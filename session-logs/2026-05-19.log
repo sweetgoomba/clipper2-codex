@@ -1,0 +1,865 @@
+2026-05-19 Template Builder layout sync packaged smoke
+
+- 사용자 요구:
+  - `.codex` 기준 문서와 최신 session log를 확인한 뒤 Template Builder editor/layout sync follow-up을 이어서 진행.
+  - 새 템플릿 생성, layout image 선택, `나머지 비율에 적용`, ratio 전환, 저장 전/후 preview/thumbnail/overflow를 실제 UI 기준으로 smoke 확인하고 남은 버그 수정.
+- 확인/원인:
+  - packaged UI smoke에서 custom local absolute layout asset을 gallery card thumbnail이 backend base URL에 단순 concat해 엑박이 될 수 있음을 확인.
+  - dirty draft와 pending variant update map이 어긋나면 save가 backend patch 없이 frontend clean 상태로 바뀔 수 있는 저장 경계 취약점을 확인.
+  - stack layout target ratio에서 raw `layoutImage` 선택 상태일 때 inspector는 기본 stack layer를 편집하지만 canvas VM은 raw `layoutImage`를 선택값으로 넘겨 frame 밖 overflow 복제본이 보이지 않는 mismatch를 확인.
+- 수정:
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.ts`
+    - local/non-direct `layoutImage.assetUri` card thumbnail은 variant `assets/layout-image/file` endpoint를 사용.
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.ts`
+    - save 직전 pending map에 없는 ratio draft diff를 backfill해 stale pending 상태에서도 draft 변경을 persist.
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+    - canvas VM의 selected media id를 inspector와 같은 effective layout media layer id로 맞춰 기본 stack layer overflow 표시를 복구.
+- 회귀 테스트:
+  - gallery local absolute layout thumbnail endpoint test 추가.
+  - stale pending map save persistence test 추가.
+  - default selected stack layer overflow test 추가. RED/GREEN 확인.
+- 검증:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts`: 147 SUCCESS.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts --include src/features/template-builder/components/template-family-gallery.component.spec.ts`: 56 SUCCESS.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+  - Rebuilt packaged Electron UI smoke:
+    - 새 template 생성 후 layout image upload.
+    - `나머지 비율에 적용` 후 저장 전 `4:3`, `1:1` preview 모두 source `16:9` layout endpoint로 정상 표시.
+    - `4:3` layout x=-120에서 overflow 표시됨, text layer 선택 시 overflow 사라짐.
+    - save PATCH는 `4:3`, `1:1` 둘 다 발생.
+    - save 후 API persistence: `4:3.layoutImage`, `1:1.layoutImage`, 각 `layout.legacy` layer 모두 같은 uploaded asset URI 유지. `4:3.layout.legacy.x=-120`.
+    - gallery broken card image count: 0.
+    - smoke-created template은 삭제 완료.
+- 현재 상태:
+  - `clipper_nestjs`, `clipper_electron` worktree clean.
+  - 변경은 `clipper_angular`에만 남아 있음.
+
+2026-05-19 Template Builder delete last layout preview fix
+
+- 추가 사용자 제보:
+  - 새 템플릿 편집 중 layout image를 추가한 뒤 마지막 레이아웃 레이어를 삭제하면 inspector에는 `등록된 레이아웃 레이어가 없습니다`가 표시되지만 preview에는 삭제한 이미지가 계속 보임.
+- 원인:
+  - 마지막 stack layer 삭제 후 `layoutLayers=[]`가 되지만 base `layoutImage.assetUri`는 남아 있어 `layoutImagePreviewUrl`이 legacy/base preview fallback을 다시 렌더함.
+  - `layoutLayers`가 `undefined`인 legacy template fallback과, 명시적 빈 배열인 사용자 삭제 상태를 구분하지 않았다.
+- 수정:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`에서 `layoutLayers`가 정의되어 있으면 빈 배열이어도 base `layoutImage` preview를 렌더하지 않음.
+  - 기존 마지막 layer 삭제 테스트에 부모 state 반영 후 empty state와 preview 제거를 검증하는 assertion 추가.
+- 검증:
+  - RED: `deletes the last layout layer without falling back to legacy layoutImage`가 `layout-image-preview` 잔존으로 실패.
+  - GREEN: `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts`: 147 SUCCESS.
+  - `clipper_angular git diff --check`: passed.
+
+2026-05-19 Template Builder cancel after layout upload restore fix
+
+- 추가 사용자 제보:
+  - 새 템플릿 편집 중 layout image를 선택해 preview에 들어간 뒤 해당 layout layer를 삭제하고, 저장하지 않고 `취소`를 눌러도 템플릿에 해당 비율 layout image가 적용되어 있음.
+- 원인:
+  - layout image upload는 backend asset endpoint를 즉시 호출한다.
+  - 새 layout stack layer에 업로드할 때 dirty edit session을 먼저 저장해야 해서 `saveEditSession()`이 편집 시작 시점의 `baseFamily`를 업로드 직전 draft로 덮었다.
+  - 이후 `취소`는 frontend edit session만 지우고 backend에 이미 저장된 layer/image 변경을 되돌리지 않았다.
+- 수정:
+  - `TemplateBuilderEditSession`에 `backendMutated`, `restoreBaseFamily`를 추가.
+  - layout upload 전 내부 저장이 필요하면 편집 시작 시점 원본을 `restoreBaseFamily`에 보존하고, 내부 저장은 해당 restore 기준을 유지하도록 변경.
+  - `cancelEditSession()`을 async로 바꾸고, backend mutation이 있었던 edit session은 원본 layer patch로 backend variant layers를 복원한 뒤 세션을 종료.
+  - 복원 patch는 `layoutImage.assetUri=null`, `logoImage.assetUri=null`, `layoutLayers=[]` fallback을 명시해 merge patch가 업로드 asset/layer를 남기지 않도록 함.
+- 회귀 테스트:
+  - 실제 upload service double이 family state에 asset URI를 반영하도록 보강.
+  - dirty draft layout stack layer upload -> layer 삭제 -> cancel 시 backend/selected family에서 uploaded image layer가 사라지는 spec 추가.
+- 검증:
+  - RED: 새 page spec이 cancel 후 uploaded layout layer 잔존으로 실패.
+  - GREEN: `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts`: 54 SUCCESS.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/components/template-family-gallery.component.spec.ts`: 150 SUCCESS.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+- Packaged UI smoke:
+  - packaged app을 `--remote-debugging-port=9333`로 실행해 Template Builder UI에서 custom template 생성, edit start, layout image layer 추가, file input upload까지 진행.
+  - smoke image upload 후 UI/API에서 image layout layer와 asset path 생성을 확인.
+  - 후속 자동 삭제/정리는 현재 UI에 보이는 custom template 이름이 `새 템플릿`이라 사용자 데이터와 구분이 불명확해 중단.
+  - 주의: smoke 중 확인된 local data entries:
+    - `custom.template.2c750926-e0a9-4762-8562-b3c09a44cd73` (`새 템플릿`)에 smoke upload asset path가 남아 있음.
+    - `custom.template.ff30c522-5d46-4df0-8c0b-655ff148221d` (`Smoke Cancel Layout 1779124881095`)도 local template-builder JSON에 남아 있음.
+    - 사용자 승인 없이는 삭제하지 않았다.
+  - packaged app/NestJS 프로세스는 종료 확인.
+
+2026-05-19 Template Builder staged layout upload proper fix
+
+- 사용자 피드백:
+  - layout image upload가 backend family/template 저장 상태를 즉시 변경하면 안 되고, 저장 버튼을 눌렀을 때 DB/JSON에 반영되어야 한다는 지적.
+  - 이전 `backendMutated`/cancel restore 보정은 임시방편이므로 제거하고 구조를 바로잡기로 결정.
+- 수정:
+  - Angular 임시 복원 필드/로직 제거:
+    - `TemplateBuilderEditSession.backendMutated`, `restoreBaseFamily`, `restoreEditSessionBaseFamily()`, `restoreLayersPatch()` 제거.
+    - `cancelEditSession()`은 다시 frontend edit session만 종료.
+  - NestJS layout upload 계약 변경:
+    - `uploadLayoutImage()`, `uploadLayoutLayerImage()`는 더 이상 `repository.upsert()`로 family를 갱신하지 않음.
+    - 파일만 `template-assets/...`에 쓰고 `{ assetUri, assetWidth, assetHeight, frame }`을 반환.
+    - `uploadLayoutLayerImage()`는 backend에 아직 없는 draft layer id도 허용. 새 layer upload 전에 dirty edit session을 저장할 필요가 없어짐.
+  - Angular layout upload 흐름 변경:
+    - 이미지 선택 시 upload result를 현재 edit draft layer patch로만 반영.
+    - `saveEditSession()`에서 기존 variant patch 저장 경로를 통해서만 backend family에 반영.
+    - 취소하면 draft patch가 버려져 backend에는 upload 선택이 적용되지 않음.
+  - 저장 전 preview 지원:
+    - family-scoped endpoint가 아직 저장되지 않은 staged asset을 찾을 수 없으므로 `GET /v1/template-builder/assets/file?uri=...` generic local asset proxy 추가.
+    - editor는 absolute local `template-assets` URI를 이 endpoint로 preview.
+- 회귀 테스트:
+  - Angular page:
+    - dirty layout stack layer upload가 edit session을 저장하지 않고 draft에만 asset을 반영.
+    - 취소 시 backend family에 staged upload가 남지 않음.
+    - 저장 시 staged upload가 variant patch로 backend에 반영됨.
+  - Angular service:
+    - layout upload response contract를 staged asset response로 갱신.
+  - Angular editor:
+    - absolute local template asset preview URL을 generic asset endpoint로 갱신.
+  - NestJS:
+    - layout image / selected layout stack layer upload가 family를 mutate하지 않고 staged asset만 반환하는 테스트로 갱신.
+- 검증:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts --include src/features/template-builder/services/template-builder.service.spec.ts`: 76 SUCCESS.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/components/template-family-gallery.component.spec.ts`: 150 SUCCESS.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "stages a layout image|stores uploaded layout images|stages a selected layout stack layer" test/template-builder-api.test.js`: 3 passed.
+  - 참고: `clipper_nestjs node --test test/template-builder-api.test.js` 전체는 기존 baseline성 5개 실패가 있어 targeted staged upload tests로 검증.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check && clipper_nestjs git diff --check`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+
+2026-05-19 Template Builder card thumbnail / legacy thumbnail follow-up
+
+- 사용자 요구:
+  - 템플릿 목록 카드에서 선택 상태가 더 명확해야 함.
+  - 신규/복제/custom 템플릿 저장 시 카드 썸네일이 실제 캔버스와 다르게 생성됨.
+  - 저장 당시 선택 ratio가 아니라 항상 `4:3` 왼쪽 캔버스 상태를 카드 썸네일로 써야 함.
+  - legacy Clipper1 카드 썸네일도 `4:3` 왼쪽 캔버스, 타이틀/자막 2줄 상태여야 하며 layout image가 완전히 로드된 뒤 캡처되어야 함.
+- 수정:
+  - `clipper_electron`에 page region capture IPC를 추가해 Angular가 현재 Electron 화면의 preview DOM 영역을 PNG data URL로 캡처할 수 있게 했다.
+  - `TemplateBuilderCardThumbnailService`에 preview element 기반 PNG 파일 생성 경로를 추가했다.
+  - `TemplateBuilderPageComponent`의 저장 썸네일 생성은 live preview DOM 캡처를 우선 사용한다.
+  - 저장 썸네일 캡처는 현재 선택 ratio와 무관하게 임시로 `4:3` ratio로 전환하고, preview chrome을 숨긴 뒤 캡처하고, 이전 ratio/text artifact 상태를 복원한다.
+  - create/clone 직후 아직 새 family가 editor에 렌더되기 전에는 live DOM 캡처를 쓰지 않고 기존 model renderer fallback을 사용해 이전 선택 template이 캡처되지 않게 했다.
+  - Angular screenshot export helper가 `--family-json`, `--ratio`를 받아 특정 Template Builder family/ratio를 렌더하도록 확장됐다.
+  - `clipper_angular/scripts/export-legacy-clipper1-card-thumbnails.mjs`를 추가해 NestJS seed의 legacy Clipper1 21개 family를 `4:3` 캔버스 PNG로 export한다.
+  - screenshot export 대기는 `.phone-canvas img` 전체를 대상으로 바꿔 layout/content/logo image decode 완료 후 캡처하도록 했다.
+  - regenerated legacy thumbnails 21개를 기존 S3 key `s3://clipperstudio/templates/card-thumbnails/legacy-clipper1/`에 overwrite 업로드했다. DB/registry URL은 바꾸지 않았다.
+- 검증:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts --include src/features/template-builder/services/template-builder-card-thumbnail.service.spec.ts --include src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts`: 57 SUCCESS.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular node --test test/template-builder-preview-screenshot-export.test.mjs`: 2 passed.
+  - `clipper_nestjs node --test test/legacy-card-thumbnail-upload-script.test.js`: 3 passed.
+  - Regenerated local output `/tmp/legacy-clipper1-left-card-thumbnails-ready` visually checked for template 1 and 16 after layout image load wait fix.
+  - S3 upload script uploaded 21 legacy thumbnails. HEAD checks for `1_ratio_4_3_thumb.png`, `16_ratio_4_3_thumb.png`, `21_ratio_4_3_thumb.png` returned 200 OK.
+- 주의:
+  - S3 key를 overwrite했기 때문에 기존 브라우저 캐시가 남아 있으면 card image가 즉시 바뀌지 않을 수 있다. 필요하면 hard refresh/cache-bust로 확인한다.
+  - 다음 세션은 사용자가 새 요구사항을 줄 때까지 자동으로 수정에 들어가지 말고, 문서와 현재 diff만 파악한 뒤 대기한다.
+
+2026-05-19 Commit checkpoint
+
+- 커밋:
+  - `clipper_angular` `31322e6 fix: sync template builder layouts and thumbnails`
+  - `clipper_electron` `abb800f feat: add page region capture ipc`
+  - `clipper_nestjs` `b164ccb fix: stage template assets and upload thumbnails`
+- 커밋 전 검증:
+  - `clipper_angular` targeted Karma: 244 SUCCESS.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular node --test test/template-builder-preview-screenshot-export.test.mjs`: 2 passed.
+  - `clipper_electron npm run build`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs` 관련 Node tests: 3 passed / 3 passed / 3 passed.
+  - 세 repo 모두 `git diff --check`: passed.
+  - 세 repo 모두 commit 후 `git status --short` 출력 없음.
+
+2026-05-19 Template Builder official DB / S3 rollback incident state
+
+- 문제 시작점:
+  - 사용자가 `clipper2_template_families`, `clipper2_template_variants`, `clipper2_template_assets`를 DBeaver SQL INSERT export로 백업한 뒤, system override JSON 값을 official DB에 안전하게 반영해 달라고 요청했다.
+  - 이때 기존 `clipper_nestjs/scripts/register-official-template-seed.js`를 `CLIPPER_DATA_DIR=/Users/jina/Library/Application Support/Clipper2`와 `--apply --asset-mode=upload`로 실행했다.
+  - 이 판단이 잘못됐다. 해당 스크립트는 override JSON만 DB에 반영하는 도구가 아니라, legacy official seed 21개 family 전체와 관련 asset upload plan을 다시 적용한다.
+
+- 실제로 발생한 영향:
+  - DB:
+    - 21개 legacy official family와 84개 variant가 upsert됐다.
+    - 이후 사용자가 제공한 DBeaver SQL INSERT 덤프 3개로 DB는 다시 복원했다.
+    - 복원 확인값: `families=21`, `variants=84`, `assets=697`.
+    - 예시 `system.legacy.clipper1.template.14` / `템플릿 타입 N` 4:3 main title 값도 덤프 상태로 돌아왔다.
+  - S3:
+    - `register-official-template-seed.js --asset-mode=upload`가 `templates/card-thumbnails/legacy-clipper1/*.png` key를 업로드 대상으로 포함했다.
+    - 이때 source는 이전 세션에서 생성한 `/tmp/legacy-clipper1-left-card-thumbnails-ready`가 아니라 `clipper_nestjs/src/projects/assets/legacy-clipper1-template-ui/thumbs-and-origins`의 번들 PNG였다.
+    - 따라서 이전 세션에서 업로드했던 "4:3 왼쪽 캔버스, 타이틀/자막 2줄" legacy card thumbnails가 같은 S3 key에서 덮였다.
+    - 샘플 확인: S3 `templates/card-thumbnails/legacy-clipper1/14_ratio_4_3_thumb.png`의 현재 size가 로컬 번들 `thumbs-and-origins/14_ratio_4_3_thumb.png`와 동일하다.
+    - DB restore는 S3 object를 되돌리지 않으므로 이 상태는 별도 복원이 필요하다.
+  - 앱 데이터:
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`는 삭제하지 않고 `.applied-2026-05-19.bak.json`로 이동했다.
+    - "문제 시작점 직전"으로 되돌리려면 이 backup 파일을 원래 이름으로 되돌리는 것이 맞다.
+  - 코드:
+    - 현재 `clipper_nestjs/src/template-builder/template-builder-seed.ts`에는 legacy fallback 이름을 `템플릿 타입 A..U`로 바꾸는 uncommitted diff가 남아 있다.
+    - 이 변경은 S3 overwrite의 직접 원인은 아니지만, "문제 시작점 직전"에 이 diff를 유지할지 되돌릴지는 별도 판단이 필요하다. DB official이 있으면 일반 앱 목록은 DB 값을 우선 사용한다.
+
+- 현재 복원 기준:
+  - 사용자가 말한 "그게 시작되기 전"은 `register-official-template-seed.js --apply --asset-mode=upload` 실행 전 상태로 해석한다.
+  - 필요한 복원 작업:
+    - DB: DBeaver SQL INSERT 덤프 기준 복원 완료.
+    - 앱 데이터 override JSON: `.bak.json`을 원래 `template-builder-system-overrides.json`로 되돌려야 함.
+    - S3 legacy card thumbnails: 이전 세션 방식대로 `clipper_angular/scripts/export-legacy-clipper1-card-thumbnails.mjs`로 21개를 다시 생성하고, `clipper_nestjs/scripts/upload-legacy-clipper1-card-thumbnails.js --apply --source <generated-dir>`로 `s3://clipperstudio/templates/card-thumbnails/legacy-clipper1/`에 재업로드해야 함.
+    - DB가 현재 참조하는 thumbnail URL prefix는 덤프 기준 `templates/legacy-clipper1/card-thumbnails/...`이고, 이전 세션에서 재생성/업로드한 legacy card thumbnail prefix는 `templates/card-thumbnails/legacy-clipper1/...`이다. 둘을 혼동하지 말아야 한다.
+
+- 복원 실행:
+  - 앱 데이터 override JSON 복원 완료:
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.applied-2026-05-19.bak.json`
+    - -> `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+  - legacy card thumbnail 재생성 완료:
+    - output: `/tmp/legacy-clipper1-left-card-thumbnails-rollback-20260519`
+    - generated PNG count: 21
+    - sample visual check: `14_ratio_4_3_thumb.png`가 4:3 왼쪽 캔버스, 메인 타이틀 2줄, 자막 2줄 형태임을 확인.
+  - S3 재업로드 완료:
+    - command: `node scripts/upload-legacy-clipper1-card-thumbnails.js --apply --source /tmp/legacy-clipper1-left-card-thumbnails-rollback-20260519 --env-file .env.local`
+    - uploaded: 21
+    - target prefix: `s3://clipperstudio/templates/card-thumbnails/legacy-clipper1/`
+  - S3 HEAD sample:
+    - `1_ratio_4_3_thumb.png`: 125409 bytes, updated `2026-05-19T05:54:57.000Z`
+    - `14_ratio_4_3_thumb.png`: 148795 bytes, updated `2026-05-19T05:54:58.000Z`
+    - `16_ratio_4_3_thumb.png`: 62773 bytes, updated `2026-05-19T05:54:58.000Z`
+    - `21_ratio_4_3_thumb.png`: 105154 bytes, updated `2026-05-19T05:54:58.000Z`
+
+2026-05-19 Template Builder DB-only verification guard snapshot
+
+- 사용자 목표:
+  - 현재 정상으로 보이는 legacy template 상태로 언제든 돌아올 수 있게 한 뒤, local JSON 영향 없이 DB 값만으로 기존 legacy 21개가 제대로 보이는지 확인한다.
+  - 이번 확인에서는 새 템플릿 생성/복제/custom 저장 경로는 고려하지 않는다.
+- 현재 정상 상태 스냅샷:
+  - 위치: `/Users/jina/project/adlight/template-builder-current-good-state-20260519-1500`
+  - 포함:
+    - app data JSON:
+      - `app-data/template-builder-system-overrides.json`
+      - `app-data/template-builder.json`
+    - DB SQL:
+      - `db/template-builder-current-good-state.sql`
+      - counts: families 21, variants 84, assets 697
+    - S3 card thumbnail PNG:
+      - `s3-card-thumbnails/*_ratio_4_3_thumb.png`
+      - count: 21
+  - S3 snapshot source prefix: `s3://clipperstudio/templates/card-thumbnails/legacy-clipper1/`
+- DB-only 확인을 위한 local JSON 비활성화:
+  - 삭제하지 않고 이름만 변경했다.
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+    - -> `template-builder-system-overrides.disabled-20260519-1500.json`
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`
+    - -> `template-builder.disabled-20260519-1500.json`
+- 현재 app data templates 폴더에는 active `template-builder-system-overrides.json` / `template-builder.json`가 없다.
+- 되돌릴 때:
+  - disabled 파일명을 원래 이름으로 되돌리거나, snapshot의 `app-data/*.json`을 원래 app data 경로로 복사한다.
+  - DB는 snapshot SQL 또는 기존 DBeaver SQL 백업으로 복구 가능하다.
+  - S3 card thumbnails는 snapshot `s3-card-thumbnails` 폴더를 `clipper_nestjs/scripts/upload-legacy-clipper1-card-thumbnails.js --apply --source <snapshot-dir>`로 재업로드한다.
+
+2026-05-19 Template Builder DB-only verification result
+
+- 사용자가 JSON 비활성화 후 재빌드 확인:
+  - 템플릿이 이상해졌다.
+  - 결론: DB/seed 값만으로는 현재 원하는 legacy template 결과가 충분히 재현되지 않는다.
+  - 현재 원하는 상태 일부는 local JSON, 특히 system override JSON에만 남아 있다.
+- 즉시 복원:
+  - 비활성화했던 JSON 파일명을 원래대로 되돌렸다.
+  - active files:
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`
+- 다음 안전한 단계:
+  - JSON 전체를 무작정 DB에 재적용하지 않는다.
+  - DB와 local JSON의 legacy family 차이를 diff로 뽑고, 현재 원하는 상태에 필요한 필드만 DB에 반영해야 한다.
+
+2026-05-19 Template Builder local source influence check
+
+- active JSON files:
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+    - legacy ids: 10개
+    - `system.legacy.clipper1.template.{14,13,16,17,10,2,5,6,9,4}`
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`
+    - legacy id: 1개
+    - `system.legacy.clipper1.template.14`
+- 코드 merge/get 순서:
+  - list: `DB official -> system seed(+system override) -> custom JSON`
+  - get: `DB official -> system seed(+system override) -> custom JSON`
+- 결론:
+  - 기존 legacy template 21개에는 `template-builder-system-overrides.json`가 직접 영향을 준다.
+  - `template-builder.json`의 `system.legacy.clipper1.template.14`는 같은 id가 system seed/system override에 먼저 존재하므로 기존 legacy list/get에서는 shadow된다.
+  - 따라서 이번 DB-only 테스트에서 이상해진 원인은 `template-builder.json`이 아니라 active system override JSON을 제거했기 때문으로 보는 것이 맞다.
+  - 단, DB official이 앱 런타임에서 실제로 활성화되어 있다면 DB가 먼저 잡혀야 한다. JSON disable이 화면을 바꿨다는 사실은 현재 확인한 앱 런타임에서는 DB official이 legacy 화면의 1순위 source로 작동하지 않았다는 강한 증거다.
+- DB와 system override 차이 예:
+  - template 14:
+    - DB card: `templates/legacy-clipper1/card-thumbnails/14_ratio_16_9_thumb.png`
+    - override card: `templates/card-thumbnails/legacy-clipper1/14_ratio_4_3_thumb.png`
+    - 4:3 `mainTitleLine1.twoLineFirstY`: DB 265, override 252
+    - 4:3 `mainTitleLine2.twoLineSecondY`: DB 376, override 359
+  - template 17:
+    - 4:3 `mainTitleLine1.twoLineFirstY`: DB 321, override 315
+    - 4:3 `mainTitleLine2.twoLineSecondY`: DB 425, override 421
+  - template 6:
+    - 4:3 `mainTitleLine1.oneLineY`: DB 367, override 355
+    - 4:3 `mainTitleLine1.twoLineFirstY`: DB 309, override 308
+    - 4:3 `mainTitleLine2.twoLineSecondY`: DB 422, override 418
+
+2026-05-19 Template Builder effective legacy DB migration
+
+- 목표:
+  - 현재 정상으로 보이는 legacy template effective state를 official DB에 반영한다.
+  - S3 업로드는 하지 않는다.
+  - `register-official-template-seed.js`는 사용하지 않는다.
+- 안전장치:
+  - 현재 정상 상태 snapshot:
+    - `/Users/jina/project/adlight/template-builder-current-good-state-20260519-1500`
+  - DB rollback SQL:
+    - `template-builder-current-good-state-20260519-1500/db/template-builder-current-good-state.sql`
+  - S3 thumbnail snapshot:
+    - `template-builder-current-good-state-20260519-1500/s3-card-thumbnails`
+- 전용 migration script:
+  - `template-builder-current-good-state-20260519-1500/db/migrate-effective-legacy-to-official-db.js`
+  - source:
+    - built NestJS legacy seed from `clipper_nestjs/dist`
+    - active system override JSON
+  - target:
+    - legacy family 21개
+  - operation:
+    - `clipper2_template_families` upsert
+    - `clipper2_template_variants` upsert
+    - 해당 family의 `clipper2_template_assets` delete/reinsert
+    - S3 upload 없음
+- dry-run before apply:
+  - changed family: 21
+  - changed variants: 84
+  - current assets for legacy families: 697
+  - target assets for legacy families: 109
+  - 주요 cardThumbnailUri 변경:
+    - `templates/legacy-clipper1/card-thumbnails/*` -> `templates/card-thumbnails/legacy-clipper1/*_ratio_4_3_thumb.png`
+- apply:
+  - transaction 성공.
+- apply 후 검증:
+  - migration script dry-run:
+    - changed family: 0
+    - changed variants: 0
+    - current assets for legacy families: 109
+    - target assets for legacy families: 109
+  - DB count:
+    - families: 21
+    - variants: 84
+    - assets: 109
+  - sample `system.legacy.clipper1.template.14`:
+    - cardThumbnailUri: `https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/card-thumbnails/legacy-clipper1/14_ratio_4_3_thumb.png`
+    - 4:3 `mainTitleLine1.twoLineFirstY`: 252
+    - 4:3 `mainTitleLine2.twoLineSecondY`: 359
+- JSON 영향 제거 검증 준비:
+  - 삭제하지 않고 disabled 이름으로 변경했다.
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+    - -> `template-builder-system-overrides.disabled-after-db-migration-20260519.json`
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`
+    - -> `template-builder.disabled-after-db-migration-20260519.json`
+  - 현재 active `template-builder-system-overrides.json` / `template-builder.json`는 없다.
+- 다음 확인:
+  - 사용자가 앱을 재빌드/재실행해서 legacy templates가 정상인지 확인한다.
+  - 정상이라면 DB migration 성공이며 local JSON은 제거 가능하다.
+  - 이상하면 disabled JSON 파일명을 원래대로 복원하면 즉시 이전 정상 상태로 돌아갈 수 있다.
+
+2026-05-19 Template Builder DB migration verification failure and env fix
+
+- 사용자가 JSON disabled 상태에서 재빌드 확인:
+  - 정상 아님.
+- 즉시 복원:
+  - disabled JSON을 원래 이름으로 복원해 정상 표시 상태로 되돌렸다.
+- 원인 판단:
+  - official DB 값은 effective legacy 값과 일치한다.
+  - 그런데 packaged app의 Electron `BundledEnvProvider`는 `resourcesPath/clipper_python/.env`와 `userData/.env`만 읽는다.
+  - Template Builder DB/S3 env는 `clipper_nestjs/.env.local`에 있고, packaged resource/env로 주입되지 않았다.
+  - 따라서 packaged NestJS gateway에서 `CLIPPER2_TEMPLATE_DB_*`가 없어 `TemplateBuilderOfficialPostgresRepository.fromConfig()`가 null을 반환했고, 앱은 DB가 아니라 seed/system override 경로를 썼다.
+- 코드 수정:
+  - `clipper_electron/src/main/config/bundled-env-provider.ts`
+    - `resourcesPath/clipper_nestjs/.env`와 `.env.local`도 읽어 NestJS gateway env에 주입하도록 변경.
+  - `clipper_electron/electron-builder.yml`
+    - `../clipper_nestjs/.env.local`을 packaged resource `clipper_nestjs/.env.local`로 포함.
+- 검증:
+  - `clipper_electron npm run build`: passed.
+- 다음 재빌드 검증 준비:
+  - JSON은 삭제하지 않고 다시 disabled 처리했다.
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.json`
+    - -> `template-builder-system-overrides.disabled-after-env-fix-20260519.json`
+  - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`
+    - -> `template-builder.disabled-after-env-fix-20260519.json`
+  - 현재 active local Template Builder JSON 없음.
+- 다음 확인:
+  - 앱을 다시 full rebuild/package 후 실행한다.
+  - 정상이라면 packaged app이 DB official 값을 읽기 시작한 것.
+  - 이상하면 disabled 파일명을 원래대로 되돌려 즉시 정상 상태로 복원한다.
+
+2026-05-19 Template Builder DB-only verification success
+
+- 사용자가 env fix 후 full rebuild/package 확인:
+  - 정상으로 보임.
+- 결론:
+  - effective legacy 값의 DB 이관은 성공했다.
+  - packaged 앱이 `clipper_nestjs/.env.local`을 resource/env로 받도록 한 수정이 필요했다.
+  - 이제 active local Template Builder JSON 없이도 legacy templates가 정상 표시된다.
+- 현재 app data 상태:
+  - active files 없음:
+    - `template-builder-system-overrides.json`
+    - `template-builder.json`
+  - rollback용 disabled files:
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder-system-overrides.disabled-after-env-fix-20260519.json`
+    - `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.disabled-after-env-fix-20260519.json`
+- 주의:
+  - `migrate-effective-legacy-to-official-db.js --dry-run`은 active system override JSON이 있을 때 "현재 정상 effective state"를 target으로 비교하는 도구다.
+  - active override JSON을 disabled한 이후 실행하면 seed-only target과 DB를 비교하게 되어 변경이 남은 것처럼 보일 수 있다. 이 상태의 dry-run report는 DB 이관 실패를 의미하지 않는다.
+- 남은 source changes:
+  - `clipper_electron/src/main/config/bundled-env-provider.ts`
+  - `clipper_electron/electron-builder.yml`
+  - `clipper_nestjs/src/template-builder/template-builder-seed.ts`
+- rollback:
+  - 화면 이상 발생 시 disabled JSON 파일명을 원래대로 되돌리면 이전 local JSON 기반 정상 상태로 복원 가능.
+  - DB/S3 전체 rollback은 `/Users/jina/project/adlight/template-builder-current-good-state-20260519-1500` snapshot을 사용.
+
+2026-05-19 Template Builder DB-required runtime cleanup
+
+- 사용자 지시:
+  - 작업 전 현재 변경을 먼저 커밋한다.
+  - Template Builder 앱 런타임은 DB가 무조건 연결된다는 전제로 진행한다.
+  - DB 연결이 없으면 fallback으로 seed/JSON을 쓰지 말고 에러가 나게 한다.
+  - DB가 있고 데이터가 있으면 필요 없는 seed fallback/JSON influence를 제거한다.
+  - seed가 필요한 스크립트/도구 경로는 유지한다.
+- 선행 커밋:
+  - `clipper_electron` `3edc5c1 fix: provide template db env in packaged app`
+  - `clipper_nestjs` `93839b5 fix: name legacy template seed types`
+- 런타임 수정:
+  - `TemplateBuilderModule` official repository provider가 `fromConfigOrThrow()`를 사용한다.
+  - `CLIPPER2_TEMPLATE_DB_*` env가 없으면 Template Builder official DB repository 생성 단계에서 에러가 난다.
+  - `TemplateBuilderService.listFamilies()`는 official DB repository만 조회한다.
+  - `TemplateBuilderService.getFamily()`는 official DB repository만 조회하고, 없으면 `NotFoundException`.
+  - `systemFamilies()` fallback과 `mergeFamilySources()` fallback merge를 service에서 제거했다.
+  - system template edit 저장은 local system override JSON이 아니라 official DB repository `upsert()`로 저장한다.
+- seed 유지 경로:
+  - `scripts/register-official-template-seed.js`는 더 이상 `TemplateBuilderService.listFamilies()`에 의존하지 않는다.
+  - 이 스크립트는 seed + system override JSON을 직접 계산해서 legacy official 등록 source를 만든다.
+  - 따라서 앱 runtime은 DB-only이고, seed 등록/thumbnail export 같은 seed 기반 도구는 계속 작동한다.
+- 테스트/검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "official repository families|official DB repository is missing|official template seed registration|TemplateBuilderModule wires|Postgres official" test/template-builder-api.test.js test/template-builder-register-official-seed-script.test.js test/template-builder-official-repository.test.js`: 9 passed.
+- 현재 uncommitted changes:
+  - `clipper_nestjs/scripts/register-official-template-seed.js`
+  - `clipper_nestjs/src/template-builder/template-builder-official-postgres.repository.ts`
+  - `clipper_nestjs/src/template-builder/template-builder.module.ts`
+  - `clipper_nestjs/src/template-builder/template-builder.service.ts`
+  - `clipper_nestjs/test/template-builder-api.test.js`
+
+2026-05-19 Template Builder DB-only custom create/delete fix
+
+- 사용자 재빌드 확인:
+  - 새 템플릿 생성 후 `Unknown template family: custom.template...` 발생.
+  - 삭제 버튼도 `템플릿을 삭제하지 못했습니다.` 발생.
+- 원인:
+  - 직전 DB-only refactor에서 `listFamilies()`/`getFamily()`는 DB-only로 바뀌었지만,
+    `createFamily()`/`cloneFamily()`/`deleteFamily()` 및 일부 update/upload 저장 경로가 아직 `JsonTemplateBuilderRepository`를 호출했다.
+  - 그래서 새 custom family는 local `template-builder.json`에 쓰였고, 조회는 DB만 보면서 바로 missing이 되었다.
+- 수정:
+  - `TemplateBuilderService`의 Template Builder runtime 저장/삭제 경로를 official DB repository로 통일.
+    - create/clone/rename/delete/createVariant/sampleRender/cardThumbnail/image/font/persistEditedFamily.
+  - `TemplateBuilderOfficialRepository`에 `delete(familyId)` 계약 추가.
+  - `TemplateBuilderOfficialPostgresRepository.upsert()`가 더 이상 모든 family를 system/built_in/readonly로 강제하지 않고,
+    custom family의 `ownerType/source/readonly`를 보존하도록 변경.
+  - Postgres upsert 시 해당 family의 variant/asset rows를 다시 생성해 stale rows가 남지 않게 정리.
+  - Postgres family delete 추가. family row 삭제로 variants/assets는 DB cascade를 따른다.
+- App Support 상태:
+  - 실패한 생성 시도 때문에 active `/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`이 다시 생겼다.
+  - 삭제하지 않고 `template-builder.disabled-db-only-20260519.json`으로 이동했다.
+  - active `template-builder.json`/`template-builder-system-overrides.json` 없음.
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "creates and deletes custom families|lists only DB|official DB repository is missing|Postgres official template repository" test/template-builder-api.test.js test/template-builder-official-repository.test.js`: 8 passed.
+- 주의:
+  - 긴 legacy sample-render 테스트를 함께 돌리면 자막 샘플 문구 기대값 차이로 실패하는 기존/별도 이슈가 보였다.
+    이번 custom create/delete 저장 경로 문제와 직접 관련된 targeted tests는 통과했다.
+
+2026-05-19 Template Builder official DB + local custom correction
+
+- 사용자 정정:
+  - DB-only 의미는 legacy/system official 템플릿 표시 경로에서 seed/system override JSON 영향을 제거하라는 뜻이었다.
+  - 유저가 새로 만든 템플릿과 복제본은 공식 등록 전까지 DB에 올라가면 안 된다.
+  - custom/clone은 해당 유저 로컬 `template-builder.json`에만 저장되어 목록에 보인다.
+  - 관리자 권한으로 공식 등록된 뒤에야 official DB에 들어가고 다른 설치 환경에도 보인다.
+- 수정 반영:
+  - 직전 custom/clone DB 저장 변경을 되돌렸다.
+  - `TemplateBuilderService.listFamilies()`:
+    - official DB families + local custom families를 merge한다.
+    - seed/system override JSON fallback은 보지 않는다.
+  - `TemplateBuilderService.getFamily()`:
+    - official DB를 먼저 보고, 없으면 local custom repository를 본다.
+    - seed/system override JSON fallback은 보지 않는다.
+  - create/clone/rename/delete/createVariant/sampleRender custom 저장은 다시 local `TemplateBuilderRepository` 경로다.
+  - system template edit/admin official registration은 official DB upsert 경로다.
+  - `TemplateBuilderOfficialPostgresRepository`는 official repository답게 upsert 시 system/built_in/readonly로 저장한다.
+- App Support 상태:
+  - active `template-builder.json`/`template-builder-system-overrides.json` 없음.
+  - 단, 이후 새 템플릿 생성/복제 테스트를 하면 active `template-builder.json`이 다시 생기는 것이 정상 동작이다.
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "official template seed registration|creates and deletes custom|DB official families|official DB repository is missing|Postgres official template repository" test/template-builder-api.test.js test/template-builder-register-official-seed-script.test.js test/template-builder-official-repository.test.js`: 9 passed.
+  - 사용자가 재빌드 후 새 템플릿 생성/삭제 흐름이 정상 동작함을 확인했다.
+- 최종 의도:
+  - legacy/system official 21개는 DB official source가 canonical.
+  - runtime에서 seed/system override JSON은 official legacy 표시 결과에 영향을 주지 않는다.
+  - local `template-builder.json`은 custom/clone 사용자 로컬 저장소로 유지한다.
+  - 공식 등록 기능은 별도 설계 후 구현한다.
+
+2026-05-19 Template Builder overlay + admin password + official registration
+
+- 사용자 요청:
+  - inline `template-create-panel`들이 `template-page__body` 위에 생겨 body 크기에 영향을 주는 문제를 overlay로 전환.
+  - overlay open/close 상태는 재사용 가능한 추상 클래스로 분리.
+  - 임시 관리자 모드 실행 시 overlay로 비밀번호를 입력받고, `050505`가 맞을 때만 실행.
+  - 공식 템플릿 등록 기능 구현.
+- Angular 수정:
+  - `src/features/template-builder/components/template-builder-overlay.base.ts`
+    - `TemplateBuilderOverlayBase<TOverlay>` 추가.
+    - `activeOverlay`, `openOverlay`, `closeOverlay`, `isOverlayOpen` 제공.
+  - `TemplateBuilderPageComponent`
+    - create/rename/clone/delete/admin-password overlay 상태를 `TemplateBuilderOverlayBase`로 통합.
+    - create/rename/clone/delete form을 body 위 inline panel에서 fixed overlay로 이동.
+    - 임시 관리자 모드 enable 시 `admin-password` overlay를 열고, `050505` 확인 후에만 `setSystemTemplateEditMode(true)` 호출.
+    - 관리자 모드 disable은 비밀번호 없이 즉시 해제.
+- NestJS 수정:
+  - `registerOfficialTemplate()`가 official DB upsert 전에 local custom assets를 official S3 asset으로 승격한다.
+  - local App Support asset path만 승격 대상이다.
+  - 이미 `http(s)` URL인 asset은 그대로 둔다.
+  - 승격 대상:
+    - `cardThumbnailUri`
+    - `layoutImage`, `contentArea`, `logoImage`
+    - `layoutLayers[].assetUri`
+    - text layer `text.fontFamily`가 local file path인 경우
+  - S3 key prefix:
+    - `templates/official/<familyId>/...`
+  - local asset이 있는데 `TemplateBuilderAssetStorage`가 없으면 official registration은 실패한다.
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "register official|official template seed registration|creates and deletes custom|DB official families|official DB repository is missing|Postgres official template repository" test/template-builder-api.test.js test/template-builder-register-official.test.js test/template-builder-register-official-seed-script.test.js test/template-builder-official-repository.test.js`: 12 passed.
+
+2026-05-19 Template Builder registration error visibility + env loading
+
+- 사용자 확인:
+  - 공식 등록 클릭 시 기존에는 `템플릿을 등록하지 못했습니다.`만 보여 원인이 가려졌다.
+  - snackbar/닫기 버튼 방식 선호.
+- Angular 수정:
+  - Template Builder page의 inline error block을 우측 하단 snackbar로 변경.
+  - 닫기 버튼 추가.
+  - page-level async error handling이 `HttpErrorResponse.error.message`를 우선 표시하도록 `templateBuilderErrorMessage()` 사용 범위 확장.
+- 추가 확인된 원인:
+  - snackbar에 `공식 템플릿 등록에는 템플릿 asset storage 설정이 필요합니다.` 표시.
+  - NestJS `ConfigModule.forRoot()` 기본값은 `.env.local`을 자동 로드하지 않는다.
+  - dev/직접 실행에서 S3 env가 `TemplateBuilderAssetStorage` provider에 들어가지 않아 provider가 null이 될 수 있다.
+- NestJS 수정:
+  - `ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env.local', '.env'] })`로 변경.
+- 검증:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test --test-name-pattern "register official" test/template-builder-register-official.test.js`: 3 passed.
+
+2026-05-19 Template Builder asset storage fallback hardening
+
+- 사용자 확인:
+  - packaged app에서 여전히 `공식 템플릿 등록에는 템플릿 asset storage 설정이 필요합니다.` 표시.
+- 추가 수정:
+  - `TemplateBuilderS3AssetStorage.fromConfig()`가 `ConfigService`만 보지 않고 다음 순서로 S3 env를 찾도록 강화:
+    - `ConfigService`
+    - `process.env`
+    - `CLIPPER_NESTJS_ENV_FILE`
+    - `__dirname` 기준 `.env.local`/`.env`
+    - 상위 1-2단계 `.env.local`/`.env`
+    - `process.cwd()` 기준 `.env.local`/`.env`
+  - `TemplateBuilderService`가 registration 실행 시점에도 lazy fallback으로 `TemplateBuilderS3AssetStorage.fromConfig()`를 다시 시도.
+  - packaged app resource 직접 덮어쓰기는 macOS 권한으로 실패했으므로 정식 packaging으로 해결.
+- 검증:
+  - `clipper_nestjs npm run build && npm run bundle && node --test --test-name-pattern "register official|S3 asset storage" test/template-builder-register-official.test.js`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+  - packaged resource 확인:
+    - `dist-app/mac-arm64/Clipper2.app/Contents/Resources/clipper_nestjs/.env.local`에 S3 env presence 확인.
+    - packaged `index.js`에 `readTemplateBuilderEnvFiles()` fallback 반영 확인.
+
+2026-05-19 Template Builder registration snackbar polish
+
+- 사용자 확인:
+  - 공식 등록 성공 확인.
+  - 성공 시 snackbar를 띄우되 에러와 다른 색상, 닫기 버튼 없이 2초 후 자동 사라짐을 요청.
+  - snackbar 위치를 상단 중앙으로 요청.
+  - plugin install floating bar와 같은 추상화인지 확인 요청.
+- Angular 수정:
+  - official registration 성공 시 `템플릿을 등록했습니다.` success snackbar 표시.
+  - success snackbar는 초록 계열, 닫기 버튼 없음, 2초 후 자동 dismiss.
+  - error snackbar는 닫기 버튼 유지.
+  - Template Builder snackbar 위치를 top center로 변경.
+- 확인:
+  - plugin install UI는 `FloatingInstallBarComponent` 기반 진행률 전용 bar로, Template Builder snackbar와 별개 구현이다.
+  - 현재는 성격이 달라 분리 유지. 전역 snackbar가 필요하면 별도 `NotificationService`/host component로 추출하는 게 맞다.
+- 검증:
+  - `clipper_angular npm run build`: passed.
+
+2026-05-19 Clipper1 template integration discovery
+
+- 사용자 요청:
+  - Clipper2 Template Builder에서 공식 템플릿으로 등록하면 기존 내부 Clipper1 템플릿 목록에도 보이게 할 수 있는지, 구현 전 구조를 파악하고 설계하기.
+  - 이번 단계는 구현 전 조사/설계이며 파일 수정 구현은 하지 않음.
+- 현재 변경사항 상태:
+  - `clipper_nestjs`: clean, latest relevant commits include DB official/custom split and official asset promotion.
+  - `clipper_angular`: clean, latest relevant commit includes Template Builder overlays/admin password/snackbar/registration UI.
+- Clipper1 프론트 확인:
+  - 템플릿 목록은 `adlight_angular`의 `TemplatesApi.getList()`가 `GET /v1/templates/list`를 호출.
+  - `D2XDataService.fetchDefaultData()`가 templates 전체를 받아 `contents_ratio`별로 `templateMap` 구성.
+  - `TemplateSelectDialogComponent`는 현재 비율의 rows만 보여주며 `thumbnail_url` 이미지와 numeric `id`를 사용.
+  - 저장/생성 payload는 `template_id: currentTemplate.id`를 보냄.
+- Clipper1 백엔드 확인:
+  - FastAPI `adlight_python/app/routers/v1/TemplatesRouter.py`.
+  - `GET /v1/templates/list`: `templates` 전체를 `id asc`로 반환.
+  - `GET /v1/templates/{template_id}` 라우트가 있으나 함수 인자가 `id`로 되어 있어 실제 사용 전 path/query 동작 확인 필요.
+  - CSV/Google Sheet upload API는 `templates` rows를 추가하는 기존 관리성 API.
+  - 영상 생성 준비 단계는 `ShortsProjectService.prepare_media_server_payload()`에서 프로젝트의 `template_id`로 `templates.id`를 다시 조회하고, `settings` 전체를 media server payload로 전달.
+- 실제 DB `templates` 확인:
+  - columns: `id`, `name`, `category`, `thumbnail_url`, `settings`, `template`, `origin_url`, `contents_ratio`.
+  - `id`는 `templates_id_seq` 기반 integer primary key.
+  - `contents_ratio`는 enum `template_ratio`.
+  - 현재 84 rows, 21 template designs, 각 design마다 `16:9`, `4:3`, `1:1`, `full` 4 rows.
+  - 현재 `name/category`는 84 rows 모두 null.
+  - 유니크 제약은 primary key 외 확인되지 않음.
+- Clipper1 settings 요구:
+  - `ShortsTemplateSettingsSchema`와 `VideoService`가 legacy settings keys를 직접 사용.
+  - 필수/중요: `contents_area_y_offset`, `layout_image`, 각 title/subtitle/logo font/font_size/color/tracking/y_offset/align margin/box/outline/shadow keys.
+  - `layout_image`는 URL 다운로드 방식.
+  - font 값은 현재 `JalnanGothic.otf` 같은 파일명이고, `VideoService`는 `app/fonts/<font>`로 로컬 파일을 찾음. 원격 font URL을 그대로 넣으면 기존 Clipper1 renderer는 깨질 수 있음.
+- Clipper2 연결 지점:
+  - 현재 official 등록은 `clipper2_template_families`, `clipper2_template_variants`, `clipper2_template_assets`만 upsert.
+  - Clipper1 `templates`로 쓰는 로직은 아직 없음.
+  - Template Builder family 1개는 Clipper1 `templates` 4 rows로 변환되어야 함.
+  - Clipper2에는 TemplateBuilder variant -> legacy render settings 변환 로직이 이미 `LegacyClipper1RenderPayloadMapper.templateBuilderSettingsFor()` 안에 존재하므로 reverse/new exporter에서 재사용 또는 추출 가능.
+
+2026-05-19 Clipper1 integration design document saved
+
+- 상세 설계 문서:
+  - `.codex/design/2026-05-19-clipper2-official-to-clipper1-template-export-design.md`
+- 문서에 기록한 내용:
+  - 현재 커밋/작업 상태:
+    - `clipper_nestjs` `01940c1 fix: require db for official templates`
+    - `clipper_nestjs` `87f95e1 feat: promote official template assets`
+    - `clipper_angular` `2315a27 feat: add template builder overlays`
+    - `clipper_nestjs`, `clipper_angular` clean
+  - Clipper1 Angular template list flow:
+    - `GET /v1/templates/list`
+    - ratio별 filtering
+    - thumbnail-only UI
+    - 생성 payload의 `template_id`는 `templates.id`
+  - Clipper1 FastAPI/DB/render flow:
+    - `templates` table schema
+    - 실제 DB rows: 84 rows, 21 designs, 4 ratios per design
+    - `ShortsProjectService.prepare_media_server_payload()`가 `templates.id`로 settings를 조회해 media server로 전달
+    - `VideoService`가 legacy settings keys를 직접 참조
+  - 설계 결론:
+    - Clipper2 official family 1개는 Clipper1 `templates` 4 rows로 export되어야 함.
+    - 중복 재등록 방지를 위해 `clipper2_template_legacy_exports` mapping table 필요.
+    - Template Builder layers -> Clipper1 legacy settings 변환 로직은 `LegacyClipper1RenderPayloadMapper.templateBuilderSettingsFor()`를 공용 mapper로 추출하는 방향.
+    - Clipper1 renderer는 font URL이 아니라 `app/fonts/<filename>`를 찾으므로 upload/S3 font를 그대로 export하면 위험.
+    - Clipper1 목록에는 ratio별 `thumbnail_url`이 필요하므로 대표 `cardThumbnailUri` 하나로는 부족하고 4 ratio thumbnail/origin 준비가 필요.
+  - 권장 구현 순서:
+    - dry-run/export preview API
+    - legacy settings mapper extraction
+    - mapping table + `templates` upsert
+    - official registration flow 연결
+- `NEXT_SESSION_PROMPT.md` 상단에도 위 설계 문서와 다음 세션 복기 포인트를 추가했다.
+
+2026-05-19 Clipper2 Windows packaging discovery and plan
+
+- 사용자 요청:
+  - Clipper1 export 작업은 나중으로 미룸.
+  - 더 급한 작업은 Windows 설치형 빌드 지원.
+  - 구현은 아직 하지 않고, 현재 빌드 구조/Windows 빌드 필요사항/브랜치 전략을 파악하고 문서화.
+- 상세 설계 문서:
+  - `.codex/design/2026-05-19-clipper2-windows-packaging-plan.md`
+- 브랜치 전략 결론:
+  - 구현 시작 시 새 브랜치는 권장.
+  - 4개 repo 전부를 무조건 먼저 팔 필요는 없음.
+  - 우선 대상:
+    - `clipper_electron`: packaging entrypoint, build scripts, electron-builder config.
+    - `clipper_python`: packaged first-run `uv sync` 대상, 현재 Windows environment가 빠져 있음.
+    - `clipper_nestjs`: bundle/copy scripts가 Unix shell command 사용.
+  - `clipper_angular`: Windows-specific UI 변경이 생길 때만 같은 브랜치 생성해도 충분.
+- 현재 빌드 구조:
+  - `clipper_electron/scripts/build-app.mjs`
+    1. Python `__pycache__` cleanup
+    2. Angular `npm run build:electron`
+    3. NestJS `npm run bundle`
+    4. Electron `tsc`
+    5. `prepare-uv.mjs <platform> <arch>`
+    6. `electron-builder --mac/--win --arm64/--x64`
+  - `clipper_electron/package.json`에는 이미 `build:app:win:x64` 존재.
+  - `clipper_electron/electron-builder.yml`에는 이미 Windows `nsis` x64 target과 `resources/bin/uv.exe` extraResource 존재.
+- 이미 Windows 고려가 들어간 runtime:
+  - packaged venv path: Windows는 `userData/clipper_venv/Scripts`.
+  - plugin process: Windows `python.exe`, PATH delimiter 처리.
+  - ffmpeg downloader: `win32-x64`, `ffmpeg.exe`, `ffprobe.exe`.
+  - NestJS source service: Windows `ffmpeg.exe`, browser cookie fallback.
+  - resource telemetry: Windows path 일부 존재.
+- 주요 blocker:
+  - `clipper_electron/scripts/build-app.mjs`가 `find ... rm -rf` 사용.
+  - `clipper_electron/scripts/fetch-uv.mjs`가 `curl`, `tar`, `mv`, `unzip`, `rm -rf` 사용.
+  - `clipper_nestjs/package.json`의 `copy-assets`, `bundle`이 `mkdir -p`, `cp -R` 사용.
+  - `clipper_python/pyproject.toml`의 `[tool.uv].environments`가 `darwin`, `linux`만 포함하고 Windows 제외.
+  - `clipper_python/uv.lock`도 Windows markers가 없는 상태.
+- 1차 목표:
+  - Windows x64 unsigned internal NSIS installer.
+  - CPU fallback 기준.
+  - CUDA acceleration, code signing, auto-update, external secrets delivery는 제외.
+- 권장 구현 순서:
+  1. `clipper_electron`, `clipper_python`, `clipper_nestjs`에 `feature/windows-packaging` 브랜치 생성.
+  2. Electron build/fetch scripts cross-platform화.
+  3. NestJS asset copy script cross-platform화.
+  4. Python uv Windows environment 추가 및 lock refresh.
+ 5. Mac build regression 확인.
+ 6. Windows PC에서 `npm run build:app:win:x64` 및 packaged smoke.
+
+2026-05-19 Clipper2 Windows packaging 1차 구현
+
+- 사용자 요청:
+  - 조사/설계 후 단계별로 Windows build 지원 작업을 진행.
+  - 실제 Windows build 확인은 Windows PC에서 할 예정이며, Mac mini에서는 구현과 Mac 회귀 확인을 진행.
+- 브랜치:
+  - `clipper_electron`: `feature/windows-packaging`
+  - `clipper_nestjs`: `feature/windows-packaging`
+  - `clipper_python`: `feature/windows-packaging`
+  - `clipper_angular`: 변경 없음, 새 브랜치 생성하지 않음.
+- 변경:
+  - `clipper_electron/scripts/build-app.mjs`
+    - Unix 전용 `find ... rm -rf` Python bytecode cleanup 제거.
+    - Node `fs` 기반 recursive `__pycache__` cleanup으로 교체.
+  - `clipper_electron/scripts/fetch-uv.mjs`
+    - `curl`, `mv`, `unzip`, `rm -rf` shell command 의존 제거.
+    - Node `https`, `pipeline`, `copyFileSync`, `rmSync` 기반으로 download/copy/cleanup 처리.
+    - archive extraction은 Windows 10/11과 macOS 기본 `tar` command에 의존.
+  - `clipper_nestjs/scripts/copy-assets.mjs`
+    - NestJS bundled/static asset copy를 위한 cross-platform Node script 추가.
+  - `clipper_nestjs/package.json`
+    - `copy-assets`, `bundle`에서 `mkdir -p`, `cp -R` 제거.
+    - `node scripts/copy-assets.mjs dist`, `node scripts/copy-assets.mjs dist/bundled` 사용.
+  - `clipper_python/pyproject.toml`
+    - `[tool.uv].environments`에 `sys_platform == 'win32'` 추가.
+  - `clipper_python/uv.lock`
+    - `uv lock`으로 Windows markers/wheels 추가.
+    - Windows 조건부 dependency `colorama` 추가.
+- 검증:
+  - `clipper_electron node --check scripts/build-app.mjs`: passed.
+  - `clipper_electron node --check scripts/fetch-uv.mjs`: passed.
+  - `clipper_electron node scripts/prepare-uv.mjs win32 x64`: passed (`uv-win32-x64.exe -> uv.exe`).
+  - `clipper_electron npm run build`: passed.
+  - `clipper_nestjs node --check scripts/copy-assets.mjs`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs npm run bundle`: passed.
+  - `clipper_python uv lock`: passed.
+  - `clipper_python uv lock --check`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+- 남은 확인:
+  - Windows PC에서 `clipper_electron npm run build:app:win:x64` 실행.
+  - 생성된 NSIS installer 설치 후 renderer/gateway/Python first-run/template builder smoke 확인.
+- 상세 문서:
+  - `.codex/design/2026-05-19-clipper2-windows-packaging-plan.md`
+
+2026-05-19 Clipper2 Windows packaging font dependency cleanup
+
+- 사용자 요청:
+  - Windows PC build flow에서 `adlight_python`까지 클론하게 만들면 안 됨.
+  - 현재 Mac build와 향후 Windows build 모두 `../adlight_python/fonts`에 의존하지 않도록 수정.
+  - Windows PC의 Codex CLI 세션에게 그대로 넘길 수 있는 단계별 작업 지시 문서 작성.
+- 선행 커밋:
+  - 기존 Windows packaging 1차 변경을 먼저 repo별로 커밋.
+  - `clipper_electron` `e89dd4c Make app build scripts cross-platform`
+  - `clipper_nestjs` `5e1a0be Make asset copy scripts cross-platform`
+  - `clipper_python` `248693f Add Windows uv lock support`
+- 변경:
+  - `clipper_electron/electron-builder.yml`에서 `../adlight_python/fonts -> clipper_python/fonts` extraResource 제거.
+  - 공식 Template Builder templates는 DB payload의 S3 font URL을 사용하므로 legacy font 파일을 앱에 번들링하지 않는다.
+- 추가 커밋/정리:
+  - `clipper_electron` `e264865 Remove external font packaging dependency`
+  - `clipper_python` `39751e6 Bundle legacy template fonts`는 과도한 번들링으로 판단해 revert.
+  - `clipper_python` `5a61a62 Revert "Bundle legacy template fonts"`
+- 검증:
+  - `clipper_electron rg 'adlight_python/fonts|../adlight_python' electron-builder.yml scripts src`: no match.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+- Windows handoff 문서:
+  - `.codex/implementation/2026-05-19-windows-build-codex-cli-handoff.md`
+  - 핵심 지시:
+    - Windows PC에서는 `clipper_angular`, `clipper_electron`, `clipper_nestjs`, `clipper_python` 4개 repo만 clone.
+    - `adlight_python`은 clone하지 않음.
+    - `clipper_electron`에서 `npm run build:app:win:x64`.
+
+2026-05-19 Template Builder new template default font S3 URL
+
+- 사용자 확인:
+  - font 파일을 앱에 번들링하는 대신, 새 템플릿 기본 font도 S3 URL을 쓰는 쪽이 맞는지 확인.
+  - 결론: 시스템 fallback/font 선택 전 임시 폰트보다 S3 URL default가 현재 DB/S3 font 정책에 맞음.
+- 후속 사용자 확인:
+  - Mac packaged build에서 Template Builder preview의 텍스트가 매우 작고 깨진 문자처럼 표시됨.
+  - 원인: `fontFamily`를 S3 URL로 바꾸면서 preview 화면에서 브라우저가 URL 문자열을 CSS font-family로 해석했다. Python renderer는 remote font URL을 다운로드할 수 있지만, Angular live preview는 S3 URL을 `FontFace`로 등록해야 한다.
+- 변경:
+  - `clipper_nestjs/src/template-builder/fixtures/new-template-baseline.json`
+    - 새 템플릿 baseline의 `JalnanGothic.otf`, `Pretendard-SemiBold.otf`, `Pretendard-Bold.otf`를 각각 official S3 font URL로 변경.
+    - 각 text style에 `fontName`도 추가해 asset URL과 표시/렌더용 font family name을 분리.
+  - `clipper_nestjs/src/template-builder/dto/template-builder.dto.ts`
+    - baseline이 없는 fallback default text layer font도 `Pretendard-SemiBold` S3 URL + `fontName: Pretendard`로 변경.
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+    - remote `fontFamily` URL을 `FontFace`로 등록하고, canvas preview CSS에는 generated remote font family name을 사용.
+    - 이로써 S3 font URL을 유지하면서 live preview가 URL 문자열을 font-family로 쓰지 않게 함.
+  - `clipper_nestjs/test/template-builder-api.test.js`
+    - 새 custom family 생성 시 기본 main title/subtitle font가 S3 URL인지 assert 추가.
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - custom family 생성 smoke script: created `mainTitle`, `subtitleText`, `logoText` fontFamily가 official S3 font URL임을 출력 확인.
+  - custom family 생성 smoke script: `mainTitle`, `subtitleText`, `logoText` fontName이 각각 `JalnanGothic`, `Pretendard`, `Pretendard`임을 출력 확인.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_angular git diff --check`: passed.
+  - 커밋:
+    - `clipper_nestjs` `6679b91 Add font names to S3 template defaults`
+    - `clipper_angular` `4501146 Fix remote template font preview`
+  - 참고: `node --test test/template-builder-api.test.js` 전체 실행은 실패.
+    - 첫 failure는 기존 sample subtitle expectation mismatch: actual `자막이 표시되는 영역입니다` x2 vs expected `자막이 표시되는 영역이며,` / `최대 두 줄까지 가능합니다`.
+    - 나머지 다수 failure는 현재 테스트가 official DB repository 미구성 상태에서 official family access를 시도해 `Template Builder official DB is not configured.`가 나는 기존 상태.
+  - 후속 정비 문서:
+    - `.codex/implementation/2026-05-19-template-builder-api-test-followup.md`
+    - 이번 Windows packaging 흐름에서는 더 진행하지 않고, 나중에 Template Builder test suite 정비 세션에서 처리.
+
+2026-05-19 Template Builder existing custom font filename normalization
+
+- 사용자 확인:
+  - 재빌드 후에도 Template Builder preview가 처음에는 텍스트로 보이다가, final-render text artifact 변환 후 한글이 작고 이상한 문자/네모처럼 보임.
+- 원인:
+  - 기존 local custom template store(`/Users/jina/Library/Application Support/Clipper2/templates/template-builder.json`)에 예전 새 템플릿 기본값인 `JalnanGothic.otf`, `Pretendard-SemiBold.otf`, `Pretendard-Bold.otf` 파일명이 남아 있었다.
+  - Angular DOM preview는 처음에는 브라우저 텍스트로 보이지만, 잠시 뒤 NestJS/Python이 생성한 PNG text artifact로 교체된다.
+  - packaged app에는 font 파일을 번들링하지 않으므로 Python artifact renderer가 해당 파일명을 실제 font file로 찾지 못해 PIL 기본 bitmap font로 fallback했고, 한글 glyph가 깨졌다.
+- 변경:
+  - `clipper_nestjs/src/template-builder/template-builder-font-references.ts`
+    - known built-in filename font reference를 official S3 font URL + `fontName`으로 normalize하는 helper 추가.
+    - 1차 대상은 `JalnanGothic.otf`, `Pretendard-SemiBold.otf`, `Pretendard-Bold.otf`.
+    - 후속 사용자 확인에서 다른 legacy font도 깨진다고 확인되어, absolute/local upload path는 유지하고 bare `.otf`/`.ttf` filename 전체를 `templates/legacy-clipper1/fonts/<filename>` S3 URL로 normalize하도록 확장.
+  - `clipper_nestjs/src/template-builder/template-builder.service.ts`
+    - family를 API로 반환하기 전 known font reference를 normalize.
+    - 기존 local custom JSON을 직접 수정하지 않아도 UI가 S3 URL/fontName 기준으로 동작.
+  - `clipper_nestjs/src/template-builder/template-builder-text-artifact.service.ts`
+    - Angular draft variant가 직접 text artifact request body로 넘어오는 경우도 artifact render 직전 normalize.
+  - `clipper_nestjs/test/template-builder-font-references.test.js`
+    - legacy filename -> S3 URL/fontName normalize test 추가.
+- 검증:
+  - 실제 app data의 `custom.template.99d90c50-6111-4f18-8631-72a16da903a3`가 `JalnanGothic.otf` filename 상태임을 확인.
+  - dist helper로 해당 custom family를 normalize하면 `mainTitleLine1.text.fontFamily`가 official S3 URL, `fontName`이 `JalnanGothic`으로 보정됨을 확인.
+  - `clipper_python uv run python scripts/export_template_builder_text_preview_artifacts.py --contract /tmp/... --output-dir /tmp/clipper-custom-font-normalized-artifact --layer mainTitleLine1 --text mainTitleLine1=타이틀 영역입니다`: passed, PNG text artifact 정상 한글 렌더 확인.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-font-references.test.js`: passed.
+  - 후속 확장 후 `clipper_nestjs node --test test/template-builder-font-references.test.js`: 2 passed.
+  - `NanumMyeongjoExtraBold.otf` smoke: official S3 URL + `NanumMyeongjoExtraBold`로 normalize되고 Python text artifact PNG가 정상 한글로 렌더됨을 확인.
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+  - 후속 확장 후 `clipper_electron npm run build:app:mac:arm64`: passed.
+- 커밋:
+  - `clipper_nestjs` `eed4bf2 Fix legacy custom template font artifacts`
+  - `clipper_nestjs` `c33fbd8 Normalize bare legacy template font filenames`
+- 사용자 최종 확인:
+  - 재빌드 후 Template Builder preview에서 text artifact 변환 이후에도 기본 폰트와 다른 legacy font가 정상 표시됨.
+- 상세 문서:
+  - `.codex/implementation/2026-05-19-template-builder-font-artifact-fix.md`

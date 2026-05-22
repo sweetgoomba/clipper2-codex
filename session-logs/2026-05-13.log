@@ -1,0 +1,220 @@
+2026-05-13 Template Builder layout inspector stack/color layers
+
+- 사용자 요구:
+  - 왼쪽 기본 레이어에는 `레이아웃` 메뉴 하나만 두고, 실제 layout layer 추가/수정/삭제/순서변경은 오른쪽 inspector에서 Photoshop layer list처럼 관리.
+  - layout layer는 이미지와 단색 배경을 같이 쓸 수 있어야 하고, 목록 순서는 drag/drop으로 바꿔야 함.
+- 결정/구현:
+  - `layoutLayers[]` 저장/렌더 기준은 기존대로 bottom-to-top order 유지.
+  - Angular inspector 표시만 reverse해서 top-to-bottom order로 보여준다.
+  - Angular CDK drag/drop으로 inspector list reorder를 구현하고, drop 후 다시 bottom-to-top으로 emit한다.
+  - 왼쪽 기본 레이어 stack row/위/아래/삭제 buttons 제거.
+  - inspector에 `+ 이미지`, `+ 단색`, 삭제, 이름, 방식, 색상/asset, X/Y/W/H 편집을 추가.
+  - 마지막 layout layer 삭제는 `layoutLayers: []`로 저장하고 legacy `layoutImage` fallback을 자동으로 되살리지 않는다.
+  - Angular preview는 color layout layer를 div block으로 렌더링한다.
+  - NestJS render payload는 color/image layer 모두 `template_builder_layout_layers`에 포함하고 `source_type`, `background_color`, `asset_uri`를 내려보낸다.
+  - Python renderer는 image layer는 asset input, color layer는 FFmpeg `color` source로 만들어 stack order대로 합성한다.
+- 커밋:
+  - `clipper_angular` `60b16d3 Manage template builder layout layers in inspector`
+  - `clipper_nestjs` `518e558 Include color layout layers in render payload`
+  - `clipper_python` `e7acb37 Render color template layout layers`
+- 검증:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/components/template-builder-workspace.component.spec.ts`: 122 SUCCESS.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-render-payload.test.js`: 12 pass.
+  - `clipper_nestjs node --test test/template-builder-validation.test.js test/template-builder-api.test.js test/template-builder-render-payload.test.js`: 36 pass.
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_media_looping.py -q`: 35 passed.
+  - `clipper_python uv run python -m compileall plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`: passed.
+  - `clipper_python git diff --check`: passed.
+- 다음 확인:
+  - packaged Electron에서 inspector stack UI, DnD reorder, 단색+이미지 preview/render 순서를 수동 확인.
+  - 21개 system template의 full/non-full layout/content layering regressions 확인.
+
+2026-05-13 Packaged Electron smoke after layout inspector stack/color layers
+
+- 실행/검증:
+  - `clipper_electron npm run build:app:mac:arm64`: passed.
+  - 생성물: `dist-app/mac-arm64/Clipper2.app`, `dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - packaged app 실행 시 Python env sync가 packaged `clipper_python` plugin source를 다시 설치했고, PluginHostBridge와 NestJS `/v1`가 정상 기동했다.
+  - NestJS route mapping에서 layout layer asset endpoints가 등록된 것을 확인했다.
+    - `GET /v1/template-builder/families/:familyId/variants/:ratio/assets/layout-layers/:layoutLayerId/file`
+    - `POST /v1/template-builder/families/:familyId/variants/:ratio/assets/layout-layers/:layoutLayerId`
+  - `curl -s http://127.0.0.1:<packaged-port>/v1/health`: `{"status":"ok","service":"clipper-nestjs"}`.
+  - `curl -s http://127.0.0.1:<packaged-port>/v1/template-builder/families`: system template variants에 `layoutLayers[]` 포함 확인. full variants에는 `layout.fullGradient`, non-full에는 legacy layout stack이 내려온다.
+  - packaged resources grep으로 renderer/NestJS/Python 변경사항 포함을 확인했다.
+    - renderer bundle: `layout-manager-row`, `add-color-layout-layer-button`.
+    - NestJS bundle: `source_type`, `background_color`.
+    - packaged Python plugin: color layout layer FFmpeg `color` source handling.
+  - smoke용 packaged app/NestJS 프로세스는 종료했다.
+- 남은 확인:
+  - 실제 `/templates` 화면에서 inspector drag/drop, 썸네일/swatch, preview z-order, sample render order는 사용자가 packaged app에서 수동 확인한다.
+
+2026-05-13 Template Builder official template registry design
+
+- 사용자 결정:
+  - Template Builder 공식 템플릿은 모든 유저에게 공유되어야 하므로 장기적으로 중앙 Template API가 맞다.
+  - 개발 단계에서는 Clipper2 local NestJS가 DB/S3에 직접 접근하는 방식으로 먼저 구현한다.
+  - 구현은 기존 21개 템플릿 보정이 끝난 뒤 사용자가 다시 지시할 때 시작한다.
+  - `게시` 개념은 제거하고, 샘플 렌더는 언제든 실행 가능한 미리보기 기능으로만 유지한다.
+  - 관리자 권한이 있을 때만 `템플릿 등록` 버튼을 보여주고, 지금은 `임시 관리자 모드`가 관리자 권한 역할을 대신한다.
+  - 비관리자 유저가 만든/복제한 템플릿은 해당 PC의 local personal template로만 보인다.
+- 문서화:
+  - `.codex/design/2026-05-13-template-builder-official-template-registry-design.md` 추가.
+  - 내용: 공식/개인 템플릿 정책, DB/S3 개발 단계 접근, 중앙 API 전환 경계, JSONB 중심 schema, S3 `templates/` prefix 정책, 명시적 edit mode, scoped undo/redo, `게시` 제거, 관리자 전용 `템플릿 등록` flow.
+- 확인한 기존 환경변수 위치:
+  - DB: `adlight_nestjs/src/configs/database.config.ts`, `adlight_python/app/configs/Environment.py`, `adlight_python/app/configs/Database.py`.
+  - S3: `adlight_python/app/configs/Environment.py`, `adlight_python/app/services/S3FileUploaderService.py`, `adlight_angular/sign-and-publish.js`, `adlight_angular/electron-builder.yml`.
+  - secret 값은 문서에 기록하지 않고 env key 이름과 위치만 기록했다.
+
+2026-05-13 Template Builder legacy template 14 asset repair and text artifact align
+
+- 사용자 요구:
+  - `Legacy Clipper1 Template 14` 1:1은 `14.png`가 아니라 `14_1대1.png`를 써야 한다.
+  - Template 14 full은 `14_full.png` base 위에 `gradient.png` overlay가 있어야 한다.
+  - `Legacy Clipper1 Template 2` full의 sub-title/title/subtitle/bottom title이 inspector에서는 left align인데 preview artifact에서는 center로 보이는 문제 수정.
+- 원인:
+  - 임시 관리자 모드 system override에 Template 14의 1:1/full layout image가 과거 `14.png` 단일 레이어 상태로 저장돼 seed 값을 덮었다.
+  - Python Template Builder text artifact renderer가 `align` 값을 받지만 실제 text x 계산에서는 항상 중앙 정렬했다.
+- 구현:
+  - `clipper_nestjs` system family load 후 Template 14 legacy correction을 적용해 override가 잘못돼 있어도 1:1은 `14_1대1.png`, full은 `[14_full.png, gradient.png]` stack으로 보정한다.
+  - catalog의 Template 14 1:1 layout URL은 S3에 실제 존재하는 분해형 key `14_1대1.png`를 유지한다. 완성형 `14_1대1.png`는 S3에서 403이므로 runtime correction에서 known-bad로 보정한다.
+  - `clipper_python` text renderer가 `left`/`center`/`right` align을 artifact 내부 text x position에 반영한다.
+- 검증:
+  - RED/GREEN: `clipper_nestjs node --test test/template-builder-api.test.js`에서 Template 14 override repair regression 실패 확인 후 통과.
+  - RED/GREEN: `clipper_python uv run pytest tests/test_template_builder_text_renderer.py -q`에서 align pixel regression 실패 확인 후 통과.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-render-payload.test.js test/template-builder-validation.test.js test/template-builder-api.test.js`: 37 pass.
+  - `clipper_python uv run pytest tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py -q`: 6 passed.
+  - 현재 사용자 `template-builder-system-overrides.json`를 dist service로 로드해 Template 14 1:1/full runtime layout stack이 S3 200 key와 올바른 full z-order로 보정되는 것을 확인했다.
+  - 후속 정정: Template 14 full은 `14_full.png`가 `gradient.png`보다 위에 와야 하므로 bottom-to-top stack은 `[gradient.png, 14_full.png]`가 맞다. 테스트와 correction 순서를 이 기준으로 수정했다.
+
+2026-05-13 Template Builder official registry implementation
+
+- 사용자 요구:
+  - 기존 템플릿 보정 변경사항을 먼저 커밋한 뒤, 공식 템플릿 registry 설계 구현을 진행.
+  - `게시` 개념은 제거하고, 관리자 권한일 때만 `템플릿 등록`으로 공식 템플릿을 DB에 등록하는 방향.
+  - 개발 단계에서는 중앙 API 대신 Clipper2 NestJS가 DB/S3에 직접 접근한다.
+- 주요 구현:
+  - card thumbnail과 sample render thumbnail을 분리했다. 기존 21개 템플릿 카드 썸네일은 legacy preset thumbnail을 우선 사용하고, sample render는 카드 썸네일을 바꾸지 않는다.
+  - Angular/NestJS publish UI/API를 제거하고, sample render는 preview-only 기능으로 유지했다.
+  - Angular Template Builder에 명시적 edit session을 추가했다. 편집 시작 전 patch는 저장하지 않고, 저장 후에도 edit mode는 유지된다.
+  - undo/redo stack을 edit session 단위로 격리해 다른 템플릿으로 되돌아가지 않게 했다.
+  - NestJS에 `TemplateBuilderOfficialRepository`, Postgres official repository, asset storage/S3 storage interface를 추가했다.
+  - 관리자 모드 + edit mode에서 `템플릿 등록` 버튼이 보이고, `POST /v1/template-builder/families/:familyId/register-official`이 current family를 official DTO로 upsert한다.
+  - `scripts/register-official-template-seed.js`를 추가했다. 현재 system overrides가 반영된 21개 legacy official families를 로드하고, custom clone이 있으면 `--allow-custom` 없이는 거부한다. `--dry-run`은 DB/S3 env 없이 동작하고, `--apply`는 DB/S3 env 누락 시 명확히 실패한다. 현재 asset mode는 `preserve`만 지원한다.
+- 커밋:
+  - `clipper_nestjs` `deb4f45 Separate template card thumbnails from samples`
+  - `clipper_angular` `0bf7d05 Prefer template card thumbnails in gallery`
+  - `clipper_angular` `e140433 Remove template builder publish action`
+  - `clipper_nestjs` `562467b Remove template builder publish endpoint`
+  - `clipper_angular` `7ac9309 Add template builder edit sessions`
+  - `clipper_nestjs` `9fc20ee Add official template repository hook`
+  - `clipper_nestjs` `362fc42 Add template asset storage interfaces`
+  - `clipper_nestjs` `b912722 Add official template Postgres repository`
+  - `clipper_nestjs` `40a9955 Add official template registration endpoint`
+  - `clipper_angular` `08efb78 Add official template registration action`
+  - `clipper_nestjs` `7d028b2 Add official template seed registration script`
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-register-official.test.js test/template-builder-official-repository.test.js test/template-builder-register-official-seed-script.test.js`: 36 pass.
+  - `clipper_nestjs node scripts/register-official-template-seed.js --dry-run`: `21 legacy official families ready`, `0 custom clone families included`.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/components/template-family-gallery.component.spec.ts`: 161 SUCCESS.
+  - `clipper_python uv run pytest tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py -q`: 12 passed.
+  - `clipper_angular`, `clipper_nestjs`, `clipper_python`, `clipper_electron` 작업트리 모두 clean.
+- 남은 확인:
+  - packaged Electron에서 실제 Template Builder UI로 card thumbnail 유지, edit mode, session undo, admin mode `템플릿 등록`, seed 등록 전/후 흐름을 수동 smoke 확인.
+  - 실제 DB/S3 env 값을 세팅한 뒤 `node scripts/register-official-template-seed.js --apply` 실행은 아직 하지 않았다.
+
+2026-05-13 Template Builder official seed live DB apply
+
+- 추가 구현:
+  - `TemplateBuilderOfficialPostgresRepository.ensureSchema()` 추가.
+  - `register-official-template-seed.js --apply`가 upsert 전에 `clipper2_template_families`, `clipper2_template_variants`, `clipper2_template_assets` 테이블을 생성하도록 연결했다.
+  - card thumbnail asset row는 `ratio=null` 대신 `_family` sentinel을 사용한다. Postgres primary key/conflict key에서 null ratio가 안정적인 unique key가 되지 않는 문제를 방지한다.
+  - `TemplateBuilderModule`에 `TemplateBuilderOfficialRepository` provider를 연결했다. `CLIPPER2_TEMPLATE_DB_*` env가 있으면 런타임에서도 Postgres official repository가 주입된다.
+- 커밋:
+  - `clipper_nestjs` `97455ba Create official template registry schema`
+  - `clipper_nestjs` `c8fd495 Wire official template repository provider`
+- 검증:
+  - RED/GREEN: official repository schema creation과 card thumbnail `_family` asset key regression 확인.
+  - RED/GREEN: `TemplateBuilderModule` official repository provider wiring regression 확인.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-register-official.test.js test/template-builder-official-repository.test.js test/template-builder-register-official-seed-script.test.js`: 38 pass.
+  - 기존 `adlight_python/.env.local`의 `DATABASE_*` 값을 `CLIPPER2_TEMPLATE_DB_*`로 매핑하고, S3 bucket은 사용자 지정 `clipperstudio`로 매핑해 `node scripts/register-official-template-seed.js --apply` 실행: succeeded.
+  - DB row count 확인: `clipper2_template_families=21`, `clipper2_template_variants=84`, `clipper2_template_assets=109`.
+  - DB env를 넣은 local NestJS runtime smoke: `GET /v1/template-builder/families`가 `families=21`, `officialLegacy=21`, first id `system.legacy.clipper1.template.1` 반환.
+- 남은 확인:
+  - asset은 아직 preserve mode이므로, 레이아웃/썸네일/폰트/로고 파일을 `clipperstudio/templates/...`로 실제 업로드하고 URI를 교체하는 S3 migration은 별도 단계로 남아 있다.
+  - packaged Electron에서 DB official families를 읽는 흐름과 UI smoke 확인이 필요하다.
+
+2026-05-13 Template Builder official asset upload mode
+
+- 구현:
+  - `register-official-template-seed.js --asset-mode=upload` 추가.
+  - dry-run에서 upload plan을 계산한다.
+  - legacy card thumbnail은 bundled `src/projects/assets/legacy-clipper1-template-ui/thumbs-and-origins`에서 찾는다.
+  - legacy layout image는 `/Users/jina/project/adlight/adlight_python/layout`에서 찾고, `1대1`처럼 decomposed Korean filename은 NFC/NFD normalize로 매칭한다.
+  - 업로드 대상 key:
+    - `templates/legacy-clipper1/card-thumbnails/<file>`
+    - `templates/legacy-clipper1/layouts/<file>`
+  - apply upload mode는 S3 upload 후 family payload URI를 새 public URL로 치환하고 official DB에 다시 upsert한다.
+  - 폰트는 아직 Python renderer가 remote font URL을 직접 처리하지 않으므로 payload migration 대상에서 제외했다.
+- 커밋:
+  - `clipper_nestjs` `9e668d2 Upload official template seed assets`
+- 검증:
+  - RED/GREEN: `--dry-run --asset-mode=upload`가 `asset upload plan: 53 uploadable, 0 missing`을 출력하는 regression 추가.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-register-official.test.js test/template-builder-official-repository.test.js test/template-builder-register-official-seed-script.test.js`: 39 pass.
+- 실제 S3 apply 시도:
+  - `node scripts/register-official-template-seed.js --apply --asset-mode=upload` 실행.
+  - 실패 원인: 현재 `adlight_python/.env.local`의 AWS credential은 `clipperstudio` bucket에 `s3:PutObject` 권한이 없다.
+  - AWS error: `S3-ACCESS-USER is not authorized to perform: s3:PutObject on resource arn:aws:s3:::clipperstudio/templates/...`.
+  - 실패가 첫 object upload에서 발생해서 DB upsert까지 가지 않았다.
+  - DB 확인: Template 1 card/layout URI는 여전히 preserve 상태 (`template-presets/...`, `https://d2x-s3.../layout/1.png`).
+- 남은 확인:
+  - `clipperstudio` bucket에 PutObject 가능한 AWS credential 또는 bucket policy가 필요하다.
+  - credential이 준비되면 같은 명령으로 S3 upload + DB URI replacement를 재실행하면 된다.
+
+2026-05-13 Template Builder official asset upload completed
+
+- 추가 실행:
+  - 사용자가 새 IAM access key를 제공했고, `adlight_python/.env*`는 건드리지 않은 채 `clipper_nestjs` 실행 환경에만 주입했다.
+  - `node scripts/register-official-template-seed.js --apply --asset-mode=upload` 재실행 성공.
+  - 업로드 대상 53개를 S3 `clipperstudio` 버킷 `templates/legacy-clipper1/...` 아래에 저장하고, official DB payload URI를 새 public S3 URL로 갱신했다.
+  - DB 재조회 결과:
+  - `card=https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/legacy-clipper1/card-thumbnails/1_ratio_16_9_thumb.png`
+  - `layout=https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/legacy-clipper1/layouts/1.png`
+  - `gradient=https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/legacy-clipper1/layouts/gradient.png`
+  - `families=21`
+- 남은 확인:
+  - packaged Electron에서 Template Builder gallery/preview가 이제 DB public S3 URL을 그대로 읽는지 smoke 확인하면 된다.
+
+2026-05-13 Packaged Electron Template Builder smoke
+
+- 실행:
+  - `clipper_electron` 최신 packaged app을 다시 빌드했다.
+  - 실제 DB/S3 env를 넣은 packaged Electron을 실행했다.
+  - NestJS 런타임이 `http://127.0.0.1:54681/v1`에서 기동했고, Template Builder route가 모두 등록됐다.
+- smoke 결과:
+  - `GET /v1/template-builder/families` 응답에서 `families=22`, `officialLegacy=21`, first family `system.legacy.clipper1.template.1`을 확인했다.
+  - first family의 card thumbnail과 layout image는 모두 `https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/legacy-clipper1/...` public URL로 내려왔다.
+  - 전체 family 수가 22인 이유는 로컬 custom family 1개가 함께 남아 있기 때문이다.
+- 정리:
+  - packaged Electron에서 official registry는 DB/S3 기반으로 정상 조회된다.
+  - 현재 남은 일은 UI 레벨에서 template gallery/card/edit mode가 기대대로 보이는지 수동 확인하는 것뿐이다.
+
+2026-05-13 Template Builder asset ownership clarification
+
+- 확인한 현재 경계:
+  - Template Builder 목록/등록/공식 템플릿 저장은 NestJS가 담당한다.
+  - FastAPI/Python은 render contract를 받아 실제 렌더링만 담당한다.
+  - 공식 템플릿의 카드 썸네일/레이아웃 이미지는 S3 public URL로 저장되어 DB에 들어간다.
+  - 폰트는 아직 S3/DB로 일괄 이관되지 않았고, 렌더러는 로컬 파일 경로 또는 legacy fonts dir를 해석해서 읽는다.
+  - `TemplateBuilderService`의 custom/system edit 저장은 아직 로컬 JSON repository 기반이다.
+  - system template edit mode에서 수정한 뒤 `템플릿 등록`을 눌러야 official Postgres registry로 들어간다.
+- 남은 문서화 포인트:
+  - 나중에 폰트까지 포함해 asset 정책을 완전 DB/S3 통일할지 별도 설계가 필요하다.
+  - custom template 저장소를 local JSON으로 둘지 DB로 이동할지 정책 결정을 다시 해야 한다.

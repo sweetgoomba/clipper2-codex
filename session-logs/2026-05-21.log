@@ -1,0 +1,451 @@
+# 2026-05-21
+
+2026-05-21 Windows dialog highlight install-state fix
+
+- 사용자 보고:
+  - Windows packaged app에서 dialog highlight plugin 설치가 완료됐다고 표시되지만 Plugin Store card는 계속 다운로드 필요/미설치로 남음.
+  - dance highlight는 정상 설치됨.
+- 원인:
+  - `clipper_electron/src/main/model-download-ipc.ts`는 plugin health 통과 후 `dialog_highlight.ready` marker를 작성해 설치 완료 UI를 띄움.
+  - 실제 Plugin Store installState는 marker가 아니라 `clipper_electron/src/main/plugin/plugin-install-state.ts`의 모델 파일 존재 판정이 source of truth.
+  - 기존 HuggingFace cache 판정은 `models--.../blobs`가 non-empty인 경우만 설치됨으로 인정.
+  - 이 Windows PC에서는 HuggingFace cache의 `blobs`가 비어 있고 실제 weight 파일은 `snapshots/<revision>/model.bin`, `snapshots/<revision>/open_clip_model.safetensors`에 저장되어 있었음.
+  - 그래서 plugin은 정상 로드/health 통과했지만 installState만 `not_installed`로 오판정됨.
+- 수정:
+  - `clipper_electron/src/main/plugin/plugin-install-state.ts`
+    - 기존 `blobs` non-empty 판정은 유지.
+    - Windows 등에서 symlink/blob layout 대신 snapshot 실제 파일 layout을 쓰는 경우를 위해 대표 weight 파일 존재도 인정.
+    - `faster-whisper-small`: `model.bin` 또는 `model.safetensors`.
+    - `open-clip-ViT-B-32`: `open_clip_model.safetensors` 또는 `open_clip_pytorch_model.bin`.
+    - 빈 cache skeleton은 계속 미설치로 판정.
+  - `clipper_electron/test/plugin-install-state.test.mjs`
+    - blobs layout, snapshots real-file layout, empty skeleton regression tests 추가.
+- 검증:
+  - RED: 새 snapshot real-file test가 기존 구현에서 `not_installed !== installed`로 실패.
+  - GREEN: `clipper_electron npm.cmd run build` passed.
+  - GREEN: `clipper_electron node --test test/plugin-install-state.test.mjs`: 3 passed.
+  - 실제 PC cache smoke: `dialog_highlight` installState `installed`, missingModelNames `[]`.
+  - `clipper_electron git diff --check`: exit 0, LF->CRLF warning only.
+- 현재 작업트리:
+  - `clipper_electron/src/main/plugin/plugin-install-state.ts` modified.
+  - `clipper_electron/test/plugin-install-state.test.mjs` added.
+  - 기존 `clipper_electron/package-lock.json` modified는 npm metadata 변동으로 남아 있으며 이번 수정과 무관.
+
+2026-05-21 Windows dance image search/env mode follow-up
+
+- 사용자 보고:
+  - Windows packaged app에서 dance highlight plugin은 설치/실행되지만 아티스트 멤버별 이미지 후보를 전부 0개만 가져옴.
+  - macOS packaged app에서는 같은 기능이 정상 동작했음.
+- 조사 요약:
+  - 멤버 이미지 수집은 Python dance plugin이 아니라 NestJS image search API 경로.
+  - Angular dance flow는 image search 실패를 빈 후보 목록으로 흡수해 UI상 0개처럼 보일 수 있음.
+  - NestJS image search에는 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`, `KAKAO_REST_API_KEY`가 필요함.
+  - Windows 조사 시점의 local/resources/userData 후보 경로에 해당 key들이 없었음.
+- 결론:
+  - 직접 원인은 Windows packaged 실행 환경에 image search key가 들어가지 않은 것.
+  - 근본 문제는 `.env.local` 의미, packaged env 복사/탐색, 실행 모드별 env loading, plugin port 관리가 명확하지 않은 구조.
+- 문서화:
+  - 설계 기준: `.codex/design/2026-05-21-execution-env-mode-design.md`.
+  - 경과/결론: `.codex/implementation/2026-05-21-windows-dance-image-env-management-context.md`.
+- 현재 합의:
+  - 실행 모드 이름은 `local`, `devapp`, `packaged`.
+  - env 파일은 `.env.local`, `.env.devapp`, `.env.packaged`, `.env.example`.
+  - `.env.local`은 localhost 개발 실행용이며 packaged에서 읽거나 복사하지 않음.
+  - 플러그인 포트는 plugin별 고정값이 아니라 mode별 port range와 runtime dynamic allocation으로 관리.
+
+2026-05-21 env/runtime scope correction
+
+- 사용자 정정:
+  - 이번 목표는 Windows packaged image search key 누락만 고치는 bug fix가 아니라, 이 문제를 드러낸 실행 모드/env/plugin runtime 구조를 바로잡는 것.
+- 정정된 구현 범위:
+  - NestJS env loading을 `local`/`devapp`/`packaged` mode 기반 explicit loading으로 변경.
+  - packaged build/runtime에서 `.env.local` copy/read 제거.
+  - packaged env는 `clipper_nestjs/.env.packaged`만 사용.
+  - Electron devapp renderer URL/NestJS base URL을 env/config에서 받음.
+  - NestJS `StaticPluginHost`의 plugin별 default URL fallback 제거.
+  - local/devapp plugin URL은 명시 env가 있을 때만 인정.
+- 이 시점의 후속 후보:
+  - RemoteConfigProvider/subscription config.
+  - Angular UX 개편.
+- 이후 사용자 정정에 따라 local/devapp Python plugin process spawn과 env schema 정리는 이번 세션 범위에 포함했다.
+
+2026-05-21 env/runtime implementation
+
+- 문서:
+  - `.codex/design/2026-05-21-execution-env-mode-design.md`에 코드 재검토 후 정정된 성공 기준/구현 범위 추가.
+  - `.codex/implementation/2026-05-21-windows-dance-image-env-management-context.md`에 단순 bug fix가 아니라 구조 개선 목표임을 명시.
+- `clipper_nestjs`:
+  - `src/config/execution-env.ts` 추가.
+  - `CLIPPER_EXECUTION_MODE=local|devapp|packaged`에 따라 `.env.<mode>`만 로드.
+  - `CLIPPER_NESTJS_ENV_FILE`은 explicit override로 유지.
+  - Template Builder S3 storage의 별도 `.env.local`/`.env` 탐색 제거.
+  - `StaticPluginHost`의 plugin별 default URL fallback 제거.
+  - `PLUGIN_URL_<NAME>` 개별 env 제거, local/devapp 수동 endpoint는 `PLUGIN_URLS` JSON만 허용.
+  - scripts에 `start:local`, `start:devapp`, `start:packaged` 추가.
+  - `clipper_electron`:
+  - packaged builder가 `clipper_nestjs/.env.packaged`만 resources에 복사.
+  - `BundledEnvProvider`가 `clipper_python/.env.packaged`, `clipper_nestjs/.env.packaged`, userData repo별 `.env.packaged`만 읽음.
+  - devapp에서 `.env.devapp`/`CLIPPER_ELECTRON_ENV_FILE`을 읽어 `CLIPPER_RENDERER_URL`, `CLIPPER_NEST_BASE_URL` 사용.
+  - packaged NestJS/plugin subprocess에 `CLIPPER_EXECUTION_MODE=packaged` 주입.
+  - dev plugin subprocess는 `clipper_python/.env.<mode>`를 사용.
+- `clipper_angular`:
+  - `devapp`/`packaged` environment와 Angular configurations 추가.
+  - 기존 `start:electron`/`build:electron`은 compatibility alias로 유지.
+- `clipper_python`:
+  - `.env.example` 추가, `.env.example` unignore.
+- 검증:
+  - GREEN: `clipper_nestjs npm run build`.
+  - GREEN: `clipper_nestjs npm run bundle`.
+  - GREEN: `clipper_electron npm run build`.
+  - GREEN: `clipper_angular npm run build:packaged -- --progress=false` with Node 22 outside sandbox.
+  - GREEN: `clipper_angular npm run build:devapp -- --progress=false` with Node 22 outside sandbox.
+  - GREEN: `clipper_angular npx tsc -p tsconfig.app.json --noEmit` with Node 22.
+  - GREEN: `git diff --check` for `clipper_nestjs`, `clipper_electron`, `clipper_angular`, `clipper_python`.
+  - Note: Angular build inside sandbox exited `-1` without diagnostics; rerun outside sandbox passed.
+
+2026-05-21 NestJS local/devapp plugin runtime implementation
+
+- 목표:
+  - local/devapp에서 NestJS가 control plane으로 Python plugin process를 직접 실행.
+  - packaged는 기존 Electron host bridge/native adapter 유지.
+- `clipper_nestjs` 변경:
+  - `src/plugins/local-plugin-host.service.ts`
+    - `clipper_python/plugins/*/manifest.json` discovery.
+    - plugin status/start/stop lifecycle 관리.
+    - `.env.<mode>`를 직접 parse해 blank 값을 제외한 뒤 `uv run --directory <clipper_python> python -m <plugin> <port>` 실행.
+  - `src/plugins/plugin-port-allocator.ts`
+    - `PLUGIN_PORT_RANGE_START/END`가 있으면 inclusive range에서 사용 가능한 포트 할당.
+    - 범위가 없으면 OS ephemeral port 사용.
+  - `src/plugins/local-plugin-process.ts`
+    - plugin subprocess spawn/logging/stop.
+  - `src/plugins/local-plugin-manifest.ts`
+    - manifest JSON을 `PluginManifestView`로 mapping.
+  - `src/plugins/plugins.module.ts`
+    - `ELECTRON_PLUGIN_HOST_URL` 있으면 `ElectronPluginHost`.
+    - `CLIPPER_PLUGIN_HOST_MODE=static`이면 compatibility `StaticPluginHost`.
+    - 그 외 기본값은 `LocalPluginHost`.
+  - `.env.example`
+    - `CLIPPER_PYTHON_ROOT`, `PLUGIN_PORT_RANGE_START/END`, `CLIPPER_PLUGIN_HOST_MODE` 추가.
+- 검증:
+  - GREEN: `clipper_nestjs npm run build`.
+  - GREEN: `clipper_nestjs npm run bundle`.
+  - GREEN: `clipper_nestjs git diff --check`.
+  - GREEN smoke outside sandbox:
+    - `NEST_PORT=19052 CLIPPER_EXECUTION_MODE=local node dist/main.js`.
+    - `GET /v1/plugins` returned `clipper1_video_render`, `dance_highlight`, `dialog_highlight`, plus virtual workflow plugins.
+    - `POST /v1/plugins/clipper1_video_render/start` returned dynamic base URL `http://127.0.0.1:51212`.
+    - `GET /v1/plugins/clipper1_video_render/status` returned `runtimeState: running`, `port: 51212`.
+    - `POST /v1/plugins/clipper1_video_render/stop` stopped the process.
+
+2026-05-21 Electron packaged plugin port range alignment
+
+- `clipper_electron`:
+  - `src/main/plugin/port-allocator.ts`
+    - optional `PLUGIN_PORT_RANGE_START/END` support.
+    - range가 없으면 기존처럼 OS ephemeral port 사용.
+    - claimed port release 지원.
+  - `src/main/plugin/plugin-manager.ts`
+    - plugin stop/exit/start failure에서 allocator release 호출.
+  - `src/main/main.ts`
+    - packaged에서는 `BundledEnvProvider`가 읽은 `.env.packaged` 값으로 plugin port range 구성.
+    - devapp에서는 process env/`.env.devapp` 값으로 range 구성 가능.
+  - `.env.example`
+    - Electron-owned plugin process range key 문서화.
+- 기준:
+  - `PLUGIN_PORT_RANGE_START/END`는 Python plugin process HTTP port에만 적용.
+  - NestJS gateway port와 Electron plugin host bridge port는 내부 control-plane channel이라 OS ephemeral 유지.
+  - 검증:
+    - GREEN: `clipper_electron npm run build`.
+    - GREEN: `clipper_electron git diff --check`.
+    - GREEN smoke outside sandbox: compiled `PortAllocator` with range `49152-49153` allocated `49152`, `49153`, then released/reclaimed `49152`.
+    - Note: allocator localhost bind smoke inside sandbox failed due bind restrictions; outside sandbox passed.
+- Packaged env preflight:
+  - `clipper_electron/scripts/build-app.mjs` now fails early if `clipper_nestjs/.env.packaged` is missing.
+  - Verified missing-file failure message with `node scripts/build-app.mjs darwin arm64`.
+  - Ignored secret env files were prepared locally after user confirmation; values were not printed or documented.
+  - Prepared files:
+    - `clipper_nestjs/.env.devapp`
+    - `clipper_nestjs/.env.packaged`
+    - `clipper_python/.env.local`
+    - `clipper_python/.env.devapp`
+    - `clipper_python/.env.packaged`
+    - `clipper_electron/.env.devapp`
+
+2026-05-21 Packaged app smoke and Template Builder DB-required correction
+
+- Packaged mac build initially booted Electron/Python env but NestJS exited during DI:
+  - `Template Builder official DB is not configured. Missing one or more CLIPPER2_TEMPLATE_DB_* environment variables.`
+- Root cause:
+  - The 2026-05-19 decision says Template Builder app runtime requires the official DB.
+  - The packaged env split stopped reading `.env.local`, but `clipper_nestjs/.env.packaged` did not yet include the required `CLIPPER2_TEMPLATE_DB_*` values.
+  - A temporary optional-DB fallback change was incorrect because it violated that decision and broke the existing `official DB repository is missing` test.
+- Correct fix:
+  - Keep `TemplateBuilderModule` on `TemplateBuilderOfficialPostgresRepository.fromConfigOrThrow(config)`.
+  - Keep `TemplateBuilderService.listFamilies()`/`getFamily()` requiring the official repository, while still merging local custom templates after DB official templates.
+  - Copy required Template Builder DB/S3 keys into ignored `clipper_nestjs/.env.packaged` without printing values.
+  - `clipper_electron/scripts/build-app.mjs` now fails early if `.env.packaged` lacks required `CLIPPER2_TEMPLATE_DB_*` values.
+- Verification:
+  - GREEN: `clipper_nestjs npm run build`.
+  - GREEN: `clipper_nestjs npm run bundle`.
+  - GREEN: `node --test --test-name-pattern "official DB repository is missing" test/template-builder-api.test.js`.
+  - GREEN: `clipper_electron npm run build`.
+  - GREEN: `clipper_electron npm run build:app:mac:arm64` with Node 22 outside sandbox.
+  - GREEN: packaged resources include only:
+    - `Contents/Resources/clipper_python/.env.packaged`
+    - `Contents/Resources/clipper_nestjs/.env.packaged`
+  - GREEN: packaged app booted NestJS at `http://127.0.0.1:51876/v1`.
+  - GREEN: `GET /v1/health` returned `{"status":"ok","service":"clipper-nestjs"}`.
+  - GREEN: `GET /v1/template-builder/families` returned status `200`, family count `25`.
+  - GREEN: `GET /v1/plugins` returned Python plugin manifests plus virtual workflow plugins.
+  - GREEN: `POST /v1/dance/members/images` for BLACKPINK/Jennie returned status `201`, candidate count `10`.
+
+2026-05-21 Env ownership cleanup, later corrected
+
+- Policy clarified:
+  - `.env.example` documents variables a repo may need; it is not a requirement to keep blank placeholders in every `.env.<mode>` file.
+  - Real `.env.<mode>` files should contain only values intentionally set for that mode.
+  - Optional path/cache/binary overrides should be absent unless that mode explicitly needs them.
+  - `clipper_electron` only keeps `.env.devapp` because Electron does not directly consume `.env.local` or `.env.packaged`.
+- Removed local legacy env files:
+  - `clipper_nestjs/.env`
+  - `clipper_python/.env`
+- Python env cleanup:
+  - Removed `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`, `KAKAO_REST_API_KEY` from Python mode env files.
+  - These keys remain in `clipper_nestjs` because current member image/media search is NestJS-owned.
+  - Python `OPENAI_API_KEY` remains because `dialog_highlight` LLM client still reads it as a local/dev fallback.
+- Runtime safety:
+  - Electron and NestJS Python plugin launchers now parse `.env.<mode>` themselves and ignore blank values before spawning plugin processes.
+  - This is a defensive guard only; real env files should not keep blank optional placeholders such as `HF_HOME=`.
+  - NestJS gateway port parsing now ignores blank `NEST_PORT` and falls back correctly.
+- Verification:
+  - GREEN: no tracked `.env.example` file keeps optional blank placeholders for Python cache/binary paths, `CLIPPER_PYTHON_ROOT`, or `PLUGIN_URLS`.
+  - GREEN: no Python mode env file contains Naver/Kakao keys.
+  - GREEN: no legacy `.env` file remains in `clipper_nestjs`, `clipper_python`, or `clipper_electron`.
+  - GREEN: `clipper_nestjs npm run build`.
+  - GREEN: `clipper_electron npm run build`.
+  - GREEN: `clipper_electron npm run build:app:mac:arm64` with Node 22 outside sandbox.
+
+2026-05-21 final commits created
+
+- `clipper_nestjs`:
+  - `1c8bd74 Clarify env modes and local plugin runtime`
+  - `d064f5a Restore required template DB runtime`
+  - `37c37e8 Align NestJS env schema`
+  - `9cd43f1 Trim optional env placeholders`
+- `clipper_electron`:
+  - `96f9fd0 Use packaged env files for desktop runtime`
+  - `fc17b29 Require template DB env for packaged builds`
+  - `148248b Ignore blank plugin env values`
+  - `06936ba Trim optional env placeholders`
+- `clipper_angular`:
+  - `72faaf7 Add devapp and packaged Angular modes`
+- `clipper_python`:
+  - `cae92e6 Document Python env mode files`
+  - `f019ac4 Align Python plugin env schema`
+  - `88d22c6 Trim optional env placeholders`
+- Git status after commits:
+  - `clipper_nestjs`, `clipper_electron`, `clipper_python` are clean and ahead of origin by 1 until pushed.
+  - `clipper_angular` is clean.
+  - Ignored local secret env files remain unstaged.
+
+2026-05-21 Execution runbook documented
+
+- Added `.codex/implementation/2026-05-21-execution-mode-runbook.md`.
+- The runbook documents:
+  - `local`, `devapp`, `packaged` execution purpose and process ownership.
+  - Exact terminal commands for NestJS, Angular, Electron, packaged build, packaged run, and smoke checks.
+  - Mode-specific env files and the packaged rule that `.env.local`, `.env.devapp`, and generic `.env` must not be copied/read.
+- Updated `.codex/README.md` to link the runbook from the Implementation section.
+
+2026-05-21 Env schema correction
+
+- Corrected the previous over-applied "same key set" policy.
+- New policy:
+  - Real `.env.<mode>` files should contain only values intentionally set for that mode.
+  - Blank optional placeholders such as `HF_HOME=`, `IMAGEIO_FFMPEG_EXE=`, and `CLIPPER_PYTHON_ROOT=` should not be kept in real env files.
+  - Cross-machine absolute paths should not be required for standard Windows/macOS checkouts.
+  - Path/cache/binary envs are optional overrides only.
+  - `PLUGIN_URLS` is only for explicit `CLIPPER_PLUGIN_HOST_MODE=static` compatibility mode.
+- Updated tracked `.env.example` files in `clipper_nestjs`, `clipper_python`, and `clipper_electron` to remove optional blank placeholders.
+- Created follow-up commits:
+  - `clipper_nestjs 9cd43f1 Trim optional env placeholders`
+  - `clipper_python 88d22c6 Trim optional env placeholders`
+  - `clipper_electron 06936ba Trim optional env placeholders`
+- Updated the execution mode design/runbook/implementation context docs to reflect this correction.
+
+2026-05-21 Local ignored secret env files normalized
+
+- Cleaned the actual ignored local secret env files so they can be copied to another checkout without OS-specific path edits.
+- Clarified that this is not a Windows-specific env split. The Mac checkout's normalized `.env.*` files are the OS-independent source files to copy to the same relative paths on Windows.
+- Values were restored from the existing packaged app resource env copies where needed, without printing secret values.
+- Current ignored env key shape:
+  - `clipper_nestjs/.env.local`: `NEST_PORT`, image search keys, plugin port range, Template Builder DB/S3 keys.
+  - `clipper_nestjs/.env.devapp`: same as local.
+  - `clipper_nestjs/.env.packaged`: image search keys, plugin port range, Template Builder DB/S3 keys; no `NEST_PORT`.
+  - `clipper_python/.env.local`, `.env.devapp`, `.env.packaged`: `OPENAI_API_KEY` only at this point.
+  - `clipper_electron/.env.devapp`: `CLIPPER_RENDERER_URL`, `CLIPPER_NEST_BASE_URL`.
+- Confirmed absent from actual ignored env files:
+  - `CLIPPER_PYTHON_ROOT`
+  - `CLIPPER_PLUGIN_HOST_MODE`
+  - `PLUGIN_URLS`
+  - Python cache/model path overrides such as `HF_HOME`, `HUGGINGFACE_HUB_CACHE`, `XDG_CACHE_HOME`, `INSIGHTFACE_HOME`
+  - media/path overrides such as `IMAGEIO_FFMPEG_EXE`, `IMAGEIO_FFPROBE_EXE`, `CLIPPER_LEGACY_*`
+
+2026-05-21 Env copy/runbook clarification
+
+- Updated `.codex/implementation/2026-05-21-execution-mode-runbook.md` with a Secret Env copy section.
+- The runbook now states:
+  - Do not create OS-specific env files for Windows/macOS.
+  - Copy the current normalized ignored `.env.*` files to the same relative paths on the other checkout.
+  - If Windows requires editing path values, the runtime path resolution is wrong and should be fixed instead.
+  - Windows packaged build commands are PowerShell-oriented, not macOS shell commands.
+
+2026-05-21 Windows electron-builder EBUSY follow-up
+
+- Windows `npm run build:app:win:x64` reached Step 5/5 and failed during electron-builder packaging:
+  - `EBUSY: resource busy or locked, open ...\dist-app\win-unpacked\Clipper2.exe`
+- Interpretation:
+  - This is not an env loading failure.
+  - Windows is holding a handle to the previous `Clipper2.exe`, usually because the unpacked app is still running, Electron is still alive, Explorer/preview/indexing has the file open, or antivirus is scanning it.
+- Updated `clipper_electron/scripts/build-app.mjs` locally:
+  - For `win32` target, clean `dist-app/win-unpacked` before Step 0.
+  - If cleanup fails due to a lock, fail early with PowerShell instructions instead of waiting until electron-builder Step 5.
+- Verification:
+  - GREEN: `node --check scripts/build-app.mjs`.
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows addWinAsarIntegrity lock follow-up
+
+- After pulling `45718ae`, Windows still failed at Step 5/5 with the same path, now from `build-app.mjs:197`.
+- Interpretation was refined:
+  - The cleanup commit handled stale `win-unpacked` output before the build.
+  - The remaining failure happens inside electron-builder after it copies/renames the fresh `Clipper2.exe`.
+  - The failing code path is `addWinAsarIntegrity`, which reopens `Clipper2.exe` to inject asar integrity metadata.
+  - Windows Defender/Explorer can lock the freshly created exe during this narrow window.
+- Updated `clipper_electron/electron-builder.yml` locally:
+  - Added `win.asar: false`.
+  - This is Windows-only and avoids the `addWinAsarIntegrity` exe rewrite step.
+  - macOS packaging keeps the existing asar behavior.
+- Verification:
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows asar workaround rejected and corrected
+
+- User rejected `win.asar: false` as an unacceptable temporary workaround.
+- Corrected direction:
+  - Restore the normal Windows asar packaging path.
+  - Do not change packaged app layout just to avoid the lock.
+  - Keep the pre-build cleanup for stale `win-unpacked`.
+  - Add a Windows-only retry around the electron-builder Step 5 command, so transient exe locks during electron-builder resource editing cause a clean rebuild attempt instead of changing packaging semantics.
+- Code changes:
+  - Removed `win.asar: false` from `clipper_electron/electron-builder.yml`.
+  - Updated `clipper_electron/scripts/build-app.mjs` so `runElectronBuilder()` retries Step 5 up to 3 times on Windows, cleaning `dist-app/win-unpacked` before retry attempts.
+- Verification:
+  - GREEN: `node --check scripts/build-app.mjs`.
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows electron-builder retry rejected
+
+- User rejected wrapping electron-builder Step 5 in retries.
+- Corrected direction again:
+  - Do not disable asar.
+  - Do not retry electron-builder to hide the failure.
+  - Keep Step 5 as a single electron-builder invocation.
+  - Keep only the deterministic pre-build cleanup/check for stale `dist-app/win-unpacked`; if that is locked, fail before the expensive build starts.
+- Code changes:
+  - Removed `runElectronBuilder()`.
+  - Removed the synchronous sleep helper.
+  - Restored Step 5 to `run("npx electron-builder ...")`.
+- Current unresolved diagnosis:
+  - The failing line is inside electron-builder's Windows exe resource editing path, not env loading.
+  - If it still fails on a single Step 5 invocation, the next diagnostic is identifying which Windows process owns `dist-app\win-unpacked\Clipper2.exe` at failure time.
+- Verification:
+  - GREEN: `node --check scripts/build-app.mjs`.
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows lock handling code removed
+
+- User also rejected fail-fast handling for locked `dist-app/win-unpacked`.
+- Corrected again:
+  - Removed `cleanTargetBuildOutput()`.
+  - Removed `failLockedBuildOutput()`.
+  - Removed all Windows lock handling from `build-app.mjs`.
+  - Build script now leaves electron-builder Step 5 behavior unwrapped and unmodified.
+- Remaining electron build script changes are only env/preflight/build-mode related:
+  - packaged Angular build config
+  - `.env.packaged` preflight
+  - packaged resources env copy policy
+- Current state:
+  - The Windows EBUSY owner is still unknown from macOS-side evidence.
+  - The log proves only the failing phase: Windows exe resource editing of `dist-app\win-unpacked\Clipper2.exe`.
+  - Next non-workaround diagnosis requires identifying the Windows process that owns the handle at failure time or bisecting the env/build-mode commits on the Windows machine.
+- Verification:
+  - GREEN: `node --check scripts/build-app.mjs`.
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows old-commit EBUSY result
+
+- User tested detached `clipper_electron 19dafd3`, which predates the env/run-mode redesign.
+- Result:
+  - `19dafd3` also fails at Step 5/5 with the same `addWinAsarIntegrity` / `Clipper2.exe` EBUSY stack.
+  - `Get-Process Clipper2,electron` returned no running app/electron process.
+- Conclusion:
+  - The failure is not directly caused by the current env/run-mode code changes.
+  - The known failing phase is still electron-builder's Windows ASAR integrity executable resource write.
+- Upstream/toolchain note:
+  - Current project lock used `electron-builder 25.1.8`.
+  - Electron-builder upstream has newer 26.x releases, and there are upstream reports around 25.1.8 Windows ASAR integrity packaging behavior.
+- Code changes:
+  - Updated `clipper_electron` dev dependency from `electron-builder ^25.1.8` to `^26.9.1`.
+  - `package-lock.json` now resolves `electron-builder 26.9.1` and `app-builder-lib 26.9.1`.
+- Verification:
+  - GREEN: `node --check scripts/build-app.mjs`.
+  - GREEN: `clipper_electron npm run build`.
+  - GREEN: `git -C clipper_electron diff --check`.
+
+2026-05-21 Windows PowerToys Command Palette EBUSY root cause
+
+- User collected ProcMon evidence after `handle64.exe` found no persistent handles after failure.
+- Relevant ProcMon events:
+  - `node.exe` failed to open `dist-app\win-unpacked\Clipper2.exe` with `SHARING VIOLATION` while requesting `Generic Write` and `OverwriteIf`.
+  - `Microsoft.CmdPal.UI.exe` accessed the same `Clipper2.exe` around the failure window and produced `CreateFileMapping` events with `FILE LOCKED WITH ONLY READERS`.
+- User confirmed causality:
+  - With PowerToys `Command Palette` disabled, Windows build completed.
+  - With PowerToys `Command Palette` enabled again, Windows build failed again.
+- Conclusion:
+  - The Windows Step 5 EBUSY was caused by PowerToys Command Palette (`Microsoft.CmdPal.UI.exe`) touching the freshly generated Electron exe during electron-builder's ASAR integrity resource write.
+  - This was not caused by the env/run-mode redesign, not by stale Clipper/Electron app processes, and not fixed by upgrading electron-builder from 25.1.8 to 26.9.1.
+- Correct action:
+  - Do not disable asar.
+  - Do not add electron-builder retries.
+  - Do not add custom lock handling to the build script.
+  - Document that Windows builds should disable PowerToys `Command Palette`; `Keyboard Manager` can remain enabled if needed.
+
+2026-05-21 Windows PowerToys EBUSY cleanup
+
+- Since the final root cause was external PowerToys `Command Palette`, the diagnostic electron-builder upgrade was reverted.
+- `clipper_electron` commit created:
+  - `f701677 Revert "Update electron builder"`
+- Current post-cleanup state:
+  - No `win.asar: false`.
+  - No electron-builder retry wrapper.
+  - No Windows lock cleanup/fail-fast handling in `build-app.mjs`.
+  - `electron-builder` and `app-builder-lib` restored to `25.1.8`.
+  - `git diff 06936ba..HEAD` in `clipper_electron` is empty, proving the Windows EBUSY trial commits leave no net code/config/dependency diff.
+- Added detailed standalone diagnosis document:
+  - `.codex/implementation/2026-05-21-windows-electron-builder-powertoys-ebusy-diagnosis.md`
+- Updated `.codex/README.md` to link the diagnosis document.
+- Verification:
+  - GREEN: `clipper_electron git diff --check`.
+  - GREEN: `clipper_electron npm run build`.
+
+2026-05-21 Session close handoff
+
+- Updated `.codex/implementation/NEXT_SESSION_PROMPT.md` with a new top section for the 2026-05-21 env/runtime and Windows packaged build handoff.
+- The next-session prompt now lists:
+  - Required documents to read first.
+  - Current repo heads.
+  - Current ignored secret env file policy.
+  - PowerToys `Command Palette` EBUSY conclusion.
+  - Windows packaged build/smoke next steps.
+  - Explicit warning not to reintroduce `win.asar: false`, electron-builder retry, lock handling, packaged `.env.local`, plugin-specific env ports, or blank optional env placeholders.

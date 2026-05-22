@@ -1,0 +1,131 @@
+2026-05-18 Template Builder official font asset policy
+
+- 사용자 요구:
+  - Template Builder에서 “모든 에셋을 DB에서 가져와야 한다”는 기준으로 font 포함 asset 정책을 검토하고, 필요하면 최소 변경으로 진행.
+  - 변경 전 기존 변경사항이 있으면 먼저 커밋.
+- 확인:
+  - `clipper_angular`, `clipper_nestjs`, `clipper_python`, `clipper_electron` 작업트리는 시작 시 clean. 선행 커밋할 기존 변경사항 없음.
+  - 공식 template registry는 NestJS/Postgres가 source of truth.
+  - 공식 card thumbnail/layout/content/logo image는 S3 public URL로 DB payload에 저장됨.
+  - font는 기존 official payload에서 `*.otf`/`*.ttf` filename으로 남아 있었고, Python renderer는 local absolute path 또는 legacy fonts dir fallback으로 읽고 있었음.
+  - custom/system edit 저장은 여전히 local JSON repository 기반.
+- 문서화:
+  - `.codex/design/2026-05-18-template-builder-font-asset-policy.md` 추가.
+  - 결정: official template의 모든 binary asset은 DB payload에 S3 public URL로 저장한다. `clipper2_template_assets`는 payload-derived index/audit table이며 별도 runtime lookup source가 아니다.
+  - custom/local template repository DB/S3 이전은 별도 정책 결정으로 분리.
+- 구현:
+  - `clipper_nestjs/scripts/register-official-template-seed.js --asset-mode=upload`가 text layer font references도 수집한다.
+  - legacy official fonts는 `adlight_python/fonts`에서 찾아 `templates/legacy-clipper1/fonts/<file>`로 업로드하고, `layer.text.fontFamily`를 S3 public URL로 rewrite한다.
+  - upload plan은 기존 53 image assets + 24 fonts = 77 uploadable assets.
+  - Python `template_builder_text_renderer`가 `http(s)` font URL을 temp cache로 materialize한 뒤 Pillow/fontTools path로 사용한다.
+  - Python `LocalRenderAdapter`의 legacy ASS/font-name 경로도 같은 remote font resolver를 사용한다.
+- 커밋:
+  - `clipper_nestjs` `a7975f7 Upload official template fonts`
+  - `clipper_python` `0153f44 Resolve remote template fonts`
+- 검증:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-register-official-seed-script.test.js`: 3 pass.
+  - `clipper_nestjs node --test test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-register-official.test.js test/template-builder-official-repository.test.js test/template-builder-register-official-seed-script.test.js`: 39 pass.
+  - `clipper_python uv run pytest tests/test_template_builder_text_renderer.py -q`: 7 passed.
+  - `clipper_python uv run pytest tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_clipper1_video_render_remote_assets.py -q`: 23 passed.
+  - `clipper_python uv run python -m compileall plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py plugins/clipper1_video_render/clipper1_video_render/template_builder_text_renderer.py`: passed.
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_python git diff --check`: passed.
+- 참고:
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py -q`는 기존 독립 실패 1개가 있음: `test_project_overlay_renders_second_main_title_without_first_line`에서 expected 1 event but got 0. 이번 remote font URL 경로와 직접 관련 없음.
+- 다음 작업:
+  - 실제 DB/S3 env로 `clipper_nestjs node scripts/register-official-template-seed.js --apply --asset-mode=upload` 재실행해 official DB font URLs를 S3 URL로 갱신.
+  - packaged Electron에서 official templates의 preview artifact/final sample render가 S3 font URL로 정상 렌더되는지 smoke.
+
+2026-05-18 Official font asset live apply attempt
+
+- 추가 진행:
+  - `clipper_nestjs node scripts/register-official-template-seed.js --dry-run --asset-mode=upload`: `77 uploadable, 0 missing`.
+  - 기존 `adlight_python/.env.local` DB env와 AWS env를 `CLIPPER2_TEMPLATE_*`로 매핑해 `--apply --asset-mode=upload` 시도.
+- 결과:
+  - sandbox 네트워크에서는 DNS 실패.
+  - escalated 네트워크에서는 S3 권한 실패.
+  - 현재 `.env.local` AWS credential은 `S3-ACCESS-USER`이고 `clipperstudio/templates/...`에 `s3:PutObject` 권한이 없다.
+  - 실패는 첫 S3 object upload에서 발생하므로 DB upsert 전이다.
+  - DB 샘플 조회 결과 Template 1 `16:9` official payload는 아직 `mainTitleFont=JalnanGothic.otf`, `subtitleFont=Pretendard-SemiBold.otf` 상태다.
+- 현재 blocker:
+  - `clipperstudio` bucket `templates/legacy-clipper1/...` prefix에 PutObject 가능한 AWS credential이 필요하다.
+  - credential 준비 후 같은 command를 재실행하면 24개 font 포함 77개 asset 업로드와 official DB payload rewrite가 진행된다.
+
+2026-05-18 Official font asset apply retry with default AWS profile
+
+- 추가 확인:
+  - 로컬 AWS `default` profile은 존재하고 `.env.local`의 key와 문자열상 다르지만, 실제 apply 시 AWS가 여전히 `arn:aws:iam::327655937726:user/S3-ACCESS-USER`로 평가했다.
+  - `default` profile credential로도 `clipperstudio/templates/...` `s3:PutObject` 권한 실패.
+  - public URL probe:
+    - existing card thumbnail: `200`
+    - new font target `templates/legacy-clipper1/fonts/Pretendard-SemiBold.otf`: `403`
+- 결론:
+  - DB payload만 font S3 URL로 바꾸면 renderer가 접근할 수 없으므로 강행하지 않는다.
+  - PutObject 가능한 credential 또는 bucket/policy 수정 전까지 live migration은 중단.
+
+2026-05-18 Official font asset live apply completed
+
+- 추가 진행:
+  - 사용자가 `clipperstudio` PutObject 가능한 IAM key를 다시 제공했다.
+  - `clipper_nestjs/.env.local`을 생성해 `CLIPPER2_TEMPLATE_DB_*`, `CLIPPER2_TEMPLATE_S3_*` 값을 저장했다. 파일은 gitignored이며 값은 문서에 기록하지 않는다.
+  - `set -a; source .env.local; set +a; node scripts/register-official-template-seed.js --apply --asset-mode=upload` 실행 성공.
+- 결과:
+  - 77개 official template assets 업로드 성공.
+    - image/card/layout assets: 53
+    - fonts: 24
+  - 21개 official template families DB 등록/upsert 성공.
+  - DB 샘플 확인: Template 1 `16:9` `mainTitleLine1.text.fontFamily`, `subtitleText.text.fontFamily`가 `https://clipperstudio.s3.ap-northeast-2.amazonaws.com/templates/legacy-clipper1/fonts/...` URL로 갱신됨.
+  - DB asset index count: `font=588`, `layoutImage=67`, `contentArea=21`, `thumbnail=21`.
+  - S3 public probe: `templates/legacy-clipper1/fonts/Pretendard-SemiBold.otf` returned `200`.
+  - Python renderer actual S3 font URL smoke: `ink=True`, rendered ink height `57`.
+  - local NestJS runtime smoke on `127.0.0.1:19052`: `GET /v1/template-builder/families` returned `families=21`, first official family font/card/layout all S3 URLs.
+  - packaged Electron rebuild: `clipper_electron npm run build:app:mac:arm64` passed. Artifacts in `clipper_electron/dist-app/`.
+  - packaged app smoke with DB/S3 env: NestJS ready on runtime port, `GET /v1/template-builder/families` returned `families=22`, first official family font/card/layout all S3 URLs. The extra family is local custom data.
+  - packaged app process was stopped after smoke.
+- 현재 상태:
+  - `clipper_nestjs/.env.local` exists as ignored local secret file.
+  - `clipper_nestjs`, `clipper_python`, `clipper_angular`, `clipper_electron` git worktrees are clean.
+
+2026-05-18 Template Builder editor/layout sync follow-up
+
+- 사용자 요구:
+  - Template Builder의 layout/image/font/inspector/undo/selection 관련 편집 UX 버그를 이어서 수정.
+  - 새 템플릿 baseline 변경을 커밋하고, 현재 진행 상태를 다음 세션에서 이어받을 수 있게 문서화.
+- 주요 수정:
+  - subtitle artifact box render가 1px 높이로 보이던 회귀를 renderer request와 browser box overlay 경계에서 수정.
+  - layout image upload 실패 메시지를 UI에 노출하고, dirty edit session 저장 후 layout layer upload target을 찾도록 수정.
+  - history에 있던 layout overflow preview 패턴을 stack layout layers에도 복구:
+    - layout 편집 중 선택 layer가 frame 밖으로 나가면 바깥 영역은 흐리게 표시.
+    - layout 외 요소 선택 또는 edit chrome 없는 상태에서는 frame 밖 영역을 렌더하지 않음.
+  - `나머지 비율에 적용` 추가:
+    - `16:9`, `4:3`, `1:1` 사이에서만 동작.
+    - `full`은 source/target 제외.
+    - `layoutImage`, `layoutLayers`만 복사.
+    - 단일 legacy `layoutImage` source는 target에서 `layout.legacy` stack layer로 변환.
+  - 복사 직후 저장 전 preview/thumbnail 깨짐 수정:
+    - 같은 `assetUri`가 여러 ratio에 있을 때 source ratio asset endpoint를 안정적으로 선택.
+    - asset path 안의 ratio segment를 우선 판별해 source/target 전환 중 URL이 흔들리지 않게 함.
+  - 새 템플릿 baseline fixture 갱신:
+    - baseline common text font size/color 조정.
+    - subtitle two-line first Y 보정.
+    - full ratio gradient layout/contentArea/layoutLayers 기본값 반영.
+  - NestJS template image upload는 configured S3 storage가 있으면 S3 public URL을 저장하도록 확장.
+- 최신 커밋:
+  - `clipper_angular` `090f0a0 Fix subtitle artifact boxless render request`
+  - `clipper_angular` `e689bac Show template layout upload errors`
+  - `clipper_angular` `af931cd Fix layout layer upload target selection`
+  - `clipper_angular` `477c9f5 Restore layout stack overflow preview`
+  - `clipper_angular` `e737e01 Add layout sync across ratios`
+  - `clipper_angular` `91386f4 Fix legacy layout ratio sync`
+  - `clipper_angular` `e5e7e43 Fix copied layout preview URLs`
+  - `clipper_angular` `f543308 Stabilize synced layout asset source`
+  - `clipper_nestjs` `4871ebe Store template image uploads in S3`
+  - `clipper_nestjs` `bbf0bf4 Update new template baseline`
+- 검증:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts`: 146 SUCCESS.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_nestjs` and `clipper_angular` worktrees clean after commits.
+- 다음 확인:
+  - packaged/local UI에서 새 템플릿 생성 후 layout stack thumbnail, ratio sync preview, frame 밖 overflow, save/reopen persistence를 smoke 확인.
+  - 문제가 남으면 Network에서 깨지는 URL이 source ratio `layout-image/file`인지 target ratio `layout-layers/<id>/file`인지 먼저 확인.

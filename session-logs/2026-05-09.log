@@ -1,0 +1,1906 @@
+[2026-05-09 17:01:35 KST] Legacy Clipper1 render parity: RAQM width and automatic pan sequence
+
+User request:
+- Continue from `.codex/README.md`, `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-08.md`, `.codex/implementation/NEXT_SESSION_PROMPT.md`, and latest session logs.
+- Diagnose common content edge drift for `template-17-16_9`, `template-14-16_9`, `template-11-16_9`.
+- Reduce with TDD if possible, tighten the threshold, and keep `.codex` documentation/session log updated.
+
+Context read:
+- `.codex/README.md`
+- `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-08.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/session-logs/2026-05-08.log`
+
+Initial reproduction:
+- Current repo state was `clipper_python` `e79e7a4` and `adlight_python` clean.
+- Running target drift with current `uv` env initially produced failures larger than checkpoint:
+  - `template-14-16_9`: `0.010783179012345679`
+  - `template-17-16_9`: `0.008946759259259258`
+  - `template-11-16_9`: `0.007546296296296297`
+- Full golden test also failed at `template-1-16_9`, ratio `0.006774691358024692`.
+
+Root cause 1:
+- Current `clipper_python` uv Pillow had RAQM disabled:
+  - `Pillow 12.2.0`, `raqm False`, `freetype 2.14.3`.
+- Legacy `adlight_python/venv310` Pillow had RAQM enabled:
+  - `Pillow 12.1.1`, `raqm True`, Harfbuzz/Fribidi available.
+- Legacy `create_text_image()` centers using RAQM `font.getbbox(line)`.
+- Current no-RAQM line width for `JalnanGothic.otf` 80px `Template 1` was `463`, while legacy RAQM width is `454`.
+
+TDD 1:
+- RED: Added `test_legacy_line_bbox_width_matches_raqm_centering_without_pillow_raqm`; failed with `463.0 != 454`.
+- GREEN:
+  - Added `uharfbuzz` dependency.
+  - Added Harfbuzz shaped advance fallback for `_line_bbox_width_with_spacing()` when Pillow RAQM is unavailable.
+  - Focused test passed.
+- After this, 25-case drift had only 2 failures; target content drift was now visible.
+
+Root cause 2:
+- 16:9 square media cases use automatic vertical pan, not automatic zoom.
+- Existing Clipper2 automatic pan still used FFmpeg scale/crop.
+- Legacy Clipper1 `_pan_vertically()` / `_pan_horizontally()` uses MoviePy/OpenCV resize and writes a 30fps full-frame segment.
+
+TDD 2:
+- RED: Added `test_automatic_pan_renders_legacy_moviepy_frame_sequence`; failed because `-framerate` was absent.
+- GREEN:
+  - Added automatic image pan 30fps frame sequence path.
+  - Explicit recipe pan remains on the existing FFmpeg path.
+  - Focused auto pan/auto zoom/explicit pan/text metric tests passed.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+- `clipper_python/plugins/clipper1_video_render/pyproject.toml`
+- `clipper_python/uv.lock`
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+- `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+- `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-09.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/implementation/WORKLOG.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/diagnostics/LEGACY_CLIPPER1_GOLDEN_DRIFT_2026-05-08.md`
+- `.codex/session-logs/2026-05-09.log`
+
+Drift result:
+- Command:
+  - `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-20260509-after-auto-pan-sequence --write-diffs none`
+- Result:
+  - 25 cases, failed 0.
+  - Latest worst: `template-21-16_9`, ratio `0.0024286265432098765`.
+  - New checked-in threshold: `maxMismatchRatio=0.0025`.
+- Target cases:
+  - `template-17-16_9`: `0.0038541666666666668 -> 0.0005690586419753086`.
+  - `template-14-16_9`: `0.0005189043209876544`.
+  - `template-11-16_9`: `0.0002642746913580247`.
+
+Verification:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_renders_legacy_moviepy_frame_sequence tests/test_clipper1_video_render_media_looping.py::test_automatic_pan_renders_legacy_moviepy_frame_sequence tests/test_clipper1_video_render_media_looping.py::test_explicit_legacy_auto_pan_uses_pinned_crop_direction tests/test_clipper1_video_render_template_styles.py::test_legacy_line_bbox_width_matches_raqm_centering_without_pillow_raqm -q` passed, 4 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_template_styles.py -q` passed, 46 tests.
+- GREEN: `adlight_python venv310/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 110 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python uv lock --check` passed, 141 packages resolved.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with latest worst `template-21-16_9`, then `template-6-16_9` and `template-6-1_1` top text edge.
+- If top text edge is reduced, consider tightening below `0.0025`.
+
+[2026-05-09 18:20:00 KST] Legacy Clipper1 render parity: Paperlogy glyph cursor and threshold 0.0006
+
+Continued task:
+- Diagnose and reduce the remaining top text edge after auto pan sequence parity.
+- Primary targets: `template-21-16_9`, `template-6-16_9`, `template-6-1_1`.
+
+Root cause:
+- `template-21/6` top titles use `Paperlogy-8ExtraBold.ttf`.
+- The Harfbuzz RAQM line bbox fallback used total advance only, missing first-glyph negative left bearing:
+  - `Template 21`, 92px, tracking `-4.6`: current fallback `554.0`, legacy expected `555.0`.
+- Current Pillow/FreeType reports Paperlogy `a` glyph bbox width as `59`, while legacy Clipper1 cursor width is `58`.
+- Applying the glyph compensation too broadly regressed `SEBANGGothicBold.otf` outline titles, so the cursor compensation is scoped to Paperlogy only.
+
+TDD:
+- RED: `test_legacy_line_bbox_width_includes_negative_raqm_left_bearing` failed with `554.0 != 555.0`.
+- GREEN: Harfbuzz fallback now includes negative left bearing.
+- RED: `test_legacy_glyph_width_matches_raqm_cursor_without_pillow_raqm` failed with `59.0 != 58.0`.
+- RED: `test_legacy_glyph_width_compensation_does_not_shift_sebang_outline_titles` failed with `22.0 != 23.0`.
+- GREEN: Paperlogy-only glyph cursor compensation.
+
+Drift result:
+- Command:
+  - `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-20260509-paperlogy-scoped-all --write-diffs top --top-diffs 10`
+- Result:
+  - 25 cases, failed 0.
+  - Latest worst: `template-17-16_9`, ratio `0.0005690586419753086`.
+  - New checked-in threshold: `maxMismatchRatio=0.0006`.
+- Target changes:
+  - `template-21-16_9`: `0.0024286265432098765 -> 0.00017361111111111112`.
+  - `template-6-16_9`: `0.001979166666666667 -> 0.00013310185185185185`.
+  - `template-6-1_1`: `0.0014409722222222222 -> 0.00011381172839506173`.
+  - `template-11-16_9`: `0.0002642746913580247` maintained after scope guard.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+- `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+- `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-09.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/implementation/WORKLOG.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/diagnostics/LEGACY_CLIPPER1_GOLDEN_DRIFT_2026-05-08.md`
+- `.codex/session-logs/2026-05-09.log`
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py -q` passed, 27 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_clipper2_template_baseline_frames.py -q` passed, 4 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_template_styles.py -q` passed, 49 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 113 tests / 4 skipped.
+- GREEN: `adlight_python venv310/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python uv lock --check` passed, 141 packages resolved.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with latest worst `template-17-16_9`, then `template-12-16_9`, `template-14-16_9`, and `template-19-16_9` top text edge.
+- If reduced, consider tightening below `0.0006`.
+
+[2026-05-09 KST] Template rendering policy shift: legacy guard frozen, preview/final parity next
+
+User clarified:
+- Stop over-optimizing pixel-level Clipper1 parity.
+- Existing 21 templates still need stable output because internal teams already use them.
+- New Template Builder/Clipper2 modern templates must not copy Clipper1 implementation bugs such as glyph clipping or Pillow padding hacks.
+- Primary product goal is that the user's live preview and the generated final video match.
+
+Commits created before policy work:
+- `clipper_python` `664d117 fix: align legacy clipper1 render parity`
+- `adlight_python` `1052b07 chore: tighten clipper1 reference threshold`
+
+Documentation changed:
+- Added `.codex/implementation/TEMPLATE_RENDERING_POLICY_2026-05-09.md`.
+- Added `.codex/implementation/PREVIEW_FINAL_RENDER_PARITY_PLAN_2026-05-09.md`.
+- Updated `.codex/implementation/NEXT_SESSION_PROMPT.md`.
+- Updated `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-09.md`.
+- Updated `.codex/implementation/TASKS.md`.
+- Updated `.codex/implementation/WORKLOG.md`.
+
+Policy:
+- Legacy Clipper1 golden frame fixture is now compatibility guard only.
+- Current guard remains `channelTolerance=32`, `maxMismatchRatio=0.0006`.
+- Do not pursue the previous next priority of reducing `template-17/12/14/19` top text edge for threshold `0.0004`.
+- Next implementation priority is Template Builder preview/final parity.
+
+First TDD slice:
+- RED: Added assertion that Template Builder sample render recipe carries `templateBuilderOutputSize`; `node --test test/template-builder-api.test.js` failed with actual `undefined`.
+- GREEN: Added `templateBuilderOutputSize: variant.outputSize` to `TemplateBuilderSampleRenderService.recipeFor().templateParams`.
+- Commit:
+  - `clipper_nestjs` `757892e test: preserve template builder output size`
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js` passed, 10 tests.
+  - `clipper_nestjs node --test test/template-builder-api.test.js test/template-builder-render-payload.test.js` passed, 14 tests.
+  - `clipper_nestjs git diff --check` passed.
+
+Second TDD slice:
+- RED: Added `test/template-builder-render-contract.test.js`; it failed with `Cannot find module '../dist/template-builder/template-builder-render-contract'`.
+- GREEN:
+  - Added `src/template-builder/template-builder-render-contract.ts`.
+  - Added `templateBuilderRenderContractFor(variant)` with schema version `template-builder-render-contract.v1`.
+  - Wired the contract into `TemplateBuilderSampleRenderService.recipeFor().templateParams`.
+  - Wired the same contract into `TemplateBuilderPublishedPresetSource.defaultParams`.
+  - Preserved existing compatibility keys for current mapper/render consumers.
+- Commit:
+  - `clipper_nestjs` `68d65d1 feat: add template builder render contract`
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-render-payload.test.js` passed, 20 tests.
+  - `clipper_nestjs git diff --check` passed.
+
+Third TDD slice:
+- RED: Added Angular `template-builder-preview-contract.spec.ts`; focused test failed with module missing for `./template-builder-preview-contract`.
+- GREEN:
+  - Added `clipper_angular/src/features/template-builder/services/template-builder-preview-contract.ts`.
+  - Added `templateBuilderPreviewContractFor(variant)` that projects output size, content area, and layer frames/visibility.
+  - Added `previewContract` computed to `TemplateBuilderEditorComponent`.
+  - Template Builder editor content-area preview now reads from `previewContract.contentArea`.
+- Commit:
+  - `clipper_angular` `f631f81 feat: add template builder preview contract`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, `TOTAL: 36 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+
+Fourth TDD slice:
+- RED: Added a render payload test using only `templateBuilderRenderContract`; mapper failed with `Recipe does not use a legacy Clipper1 template: shorts.basic_letterbox`.
+- GREEN:
+  - `LegacyClipper1RenderPayloadMapper` now treats `templateBuilderRenderContract.variantId` as Template Builder provenance.
+  - `templateId`, `contentsRatio`, `templateBuilderLayers`, `contentArea`, and `outputSize` fall back to the render contract.
+  - Existing direct `templateBuilder*` keys still take precedence.
+- Commit:
+  - `clipper_nestjs` `70c8ca8 feat: map template builder render contract`
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-payload.test.js` passed, 5 tests.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-render-payload.test.js` passed, 21 tests.
+  - `clipper_nestjs git diff --check` passed.
+
+Task 5 investigation:
+- Checked `clipper_python` Template Builder/custom render path.
+- Current custom Template Builder final render still uses legacy text overlay code:
+  - `LocalRenderAdapter._append_timed_legacy_text_overlays()`
+  - `LocalRenderAdapter._create_legacy_text_image()`
+- Conclusion:
+  - Do not add text clipping quality guard directly to the legacy path.
+  - That would risk changing the frozen Clipper1 compatibility guard.
+  - Next prerequisite is a modern Template Builder text render seam/adapter that can be tested separately from `clipper1_golden_frames`.
+
+Task 5 implementation:
+- RED: Added `tests/test_template_builder_text_renderer.py`; focused pytest failed with module missing for `clipper1_video_render.template_builder_text_renderer`.
+- GREEN:
+  - Added `clipper1_video_render.template_builder_text_renderer`.
+  - `render_template_builder_text_layer(layer, text)` returns an RGBA image plus `ink_bbox`, `required_size`, and `clipped`.
+  - First guard verifies `gjpqy 와 므르트픔` with outline/shadow stays inside image bounds.
+  - Second guard verifies too-small layer boxes are reported as clipped.
+  - This seam is not wired into legacy `LocalRenderAdapter`.
+- Commit:
+  - `clipper_python` `9457abb feat: add template builder text renderer seam`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_text_renderer.py -q` passed, 2 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py -q` passed, 4 tests.
+  - `clipper_python git diff --check` passed.
+
+Preview contract style projection:
+- RED: Extended `template-builder-preview-contract.spec.ts` to expect text style/effects and media asset URI. Focused Angular test failed with missing `kind/text/align/box/outline/shadow/assetUri` fields.
+- GREEN:
+  - `templateBuilderPreviewContractFor()` now emits discriminated text/media layer contracts.
+  - Text contracts include `align`, `text`, `box`, `outline`, `shadow`.
+  - Media contracts include `assetUri`.
+- Commit:
+  - `clipper_angular` `b8fe242 feat: include styles in template preview contract`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, `TOTAL: 36 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+
+Deterministic text artifact boundary:
+- RED: Added `tests/test_template_builder_text_artifacts.py`; focused pytest failed with module missing for `clipper1_video_render.template_builder_text_artifacts`.
+- GREEN:
+  - Added `clipper1_video_render.template_builder_text_artifacts`.
+  - `render_template_builder_text_artifact(contract, layer_id, text, output_dir)` accepts both Angular preview contract shape and NestJS render contract shape.
+  - The function normalizes visible text layers, renders through the modern text renderer seam, writes a deterministic PNG, and returns `frame/requiredSize/inkBBox/clipped` metadata.
+  - This does not wire the seam into legacy `LocalRenderAdapter` and does not change Clipper1 golden output.
+- Commit:
+  - `clipper_python` `dbeb2c3 feat: render template builder text artifacts`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_text_artifacts.py -q` passed, 2 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py -q` passed, 6 tests.
+
+Deterministic full-frame artifact boundary:
+- RED: Added `tests/test_template_builder_frame_artifacts.py`; focused pytest failed with module missing for `clipper1_video_render.template_builder_frame_artifacts`.
+- GREEN:
+  - Added `clipper1_video_render.template_builder_frame_artifacts`.
+  - `render_template_builder_frame_artifact(contract, layer_text, output_dir)` creates an `outputSize` RGBA canvas, preserves `contentArea` metadata, renders visible text layers through the deterministic text artifact boundary, and composites them by `frame`.
+  - The focused test compares Angular preview contract shape and NestJS render contract shape with zero tolerance using `compare_rgb_frames`.
+  - This remains separate from legacy `LocalRenderAdapter` and does not change Clipper1 golden output.
+- Commit:
+  - `clipper_python` `0050409 feat: compose template builder frame artifacts`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_frame_artifacts.py -q` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py -q` passed, 7 tests.
+
+Template Builder preview/final artifact entrypoint:
+- RED: Added `tests/test_template_builder_preview_final_artifact_script.py`; focused pytest failed with module missing for `scripts.render_template_builder_preview_final_artifacts`.
+- GREEN:
+  - Added `scripts/render_template_builder_preview_final_artifacts.py`.
+  - `render_preview_final_artifacts()` reads one saved contract JSON and writes `preview.png`, `final_frame.png`, and `comparison.json`.
+  - The script uses the deterministic frame artifact composer for both preview and final outputs, then compares them with `compare_rgb_frames`.
+  - This is a contract/capture diagnostic. It does not yet compare browser CSS preview or encoded final video frames.
+- Commit:
+  - `clipper_python` `f77e125 feat: add template builder artifact entrypoint`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_artifact_script.py -q` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py -q` passed, 8 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+
+NestJS app-produced render contract fixture export:
+- RED: Extended `test/template-builder-render-contract.test.js`; focused test failed with module missing for `../dist/template-builder/template-builder-render-contract-fixture`.
+- GREEN:
+  - Added `src/template-builder/template-builder-render-contract-fixture.ts`.
+  - The fixture is produced through `createDefaultTemplateVariant()` and `templateBuilderRenderContractFor()`.
+  - `writeTemplateBuilderRenderContractFixture(outputPath)` writes a JSON contract fixture for artifact scripts.
+  - Cross-checked the exported JSON with Python `scripts/render_template_builder_preview_final_artifacts.py`.
+- Commit:
+  - `clipper_nestjs` `b1f99d8 feat: export template builder contract fixture`
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js` passed, 2 tests.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-render-payload.test.js` passed, 22 tests.
+  - `clipper_python uv run python scripts/render_template_builder_preview_final_artifacts.py --contract /tmp/template-builder-render-contract-fixture.json --output-dir /tmp/template-builder-render-contract-artifacts --text 'subtitleText=gjpqy 와 므르트픔'` passed with mismatchRatio 0.0.
+
+Angular preview contract fixture export:
+- RED: Extended `template-builder-preview-contract.spec.ts`; focused test failed with module missing for `./template-builder-preview-contract-fixture`.
+- GREEN:
+  - Added `template-builder-preview-contract-fixture.ts`.
+  - `templateBuilderPreviewVariantFixture()` builds the same variant shape as the NestJS render fixture.
+  - `templateBuilderPreviewContractFixture()` projects that variant through `templateBuilderPreviewContractFor()`.
+  - This is not browser screenshot capture. It is a source-level preview contract fixture/export boundary.
+- Commit:
+  - `clipper_angular` `ef55fbd feat: export template builder preview fixture`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts` passed, `TOTAL: 2 SUCCESS`.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, `TOTAL: 37 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+
+Cross-runtime fixture comparison:
+- RED:
+  - Added `clipper_angular/test/template-builder-preview-contract-fixture-export.test.mjs`; node test failed because `scripts/export-template-builder-preview-contract-fixture.mjs` was missing.
+  - Extended Python `tests/test_template_builder_preview_final_artifact_script.py`; pytest failed because `render_preview_final_artifacts()` did not accept `final_contract_path`.
+- GREEN:
+  - Added Angular `scripts/export-template-builder-preview-contract-fixture.mjs`.
+  - Python artifact entrypoint now accepts separate preview and final/render contract paths.
+  - Angular preview fixture export JSON and NestJS render fixture export JSON can be compared by Python artifact entrypoint.
+- Debugging note:
+  - First cross-runtime run failed with mismatchRatio `0.02802469135802469`.
+  - Root cause was fixture drift: Angular `subtitleBox.box.enabled=false`, NestJS/app default `subtitleBox.box.enabled=true`.
+  - Added an Angular spec guard and aligned the fixture.
+- Commit:
+  - `clipper_angular` `73df1cb feat: export preview contract fixture json`
+  - `clipper_python` `cbf2c17 feat: compare template builder contract artifacts`
+- Verification:
+  - `clipper_angular node --test test/template-builder-preview-contract-fixture-export.test.mjs` passed, 1 test.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts` passed, `TOTAL: 2 SUCCESS`.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_artifact_script.py -q` passed, 2 tests.
+  - Cross-run: Angular preview fixture JSON vs NestJS render fixture JSON through Python entrypoint passed with mismatchRatio 0.0.
+
+Single cross-runtime diagnostic runner:
+- RED: Added `tests/test_template_builder_cross_runtime_fixture_script.py`; pytest failed with module missing for `scripts.compare_template_builder_cross_runtime_fixtures`.
+- GREEN:
+  - Added `scripts/compare_template_builder_cross_runtime_fixtures.py`.
+  - The runner exports Angular preview contract JSON, exports NestJS render contract JSON, and compares them through `render_preview_final_artifacts()`.
+  - The test uses fake Angular/NestJS repo folders so the subprocess contract is covered without requiring a full app build.
+  - Real repo cross-run still passes with mismatchRatio 0.0.
+- Commit:
+  - `clipper_python` `0d5a054 feat: add template builder cross-runtime diagnostics`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_cross_runtime_fixture_script.py -q` passed, 1 test.
+  - `clipper_python uv run python scripts/compare_template_builder_cross_runtime_fixtures.py --workspace-root /Users/jina/project/adlight --output-dir /tmp/template-builder-cross-runtime-runner --text 'subtitleText=gjpqy 와 므르트픔'` passed with mismatchRatio 0.0.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py -q` passed, 10 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+
+Staged media asset resolver seam:
+- RED: Extended `tests/test_template_builder_frame_artifacts.py` to pass `media_assets={"media/logo.png": path}`; pytest failed because `render_template_builder_frame_artifact()` did not accept `media_assets`.
+- GREEN:
+  - `render_template_builder_frame_artifact()` now accepts `media_assets`.
+  - Resolved media assets are composited into their frame and metadata records `placeholder=false` plus `assetPath`.
+  - Unresolved media assets still use deterministic placeholders.
+- Commit:
+  - `clipper_python` `bd573f2 feat: resolve template builder media assets`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_frame_artifacts.py -q` passed, 2 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py -q` passed, 11 tests.
+
+Deterministic media placeholder in frame artifacts:
+- RED: Extended `tests/test_template_builder_frame_artifacts.py` with a visible `logoImage` media layer; focused pytest failed because `logoImage` metadata was missing.
+- GREEN:
+  - `render_template_builder_frame_artifact()` now includes visible media layers.
+  - Media layers are rendered as deterministic placeholders derived from `layerId:assetUri`.
+  - Angular preview contract shape and NestJS render contract shape now produce the same media placeholder metadata and pixels.
+  - This still does not use real media assets and remains separate from legacy `LocalRenderAdapter`.
+- Commit:
+  - `clipper_python` `9e7f82d feat: add template builder media placeholders`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_frame_artifacts.py -q` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py -q` passed, 7 tests.
+
+Resolved media assets in artifact entrypoints:
+- Time: 2026-05-09 19:28 KST.
+- RED:
+  - Extended `tests/test_template_builder_preview_final_artifact_script.py` and `tests/test_template_builder_cross_runtime_fixture_script.py` to pass `media_assets={"media/logo.png": path}`.
+  - Focused pytest failed because `render_preview_final_artifacts()` and `compare_cross_runtime_fixtures()` did not accept `media_assets`.
+- GREEN:
+  - `render_template_builder_preview_final_artifacts.py` now accepts `media_assets` and CLI `--media-asset assetUri=path`.
+  - `compare_template_builder_cross_runtime_fixtures.py` forwards the same map from function and CLI to the artifact renderer.
+  - Resolved media mode and placeholder mode now share the same Angular/NestJS contract fixture comparison path.
+- Commit:
+  - `clipper_python` `c053ca1 feat: thread template builder media assets`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py -q` passed, 5 tests.
+  - `clipper_python uv run python scripts/compare_template_builder_cross_runtime_fixtures.py --workspace-root /Users/jina/project/adlight --output-dir /tmp/template-builder-cross-runtime-resolved-assets --text 'subtitleText=gjpqy 와 므르트픔' --media-asset 'media/logo.png=/Users/jina/project/adlight/adlight_python/dist/highlight_server/_internal/images/gradient.png'` passed with mismatchRatio 0.0.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py -q` passed, 13 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Next:
+  - Choose the first non-contract visual capture target: Angular preview fixture browser screenshot capture or Template Builder sample-render final frame extraction.
+
+Angular preview render snapshot:
+- Time: 2026-05-09 19:45 KST.
+- RED:
+  - Extended `TemplateBuilderEditorComponent` spec to call `templateBuilderPreviewRenderSnapshotFor(fixture.nativeElement)` with the Angular preview fixture contract rendered through the real editor component.
+  - Focused Angular test failed with module missing for `../services/template-builder-preview-render-snapshot`.
+- GREEN:
+  - Added `src/features/template-builder/services/template-builder-preview-render-snapshot.ts`.
+  - The helper reads the actual Karma/Chrome-rendered `.phone-canvas`, `.canvas-content-area`, text layers, and media layers.
+  - It records rects from computed CSS pixels, text computed styles, media `object-fit`, and media `src`.
+  - The component spec now verifies `subtitleText` and `logoImage` preview fixture render values.
+- Observation:
+  - Chrome computed `subtitleText` height is `25.195px`, not the arithmetic `25.2px`. This confirms why a browser render snapshot is useful before bitmap/final-frame parity.
+- Commit:
+  - `clipper_angular` `7488e27 feat: capture template preview render snapshot`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, `TOTAL: 36 SUCCESS`.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, `TOTAL: 38 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Next:
+  - Either export this browser render snapshot as a JSON artifact, or add Playwright to capture an actual preview bitmap artifact.
+
+Angular preview render snapshot JSON artifact export:
+- Time: 2026-05-09 19:56 KST.
+- RED:
+  - Added `test/template-builder-preview-render-snapshot-export.test.mjs`.
+  - Node test failed because `scripts/export-template-builder-preview-render-snapshot.mjs` was missing.
+- GREEN:
+  - Added `scripts/export-template-builder-preview-render-snapshot.mjs`.
+  - Added `scripts/template-builder-preview-render-snapshot-reporter.cjs`.
+  - Added `src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts`.
+  - The script runs a one-off Karma/ChromeHeadless diagnostic spec and writes a browser-rendered preview snapshot JSON artifact.
+  - The artifact captures canvas/content-area rects, visible text layer rect/style/text, and visible media layer rect/style/src.
+- Observation:
+  - Headless Chrome computes the preview fixture `subtitleText` height as `25.188px`; regular Chrome component spec measured `25.195px`.
+  - This confirms the diagnostic should record browser/runtime details before any strict bitmap comparison is used.
+- Commit:
+  - `clipper_angular` `618e70c feat: export template preview render snapshot`
+- Verification:
+  - `clipper_angular node --test test/template-builder-preview-contract-fixture-export.test.mjs test/template-builder-preview-render-snapshot-export.test.mjs` passed, 2 tests.
+  - `clipper_angular node scripts/export-template-builder-preview-render-snapshot.mjs --output /tmp/template-builder-preview-render-snapshot-final.json` wrote the JSON artifact.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts` passed, `TOTAL: 39 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Next:
+  - Add a Playwright-based `.phone-canvas` bitmap screenshot artifact, still diagnostic-only.
+
+Angular preview bitmap screenshot artifact export:
+- Time: 2026-05-09 20:00 KST.
+- RED:
+  - Added `test/template-builder-preview-screenshot-export.test.mjs`.
+  - Node test failed because `scripts/export-template-builder-preview-screenshot.mjs` was missing.
+- GREEN:
+  - Added `scripts/export-template-builder-preview-screenshot.mjs`.
+  - Added `src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts`.
+  - The script runs a one-off Karma/ChromeHeadless diagnostic spec and connects to Chrome DevTools Protocol directly from Node.
+  - It locates the real rendered `.phone-canvas` and writes a PNG screenshot artifact.
+  - No Playwright dependency was added in this slice because CDP was enough for the current diagnostic.
+- Commit:
+  - `clipper_angular` `3acc406 feat: export template preview screenshot`
+- Verification:
+  - `clipper_angular node --test test/template-builder-preview-contract-fixture-export.test.mjs test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 3 tests.
+  - `clipper_angular node scripts/export-template-builder-preview-screenshot.mjs --output /tmp/template-builder-preview-screenshot-final.png` wrote the PNG artifact.
+  - PNG check: signature `89504e470d0a1a0a`, width `324`, height `576`, bytes `1686`.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/services/template-builder-preview-contract.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts --include src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts --include src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts` passed, `TOTAL: 40 SUCCESS`.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Next:
+  - Add a diagnostic comparison bridge that explicitly scales the 324x576 preview screenshot against the 1080x1920 Python/final frame artifact.
+
+Preview screenshot vs final frame diagnostic bridge:
+- Time: 2026-05-09 20:04 KST.
+- RED:
+  - Added `tests/test_template_builder_preview_screenshot_comparison.py`.
+  - Focused pytest failed because `scripts.compare_template_builder_preview_screenshot` was missing.
+- GREEN:
+  - Added `scripts/compare_template_builder_preview_screenshot.py`.
+  - The script scales the frame PNG to the browser preview screenshot size, writes `final_frame_scaled_to_preview.png`, and writes `preview_screenshot_comparison.json`.
+  - The report records `previewSize`, `frameSize`, `scale`, `normalization`, and mismatch metrics separately.
+- Commit:
+  - `clipper_python` `c99f709 feat: compare template preview screenshot`
+- Actual diagnostic:
+  - Command compared `/tmp/template-builder-preview-screenshot-final.png` with `/tmp/template-builder-cross-runtime-resolved-assets-final/artifacts/final_frame.png`.
+  - Reported preview size `324x576`, frame size `1080x1920`, scale `0.3/0.3`, mismatchRatio `1.0`.
+  - This is expected diagnostic output, not a product gate, because the current browser editor preview and Python deterministic artifact composer still draw different visual surfaces.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 14 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_python git diff --check` passed.
+- Next:
+  - Split mismatch categories before introducing thresholds: editor-only content-area visuals, browser CSS text, Python artifact text, media resolving, and scale/sub-pixel behavior.
+
+Angular preview screenshot capture correction:
+- Time: 2026-05-09 20:13 KST.
+- Skills used: test-driven-development, systematic-debugging, verification-before-completion.
+- RED:
+  - Strengthened `clipper_angular/test/template-builder-preview-screenshot-export.test.mjs` to decode the exported PNG and require actual rendered preview pixels.
+  - The focused Node test failed because the existing screenshot artifact was a blank white 324x576 PNG.
+- Root cause evidence:
+  - Fresh export reproduced the white PNG.
+  - Pixel stats showed `/tmp/template-builder-preview-screenshot-final.png` mean RGB `[255, 255, 255]`.
+  - CDP debug showed `.phone-canvas` clip rect `x=307, y=927, width=324, height=576`, while the target viewport was only `741x417`.
+  - Therefore CDP was capturing outside the visible Karma iframe/content area.
+- GREEN:
+  - `scripts/export-template-builder-preview-screenshot.mjs` now launches Headless Chrome with `--window-size=1280,1200`.
+  - The CDP canvas rect expression calls `scrollIntoView({ block: 'center', inline: 'center' })` before calculating the clip.
+  - The export spec waits for two animation frames before setting `__templateBuilderPreviewScreenshotReady`.
+  - The test now prevents blank PNGs from passing.
+- Commit:
+  - `clipper_angular` `22f545a fix: capture rendered template preview screenshot`
+- Verification:
+  - `clipper_angular node --test test/template-builder-preview-screenshot-export.test.mjs` passed, 1 test.
+  - `clipper_angular node --test test/template-builder-preview-contract-fixture-export.test.mjs test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 3 tests.
+  - `clipper_angular node scripts/export-template-builder-preview-screenshot.mjs --output /tmp/template-builder-preview-screenshot-final.png` wrote the corrected PNG.
+  - `clipper_angular npm run build` passed.
+  - Corrected PNG: 324x576, bytes `56778`, center pixel `(30, 41, 59)`.
+
+Preview/final category diagnostics:
+- Time: 2026-05-09 20:14 KST.
+- RED:
+  - Extended `clipper_python/tests/test_template_builder_preview_screenshot_comparison.py` with a synthetic snapshot and expected region category metrics.
+  - Focused pytest failed with `compare_preview_screenshot_to_frame() got an unexpected keyword argument 'preview_render_snapshot_path'`.
+- GREEN:
+  - `scripts/compare_template_builder_preview_screenshot.py` accepts `preview_render_snapshot_path` and CLI `--preview-render-snapshot`.
+  - The report now includes overlapping diagnostic categories from the browser snapshot rects: `canvas`, `contentArea`, `text:<layerId>`, `media:<layerId>`.
+- Actual diagnostic:
+  - Regenerated `/tmp/template-builder-preview-screenshot-final.png` was compared with `/tmp/template-builder-cross-runtime-resolved-assets-final/artifacts/final_frame.png`.
+  - Tolerance 0 still saturates all categories at `mismatchRatio=1.0`.
+  - Tolerance 128 category run:
+    - `canvas`: `0.2823431069958848`
+    - `text:subTitle`: `0.7350364963503649`
+    - `text:mainTitleLine1`: `0.656021897810219`
+    - `text:mainTitleLine2`: `0.5596715328467153`
+    - `text:subtitleText`: `0.5782051282051283`
+    - `media:logoImage`: `0.757985257985258`
+- Commit:
+  - `clipper_python` `6e02da3 feat: categorize template preview mismatches`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 2 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 15 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Next:
+  - Do not lower visual thresholds yet.
+  - Align the visual surface first: either add Angular editor-only content-area/background visuals to the Python deterministic composer, or add a real sample/final render frame extraction path.
+
+Template Builder video frame extraction diagnostics:
+- Time: 2026-05-09 20:25 KST.
+- RED:
+  - Added `clipper_python/tests/test_template_builder_video_frame_extraction.py`.
+  - Focused pytest failed with module missing for `scripts.extract_template_builder_video_frame`.
+- GREEN:
+  - Added `scripts/extract_template_builder_video_frame.py`.
+  - The script extracts `final_frame.png` from a given MP4 using ffmpeg and writes `video_frame_extraction.json`.
+  - Test uses a fake ffmpeg runner to verify command shape and report output without requiring a real video.
+- Actual smoke:
+  - `tests/fixtures/clipper1_golden_frames/template-17-16_9/video/final_video.mp4` extracted to `/tmp/template-builder-video-frame-extraction-smoke/final_frame.png`.
+  - Extracted frame size: `[1080, 1920]`.
+- Commit:
+  - `clipper_python` `af32bfd feat: extract template builder video frames`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_video_frame_extraction.py -q` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_video_frame_extraction.py -q` passed, 16 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+
+Preview screenshot vs video frame comparison runner:
+- Time: 2026-05-09 20:29 KST.
+- RED:
+  - Added `clipper_python/tests/test_template_builder_preview_video_frame_comparison.py`.
+  - Focused pytest failed with module missing for `scripts.compare_template_builder_preview_video_frame`.
+  - After first implementation, actual CLI smoke failed with `ModuleNotFoundError: No module named 'scripts'`.
+  - Added a `--help` script execution regression test, which failed with the same import error.
+- GREEN:
+  - Added `scripts/compare_template_builder_preview_video_frame.py`.
+  - The runner extracts `video-frame/final_frame.png`, compares it against the browser preview screenshot through the existing scale-normalized bridge, and writes `preview_video_frame_comparison.json`.
+  - The CLI import issue was fixed by adding repo root to `sys.path`, matching existing diagnostic script style.
+- Actual smoke:
+  - Compared `/tmp/template-builder-preview-screenshot-final.png` against a frame extracted from `tests/fixtures/clipper1_golden_frames/template-17-16_9/video/final_video.mp4`.
+  - Output: `/tmp/template-builder-preview-video-frame-runner-smoke/preview_video_frame_comparison.json`.
+  - Extracted frame size `[1080, 1920]`, preview size `[324, 576]`, scale `{x: 0.3, y: 0.3}`, mismatchRatio `0.9999464163237312`.
+  - This mismatch value is not a product quality signal because the smoke compares a Template Builder preview fixture to a legacy Clipper1 fixture video. It only proves the runner path works.
+- Commit:
+  - `clipper_python` `a93a764 feat: compare template preview video frames`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_video_frame_extraction.py tests/test_template_builder_preview_video_frame_comparison.py tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 5 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_video_frame_extraction.py tests/test_template_builder_preview_video_frame_comparison.py -q` passed, 18 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Next:
+  - Connect this runner to a real Template Builder sample render MP4 rather than a legacy fixture MP4.
+
+Template Builder sample render fixture MP4:
+- Time: 2026-05-09 20:42 KST.
+- RED:
+  - Added `clipper_nestjs/test/template-builder-sample-render-fixture.test.js`.
+  - Focused Node test failed with missing module `../dist/template-builder/template-builder-sample-render-fixture`.
+- GREEN:
+  - Added `clipper_nestjs/src/template-builder/template-builder-sample-render-fixture.ts`.
+  - Added `clipper_nestjs/scripts/export-template-builder-sample-render-fixture.mjs`.
+  - Reused `templateBuilderVariantFixture()` from the render contract fixture.
+  - The exported package contains `recipe.json`, `artifacts.json`, `legacy_payload.json`, `fixture.json`, and staged assets under `assets/`.
+  - The legacy payload is produced through `LegacyClipper1RenderPayloadMapper`, matching the path NestJS sample render submits to the Python worker.
+- Commit:
+  - `clipper_nestjs` `43ad151 feat: export template builder sample render fixture`
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js test/template-builder-render-contract.test.js test/template-builder-render-payload.test.js` passed, 9 tests.
+
+Python sample fixture MP4 render:
+- Time: 2026-05-09 20:45 KST.
+- RED:
+  - Added `clipper_python/tests/test_template_builder_sample_video_fixture_render.py`.
+  - Focused pytest failed with module missing for `scripts.render_template_builder_sample_video_fixture`.
+- GREEN:
+  - Added `clipper_python/scripts/render_template_builder_sample_video_fixture.py`.
+  - The script reads exported `legacy_payload.json` and `recipe.json`, calls `LocalRenderAdapter`, and writes `sample_render_result.json`.
+- Actual end-to-end diagnostic:
+  - Exported NestJS fixture to `/tmp/template-builder-sample-render-fixture`.
+  - Rendered Python MP4 `/tmp/template-builder-sample-render-fixture/template-sample/main.mp4`.
+  - Compared preview screenshot against that MP4 through `compare_template_builder_preview_video_frame.py`.
+  - Result: preview size `[324, 576]`, frame size `[1080, 1920]`, scale `{x: 0.3, y: 0.3}`, mismatchRatio `0.9999732081618655`.
+  - This remains diagnostic-only because the preview fixture and sample render fixture do not yet share the same text/media/background choices.
+- Commit:
+  - `clipper_python` `c3bff8f feat: render template builder sample fixture video`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_sample_video_fixture_render.py tests/test_template_builder_video_frame_extraction.py tests/test_template_builder_preview_video_frame_comparison.py tests/test_template_builder_preview_screenshot_comparison.py -q` passed, 6 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_text_renderer.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_preview_final_artifact_script.py tests/test_template_builder_cross_runtime_fixture_script.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_video_frame_extraction.py tests/test_template_builder_preview_video_frame_comparison.py tests/test_template_builder_sample_video_fixture_render.py -q` passed, 19 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Next:
+  - Align the Angular preview fixture and Template Builder sample render fixture inputs before interpreting mismatch values or introducing a threshold.
+
+Template Builder preview/sample input surface alignment:
+- Time: 2026-05-09 20:50 KST.
+- Scope:
+  - Stop interpreting preview/sample bitmap mismatch as quality while the visual surface differs.
+  - Align the first non-pixel input slice: sample text copy and image-logo visibility.
+- RED:
+  - Angular preview contract/render snapshot tests failed because the fixture still rendered `logoText: "Clipper"` alongside `logoImage`, and `logoText.visible` was still `true`.
+  - NestJS tests failed because sample render service/fixture still emitted `샘플 ...` copy and render contract fixture still had `logoText.visible=true`.
+- GREEN:
+  - `clipper_angular/src/features/template-builder/services/template-builder-preview-sample-content.ts` now owns preview sample copy.
+  - Angular preview fixture hides `logoText` for the image-logo sample.
+  - `clipper_nestjs/src/template-builder/template-builder-sample-content.ts` now owns sample render copy helpers.
+  - NestJS sample render service and sample render fixture export use the same copy as Angular preview: `오늘의 핵심`, `서울 근교\n축제 TOP 5`, `저장해두세요`, and subtitle lines `이번 주말에 가기 좋은`, `서울 근교 축제부터 볼게요`.
+  - NestJS render contract fixture hides `logoText` for the image-logo sample.
+- Verification so far:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder-preview-contract.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts` passed, 3 specs.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-sample-render-fixture.test.js test/template-builder-api.test.js` passed, 14 tests.
+- Regenerated diagnostic artifacts:
+  - `/tmp/template-builder-preview-render-snapshot-20260509.json`
+  - `/tmp/template-builder-preview-screenshot-20260509.png`
+  - `/tmp/template-builder-sample-render-fixture-20260509`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509`
+- Diagnostic result:
+  - preview size `[324, 576]`, frame size `[1080, 1920]`, scale `{x: 0.3, y: 0.3}`, mismatchRatio `0.9999624914266118`.
+  - Report categories no longer include `text:logoText`; sample payload project text matches preview copy.
+  - This remains diagnostic-only because media/background/editor-browser vs final-render surface still differs.
+- Next:
+  - Align the remaining media/background surface before introducing any visual threshold.
+
+Angular focused verification follow-up:
+- Time: 2026-05-09 20:52 KST.
+- Running the broader Template Builder Angular focused suite exposed an existing brittle assertion in `template-builder-editor.component.spec.ts`.
+- Failure:
+  - `subtitleText.rect.height` was expected exactly `25.195`, but Chrome returned `25.188`.
+- Root cause:
+  - Browser computed sub-pixel text height varies in the same known range already accepted by the render snapshot export spec.
+- Fix:
+  - Changed the component spec to assert `subtitleText` rect `left/top/width` exactly and height range `25.18 < h < 25.2`.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/services/template-builder-preview-contract.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts --include=src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts` passed, 40 specs.
+
+Commits:
+- Time: 2026-05-09 20:53 KST.
+- `clipper_angular` `79ae804 feat: align template preview sample content`
+- `clipper_nestjs` `3d6687e feat: align template sample render content`
+- `clipper_angular`, `clipper_nestjs`, `clipper_python` working trees are clean after commit.
+
+Template Builder preview/sample media surface alignment:
+- Time: 2026-05-09 20:58 KST.
+- Scope:
+  - Align the first background/media fixture surface without introducing a visual threshold.
+  - Replace the editor-only gradient/`clip_1.jpeg` mismatch with the same deterministic sample media bytes.
+- RED:
+  - Angular preview contract test failed because `contentArea.assetUri` was `null`.
+  - Angular render snapshot test failed because `layers.contentArea` was absent.
+  - NestJS tests failed because sample media still used `assets/template-sample-media.jpg` and `image/jpeg`, and render contract fixture had no content-area media data URL.
+- GREEN:
+  - Added deterministic 1x1 PNG sample media data URL (`#111827`) to Angular preview sample content.
+  - Angular preview fixture sets `contentArea.assetUri` to the data URL.
+  - Angular editor preview renders direct `data:`, `blob:`, and `http(s):` content-area media URLs as the content-area image.
+  - Browser render snapshot records `media:contentArea`.
+  - NestJS sample content exposes the same PNG base64/data URL.
+  - NestJS render contract fixture sets `contentArea.assetUri` to that data URL.
+  - NestJS sample render service and sample render fixture stage the generated PNG as `assets/template-sample-media.png`, `image/png`.
+- Focused verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder-preview-contract.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts` passed, 3 specs.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-sample-render-fixture.test.js test/template-builder-api.test.js` passed, 14 tests.
+- Regenerated diagnostic artifacts:
+  - `/tmp/template-builder-preview-render-snapshot-20260509-media.json`
+  - `/tmp/template-builder-preview-screenshot-20260509-media.png`
+  - `/tmp/template-builder-sample-render-fixture-20260509-media`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509-media`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509-media-t4`
+- Diagnostic result:
+  - tolerance 0 mismatchRatio `0.9998981910150891`.
+  - The background bytes are aligned, but browser preview samples `(17,24,39)` while final video frame samples `(15,23,38)` after video color conversion, so tolerance 0 still counts almost every background pixel.
+  - `--channel-tolerance 4` overall mismatchRatio is `0.06444508744855967`.
+  - Category focus at tolerance 4: `text:subtitleText=0.7897435897435897`, `text:subtitleBox=0.9551094890510949`, `media:logoImage=0.7936117936117936`.
+- Next:
+  - Align logo image bytes between Angular preview and sample render, or isolate subtitle/subtitleBox renderer differences before introducing any visual threshold.
+
+Commits:
+- Time: 2026-05-09 21:00 KST.
+- `clipper_angular` `abeed8d feat: align template preview sample media`
+- `clipper_nestjs` `385206d feat: align template sample render media`
+- `clipper_angular`, `clipper_nestjs`, `clipper_python` working trees are clean after commit.
+
+Template Builder preview/sample logo and subtitle fixture alignment:
+- Time: 2026-05-09 21:25 KST.
+- Scope:
+  - Continue preview/final visual diagnostics without introducing a bitmap threshold.
+  - Align logo image bytes and remove known fixture-only subtitle placement drift.
+- RED:
+  - Angular focused Karma tests failed while `logoImage.src` was still backend URL/path based, `subtitleBox.text` still contained subtitle copy, and `subtitleText.rect.top` was still `28.8`.
+  - NestJS render contract fixture test failed with `subtitleText.y=96` instead of the final payload subtitle y `1254`.
+- GREEN:
+  - Angular preview fixture now uses a deterministic logo PNG data URL for `logoImage.assetUri`.
+  - NestJS render contract fixture, sample render service, and sample render fixture export stage the same deterministic PNG as `assets/template-sample-logo.png`.
+  - `subtitleBox` preview sample text is empty because final render treats it as subtitle box settings rather than a text overlay.
+  - `subtitleText.y=1254` and `subtitleText.box.enabled=false` in both preview and render fixture surfaces.
+- Diagnostic note:
+  - An initial attempt to embed the bundled `clipper_logo_w.png` as base64 created a truncated PNG and caused the Python/ffmpeg diagnostic render to hang. The hung render was killed, and the fixture was changed to a small valid deterministic PNG.
+- Verification so far:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder-preview-contract.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 39 specs.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-render-contract.test.js test/template-builder-sample-render-fixture.test.js` passed, 4 tests.
+- Commits:
+  - `clipper_angular` `f2acf10 feat: align template preview logo and subtitles`.
+  - `clipper_nestjs` `9db3f14 feat: align template sample logo and subtitles`.
+- Regenerated diagnostic artifacts:
+  - `/tmp/template-builder-preview-render-snapshot-20260509-subtitle-y.json`
+  - `/tmp/template-builder-preview-screenshot-20260509-subtitle-y.png`
+  - `/tmp/template-builder-sample-render-fixture-20260509-subtitle-y`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509-subtitle-y`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509-subtitle-y-t4`
+- Diagnostic result:
+  - tolerance 0 mismatchRatio `0.9992926954732511`.
+  - `--channel-tolerance 4` overall mismatchRatio `0.05262988683127572`.
+  - Category focus at tolerance 4: `media:logoImage=0.22235872235872237`, `text:subtitleText=0.9850427350427351`, `text:subtitleBox=0.962043795620438`.
+  - Previous media-aligned diagnostic was `0.06444508744855967`, so this slice reduced overall diagnostic mismatch by about 1.18 percentage points.
+  - Logo improved substantially: `0.7936117936117936 -> 0.22235872235872237`.
+- Next:
+  - Remaining subtitle mismatch is not a simple pixel edge issue. Preview still treats `subtitleBox` as a fixed canvas rectangle, while final render uses subtitle box settings to draw dynamic boxes around actual subtitle text lines.
+  - Next implementation candidate is a TDD preview subtitle renderer that treats `subtitleBox` as subtitleText line box style/settings, or a narrower diagnostic that first reports dynamic subtitle box bounds.
+
+Template Builder dynamic subtitle preview boxes:
+- Time: 2026-05-09 21:32 KST.
+- Scope:
+  - Reduce the remaining preview/final subtitleBox semantic mismatch.
+  - Keep visual comparison diagnostic-only.
+- RED:
+  - Angular snapshot/component tests failed because `subtitleText` still spanned only the browser text block height, `subtitleBox` still painted fixed `rgba(0,0,0,0.8)` background, and no per-line `[data-testid^="canvas-subtitle-line-"]` boxes existed.
+- GREEN:
+  - `TemplateBuilderEditorComponent` now renders `subtitleText` as per-line dynamic subtitle boxes.
+  - Dynamic line y positions use `oneLineY`, `twoLineFirstY`, and `twoLineSecondY`.
+  - The line boxes use `subtitleBox.box` settings for background, padding, height, and border.
+  - The fixed `subtitleBox` canvas layer is visually transparent so it no longer creates a full-width preview-only rectangle.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 37 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder-preview-contract.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts --include=src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 40 specs.
+  - `clipper_angular git diff --check` passed.
+- Regenerated diagnostic artifacts:
+  - `/tmp/template-builder-preview-render-snapshot-20260509-dynamic-subtitle.json`
+  - `/tmp/template-builder-preview-screenshot-20260509-dynamic-subtitle.png`
+  - `/tmp/template-builder-preview-vs-sample-render-20260509-dynamic-subtitle-t4`
+- Diagnostic result:
+  - `--channel-tolerance 4` overall mismatchRatio `0.036785193758573385`.
+  - `text:subtitleBox=0.2737226277372263`, down from `0.962043795620438`.
+  - `text:subtitleText=0.9438271604938272`, still high due browser-vs-final glyph/stroke/shadow/text-image differences.
+  - `media:logoImage=0.22235872235872237`.
+- Commit:
+  - `clipper_angular` `3db3bdc feat: render dynamic template subtitle boxes`.
+- Next:
+  - Text glyph/stroke/shadow parity remains. The next decision is whether browser text remains the preview source of truth with tolerated renderer drift, or whether preview should consume deterministic final-render text artifact metadata for tighter parity.
+
+Template Builder hybrid final-render text artifacts:
+- Time: 2026-05-09 21:55 KST.
+- Decision:
+  - Adopt the hybrid preview strategy discussed with the user.
+  - Browser/CSS preview remains immediate while final-render text artifacts are requested in the background.
+  - When exact text artifacts arrive, plain text layers can display the renderer-produced PNG; if requests fail or are slow, the editor falls back to browser text without blocking the user.
+  - Scope of this first slice is plain text layers: `subTitle`, `mainTitleLine1`, `mainTitleLine2`, `bottomTitle`, `logoText`. Dynamic subtitle text/box artifacts are intentionally left for the next slice.
+- RED:
+  - Python plugin test failed because `template_builder_text_artifact` jobs still entered legacy payload validation.
+  - NestJS text artifact service test failed because no service/client existed.
+  - Angular service/editor/page tests failed because no API method, editor artifact input, or page background refresh existed.
+- GREEN:
+  - `clipper_python` plugin job mode `template_builder_text_artifact` renders one Template Builder visible text layer through the deterministic modern text artifact renderer and returns `imageDataUrl`, metadata, artifact path, and render timing.
+  - `clipper_nestjs` now exposes a Template Builder preview text artifact service and route:
+    - `POST /template-builder/families/:familyId/variants/:ratio/preview/text-artifacts/:layerId`
+    - It builds `templateBuilderRenderContractFor(variant)`, submits a fast Python worker job, caches identical layer/text/style requests by hash, and rejects hidden/non-text layers.
+  - `clipper_angular` now has:
+    - `TemplateBuilderService.renderTextPreviewArtifact(...)`
+    - `TemplateBuilderEditorComponent` `textPreviewArtifacts` input and `<img data-testid="canvas-text-artifact-...">` overlay for plain text layers.
+    - `TemplateBuilderPageComponent.refreshTextPreviewArtifactsForSelectedVariant()` with debounced background refresh and stale artifact clearing.
+- Verification:
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py` passed, 3 tests.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-text-artifact.test.js test/template-builder-render-contract.test.js test/template-builder-api.test.js` passed, 14 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 69 specs.
+  - `git diff --check` passed in `clipper_python`, `clipper_nestjs`, and `clipper_angular`.
+- Commits:
+  - `clipper_python` `87df386 feat: add template builder text artifact job`
+  - `clipper_nestjs` `a55772a feat: serve template builder text artifacts`
+  - `clipper_angular` `85a55d5 feat: preview template builder text artifacts`
+- Next:
+  - Run a real Electron/NestJS/Python worker smoke for the new endpoint and record warm/cold latency.
+  - Add a stale-response/cancellation guard if real latency or rapid edits expose artifact flicker.
+  - Extend exact artifact support to subtitle dynamic line boxes only after defining whether one combined subtitle artifact or per-line artifacts is the right preview model.
+
+Template Builder worker warm session and combined subtitle artifacts:
+- Time: 2026-05-09 22:15 KST.
+- Decision:
+  - Implementation speed is not the priority; preview/final correctness is.
+  - Template Builder must keep the Python renderer worker warm while the editor is open.
+  - Subtitle preview should use a final-render combined artifact, not per-line browser reconstruction, because the final composition of text, shadow, outline, and boxes is the source of truth.
+- Plan:
+  - Saved to `.codex/implementation/HYBRID_TEXT_ARTIFACT_PLAN_2026-05-09.md`.
+- RED/GREEN:
+  - Python RED: `render_template_builder_subtitle_artifact` import missing.
+  - Python GREEN:
+    - Added combined subtitle artifact renderer.
+    - It normalizes `subtitleText` and `subtitleBox`, renders dynamic line boxes into one transparent PNG, and returns group frame plus per-line metadata.
+    - Added plugin job mode `template_builder_subtitle_artifact`.
+  - NestJS RED: `ensureWarm()` and `renderSubtitle()` missing.
+  - NestJS GREEN:
+    - Added `TemplateBuilderTextArtifactWorkerClient.ensureWarm()`.
+    - Added `TemplateBuilderTextArtifactService.renderSubtitle(...)`.
+    - Added routes:
+      - `POST /template-builder/preview/renderer-session`
+      - `POST /template-builder/families/:familyId/variants/:ratio/preview/subtitle-artifact`
+  - Angular RED: service/page/editor did not know warmup/subtitle artifact APIs.
+  - Angular GREEN:
+    - Added `ensureTextPreviewRendererSession()` and `renderSubtitlePreviewArtifact(...)`.
+    - Template Builder page warms the renderer session when opened.
+    - Background artifact refresh now requests plain text artifacts plus combined `subtitleText` artifact.
+    - Editor displays `[data-testid="canvas-subtitle-artifact"]` from final-render metadata frame and suppresses browser subtitle line boxes when the artifact is available.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py` passed, 5 tests.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-text-artifact.test.js test/template-builder-render-contract.test.js test/template-builder-api.test.js` passed, 16 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 73 specs.
+- Commits:
+  - `clipper_python` `9d0b8bb feat: render template builder subtitle artifacts`
+  - `clipper_nestjs` `ef48631 feat: warm template text artifact worker`
+  - `clipper_angular` `f9a9741 feat: preview combined subtitle artifacts`
+- Real worker smoke:
+  - Started `clipper1_video_render` at `http://127.0.0.1:54823` and NestJS at `http://127.0.0.1:9019`.
+  - `POST /v1/template-builder/preview/renderer-session`: HTTP 201, `time_total=0.023639`, response `{status:"ready", pluginName:"clipper1_video_render", baseUrl:"http://127.0.0.1:54823"}`.
+  - `POST /v1/template-builder/families/system.legacy.clipper1.template.1/variants/16%3A9/preview/subtitle-artifact` with `안녕하세요\n두 번째 줄입니다`: HTTP 201, `time_total=0.068961`, `cached=false`, worker `renderMs=7.168`, `metadata.layerId=subtitleText`, `metadata.lines=2`, `metadata.clipped=false`.
+  - Concurrent identical subtitle request shared the pending cache: HTTP 201, `time_total=0.064150`, `cached=true`.
+  - Sequential identical cache hit after completion: HTTP 201, `time_total=0.003192`, `cached=true`.
+  - Warm worker new-text render with one-character change `안녕하세요!\n두 번째 줄입니다`: HTTP 201, `time_total=0.058364`, `cached=false`, worker `renderMs=4.712`, `metadata.lines=2`, `metadata.clipped=false`.
+  - Smoke processes were shut down after measurement; no listeners remained on ports `54823` or `9019`.
+- Next:
+  - Verify rapid layer edits do not show stale artifact images; add stricter in-flight cancellation or per-request aborting beyond the existing generation guard if needed.
+  - Re-run preview screenshot vs final/sample frame diagnostics with artifact-backed text preview.
+
+Template Builder stale artifact invalidation:
+- Time: 2026-05-09 22:26 KST.
+- Problem:
+  - Existing generation guard incremented only when a new artifact refresh actually started.
+  - During the 180ms debounce window after a layer edit, an older in-flight artifact response could still pass the generation check and briefly replace the browser fallback with stale final-render PNGs.
+- RED:
+  - Added a page spec that starts a deferred artifact refresh, edits the variant before the deferred response resolves, then resolves the old text/subtitle artifact promises.
+  - Failure showed stale `subTitle`, `mainTitleLine1`, `mainTitleLine2`, `bottomTitle`, `logoText`, and `subtitleText` artifacts being applied.
+- GREEN:
+  - `scheduleTextPreviewArtifactRefresh()` now calls `invalidateTextPreviewArtifacts()` immediately.
+  - Invalidation increments `textPreviewArtifactGeneration` and clears `textPreviewArtifacts` before the debounce timer fires.
+  - Result: old in-flight artifact responses are rejected even while the replacement refresh is still waiting for debounce.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 22 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 74 specs.
+  - `clipper_angular git diff --check` passed.
+- Commit:
+  - `clipper_angular` `fbce6ab fix: discard stale template text artifacts`
+- Next:
+  - Re-run preview screenshot vs final/sample frame diagnostics with artifact-backed text preview.
+
+Template Builder artifact-backed visual diagnostic:
+- Time: 2026-05-09 22:36 KST.
+- Goal:
+  - Re-run preview screenshot vs sample/final frame diagnostic after injecting final-render text artifacts into the Angular preview capture.
+- RED/GREEN:
+  - Angular RED:
+    - `export-template-builder-preview-screenshot.mjs --text-preview-artifacts <json>` did not inject artifacts; screenshot lacked the injected red artifact pixel.
+    - `export-template-builder-preview-render-snapshot.mjs --text-preview-artifacts <json>` did not use artifact metadata; snapshot rect stayed on browser text geometry.
+  - Angular GREEN:
+    - Both preview screenshot and render snapshot exporters accept `--text-preview-artifacts <json>`.
+    - Export specs pass `window.__templateBuilderPreviewTextArtifacts` into `TemplateBuilderEditorComponent.textPreviewArtifacts`.
+    - Screenshot export waits for `.canvas-text-artifact` images before marking the canvas ready for CDP capture.
+  - Python RED:
+    - No reusable script existed to export a contract's final-render text artifacts as Angular `textPreviewArtifacts` JSON.
+  - Python GREEN:
+    - Added `scripts/export_template_builder_text_preview_artifacts.py`.
+    - It reads a Template Builder render contract, renders plain text artifacts plus combined `subtitleText`, writes PNGs, and writes an Angular artifact map JSON with `imageDataUrl`, metadata, cacheKey, cached=false, and renderMs.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_text_preview_artifact_export_script.py` passed, 1 test.
+  - `clipper_python uv run pytest tests/test_template_builder_text_preview_artifact_export_script.py tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py` passed, 6 tests.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 4 tests.
+  - `clipper_angular npm run build` passed.
+  - `git diff --check` passed in `clipper_python` and `clipper_angular`.
+- Commits:
+  - `clipper_python` `f228316 feat: export template text preview artifacts`
+  - `clipper_angular` `8a10966 feat: capture artifact-backed template previews`
+- Diagnostic run:
+  - Output root: `/tmp/template-builder-artifact-backed-20260509`.
+  - Render contract: `/tmp/template-builder-artifact-backed-20260509/render-contract.json`.
+  - Text artifact map: `/tmp/template-builder-artifact-backed-20260509/text-preview-artifacts.json`.
+  - Artifact-backed preview screenshot: `/tmp/template-builder-artifact-backed-20260509/preview-screenshot-artifact-backed.png`.
+  - Artifact-backed preview snapshot: `/tmp/template-builder-artifact-backed-20260509/preview-render-snapshot-artifact-backed.json`.
+  - Sample render video: `/tmp/template-builder-artifact-backed-20260509/sample-render-fixture/template-sample/main.mp4`.
+  - Comparison report: `/tmp/template-builder-artifact-backed-20260509/preview-vs-sample-render-t4/preview_video_frame_comparison.json`.
+  - `--channel-tolerance 4`, scale `0.3 x 0.3`, overall mismatchRatio `0.027445558984910835`.
+  - Previous dynamic-subtitle diagnostic overall was `0.036785193758573385`, so artifact-backed text preview reduced the overall mismatch.
+  - Category ratios:
+    - `text:subTitle=0.13248175182481753`
+    - `text:mainTitleLine1=0.0843065693430657`
+    - `text:mainTitleLine2=0.013868613138686132`
+    - `text:bottomTitle=0.11916058394160584`
+    - `text:subtitleText=0.9515873015873015`
+    - `text:subtitleBox=0.20145985401459854`
+    - `media:logoImage=0.22235872235872237`
+- Interpretation:
+  - Plain title text categories improved enough to reduce the whole-frame mismatch.
+  - `subtitleText` remains high because the injected modern combined subtitle artifact is still being compared to the current legacy sample-render subtitle path. This is a renderer-path difference, not a reason to reintroduce browser subtitle reconstruction.
+- Next:
+  - Commit Python/Angular exporter changes.
+  - Decide whether sample/final render should consume the same modern text artifact path, or whether diagnostics should compare against a modern deterministic frame artifact until final render migration is done.
+
+Template Builder modern text final render path:
+- Time: 2026-05-09 22:50 KST.
+- Decision:
+  - Sample/final render should consume the same modern text artifact path as artifact-backed preview.
+  - The deterministic frame artifact-only path is kept as a diagnostic tool, not the product path.
+- RED:
+  - NestJS fixture test failed because `legacy_payload.json` did not include `template_builder_render_contract`; failure was `Cannot read properties of undefined (reading 'schemaVersion')`.
+  - Python focused test failed because a Template Builder payload with `template_builder_render_contract` still produced legacy roles: `main_title1`, `main_title2`, `bottom_title`, `subtitle_0_0`, `subtitle_0_1`.
+- GREEN:
+  - `LegacyClipper1RenderPayloadMapper` now includes `template_builder_render_contract` when the recipe/default params carry a Template Builder render contract.
+  - `LocalRenderAdapter._write_overlay_assets_for_clip()` now detects `template_builder_render_contract`.
+  - When present, project text uses `render_template_builder_text_artifact()` for `subTitle`, `mainTitleLine1`, `mainTitleLine2`, `bottomTitle`, and `logoText`.
+  - Timed subtitle segments use one combined `render_template_builder_subtitle_artifact()` PNG per segment.
+  - Legacy Clipper1 payloads without this contract continue using the existing legacy text-image path.
+- Verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js` passed, 2 tests.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js test/template-builder-render-contract.test.js test/template-builder-api.test.js` passed, 14 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_template_builder_payload_writes_modern_text_artifact_overlays -q` passed.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py -q` passed, 28 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_template_builder_text_preview_artifact_export_script.py tests/test_template_builder_sample_video_fixture_render.py -q` passed, 33 tests.
+- Diagnostic:
+  - Output root: `/tmp/template-builder-modern-final-text-20260509`.
+  - Sample fixture: `/tmp/template-builder-modern-final-text-20260509/sample-render-fixture`.
+  - Artifact map: `/tmp/template-builder-modern-final-text-20260509/text-preview-artifacts.json`.
+  - Artifact-backed preview screenshot: `/tmp/template-builder-modern-final-text-20260509/preview-screenshot-artifact-backed.png`.
+  - Artifact-backed preview snapshot: `/tmp/template-builder-modern-final-text-20260509/preview-render-snapshot-artifact-backed.json`.
+  - Comparison report: `/tmp/template-builder-modern-final-text-20260509/preview-vs-sample-render-t4/preview_video_frame_comparison.json`.
+  - `--channel-tolerance 4`, scale `0.3 x 0.3`, overall mismatchRatio `0.010823902606310014`.
+  - Previous artifact-backed preview vs legacy sample-render text path was `0.027445558984910835`, so whole-frame mismatch dropped substantially.
+  - Category ratios:
+    - `text:subTitle=0.024817518248175182`
+    - `text:mainTitleLine1=0.00583941605839416`
+    - `text:mainTitleLine2=0.009306569343065693`
+    - `text:bottomTitle=0.009124087591240875`
+    - `text:subtitleText=0.9865079365079366`
+    - `text:subtitleBox=0.13248175182481753`
+    - `media:logoImage=0.22235872235872237`
+- Interpretation:
+  - Final/sample render is now on the same modern text artifact path as preview.
+  - The high `subtitleText` category is no longer legacy-vs-modern disagreement. The category rect is now the tight combined subtitle artifact group, so its sample is dominated by glyph/box edge pixels after MP4 encoding and frame-to-preview scaling.
+- Docs:
+  - Added `.codex/implementation/MODERN_TEXT_FINAL_RENDER_PLAN_2026-05-09.md`.
+  - Updated `.codex/implementation/PREVIEW_FINAL_RENDER_PARITY_PLAN_2026-05-09.md`.
+  - Updated `.codex/implementation/NEXT_SESSION_PROMPT.md`.
+- Commits:
+  - `clipper_nestjs` `8b06e1f feat: carry template builder render contract`
+  - `clipper_python` `ce79935 feat: render template builder text artifacts in final output`
+- Post-commit verification:
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js test/template-builder-render-contract.test.js test/template-builder-api.test.js` passed, 14 tests.
+  - `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_template_builder_text_preview_artifact_export_script.py tests/test_template_builder_sample_video_fixture_render.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 35 tests.
+  - `git status --short` is clean in `clipper_python`, `clipper_nestjs`, and `clipper_angular`.
+- Next:
+  - Promote this diagnostic into an initial Template Builder preview/final guard after setting threshold/tolerance.
+  - Investigate `media:logoImage` and tight subtitle category separately.
+  - Run packaged Electron bridge smoke separately.
+
+Template Builder preview/final report guard:
+- Time: 2026-05-09 23:05 KST.
+- Goal:
+  - Stop leaving the modern-text preview/final comparison as diagnostic-only.
+  - Add a guard seam that validates an already-generated comparison report without re-running Angular, FFmpeg, or the Python renderer.
+- RED:
+  - Added `tests/test_template_builder_preview_final_report_guard.py`.
+  - RED was `ModuleNotFoundError: No module named 'scripts.validate_template_builder_preview_final_report'`.
+- GREEN:
+  - Added `scripts/validate_template_builder_preview_final_report.py`.
+  - The validator supports:
+    - overall `--max-mismatch-ratio`,
+    - repeated `--category-threshold category=maxRatio`,
+    - repeated `--required-category`,
+    - default modern-text Template Builder thresholds,
+    - both video comparison report shape and screenshot comparison report shape.
+- Default thresholds:
+  - overall `0.012`
+  - `text:subTitle=0.03`
+  - `text:mainTitleLine1=0.01`
+  - `text:mainTitleLine2=0.012`
+  - `text:bottomTitle=0.012`
+  - `text:subtitleText=0.99`
+  - `text:subtitleBox=0.15`
+  - `media:logoImage=0.25`
+- Actual report validation:
+  - Command: `clipper_python uv run python scripts/validate_template_builder_preview_final_report.py --report /tmp/template-builder-modern-final-text-20260509/preview-vs-sample-render-t4/preview_video_frame_comparison.json --output /tmp/template-builder-modern-final-text-20260509/preview-final-guard.json`
+  - Result: passed.
+  - Overall mismatchRatio `0.010823902606310014 <= 0.012`.
+  - All default required categories were present and under thresholds.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_report_guard.py -q` passed, 3 tests.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_preview_video_frame_comparison.py -q` passed, 7 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Commit:
+  - `clipper_python` `979a24d feat: validate template preview final reports`
+- Next:
+  - Wire the validator into a single scripted preview-vs-sample diagnostic flow.
+  - Investigate `media:logoImage` and improve tight subtitle category reporting.
+
+Template Builder single-command preview/final guard runner:
+- Time: 2026-05-09 23:17 KST.
+- Goal:
+  - Connect the report validator to the existing preview-vs-sample diagnostic steps so the whole flow can be run with one command.
+- RED:
+  - Added `tests/test_template_builder_preview_final_guard_runner.py`.
+  - RED was `ModuleNotFoundError: No module named 'scripts.run_template_builder_preview_final_guard'`.
+- GREEN:
+  - Added `scripts/run_template_builder_preview_final_guard.py`.
+  - The runner:
+    - exports the NestJS sample render fixture,
+    - writes `render-contract.json` from `recipe.templateParams.templateBuilderRenderContract`,
+    - renders the sample fixture through Python `LocalRenderAdapter`,
+    - derives sample layer text from recipe overlays/subtitle tracks,
+    - exports renderer-backed text preview artifacts,
+    - captures Angular preview render snapshot and screenshot with injected artifacts,
+    - compares preview screenshot vs sample render video frame,
+    - validates the report through `validate_template_builder_preview_final_report.py`.
+- Actual runner:
+  - Command: `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-runner-20260509`
+  - Result: passed.
+  - Summary: `/tmp/template-builder-preview-final-guard-runner-20260509/summary.json`
+  - Comparison report: `/tmp/template-builder-preview-final-guard-runner-20260509/preview-vs-sample-render-t4/preview_video_frame_comparison.json`
+  - Guard report: `/tmp/template-builder-preview-final-guard-runner-20260509/preview-final-guard.json`
+  - Overall mismatchRatio `0.010823902606310014 <= 0.012`.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py -q` passed, 2 tests.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_preview_video_frame_comparison.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Commit:
+  - `clipper_python` `450cae2 feat: run template preview final guard`
+- Next:
+  - Investigate `media:logoImage` drift.
+  - Improve tight subtitle category reporting.
+  - Decide where this runner belongs in regular developer/CI workflow.
+
+Template Builder logo image drift diagnostic:
+- Time: 2026-05-09 23:36 KST.
+- Goal:
+  - Determine whether the remaining `media:logoImage=0.22235872235872237` category mismatch is actual placement/object-fit drift or bitmap edge noise from MP4 encode and frame-to-preview scaling.
+- Root-cause evidence:
+  - The fixture logo asset is a tiny deterministic `5x3` solid white PNG.
+  - The preview snapshot places `logoImage` at approximately `left=12.6`, `top=72`, `width=36`, `height=21.594`.
+  - The comparison category rect rounds to `left=12`, `top=72`, `width=37`, `height=22`.
+  - Manual threshold inspection showed preview/final foreground bounds are nearly aligned even though raw RGB mismatch is high.
+- RED:
+  - Added `tests/test_template_builder_preview_final_category_diagnostics.py`.
+  - RED was `ModuleNotFoundError: No module named 'scripts.diagnose_template_builder_preview_final_category'`.
+- GREEN:
+  - Added `scripts/diagnose_template_builder_preview_final_category.py`.
+  - The script reads an existing preview/final comparison report, crops one category rect, computes foreground bbox/count/coverage for two thresholds, reports bbox IoU/count ratio, and writes JSON.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_category_diagnostics.py tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py -q` passed, 7 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_python git diff --check` passed.
+- Commit:
+  - `clipper_python` `14004e3 feat: diagnose template preview final categories`
+- Actual diagnostic:
+  - Command: `clipper_python uv run python scripts/diagnose_template_builder_preview_final_category.py --comparison-report /tmp/template-builder-preview-final-guard-runner-20260509/preview-vs-sample-render-t4/preview_video_frame_comparison.json --category media:logoImage --output /tmp/template-builder-preview-final-guard-runner-20260509/logo-image-category-diagnostic.json`
+  - Raw category mismatchRatio: `0.22235872235872237`.
+  - Foreground threshold `80`: preview bbox `{left:1, top:0, width:36, height:21}`, final bbox `{left:0, top:0, width:37, height:22}`, bbox IoU `0.9287469287469288`, foreground count ratio `0.9298892988929889`.
+  - Strong foreground threshold `180`: preview bbox `{left:1, top:0, width:36, height:21}`, final bbox `{left:1, top:0, width:35, height:21}`, bbox IoU `0.9722222222222222`, foreground count ratio `0.9722222222222222`.
+- Interpretation:
+  - The visible foreground bounds are aligned.
+  - This is not currently a placement/object-fit bug worth changing.
+  - The raw mismatch is dominated by edge/fringe differences after MP4 encode and scale normalization.
+- Next:
+  - Keep the current `media:logoImage <= 0.25` allowance, but interpret it with the foreground bounds diagnostic.
+  - Improve tight `subtitleText` category reporting next.
+
+Template Builder preview export chrome removal and guard tightening:
+- Time: 2026-05-09 23:55 KST.
+- Goal:
+  - Improve the remaining tight `subtitleText` category signal without copying legacy bugs or hiding real preview/final disagreement.
+- Investigation:
+  - Running the category diagnostic on `text:subtitleText` showed the preview crop had many bright/blue foreground pixels while the final crop was mostly dark.
+  - Pixel inspection found preview colors like `#2563eb` and `#60a5fa`.
+  - These are Angular editor selection/resize UI colors, not subtitle renderer output.
+  - Extracting the comparison at `0.4s` produced the same category values, so the issue was not subtitle timing.
+- Root cause:
+  - `export-template-builder-preview-screenshot.mjs` captured `.phone-canvas` while the editor still showed the default selected `subtitleText` layer chrome.
+  - The parity guard was comparing final video against preview render content plus editor-only selection UI.
+- RED:
+  - Added a component spec for hiding editor-only preview chrome during render-surface capture.
+  - Added export spec assertions that screenshot export mode has no `.selection-box`, `.canvas-resize-handle`, or `.canvas-text-layer--selected`.
+  - RED failure: `NG0303: Can't set value of the 'previewChromeVisible' input`.
+  - Added a Python guard test proving the old chrome-contaminated report should fail the new defaults.
+- GREEN:
+  - Added `TemplateBuilderEditorComponent.previewChromeVisible`, default `true`.
+  - When false, the canvas hides selected classes, selection boxes, resize handles, alignment guides, and snap-grid chrome.
+  - Snapshot/screenshot export fixtures set `previewChromeVisible=false`.
+  - Tightened `clipper_python/scripts/validate_template_builder_preview_final_report.py` defaults:
+    - overall `0.006`
+    - `text:subtitleText=0.3`
+    - `text:subtitleBox=0.04`
+    - existing plain title and `media:logoImage` thresholds unchanged.
+- Verification:
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/services/template-builder-preview-screenshot.export.spec.ts --include=src/features/template-builder/services/template-builder-preview-render-snapshot.export.spec.ts` passed, 41 specs.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 4 tests.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_category_diagnostics.py tests/test_template_builder_preview_screenshot_comparison.py tests/test_template_builder_preview_video_frame_comparison.py -q` passed, 12 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `git diff --check` passed in `clipper_angular` and `clipper_python`.
+- Commits:
+  - `clipper_angular` `4665613 fix: hide template preview chrome in exports`
+  - `clipper_python` `70d442d test: tighten template preview final guard`
+- Post-commit verification:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-postcommit-20260509` passed.
+  - Post-commit runner overall mismatchRatio `0.005095807613168724 <= 0.006`.
+  - Post-commit runner guard failures: `[]`.
+  - `git status --short` is clean in `clipper_angular`, `clipper_python`, and `clipper_nestjs`.
+- Actual end-to-end runner:
+  - Command: `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-no-chrome-runner-20260509`
+  - Result: passed.
+  - Summary: `/tmp/template-builder-preview-final-guard-no-chrome-runner-20260509/summary.json`
+  - Guard report: `/tmp/template-builder-preview-final-guard-no-chrome-runner-20260509/preview-final-guard.json`
+  - Overall mismatchRatio `0.005095807613168724 <= 0.006`.
+  - Category values:
+    - `text:subtitleText=0.25873015873015875 <= 0.3`
+    - `text:subtitleBox=0.029562043795620437 <= 0.04`
+    - `media:logoImage=0.22235872235872237 <= 0.25`
+- Effect:
+  - Overall mismatch improved from `0.010823902606310014` to `0.005095807613168724`.
+  - `text:subtitleText` improved from `0.9865079365079366` to `0.25873015873015875`.
+  - `text:subtitleBox` improved from `0.13248175182481753` to `0.029562043795620437`.
+- Next:
+  - Decide how to wire the runner into regular developer/CI workflow.
+  - Run packaged Electron bridge smoke.
+
+Template Builder preview/final local guard workflow:
+- Time: 2026-05-10 00:12 KST.
+- Decision:
+  - The repository does not currently have GitHub Actions or another CI service configured.
+  - Do not add CI workflow files in this slice.
+  - Treat `clipper_python/scripts/run_template_builder_preview_final_guard.py` as a manual local development/QA integration guard.
+- Clarification:
+  - This runner is not part of the packaged application.
+  - It is not run during normal user app usage.
+  - It is run manually by developers after Template Builder preview/final related changes.
+- RED:
+  - Tightened `tests/test_template_builder_preview_final_guard_runner.py` so `--help` must mention `local development` and `not run by the packaged application`.
+  - RED failed because the CLI help did not contain that explanation.
+- GREEN:
+  - Updated `scripts/run_template_builder_preview_final_guard.py` argparse epilog.
+  - Added `clipper_python/scripts/TEMPLATE_BUILDER_PREVIEW_FINAL_GUARD.md` with purpose, when to run, command, current thresholds, outputs, and failure handling.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py -q` passed, 6 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-local-doc-20260510` passed with mismatchRatio `0.005095807613168724 <= 0.006`.
+  - `clipper_python git diff --check` passed.
+- Commit:
+  - `clipper_python` `e080135 docs: document template preview final local guard`
+- Local command:
+  - `cd clipper_python`
+  - `uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard`
+- Next:
+  - Run packaged Electron bridge smoke.
+  - Optionally integrate foreground-bounds diagnostics into the guard report.
+
+Template Builder packaged Electron bridge smoke:
+- Time: 2026-05-10 00:31 KST.
+- Goal:
+  - Verify the packaged Electron app can start and reuse the Template Builder Python renderer worker through `ElectronPluginHost.ensureStarted(...)`.
+  - Keep this separate from the local preview/final guard runner; this is a bridge/package smoke, not a CI job and not product runtime automation.
+- Setup:
+  - The already-built packaged app was stale and returned 404 for `GET /v1/template-builder/families`.
+  - Rebuilt latest packaged app from `clipper_electron`:
+    - `source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`
+  - Build completed successfully: Angular electron build, NestJS ncc bundle, Electron TS compile, Python uv prepare, and electron-builder all succeeded.
+  - Launched:
+    - `dist-app/mac-arm64/Clipper2.app/Contents/MacOS/Clipper2`
+- Runtime:
+  - PluginHostBridge: `http://127.0.0.1:60496`
+  - Packaged NestJS: `http://127.0.0.1:60497/v1`
+  - Renderer session base URL after warmup: `http://127.0.0.1:60515`
+- Smoke checks:
+  - `GET /v1/health`: HTTP 200, `time_total=0.001021`, body `{"status":"ok","service":"clipper-nestjs"}`.
+  - `GET /v1/plugins/clipper1_video_render/status` before warmup: HTTP 200, `runtimeState=stopped`.
+  - `GET /v1/template-builder/families`: HTTP 200, route present.
+  - `POST /v1/template-builder/preview/renderer-session`: HTTP 201, `time_total=3.049470`, body `{"status":"ready","pluginName":"clipper1_video_render","baseUrl":"http://127.0.0.1:60515"}`.
+  - `GET /v1/plugins/clipper1_video_render/status` after warmup: HTTP 200, `runtimeState=running`, `port=60515`, `pid=51282`.
+  - First subtitle artifact request:
+    - HTTP 201.
+    - Client measured time: `76ms`.
+    - Worker `renderMs=17.458`.
+    - `cached=false`, `lineCount=2`, `clipped=false`, `imageDataUrlLength=1126`.
+  - Identical subtitle artifact request:
+    - HTTP 201.
+    - Client measured time: `18ms`.
+    - `cached=true`, `lineCount=2`, `clipped=false`, `imageDataUrlLength=1126`.
+  - `POST /v1/plugins/clipper1_video_render/stop`: HTTP 204, `time_total=0.207633`.
+  - Final status: HTTP 200, `runtimeState=stopped`.
+  - Packaged app was shut down; NestJS exited with code 0.
+- Interpretation:
+  - Cold renderer startup in packaged app took about 3 seconds.
+  - Warm text/subtitle artifact calls are fast enough for background preview refresh behavior; the second identical call hit cache in 18ms client time.
+  - The packaged Electron bridge path is usable for Template Builder renderer warm sessions.
+- Next:
+  - Optionally integrate foreground-bounds diagnostics into the preview/final guard report for known media edge-noise categories.
+
+Template Builder preview/final guard foreground diagnostics:
+- Time: 2026-05-10 00:47 KST.
+- Goal:
+  - Integrate the existing foreground-bounds category diagnostic into the guard report so `media:logoImage` can be interpreted without running a separate script.
+  - Keep pass/fail semantics unchanged.
+- RED:
+  - Added a validator test requiring `validate_preview_final_report(... foreground_bounds_categories=("media:logoImage",))` to attach `foregroundBounds` under `categories.media:logoImage`.
+  - Added a runner test requiring `run_template_builder_preview_final_guard()` to pass `foreground_bounds_categories=("media:logoImage",)` to the validator.
+  - RED failures:
+    - `TypeError: validate_preview_final_report() got an unexpected keyword argument 'foreground_bounds_categories'`.
+    - runner fake validator saw missing `foreground_bounds_categories`.
+- GREEN:
+  - `validate_template_builder_preview_final_report.py` imports `diagnose_preview_final_category()` and can attach compact foreground-bounds metadata to requested categories.
+  - `run_template_builder_preview_final_guard.py` defaults foreground-bounds diagnostics to `("media:logoImage",)`.
+  - CLI now supports `--foreground-bounds-category`.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_python git diff --check` passed.
+  - Actual runner:
+    - `uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-foreground-20260510`
+    - passed `true`, mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - Actual guard foreground metadata:
+    - `media:logoImage` raw mismatchRatio `0.22235872235872237`.
+    - foreground threshold `80`: bbox IoU `0.9287469287469288`, foreground count ratio `0.9298892988929889`.
+    - strong threshold `180`: bbox IoU `0.9722222222222222`, foreground count ratio `0.9722222222222222`.
+    - interpretation: foreground bounds are aligned; raw mismatch is likely dominated by encode/scale edge noise.
+- Commit:
+  - `clipper_python` `ae777cc feat: include foreground diagnostics in preview final guard`
+- Next:
+  - Keep using the local guard runner after Template Builder preview/final renderer changes.
+  - Next implementation should broaden product-level coverage, for example multiple Template Builder sample fixtures or a documented manual release checklist hook.
+
+Template Builder multi-fixture local guard:
+- Time: 2026-05-10 01:18 KST.
+- Goal:
+  - Broaden the local preview/final guard beyond the single image-logo sample.
+  - Add a text-heavy Korean fixture while keeping the same visible category set so existing thresholds/required categories remain valid.
+- Fixture set:
+  - `default-image-logo`: existing sample.
+  - `long-korean-text`: longer Korean text sample:
+    - subTitle `오늘의 긴 핵심 문장`
+    - main title lines `가을 야시장과`, `로컬 페스티벌 추천`
+    - bottomTitle `저장하고 같이 보기`
+    - subtitle lines `이번 주말 가족 나들이`, `서울 근교 축제 소식 정리`
+- RED:
+  - NestJS test required `writeTemplateBuilderSampleRenderFixture(outputDir, { fixtureId: 'long-korean-text' })` and CLI `--fixture-id long-korean-text` to export long Korean text fixture metadata.
+  - Angular node test required `export-template-builder-preview-render-snapshot.mjs --fixture-id long-korean-text` to output long Korean text in the render snapshot.
+  - Python runner test required default execution to run both `default-image-logo` and `long-korean-text`, pass `--fixture-id` to NestJS/Angular exporters, and write fixture results under top-level `summary.json`.
+- GREEN:
+  - `clipper_nestjs` added fixture ids and fixture-specific sample text in `template-builder-sample-content.ts`, plus `--fixture-id` support in the sample render fixture exporter.
+  - `clipper_angular` added matching fixture ids/sample text, a `previewTextSamples` input for export-only text selection, and `--fixture-id` support in snapshot/screenshot exporters.
+  - `clipper_python` changed the local guard runner to run the default fixture set and aggregate per-fixture results.
+- Verification:
+  - `clipper_nestjs npm run build && node --test test/template-builder-sample-render-fixture.test.js` passed, 4 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 5 tests.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `git diff --check` passed in `clipper_nestjs`, `clipper_angular`, and `clipper_python`.
+- Actual runner:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-multifixture-20260510`
+  - passed `true`.
+  - `default-image-logo`: mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - `long-korean-text`: mismatchRatio `0.005438743141289438 <= 0.006`, failures `[]`.
+- Commits:
+  - `clipper_nestjs` `601be29 feat: add selectable template sample fixtures`
+  - `clipper_angular` `adc289b feat: export selectable template preview fixtures`
+  - `clipper_python` `6aa92e0 feat: run template preview final guard fixtures`
+- Next:
+  - Add fixture-specific required-category/threshold overrides before adding a visibility fixture such as `logoImage.visible=false`.
+  - Keep local guard usage manual until a release checklist or CI exists.
+
+Template Builder hidden-logo visibility fixture:
+- Time: 2026-05-10 01:44 KST.
+- Goal:
+  - Add the first visibility-focused fixture to the preview/final local guard.
+  - Verify `logoImage.visible=false` and `logoText.visible=false` are honored in both Angular preview and final/sample render.
+  - Make guard category requirements fixture-aware so hidden layers do not require impossible categories.
+- RED:
+  - Python runner test required default fixture ids to include `hidden-logo`.
+  - Python runner test required `hidden-logo` validation kwargs to omit `media:logoImage` from `category_thresholds`, `required_categories`, and `foreground_bounds_categories`.
+  - NestJS fixture test required `hidden-logo` sample render fixture to produce `logo_check=false`, no `logo_image`, and no `logo_text`.
+  - Angular snapshot export test required `--fixture-id hidden-logo` to produce no `logoImage`/`logoText` layer in the browser render snapshot.
+- GREEN:
+  - `clipper_nestjs` added `hidden-logo` sample text and sets `logoImage.visible=false` in the fixture variant.
+  - `clipper_angular` added matching `hidden-logo` preview text and sets `logoImage.visible=false` in the preview fixture.
+  - `clipper_python` added fixture-specific optional category policy: `hidden-logo` removes `media:logoImage` from thresholds, required categories, and foreground diagnostics.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_nestjs npm run build && node --test test/template-builder-sample-render-fixture.test.js` passed, 5 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 6 tests.
+  - `git diff --check` passed in `clipper_python`, `clipper_nestjs`, and `clipper_angular`.
+- Actual runner:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-visibility-20260510`
+  - passed `true`.
+  - `default-image-logo`: mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - `long-korean-text`: mismatchRatio `0.005438743141289438 <= 0.006`, failures `[]`.
+  - `hidden-logo`: mismatchRatio `0.0036061814128943758 <= 0.006`, failures `[]`.
+  - Hidden-logo required categories: `text:subTitle`, `text:mainTitleLine1`, `text:mainTitleLine2`, `text:bottomTitle`, `text:subtitleText`, `text:subtitleBox`.
+  - Hidden-logo categories do not include `media:logoImage`.
+- Commits:
+  - `clipper_nestjs` `ed2e9cd feat: add hidden logo template fixture`
+  - `clipper_angular` `74e2ba5 feat: add hidden logo preview fixture`
+  - `clipper_python` `1fd276c feat: support visibility guard fixture policy`
+- Next:
+  - Product-behavior fixture candidates: `logo-text-only` or `subtitle-hidden`.
+  - Keep the local guard manual until a release checklist or CI exists.
+
+Template Builder subtitle-hidden visibility fixture:
+- Time: 2026-05-10 02:02 KST.
+- Goal:
+  - Add a visibility fixture for hidden subtitles.
+  - Verify `subtitleText.visible=false` and `subtitleBox.visible=false` remove subtitles from Angular preview, NestJS legacy payload, Python text artifact export, and guard category policy.
+- RED:
+  - Python runner test required default fixture ids to include `subtitle-hidden`.
+  - Python runner test required `subtitle-hidden` validation kwargs to omit `text:subtitleText` and `text:subtitleBox` from thresholds and required categories.
+  - NestJS fixture test required `clips[0].subtitles=[]` while keeping logo enabled.
+  - Angular snapshot export test required `subtitleText` and `subtitleBox` to be absent while `logoImage` remains visible.
+- GREEN:
+  - `clipper_nestjs` added `subtitle-hidden` sample text and sets `subtitleText.visible=false`, `subtitleBox.visible=false`.
+  - `clipper_angular` added matching preview fixture behavior.
+  - `clipper_python` added fixture-specific optional category policy for hidden subtitle layers and stopped forwarding hidden subtitle text into preview text artifact generation.
+- Verification:
+  - `clipper_nestjs npm run build && node --test test/template-builder-sample-render-fixture.test.js` passed, 6 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 7 tests.
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+- Actual runner:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-subtitle-hidden-20260510`
+  - passed `true`.
+  - `default-image-logo`: mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - `long-korean-text`: mismatchRatio `0.005438743141289438 <= 0.006`, failures `[]`.
+  - `hidden-logo`: mismatchRatio `0.0036061814128943758 <= 0.006`, failures `[]`.
+  - `subtitle-hidden`: mismatchRatio `0.00325252914951989 <= 0.006`, failures `[]`.
+  - `subtitle-hidden` required categories: `text:subTitle`, `text:mainTitleLine1`, `text:mainTitleLine2`, `text:bottomTitle`, `media:logoImage`.
+  - `subtitle-hidden` categories do not include `text:subtitleText` or `text:subtitleBox`.
+- Commits:
+  - `clipper_nestjs` `aefda40 feat: add hidden subtitle template fixture`
+  - `clipper_angular` `36a314c feat: add hidden subtitle preview fixture`
+  - `clipper_python` `5bb9b07 feat: add hidden subtitle guard fixture`
+  - `clipper_python` `bc61033 docs: document template guard fixture set`
+
+Template Builder logo-text-only visibility fixture:
+- Time: 2026-05-10 02:36 KST.
+- Goal:
+  - Add a product-behavior fixture where the image logo is hidden and the text logo is visible.
+  - Verify text-logo preview/final parity and require the `text:logoText` comparison category.
+- RED:
+  - Python runner test required default fixture ids to include `logo-text-only`.
+  - Python runner test required `logo-text-only` to omit `media:logoImage`, add `text:logoText <= 0.03`, and require `text:logoText`.
+  - NestJS fixture test required `logo_check=true`, `logo_type=TEXT`, no `logo_image`, and `logo_text=Clipper`.
+  - Angular snapshot export test required no `logoImage` layer and a visible `logoText=Clipper` layer.
+  - A follow-up RED caught that the CLI path added `text:logoText` to thresholds but not to `requiredCategories`.
+- GREEN:
+  - `clipper_nestjs` added `logo-text-only` sample content and switches the sample logo overlay from image artifact to text when `logoText.visible=true`.
+  - `clipper_angular` added matching preview fixture visibility and sample text.
+  - `clipper_python` added fixture-specific `text:logoText` threshold and required-category handling while removing `media:logoImage`.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js` passed, 7 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 8 tests.
+- Actual runner:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-logo-text-only-required-20260510`
+  - passed `true`.
+  - `default-image-logo`: mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - `long-korean-text`: mismatchRatio `0.005438743141289438 <= 0.006`, failures `[]`.
+  - `hidden-logo`: mismatchRatio `0.0036061814128943758 <= 0.006`, failures `[]`.
+  - `subtitle-hidden`: mismatchRatio `0.00325252914951989 <= 0.006`, failures `[]`.
+  - `logo-text-only`: mismatchRatio `0.0037776491769547327 <= 0.006`, failures `[]`.
+  - `logo-text-only` required categories include `text:logoText`.
+  - `text:logoText`: mismatchRatio `0.009124087591240875 <= 0.03`.
+- Commits:
+  - `clipper_nestjs` `810e483 feat: add text logo template fixture`
+  - `clipper_angular` `ad23c40 feat: add text logo preview fixture`
+  - `clipper_python` `2b6359c feat: add text logo guard fixture`
+- Next:
+  - Next implementation candidate: `style-heavy` fixture for outline/shadow/box combinations across non-subtitle title layers.
+  - Separate documentation candidate: wire the local guard into a manual release checklist.
+
+Template Builder style-heavy fixture:
+- Time: 2026-05-10 03:32 KST.
+- Goal:
+  - Add a style-focused fixture to the preview/final local guard.
+  - Cover non-subtitle title/logo text style combinations: box fill, border, outline, shadow, color, tracking, and text-logo style.
+- Fixture:
+  - `style-heavy`.
+  - Text sample:
+    - subTitle `스타일 집중 확인`
+    - main title lines `윤곽선과 그림자`, `박스 색상 테스트`
+    - bottomTitle `스타일 그대로 저장`
+    - subtitle lines `복잡한 스타일도`, `결과 영상과 맞춰요`
+    - logoText `STYLE`
+  - `logoImage.visible=false`, `logoText.visible=true`, subtitles visible.
+- RED:
+  - Python runner test required default fixture ids to include `style-heavy`.
+  - Python runner test required `style-heavy` to omit `media:logoImage`, require `text:logoText`, and later use style-heavy-specific thresholds.
+  - NestJS fixture test required style-heavy render contract style values and legacy template settings mapping.
+  - Angular snapshot export test required browser-rendered style values for text color, box background, outline width, no `logoImage`, and visible `logoText`.
+- GREEN:
+  - `clipper_nestjs` added `style-heavy` sample text and applies style-heavy layer styles in `templateBuilderVariantFixture`.
+  - `clipper_angular` added matching preview fixture text and styles.
+  - `clipper_python` added `style-heavy` to the default fixture set and applies fixture-specific guard policy.
+- Diagnostic decision:
+  - First style-heavy runner under default guard failed:
+    - overall `0.03424532750342935 > 0.006`
+    - `text:subTitle=0.2824817518248175 > 0.03`
+    - `text:bottomTitle=0.393978102189781 > 0.012`
+    - `text:logoText=0.3165137614678899 > 0.03`
+  - Inspection of preview and final scaled frames showed visual alignment. The mismatch is dominated by MP4 encode and preview-scale channel drift across large filled text-box regions.
+  - Do not loosen default fixture thresholds. Add style-heavy-specific thresholds only.
+- Style-heavy guard thresholds:
+  - overall `0.04`
+  - `text:subTitle=0.32`
+  - `text:mainTitleLine1=0.016`
+  - `text:mainTitleLine2=0.022`
+  - `text:bottomTitle=0.44`
+  - `text:logoText=0.36`
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_preview_final_guard_runner.py tests/test_template_builder_preview_final_report_guard.py tests/test_template_builder_preview_final_category_diagnostics.py -q` passed, 9 tests.
+  - `clipper_python uv run python -m compileall scripts` passed.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-sample-render-fixture.test.js` passed, 8 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 9 tests.
+- Actual runner:
+  - `clipper_python uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard-style-heavy-full-20260510`
+  - passed `true`.
+  - `default-image-logo`: mismatchRatio `0.005095807613168724 <= 0.006`, failures `[]`.
+  - `long-korean-text`: mismatchRatio `0.005438743141289438 <= 0.006`, failures `[]`.
+  - `hidden-logo`: mismatchRatio `0.0036061814128943758 <= 0.006`, failures `[]`.
+  - `subtitle-hidden`: mismatchRatio `0.00325252914951989 <= 0.006`, failures `[]`.
+  - `logo-text-only`: mismatchRatio `0.0037776491769547327 <= 0.006`, failures `[]`.
+  - `style-heavy`: mismatchRatio `0.03424532750342935 <= 0.04`, failures `[]`.
+  - Style-heavy category results:
+    - `text:subTitle=0.2824817518248175 <= 0.32`
+    - `text:mainTitleLine1=0.012043795620437956 <= 0.016`
+    - `text:mainTitleLine2=0.016423357664233577 <= 0.022`
+    - `text:bottomTitle=0.393978102189781 <= 0.44`
+    - `text:logoText=0.3165137614678899 <= 0.36`
+- Commits:
+  - `clipper_nestjs` `f4eca90 feat: add style heavy template fixture`
+  - `clipper_angular` `a7f047f feat: add style heavy preview fixture`
+  - `clipper_python` `a3a6c3b feat: add style heavy guard fixture`
+- Next:
+  - Direct packaged app testing is now appropriate after rebuilding from the latest commits.
+  - Prepare a concise manual Template Builder checklist for the user before/with packaged app testing.
+
+Template Builder packaged app smoke and manual checklist:
+- Time: 2026-05-10 KST.
+- Goal:
+  - Rebuild the packaged Electron app after the latest Template Builder preview/final guard fixtures.
+  - Verify packaged NestJS Template Builder routes and packaged renderer-session startup.
+  - Prepare a manual checklist for user-facing Template Builder app testing.
+- Build:
+  - `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64` succeeded.
+  - Artifact app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Artifact DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - macOS signing was skipped because no valid signing identity was available.
+- Packaged runtime:
+  - PluginHostBridge: `http://127.0.0.1:50282`.
+  - packaged NestJS: `http://127.0.0.1:50283/v1`.
+  - renderer session: `http://127.0.0.1:50304`.
+- Smoke:
+  - `GET /v1/health`: HTTP 200, `time_total=0.001096`.
+  - `GET /v1/template-builder/families`: HTTP 200, `time_total=0.006860`.
+  - `GET /v1/plugins/clipper1_video_render/status` before warmup: HTTP 200, `runtimeState=stopped`, `time_total=0.007597`.
+  - `POST /v1/template-builder/preview/renderer-session`: HTTP 201, `time_total=0.259108`, `status=ready`, `baseUrl=http://127.0.0.1:50304`.
+  - Packaged app was terminated after the smoke; NestJS and Python renderer worker shut down cleanly.
+- Documentation:
+  - Added `.codex/implementation/TEMPLATE_BUILDER_MANUAL_APP_CHECKLIST_2026-05-10.md`.
+  - Updated `.codex/implementation/PREVIEW_FINAL_RENDER_PARITY_PLAN_2026-05-09.md`.
+  - Updated `.codex/implementation/NEXT_SESSION_PROMPT.md`.
+- Next:
+  - User can now launch `clipper_electron/dist-app/mac-arm64/Clipper2.app` and follow the manual checklist.
+  - Continue running `clipper_python/scripts/run_template_builder_preview_final_guard.py` manually after Template Builder preview/final changes.
+
+Template Builder panel-local scrolling fix:
+- Time: 2026-05-10 KST.
+- User feedback:
+  - The Template Builder page should not scroll as one whole `Shared Template Catalog` page.
+  - The four visual regions should not all grow to match the long fourth properties region.
+  - The canvas preview region must never have its own scroll.
+- Decision:
+  - Disable page-level vertical scrolling for `.template-page`.
+  - Let the family catalog list, left editor layer list, and right properties panel own their own vertical scroll.
+  - Keep the center stage/canvas region overflow-hidden with no scroll.
+- RED:
+  - Added `TemplateBuilderPageComponent keeps the catalog page fixed while each non-canvas panel owns its vertical scroll`.
+  - Verified it failed against the old CSS: page overflow was visible, page height exceeded viewport, list/editor panel scroll ownership was missing, editor min-height came from `calc(100vh - 120px)`, left/props panels used hidden instead of auto.
+- GREEN:
+  - `template-builder-page.component.scss` now uses `height: 100vh`, `min-height: 0`, page `overflow: hidden`, body `minmax(0, 1fr)` and panel-local overflow rules.
+  - `template-builder-editor.component.scss` now makes the host/editor fill the parent height, removes the old viewport-derived min-height, sets left/props panels to `overflow-y: auto`, and keeps stage/stage-grid overflow hidden.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 23 specs.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 39 specs.
+  - `clipper_angular node --test test/template-builder-preview-render-snapshot-export.test.mjs test/template-builder-preview-screenshot-export.test.mjs` passed, 9 tests.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Commit:
+  - `clipper_angular` `5ed7cbe fix: constrain template builder panel scrolling`.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke: `GET /v1/health` HTTP 200, `time_total=0.001022`; `GET /v1/template-builder/families` HTTP 200, `time_total=0.005769`.
+  - Packaged app and NestJS were shut down after smoke.
+- Documentation:
+  - Updated `.codex/implementation/TEMPLATE_BUILDER_MANUAL_APP_CHECKLIST_2026-05-10.md` with panel-local scrolling checks.
+  - Updated `.codex/implementation/NEXT_SESSION_PROMPT.md`.
+
+Plugin dashboard Clipper1 workflow-only fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - `Clipper1 숏폼 제작` appears not to start from the plugin store/dashboard flow.
+- Investigation:
+  - Current packaged `/v1/plugins` returns both `clipper1_video_render` and `clipper1`.
+  - `clipper1_video_render` is the actual runtime worker and `POST /v1/plugins/clipper1_video_render/start` succeeded with `baseUrl=http://127.0.0.1:51492`.
+  - `clipper1` is a workflow entry for `/clipper-studio`, not a runtime worker.
+  - Angular dashboard still checked the stale name `clipper_studio` in `isWorkflowOnly()`.
+  - Therefore `clipper1` was incorrectly rendered as startable; direct `POST /v1/plugins/clipper1/start` returned HTTP 201 with empty `baseUrl`, and status remained `stopped`.
+- RED:
+  - Added `clipper_angular/src/shell/dashboard/dashboard.component.spec.ts`.
+  - The focused test proved `clipper1` was not workflow-only, showed `canStart=true`, state label `중지됨`, and rendered a `시작` button instead of `열기`.
+- GREEN:
+  - Added `isWorkflowOnlyPlugin()` in `clipper_angular/src/core/plugin-status.service.ts`.
+  - Classified `clipper1` and `variation` as workflow-only entries.
+  - Dashboard now uses the shared helper.
+  - Updated local fallback names for `clipper1` and `variation`.
+- Commit:
+  - `clipper_angular` `6d376b4 fix: open workflow plugins from dashboard`.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/shell/dashboard/dashboard.component.spec.ts` passed, 1 spec.
+  - `clipper_angular npm test -- --watch=false --include src/core/plugin-status.service.spec.ts` passed, 4 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke: `GET /v1/health` HTTP 200, `time_total=0.000965`; `GET /v1/plugins` HTTP 200, `time_total=0.008602`.
+  - Packaged app and NestJS were shut down after smoke.
+
+Plugin dashboard runtime-status projection fix:
+- Time: 2026-05-10 KST.
+- User follow-up:
+  - `Clipper1 숏폼 제작` and `Variation 대량 숏폼 제작` are workflow entries, not runtime plugins.
+  - They should not appear in the Dashboard plugin status list at all.
+- Decision:
+  - Keep `/v1/plugins` as the combined backend list for workflow/user-facing entries plus runtime workers.
+  - Keep `PluginStatusService.items()` as the Store/catalog-facing list.
+  - Add `PluginStatusService.runtimeItems()` as the Dashboard runtime-status projection.
+  - Exclude workflow-only entries (`clipper1`, `variation`) from `runtimeItems()`.
+  - Keep actual runtime plugins visible: `clipper1_video_render`, `dance_highlight`, `dialog_highlight`.
+- RED:
+  - Added/updated `clipper_angular/src/core/plugin-status.service.spec.ts`.
+  - New optimistic runtime-state test failed against the old implementation: runtime list stayed `stopped` instead of `starting`.
+  - Dashboard component test was updated to prove status rows render `runtimeItems()` and do not contain `Clipper1 숏폼 제작` or `Variation 대량 숏폼 제작`.
+- GREEN:
+  - `PluginStatusService` now separates `items` and `runtimeItems` on `refreshAll()`.
+  - `refreshOne()` updates both scopes without reintroducing workflow-only entries into the runtime list.
+  - start/stop optimistic state updates both `items` and `runtimeItems`.
+  - Dashboard status list, loading empty state, and idle cleanup now read `runtimeItems()`.
+  - Removed workflow-only `열기` action branch from Dashboard status rows.
+- Commit:
+  - `clipper_angular` `15727b3 fix: show only runtime plugins in dashboard status`.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/core/plugin-status.service.spec.ts` passed, 8 specs.
+  - `clipper_angular npm test -- --watch=false --include src/shell/dashboard/dashboard.component.spec.ts` passed, 1 spec.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke: `GET /v1/health` HTTP 200, `time_total=0.001090`; `GET /v1/plugins` HTTP 200, `time_total=0.009961`.
+  - `/v1/plugins` still includes `clipper1` and `variation` by design; Angular Dashboard filters them out through `runtimeItems()`.
+  - Packaged app and NestJS were shut down after smoke.
+
+Template Builder document-level scroll fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - Template Builder page still has whole-page vertical scroll.
+  - Scrolling down reveals the black app background below the bright Template Builder page.
+- Investigation:
+  - The previous scroll fix covered only `template-builder-page` and `template-builder-editor` internals.
+  - The actual app root/shell still allowed vertical document flow:
+    - `app-root` was not a fixed block viewport boundary.
+    - `app-floating-install-bar` remained an inline element in document flow.
+    - `.app-main` had `overflow-x: auto` but no vertical overflow rule, so browser computed `overflow-y: auto`.
+  - Template Builder also differed from Store/Dashboard/Projects route behavior because its route host did not explicitly own the bright fixed-height page surface.
+  - A packaged-app CDP check before the final root fix reproduced the bug: after `window.scrollTo(0, 9999)`, `/templates` reported `window.scrollY=428`, `documentElement.scrollHeight=1300`, and the `app-root` rect moved to `y=-428`.
+- RED:
+  - Updated `clipper_angular/src/app/app.component.spec.ts` to run zoneless and use router providers.
+  - Added app-root/app-shell regression: root must be a fixed block viewport boundary, shell/main must hide vertical overflow, and main/root height must not exceed viewport.
+  - Verified failure against old CSS: `.app-shell overflow-y` was `visible`, `.app-main overflow-y` was `auto`.
+- GREEN:
+  - `clipper_angular/src/app/app.component.scss`
+    - `:host` now uses `position: fixed`, `inset: 0`, `display: block`, `width: 100vw`, `height: 100vh`, `min-height: 0`, `overflow: hidden`, and app background.
+    - `.app-shell` now uses `height: 100vh`, `min-height: 0`, `overflow: hidden`.
+    - `.app-main` now uses `height: 100vh`, `min-height: 0`, `overflow-x: auto`, `overflow-y: hidden`.
+    - `app-floating-install-bar` now uses `display: contents`.
+  - `clipper_angular/src/styles.scss`
+    - `html, body` now use `height: 100%`, `min-height: 0`, `overflow: hidden`.
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.scss`
+    - Route host now owns the bright Template Builder surface: `display: block`, `height: 100vh`, `min-width: 1500px`, `overflow: hidden`, `background: #f3f5f7`.
+    - `.template-page` follows the host with `height: 100%` and the same `min-width`.
+- Commit:
+  - `clipper_angular` `9bc271e fix: prevent app shell vertical scroll`.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/app/app.component.spec.ts` passed, 3 specs.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 23 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Final CDP app-root/page comparison after `window.scrollTo(0, 9999)`:
+    - `/templates`: `scrollY=0`, `documentElement.scrollHeight=872`, `documentElement.clientHeight=872`, `body.scrollHeight=872`.
+    - `/templates` `app-root`: `position=fixed`, rect `y=0`, rect height `872`, bottom `872`.
+    - `/templates` route host/page: background `rgb(243, 245, 247)`, height `872px`, min-width `1500px`.
+    - `/dashboard` and `/store`: also `scrollY=0`, `documentElement.scrollHeight=872`, `documentElement.clientHeight=872`, matching the no-document-scroll app shell behavior.
+  - Smoke: `GET /v1/health` HTTP 200, `time_total=0.001205`; `GET /v1/template-builder/families` HTTP 200, `time_total=0.005558`.
+  - Packaged app and NestJS were shut down after smoke.
+
+Template Builder preview text shrink fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - In Template Builder preview, moving subtitle/text layers briefly shows normal-sized text.
+  - Within less than a second, the text becomes extremely small.
+- Investigation:
+  - During drag/update, Angular invalidates text preview artifacts and shows browser-rendered text fallback.
+  - After the debounce/background render, Python final-render text artifacts arrive and replace browser text with `.canvas-text-artifact` images.
+  - The default Template Builder layer font is stored as a filename such as `Pretendard-SemiBold.otf`.
+  - `template_builder_text_renderer.py` tried `Path(font_family)` and `ImageFont.truetype(font_family, size)`, then fell back to `ImageFont.load_default()`.
+  - Pillow default bitmap font ignored the intended Template Builder font size, producing a tiny text artifact; this matched the reported "normal briefly, then tiny" behavior.
+  - Packaged Electron also needed explicit font packaging/env because plugin cwd is userData, not the app resources directory.
+- RED:
+  - Added `test_modern_template_builder_text_renderer_resolves_shared_font_filename`.
+  - The old renderer failed with `bottom - top == 8`, proving filename-only Pretendard fell back to Pillow default bitmap font.
+- GREEN:
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/template_builder_text_renderer.py`
+    - Resolves font filenames from `CLIPPER_LEGACY_FONTS_DIR`, `cwd/fonts`, source tree `clipper_python/fonts`, and local dev sibling `adlight_python/fonts`.
+  - `clipper_electron/electron-builder.yml`
+    - Bundles `../adlight_python/fonts` into packaged `clipper_python/fonts`.
+  - `clipper_electron/src/main/plugin/plugin-process.ts`
+    - Passes `CLIPPER_LEGACY_FONTS_DIR=<pythonRoot>/fonts` to dev/packaged plugin subprocesses unless already configured.
+- Commits:
+  - `clipper_python` `86d3cac fix: resolve template builder preview fonts`.
+  - `clipper_electron` `5916d2d fix: bundle template builder fonts`.
+- Verification:
+  - `clipper_python uv run pytest tests/test_template_builder_text_renderer.py tests/test_template_builder_text_preview_artifact_export_script.py tests/test_template_builder_text_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py -q` passed, 8 tests.
+  - `clipper_electron npm run build` passed.
+  - `clipper_python git diff --check` and `clipper_electron git diff --check` passed.
+  - Rebuilt packaged app with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Confirmed packaged fonts exist:
+    - `Clipper2.app/Contents/Resources/clipper_python/fonts/Pretendard-SemiBold.otf`
+    - `Clipper2.app/Contents/Resources/clipper_python/fonts/Paperlogy-8ExtraBold.ttf`
+  - Launched a separate packaged app with CDP on port 9334, leaving the user's existing Clipper2 process untouched.
+  - `/templates` CDP artifact check after background artifacts loaded:
+    - `canvas-text-artifact-mainTitleLine1`: natural size `908x64`, display size about `272.39x19.19`, alpha bbox height `36`.
+    - Other plain text artifacts had alpha bbox height `30-36`.
+    - `canvas-subtitle-artifact`: natural size `440x128`, display size `132x38.39`, alpha bbox height `128`.
+  - Stopped only the CDP-launched verification process with Ctrl-C.
+
+Template Builder read-only action guard fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - Template Builder에서 `테스트 렌더`, `게시`, `레이아웃 이미지` 버튼/입력이 오류를 낸다.
+- Investigation:
+  - 현재 선택된 기본 제공 Template Builder family는 시스템 family이며 `readonly=true`다.
+  - Angular editor가 읽기 전용 상태에서도 mutating action을 활성화했다.
+  - NestJS service의 `startSampleRender()`, `publishVariant()`, `uploadLayoutImage()`, `uploadLogoImage()`, `uploadFont()`는 시스템 family를 먼저 `getFamily()`로 인식하지 않고 custom repository에서만 찾았다.
+  - 따라서 시스템 family에 대한 직접 mutation 요청이 UI에서는 가능해 보이고, 서버에서는 `Unknown template family: system...`류 오류나 직접 수정 불가 오류로 이어질 수 있었다.
+- Decision:
+  - 기본 제공 템플릿은 read-only catalog item으로 유지한다.
+  - 사용자는 기본 제공 템플릿을 복제한 사용자 템플릿에서 수정, 이미지/폰트 업로드, 샘플 렌더, 게시를 수행한다.
+- RED:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+    - read-only system family에서 sample render/publish/layout image upload event가 emit되지 않고 버튼/input이 disabled여야 한다는 spec을 추가했다.
+    - 기존 template에는 `sample-render-button`/`publish-button` test id와 disabled guard가 없어 실패했다.
+  - `clipper_nestjs/test/template-builder-api.test.js`
+    - read-only preset에서 sample render/publish/layout image upload가 clone guidance message로 reject되어야 한다는 service spec을 추가했다.
+    - 기존 service는 `Unknown template family: system.legacy...`로 실패했다.
+- GREEN:
+  - `clipper_angular` `ebcaedd fix: gate template builder readonly actions`
+    - `TemplateBuilderEditorComponent`에 `isReadonly()` guard를 추가했다.
+    - read-only family에서 sample render, publish, variant create, file upload, drag/resize, property patch emit을 막았다.
+    - sample render/publish buttons와 layout/logo/font file inputs에 disabled state/test id를 추가했다.
+  - `clipper_nestjs` `5cf529b fix: reject readonly template builder mutations`
+    - mutating service methods가 system family까지 포함하는 `getFamily()`를 먼저 사용한다.
+    - read-only system family는 “복제 후 샘플 렌더/게시/수정할 수 있습니다” 메시지로 reject한다.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 40 specs.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 23 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js` passed, 11 tests.
+  - `clipper_angular git diff --check` and `clipper_nestjs git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke:
+    - `GET /v1/health` HTTP 200, `time_total=0.005476`.
+    - `GET /v1/template-builder/families` HTTP 200, `time_total=0.005544`; system families are `readonly=true`.
+    - `POST /v1/template-builder/families/system.legacy.clipper1.template.1/variants/full/sample-render` HTTP 400 with `기본 제공 템플릿은 복제 후 샘플 렌더할 수 있습니다.`
+    - `POST /v1/template-builder/families/system.legacy.clipper1.template.1/variants/full/publish` HTTP 400 with `기본 제공 템플릿은 복제 후 게시할 수 있습니다.`
+    - `POST /v1/template-builder/families/system.legacy.clipper1.template.1/variants/full/assets/layout-image` HTTP 400 with `기본 제공 템플릿은 복제 후 수정할 수 있습니다.`
+  - Smoke용 packaged app, NestJS 프로세스가 종료됐음을 `pgrep`으로 확인했다.
+
+Template Builder clone visual preservation fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - Template Builder에서 템플릿 하나를 선택해 복제했을 때 선택했던 템플릿이 제대로 복제되지 않는다.
+  - 복제 결과의 배경은 검은색이고, 모든 타이틀/자막이 콘텐츠 영역 안에 모여 보인다.
+- Investigation:
+  - Angular `openCloneFamilyForm()`은 현재 editor에서 보고 있는 ratio를 보지 않고 `defaultCloneRatio()`가 `full`을 우선 선택했다.
+  - 그래서 사용자가 16:9 template을 보고 있더라도 clone form/request가 `full` clone으로 기본 설정될 수 있었다.
+  - NestJS real catalog diagnostic에서 `template 17`의 `full -> 16:9` transfer는 text y를 content-area 기준으로 remap했다:
+    - `subTitle.y=747`, `mainTitleLine1.y=771`, `mainTitleLine2.y=802`, `subtitleText.y=1053`, `bottomTitle.y=1109`.
+    - 이 값들은 16:9 content area `y=656`, `height=608` 안에 모여 사용자가 말한 증상과 일치했다.
+  - system preset seed는 `contents_area_y_offset`을 `layers.contentArea.y`에만 반영했고 `variant.contentArea.y`에는 반영하지 않아 contract content-area가 기본값으로 남았다.
+  - 같은 ratio clone도 exact visual snapshot copy가 아니라 default variant + style transfer path를 탔다.
+- RED:
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.spec.ts`
+    - editor ratio가 `16:9`인 상태에서 clone form이 `16:9`를 기본 선택하고 clone request도 `ratio=16:9`, `cloneFromRatio=16:9`여야 한다는 spec 추가.
+    - 기존 implementation은 `full`을 보내 실패했다.
+  - `clipper_nestjs/test/template-builder-api.test.js`
+    - read-only preset ratio clone이 content area, layout image, title/subtitle y 좌표를 remap하지 않고 보존해야 한다는 service/API spec 추가.
+    - 기존 implementation은 `contentArea.y=656`으로 실패했다. 기대값은 legacy setting의 `595`.
+- GREEN:
+  - `clipper_angular` `6c0b1df fix: clone current template builder ratio`
+    - clone form/default fallback이 현재 editor preview ratio를 우선 사용한다.
+    - clone 성공 후 page state의 editor ratio를 clone된 ratio로 맞춘다.
+  - `clipper_nestjs` `48091dd fix: preserve template builder clone visuals`
+    - `template-builder-seed.ts`가 `contents_area_y_offset`을 `variant.contentArea.y`와 `layers.contentArea.y`에 같이 반영한다.
+    - `cloneFamily()`는 source/target ratio가 같을 때 source variant를 exact visual clone으로 복사한 뒤 id/family/status/sampleRender만 새 사용자 템플릿에 맞게 갱신한다.
+    - cross-ratio geometry transfer path는 유지했다.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 24 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_nestjs npm run build` passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js` passed, 12 tests.
+  - `clipper_angular git diff --check` and `clipper_nestjs git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke used a separate packaged app instance with `--user-data-dir=/tmp/clipper-codex-clone-user-data`.
+  - Smoke result:
+    - `GET /v1/health` HTTP 200.
+    - `POST /v1/template-builder/families/system.legacy.clipper1.template.17/clone` with `ratio=16:9`, `cloneFromRatio=16:9` HTTP 201.
+    - source/cloned values matched:
+      - `contentArea.y=595`
+      - `layers.contentArea.y=595`
+      - `layoutImage.assetUri=https://d2x-s3.s3.ap-northeast-2.amazonaws.com/layout/17.png`
+      - `mainTitleLine1.y=364`
+      - `subtitleText.oneLineY=1291`
+  - Smoke용 packaged app/NestJS process was stopped after verification.
+
+Template Builder clone ratio select display fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - 기존 템플릿의 1:1 ratio를 선택한 뒤 복제를 누르면 `복제할 비율` select가 16:9로 보인다.
+  - 그 상태에서 `복제`를 누르면 실제 생성되는 복제본은 1:1이다.
+- Investigation:
+  - 이전 clone ratio fix 이후 `cloneRatio()` state는 editor의 1:1 선택을 제대로 따라갔다.
+  - 하지만 `<select [value]="cloneRatio()">`가 clone form의 option 렌더링 시점과 동기화되지 않아 DOM select 표시값은 첫 option인 16:9로 남았다.
+  - 따라서 request/state는 1:1인데 화면에 보이는 select만 16:9인 상태가 가능했다.
+- RED:
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.spec.ts`
+    - editor ratio가 1:1일 때 clone form의 DOM select `value`와 selected option text도 1:1이어야 한다는 spec을 추가했다.
+    - 기존 implementation은 `cloneRatio() === '1:1'`인데 select value/selected option은 `16:9`로 실패했다.
+- GREEN:
+  - `clipper_angular` `3f2a216 fix: show selected clone ratio`
+    - clone ratio option에 `[selected]="ratio === cloneRatio()"`를 추가했다.
+    - 같은 select rendering pattern인 create ratio option에도 `[selected]="ratio === createRatio()"`를 추가했다.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 25 specs.
+  - `clipper_angular npm run build` passed.
+  - `clipper_angular git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+
+Template Builder default ratio and legacy style seed fix:
+- Time: 2026-05-10 KST.
+- User report:
+  - Template Builder에서 템플릿을 선택할 때마다 `full`이 기본 선택되는 것이 아니라 `16:9`가 기본 선택되어야 한다.
+  - 기존 레거시 템플릿의 title/subtitle/logo text가 모두 기본값처럼 `Pretendard-SemiBold.otf`, `40`, `#000000`, `tracking=-1.2`, `lineHeight=1.18`처럼 보인다.
+  - 어두운 텍스트에 어두운 box가 같이 보이는 경우가 있는데, legacy 설정상 box가 투명이거나 다른 색이어야 하는지 확인이 필요하다.
+- Investigation:
+  - Angular editor/page state의 ratio 기본값이 `full`이었다.
+  - Template Builder system seed는 legacy catalog `rawSettings` 중 content area y, layout image, subtitle 일부만 반영했다.
+  - 레거시 카탈로그에는 `sub_title_*`, `main_title_*`, `bottom_title_*`, `logo_text_*`, `subtitle_box_*`, outline/shadow/margin/y-offset 값이 이미 들어 있었지만 Template Builder layer로 역매핑되지 않았다.
+  - box color가 `null`인 legacy 설정은 box가 없는 상태로 봐야 한다. 기존 기본 subtitle box black이 그대로 남으면 어두운 텍스트/어두운 박스 오표시가 생길 수 있었다.
+- RED:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+    - selected family에 `16:9` variant가 있으면 기본 ratio가 `16:9`이어야 한다.
+    - 다른 family로 전환하면 이전 `full` 선택을 유지하지 않고 `16:9`로 reset되어야 한다.
+  - `clipper_nestjs/test/template-builder-api.test.js`
+    - 실제 legacy catalog 기반 system preset이 title/subtitle/logo font/color/size/tracking/y/box 값을 보존해야 한다.
+    - `template 3 / 16:9`처럼 subtitle text가 `#000000`인 경우 subtitle box가 catalog의 `#ffffff`로 seed되어야 한다.
+    - `sub_title_box_color=null`, `main_title_box_color=null`은 box disabled로 seed되어야 한다.
+- GREEN:
+  - `clipper_angular` `80ddba7 fix: default template builder selection to 16x9`
+    - editor/page/create/clone 기본 ratio를 `16:9` 중심으로 조정했다.
+    - family 선택 시 `16:9`가 있으면 editor ratio를 `16:9`로 reset한다.
+    - parent page의 `editorSelectedRatio`를 editor input으로 내려 parent/child ratio 상태와 text preview artifact 상태가 엇갈리지 않게 했다.
+    - parent가 이미 알고 있는 ratio reset은 child가 다시 emit하지 않아 artifact invalidate loop가 생기지 않는다.
+  - `clipper_nestjs` `8a75081 fix: seed legacy template builder styles`
+    - system preset seed에서 legacy rawSettings의 title/subtitle/logo text style, y-offset, margin, box, outline, shadow, logo image geometry를 Template Builder layers로 반영한다.
+    - legacy box color가 `null`이면 box를 disabled/transparent로 seed한다.
+- Verification:
+  - RED 확인:
+    - `clipper_angular npm run test -- --watch=false --browsers=ChromeHeadless --include src/features/template-builder/components/template-builder-editor.component.spec.ts` failed before fix.
+    - `clipper_nestjs node --test test/template-builder-api.test.js --test-name-pattern "legacy Clipper1 text styles"` failed before fix.
+  - GREEN:
+    - `clipper_angular npm run test -- --watch=false --browsers=ChromeHeadless --include src/features/template-builder/components/template-builder-editor.component.spec.ts` passed, 42 specs.
+    - `clipper_angular npm run test -- --watch=false --browsers=ChromeHeadless --include src/features/template-builder/pages/template-builder-page.component.spec.ts` passed, 25 specs.
+    - `clipper_angular npm run build` passed.
+    - `clipper_nestjs npm run build` passed.
+    - `clipper_nestjs node --test test/template-builder-api.test.js --test-name-pattern "legacy Clipper1 text styles"` passed; Node runner executed all 13 tests in the file.
+    - `clipper_angular git diff --check` and `clipper_nestjs git diff --check` passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.

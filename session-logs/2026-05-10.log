@@ -1,0 +1,646 @@
+Template Builder clone family / subtitle line / effect mode update:
+- Time: 2026-05-10 KST.
+- User report:
+  - 기본 제공 template 복제는 선택한 ratio 하나가 아니라 16:9, 1:1, 4:3, full 전체를 하나의 사용자 template family로 복제해야 한다.
+  - legacy title/subtitle text 선택 box가 짧아 glyph가 잘려 보이면 안 된다.
+  - subtitle line은 각각 위치 조정이 가능해야 한다.
+  - `렌더 폰트명`은 굳이 편집 UI에 노출할 필요가 없다.
+  - preview zoom 30%의 의미를 명확히 하고 사용자가 조절할 수 있어야 한다.
+  - `간격` 라벨은 snap grid 간격이므로 더 명확해야 한다.
+  - `박스`, `윤곽선`, `그림자`는 동시에 켜는 controls가 아니라 하나의 text effect mode 중 하나로 선택해야 한다.
+- Clipper1 subtitle structure confirmation:
+  - legacy Clipper1은 subtitle line을 독립 layer로 갖기보다 `subtitle_1st_y_offset_subtitle_line_1`, `subtitle_1st_y_offset_subtitle_line_2`, `subtitle_2nd_y_offset_subtitle_line_2` y-offset 구조를 사용한다.
+  - Template Builder model은 이미 이를 `subtitleText.oneLineY`, `twoLineFirstY`, `twoLineSecondY`로 mirror한다.
+  - 따라서 schema를 큰 폭으로 바꾸지 않고, UI에서 각 subtitle line drag/input이 이 y-offset만 patch하도록 구현했다.
+- RED:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+    - `렌더 폰트명` input 숨김.
+    - stage toolbar zoom input과 `스냅 간격` label.
+    - `텍스트 효과` single mode select와 outline default width 8 patch.
+    - subtitle line drag가 group `x/y`가 아니라 `twoLineFirstY`만 patch해야 함.
+    - subtitle y-offset property input이 `twoLineSecondY`만 patch해야 함.
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.spec.ts`
+    - clone form에서 ratio select가 없어야 하고 “모든 비율” 복제로 표시되어야 함.
+    - selected template에 16:9가 있으면 clone reference/default는 16:9여야 함.
+  - `clipper_nestjs/test/template-builder-api.test.js`
+    - default outline width는 8이어야 함.
+    - legacy preset family clone은 모든 ratio variant를 복제해야 함.
+    - legacy title text layer height는 font size/line-height보다 작으면 안 됨.
+- GREEN implementation:
+  - `clipper_angular`
+    - clone form ratio select 제거, all-ratio copy wording 적용.
+    - clone reference/default를 16:9 우선으로 조정하고 clone 후 selected ratio도 cloned family default로 맞춤.
+    - editor preview scale을 `previewScalePercent` signal로 관리하고 기본 30%, input/wheel 10-80% 조절 추가.
+    - `간격`을 `스냅 간격`으로 변경.
+    - `렌더 폰트명` 편집 input 제거.
+    - `텍스트 효과` select 추가. 선택 mode만 세부 controls를 표시하고, mode 변경 patch는 다른 effect를 disabled로 보냄.
+    - subtitle line span pointer drag를 추가해 `oneLineY/twoLineFirstY/twoLineSecondY`만 patch.
+    - subtitle y-offset property inputs 추가.
+  - `clipper_nestjs`
+    - `cloneFamily()`가 source family의 모든 existing ratio variant를 exact visual clone으로 복제.
+    - request ratio가 source에 없는 경우에는 backward-compatible cross-ratio transfer variant를 추가.
+    - default outline width를 8로 변경.
+    - legacy seed text height를 font/effect 기준으로 보강.
+- Commits:
+  - `clipper_angular` `6a9e889 fix: improve template builder editing controls`
+  - `clipper_nestjs` `56e6d38 fix: clone template builder families`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed, 47 specs.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/pages/template-builder-page.component.spec.ts`: passed, 25 specs.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js`: passed, 14 tests.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_nestjs git diff --check`: passed.
+- Packaged app:
+  - Rebuilt with `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`.
+  - Latest app: `clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+  - Latest DMG: `clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`.
+  - Smoke used a separate user data dir: `/tmp/clipper-codex-template-builder-user-data`.
+  - Smoke result:
+    - `GET /v1/health`: HTTP 200, `{ status: "ok", service: "clipper-nestjs" }`.
+    - `POST /v1/template-builder/families/system.legacy.clipper1.template.17/clone`: HTTP 201.
+    - source ratios: `16:9`, `1:1`, `4:3`, `full`.
+    - clone ratios: `16:9`, `1:1`, `4:3`, `full`.
+    - clone `16:9` sanity values: `mainTitleLine1.y=321`, `subtitleText.twoLineFirstY=1255`, `mainTitleLine1.outline.width=8`.
+  - Smoke용 packaged app/NestJS process was stopped cleanly.
+
+Template Builder subtitle/background/usage update:
+- Time: 2026-05-10 KST.
+- Decision: session logs stay concise; detailed command output/diff is omitted unless it is the result itself.
+- Fix:
+  - UI hides `자막 박스`; fixed layers show `자막 첫번째줄`/`자막 두번째줄`, both backed by shared `subtitleText` style.
+  - `표시` wording changed to `사용`; read-only usage toggles are disabled.
+  - Background supports image mode and color mode.
+  - Legacy seed treats null display y-offsets as unused layers, e.g. template 19 1:1 bottom title.
+  - `subtitleText.box` is the primary subtitle box style; legacy `subtitleBox` is fallback only.
+- Commits:
+  - `clipper_angular` `2aefebe fix: refine template builder subtitle layers`
+  - `clipper_nestjs` `32ebdd2 fix: honor template builder unused layers`
+  - `clipper_python` `553d490 fix: render template builder subtitle boxes`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npx ng test --watch=false --browsers=ChromeHeadless '--include=src/features/template-builder/**/*.spec.ts'`: 93 specs passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test ...template-builder...`: 34 tests passed.
+  - `clipper_python uv run pytest ...`: 52 tests passed.
+  - `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`: passed.
+
+Template Builder read-only/line-position UX update:
+- Time: 2026-05-10 KST.
+- Fix:
+  - Read-only legacy templates are view-only: fixed layer rows cannot be selected, preview selection chrome is hidden, ratio slot status labels are hidden, edit/upload controls are disabled or hidden.
+  - Hidden selected layers no longer leave blue preview selection boxes behind.
+  - Subtitle preview selection is line-level; `자막 첫번째줄` and `자막 두번째줄` no longer share one group selection box.
+  - Main title preview now uses separate one-line/two-line Y positions, with property controls for `oneLineY`, `twoLineFirstY`, `twoLineSecondY`.
+  - Property sections have larger headings and clearer section boundaries.
+- Changed repo/files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.{ts,html,scss,spec.ts}`
+- Verification:
+  - RED confirmed against new component specs.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: 55 passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless '--include=src/features/template-builder/**/*.spec.ts'`: 98 passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless`: 172 passed.
+  - `clipper_angular npm run build`: passed.
+Template Builder group/line-mode refactor:
+- Decision: fixed layer rows now group as `레이아웃 / 타이틀 / 자막 / 로고`, and `타이틀`/`자막` expose one-line vs two-line mode in properties.
+- Fix:
+  - subtitle preview lines stay separate in double-line mode, but the shared subtitle layer owns the use toggle and line-mode switch.
+  - layout properties only show when layout is selected; text selections show text controls only; logo image hides upload controls.
+  - logo text/image mode is toggled from properties, with logo image placement only, not upload, in the builder.
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless '--include=src/features/template-builder/**/*.spec.ts'`: passed.
+  - `clipper_angular npm run build`: passed.
+
+Template Builder layout image cover/overflow update:
+- Decision: layout image previews use ratio-preserving cover behavior, can extend beyond the 1080x1920 frame, and dim the outside area.
+- Fix:
+  - Angular preview now marks layout image overflow state and uses `object-fit: cover`.
+  - Python frame artifact rendering now clips media layers to the canvas after cover-fitting them.
+- Verification:
+  - `clipper_python UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/test_template_builder_frame_artifacts.py -q`: passed, 3 tests.
+  - `clipper_angular npm run build`: passed, no style budget warning.
+
+Template Builder layout image overflow drag fix:
+- Decision: layout image move/resize must not be clamped to the 1080x1920 frame.
+- Fix:
+  - Removed frame-bound clamp for `layoutImage` move/resize paths in the Angular editor.
+  - Added regression specs for negative movement and oversize resize.
+- Verification:
+  - `clipper_angular npm run build`: passed.
+
+Template Builder layoutImage family-wide sync / clipped render:
+- Decision: `layoutImage` is template-wide, not ratio-specific.
+- Fix:
+  - `layoutImage` patch now syncs to every ratio variant in the family.
+  - legacy render payload carries layout box geometry so sample/final render can clip to the canvas instead of stretching to full frame.
+- Verification:
+  - `clipper_nestjs node --test test/template-builder-api.test.js`: 15 passed.
+  - `clipper_python UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/test_template_builder_frame_artifacts.py -q`: 4 passed.
+  - `clipper_angular npm run build`: passed.
+  - Angular Karma spec runner still blocked here by port bind EPERM.
+
+Template Builder layoutImage upload/resize parity:
+- Decision: upload uses natural image size -> cover-fit box; resize keeps aspect ratio locked.
+- Fix: family-wide layout upload sync, aspect-locked layoutImage width/height edits and resize, stronger overflow dim.
+- Verification: `clipper_nestjs node --test test/template-builder-api.test.js` 15 passed; `clipper_angular npm run build` passed; `git diff --check` passed.
+
+Template Builder sample render flush fix:
+- Decision: sample render/publish must flush pending layout edits before calling backend.
+- Fix: `handleSampleRender()` and `handlePublish()` now await pending variant update flush first.
+- Verification: `clipper_nestjs node --test test/template-builder-render-payload.test.js` passed; `clipper_angular npm run build` passed.
+
+Template Builder auto zoom/pan layout image clip fix:
+- Decision: sample render must clip `layoutImage` to the template geometry inside legacy auto zoom/pan frame generation.
+- Fix: Python auto zoom/pan background frames now respect `layout_image_x_offset/y_offset/area_width/area_height` instead of resizing layout image to full frame.
+- Verification: `clipper_python UV_CACHE_DIR=/tmp/uv-cache uv run python -m pytest tests/test_clipper1_video_render_media_looping.py tests/test_template_builder_frame_artifacts.py -q`: 24 passed.
+
+Template Builder layout image cover-fit fix:
+- Decision: layout image rendering must preserve aspect ratio and use cover-fit, not stretch-to-box.
+- Fix: Python background composition now cover-fits layout image before applying the frame intersection.
+- Verification: `clipper_python UV_CACHE_DIR=/tmp/uv-cache uv run python -m pytest tests/test_clipper1_video_render_media_looping.py tests/test_template_builder_frame_artifacts.py -q`: 25 passed.
+
+Template Builder layoutImage clone geometry fix:
+- Decision: `layoutImage` is family-wide and must not be reprojected or clamped when cloning/creating ratio variants.
+- Fix: `copyMediaLayerToOutputGeometry()` now preserves layoutImage geometry verbatim.
+- Verification: `clipper_nestjs node --test test/template-builder-api.test.js -q`: passed after rebuild.
+
+Template Builder layout image ffmpeg center-crop fix:
+- Decision: final/sample render must center-crop layout image after cover-fit scaling.
+- Fix: ffmpeg `crop` now uses centered offsets instead of top-left crop.
+- Verification: `clipper_python UV_CACHE_DIR=/tmp/uv-cache uv run python -m pytest tests/test_template_builder_frame_artifacts.py tests/test_clipper1_video_render_media_looping.py -q`: 25 passed.
+
+Packaged Python venv refresh fix:
+- Decision: packaged launch must force-reinstall `clipper-plugin-clipper1-video-render` too.
+- Fix: `ensureVenv()` now reinstalls the clipper1 worker package during `uv sync`.
+- Verification: `clipper_electron npm run build`: passed.
+
+Packaged Python venv reset fix:
+- Decision: packaged launch must not reuse stale `clipper_venv`.
+- Fix: `ensureVenv()` now deletes the packaged venv before `uv sync`.
+- Verification: `clipper_electron npm run build`: passed.
+
+Template Builder sample render cache-bust fix:
+- Decision: sample render file URL must change when artifact changes.
+- Fix: append `sampleRender.updatedAt`/`jobId` as `?v=` on the video src and use cover-fit preview for layout image.
+- Verification: `clipper_angular npx ng test --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed.
+
+Template Builder sample render nonce fix:
+- Decision: sample render src must also change per render request, not only per backend state.
+- Fix: added page-local `sampleRenderNonce` and included it in the sample video cache key.
+- Verification: `clipper_angular npx ng test --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed.
+- sample render URL cache-bust nonce 추가. dist-app / packaged resources / bundled NEST / Python source 모두 현재 코드와 맞는지 재확인했지만, live sample render 결과는 여전히 동일. runtime payload/worker 경로 재점검 필요.
+- payload mapper 테스트상 layout_image_x_offset/area_width는 이미 내려가고 있음. 따라서 남은 의심은 live app에서 다른 payload/worker 인스턴스를 타는지, 또는 실제 render job 로그 확인이 필요하다는 점.
+- 2026-05-10: dist-app 재빌드 후 /Applications/Clipper2.app도 새 빌드로 교체. layoutImage crop는 이제 packaged app에도 반영됨.
+- 2026-05-10: `clipper_venv` 전체 삭제 우회는 제거했다. 유지 대상은 `clipper-plugin-clipper1-video-render` 강제 재설치뿐이다. build/packaging의 venv invalidation/local package refresh 문제는 장기 보류로 `.codex/implementation/BUILD_AND_PACKAGING_LONG_TERM_TODO_CATALOG_2026-05-10.md`에 고정했다.
+
+Template Builder common layer / preview lock update:
+- Time: 2026-05-10 KST.
+- Decision:
+  - `layoutImage`는 비율과 무관한 `공통 레이어`로 분리하고, 나머지 레이어는 `기본 레이어`로 묶는다.
+  - `contentArea`는 편집 대상이 아닌 preview guide로 유지하되, layout image 위와 text layer 아래에 보이게 한다.
+  - `레이아웃`이 선택된 상태에서는 preview에서 다른 요소를 선택/이동/확대축소하지 못하게 막는다.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `.codex/implementation/2026-05-10-template-builder-common-layer-preview-lock-plan.md`
+  - `.codex/design/2026-05-10-template-builder-redesign.md`
+  - `.codex/implementation/2026-05-10-template-builder-redesign-plan.md`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+- `clipper_angular git diff --check`: passed.
+
+Template Builder layout overflow bleed restoration:
+- Time: 2026-05-10 KST.
+- Decision:
+  - `layoutImage` overflow bleed is rendered only when `layoutImage` itself is selected.
+  - Default layer selection hides the overflow bleed entirely; only the clipped in-frame image remains.
+  - The visible overflow bleed keeps the faded overlay styling (`opacity: .16`).
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder sample render color fidelity follow-up:
+- Time: 2026-05-10 KST.
+- Decision:
+  - The dull / dark sample render was coming from the final ffmpeg encode path, not from stale processes or from the text artifact renderer.
+  - `yuv420p` was visibly muting strong colors in a synthetic comparison, so the sample render final output now uses `yuv444p` with `libx264` `high444`.
+  - Legacy golden-frame thresholds were kept tight, but the few cases that shift slightly under the new encode now allow `maxMismatchRatio=0.001`.
+- Changed files:
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+  - `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+- Verification:
+  - `clipper_python UV_CACHE_DIR=/private/tmp/uv-cache uv run pytest tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py tests/test_template_builder_sample_video_fixture_render.py -q`: passed (`25 passed`).
+  - `clipper_python git diff --check`: passed.
+
+Template Builder layout overflow fade restoration:
+- Time: 2026-05-10 KST.
+- Decision:
+  - layout overflow preview keeps the faded bleed overlay (`opacity: .16`) while the clipped in-frame image remains visible.
+  - layout selection lock behavior stays unchanged.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder layout overflow visibility correction:
+- Time: 2026-05-10 KST.
+- Decision:
+  - `layoutImage`가 선택된 상태에서는 preview에서 프레임 밖으로 나간 부분을 숨기지 않고 보여준다.
+  - 기본 레이어가 선택된 상태에서는 layout preview interaction lock만 유지한다.
+  - layout clip container만 상태별로 `overflow: hidden` / `overflow: visible`을 전환한다.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+  - Karma component test runner still blocked in this sandbox by `listen EPERM 0.0.0.0:9876`.
+
+Template Builder sample render color fidelity update:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Template Builder sample render / final render outputs now carry explicit `bt709` / full-range color metadata so browser playback matches preview hot pink more closely.
+  - Tight legacy golden-frame parity thresholds were bumped slightly to absorb the systematic encoder metadata shift without masking layout drift.
+- Changed files:
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+  - `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+- Verification:
+  - `clipper_python UV_CACHE_DIR=/private/tmp/uv-cache uv run pytest tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py -q`: passed (`24 passed`).
+  - `clipper_python git diff --check`: passed.
+
+Template Builder sample render color metadata rollback:
+- Time: 2026-05-10 KST.
+- Decision:
+  - The `bt709` / full-range metadata change did not improve preview parity and appeared to make sample render darker in the user's environment, so it was rolled back.
+  - The current working assumption is that the sample render worker process may have been stale or that the color issue is rooted elsewhere than metadata tagging.
+- Changed files:
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+  - `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+- Verification:
+  - `clipper_python UV_CACHE_DIR=/private/tmp/uv-cache uv run pytest tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py -q`: passed (`24 passed`).
+  - `clipper_python git diff --check`: passed.
+
+Template Builder layout lock / overflow clamp update:
+- Time: 2026-05-10 KST.
+- Decision:
+  - `layoutImage` preview interactions are now mutually exclusive with default layer interactions; if a default layer is selected, layout cannot be selected, moved, or resized from preview.
+  - layout image overflow outside the canvas is clipped instead of shown as faded bleed.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder redesign mockup:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Added a browser-only preview route at `/templates-preview` to review the redesign before touching the real Template Builder page.
+  - The mockup now shows a left template gallery grid with thumbnails and badges, a centered workspace mock, and a narrower inspector with preview actions disabled.
+  - Clone lineage metadata (`originFamilyId`) and system sample-render thumbnail metadata are available for gallery badges and cards.
+- Commits:
+  - `clipper_angular` `fb3936c` `feat: add template builder redesign mockup`
+  - `clipper_nestjs` `0afce71` `feat: add template builder thumbnails and lineage`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/app/app.routes.spec.ts --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/pages/template-builder-redesign-preview.component.spec.ts`: passed.
+  - `clipper_angular npm run build`: passed with existing stylesheet budget warning on `template-builder-editor.component.scss`.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js`: passed after rebuild.
+  - `clipper_nestjs git diff --check`: passed.
+
+Template Builder page gallery split and inspector action lift:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Split the real Template Builder page's left catalog into `TemplateFamilyGalleryComponent` and `TemplateFamilyCardComponent` so the page shell no longer renders a vertical list.
+  - Moved sample render / publish actions to the top of the inspector area and removed the old `속성 · ...` header and tab strip chrome.
+  - Narrowed the inspector column and kept the stage grid scroll contract explicit in tests.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.ts`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.html`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.scss`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.spec.ts`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-family-gallery.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed (`94 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_nestjs git diff --check`: passed.
+
+Template Builder property section wrapper split:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Added a reusable `TemplateBuilderPropertySectionComponent` so the inspector's repeated section chrome no longer lives inline in the editor monolith.
+  - The editor template now uses the wrapper for layout, logo, position, text style, palette, and effect blocks.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-property-section.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-property-section.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-property-section.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-family-gallery.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: passed (`94 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder editor workspace/canvas/inspector split:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Split the monolithic editor view into `TemplateBuilderWorkspaceComponent`, `TemplateBuilderCanvasComponent`, and `TemplateBuilderInspectorComponent`.
+  - Kept state and mutation logic in `TemplateBuilderEditorComponent`, but moved the render surface, workspace chrome, and inspector chrome into separate standalone components.
+  - Kept sample render and publish actions in the inspector header, and kept layout/content area stacking rules inside the canvas component.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.scss`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: blocked by Karma bind error on `0.0.0.0:9876` in this sandbox.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder gallery card density update:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Narrowed gallery cards to a fixed `130px` width and removed the visible title row from each card.
+  - Kept only the thumbnail and an overlay badge in the top-right corner, with badge z-order above the image.
+  - Fixed the gallery grid to 3 columns so row density stays stable instead of expanding with viewport width.
+  - Standardized gallery thumbnails to a 16:9 presentation and switched the image fit to contain so the preview is not cropped.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.spec.ts`
+- Verification:
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-family-gallery.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder role-scoped common text styles:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Added family-level `commonStyles` keyed by text role: `mainTitle`, `subTitle`, `bottomTitle`, `subtitleText`, and `logoText`.
+  - Kept `공통 레이어` as layout-only; exposed style sharing in the inspector as `비율 공통 스타일`.
+  - Text style/effect edits now emit a common-style update instead of a ratio-local layer update.
+  - Backend mirrors a common-style update into matching text layers for every existing ratio so preview and sample render continue to consume materialized variant layers.
+  - Font upload for a role text layer now updates the role common style and all ratio variants for that role.
+  - JSON repository backfills missing `commonStyles` from existing variant layers for old custom store files.
+- Changed files:
+  - `clipper_nestjs/src/template-builder/dto/template-builder.dto.ts`
+  - `clipper_nestjs/src/template-builder/template-builder-role-common-styles.ts`
+  - `clipper_nestjs/src/template-builder/template-builder.service.ts`
+  - `clipper_nestjs/src/template-builder/template-builder.controller.ts`
+  - `clipper_nestjs/src/template-builder/template-builder.repository.ts`
+  - `clipper_nestjs/src/template-builder/template-builder-seed.ts`
+  - `clipper_nestjs/test/template-builder-api.test.js`
+  - `clipper_angular/src/features/template-builder/models/template-builder.ts`
+  - `clipper_angular/src/features/template-builder/services/template-builder-role-common-styles.ts`
+  - `clipper_angular/src/features/template-builder/services/template-builder.service.ts`
+  - `clipper_angular/src/features/template-builder/services/template-builder.service.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.scss`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.ts`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.html`
+- Verification:
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_nestjs node --test test/template-builder-api.test.js`: passed (`18 tests`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`111 SUCCESS`).
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder inspector usability refresh:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Reduced template gallery card width from `120px` to `106px` while keeping the fixed 3-column portrait grid.
+  - Reworked the inspector away from rounded card/grid-heavy controls into a simpler vertical form with section dividers.
+  - Moved each selected layer's `사용` toggle to the top of the inspector; when unchecked, the lower property fieldset is disabled.
+  - Added reusable `TemplateBuilderColorFieldComponent` so color controls show a native color picker and a hex field together.
+  - Merged the font family display and font upload action into one row.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-color-field.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-color-field.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-color-field.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-property-section.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: first failed as expected after adding regression assertions, then passed (`68 SUCCESS`) after implementation.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`112 SUCCESS`).
+
+Template Builder layout background mode cleanup:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Removed the `사용` toggle from the always-on common `레이아웃` inspector panel.
+  - Removed `사용/사용 안 함` status text from the common layer row for `레이아웃`.
+  - In layout `image` mode, the inspector shows only image upload and treats the layout background color as `#000000`.
+  - In layout `color` mode, the inspector shows only the background color control and hides image upload.
+  - Switching layout background mode back to `image` emits `backgroundColor: '#000000'` with `sourceType: 'image'`.
+  - Preview layout image rendering no longer depends on `layoutImage.visible`.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.html`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after regression assertions, then passed (`70 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`115 SUCCESS`).
+
+Template Builder canvas measurement guides:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Added a stage toolbar `가로 중앙` action that centers the selected preview element on the video frame x-axis.
+  - The center action emits an x-only patch and keeps the selected element's y position unchanged.
+  - Added canvas measurement overlays for selected elements, using original video px values in labels and scaled positions for rendering.
+  - Frame-edge guides show left/right/top/bottom distance from the selected element to the output frame.
+  - Neighbor guides show the nearest visible element distance in each direction when projections overlap.
+  - Guide rendering is kept in the canvas component; guide calculation and patch emission remain in the editor state component.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.scss`
+  - `.codex/implementation/2026-05-10-template-builder-canvas-measurement-guides-plan.md`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after regression assertions, then passed (`73 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`118 SUCCESS`).
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder box effect width mode:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Box effect width mode belongs to the ratio-common text effect style, not to ratio-local position/size.
+  - `sizing: 'text'` keeps the existing text-fit behavior and uses `paddingX` as text-side padding.
+  - `sizing: 'fixed'` hides `paddingX`, uses `box.width`, and lets horizontal preview resize update the common box width instead of the ratio-local text layer width.
+  - Text-fit box mode exposes only vertical resize handles in preview so users cannot stretch the box width from the canvas.
+  - Python text artifact rendering now consumes the same `sizing/width/paddingX` contract so preview artifacts and sample/final render overlays do not drift.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/models/template-builder.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-inspector.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.html`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.ts`
+  - `clipper_nestjs/src/template-builder/dto/template-builder.dto.ts`
+  - `clipper_nestjs/src/template-builder/template-builder-seed.ts`
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/template_builder_text_renderer.py`
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/template_builder_text_artifacts.py`
+  - `clipper_python/tests/test_template_builder_text_renderer.py`
+  - `.codex/implementation/2026-05-10-template-builder-box-sizing-plan.md`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after RED assertions, then passed (`77 SUCCESS`).
+  - `clipper_python uv run --extra test pytest tests/test_template_builder_text_renderer.py`: first failed as expected after RED assertions, then passed (`5 passed`).
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`122 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_nestjs npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+  - `clipper_nestjs git diff --check`: passed.
+  - `clipper_python git diff --check`: passed.
+
+Template Builder preview toolbar and measurement guide cleanup:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Replaced the `가로 중앙` toolbar text button with an icon-only button while keeping `aria-label` and `title`.
+  - Removed snap controls, snap interval input, snap grid overlay, and snap-to-grid movement/resize logic.
+  - Kept alignment assist for canvas center and nearby layer edges because it is separate from the removed snap-grid controls.
+  - Removed the preview zoom input from the toolbar and left only readonly grey `줌 NN%` text.
+  - Offset measurement guide lanes so vertical guides no longer all sit on the selected element center line.
+  - Moved measurement labels away from the guide line, reduced label weight, and made label background more transparent.
+  - Added endpoint ticks to measurement guides so the measured start/end points are clearer.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.contract.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.html`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.scss`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after RED assertions, then passed (`75 SUCCESS`).
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`120 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder content area measurement guide:
+- Time: 2026-05-10 KST.
+- Decision:
+  - Added the visible `contentArea` guide frame to nearby measurement candidates.
+  - The content area remains a preview guide, not an editable layer target, but selected elements can now show px distance to it.
+  - Existing selected-layer behavior is preserved: the currently selected layer itself is excluded from neighbor candidates.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after RED assertion, then passed (`76 SUCCESS`).
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`121 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder text-fit box center/move anchor fix:
+- Time: 2026-05-10 KST.
+- Root cause:
+  - Text-fit box preview artifacts can have a visible frame x that differs from the persisted layer `x` because center/right text alignment adds an artifact offset inside the layer width.
+  - Canvas move and the `가로 중앙` action were storing the visible artifact frame x directly as `layer.x`, so the next artifact render drifted horizontally.
+- Decision:
+  - Keep using the visible artifact frame for selection, measurement, and centering calculations.
+  - Convert visible frame x back to the persisted layer anchor x when emitting ratio-local x patches.
+  - Apply the conversion to both canvas drag patches and the stage toolbar horizontal-center action.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after RED assertions, then passed (`78 SUCCESS`).
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`123 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.
+
+Template Builder editor checkpoint commits:
+- Time: 2026-05-10 KST.
+- Documentation:
+  - `.codex/implementation/2026-05-10-template-builder-editor-checkpoint.md`
+- Commits:
+  - `clipper_angular` `c4c52e3 feat: refine template builder preview editor`
+  - `clipper_nestjs` `5923995 feat: extend template builder box sizing contract`
+  - `clipper_python` `89e940b feat: render template builder fixed text boxes`
+- Verification:
+  - `clipper_angular` focused Template Builder suite passed (`123 SUCCESS`), `npm run build` passed, `git diff --check` passed.
+  - `clipper_nestjs npm run build` passed, `git diff --check` passed.
+  - `clipper_python uv run --extra test pytest tests/test_template_builder_text_renderer.py` passed (`5 passed`), `git diff --check` passed.
+
+Template Builder zoomed canvas toolbar width fix:
+- Time: 2026-05-11 KST.
+- Root cause:
+  - At high preview zoom, the canvas component grid item kept its default `min-width:auto`, so the large `.phone-canvas` min-content width expanded the stage column.
+  - Because `.stage-toolbar` is in the same stage column, it visually grew with the zoomed canvas.
+- Decision:
+  - Keep the toolbar in the fixed stage column.
+  - Let only the canvas component host handle overflow/scroll by setting the workspace stage/canvas grid items to `min-width:0` and the canvas host to `overflow:auto`.
+- Changed files:
+  - `clipper_angular/src/features/template-builder/components/template-builder-workspace.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-canvas.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
+- Verification:
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/components/template-builder-editor.component.spec.ts`: first failed as expected after RED layout assertion, then passed (`79 SUCCESS`).
+  - `clipper_angular npm test -- --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/services/template-builder.service.spec.ts --include=src/features/template-builder/components/template-builder-editor.component.spec.ts --include=src/features/template-builder/pages/template-builder-page.component.spec.ts --include=src/features/template-builder/components/template-family-gallery.component.spec.ts`: passed (`124 SUCCESS`).
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular git diff --check`: passed.

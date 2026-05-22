@@ -1,0 +1,19 @@
+2026-05-11 Template Builder layout rollback
+
+- 결정: 방금 추가한 left sidebar 재배치는 되돌리고, inspector width `360px` 고정만 유지한다.
+- 현재 상태:
+  - Template Builder page는 원래대로 `gallery / editor` 2컬럼 구조를 유지한다.
+  - `template-workspace__left`는 다시 workspace 내부에 포함된다.
+  - inspector 폭은 `360px`으로 고정된 상태다.
+- 검증:
+  - rollback 후 다시 `clipper_angular npm run build`와 Template Builder focused specs를 돌릴 예정이다.
+
+2026-05-11 Template Builder font-path experiment rollback
+
+- 결정: `clipper_angular`를 `0ae1144`로 되돌리고, 그 이후의 Template Builder / Electron / NestJS 폰트 경로 실험 변경은 모두 폐기했다.
+- 현재 상태:
+  - `clipper_angular`, `clipper_nestjs`, `clipper_electron` 모두 작업트리가 깨끗하다.
+  - `subtitleBox`를 비롯한 폰트 preload 우회, `CLIPPER_LEGACY_FONTS_DIR` 추가, renderer file URL 수정은 모두 제거됐다.
+- 다음 세션 우선순위:
+  - `0ae1144` 기준에서 다시 시작한다.
+  - 템플릿 빌더 폰트 회귀를 다시 볼 때는 먼저 이전 커밋 비교로 경로/로딩 기준을 재확인한다.

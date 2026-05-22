@@ -1,0 +1,1305 @@
+[2026-05-08 00:50:45 KST] Legacy Clipper1 template UI thumbnail/origin assets
+
+User request:
+- User added legacy Clipper1 UI thumbnail/origin files under `.codex/imports` and clarified that actual render backgrounds are in `adlight_python/layout`.
+
+Decision:
+- Treat thumbnail/origin PNGs as UI preview assets only.
+- Keep render layout/background source as template row `settings.layout_image`, with local render resolution through `adlight_python/layout`.
+- Normalize the raw import folder name `thumsandorigins` to code path `thumbs-and-origins`.
+
+Input:
+- Raw import folder: `.codex/imports/legacy-clipper1-template-assets/thumsandorigins/`
+- 168 PNG files:
+  - 84 `*_thumb.png`
+  - 84 `*_origin.png`
+- File pattern: `{template}_ratio_{16_9|4_3|1_1|full}_{thumb|origin}.png`
+
+TDD RED:
+- Added NestJS regression requiring legacy catalog preview URLs to use `template-presets/legacy-clipper1/assets/...`, not S3 thumbnail URLs.
+- Added NestJS regression requiring bundled asset resolver to resolve `1_ratio_16_9_thumb.png` and `1_ratio_16_9_origin.png`.
+- `clipper_nestjs node --test test/template-builder-preset-source.test.js` failed because catalog still emitted S3 URL and the resolver service did not exist.
+- Added Angular regression requiring `ProjectHistoryService` to normalize `preview.remoteLargeImageUrl` against backend base URL.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include='src/core/project-history.service.spec.ts'` failed at compile time because `remoteLargeImageUrl` was not in the client type.
+
+Changed:
+- `clipper_nestjs/src/projects/assets/legacy-clipper1-template-ui/thumbs-and-origins/`
+  - Added 168 bundled PNG assets copied from raw import.
+- `clipper_nestjs/src/project-manifest/legacy-clipper1-template-asset.service.ts`
+  - Added packaged/dev source asset resolver with filename validation.
+- `clipper_nestjs/src/project-manifest/template-presets.controller.ts`
+  - Added `GET /template-presets/legacy-clipper1/assets/:fileName`.
+- `clipper_nestjs/src/project-manifest/legacy-clipper1-template-adapter.ts`
+  - `preview.remoteImageUrl` now uses local thumb endpoint.
+  - `preview.remoteLargeImageUrl` now uses local origin endpoint.
+- `clipper_nestjs/src/project-manifest/dto/template-preset.dto.ts`
+  - Added `TemplatePreview.remoteLargeImageUrl`.
+- `clipper_angular/src/core/project-history.service.ts`
+  - Added client type and backend-relative URL normalization for `remoteLargeImageUrl`.
+- `clipper_angular/src/core/project-history.service.spec.ts`
+  - Added regression coverage.
+- `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`
+- `.codex/implementation/WORKLOG.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/session-logs/2026-05-08.log`
+
+Verification:
+- GREEN: `clipper_nestjs npm run build` passed.
+- GREEN: `clipper_nestjs node --test test/template-builder-preset-source.test.js` passed, 5 tests.
+- GREEN: `clipper_nestjs node --test test/legacy-clipper1-render-media-slots.test.js test/template-builder-validation.test.js test/template-builder-repository.test.js test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-render-payload.test.js` passed, 22 tests.
+- GREEN: `clipper_nestjs git diff --check` passed.
+- GREEN: `clipper_angular ./node_modules/.bin/ng test --watch=false --include='src/core/project-history.service.spec.ts'` passed, 1 test.
+- GREEN: `clipper_angular ./node_modules/.bin/ngc -p tsconfig.app.json` passed.
+- GREEN: `clipper_angular git diff --check` passed.
+
+Commit:
+- `clipper_nestjs` `85d21f5 feat: bundle legacy template previews`
+- `clipper_angular` `6f0ceb9 feat: resolve large template preview urls`
+
+Remaining:
+- The shared template picker still displays presets as a flat list/grid. With 84 legacy presets, grouping by template design and ratio may be needed.
+- The API/client contract exposes large origin previews, but no enlarged preview modal has been built yet.
+
+[2026-05-08 01:05:53 KST] Legacy Clipper1 render layout assets bundled in Python worker
+
+User request:
+- Bundle the actual render background layout files from `adlight_python/layout` immediately, instead of relying on the sibling repo at runtime.
+
+Decision:
+- UI preview assets stay in NestJS bundled assets.
+- Actual render layout assets belong inside the `clipper1_video_render` Python worker package because that process performs ffmpeg rendering.
+- Keep `CLIPPER_LEGACY_ASSETS_DIR` as an override, then use package-internal `legacy_assets`, then dev fallbacks.
+
+TDD RED:
+- Updated/added tests in `clipper_python/tests/test_clipper1_video_render_remote_assets.py`.
+- Required relative `1.png` to resolve to package internal `legacy_assets/layout/1.png`.
+- Required D2X S3 layout URL to resolve to package internal layout even when cwd is a temp dir without sibling `adlight_python`.
+- RED: focused test failed because current resolver returned sibling `adlight_python/layout/1.png` or downloaded the remote URL.
+
+Changed:
+- Copied 33 files from `adlight_python/layout` into:
+  - `clipper_python/plugins/clipper1_video_render/clipper1_video_render/legacy_assets/layout/`
+- Updated `LocalRenderAdapter._legacy_visual_asset_roots()` to add:
+  - `Path(__file__).resolve().parent / "legacy_assets"`
+- `.codex/implementation/WORKLOG.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`
+- `.codex/session-logs/2026-05-08.log`
+
+Verification:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_remote_assets.py -q` passed, 9 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_uploaded_fonts.py -q` passed, 20 tests.
+- GREEN: `clipper_python uv run python -m compileall plugins/clipper1_video_render` passed.
+- GREEN: `clipper_python uv run pytest -q` passed, 77 passed, 5 skipped.
+- GREEN: `clipper_python uv build --package clipper-plugin-clipper1-video-render --wheel --out-dir /tmp/clipper1-video-render-wheel-check` passed after escalated rerun due sandbox uv cache access.
+- GREEN: wheel content check found 33 `legacy_assets/layout` files, including `1.png` and `gradient.png`.
+- GREEN: `clipper_python git diff --check` passed.
+
+Commit:
+- `clipper_python` `b60ef85 feat: bundle legacy render layouts`
+
+Remaining:
+- Consider adding a small import/copy script for future legacy layout updates.
+- Expand render smoke/golden fixtures across representative templates.
+
+[2026-05-08 01:13:51 KST] Legacy Clipper1 template asset import scripts
+
+User request:
+- Continue implementation.
+
+Decision:
+- Script the asset refresh/import path before adding more render parity fixtures.
+- Keep the existing asset split:
+  - UI thumbnail/origin assets are owned by NestJS bundled project assets.
+  - Actual render layout assets are owned by the `clipper1_video_render` Python worker package.
+
+TDD RED:
+- Added `clipper_nestjs/test/legacy-template-asset-import-script.test.js`; focused run failed because the importer module did not exist.
+- Added `clipper_python/tests/test_legacy_layout_asset_import_script.py`; focused run failed because the importer module did not exist.
+
+Changed:
+- Added `clipper_nestjs/scripts/import-legacy-clipper1-template-ui-assets.js`.
+  - Default source: `.codex/imports/legacy-clipper1-template-assets/thumsandorigins`.
+  - Default target: `clipper_nestjs/src/projects/assets/legacy-clipper1-template-ui/thumbs-and-origins`.
+  - Validates 4 ratios x thumb/origin for each template id.
+- Added `clipper_nestjs` npm script `import:legacy-template-ui-assets`.
+- Added `clipper_python/scripts/import_legacy_clipper1_layout_assets.py`.
+  - Default source: `adlight_python/layout`.
+  - Default target: `clipper_python/plugins/clipper1_video_render/clipper1_video_render/legacy_assets/layout`.
+  - Validates PNG-only layout assets.
+- Updated `.codex` worklog, task list, next-session prompt, and template system design doc.
+
+Verification:
+- GREEN: `clipper_nestjs node --test test/legacy-template-asset-import-script.test.js` passed, 2 tests.
+- GREEN: `clipper_python uv run pytest tests/test_legacy_layout_asset_import_script.py -q` passed, 2 tests.
+- GREEN: `clipper_nestjs npm run import:legacy-template-ui-assets -- --dry-run` passed, 168 files / 21 templates.
+- GREEN: `clipper_python uv run python scripts/import_legacy_clipper1_layout_assets.py --dry-run` passed, 33 files.
+- GREEN: `clipper_nestjs npm run build` passed.
+- GREEN: `clipper_nestjs node --test test/*.test.js` passed, 44 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 79 passed, 5 skipped.
+
+Commit:
+- `clipper_nestjs` `74ce098 chore: add legacy template asset import script`
+- `clipper_python` `4b829c3 chore: add legacy layout asset import script`
+
+Remaining:
+- Add representative render smoke/golden fixtures for the 21 legacy template designs.
+
+[2026-05-08 01:18:15 KST] Legacy Clipper1 layout catalog coverage validator
+
+User request:
+- Continue implementation.
+
+Decision:
+- Before expanding representative golden frames, add a lightweight validator that guarantees every `settings.layout_image` in the 84-row legacy catalog has a corresponding file in the Python worker layout bundle.
+
+TDD RED:
+- Added `clipper_python/tests/test_legacy_layout_catalog_validation_script.py`; focused run failed because the validator module did not exist.
+
+Changed:
+- Added `clipper_python/scripts/validate_legacy_clipper1_layout_catalog.py`.
+  - Default catalog: `clipper_nestjs/src/project-manifest/catalogs/legacy-clipper1-templates.ko.json`.
+  - Default layout dir: `clipper_python/plugins/clipper1_video_render/clipper1_video_render/legacy_assets/layout`.
+  - Normalizes S3 URLs and relative layout filenames to basename.
+  - Fails on missing layout files unless `--allow-missing` is passed.
+- Updated `.codex` worklog, task list, next-session prompt, and template system design doc.
+
+Verification:
+- GREEN: `clipper_python uv run pytest tests/test_legacy_layout_catalog_validation_script.py -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/validate_legacy_clipper1_layout_catalog.py` passed with 84 rows, 32 unique layouts, missing 0.
+- GREEN: `clipper_python uv run pytest tests/test_legacy_layout_asset_import_script.py tests/test_legacy_layout_catalog_validation_script.py -q` passed, 4 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 81 passed, 5 skipped.
+- GREEN: `clipper_python git diff --check` passed.
+
+Commit:
+- `clipper_python` `398dfda chore: validate legacy layout catalog coverage`
+
+Remaining:
+- Add representative render smoke/golden fixtures for the 21 legacy template designs.
+
+[2026-05-08 01:23:41 KST] Legacy Clipper1 template render smoke runner
+
+User request:
+- Continue implementation.
+
+Decision:
+- Add a render smoke runner before pixel-level golden frame parity, so representative legacy catalog rows can be rendered through the Python worker with real ffmpeg output.
+
+TDD RED:
+- Added `clipper_python/tests/test_legacy_template_render_smoke_script.py`; focused run failed because the smoke module did not exist.
+- Added a CLI path execution regression; focused run failed because running `scripts/render_legacy_clipper1_template_smoke.py` directly could not import the `scripts` package.
+
+Changed:
+- Added `clipper_python/scripts/render_legacy_clipper1_template_smoke.py`.
+  - Default cases cover all fixed ratios and special full/special-layout filenames: `1:16:9`, `1:full`, `6:1:1`, `16:4:3`, `17:full`.
+  - Supports `--case <template>:<ratio>`.
+  - Supports `--all-designs` for one 16:9 smoke render per legacy design.
+  - Builds a synthetic local image with PIL and renders through `LocalRenderAdapter`.
+- Updated `.codex` worklog, tasks, next-session prompt, and template system design doc.
+
+Verification:
+- GREEN: `clipper_python uv run pytest tests/test_legacy_template_render_smoke_script.py -q` passed, 5 tests.
+- GREEN: `clipper_python uv run python scripts/render_legacy_clipper1_template_smoke.py --output-root /tmp/clipper1-template-smoke-20260508 --duration 0.2 --fps 4` passed, 5 cases rendered.
+- GREEN: `clipper_python uv run python scripts/render_legacy_clipper1_template_smoke.py --all-designs --output-root /tmp/clipper1-template-smoke-all-designs-20260508 --duration 0.12 --fps 3` passed, 21 cases rendered.
+- GREEN: `clipper_python uv run pytest tests/test_legacy_template_render_smoke_script.py tests/test_legacy_layout_catalog_validation_script.py tests/test_legacy_layout_asset_import_script.py -q` passed, 9 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 86 passed, 5 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+
+Commit:
+- `clipper_python` `b926e61 chore: add legacy template render smoke runner`
+
+Remaining:
+- Promote representative smoke outputs into checked-in golden fixtures once legacy Clipper1 reference frames are available, or decide whether current smoke outputs should become Clipper2 baseline fixtures.
+
+[2026-05-08 01:33:10 KST] Session wrap-up and handoff
+
+User request:
+- Wrap up this session, fill any missing documentation, and provide the exact next-session prompt.
+
+Checked:
+- `.codex/implementation/NEXT_SESSION_PROMPT.md` contains the latest 2026-05-08 01:23 KST handoff for the render smoke runner.
+- `.codex/implementation/WORKLOG.md`, `.codex/implementation/TASKS.md`, `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`, and this session log include the latest script/validator/smoke decisions.
+- Reordered the 01:18 and 01:23 session-log entries so the handoff reads chronologically.
+
+Current repo status:
+- `clipper_python`: clean working tree, branch ahead of origin by 14 commits.
+- `clipper_nestjs`: clean working tree, branch ahead of origin by 8 commits.
+- `clipper_angular`: clean working tree, branch ahead of origin by 5 commits.
+
+Next-session starting point:
+- Continue from `.codex/implementation/NEXT_SESSION_PROMPT.md`.
+- Next technical decision: whether to use old Clipper1 reference frames for pixel-level golden parity, or promote current Clipper2 smoke outputs as baseline fixtures.
+
+[2026-05-08 09:39:37 KST] Clipper2 legacy template baseline frame fixtures
+
+User request:
+- Continue from README, `.codex/implementation/NEXT_SESSION_PROMPT.md`, and latest session logs.
+- Decide whether to wait for existing Clipper1 reference frames for pixel-level golden fixtures or promote current Clipper2 smoke output as baseline fixtures, then proceed with TDD.
+
+Context read:
+- `.codex/README.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/session-logs/2026-05-08.log`
+- `.codex/design/SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md`
+- `.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+- `.codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/implementation/WORKLOG.md`
+- `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+
+Decision:
+- Do not use `origin/thumb` PNGs as pixel-level legacy golden frames because they are UI preview assets, not final Clipper1 render frames.
+- No actual legacy Clipper1 final reference frames are checked in locally.
+- Keep `clipper1_golden_frames` reserved for true legacy Clipper1 exported references.
+- Promote current Clipper2 smoke output into a separate `clipper2_template_baseline_frames` fixture as a renderer regression guard.
+
+TDD RED:
+- Added `clipper_python/tests/test_clipper2_template_baseline_frames.py`.
+- Added `clipper_python/tests/test_legacy_template_render_baseline_script.py`.
+- `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py -q` failed because baseline `manifest.json` and `scripts/promote_legacy_template_smoke_baseline.py` did not exist.
+
+Changed:
+- `clipper_python/scripts/promote_legacy_template_smoke_baseline.py`
+- `clipper_python/tests/test_clipper2_template_baseline_frames.py`
+- `clipper_python/tests/test_legacy_template_render_baseline_script.py`
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - README
+  - manifest
+  - synthetic smoke media
+  - 5 payload JSON files
+  - 5 recipe JSON files
+  - 5 extracted 1080x1920 baseline PNG frames
+- `.codex/implementation/WORKLOG.md`
+- `.codex/implementation/TASKS.md`
+- `.codex/implementation/NEXT_SESSION_PROMPT.md`
+- `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`
+- `.codex/session-logs/2026-05-08.log`
+
+Verification so far:
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py` passed, 5 cases generated.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py -q` passed, 4 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py tests/test_legacy_template_render_smoke_script.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 9 tests and 1 skipped true legacy golden fixture.
+- GREEN: `clipper_python uv run pytest -q` passed, 90 tests and 5 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+
+Current local status:
+- `clipper_python` has uncommitted new files for the baseline fixture/script/tests.
+- `.codex` docs updated in workspace root, which is not a git repo.
+
+[2026-05-08 10:15:00 KST] Legacy Clipper1 정답 이미지 추출 경로 추가
+
+User request:
+- Continue, and use `adlight_python` to generate true Clipper1 answer images by changing template ids and rendering videos one by one.
+
+Decision:
+- Use actual legacy Clipper1 output as the answer image source.
+- Keep `clipper2_template_baseline_frames` as a current-Clipper2 regression guard only.
+- Do not check the new Clipper1 answer images into `clipper_python/tests/fixtures/clipper1_golden_frames` yet, because the current renderer comparison fails.
+
+Changed:
+- Added `adlight_python/scripts/export_clipper1_reference_frames.py`.
+  - Calls legacy `app.services.VideoService.VideoService.create_video()`.
+  - Supports `--case <template>:<ratio>`, `--all-designs`, `--all-ratios`, and `--include-ratio-edge-cases`.
+  - Serves `adlight_python/layout`, synthetic media, and silent TTS through a local HTTP server so the old download path is exercised.
+  - Writes legacy input JSON, Clipper2 comparison payload/recipe JSON, first-frame PNG, legacy MP4/thumbnail, and manifest.
+- Added `adlight_python/tests/test_export_clipper1_reference_frames.py`.
+- Updated `.codex/implementation/WORKLOG.md`, `.codex/implementation/TASKS.md`, `.codex/implementation/NEXT_SESSION_PROMPT.md`, and `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`.
+
+TDD:
+- RED: focused unittest failed before the export script existed.
+- GREEN: focused unittest passed after adding the script.
+
+Verification and findings:
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 5 tests.
+- GREEN: `adlight_python .venv/bin/python scripts/export_clipper1_reference_frames.py --output-root /tmp/clipper1-reference-export-smoke --case 1:16:9 --duration 0.2` generated one Clipper1 answer frame and supporting files.
+- GREEN: rerunning the same Clipper1 case generated an identical first-frame PNG hash, so the answer image itself is reproducible.
+- GREEN: `adlight_python .venv/bin/python scripts/export_clipper1_reference_frames.py --output-root /tmp/clipper1-reference-export-all-designs --all-designs --include-ratio-edge-cases --duration 0.2` generated 25 cases, about 31MB.
+- EXPECTED RED: `clipper_python CLIPPER1_GOLDEN_FRAME_FIXTURE_DIR=/tmp/clipper1-reference-export-smoke uv run pytest tests/test_clipper1_video_render_golden_frames.py -q` failed on `template-1-16_9` with mismatch ratio `0.154080`.
+- Evidence: visual placement is close, but high-frequency background texture/video compression/text edge differences create many pixel mismatches. The next step is to choose and TDD a comparison rule that distinguishes meaningful layout drift from encoding/background noise, or first improve renderer parity.
+
+[2026-05-08 10:25:00 KST] Legacy Clipper1 정답 이미지 fixture 승격
+
+Decision:
+- Adopt `channelTolerance=32` and `maxMismatchRatio=0.04` as the first Clipper1 answer image comparison rule.
+- Reason: with `channelTolerance=32`, the 25 exported cases showed mismatch ratios from about `2.0%` to `3.8%`; the worst was `template-12-16_9` at `0.037809`.
+- A synthetic 2px vertical drift of the same image produced mismatch ratio `0.096489`, so the `0.04` threshold still catches meaningful position drift.
+
+TDD RED:
+- Added a test for export comparison defaults.
+- `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` failed because `DEFAULT_CHANNEL_TOLERANCE` and `DEFAULT_MAX_MISMATCH_RATIO` did not exist.
+
+Changed:
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - Added `DEFAULT_CHANNEL_TOLERANCE = 32`.
+  - Added `DEFAULT_MAX_MISMATCH_RATIO = 0.04`.
+  - Manifest cases now use these values.
+- Generated 25 actual legacy Clipper1 answer fixtures into `clipper_python/tests/fixtures/clipper1_golden_frames`.
+
+Verification so far:
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 6 tests.
+- GREEN: `adlight_python .venv/bin/python scripts/export_clipper1_reference_frames.py --all-designs --include-ratio-edge-cases --duration 0.2` generated 25 cases in `clipper_python/tests/fixtures/clipper1_golden_frames`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py -q` passed, 1 test covering 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py tests/test_legacy_template_render_smoke_script.py -q` passed, 11 tests.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `clipper_python uv run pytest -q` passed, 92 passed / 4 skipped.
+- GREEN: `adlight_python .venv/bin/python -m py_compile scripts/export_clipper1_reference_frames.py` passed.
+- GREEN: `adlight_python git diff --check` passed.
+
+Remaining:
+- This is not exact-pixel parity yet. It is a practical first answer-image guard that allows compression/text-edge noise while catching layout movement.
+
+[2026-05-08 13:15:24 KST] Legacy Clipper1 template-12 top text/box parity 보정
+
+사용자 요청:
+- 계속 진행하되 설명은 한국어로 한다.
+- 한 턴을 짧게 끊지 말고 큰 작업 하나를 해결한다.
+
+이번 큰 작업:
+- `template-12-16_9`에서 기존 Clipper1 정답 이미지와 Clipper2 출력의 차이가 가장 컸고, 특히 top 영역 차이가 컸다.
+- 이 top 영역의 제목 박스가 왜 Clipper1보다 넓게 나오는지 원인을 찾아 TDD로 고쳤다.
+
+원인:
+- Clipper1 `create_text_image()`는 text PNG canvas width를 문장 전체 `font.getbbox(line)` 폭 + tracking으로 계산한다.
+- Clipper2는 글자별 폭 합계를 쓰고 있었다.
+- 더 큰 원인은 Clipper2의 공용 `_number()`가 0보다 큰 숫자만 인정해서 `main_title_tracking=-4.5` 같은 음수 tracking을 0으로 버린 것이다.
+- 그래서 `Legacy Clipper1` 제목 PNG가 Clipper1 기준 `(753, 135)`가 아니라 `(815~816, 135)`로 만들어졌다.
+
+TDD:
+- RED: `test_template_12_boxed_main_title_matches_legacy_text_image_dimensions` 추가 후 `(815, 135) != (753, 135)`로 실패 확인.
+- RED after first fix: canvas width 계산만 바꿨더니 음수 tracking이 버려져 `(816, 135) != (753, 135)`로 실패 확인.
+- GREEN: tracking 전용 `_tracking_number()`를 추가하고 tracking 사용 경로에 적용하자 focused test 통과.
+
+변경:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `_tracking_number()` 추가.
+  - ASS style, shadow style, text PNG, outline PNG, font fitting, subtitle wrapping 경로의 tracking 읽기를 음수 보존 방식으로 변경.
+  - `_create_legacy_text_image()`의 canvas width를 문장 전체 bbox 폭 + tracking으로 변경.
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+  - `template-12-16_9` main title PNG 크기 회귀 테스트 추가.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - 의도적으로 renderer output이 바뀌었으므로 Clipper2 회귀 방지용 baseline 25개 재생성.
+
+Drift 결과:
+- Before `template-12-16_9`:
+  - overall `0.03780864197530864`
+  - top `0.102660`
+  - content `0.000646`
+  - bottom `0.015384`
+- After `template-12-16_9`:
+  - overall `0.011442901234567902`
+  - top `0.024770072085508327`
+  - content `0.0006091617933723197`
+  - bottom `0.009548934409269605`
+- 25 cases failed 0.
+- 새 worst case: `template-1-full`, mismatch ratio `0.02767361111111111`.
+
+검증:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_template_12_boxed_main_title_matches_legacy_text_image_dimensions -q` 성공, 1 passed.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-title-width --write-diffs top --top-diffs 10` 성공, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` 성공, 24 passed.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-after-title-width-25` 성공, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py -q` 성공, 2 passed.
+- GREEN: `clipper_python uv run python -m compileall scripts` 성공.
+- GREEN: `clipper_python uv run pytest -q` 성공, 96 passed / 4 skipped.
+
+다음:
+- `template-1-full`, `template-17-full`의 content 영역 mismatch를 진단한다.
+- full ratio layout/content 합성 방식과 overlay 순서를 기존 Clipper1 `VideoService.py` 기준으로 비교한다.
+
+[2026-05-08 13:26:19 KST] Legacy Clipper1 full ratio layout overlay order 보정
+
+이번 큰 작업:
+- 새 worst case였던 `template-1-full`, `template-17-full`의 full ratio/content mismatch를 줄였다.
+- 사용자 관점으로는 full 템플릿에서 제목/자막/로고가 회색으로 눌려 보이는 문제였다.
+
+원인:
+- Clipper1 `_create_final_video()` 순서는 `concat된 비디오 -> layout overlay -> 제목/자막/로고 overlay`다.
+- 이전 Clipper2는 `segment 안에 제목/자막/로고 overlay -> concat -> layout overlay` 순서였다.
+- full layout PNG에는 alpha가 있어서 마지막에 덮으면 이미 합성된 텍스트와 로고까지 어두워졌다.
+
+TDD:
+- RED: `test_final_layout_overlay_places_text_overlays_after_layout` 추가 후 `_overlay_final_layout()`의 `text_overlay_assets` 인자 미지원으로 실패 확인.
+- GREEN: `_overlay_final_layout()`이 layout 다음에 logo/text overlays를 쌓도록 구현한 뒤 focused test 통과.
+
+변경:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - full-height layout case에서는 segment render에서 layout과 logo image를 제외한다.
+  - segment별 text overlay asset은 concat 이후 final layout overlay 단계로 넘기고, clip 시작 시간만큼 start/end를 shift한다.
+  - `_overlay_final_layout()`이 `layout -> logo image -> text overlays` 순서로 filter chain을 만든다.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - final layout overlay가 text overlay를 layout 이후에 합성하는지 filter graph로 검증한다.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Clipper2 회귀 방지 baseline 25개 재생성.
+
+Drift 결과:
+- Before:
+  - `template-1-full` `0.02767361111111111`
+  - `template-17-full` `0.02451003086419753`
+  - worst case `template-1-full`
+- After:
+  - `template-1-full` `0.011059027777777777`
+  - `template-17-full` `0.014496527777777778`
+  - 25 cases failed 0
+  - 새 worst case `template-3-16_9`, `0.015185185185185185`
+
+검증:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_final_layout_overlay_places_text_overlays_after_layout -q` 성공, 1 passed.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-full-layout-order --write-diffs top --top-diffs 10` 성공, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` 성공, 14 passed.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-after-full-layout-order-25` 성공, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` 성공, 16 passed.
+- GREEN: `clipper_python uv run python -m compileall scripts` 성공.
+- GREEN: `clipper_python uv run pytest -q` 성공, 97 passed / 4 skipped.
+- GREEN: `clipper_python git diff --check` 성공.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` 성공, 6 tests.
+
+다음:
+- `template-3-16_9` top 영역의 title/subtitle/font edge 또는 layout alpha/encoding edge 차이를 진단한다.
+
+[2026-05-08 10:45:00 KST] Legacy Clipper1 golden drift diagnostics
+
+User request:
+- Continue with a larger, longer-running task and clarify what the "big thing" is.
+
+Decision:
+- The "big thing" for this turn is making the 25-case answer-image comparison diagnosable, not just pass/fail.
+- Build a script that renders all Clipper1 answer fixture cases, compares current Clipper2 frames, writes per-case and per-region mismatch metrics, and produces diff images for the worst cases.
+
+TDD RED:
+- Added `clipper_python/tests/test_clipper1_golden_frame_diagnostics.py`.
+- Focused run failed because `scripts.diagnose_clipper1_golden_frame_drift` did not exist.
+
+Changed:
+- Added `clipper_python/scripts/diagnose_clipper1_golden_frame_drift.py`.
+  - Reads `tests/fixtures/clipper1_golden_frames/manifest.json`.
+  - Renders each case through `LocalRenderAdapter`.
+  - Extracts actual frame with ffmpeg.
+  - Compares expected/current frames with the case tolerance settings.
+  - Computes top/content/bottom vertical region mismatch.
+  - Writes `summary.json`, `summary.tsv`, actual frames, and top diff PNGs.
+- Added `.codex/diagnostics/LEGACY_CLIPPER1_GOLDEN_DRIFT_2026-05-08.md`.
+- Updated worklog and next-session prompt.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_golden_frame_diagnostics.py -q` passed, 3 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report --write-diffs top --top-diffs 10` passed.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_golden_frame_diagnostics.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --help` passed.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `clipper_python uv run pytest -q` passed, 95 passed / 4 skipped.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Diagnostic result:
+- `caseCount`: 25
+- `failedCount`: 0
+- worst case: `template-12-16_9`
+- worst mismatch ratio: `0.03780864197530864`
+- `template-12-16_9` region mismatch:
+  - top: `0.102660`
+  - content: `0.000646`
+  - bottom: `0.015384`
+
+Conclusion:
+- The next renderer parity target is top-region project text/box rendering, not media/content placement.
+- Investigate PIL text image generation, title box dimensions/position, alpha edge, and ffmpeg overlay encoding edge for `template-12-16_9` first.
+
+[2026-05-08 09:46:44 KST] Expanded Clipper2 baseline coverage to all legacy designs
+
+User request:
+- Continue implementation and respond in Korean.
+
+Decision:
+- Extend the new Clipper2 regression baseline from the default 5 representative cases to all 21 legacy template designs.
+- Keep four non-16:9 ratio edge cases so ratio-specific layout behavior remains covered.
+
+TDD RED:
+- Updated `tests/test_clipper2_template_baseline_frames.py` to expect 25 case ids.
+- Added `test_select_baseline_rows_combines_all_designs_with_requested_ratio_edges`.
+- `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py -q` failed:
+  - fixture manifest still had 5 cases.
+  - `select_baseline_rows` did not exist.
+
+Changed:
+- `clipper_python/scripts/promote_legacy_template_smoke_baseline.py`
+  - Added `select_baseline_rows()` to merge `--all-designs` rows with explicit `--case` rows and dedupe duplicates.
+- `clipper_python/tests/test_clipper2_template_baseline_frames.py`
+  - Expected baseline ids now include templates 1-21 at `16:9`, plus `template-1-full`, `template-6-1_1`, `template-16-4_3`, `template-17-full`.
+- `clipper_python/tests/test_legacy_template_render_baseline_script.py`
+  - Added merge/dedupe regression.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated with 25 cases, 78 files total, about 27MB.
+- Updated fixture README and `.codex` docs.
+
+Verification so far:
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full` passed, 25 cases generated.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py -q` passed, 5 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_legacy_template_render_baseline_script.py tests/test_legacy_template_render_smoke_script.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 10 tests and 1 skipped true legacy golden fixture.
+- GREEN: `clipper_python uv run pytest -q` passed, 91 tests and 5 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+
+[2026-05-08 13:59:50 KST] Legacy Clipper1 template-3 text height and template-17 full pan direction parity
+
+User request:
+- Continue after confirming full-ratio overlay PNG behavior.
+- Keep explanations in Korean.
+
+Decision:
+- First finish the current worst case after full-ratio overlay-order fix: `template-3-16_9`.
+- Then take the next worst full-ratio case: `template-17-full`.
+
+Template-3 root cause:
+- Clipper2's `LEGACY_TEXT_HEIGHT_REFERENCE` was shorter than legacy Clipper1 `generate_reference_texts()`.
+- Clipper1 computes average text height using a broad Hangul reference set and `set(common_chars)`.
+- The shorter Clipper2 reference shifted text glyphs about 3px lower inside the generated PNG.
+
+Template-3 TDD:
+- RED: added `test_template_3_main_title_matches_legacy_text_vertical_placement`; it failed with bbox `(2, 9, 531, 90)` instead of expected `(2, 5, 531, 90)`.
+- GREEN: expanded the text-height reference set and matched Clipper1's `set()` behavior.
+
+Template-17 root cause:
+- Legacy Clipper1 chose `right_to_left` for the random full-ratio horizontal pan in the exported reference video.
+- Clipper2's deterministic auto pan chose `left_to_right` for the same media path.
+- The first frame's white circle was shifted by about 8px.
+
+Template-17 TDD:
+- RED: added recipe pinning test for `effects[].params.fit/travelPx/offsetPx`; existing explicit pan parser ignored those fields and returned scale-based pan.
+- GREEN: LocalRenderAdapter now supports explicit legacy auto pan crop pinning.
+- Updated `tests/fixtures/clipper1_golden_frames/template-17-full.recipe.json` with `fit=height`, `direction=right_to_left`, `travelPx=8`, `offsetPx=416`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+- `clipper_python/tests/fixtures/clipper1_golden_frames/template-17-full.recipe.json`
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/` regenerated after text height output change.
+- `.codex` worklog / next-session prompt / diagnostics updated.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_template_3_main_title_matches_legacy_text_vertical_placement -q` passed, 1 test.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_recipe_can_pin_legacy_auto_pan_direction tests/test_clipper1_video_render_media_looping.py::test_explicit_legacy_auto_pan_uses_pinned_crop_direction -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-text-height-reference --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` passed, 25 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-after-text-height-reference-25` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_template_styles.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` passed, 37 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-template17-pan-pin --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+
+Drift results:
+- `template-3-16_9`: `0.015185 -> 0.007126`.
+- `template-17-full`: `0.012880 -> 0.005683`.
+- Current worst: `template-6-1_1`, mismatch `0.011948302469135802`, worst region `content`.
+
+Next:
+- Investigate `template-6-1_1` content mismatch.
+- Likely compare legacy MoviePy/Pillow zoom processing against Clipper2 FFmpeg zoompan/scale processing before changing code.
+
+[2026-05-08 14:12:00 KST] Tightened legacy Clipper1 golden fixture threshold
+
+User note:
+- User directly inspected `template-6-1_1` reference/current/diff images and said the images look almost identical.
+
+Decision:
+- Treat the remaining `template-6-1_1` drift as edge/resize/encoding noise for now, not a meaningful layout mismatch.
+- Tighten the checked-in golden fixture threshold from `maxMismatchRatio=0.04` to `0.015` so future regressions are caught closer to the current parity level.
+
+TDD RED:
+- Added `test_legacy_clipper1_golden_frame_fixture_uses_tight_layout_threshold`.
+- Focused test failed with `{0.04} != {0.015}`.
+- Updated `adlight_python/tests/test_export_clipper1_reference_frames.py` expected default to `0.015`; discover run failed with `0.04 != 0.015`.
+
+Changed:
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - 25 cases now use `maxMismatchRatio=0.015`.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+  - documented current comparison as `channelTolerance=32`, `maxMismatchRatio=0.015`.
+- `clipper_python/tests/test_clipper1_video_render_golden_frames.py`
+  - added tightened-threshold regression.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.015`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - expected export default updated to `0.015`.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py::test_legacy_clipper1_golden_frame_fixture_uses_tight_layout_threshold -q` passed, 1 test.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 6 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `clipper_python uv run pytest -q` passed, 101 tests / 4 skipped.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with `template-6-1_1` zoom/resize pipeline investigation if further parity tightening is needed.
+
+[2026-05-08 14:28:00 KST] Matched zoom resize filter closer to legacy MoviePy
+
+Decision:
+- Investigate `template-6-1_1` before changing code.
+- Geometry was already close; remaining diff was concentrated on circle/text edges.
+- Legacy Clipper1 MoviePy resize uses OpenCV `INTER_LINEAR` for upsize when cv2 is installed.
+- Candidate FFmpeg filter experiments showed `flags=bilinear` was closer than the current/default scale filter for the content crop.
+
+TDD RED:
+- Added `test_automatic_zoom_uses_legacy_linear_resize_filter`.
+- Focused test failed because the zoom filter graph did not include `flags=bilinear`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Zoom motion filter scale now uses `force_original_aspect_ratio=increase:flags=bilinear`.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Added focused filter graph regression.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames after intentional output change.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_linear_resize_filter -q` passed, 1 test.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-zoom-bilinear --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-after-zoom-bilinear-25` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_golden_frame_diagnostics.py -q` passed, 20 tests.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `clipper_python uv run pytest -q` passed, 102 tests / 4 skipped.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Drift:
+- `template-6-1_1`: `0.011948 -> 0.010862`.
+- Current worst: `template-6-1_1`, still within tightened `0.015`.
+
+Next:
+- Investigate top text edge cases `template-16-16_9` and `template-11-16_9`, or consider whether `maxMismatchRatio=0.012` is safe after another pass.
+
+[2026-05-08 14:45:00 KST] Matched FFmpeg overlay format to legacy Clipper1
+
+Decision:
+- Legacy Clipper1 `VideoService.py` writes FFmpeg overlay filters as plain `overlay=x:y` and does not pass `format=auto`.
+- Clipper2 had `format=auto` on layout/logo/text PNG overlays, which amplified alpha/text edge differences in `template-16-16_9`, `template-11-16_9`, and full-ratio final layout overlays.
+- Temporary adapter experiment over all 25 cases showed the overlay default format lowered most cases substantially while keeping the worst under `0.012`.
+
+TDD RED:
+- Updated media-looping filter graph expectations to require legacy default overlay format and no `format=auto`.
+- `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py -q` failed in 4 focused assertions.
+- Updated golden/export threshold tests to expect `0.012`; focused runs failed with `{0.015} != {0.012}` and `0.015 != 0.012`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Removed `format=auto` from layout/media, logo, text, and full-ratio final layout overlay filters.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Updated filter graph regressions to lock the legacy overlay default.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames after intentional output change.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened 25 case `maxMismatchRatio` values from `0.015` to `0.012`.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+  - Documented current `channelTolerance=32`, `maxMismatchRatio=0.012`.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.012`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - Expected export default updated to `0.012`.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py -q` passed, 13 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-legacy-overlay-format --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-legacy-overlay-format --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py::test_legacy_clipper1_golden_frame_fixture_uses_tight_layout_threshold -q` passed, 1 test.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p 'test_export_clipper1_reference_frames.py'` passed, 6 tests.
+
+Drift:
+- `template-11-16_9`: `0.009001 -> 0.003457`.
+- `template-16-16_9`: `0.009687 -> 0.006590`.
+- `template-12-16_9`: `0.007373 -> 0.003382`.
+- `template-1-full`: `0.011059 -> 0.000573`.
+- `template-17-full`: `0.005683 -> 0.001541`.
+- Current worst: `template-6-1_1`, mismatch `0.011861496913580247`, within tightened `0.012`.
+
+Next:
+- Run full verification after docs updates.
+- Next parity target is `template-6-1_1` content edge, but do not tighten below `0.012` until that is understood.
+
+[2026-05-08 15:07:26 KST] Matched automatic zoom to legacy two-step scale/crop
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Continue with the current worst case, `template-6-1_1`.
+- Existing Clipper1 code first normalizes the image to the content area, then MoviePy applies time-based zoom by resizing that normalized clip.
+- Replace the FFmpeg `zoompan` branch with an explicit two-step scale/crop chain to better match that behavior.
+
+TDD RED:
+- Updated `test_automatic_zoom_uses_legacy_scale_crop_resize_filter`.
+- Focused test failed because the filter graph still used `zoompan`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Automatic zoom now uses:
+    - first normalize step: `fps -> scale(... force_original_aspect_ratio=increase:flags=bilinear) -> crop`
+    - second zoom step: frame-time based scale expression using `t * fps`, then centered crop
+  - Removed `zoompan` from the automatic zoom branch.
+  - Frame count denominator now uses legacy `int(duration * fps)` with a minimum of 1, not `round(duration * fps)`.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Locks the new legacy scale/crop filter graph.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 baseline cases after intentional renderer output change.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened 25 case `maxMismatchRatio` values from `0.012` to `0.008`.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/README.md`
+  - Documented current `channelTolerance=32`, `maxMismatchRatio=0.008`.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.008`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - Expected export default updated to `0.008`.
+- `.codex` worklog / next-session prompt / diagnostics updated.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter -q` passed, 1 test.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-zoom-scale-crop --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-zoom-scale-crop-int-frames --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-zoom-scale-crop --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper2_template_baseline_frames.py -q` passed, 17 tests.
+- GREEN: `clipper_python uv run pytest -q` passed, 102 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 17:09:00 KST] Matched legacy zoom resize edge with fast_bilinear
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Target current worst `template-6-1_1`.
+- Pixel analysis showed the remaining mismatch was concentrated on automatic zoom media content hard edges.
+- Old Clipper1 MoviePy `resize.py` uses OpenCV `cv2.INTER_LINEAR` in this environment.
+- FFmpeg `fast_bilinear` was closer to the Clipper1 reference edge than the current `bilinear` path.
+
+TDD RED:
+- Updated `test_automatic_zoom_uses_legacy_scale_crop_resize_filter` to expect `flags=fast_bilinear`.
+- Focused test failed because the filter graph still used `flags=bilinear`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Zoom branch first normalize scale and time-based zoom scale now use `flags=fast_bilinear`.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Updated zoom filter graph regression expectation.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.0067` to `0.0065`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0065`.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter -q` failed, filter graph still used `flags=bilinear`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-fast-bilinear --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-fast-bilinear --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_video_render_media_looping.py -q` passed, 19 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006354166666666667`, within tightened `0.0065`.
+- `template-6-1_1`: `0.006558641975308642 -> 0.006354166666666667`.
+- Current second case: `template-6-16_9`, mismatch `0.004701003086419753`.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 106 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with `template-6-1_1` remaining content edge or `template-6-16_9` content edge before considering another threshold tighten.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 106 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 106 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 17:09:00 KST] Matched legacy zoom resize edge with fast_bilinear
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Target the current worst case `template-6-1_1`.
+- Pixel analysis showed the remaining mismatch was concentrated on the automatic zoom media content hard edges, especially orange/blue and blue/cyan band edges plus the white circle edge.
+- 1px content shifts did not improve the 1:1 case.
+- Old Clipper1 MoviePy `resize.py` uses OpenCV `cv2.INTER_LINEAR` in this environment.
+- Focused FFmpeg resize experiments showed `flags=fast_bilinear` was closer to the Clipper1 reference edge than the current `flags=bilinear`.
+
+TDD RED:
+- Updated `test_automatic_zoom_uses_legacy_scale_crop_resize_filter` to expect `flags=fast_bilinear`.
+- Focused test failed because the filter graph still used `flags=bilinear`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Zoom branch first normalize scale and time-based zoom scale now use `flags=fast_bilinear`.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Updated zoom filter graph regression expectation.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.0067` to `0.0065`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0065`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - Updated expected default threshold.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter -q` failed, filter graph still used `flags=bilinear`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-fast-bilinear --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-fast-bilinear --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_video_render_media_looping.py -q` passed, 19 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006354166666666667`, within tightened `0.0065`.
+- `template-6-1_1`: `0.006558641975308642 -> 0.006354166666666667`.
+- Current second case: `template-6-16_9`, mismatch `0.004701003086419753`.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 106 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with `template-6-1_1` remaining content edge or `template-6-16_9` content edge before considering another threshold tighten.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py::test_legacy_clipper1_golden_frame_fixture_uses_tight_layout_threshold -q` passed, 1 test.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+
+Drift:
+- `template-6-1_1`: `0.011861496913580247 -> 0.0069791666666666665`.
+- Current worst: `template-6-1_1`, mismatch `0.0069791666666666665`, within tightened `0.008`.
+
+Next:
+- Run full verification after docs updates.
+- Next parity target is likely top edge drift in `template-16-4_3`, `template-18-16_9`, or `template-16-16_9`.
+
+[2026-05-08 15:31:58 KST] Matched x264 preset to legacy MoviePy writes
+
+Decision:
+- Investigate the remaining top edge cases before tightening the `0.008` threshold further.
+- Small shift experiments showed `template-16-4_3` and `template-14-16_9` do not improve with 1px crop shifts; `template-18-16_9` and `template-16-16_9` improve only slightly at y -1.
+- Legacy Clipper1 MoviePy `write_videofile()` uses `preset='ultrafast'`, `codec='libx264'`.
+- Clipper2 used `libx264` but did not pass `-preset ultrafast`.
+
+TDD RED:
+- Added focused assertions that segment render and full-ratio final layout overlay use the legacy x264 ultrafast preset.
+- Focused tests failed because the commands did not include `-preset ultrafast`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Added `-preset ultrafast` to segment render encoding.
+  - Added `-preset ultrafast` to full-ratio final layout overlay encoding.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Added command-level regressions for the legacy x264 preset.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames after intentional output change.
+- `.codex` worklog / next-session prompt / diagnostics updated.
+
+Verification so far:
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_render_segment_encodes_with_legacy_x264_ultrafast_preset tests/test_clipper1_video_render_media_looping.py::test_final_layout_overlay_places_layout_on_top_of_concatenated_full_video -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-x264-ultrafast --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-x264-ultrafast --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest -q` passed, 103 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.0070119598765432094`, within `0.008`.
+- `template-16-4_3`: `0.006740 -> 0.006553`.
+- `template-18-16_9`: `0.006653 -> 0.006534`.
+- `template-16-16_9`: `0.006590 -> 0.006476`.
+
+Next:
+- Run full verification.
+- Continue with top edge/text edge diagnosis before considering another threshold tighten.
+
+[2026-05-08 15:50:13 KST] Matched legacy text height reference row
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Continue investigating the remaining top/text edge drift before tightening the `0.008` threshold.
+- A root-cause check found that current `LEGACY_TEXT_HEIGHT_REFERENCE` did not exactly match old Clipper1 `generate_reference_texts()`.
+- Old Clipper1 has `그느드르므브스으즈츠크트프흐`; current renderer had `그느드르무브스으즈츠크트프흐`.
+- This matters because that character set feeds average text height and can affect PNG text vertical placement.
+
+TDD RED:
+- Added `test_legacy_text_height_reference_includes_clipper1_eu_row`.
+- Focused test failed with `missing_chars == ['므']`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Corrected `LEGACY_TEXT_HEIGHT_REFERENCE` to include `므` in the legacy row.
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+  - Added a regression test for the Clipper1 `으`-family row.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_legacy_text_height_reference_includes_clipper1_eu_row -q` failed, missing `므`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_legacy_text_height_reference_includes_clipper1_eu_row -q` passed, 1 test.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py -q` passed, 22 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-text-reference-mu --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-text-reference-mu --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py -q` passed, 2 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.0070119598765432094`, within `0.008`.
+- Top 10 order and rounded values stayed the same as the x264 ultrafast result.
+
+Next:
+- Run full verification.
+- Continue with `template-6-1_1` content edge or top edge text/image edge diagnosis before another threshold tighten.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 104 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 16:05:32 KST] Matched legacy automatic zoom source preprocessing
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Target current worst case `template-6-1_1`.
+- Pixel analysis showed the mismatch concentrates on full-width content edge rows, not a 1px crop shift.
+- FFmpeg scale flag experiments did not improve over the current bilinear/bilinear path.
+- Old Clipper1 `_apply_zoom_effect()` first resizes/crops the source image to the content area and stores an intermediate `.jpg` for RGB images before applying MoviePy zoom.
+- Current renderer fed the original PNG directly into ffmpeg. Implement the legacy intermediate source only for `motion_effect.summary.source == "auto"` image zoom.
+
+TDD RED:
+- Added `test_automatic_zoom_uses_legacy_preprocessed_image_source`.
+- Focused test failed because the ffmpeg input was still the original `still.png`.
+- Tightening tests failed while manifest/export defaults still used `0.008`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Auto image zoom now writes `<segment>_legacy_zoom_source.jpg` for RGB input or `.png` for transparent input after content-area fit/crop.
+  - Explicit recipe zoom does not use this preprocessing path.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Added regression coverage for the legacy preprocessed source path.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.008` to `0.007`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.007`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - Updated expected default threshold.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` failed, original input still used.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` passed, 1 test.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py -q` passed, 15 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-autozoom-preprocess-threshold007 --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-autozoom-preprocess --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006558641975308642`, within tightened `0.007`.
+- `template-6-1_1`: `0.0070119598765432094 -> 0.006558641975308642`.
+- Current second case: `template-16-4_3`, mismatch `0.006552854938271605`.
+
+Next:
+- Run full verification.
+- Continue with top edge cases before considering another threshold tighten.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 105 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 16:23:33 KST] Matched legacy text height zero-glyph averaging
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Target `template-16-4_3`, the top edge case that became second after auto zoom source preprocessing.
+- Pixel analysis showed the top mismatch concentrates in the project title area, not the whole layout.
+- Overlay mask analysis showed main title 1/2 accounts for most top mismatch.
+- Old Clipper1 `get_average_text_height()` includes zero-height glyphs in its average; current renderer filtered them out.
+- For `SCDream8.otf` at 85px this changed average text height from `75.6687898089172` to `77.6470588235294`, moving main title glyphs 1px up.
+
+TDD RED:
+- Added `test_template_16_main_titles_include_zero_height_reference_glyphs`.
+- Focused test failed with line 1 bbox top `3 != 4`.
+- Tightening tests failed while manifest/export defaults still used `0.007`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `_average_text_height()` now includes zero-height glyphs, matching old Clipper1.
+- `clipper_python/tests/test_clipper1_video_render_template_styles.py`
+  - Added template-16 main title vertical placement regression.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.007` to `0.0067`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0067`.
+- `adlight_python/tests/test_export_clipper1_reference_frames.py`
+  - Updated expected default threshold.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_template_16_main_titles_include_zero_height_reference_glyphs -q` failed, bbox top `3 != 4`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py::test_template_16_main_titles_include_zero_height_reference_glyphs tests/test_clipper1_video_render_template_styles.py::test_template_3_main_title_matches_legacy_text_vertical_placement -q` passed, 2 tests.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_template_styles.py -q` passed, 23 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-average-height-zero-glyphs-threshold0067 --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-average-height-zero-glyphs --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006558641975308642`, within tightened `0.0067`.
+- `template-16-4_3`: `0.006552854938271605 -> 0.003433641975308642`.
+- `template-14-16_9`: `0.006534 -> 0.003546`.
+- `template-18-16_9`: `0.006534 -> 0.003447`.
+- `template-16-16_9`: `0.006476 -> 0.003289`.
+
+Next:
+- Run full verification.
+- Continue with `template-6-1_1` or `template-6-16_9` content edge before considering another threshold tighten.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 106 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 17:09:00 KST] Matched legacy zoom resize edge with fast_bilinear
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Target current worst `template-6-1_1`.
+- Pixel analysis showed the remaining mismatch was concentrated on automatic zoom media content hard edges.
+- Old Clipper1 MoviePy `resize.py` uses OpenCV `cv2.INTER_LINEAR` in this environment.
+- FFmpeg `fast_bilinear` was closer to the Clipper1 reference edge than the current `bilinear` path.
+
+TDD RED:
+- Updated `test_automatic_zoom_uses_legacy_scale_crop_resize_filter` to expect `flags=fast_bilinear`.
+- Focused test failed because the filter graph still used `flags=bilinear`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Zoom branch first normalize scale and time-based zoom scale now use `flags=fast_bilinear`.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Updated zoom filter graph regression expectation.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.0067` to `0.0065`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0065`.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter -q` failed, filter graph still used `flags=bilinear`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-fast-bilinear --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source tests/test_clipper1_video_render_golden_frames.py -q` passed, 4 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-fast-bilinear --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_video_render_media_looping.py -q` passed, 19 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006354166666666667`, within tightened `0.0065`.
+- `template-6-1_1`: `0.006558641975308642 -> 0.006354166666666667`.
+- Current second case: `template-6-16_9`, mismatch `0.004701003086419753`.
+
+Next:
+- Run full verification.
+- Continue with `template-6-1_1` remaining content edge or `template-6-16_9` content edge before considering another threshold tighten.
+
+[2026-05-08 17:32:05 KST] Matched legacy final video re-encode stage
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Continue from `template-6` content edge.
+- Old Clipper1 `_create_final_video()` always runs final FFmpeg concat/filter/x264 encode, even when there is one clip.
+- Current `_concat_segments()` skipped that stage for a single segment via `shutil.copyfile()`, and used `-c copy` for multi-segment concat.
+- Post-process experiment showed legacy final re-encode reduces `template-6-1_1` and `template-6-16_9` drift.
+
+TDD RED:
+- Added `test_concat_segments_reencodes_single_clip_with_legacy_final_x264_options`.
+- Focused test failed with `adapter.commands[0]` missing because single segment concat used copy path.
+- Threshold test failed after expecting `0.0064` while manifest still used `0.0065`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - `_concat_segments()` now always runs FFmpeg `concat` filter and legacy final x264 options.
+  - Adds `ValueError` for empty segment lists.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Added final re-encode regression test.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.0065` to `0.0064`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0064`.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_concat_segments_reencodes_single_clip_with_legacy_final_x264_options -q` failed, no recorded ffmpeg command.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_concat_segments_reencodes_single_clip_with_legacy_final_x264_options tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_scale_crop_resize_filter tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_uses_legacy_preprocessed_image_source -q` passed, 3 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-final-reencode --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py::test_legacy_clipper1_golden_frame_fixture_uses_tight_layout_threshold -q` failed, manifest still used `0.0065`.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_concat_segments_reencodes_single_clip_with_legacy_final_x264_options tests/test_clipper1_video_render_golden_frames.py -q` passed, 3 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-final-reencode --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_video_render_media_looping.py -q` passed, 20 tests.
+
+Drift:
+- Current worst: `template-6-1_1`, mismatch `0.006317515432098766`, within tightened `0.0064`.
+- `template-6-1_1`: `0.006354166666666667 -> 0.006317515432098766`.
+- `template-6-16_9`: `0.004701003086419753 -> 0.0033584104938271606`.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 107 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+Next:
+- Continue with `template-6-1_1` remaining content edge before considering another threshold tighten.
+
+[2026-05-08 17:52:57 KST] Matched legacy MoviePy/OpenCV automatic image zoom frame sequence
+
+User request:
+- Continue the legacy Clipper1 render parity work.
+- Keep explanations in Korean.
+
+Decision:
+- Continue from `template-6-1_1` remaining content hard-edge mismatch.
+- Pixel analysis showed dominant mismatch rows came from zoomed media color-band edges.
+- Legacy Clipper1 `_apply_zoom_effect()` creates a 30fps MoviePy/OpenCV full-frame segment before final overlay/encode.
+- Current Clipper2 used FFmpeg scale/crop for automatic image zoom, which approximated but did not match the legacy OpenCV frame path.
+
+TDD RED:
+- Added `test_automatic_zoom_renders_legacy_moviepy_frame_sequence`.
+- Focused test failed because `_render_segment()` still emitted an FFmpeg image input without `-framerate 30`.
+- Threshold test failed after expecting `0.0039` while manifest still used `0.0064`.
+
+Changed:
+- `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+  - Automatic image zoom now writes legacy 30fps frame sequence PNGs using OpenCV resize and layout/white background composition.
+  - The frame sequence is encoded with legacy MoviePy-like `libx264` `ultrafast` segment settings.
+- `clipper_python/plugins/clipper1_video_render/pyproject.toml`
+  - Added explicit `opencv-python-headless` dependency.
+- `clipper_python/tests/test_clipper1_video_render_media_looping.py`
+  - Added frame sequence regression coverage and updated preprocessing-source coverage.
+- `clipper_python/tests/fixtures/clipper1_golden_frames/manifest.json`
+  - Tightened `maxMismatchRatio` from `0.0064` to `0.0039`.
+- `clipper_python/tests/fixtures/clipper2_template_baseline_frames/`
+  - Regenerated 25 current-render baseline frames.
+- `adlight_python/scripts/export_clipper1_reference_frames.py`
+  - `DEFAULT_MAX_MISMATCH_RATIO = 0.0039`.
+- `.codex` worklog / next-session prompt / diagnostics / tasks updated.
+
+Verification so far:
+- RED: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_renders_legacy_moviepy_frame_sequence -q` failed, `-framerate` missing.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py::test_automatic_zoom_renders_legacy_moviepy_frame_sequence -q` passed, 1 test.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_media_looping.py -q` passed, 17 tests.
+- GREEN: `clipper_python uv run python scripts/diagnose_clipper1_golden_frame_drift.py --fixture-dir tests/fixtures/clipper1_golden_frames --output-root /tmp/clipper1-golden-frame-drift-report-after-legacy-cv2-autozoom-threshold0039 --write-diffs top --top-diffs 10` passed, 25 cases / failed 0.
+- GREEN: `clipper_python uv run pytest tests/test_clipper1_video_render_golden_frames.py -q` passed, 2 tests.
+- GREEN: `clipper_python uv run python scripts/promote_legacy_template_smoke_baseline.py --fixture-dir tests/fixtures/clipper2_template_baseline_frames --render-output-root /tmp/clipper2-template-baseline-render-after-legacy-cv2-autozoom --all-designs --case 1:full --case 6:1:1 --case 16:4:3 --case 17:full --duration 0.2` passed, 25 cases.
+- GREEN: `clipper_python uv run pytest tests/test_clipper2_template_baseline_frames.py tests/test_clipper1_video_render_golden_frames.py tests/test_clipper1_video_render_media_looping.py -q` passed, 21 tests.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `clipper_python uv lock --check` passed.
+
+Drift:
+- Current worst: `template-17-16_9`, mismatch `0.0038541666666666668`, within tightened `0.0039`.
+- `template-6-1_1`: `0.006317515432098766 -> 0.00011381172839506173`.
+
+Next:
+- Continue with `template-17-16_9`, `template-14-16_9`, and `template-11-16_9` content edge analysis before another threshold tighten.
+
+Final verification:
+- GREEN: `clipper_python uv run pytest -q` passed, 108 tests / 4 skipped.
+- GREEN: `clipper_python uv run python -m compileall scripts` passed.
+- GREEN: `clipper_python git diff --check` passed.
+- GREEN: `clipper_python uv lock --check` passed.
+- GREEN: `adlight_python .venv/bin/python -m unittest discover -s tests -p test_export_clipper1_reference_frames.py` passed, 6 tests.
+- GREEN: `adlight_python git diff --check` passed.
+
+[2026-05-08 18:03:51 KST] Session closeout and commits
+
+User request:
+- Finish the session here.
+- Commit the uncommitted work appropriately.
+- Document current state, completed work, remaining work, and exact next-session prompt.
+- Keep the explanation in Korean.
+
+Commits:
+- `clipper_python` on `feature/plugin-architecture`
+  - `e79e7a4 feat: tighten legacy clipper1 render parity`
+- `adlight_python` on `feature/d2x-electron`
+  - `4afaca5 test: add clipper1 reference frame exporter`
+
+Documented:
+- Added `.codex/implementation/CLIPPER1_RENDER_PARITY_CHECKPOINT_2026-05-08.md`.
+- Updated `.codex/implementation/NEXT_SESSION_PROMPT.md` to point at the checkpoint first.
+- Recorded this closeout in `.codex/session-logs/2026-05-08.log`.
+
+Current state:
+- `clipper_python`: clean working tree, branch is ahead of origin by 1 commit.
+- `adlight_python`: clean working tree, branch is ahead of origin by 1 commit.
+- `.codex` is outside a git repository in this workspace, so the documentation is intentionally local/uncommitted.
+
+Next:
+- Continue with `template-17-16_9`, `template-14-16_9`, and `template-11-16_9` content edge drift analysis.
+- Keep the 25-case Clipper1 reference fixture passing at `maxMismatchRatio=0.0039` while trying to reduce the threshold further.

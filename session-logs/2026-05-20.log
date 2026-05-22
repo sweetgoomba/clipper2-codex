@@ -1,0 +1,170 @@
+# 2026-05-20
+
+2026-05-20 Windows PC Clipper2 installer build smoke
+
+- 세션 성격:
+  - 이번 세션은 기존 Mac mini가 아니라 새 Windows PC에서 진행했다.
+  - 목표는 Windows PC에서 4개 repo만 clone해 Windows x64 NSIS installer를 만들고 최소 packaged smoke까지 확인하는 것이었다.
+  - 기준 문서:
+    - `.codex/implementation/2026-05-19-windows-build-codex-cli-handoff.md`
+    - `.codex/implementation/NEXT_SESSION_PROMPT.md`
+    - `.codex/session-logs/2026-05-19.log`
+    - `.codex/implementation/2026-05-19-template-builder-font-artifact-fix.md`
+
+- 상세 보고서:
+  - `.codex/implementation/2026-05-20-windows-build-session-report.md`
+  - 이번 session log는 요약만 남기고, 명령/경로/원인/결과의 자세한 내용은 위 문서에 기록했다.
+
+- 초기 진행:
+  - 처음에는 현재 Codex workspace인 `C:\Users\메타버즈-신사업\Desktop\project\adlight`에 4개 repo를 clone했다.
+  - clone 대상:
+    - `clipper_angular`
+    - `clipper_electron`
+    - `clipper_nestjs`
+    - `clipper_python`
+  - `adlight_python`은 clone하지 않았다.
+
+- 초기 경로 문제:
+  - 한글 사용자명 경로에서 Git `dubious ownership`, `.git/index.lock` permission 문제, npm native/postinstall 실패가 발생했다.
+  - npm/native script 실패는 `esbuild`, `@parcel/watcher`, `lmdb`, `msgpackr-extract` 등에서 나타났다.
+  - `node .\node_modules\esbuild\install.js`가 `C:\Users\메타버즈-신사업`에 대한 `lstat`에서 `EPERM`으로 실패했다.
+  - 사용자가 이전 Codex CLI 설치 시에도 한글 사용자명 아래 npm global path에서 `0xC0000005 Access Violation`이 발생했고, `C:\npm-global`로 옮긴 뒤 해결됐다고 알려줬다.
+  - 같은 계열 문제로 보고, 사용자 폴더 ACL을 더 만지지 않고 handoff 문서의 ASCII 경로인 `C:\project\adlight`로 전환했다.
+
+- 최종 build workspace:
+  - `C:\project\adlight`
+  - 4개 repo를 이 경로에 새로 clone했다.
+  - branch/commit:
+    - `clipper_angular`: `feature/initial-scaffold`, `4501146`
+    - `clipper_electron`: `feature/windows-packaging`, `e264865`
+    - `clipper_nestjs`: `feature/windows-packaging`, `c33fbd8`
+    - `clipper_python`: `feature/windows-packaging`, `5a61a62`
+
+- Windows tool 확인:
+  - Git `2.41.0.windows.1`
+  - Node `v22.11.0`
+  - npm `10.9.0`
+  - `tar` available (`bsdtar 3.8.4`)
+  - PowerShell execution policy 때문에 `npm` 대신 `npm.cmd`를 사용했다.
+
+- env 처리:
+  - `C:\project\adlight\clipper_nestjs\.env.local`이 실제 build 경로에 필요했다.
+  - 사용자가 준비한 파일은 처음에 Desktop clone 쪽에 있었으므로, 내용을 출력하지 않고 `C:\project\adlight\clipper_nestjs\.env.local`로 복사했다.
+  - `clipper_python\.env`는 packaged build 기준 필수 파일이 아님을 확인했다.
+  - Electron `BundledEnvProvider`는 없는 env 파일을 `{}`로 처리하고, `clipper_nestjs\.env.local` 값을 NestJS/Python plugin process 양쪽에 주입한다.
+
+- install/build:
+  - `npm.cmd install --cache C:\project\adlight\.npm-cache`
+    - `clipper_angular`: passed
+    - `clipper_nestjs`: passed
+    - `clipper_electron`: passed
+  - `clipper_electron npm.cmd run fetch-uv`: passed
+  - `node scripts\prepare-uv.mjs win32 x64`: passed
+  - preflight:
+    - `clipper_angular npm.cmd run build:electron -- --progress=false`: passed
+    - `clipper_nestjs npm.cmd run bundle`: passed
+    - `clipper_electron npm.cmd run build`: passed
+  - final build:
+    - `clipper_electron npm.cmd run build:app:win:x64`: passed
+
+- 산출물:
+  - `C:\project\adlight\clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe`
+  - installer size: `165,487,916` bytes
+  - packaged resource 확인:
+    - `dist-app\win-unpacked\resources\bin\uv.exe` 존재
+    - `dist-app\win-unpacked\resources\clipper_nestjs\.env.local` 존재
+
+- installer/app smoke:
+  - `C:\project\adlight\clipper2-smoke-install`에 silent install을 시도했다.
+  - command 자체는 300초 timeout에 걸렸지만 설치 디렉터리와 `Clipper2.exe`는 정상 생성되어 있었다.
+  - 설치된 app 실행 smoke:
+    - `Clipper2` process 실행 확인
+    - `%APPDATA%\Clipper2\clipper_venv\Scripts\python.exe` 생성 확인
+    - `%APPDATA%\Clipper2\logs\main.log` 생성 확인
+    - log에서 `[setup] Python env ready.`, `[PluginHostBridge] listening`, `[NestManager] ready` 확인
+
+- API smoke:
+  - 처음에는 이전 log의 stale port를 읽어 `/v1/health` 확인이 실패했다.
+  - 실행 전 log line count를 저장하고 새로 추가된 `NestManager ready` line만 읽도록 다시 확인했다.
+  - 최종 결과:
+    - base URL: `http://127.0.0.1:64441/v1`
+    - `GET /v1/health`: `200`
+    - `GET /v1/template-builder/families`: `200`
+    - family count: `24`
+  - smoke 후 남은 `Clipper2` process 없음.
+
+- 작업트리 상태:
+  - `C:\project\adlight\clipper_angular`: `package-lock.json` modified
+  - `C:\project\adlight\clipper_electron`: `package-lock.json` modified
+  - `C:\project\adlight\clipper_nestjs`: clean
+  - `C:\project\adlight\clipper_python`: clean
+  - `package-lock.json` 변경은 `npm install`로 생긴 것으로 보이며 아직 검토/커밋하지 않았다.
+
+- 아직 확인하지 않은 것:
+  - installer UI를 사람이 직접 클릭해 설치하는 흐름.
+  - renderer 화면 육안 확인.
+  - Template Builder 화면에서 thumbnail/font/text artifact가 실제로 정상 표시되는지.
+  - Template Builder sample render.
+  - plugin start/stop.
+  - ffmpeg/ffprobe download path.
+  - Dialog/Dance workflow E2E.
+
+- 다음 권장 작업:
+  - `C:\project\adlight\clipper2-smoke-install\Clipper2.exe`를 직접 열어 UI를 확인한다.
+  - Template Builder official list/card thumbnails/text artifact 변환을 눈으로 확인한다.
+  - 가능하면 sample render 및 가벼운 plugin start/stop smoke를 진행한다.
+  - `clipper_angular/package-lock.json`, `clipper_electron/package-lock.json` 변경을 검토하고 유지/되돌림을 결정한다.
+
+2026-05-20 Windows manual build guide 작성
+
+- 사용자 요청:
+  - 다른 Windows PC에서 Codex 없이 사용자가 직접 처음부터 따라 할 수 있는 build guide가 필요하다.
+  - "처음부터"는 프로젝트 루트 경로 생성, repo clone, branch checkout, env 준비, npm install, preflight, installer build, smoke 확인까지 포함한다.
+- 추가 문서:
+  - `.codex/implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-20.md`
+- 문서 내용:
+  - `C:\project\adlight` ASCII workspace 생성.
+  - 4개 repo clone 및 checkout command.
+  - `clipper_nestjs\.env.local` 준비 방법과 비밀값 출력 금지.
+  - `npm.cmd install --cache C:\project\adlight\.npm-cache`.
+  - `fetch-uv`, preflight, `npm.cmd run build:app:win:x64`.
+  - installer/resource 확인.
+  - 설치/app/API/UI smoke command.
+  - `npm.ps1` execution policy, 한글 사용자명 경로 Node/npm crash, stale log port, silent installer timeout troubleshooting.
+
+2026-05-20 Windows PC smoke follow-up triage/fixes
+
+- 입력 문서:
+  - `.codex/implementation/windows-pc-smoke-output-2026-05-20.md`
+- 다른 Windows PC smoke 결과:
+  - `C:\Users\bb\Desktop\project\clipper2`에서 configurable-root guide 12번까지 진행.
+  - installer build/install/app first launch passed.
+  - Template Builder official list 조회 passed.
+  - 새 템플릿 local `.ttf`/`.otf` 업로드 후 preview font 변화 없음.
+  - 새 템플릿 card thumbnail 엑박 확인.
+  - Plugin Store에서 Dance highlight 설치 시 ffmpeg는 다운로드됐지만 ffprobe 다운로드가 404로 실패.
+- 원인/수정:
+  - `clipper_electron/src/main/setup/download-ffmpeg.ts`
+    - `@ffprobe-installer/win32-x64@5.0.1`은 npm registry에 없는 tarball이었다.
+    - 단순 version bump 대신 `@ffprobe-installer/<platform>` package metadata에서 `dist-tags.latest`의 `dist.tarball`을 resolve해 다운로드하도록 변경.
+    - 이로써 future latest version 변경 시 hardcoded version mismatch로 404가 재발하는 위험을 낮췄다.
+  - `clipper_angular/src/features/template-builder/components/template-builder-editor.component.ts`
+    - remote URL font만 `FontFace`로 등록하고 uploaded local absolute font path는 등록하지 않아 live preview가 fallback/system font로 남았다.
+    - local absolute font path(`/...`, `C:\...`, UNC)를 backend font file endpoint URL로 등록해 preview CSS family가 generated font family를 쓰도록 수정.
+  - `clipper_angular/src/features/template-builder/components/template-family-gallery.component.ts`
+    - card thumbnail URI가 Windows absolute path(`C:\...`)이면 backend asset proxy로 보내지 않고 URL path처럼 붙여 엑박이 될 수 있었다.
+    - Windows absolute/UNC path도 `template-builder/assets/file?uri=...` proxy로 처리.
+- 검증:
+  - `clipper_electron npm run build`: passed after dynamic ffprobe tarball resolution.
+  - `clipper_angular npm run build`: passed.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-family-gallery.component.spec.ts`: 6 SUCCESS.
+  - `clipper_angular npm test -- --watch=false --include src/features/template-builder/components/template-family-gallery.component.spec.ts --include src/features/template-builder/components/template-builder-editor.component.spec.ts`: 164 SUCCESS, 1 unrelated existing failure.
+    - remaining failure: `TemplateBuilderEditorComponent emits official registration requests when the selected family can be registered`.
+    - test sets `editMode=true` but implementation intentionally requires `!editMode()` for `canRegisterOfficial()`.
+- 커밋:
+  - `clipper_angular` `b9e1052 Fix Windows template asset previews`
+  - `clipper_electron` `1a7f1b9 Resolve ffprobe tarball dynamically`
+  - 두 repo 모두 remote보다 1 commit ahead 상태이며 아직 push하지 않았다.
+- 남은 확인:
+  - Windows PC에서 재빌드 후 local font upload preview, new template card thumbnail, ffprobe download 재-smoke.
+  - 기존 official template font가 Windows에서 Mac보다 두껍게 보이는 현상은 아직 시각/렌더링 차이 추정만 가능하며 별도 screenshot 비교 필요.

@@ -1,0 +1,35 @@
+# 2026-05-22
+
+2026-05-22 Angular dance setup and Template Builder follow-up
+
+- 사용자 요구:
+  - Dance member image selection 페이지 scroll 불가와 내부 컨테이너 좌측 치우침 수정.
+  - Template Builder card thumbnail이 검정 배경으로 보이다가 한꺼번에 세팅되는 UX 개선.
+  - 방금 작업한 thumbnail loading 개선을 SOLID 관점에서 리팩토링.
+  - Template Builder 실행 전 ffmpeg/ffprobe 설치 여부 확인 필요 여부 확인 및 수정.
+- 결정:
+  - Dance setup은 page shell이 viewport를 소유하고 단계 콘텐츠가 내부 scroll을 소유해야 한다.
+  - Template Builder thumbnail loading은 card 컴포넌트에서 분리해 전용 thumbnail 컴포넌트가 placeholder/load/error 상태를 관리한다.
+  - Template Builder 목록 API 자체가 ffmpeg/ffprobe를 직접 쓰는 것은 아니지만, 같은 page startup에서 text preview renderer worker를 warm-up하고 sample render 기능도 제공하므로 Template Builder 진입 전 ffmpeg/ffprobe readiness를 gate한다.
+- 주요 변경:
+  - `clipper_angular/src/features/dance-highlight/pages/dance-setup/dance-setup.component.scss`
+  - `clipper_angular/src/features/dance-highlight/components/member-image-select/member-image-select.component.scss`
+  - `clipper_angular/src/features/template-builder/components/template-family-thumbnail.component.*`
+  - `clipper_angular/src/features/template-builder/components/template-family-card.component.*`
+  - `clipper_angular/src/features/template-builder/pages/template-builder-page.component.*`
+- 커밋/푸시:
+  - `4785375 Fix dance setup vertical scrolling`
+  - `584570c Center dance member image selector`
+  - `bf4374e Extract template family thumbnail loading`
+  - `e9c348b Guard template builder renders on ffmpeg readiness`
+  - `cad4b6c Gate template builder startup on ffmpeg readiness`
+- 검증:
+  - Dance setup spec: passed.
+  - Template family thumbnail spec: passed.
+  - Template family gallery spec: passed.
+  - Template Builder page spec: 57 SUCCESS.
+  - `npm run build -- --progress=false`: passed.
+  - `git diff --check`: passed.
+- 현재 상태:
+  - `clipper_angular feature/initial-scaffold @ cad4b6c`, origin과 동기화, clean.
+  - `clipper_nestjs`, `clipper_electron`, `clipper_python`도 origin과 동기화, clean.

@@ -1,0 +1,2345 @@
+[2026-05-06 11:12:46 KST] User input
+User said they are wrapping up the session for now and asked to document anything missing, then provide the text to enter in the next session.
+
+[2026-05-06 11:12:46 KST] Assistant output summary
+Announced that session wrap-up would follow Superpowers verification guidance.
+Explained that this turn would update handoff documentation and create a new date-based session log file for 2026-05-06.
+
+[2026-05-06 11:12:46 KST] Commands executed
+Command:
+sed -n '1,140p' /Users/jina/.codex/plugins/cache/openai-curated/superpowers/c5debd62/skills/verification-before-completion/SKILL.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Loaded verification-before-completion guidance. Relevant rule: make fresh checks before claiming the session state is complete.
+
+Command:
+git -C clipper_nestjs status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Output:
+`## feature/initial-scaffold...origin/feature/initial-scaffold`
+
+Command:
+git -C clipper_angular status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Output:
+`## feature/initial-scaffold...origin/feature/initial-scaffold`
+
+Command:
+git -C clipper_electron status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Output:
+`## feature/initial-scaffold...origin/feature/initial-scaffold`
+
+Command:
+git -C clipper_python status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Output:
+`## feature/plugin-architecture...origin/feature/plugin-architecture`
+
+Command:
+git -C clipper_nestjs log --oneline -3
+Working directory:
+/Users/jina/project/adlight
+Output:
+`531725b chore: refresh npm lock metadata`
+`ee3c7cb fix: gate unavailable render providers`
+`7c6cb49 feat: edit clipper studio script clips`
+
+Command:
+git -C clipper_angular log --oneline -4
+Working directory:
+/Users/jina/project/adlight
+Output:
+`1ba755c chore: disable angular analytics`
+`75351c5 chore: refresh npm lock metadata`
+`d6f7560 fix: show render provider unavailable reason`
+`842066e feat: edit clipper studio script clips`
+
+Command:
+git -C clipper_electron log --oneline -2
+Working directory:
+/Users/jina/project/adlight
+Output:
+`e44c8b7 chore: refresh npm lock metadata`
+`43fbd9b feat: add audio file dialog bridge`
+
+Command:
+sed -n '1,230p' .codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-05.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed the previous checkpoint. It still described pre-commit modified files, so a 2026-05-06 checkpoint was needed.
+
+Command:
+sed -n '1,90p' .codex/implementation/NEXT_SESSION_PROMPT.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed next-session prompt. It still pointed to the 2026-05-05 checkpoint.
+
+Command:
+sed -n '1,120p' .codex/implementation/TASKS.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed task tracker. Its priority section still pointed to the 2026-05-05 checkpoint.
+
+Command:
+sed -n '1,80p' .codex/implementation/WORKLOG.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed worklog top. It did not yet include 2026-05-06 commit/session wrap-up.
+
+Command:
+ls -la .codex/session-logs
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Only `2026-05-05.log` existed before this turn.
+
+Command:
+date '+%Y-%m-%d %H:%M:%S %Z'
+Working directory:
+/Users/jina/project/adlight
+Output:
+2026-05-06 11:12:46 KST
+
+[2026-05-06 11:12:46 KST] File edits
+Created:
+`.codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md`
+Purpose:
+New handoff checkpoint reflecting committed previous-session changes and current clean repo state.
+
+Updated:
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Point the next session to the 2026-05-06 checkpoint and summarize the committed changes.
+
+Updated:
+`.codex/implementation/TASKS.md`
+Purpose:
+Update the current priority checkpoint reference and note that previous-session changes are committed and repos are clean.
+
+Updated:
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Add a 2026-05-06 worklog entry with commits, verification, repo state, and handoff docs.
+
+Created:
+`.codex/session-logs/2026-05-06.log`
+Purpose:
+Start the date-based session log for this turn.
+
+[2026-05-06 11:12:46 KST] Decisions and verification summary
+Decision:
+No product code was changed in this wrap-up turn; only `.codex` handoff/session documentation was updated.
+Decision:
+Next session should begin by reading `.codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md`.
+
+[2026-05-06 11:14:12 KST] Verification commands executed
+Command:
+rg -n "CLIPPER_STUDIO_CHECKPOINT_2026-05-06|2026-05-06|ee3c7cb|1ba755c|repo 상태" .codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md .codex/implementation/NEXT_SESSION_PROMPT.md .codex/implementation/TASKS.md .codex/implementation/WORKLOG.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed the new checkpoint reference, date, key commits, and repo-state notes appear in the new checkpoint, NEXT_SESSION_PROMPT, TASKS, and WORKLOG.
+
+Command:
+sed -n '1,220p' .codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed the complete new checkpoint for handoff readability and correctness.
+
+Command:
+git -C clipper_nestjs status --short --branch
+Command:
+git -C clipper_angular status --short --branch
+Command:
+git -C clipper_electron status --short --branch
+Command:
+git -C clipper_python status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed all four repos still have clean short status output.
+
+Command:
+date '+%Y-%m-%d %H:%M:%S %Z'
+Working directory:
+/Users/jina/project/adlight
+Output:
+2026-05-06 11:14:12 KST
+
+[2026-05-06 11:14:12 KST] File edits
+Updated:
+`.codex/session-logs/2026-05-06.log`
+Purpose:
+Append verification results for the wrap-up documentation turn.
+
+[2026-05-06 11:14:12 KST] Decisions and verification summary
+Verification:
+Handoff docs now point to `.codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md`.
+Verification:
+The new checkpoint records the committed changes, previous verification commands, packaged QA status, clean repo state, remaining issues, and recommended next-session start.
+
+[2026-05-06 13:14:33 KST] User input
+User said in Korean: "이전 세션에 이어서 진행할거야." ("I will continue from the previous session.")
+
+[2026-05-06 13:14:33 KST] Assistant actions
+Responded that previous-session contents were not visible in the chat and started by inspecting the current workspace state.
+
+[2026-05-06 13:14:33 KST] Commands executed
+Command:
+git status --short
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Root directory is not a git repository.
+
+Command:
+pwd
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed workspace root `/Users/jina/project/adlight`.
+
+Command:
+rg --files -g 'AGENTS.md' -g 'README*' -g 'package.json' -g 'pyproject.toml' -g 'Cargo.toml' -g 'pom.xml' -g 'build.gradle*'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Found project manifests/readmes across `clipper_*` and `adlight_*` subprojects.
+
+Command:
+find . -maxdepth 2 -name .git -type d
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Found git repositories in `clipper_angular`, `clipper_electron`, `clipper_nestjs`, `clipper_python`, `adlight_angular`, `adlight_nestjs`, and `adlight_python`.
+
+Command:
+ls -la
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Listed workspace root, including `.codex` handoff docs and the seven subprojects.
+
+Command:
+find .codex -maxdepth 3 -type f
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Found implementation checkpoints, task tracker, worklog, design docs, and date-based session logs.
+
+Command:
+for d in clipper_angular clipper_electron clipper_nestjs clipper_python adlight_angular adlight_nestjs adlight_python; do (cd "$d" && printf '%s\n' "## $d" && git status --short); done
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+All listed subproject repositories have clean short status output.
+
+Command:
+sed -n '1,220p' .codex/implementation/NEXT_SESSION_PROMPT.md
+Command:
+sed -n '1,260p' .codex/implementation/TASKS.md
+Command:
+sed -n '1,260p' .codex/implementation/WORKLOG.md
+Command:
+sed -n '1,260p' .codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Read current handoff documents. Latest checkpoint says Clipper Studio packaged Electron render path is working, previous changes are committed, repos are clean, and next priority is user MP4 quality feedback or generation quality QA / production provider policy.
+
+[2026-05-06 13:14:33 KST] Decisions
+Decision:
+Proceed from the 2026-05-06 Clipper Studio checkpoint. Since no explicit MP4 quality feedback was provided yet, the default next technical path is generation quality QA unless the user supplies a different target.
+
+[2026-05-06 13:16:30 KST] Assistant actions
+Started generation quality QA by inspecting Clipper Studio render recipe and legacy Clipper1 render worker paths. Identified a focused BGM/TTS volume quality issue: BGM-only renders recorded `bgm_volume` in the result summary but did not apply that volume to the actual audio track, while TTS+BGM renders did apply the volume.
+
+[2026-05-06 13:16:30 KST] Commands executed
+Command:
+rg -n "legacy_clipper1|RenderRecipe|subtitle|overlay|bgm|volume|motion|thumbnail|poster" clipper_nestjs/src clipper_python clipper_angular/src -g '!**/node_modules/**'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Located render recipe, template, subtitle, BGM, motion, thumbnail, and UI code paths.
+
+Command:
+rg --files clipper_nestjs/src clipper_python clipper_angular/src | rg 'clipper|render|recipe|project|studio|video|subtitle|template|manifest'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Listed key render-related NestJS, Angular, and Python files.
+
+Command:
+find clipper_python/plugins/clipper1_video_render -maxdepth 4 -type f
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed `clipper1_video_render` worker files, including `local_render_adapter.py`.
+
+Command:
+find clipper_nestjs/src -maxdepth 5 -type f | rg 'clipper-studio|render|project-manifest|recipe|template'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Listed Clipper Studio project manifest and render recipe files.
+
+Command:
+sed -n '1,260p' clipper_nestjs/src/project-manifest/legacy-clipper1-render-payload-mapper.ts
+Command:
+sed -n '1,260p' clipper_nestjs/src/project-manifest/legacy-clipper1-render-recipe-provider.ts
+Command:
+sed -n '1,220p' clipper_nestjs/src/project-manifest/catalogs/legacy-clipper1-templates.ko.json
+Command:
+sed -n '1,260p' clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py
+Command:
+sed -n '260,620p' clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py
+Command:
+sed -n '620,980p' clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py
+Command:
+sed -n '980,1320p' clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py
+Command:
+sed -n '1320,1640p' clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed payload mapping, recipe construction, template default settings, and local render adapter implementation. Found BGM volume applied only in TTS+BGM mix filter, not in BGM-only returned track.
+
+Command:
+rg -n "bgm_volume|mixed|tts_clip_count|audio\\]" clipper_python/tests clipper_python/plugins/clipper1_video_render -g '!**/.venv/**'
+Command:
+sed -n '1,420p' clipper_python/tests/test_clipper1_video_render_remote_assets.py
+Command:
+rg -n "LocalRenderAdapter|clipper1_video_render|legacy_payload|bgm_url|tts_url" clipper_python/tests clipper_python/plugins/clipper1_video_render -g '!**/.venv/**'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed existing clipper1 render worker tests. Existing tests covered remote media/TTS/BGM render execution but not BGM-only volume application.
+
+Command:
+uv run pytest tests/test_clipper1_video_render_remote_assets.py
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+All 6 tests passed.
+
+Command:
+git -C clipper_python status --short
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+`clipper_python` has modified `local_render_adapter.py` and `test_clipper1_video_render_remote_assets.py`.
+
+Command:
+git -C clipper_python diff --stat
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+2 files changed, 42 insertions, 2 deletions.
+
+[2026-05-06 13:16:30 KST] File edits
+Updated:
+`clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+Purpose:
+Apply `bgm_volume` when building the BGM track itself so BGM-only renders are not muxed at original volume. Avoid double-applying the same volume in the TTS+BGM mix path.
+
+Updated:
+`clipper_python/tests/test_clipper1_video_render_remote_assets.py`
+Purpose:
+Add a regression test proving BGM-only audio track generation includes the expected ffmpeg `volume=0.200,aresample=48000` filter and reports the configured volume.
+
+Updated:
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Record the BGM-only volume QA fix, test command, and uncommitted changed files.
+
+Updated:
+`.codex/implementation/TASKS.md`
+Purpose:
+Mark the BGM-only volume fix as a completed subitem under generated video quality QA.
+
+Updated:
+`.codex/implementation/CLIPPER_STUDIO_CHECKPOINT_2026-05-06.md`
+Purpose:
+Update the checkpoint with the 13:16 KST BGM-only volume fix and current modified `clipper_python` status.
+
+Updated:
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Reflect that `clipper_python` is now modified with a BGM-only volume fix/test and that generated video quality QA should continue.
+
+[2026-05-06 13:16:30 KST] Decisions and verification summary
+Decision:
+Scoped this turn to one output-quality fix rather than broad visual parity work because the BGM-only volume path was a concrete, testable defect.
+Verification:
+`uv run pytest tests/test_clipper1_video_render_remote_assets.py` passed with 6 tests.
+
+[2026-05-06 13:42:36 KST] Final verification commands
+Command:
+git -C clipper_python status --short
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+`clipper_python` has two intended modified files: `local_render_adapter.py` and `test_clipper1_video_render_remote_assets.py`.
+
+Command:
+for d in clipper_nestjs clipper_angular clipper_electron clipper_python; do (cd "$d" && printf '%s\n' "## $d" && git status --short); done
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+`clipper_nestjs`, `clipper_angular`, and `clipper_electron` are clean. `clipper_python` has the two intended modified files.
+
+Command:
+nl -ba clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py | sed -n '416,566p'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Captured line references for the BGM volume and TTS+BGM mix changes.
+
+Command:
+nl -ba clipper_python/tests/test_clipper1_video_render_remote_assets.py | sed -n '145,205p'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Captured line references for the new BGM-only volume regression test.
+
+[2026-05-06 16:02:32 KST] User input summary
+User asked whether documentation was being kept up to date and explicitly reminded that every turn must write `.codex/session-logs`, and that important decisions/designs must be documented under `.codex`. User instructed to read `README.md` first and proceed properly.
+
+[2026-05-06 16:02:32 KST] Retroactive Clipper1/Variation design discussion summary
+User rejected the current Clipper2 Clipper Studio UX as too far from both legacy Clipper1 and the intended improved direction.
+Important user requirements captured:
+- Legacy Clipper1 accepted URL, prompt, and rich paste input.
+- URL parsing had legacy limitations around supported publishers/blog platforms.
+- AI script generation created roughly six clips with narration, TTS/subtitles, and media search keywords.
+- Existing Clipper1 allowed clip/script/media/TTS voice/template changes before final render.
+- Current Clipper2 prompt flow must not immediately add a completed project shell to the library.
+- The production workspace must show generated clips, allow editing, voice/template changes, preview, and only enqueue final render after `숏폼 생성`.
+- Paste input does not need Quill specifically.
+- Preview should show a real full shortform preview before final MP4 render, not only a static approximation.
+- React/Remotion integration is not allowed for the Angular app despite Remotion's Angular guide because that guide still uses React wrappers.
+- Layout direction settled on three panels: left input, center clip edit, right 9:16 preview/settings.
+- Left input remains visible and uses tabs.
+- Input action label is `클립 생성`.
+- Manual start must be possible without AI/user input, initially creating one blank clip.
+- Clip-level media must support multiple sources/pools/slots, not one media per clip.
+- Clipper1 plugin and Variation plugin should be separate user-facing plugins.
+- Both plugins must share a properly abstracted Shortform Core.
+
+[2026-05-06 16:02:32 KST] Context reviewed during design discussion
+Reviewed current Clipper2 Clipper Studio implementation:
+- `clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.*`
+- `clipper_nestjs/src/projects/projects.service.ts`
+- current ProjectManifest/RenderRecipe/provider/edit-state/render-job structure.
+Finding:
+- Current prompt submit creates a project shell with `status: completed` and routes the user toward `/projects`, which conflicts with the intended production workspace flow.
+
+Reviewed legacy Clipper1 implementation:
+- `adlight_angular/src/modules/d2x-client/pages/shortform/shortform.component.*`
+- `contents-input`, `clip-and-subtitle`, `title-check`, `shortform-buttons` related files.
+- `adlight_python` GPT/scraping/render/template services.
+Finding:
+- Legacy product shape is a three-area production UI: input, clip/subtitle/media editing, and style/preview/final generation.
+- Legacy render/template/provider internals are useful reference material but should not be copied wholesale.
+
+Reviewed Variation module reference branches:
+- `git fetch` for `adlight_angular` and `adlight_nestjs` `feature/variation-module`.
+- `git show` on Angular variation interfaces/services and NestJS shorts render/orchestrator/template files.
+Finding:
+- Angular branch has useful `Clip`, `AssetFolder`, `Asset`, `Variation`, `VariationLocks`, scenario/variation/asset-library/composer/generation service concepts.
+- NestJS branch has useful render request DTO, image sequencing, shorts orchestrator, template renderer, job/SSE/output concepts.
+- These concepts should be absorbed into shared Shortform Core and render path, not copied as a separate incompatible implementation.
+
+Web/reference checks during discussion:
+- Remotion Angular guide was checked and excluded for this product direction because it relies on React wrapper usage inside Angular.
+- ffmpeg.wasm/WebCodecs were considered for preview but not selected as the first implementation path.
+- Scrapling was identified as a URL ingestion provider candidate requiring POC, not an immediate hard dependency.
+- Tiptap/custom contenteditable were identified as possible rich paste implementation options; Quill is not a requirement.
+
+Visual companion:
+- Started local visual companion at `http://localhost:60274`.
+- Created visual companion files under `.superpowers/brainstorm/93001-1778047133/content/`.
+- Used it for layout/preview/plugin architecture mockups during brainstorming.
+
+[2026-05-06 16:02:32 KST] Documentation commands
+Command:
+sed -n '1,240p' .codex/README.md
+Command:
+sed -n '1,260p' .codex/standards/DOCUMENTATION_POLICY.md
+Command:
+tail -80 .codex/session-logs/2026-05-06.log
+Command:
+sed -n '1,260p' .codex/design/CLIPPER_STUDIO_WORKFLOW_REDESIGN.md
+Command:
+sed -n '1,260p' .codex/implementation/TASKS.md
+Command:
+sed -n '1,260p' .codex/standards/SOLID_AND_BOUNDARIES.md
+Command:
+sed -n '1,220p' .codex/implementation/WORKLOG.md
+Command:
+sed -n '1,220p' .codex/implementation/NEXT_SESSION_PROMPT.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed `.codex` documentation rules: read README/policy first, write session logs every turn, update design/TASKS/WORKLOG/NEXT_SESSION_PROMPT when scope changes, and preserve old design docs instead of deleting them.
+
+Command:
+date '+%Y-%m-%d %H:%M:%S %Z'
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Timestamp used for this documentation pass: `2026-05-06 16:02:32 KST`.
+
+Command:
+git -C clipper_angular status --short
+Command:
+git -C clipper_nestjs status --short
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Both repos were clean during this documentation pass.
+
+[2026-05-06 16:02:32 KST] File edits
+Added:
+`.codex/design/SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md`
+Purpose:
+Record the new current design for separate Clipper1 and Variation workflow plugins sharing a common Shortform Core. Captures tabbed input, `클립 생성`, manual blank clip start, multi-media clips, Angular-native full shortform preview, queue semantics, source ingestion provider boundary, error handling, tests, and phase plan.
+
+Updated:
+`.codex/README.md`
+Purpose:
+Add the new design document to the priority design list and mark it as the current Clipper1/Variation direction.
+
+Updated:
+`.codex/design/CLIPPER_STUDIO_WORKFLOW_REDESIGN.md`
+Purpose:
+Mark the old Clipper Studio workflow redesign as previous implementation reference, superseded for user-facing product direction by the new Shortform plugin split design.
+
+Updated:
+`.codex/implementation/TASKS.md`
+Purpose:
+Record the 2026-05-06 16:02 KST scope correction: separate Clipper1/Variation plugins, shared Shortform Core, tabbed input, `클립 생성`, `숏폼 생성` queue boundary, and multi-media clips.
+
+Updated:
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Record the product/design reset, inspected variation branches, and documentation updates.
+
+Updated:
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Make the next session read the new Shortform plugin split design first and summarize the corrected direction.
+
+[2026-05-06 16:02:32 KST] Decisions and verification summary
+Decision:
+The current implementation direction is no longer "prompt-only Clipper Studio". The next implementation work must start from `.codex/design/SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md` after user review.
+
+Decision:
+The old `CLIPPER_STUDIO_WORKFLOW_REDESIGN.md` remains as implementation/history reference. It is not the user-facing product target.
+
+Verification:
+Ran placeholder scan against the new design and related docs. Only existing `placeholder/demo provider 제거` task text in `TASKS.md` matched; no new TBD/TODO placeholders were found in the new design.
+
+Verification:
+`git rev-parse --show-toplevel` from `/Users/jina/project/adlight` returned "not a git repository", so `.codex` root-level documentation changes cannot be committed from a root git repository in this workspace.
+
+[2026-05-06 16:10:10 KST] User input summary
+User approved continuing from the documented direction and reiterated that any decision or meaningful progress that needs documentation must be documented every time.
+
+[2026-05-06 16:10:10 KST] Decision
+Treat the approved `SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md` as the current design baseline and proceed to implementation planning using Superpowers `writing-plans`.
+
+[2026-05-06 16:10:10 KST] Commands
+Command:
+sed -n '1,260p' /Users/jina/.codex/plugins/cache/openai-curated/superpowers/9d07fd08/skills/writing-plans/SKILL.md
+Command:
+date '+%Y-%m-%d %H:%M:%S %Z'
+Command:
+sed -n '1,220p' .codex/standards/DOCUMENTATION_POLICY.md
+Command:
+sed -n '1,220p' .codex/design/SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Loaded the writing-plans workflow, confirmed timestamp `2026-05-06 16:10:10 KST`, rechecked documentation policy, and reread the approved Shortform plugin split design.
+
+[2026-05-06 16:10:10 KST] File edits
+Updated:
+`.codex/design/SHORTFORM_PLUGIN_SPLIT_SHARED_CORE_DESIGN.md`
+Purpose:
+Mark the design status as user-approved and implementation planning in progress.
+
+[2026-05-06 16:10:10 KST] Planning commands
+Command:
+rg --files clipper_angular/src/features/clipper-studio clipper_angular/src/shell/projects clipper_angular/src/app clipper_angular/src | rg 'clipper-studio|projects|routes|app.routes|plugin|workflow'
+Command:
+rg --files clipper_nestjs/src | rg 'clipper-studio|project-manifest|projects|job|render|plugin|workflow'
+Command:
+rg -n "createClipperStudioProject|draft-jobs|clipper-studio|completed|project_shell|RenderRecipe|ProjectManifest" clipper_nestjs/src clipper_angular/src -g '!**/dist/**'
+Command:
+git -C clipper_angular status --short --branch
+Command:
+git -C clipper_nestjs status --short --branch
+Command:
+git -C clipper_python status --short --branch
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Identified the current prompt-only Angular page, current `/projects` Clipper Studio detail/editor, current NestJS project shell creation path, and render/provider modules. `clipper_angular` and `clipper_nestjs` were clean; `clipper_python` still has the known BGM-only volume fix/test modifications.
+
+Command:
+sed -n '1,220p' clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts
+Command:
+sed -n '1,260p' clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html
+Command:
+sed -n '1,260p' clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.scss
+Command:
+sed -n '360,620p' clipper_angular/src/core/project-history.service.ts
+Command:
+sed -n '1,260p' clipper_nestjs/src/projects/projects.controller.ts
+Command:
+sed -n '250,370p' clipper_nestjs/src/projects/projects.service.ts
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Confirmed current Angular `/clipper-studio` creates a project, starts draft job, then navigates to `/projects`. Confirmed NestJS `createClipperStudioProject()` requires prompt and writes `status: completed` with `stage: project_shell`.
+
+Command:
+sed -n '1,240p' clipper_nestjs/src/projects/dto/project.dto.ts
+Command:
+sed -n '1,320p' clipper_nestjs/src/project-manifest/dto/project-manifest.dto.ts
+Command:
+sed -n '1,260p' clipper_nestjs/src/project-manifest/dto/render-recipe.dto.ts
+Command:
+sed -n '1,280p' clipper_nestjs/src/projects/dto/clipper-studio-edit-state.dto.ts
+Command:
+sed -n '1,260p' clipper_nestjs/src/projects/clipper-studio-script-generator.ts
+Command:
+sed -n '130,380p' clipper_nestjs/src/projects/clipper-studio-asset-preparer.ts
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+Reviewed the DTOs and existing provider/draft/asset preparation contracts to ground the Phase 1 plan in current types and avoid replacing provider boundaries.
+
+[2026-05-06 16:10:10 KST] Planning file edits
+Added:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+Purpose:
+Write the Phase 1 implementation plan for Shortform Core, multi-media slots, Clipper1 workspace API, Angular 3-panel workspace, 9:16 preview, and `숏폼 생성` render queue boundary.
+
+Updated:
+`.codex/implementation/TASKS.md`
+Purpose:
+Add Phase 1 implementation checklist and point to `SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`.
+
+Updated:
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Record the Phase 1 plan, scope, and self-review result.
+
+Updated:
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Make future sessions read the Phase 1 plan before implementation.
+
+[2026-05-06 16:10:10 KST] Planning verification
+Command:
+rg -n "TBD|TODO|placeholder|implement later|fill in details|appropriate error handling|Similar to|similar to|If it creates|if it creates" .codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md
+Working directory:
+/Users/jina/project/adlight
+Result summary:
+No matches. The plan has no obvious empty placeholder markers or conditional circular-dependency escape hatch.
+
+[2026-05-06 16:10:10 KST] Execution preparation
+Skills loaded:
+- `executing-plans`
+- `test-driven-development`
+- `using-git-worktrees`
+
+Decision:
+Proceed with inline execution of Task 1 from `.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md` in the current workspace. The root `/Users/jina/project/adlight` is not a git repository, there is no existing `.worktrees` or `worktrees` directory in `clipper_nestjs`/`clipper_angular`, and the target subrepos are already on non-main feature branches.
+
+Current subrepo status before Task 1:
+- `clipper_nestjs`: clean, `feature/initial-scaffold`
+- `clipper_angular`: clean, `feature/initial-scaffold`
+- `clipper_electron`: clean, `feature/initial-scaffold`
+- `clipper_python`: known modified BGM-only volume fix/test from earlier work
+
+Constraint:
+Task 1 will follow TDD: write failing scheduler test first, run it to verify RED, then add production code.
+
+[2026-05-06 16:10:10 KST] Task 1 file edits and verification
+Added:
+`clipper_nestjs/test/shortform-media-slot-scheduler.test.js`
+Purpose:
+RED test for Shortform media slot scheduling: split a long clip across assets, repeat assets when more slots are needed, and keep one slot for a single asset.
+
+Command:
+npm run build
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Build succeeded before production implementation.
+
+Command:
+node --test test/shortform-media-slot-scheduler.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+RED verified. Test failed because `../dist/shortform-core` did not exist.
+
+Added:
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_nestjs/src/shortform-core/shortform-media-slot-scheduler.ts`
+`clipper_nestjs/src/shortform-core/index.ts`
+Purpose:
+Add shared Shortform Core DTOs and deterministic media slot scheduler for multi-media clips.
+
+Command:
+npm run build
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Build succeeded after production implementation.
+
+Command:
+node --test test/shortform-media-slot-scheduler.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+First GREEN attempt failed one test with `4 !== 3`. Root cause: slot count used `durationMs / minSlotMs` directly, producing four slots for a 9s clip with three assets. Fixed scheduler to keep at least one use per asset and add repeat slots only when the target slot duration would be too long.
+
+Command:
+npm run build
+Command:
+node --test test/shortform-media-slot-scheduler.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Build succeeded. Scheduler test passed, 3 tests.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 1 steps complete and record verification.
+
+Command:
+git add src/shortform-core test/shortform-media-slot-scheduler.test.js
+Command:
+git commit -m "feat: add shortform core media slots"
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Committed Task 1 as `b9dcc92 feat: add shortform core media slots`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 1 commit step complete and record commit hash.
+
+[2026-05-06 16:10:10 KST] Task 2 file edits and verification
+Added:
+`clipper_nestjs/test/legacy-clipper1-render-media-slots.test.js`
+Purpose:
+RED test proving a clip with two media slots produces two render timeline items and one subtitle item.
+
+Command:
+npm run build
+Command:
+node --test test/legacy-clipper1-render-media-slots.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+RED verified. Build succeeded; test failed with `1 !== 2` because current render recipe provider still emitted one timeline item per clip.
+
+Updated:
+`clipper_nestjs/src/project-manifest/dto/project-manifest.dto.ts`
+Purpose:
+Add `mediaArtifactIds` and `mediaSlots` to Clipper Studio compatibility detail clips.
+
+Updated:
+`clipper_nestjs/src/project-manifest/legacy-clipper1-render-recipe-provider.ts`
+Purpose:
+Expand clip media slots into render timeline items and keep subtitle/TTS generation on the first slot per clip to avoid duplication.
+
+Command:
+npm run build
+Command:
+node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Build succeeded. Both scheduler and render media slot tests passed, 4 tests.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 2 steps complete and record verification.
+
+Command:
+git add src/project-manifest/dto/project-manifest.dto.ts src/project-manifest/legacy-clipper1-render-recipe-provider.ts test/legacy-clipper1-render-media-slots.test.js
+Command:
+git commit -m "feat: render shortform media slots"
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Committed Task 2 as `a39871d feat: render shortform media slots`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 2 commit step complete and record commit hash.
+
+[2026-05-06 16:10:10 KST] Task 3 scope adjustment
+Decision:
+Task 3 will implement Clipper1 workspace create/list/get/update/clip generation only. The render promotion provider and `/render-jobs` endpoint move to Task 6, where the `숏폼 생성` queue boundary is implemented. This avoids adding an unused render method before its behavior is tested.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+Purpose:
+Move `clipper1-workspace-project-promoter.ts` and render endpoint details from Task 3 to Task 6 scope.
+
+[2026-05-06 16:10:10 KST] Task 3 file edits and verification
+Added:
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+Purpose:
+RED API smoke proving manual workspace and prompt-generated workspace stay out of completed project history.
+
+Command:
+npm run build
+Command:
+node --test test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Initial RED test harness was wrong: NestJS uses `/v1` global prefix and sandbox prevented localhost port bind. Corrected the test to use `/v1` and reran with approved escalated `node --test`.
+
+Command:
+node --test test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+RED verified with expected 404: `Cannot POST /v1/projects/clipper1/workspaces`.
+
+Added:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace-repository.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+Purpose:
+Add Clipper1 workspace API separated from completed project history.
+
+Updated:
+`clipper_nestjs/src/projects/projects.module.ts`
+Purpose:
+Register Clipper1 workspace controller/service/repository and Shortform media slot scheduler provider.
+
+Updated:
+`clipper_nestjs/src/plugins/plugin-catalog.ts`
+Purpose:
+Add separate virtual `clipper1` and `variation` workflow plugin catalog entries.
+
+Command:
+npm run build
+Command:
+node --test test/clipper1-workspace-api.test.js
+Command:
+node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Build succeeded. Workspace API test passed, 2 tests. Combined Task 1-3 tests passed, 6 tests.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 3 implementation steps complete and record verification.
+
+Command:
+git add src/plugins/plugin-catalog.ts src/projects/projects.module.ts src/projects/clipper1-workspace-repository.ts src/projects/clipper1-workspace.controller.ts src/projects/clipper1-workspace.service.ts src/projects/dto/clipper1-workspace.dto.ts test/clipper1-workspace-api.test.js
+Command:
+git commit -m "feat: add clipper1 workspace flow"
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Committed Task 3 as `15739c5 feat: add clipper1 workspace flow`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 3 commit step complete and record commit hash.
+
+[2026-05-06 16:10:10 KST] Task 4 file edits and verification
+Added:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+Purpose:
+RED Angular smoke test for Clipper1 tabbed input, `클립 생성`, `수동 시작`, and `숏폼 생성`.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Sandboxed run failed because Karma could not bind port 9876. Reran with approved escalated `./node_modules/.bin/ng test`.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+RED verified. Angular bundle failed because `../services/clipper1-workspace.service` did not exist.
+
+Added:
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-input-panel.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-input-panel.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-input-panel.component.scss`
+Purpose:
+Add frontend Shortform workspace DTO/client and tabbed Clipper1 input panel.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.scss`
+Purpose:
+Replace prompt-only form with 3-panel Clipper1 workspace shell and keep user on the workspace after clip generation.
+
+Updated:
+`clipper_angular/src/core/plugin-status.service.ts`
+`clipper_angular/src/app/app.routes.ts`
+Purpose:
+Switch user-visible workflow plugin naming toward `clipper1`/`variation` and add `/clipper1` route alias to existing Clipper1 workspace page.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+First GREEN attempt failed because the Angular test environment did not load Zone.js. Added `zone.js` and `zone.js/testing` imports to the spec.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Command:
+npm run build:electron -- --progress=false
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Angular spec passed, 1 success. Electron build succeeded.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 4 implementation steps complete and record verification.
+
+[2026-05-06 16:36:00 KST] Task 4 commit and documentation
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Focused Angular spec passed, 1 success.
+
+Command:
+npm run build:electron -- --progress=false
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Electron Angular build succeeded.
+
+Command:
+git commit -m "feat: add clipper1 workspace shell"
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Committed Task 4 as `ed07730 feat: add clipper1 workspace shell`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Mark Task 4 commit step complete, record the Angular commit hash, and point next work at Task 5/Task 6.
+
+[2026-05-06 16:37:10 KST] Task 5 RED
+
+Updated:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+Purpose:
+Add Task 5 smoke assertion that manual workspace creation renders `클립 1`, `9:16`, and `렌더 전`.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+RED verified. The test failed because the current inline preview shows duration `3s` after workspace creation instead of keeping a `렌더 전` render-state label.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+Purpose:
+Mark Task 5 Step 1 and Step 2 complete.
+
+[2026-05-06 16:41:40 KST] Task 5 editor/preview implementation and verification
+
+Added:
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+Purpose:
+Add center clip editor with narration textareas, media/slot/search counts, `클립 추가`, `미디어 추가`, `삭제`, and full workspace patch emission.
+
+Added:
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.ts`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.html`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.scss`
+Purpose:
+Add Angular-native 9:16 pre-render preview with local timeline playback, range seek, current subtitle, and `렌더 전` status.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.scss`
+Purpose:
+Wire editor and preview into the Clipper1 workspace page and keep the page component focused on orchestration.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Task 5 spec passed, 2 success.
+
+Command:
+npm run build:electron -- --progress=false
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Electron Angular build succeeded.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Mark Task 5 implementation/check steps complete and record verification.
+
+[2026-05-06 16:42:30 KST] Task 5 commit and documentation
+
+Command:
+git add src/features/clipper-studio
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Staged Task 5 Angular editor/preview files.
+
+Command:
+git commit -m "feat: preview and edit clipper1 workspace"
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Committed Task 5 as `a9e6d18 feat: preview and edit clipper1 workspace`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Mark Task 5 commit complete, record the Angular commit hash, and move the next-session pointer to Task 6.
+
+[2026-05-06 16:44:20 KST] Task 6 RED
+
+Updated:
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+Purpose:
+Add API smoke coverage proving `숏폼 생성` promotes a workspace to project history and creates a render job.
+
+Command:
+npm run build
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+NestJS build succeeded before RED API run.
+
+Command:
+node --test test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+RED verified. The first two workspace tests passed, and the new render promotion test failed with `404 Cannot POST /v1/projects/clipper1/workspaces/:id/render-jobs`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+Purpose:
+Mark Task 6 Step 1 and Step 2 complete.
+
+[2026-05-06 16:47:45 KST] Task 6 Angular RED
+
+Updated:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+Purpose:
+Add Angular smoke coverage proving the render API is called only after `숏폼 생성` is requested and that the page shows `렌더 작업 시작`.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+RED verified. The existing placeholder did not call `startRender`, and the page still showed the temporary render-queue-disabled message instead of `렌더 작업 시작`.
+
+[2026-05-06 16:49:00 KST] Task 6 implementation and Phase 1 verification
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+Purpose:
+Add Clipper1 workspace render response/request DTOs, `POST /projects/clipper1/workspaces/:id/render-jobs`, and promotion from ShortformWorkspace to `pluginName: clipper1` ProjectSnapshot plus embedded `workflow.clipper1` ProjectManifest.
+
+Implementation note:
+The Phase 1 manifest keeps `detail.kind: clipper_studio` for compatibility with the existing legacy Clipper1 RenderRecipe provider, while adding `mediaArtifactIds` and `mediaSlots` for multiple media per clip.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.scss`
+Purpose:
+Add Angular render client method, call it only from `숏폼 생성`, display render start state, and navigate to `/projects?project=<projectId>` after the render boundary is crossed.
+
+Command:
+npm run build
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+NestJS build succeeded.
+
+Command:
+node --test test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Workspace API smoke test passed, 3 tests.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Angular Clipper Studio focused spec passed, 3 success.
+
+Command:
+npm run build:electron -- --progress=false
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Electron Angular build succeeded.
+
+Command:
+node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Combined Phase 1 NestJS tests passed, 7 tests.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Mark Task 6 implementation/check/docs steps complete and record Phase 1 verification plus Phase 2 candidates.
+
+[2026-05-06 16:50:10 KST] Task 6 boundary ordering adjustment
+
+Updated:
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+Purpose:
+Move ProjectSnapshot persistence until after `VideoRenderJobsService.start()` succeeds, so provider selection/start failure does not create project history before a render job exists.
+
+Command:
+npm run build
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+NestJS build succeeded after the boundary ordering adjustment.
+
+Command:
+node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Combined Phase 1 NestJS tests still passed, 7 tests.
+
+[2026-05-06 16:51:00 KST] Task 6 commits
+
+Command:
+git commit -m "feat: enqueue clipper1 render from workspace"
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Committed Task 6 backend slice as `5948c59 feat: enqueue clipper1 render from workspace`.
+
+Command:
+git commit -m "feat: start clipper1 render from workspace"
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Committed Task 6 frontend slice as `d801b04 feat: start clipper1 render from workspace`.
+
+Updated:
+`.codex/implementation/SHORTFORM_PLUGIN_SPLIT_PHASE1_PLAN.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+Purpose:
+Mark Task 6 commit step complete and record final Phase 1 commit hashes.
+
+[2026-05-06 16:52:00 KST] Repository status after Phase 1 commits
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+`feature/initial-scaffold` is ahead of origin by 4 commits, clean.
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+`feature/initial-scaffold` is ahead of origin by 3 commits, clean.
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+Pre-existing BGM-only volume fix/test remain modified and uncommitted.
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_electron
+Result summary:
+`feature/initial-scaffold` is clean.
+
+[2026-05-06 16:53:00 KST] Finishing branch check
+
+Command:
+git branch --show-current
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+Current branch is `feature/initial-scaffold`.
+
+Command:
+git branch --show-current
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Current branch is `feature/initial-scaffold`.
+
+Command:
+git merge-base HEAD main
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+No local `main` branch exists.
+
+Command:
+git merge-base HEAD main
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+No local `main` branch exists.
+
+Command:
+git merge-base HEAD master
+Working directory:
+/Users/jina/project/adlight/clipper_nestjs
+Result summary:
+No local `master` branch exists.
+
+Command:
+git merge-base HEAD master
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+No local `master` branch exists.
+
+[2026-05-06 16:54:00 KST] Code review skill constraint
+
+Decision:
+`superpowers:requesting-code-review` applies after a major feature, but its workflow requires dispatching a code-reviewer subagent. Current developer instructions only allow subagents when the user explicitly asks for them, so no subagent review was launched. Verification evidence is the fresh NestJS/Angular test and build runs recorded above.
+
+[2026-05-06 17:00:00 KST] Clipper Python pending change commit request
+
+User request:
+Commit the existing `clipper_python` changes that were created by another session.
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+`feature/plugin-architecture` has two modified files:
+`plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+`tests/test_clipper1_video_render_remote_assets.py`
+
+Command:
+git diff --stat
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+2 files changed, 42 insertions, 2 deletions.
+
+Decision:
+Commit only the existing BGM-only volume fix/test in `clipper_python` after fresh verification.
+
+Command:
+uv run pytest tests/test_clipper1_video_render_remote_assets.py
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+Tests passed, 6 passed in 3.01s.
+
+Command:
+git add plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py tests/test_clipper1_video_render_remote_assets.py
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+Staged the two existing BGM-only volume files.
+
+Command:
+git commit -m "fix: apply bgm volume without tts"
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+Committed as `5bf9e6c fix: apply bgm volume without tts`.
+
+Command:
+git status --short --branch
+Working directory:
+/Users/jina/project/adlight/clipper_python
+Result summary:
+`feature/plugin-architecture` is ahead of origin by 1 commit, clean.
+
+Updated:
+`.codex/implementation/WORKLOG.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+`.codex/session-logs/2026-05-06.log`
+Purpose:
+Record that the previously pending `clipper_python` BGM-only volume fix/test has been verified and committed.
+
+[2026-05-06 17:08:00 KST] Angular zoneless concern and `.claude` design review
+
+User request:
+Review `/clipper_angular/.claude` for Angular change detection/state-management decisions, refactor any Zone.js usage, document the rule in `.codex`, and clarify NestJS/FastAPI backend role split and source documents.
+
+Sources reviewed:
+`clipper_angular/.claude/CLAUDE.md`
+`clipper_angular/.claude/DESIGN_DECISIONS.md`
+`clipper_angular/.claude/WORKLOG.md`
+`clipper_angular/src/app/app.config.ts`
+`clipper_angular/angular.json`
+
+Findings:
+- `.claude` explicitly decides Angular 19 standalone + zoneless using `provideExperimentalZonelessChangeDetection`.
+- `.claude` states zone.js reintroduction is forbidden and zone-dependent imported code must be refactored.
+- Local state should use component `signal()` and shared state should use `@ngrx/signals` SignalStore.
+- Current app config already uses `provideExperimentalZonelessChangeDetection()`.
+- `angular.json` build/test polyfills are empty.
+- Direct Zone.js use is limited to `clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`, where this session added `import 'zone.js'` and `import 'zone.js/testing'`.
+- `package-lock.json` contains `zone.js` as an Angular core peer dependency entry; `package.json` does not directly list it and runtime polyfills do not load it.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+RED verified after removing the two Zone.js imports. All three focused specs failed with `NG0908: In this configuration Angular requires Zone.js`, confirming TestBed needed an explicit zoneless change detection provider instead of loading Zone.js.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+Purpose:
+Remove `zone.js`/`zone.js/testing` imports and add `provideExperimentalZonelessChangeDetection()` to TestBed providers.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Focused spec passed, 3 success.
+
+Updated:
+`.codex/standards/ANGULAR_FRONTEND_RULES.md`
+`.codex/design/BACKEND_ROLE_SPLIT_CURRENT.md`
+`.codex/README.md`
+`.codex/standards/SOLID_AND_BOUNDARIES.md`
+`.codex/implementation/NEXT_SESSION_PROMPT.md`
+`.codex/implementation/WORKLOG.md`
+Purpose:
+Document Angular zoneless rules in `.codex`, and document current NestJS/FastAPI/Electron/Angular role split with source references.
+
+Command:
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts'
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Final focused spec verification passed, 3 success.
+
+Command:
+npm run build:electron -- --progress=false
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Electron Angular build succeeded.
+
+Command:
+rg -n "zone\\.js|NgZone|provideZoneChangeDetection|fakeAsync|tick\\(|waitForAsync" src angular.json package.json
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+No direct matches.
+
+Command:
+git commit -m "test: keep clipper studio spec zoneless"
+Working directory:
+/Users/jina/project/adlight/clipper_angular
+Result summary:
+Committed Angular zoneless spec fix as `b998e6d test: keep clipper studio spec zoneless`.
+
+[2026-05-06 17:08:00 KST] Backend role split explanation follow-up
+
+User request:
+Explain in more detail how backend responsibilities were split while implementing the new Clipper1 flow, including which server owns which function.
+
+Sources reviewed:
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_nestjs/src/project-manifest/video-render-jobs.service.ts`
+`clipper_nestjs/src/project-manifest/legacy-clipper1-python-worker-render-provider.ts`
+`clipper_python/plugins/clipper1_video_render/manifest.json`
+`clipper_python/plugins/clipper1_video_render/clipper1_video_render/app.py`
+`.codex/design/BACKEND_ROLE_SPLIT_CURRENT.md`
+`.codex/standards/SOLID_AND_BOUNDARIES.md`
+
+Findings:
+- Current Clipper1 Phase 1 split follows Angular UI -> NestJS control plane -> Python compute worker.
+- `클립 생성` creates/generates `ShortformWorkspace` state in NestJS and does not create project history/render jobs.
+- `숏폼 생성` is the promotion boundary where NestJS builds `ProjectSnapshot`, `ProjectManifest`, `RenderRecipe`, and starts `VideoRenderJobsService`.
+- Python `clipper1_video_render` remains a `video.render.legacy_clipper1` worker/provider and does not own workspace/project/queue policy.
+- Important implementation gap found: NestJS has workspace `PATCH`, but Angular `Clipper1WorkspaceService` does not yet expose `updateWorkspace()`. Current editor emits local signal changes only, so edited clips/media may not be persisted before render. Added this as a pending task in `.codex/implementation/TASKS.md`.
+
+[2026-05-06 17:12:00 KST] Clipper1 workspace save-before-render fix
+
+User request:
+Continue the implementation after confirming the backend role split and the identified save-before-render gap.
+
+Root cause:
+`ClipperStudioPageComponent` kept editor changes only in the Angular signal and then called `startRender(workspace.id)`. NestJS had `PATCH /projects/clipper1/workspaces/:workspaceId`, but Angular did not expose or call it.
+
+TDD:
+- Added `clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`.
+- RED: focused service spec failed because `Clipper1WorkspaceService.updateWorkspace()` did not exist.
+- Added `updateWorkspace()` to call NestJS workspace `PATCH`.
+- GREEN: focused service spec passed, 1 success.
+- Extended `clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`.
+- RED: page spec failed because only render was called, not update.
+- Updated page flow so `숏폼 생성` saves title/clips/renderSettings first, then starts render using the saved workspace.
+- GREEN: focused page spec passed, 4 success.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 5 success.
+- `npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:18:35 KST] Clipper1 workspace render asset materialization
+
+User request:
+Continue implementation.
+
+Decision:
+Before starting larger Phase 2 items such as URL/Scrapling, rich paste, or Variation UI, fix the current Phase 1 render boundary that could make `숏폼 생성` fail in actual Python execute mode.
+
+Root cause:
+- `Clipper1WorkspaceService.startRender()` created a render project with `outputRoot: null`.
+- It also created fallback workspace media artifacts with `clipper1://workspace/...` URIs.
+- Python `clipper1_video_render` execute mode requires `output_root` and a media path/remote URL that resolves to an actual file.
+
+TDD:
+- Added a NestJS smoke assertion to `test/clipper1-workspace-api.test.js`.
+- RED: `node --test test/clipper1-workspace-api.test.js` failed with `render project must have an outputRoot`.
+- Implemented Clipper1 render outputRoot creation and project-file asset preparation.
+- GREEN: `node --test test/clipper1-workspace-api.test.js` passed, 4 tests.
+
+Updated:
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Implementation summary:
+- Reused `ClipperStudioAssetPreparer` for Clipper1 workspace render promotion.
+- Created managed project `outputRoot` under `CLIPPER_DATA_DIR/projects/files/<subject>/<projectId>`.
+- Prepared seed media/TTS/layout/logo/render output artifacts as project files.
+- Connected prepared media slots and TTS artifacts into the Clipper1 compatibility manifest.
+- Passed `outputRoot` into `VideoRenderJobsService.start()`.
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 8 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 5 success.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:24:32 KST] Clipper1 workspace media search first-candidate apply
+
+User request:
+Continue implementation.
+
+Decision:
+Implement the next small vertical slice for workspace media editing: clip-level media search apply. Local upload and full candidate selection UI are deferred because they require larger Electron/file-dialog and media library surface.
+
+Design:
+- Workspace search apply does not create a project output root.
+- It stores the first media search candidate as a remote media asset in `ShortformClip.mediaPool.assets`.
+- It reschedules clip media slots from the current media pool.
+- During render promotion, remote workspace media assets become `ProjectArtifact` values with `access.kind = remote-url`, which the Python render worker can stage.
+
+TDD:
+- Added NestJS smoke coverage for `POST /v1/projects/clipper1/workspaces/:workspaceId/clips/:clipId/media/search-import`.
+- RED: endpoint returned 404.
+- Added API/controller/service/DTO support and remote media artifact mapping.
+- Added Angular page/service specs for search apply.
+- RED: page spec failed because `handleMediaSearch()` did not exist.
+- Added editor output, page handler, API client, and UI.
+- RED: preview image assertion failed because preview was text-only.
+- Added preview media lookup and image rendering.
+
+Updated:
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.ts`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.html`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.scss`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 9 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 7 success.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:36:45 KST] Clipper1 workspace media search candidate selection
+
+User request:
+Continue implementation after clarifying that the previous slice only applied the first media search candidate.
+
+Decision:
+Replace the editor-facing behavior with explicit candidate selection while preserving the first-candidate `search-import` endpoint for compatibility.
+
+Design:
+- `media/search` returns search candidates for one workspace clip without mutating the workspace.
+- `media/remote` imports the selected remote candidate into the clip media pool and reschedules media slots.
+- Angular owns the candidate-list UI state per clip and only mutates the workspace when the user selects a candidate.
+- Existing render promotion keeps using workspace remote media assets as `remote-url` manifest artifacts.
+
+TDD:
+- Added NestJS smoke coverage for candidate search and selected-candidate import.
+- RED: `node --test test/clipper1-workspace-api.test.js` failed with 404 for `POST .../media/search`.
+- Implemented `searchClipMedia()` and `importRemoteClipMedia()` service/controller/DTO support.
+- GREEN: `node --test test/clipper1-workspace-api.test.js` passed, 6 tests.
+- Added Angular service/page specs for candidate search and selected import.
+- RED: Angular focused spec failed because `searchClipMedia()`, `importRemoteClipMedia()`, and `handleMediaCandidateApply()` did not exist.
+- Implemented service methods, page candidate state, editor candidate list UI, and selected-candidate apply event.
+- GREEN: focused Angular Clipper Studio specs passed, 9 success.
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/clipper1-workspace-api.test.js` succeeded, 6 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 9 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 10 passed.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:45:08 KST] Clipper1 workspace local media upload and drag/drop
+
+User request:
+Proceed with local file upload and make drag/drop work too.
+
+Decision:
+Use browser/Electron `File` uploads rather than native file path dialogs for this slice. This keeps file selection and drag/drop on the same multipart upload path and does not require changing the Electron preload bridge.
+
+Design:
+- NestJS accepts multipart `file` uploads per workspace clip.
+- Uploaded files are copied into `CLIPPER_DATA_DIR/sources/clipper1-workspace/<subject>/<workspaceId>/media/...`.
+- Workspace media asset stores:
+  - `contentUrl` for immediate Angular preview through existing `/sources/file`.
+  - `sourcePath` for render promotion.
+  - `sizeBytes` and `checksum` for traceability.
+- Render promotion maps local uploaded assets to `source-file` artifacts, so the Python render worker reads local files directly.
+- Angular clip editor exposes file input and drag/drop, both emitting the same `mediaUpload` event.
+
+TDD:
+- Added NestJS smoke coverage for `POST .../media/local`.
+- RED: focused smoke failed with 404 for `media/local`.
+- Implemented controller multipart upload endpoint, local file persistence, workspace asset creation, and source-file render artifact mapping.
+- GREEN: focused NestJS upload smoke passed, 1 test.
+- Added Angular service/page/editor specs for upload and drag/drop.
+- RED: focused Angular specs failed because `uploadLocalClipMedia()`, `mediaUpload`, `handleMediaDrop()`, and `handleMediaUpload()` did not exist.
+- Implemented service upload method, editor file/drop UI, page upload state, and workspace update flow.
+- GREEN: focused Angular Clipper Studio specs passed, 12 success.
+
+Updated:
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "workspace clip can upload local media" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 12 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 11 passed.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:54:12 KST] Clipper1 local media import via existing Electron file picker
+
+User request:
+After clarifying that other plugins already had local file input, refactor Clipper1 local media selection to reuse that existing boundary.
+
+Finding:
+- Existing Dance/Dialog local file flows use `FilePickerService` and Electron `window.clipperBridge.dialog.openFile()`.
+- Electron already exposes `openMediaFile()` with image/video filters.
+- Existing Dance/Dialog drag/drop resolves `File.path` through `FilePickerService.resolveDroppedFile()`.
+- Existing Clipper Studio project media import accepts an absolute `sourcePath`, but it requires a project/outputRoot and cannot be reused directly for pre-render Clipper1 workspace.
+
+Decision:
+Keep the workspace-specific asset API, but add a sourcePath import branch so Clipper1 can use the existing Electron picker/drop path. Keep multipart upload only for browser fallback and dropped files without native paths.
+
+TDD:
+- Added NestJS smoke coverage for `POST .../media/source-path`.
+- RED: focused NestJS test failed with 404.
+- Implemented sourcePath DTO/controller/service path.
+- GREEN: focused sourcePath smoke passed, 1 test.
+- Added Angular service/page/editor specs for sourcePath import, native picker request, and Electron dropped-file path handling.
+- RED: focused Angular specs failed because `importSourcePathClipMedia()`, `mediaPick`, `requestMediaPick()`, and `handleMediaPick()` did not exist.
+- Implemented `FilePickerService.pickMediaFile()`, `hasNativeMediaPicker()`, `nativePathForDroppedFile()`, Clipper1 editor native picker event, page picker/import flow, and sourcePath API client.
+- GREEN: focused Angular Clipper Studio specs passed, 16 success.
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/core/file-picker.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "source path" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 16 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 12 passed.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 17:59:08 KST] Clipper1 clip media asset remove
+
+User request:
+Continue implementation.
+
+Decision:
+Implement clip-level media asset deletion before larger workspace media library work, because search/upload can currently only add media and cannot recover from a wrong selection.
+
+Design:
+- Add a workspace clip media DELETE endpoint.
+- Removing an asset deletes it from `mediaPool.assets`.
+- Any media slots referencing that asset are discarded.
+- If remaining assets exist, reschedule slots from the remaining asset ids.
+- If no assets remain, clear media slots and let render promotion fall back to prepared seed media if the user renders.
+- Angular exposes deletion on each media asset chip and refreshes workspace/preview from the server response.
+
+TDD:
+- Added NestJS smoke coverage for deleting one of two uploaded assets.
+- RED: focused NestJS test failed with 404 for DELETE.
+- Implemented controller/service remove path.
+- GREEN: focused NestJS remove test passed.
+- Added Angular service/editor/page specs for remove API, output event, and preview update.
+- RED: focused Angular specs failed because `removeClipMedia()`, `mediaRemove`, `removeMedia()`, and `handleMediaRemove()` did not exist.
+- Implemented API client, editor chip delete button, and page handler.
+- GREEN: focused Angular Clipper Studio specs passed, 19 success.
+
+Updated:
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "remove a media asset" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include='src/features/clipper-studio/**/*.spec.ts'` succeeded, 19 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 13 passed.
+- `clipper_angular npm run build:electron -- --progress=false` succeeded.
+
+[2026-05-06 18:12:13 KST] Clipper1 clip media asset replace
+
+User request:
+Continue implementation.
+
+Decision:
+Implement media replacement before broader media library/slot editing work. Replacement is more urgent than reordering because users can now add/search/upload media, but a wrong choice still required delete plus add. Replacement must preserve the existing asset id so clip media slots and preview timeline references do not break.
+
+Design:
+- NestJS adds replace variants for remote candidate, browser multipart local file, and Electron source path:
+  - `PUT .../media/:assetId/remote`
+  - `PUT .../media/:assetId/local`
+  - `PUT .../media/:assetId/source-path`
+- Each path builds the same asset shape as import, then overwrites its generated id with the existing `assetId`.
+- Existing slots are preserved when they already reference the target asset id.
+- Angular carries an optional `replaceAssetId` through candidate apply, file upload, and native picker events.
+- Editor media chips expose file replacement and search-result replacement separately.
+
+TDD:
+- Added NestJS smoke coverage for replacing an uploaded media asset with a remote candidate while preserving slot and preview asset references.
+- RED: focused NestJS smoke failed with 404 for `PUT .../media/:assetId/remote`.
+- Implemented controller/service replace paths.
+- GREEN: focused NestJS replace smoke passed, 1 test.
+- Added Angular service/editor/page specs for replace API calls and UI event flow.
+- RED: focused Angular specs failed because replace service methods, editor replace state, and page replace branch did not exist.
+- Implemented service methods, editor file/search replacement controls, and page replace routing.
+- GREEN: focused Angular Clipper Studio specs passed, 27 success.
+
+Updated:
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "replace a media asset" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 27 success.
+- `clipper_nestjs node --test test/clipper1-workspace-api.test.js` succeeded, 10 passed.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:16:54 KST] Clipper1 clip media asset reorder
+
+User request:
+Continue implementation.
+
+Decision:
+Implement media order controls next. Once a clip can hold multiple media assets, users need to control the visible sequence before fine-grained slot duration editing.
+
+Design:
+- Add a clip-level media order endpoint:
+  - `PATCH /projects/clipper1/workspaces/:workspaceId/clips/:clipId/media/order`
+  - body: `{ assetIds: string[] }`
+- Server validates that `assetIds` exactly matches the clip's current media asset id set.
+- Reorder updates `mediaPool.assets`, switches the pool policy to `sequential`, and reschedules slots using the requested order.
+- Scheduler keeps existing seeded-shuffle behavior by default and only preserves user order when called with `orderPolicy: 'sequential'`.
+- Angular editor emits reordered asset ids when the user clicks up/down controls on media chips.
+
+TDD:
+- Added NestJS smoke coverage for uploading three media assets, requesting a new order, and verifying pool/slot/preview order.
+- RED: focused NestJS smoke failed with 404 for `PATCH .../media/order`.
+- Implemented DTO, controller endpoint, service validation/reorder, and scheduler sequential option.
+- GREEN: focused NestJS reorder smoke passed, 1 test.
+- Added Angular service/editor/page specs for reorder API and UI event flow.
+- RED: focused Angular specs failed because `reorderClipMedia()`, `mediaReorder`, `moveMedia()`, and `handleMediaReorder()` did not exist.
+- Implemented service method, editor up/down controls, and page handler.
+- GREEN: focused Angular Clipper Studio specs passed, 30 success.
+
+Updated:
+`clipper_nestjs/src/shortform-core/shortform-media-slot-scheduler.ts`
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "reorder media assets" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 30 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 15 passed.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:22:50 KST] Clipper1 clip media slot duration editing
+
+User request:
+Continue implementation.
+
+Decision:
+Implement slot duration editing after asset reorder. This is a small step toward a real timeline editor without introducing drag handles yet.
+
+Design:
+- Add a clip-level media slot update endpoint:
+  - `PATCH /projects/clipper1/workspaces/:workspaceId/clips/:clipId/media/slots`
+  - body: `{ slots: [{ id, assetId, startMs, endMs, fit }] }`
+- Server validates that every slot references an existing media asset.
+- Server accepts only contiguous slots that start at 0 and cover the full clip `durationMs`.
+- Render promotion already reads workspace `mediaSlots`, so the same saved slot timings flow into preview and render manifest.
+- Angular shows a compact duration input per slot. Changing one slot adjusts the adjacent slot by the opposite amount so the clip duration stays fixed.
+
+TDD:
+- Added NestJS smoke coverage for editing two media slot durations and verifying preview plus render manifest slots.
+- RED: focused NestJS smoke failed with 404 for `PATCH .../media/slots`.
+- Implemented DTO, controller endpoint, service validation/update, and preview timeline refresh.
+- GREEN: focused NestJS slot duration smoke passed, 1 test.
+- Added Angular service/editor/page specs for slot update API and UI event flow.
+- RED: focused Angular specs failed because `updateClipMediaSlots()`, `mediaSlotsUpdate`, `updateSlotDuration()`, and `handleMediaSlotsUpdate()` did not exist.
+- Implemented service method, editor slot duration controls, and page handler.
+- GREEN: focused Angular Clipper Studio specs passed, 33 success.
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "edit media slot durations" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 33 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 16 passed.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:27:30 KST] Clipper1 workspace media library reuse
+
+User request:
+Continue implementation.
+
+Decision:
+Implement a first workspace media library slice before visual timeline drag handles. The user can now add/search/upload media per clip, so reuse across clips reduces repeated work and matches the later Variation/shared asset direction.
+
+Design:
+- Do not introduce a separate workspace-level media store yet.
+- Derive the library from all `mediaPool.assets` already attached to clips in the current workspace.
+- Add a target-clip reuse API:
+  - `POST /projects/clipper1/workspaces/:workspaceId/clips/:clipId/media/reuse`
+  - body: `{ assetId, sourceClipId? }`
+- Server only allows assets from the same workspace and another clip.
+- Server rejects duplicates already attached to the target clip.
+- Angular shows reusable assets from other clips below each clip and emits a reuse request from a compact `사용` control.
+
+TDD:
+- Added NestJS smoke coverage for adding a second clip, uploading media to the first clip, reusing it in the second clip, and verifying preview/render manifest references.
+- RED: focused NestJS smoke failed with 404 for `POST .../media/reuse`.
+- Implemented DTO, controller endpoint, service lookup/duplicate guard, and append flow.
+- GREEN: focused NestJS reuse smoke passed, 1 test.
+- Added Angular service/editor/page specs for reuse API, derived library items, and page handler.
+- RED: focused Angular specs failed because `reuseClipMedia()`, `libraryAssetsForClip()`, `mediaReuse`, and `handleMediaReuse()` did not exist.
+- Implemented service method, derived library UI, reuse output, and page handler.
+- GREEN: focused Angular Clipper Studio specs passed, 36 success.
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.controller.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.ts`
+`clipper_angular/src/features/clipper-studio/services/clipper1-workspace.service.spec.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.ts`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.html`
+`clipper_angular/src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "reuse media" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 36 success.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 17 passed.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:31:17 KST] Clipper1 media slot boundary slider
+
+User request:
+Continue implementation.
+
+Decision:
+Add a first timeline-like slot boundary control in Angular before building a full thumbnail timeline. Reuse the existing `mediaSlotsUpdate` output and NestJS slot update API instead of adding a second backend path.
+
+Design:
+- For clips with 2+ media slots, show one range slider for each boundary between adjacent slots.
+- Slider value is the boundary timestamp in milliseconds.
+- Slider min/max keep both adjacent slots above the existing minimum slot duration.
+- Moving a boundary updates only the left slot `endMs` and right slot `startMs`, preserving total clip duration and contiguous slot coverage.
+
+TDD:
+- Added Angular component spec for changing the boundary between two slots from 1500ms to 2000ms.
+- RED: focused component spec failed because `updateSlotBoundary()` did not exist.
+- Implemented boundary helper methods, slider UI, and compact SCSS.
+- GREEN: focused component spec passed, 11 success.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification so far:
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts` succeeded, 11 success.
+
+Final verification:
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 37 success.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+
+[2026-05-06 18:34:57 KST] Clipper1 media slot fit selection and preview
+
+User request:
+Continue implementation.
+
+Decision:
+Connect slot-level fit editing before deeper crop/position tools. Render recipe already carries slot `fit`, so the missing part was editor control and render-before preview parity.
+
+Design:
+- Keep using the existing `PATCH .../media/slots` API.
+- Add `fit` to workspace preview timeline items so Angular preview can display media the same way render will.
+- Add a compact slot-level select in the clip editor:
+  - `cover` -> `채움`
+  - `contain` -> `맞춤`
+  - `fill` -> `늘림`
+- Update only the selected slot's `fit`; preserve duration, boundary, asset id, and contiguous timing.
+
+TDD:
+- Added NestJS assertion that `previewTimeline.items` includes slot `fit`.
+- RED: focused NestJS smoke failed with `fit: undefined`.
+- Added Angular specs for editor `updateSlotFit()` and preview player `currentMediaFit()`.
+- RED: focused Angular specs failed because both APIs were missing.
+- Implemented Nest preview timeline fit propagation, Angular model type, editor select/handler, and preview `object-fit` binding.
+- GREEN: NestJS focused smoke and Angular focused specs passed.
+
+Updated:
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.ts`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.html`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification so far:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "edit media slot durations" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts` succeeded, 13 success.
+
+Final verification:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 17 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 39 success.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:45:46 KST] Clipper1 media slot thumbnail timeline bar and motion preset
+
+User request:
+Continue implementation.
+
+Decision:
+Add two adjacent editor-quality slices:
+1. A visual thumbnail timeline bar so clip media slot timing is visible at a glance.
+2. Slot-level motion preset persistence/selection, using the `motionPreset` field already present in Shortform slot types.
+
+Design:
+- Thumbnail timeline:
+  - Compute per-slot segment width from `slot duration / clip duration`.
+  - Show media label, time range, and thumbnail/content URL.
+  - Keep it display-only for this slice; boundary slider remains the editing control.
+- Motion preset:
+  - Keep using `PATCH .../media/slots`.
+  - Add optional `motionPreset` to the update DTO.
+  - Preserve non-empty motion preset strings in workspace slots.
+  - Include motion preset in preview timeline items and render manifest detail media slots.
+  - Add Angular select values: fixed, zoom-in, pan-left, pan-right.
+
+TDD:
+- Added Angular spec for `slotTimelineSegments()` proportional width and thumbnail URL.
+- RED: component spec failed because `slotTimelineSegments()` did not exist.
+- Implemented segment builder, timeline template, and SCSS.
+- GREEN: focused Angular clip editor spec passed, 13 success.
+- Added NestJS assertions that slot update, preview timeline, and dry-run render manifest preserve `motionPreset`.
+- RED: focused NestJS smoke failed with `motionPreset: undefined`.
+- Added Angular spec for `updateSlotMotionPreset()`.
+- RED: focused Angular spec failed because the method did not exist.
+- Implemented DTO/model propagation and editor select/handler.
+- GREEN: focused NestJS smoke and Angular clip editor specs passed.
+
+Updated:
+`clipper_nestjs/src/projects/dto/clipper1-workspace.dto.ts`
+`clipper_nestjs/src/shortform-core/shortform-core.dto.ts`
+`clipper_nestjs/src/projects/clipper1-workspace.service.ts`
+`clipper_nestjs/test/clipper1-workspace-api.test.js`
+`clipper_angular/src/features/clipper-studio/models/shortform-workspace.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.ts`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.html`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.scss`
+`clipper_angular/src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification so far:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test --test-name-pattern "edit media slot durations" test/clipper1-workspace-api.test.js` succeeded, 1 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts` succeeded, 14 success.
+
+Final verification:
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 17 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 41 success.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:50:24 KST] Clipper1 media slot motion preview and render effects
+
+User request:
+Continue implementation.
+
+Decision:
+Use the already-saved slot `motionPreset` in two places:
+1. Angular pre-render preview, so users can see approximate motion before rendering.
+2. NestJS render recipe effects, so the Python render adapter receives the same intent.
+
+Design:
+- Angular preview player:
+  - Compute progress within the current preview timeline item.
+  - `zoom-in`: scale from 1.000 to 1.080.
+  - `pan-left`: translate from +4% to -4% with light scale.
+  - `pan-right`: translate from -4% to +4% with light scale.
+  - Bind transform directly on the media image.
+- NestJS render recipe:
+  - Convert `zoom-in` into `RenderEffect { type: 'zoom', params: { mode: 'in', speed: 1 } }`.
+  - Convert `pan-left`/`pan-right` into `RenderEffect { type: 'pan', params: { direction, speed } }`.
+  - Use the Python adapter's existing `mode`, `direction`, and `speed` contract rather than inventing a new params shape.
+
+TDD:
+- Added Angular preview spec for `zoom-in` at midpoint producing `scale(1.040)`.
+- RED: focused Angular spec failed because `currentMediaTransform()` did not exist.
+- Implemented transform computation and template/style binding.
+- GREEN: focused Angular preview spec passed, 2 success.
+- Added NestJS render recipe assertion that slot `motionPreset` produces timeline `effects`.
+- RED: focused render recipe test failed because `effects` was undefined.
+- Implemented render effect mapping in `LegacyClipper1RenderRecipeProvider`.
+- GREEN: NestJS build and focused render recipe test passed.
+
+Updated:
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.ts`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.html`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.scss`
+`clipper_angular/src/features/clipper-studio/components/shortform-preview-player.component.spec.ts`
+`clipper_nestjs/src/project-manifest/legacy-clipper1-render-recipe-provider.ts`
+`clipper_nestjs/test/legacy-clipper1-render-media-slots.test.js`
+`.codex/implementation/TASKS.md`
+`.codex/implementation/WORKLOG.md`
+`.codex/session-logs/2026-05-06.log`
+
+Verification so far:
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts` succeeded, 2 success.
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/legacy-clipper1-render-media-slots.test.js` succeeded, 1 passed.
+
+Final verification:
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 17 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 42 success.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+[2026-05-06 18:59:41 KST] Pre-template checkpoint before commits
+
+User request:
+Stop before template work, document the current state, commit completed changes, then report back.
+
+Decision:
+Do not continue deep video editor work. Document that the next priority is the pre-render settings panel, especially template selection, TTS, BGM, logo, and title visibility.
+
+Documentation:
+- Added `.codex/implementation/CLIPPER1_PRE_TEMPLATE_CHECKPOINT_2026-05-06.md`.
+- The checkpoint records current Clipper1 workspace/media/preview/render status and explicitly lists template-related work that is still missing from the new workspace page.
+
+Commit plan:
+- Commit accumulated `clipper_nestjs` changes.
+- Commit accumulated `clipper_angular` changes.
+- `.codex` is outside the subrepo git histories, so it remains a workspace documentation artifact rather than part of those commits.
+
+Verification before commit:
+- `clipper_nestjs npm run build` succeeded.
+- `clipper_nestjs node --test test/shortform-media-slot-scheduler.test.js test/legacy-clipper1-render-media-slots.test.js test/clipper1-workspace-api.test.js` succeeded, 17 passed.
+- `clipper_angular ./node_modules/.bin/ng test --watch=false --include src/features/clipper-studio/services/clipper1-workspace.service.spec.ts --include src/features/clipper-studio/components/clipper1-clip-editor.component.spec.ts --include src/features/clipper-studio/components/shortform-preview-player.component.spec.ts --include src/features/clipper-studio/pages/clipper-studio-page.component.spec.ts` succeeded, 42 success.
+- `clipper_angular npm run build:electron` succeeded.
+- `git -C clipper_nestjs diff --check` succeeded.
+- `git -C clipper_angular diff --check` succeeded.
+
+Commits:
+- `clipper_nestjs` `5aca506 feat: expand clipper1 workspace media editing`
+- `clipper_angular` `692e727 feat: build clipper1 workspace media editor`
+
+Post-commit status:
+- `clipper_nestjs` clean.
+- `clipper_angular` clean.
+## Legacy Clipper1 template research
+
+- 요청: 현재 Clipper2의 기존 템플릿 구현은 기준으로 삼지 말고, 원래 Clipper1(`adlight_angular`, `adlight_python` `feature/d2x-electron`)의 템플릿 구조/설계/렌더 적용 방식/속성을 먼저 전부 문서화.
+- 조사 방식:
+  - 현재 checkout은 변경하지 않고 `git show feature/d2x-electron:<path>`와 `git grep`으로 reference branch를 읽음.
+  - Angular: `templates.api.ts`, `templates-api.interface.ts`, `TemplateData`, `TitleCheckComponent`, `TemplateSelectDialogComponent`, `VideoPreviewComponent`, `ShorformButtonsComponent` 확인.
+  - Python: `TemplateModel`, `TemplateJapanModel`, `TemplateSchema`, `ShortsProjectSchema`, `TemplatesService`, `TemplatesJapanService`, `ShortsProjectService.prepare_media_server_payload`, `MediaService`, `VideoService` 확인.
+- 핵심 확인:
+  - legacy template은 DB row + `settings` JSONB + layout/thumb asset + title/logo project state + FFmpeg overlay coordinate contract로 구성됨.
+  - output 좌표계는 1080x1920이며 ratio별 content area height는 16:9=608, 4:3=810, 1:1=1080, full=1920.
+  - Angular preview는 실제 mp4 preview가 아니라 DOM/CSS 근사 preview이며, `previewWidth=261`, `previewHeight=455`로 x/y scale이 완전히 동일하지 않음.
+  - Python renderer는 basic ratio에서는 clip 생성 시 layout을 background로 쓰고, full ratio에서는 최종 concat 후 layout을 overlay함.
+  - `main_title_shadow_x/y_offset`, `subtitle_shadow_x/y_offset`는 schema에는 있으나 확인한 final render 경로에서 실제 overlay 좌표로 사용되지 않음.
+  - `bgm_volume`은 renderer가 optional로 읽지만 `ShortsTemplateSettingsSchema`에는 없음.
+  - `VideoPreviewComponent`의 logo upload는 `uploadLogoImage(297, file)`로 project id hardcode가 남아 있음.
+- 문서화:
+  - `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md` 신규 작성.
+  - `.codex/README.md` 주요 Design 문서 목록에 추가.
+
+## Template Builder brainstorming
+
+- 요청/결정:
+  - Clipper2에서 새로 구현하는 Clipper1의 최종 숏츠 출력물은 기존 Clipper1 템플릿 적용 결과와 동일해야 함.
+  - 기존 Python 코드를 그대로 복사할 필요는 없지만, renderer output semantics는 legacy Clipper1과 호환되어야 함.
+  - 새 기능으로 `템플릿 생성기`가 필요함.
+  - 템플릿 생성기는 플러그인이 아니라 `보관함`, `플러그인 대시보드`, `플러그인 스토어`와 같은 top-level 메뉴여야 함.
+  - 생성된 템플릿은 Clipper1뿐 아니라 결과물이 숏츠 영상인 모든 플러그인에서 공통 사용되어야 함.
+- Visual companion:
+  - Superpowers brainstorming visual companion 서버 시작: `http://localhost:64878`.
+  - `.superpowers/brainstorm/7642-1778064077/content/template-builder-platform-ko.html`에 한국어 mockup 작성.
+- 확정된 설계 전제:
+  - Template Builder는 top-level 공통 관리 기능.
+  - 저장 대상은 Shared Template Catalog.
+  - 기본 제공 템플릿은 읽기 전용, 사용자 생성 템플릿은 수정/복제/삭제 가능.
+  - 목표 UX는 일반 사용자용 쉬운 편집 + 고급 속성 편집을 모두 갖는 방향.
+  - 단, 1차 구현 우선순위는 내부/디자인팀이 기존 엑셀 수작업을 줄이고 legacy-compatible 템플릿을 정확히 만들 수 있는 고급 도구에 둔다.
+- 추가 결정:
+  - 현재 Clipper2는 DB가 아니라 로컬 파일시스템에 프로젝트/상태를 저장하고 있음.
+  - 추후 로그인, 이용권/크레딧, 서버 DB 저장, 유저별 custom template, 기본 제공 template 공유가 들어올 수 있음.
+  - 따라서 template/project 저장소는 local filesystem에 종속시키지 않고 repository/adapter 경계로 추상화해야 함.
+  - built-in template과 user custom template은 데이터 모델에서 명확히 분리해야 함.
+  - custom template의 최종 저장 위치는 아직 미정이며 local-only 또는 DB 저장 모두 가능해야 함.
+  - template export/import 기능은 범위에서 제외.
+  - Template Builder 편집 좌표계는 hybrid 방식으로 확정:
+    - 사용자는 캔버스에서 드래그/리사이즈로 자연스럽게 조작.
+    - 속성 패널과 저장 모델은 실제 output 좌표계인 1080x1920 px 기준 값을 표시/수정.
+    - preview scale은 uniform scale이어야 하며 legacy Angular preview의 261x455 non-uniform scale은 계승하지 않음.
+  - Template Builder 레이어 모델은 1차에서 기존 Clipper1 고정 레이어만 지원:
+    - `layout_image`, 콘텐츠 영역, 서브 타이틀, 메인 타이틀 1/2줄, 하단 타이틀, 로고, 대사 자막/자막바.
+    - 자유 텍스트/이미지/도형 레이어 추가 기능은 1차 범위에서 제외.
+    - 각 텍스트 레이어는 legacy settings에 있는 스타일 속성을 편집할 수 있어야 함:
+      - 기본 텍스트 스타일: font, size, color, tracking.
+      - box style: color, alpha, padding, height, border where supported.
+      - outline style: outline width/color.
+      - shadow style: shadow color, shadow outline, x/y offset.
+    - mockup v2에는 박스/윤곽선/그림자 설정 노출이 부족했으므로 v3에서 우측 속성 패널을 보강.
+  - Template ratio 모델은 family + 선택적 ratio variant 방식으로 확정:
+    - template family 아래에 `16:9`, `4:3`, `1:1`, `full` variant를 필요한 것만 추가.
+    - 새 template 생성 시 `full`을 기본으로 강제하지 않고 사용자가 최초 생성할 ratio를 선택.
+    - 나중에 같은 family에 다른 ratio variant를 추가할 수 있어야 함.
+    - 단, 추가 가능한 ratio는 기존 4개(`16:9`, `4:3`, `1:1`, `full`)로 고정. 임의 ratio/무제한 variant 추가는 범위 밖.
+    - UI 문구의 `Variant 추가`는 오해가 있으므로 `없는 비율 만들기` 또는 이에 준하는 문구로 수정해야 함.
+    - 추가 피드백: `없는 비율 만들기`도 부자연스럽다. ratio는 4개 고정 슬롯으로 보여주고, 각 슬롯에서 `편집 중` / `+ 생성` / `게시됨` 같은 상태를 표현하는 방식이 더 적절함.
+  - 새 template 시작 방식은 둘 다 제공:
+    - 빈 템플릿에서 시작.
+    - 기존 기본 제공 템플릿 또는 사용자 템플릿을 복제해서 시작.
+  - 템플릿 저장/노출 상태는 초안과 게시를 분리:
+    - 편집 중 template은 `draft` 상태로 저장.
+    - Clipper1/Variation/향후 shorts plugin에서는 `published` template만 선택 가능.
+    - 저장 즉시 다른 플러그인에 노출하는 방식은 채택하지 않음.
+  - template publish gate는 스키마 검증 + 테스트 렌더 필수로 확정:
+    - 필수 field, numeric bounds, asset 존재 여부만으로는 published 전환 불가.
+    - renderer를 통해 sample render가 성공해야 다른 shorts plugin에서 선택 가능한 `published` 상태가 됨.
+  - 게시 전 테스트 렌더 결과물은 짧은 샘플 mp4로 확정:
+    - 샘플 media/title/logo/2줄 subtitle/TTS/BGM을 포함한 3-5초 수준의 mp4.
+    - 정적 대표 프레임만으로 publish 검증하지 않음.
+
+[2026-05-06 20:32:13 KST] Template Builder handoff documentation
+
+User request:
+Time is short. Document everything completed so far, include the last requirement, and provide the exact prompt to continue in the next session.
+
+Latest user requirement to preserve:
+- The editor canvas area in the current mockup is too wide.
+- Reduce the canvas area and widen the properties area.
+- Add a color palette.
+- Make it feel like a proper template builder.
+- The UI must continue in Korean.
+
+Documentation added:
+- `.codex/design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md`
+  - Summarizes legacy output parity, top-level Template Builder placement, Shared Template Catalog, storage repository/adapter boundary, system/custom template split, fixed ratio slots, editor v1 layer scope, text style controls, draft/published lifecycle, publish test render gate, and the latest UI feedback.
+- `.codex/implementation/TEMPLATE_BUILDER_NEXT_SESSION_PROMPT_2026-05-06.md`
+  - Contains a copy-paste prompt for the next Codex session.
+- `.codex/README.md`
+  - Added the new design brief and next-session prompt to the document index.
+
+Operational cleanup:
+- Stop script returned `{"status": "stopped"}` for `.superpowers/brainstorm/7642-1778064077`.
+- A follow-up port check still showed `node server.cjs` on port `64878`, so PID `7651` was terminated.
+- Final port check showed no listening server; only closed Chrome helper sockets remained.
+
+Next recommended action:
+- Start the next session by reading `.codex/README.md`, `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`, `.codex/design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md`, and `.codex/implementation/TEMPLATE_BUILDER_NEXT_SESSION_PROMPT_2026-05-06.md`.
+- Do not implement yet. Redraw the Korean editor mockup v4 with narrower canvas, wider properties panel, color palette, and complete per-text layer box/outline/shadow controls, then ask for confirmation.
