@@ -32,6 +32,7 @@
 - [features/clipper-studio/README.md](features/clipper-studio/README.md)
 - [operations/windows-packaging/README.md](operations/windows-packaging/README.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)
+- [records/README.md](records/README.md)
 
 ## Current Legacy Areas
 
