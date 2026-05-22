@@ -59,7 +59,7 @@
 - [x] Record whether `text:subtitleText` drops now that both preview and sample/final render use the modern combined subtitle artifact path.
   - Overall mismatch dropped from `0.027445558984910835` to `0.010823902606310014`.
   - `text:subtitleText` remained high at `0.9865079365079366` because the category rect is now the tight modern subtitle artifact group, so most sampled pixels are glyph/box edge pixels after video encode and frame scaling.
-- [x] Update `.codex/implementation/PREVIEW_FINAL_RENDER_PARITY_PLAN_2026-05-09.md`, `.codex/implementation/NEXT_SESSION_PROMPT.md`, and session log.
+- [x] Update `.codex/features/template-builder/records/2026/05/09-preview-final-render-parity-plan.md`, `.codex/handoff/NEXT.md`, and session log.
 
 ## Task 4: Commit
 

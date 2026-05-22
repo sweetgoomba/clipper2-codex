@@ -13,7 +13,7 @@
 5. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
 6. [../features/template-builder/README.md](../features/template-builder/README.md)
 7. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
-8. [../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md](../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md)
+8. [../features/template-builder/records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md](../features/template-builder/records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md)
 
 ## Current Repo Heads
 

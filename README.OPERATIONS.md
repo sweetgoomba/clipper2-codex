@@ -20,4 +20,4 @@
 - [operations/windows-packaging/README.md](operations/windows-packaging/README.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)
 - [operations/windows-packaging/records/2026/05/21-powertoys-ebusy-diagnosis.md](operations/windows-packaging/records/2026/05/21-powertoys-ebusy-diagnosis.md)
-- [implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md](implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md)
+- [features/template-builder/records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md](features/template-builder/records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md)

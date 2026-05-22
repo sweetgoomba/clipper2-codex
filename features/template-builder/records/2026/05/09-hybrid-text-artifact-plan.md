@@ -78,7 +78,7 @@
 
 ## Task 4: Documentation And Verification
 
-- [x] Update `.codex/session-logs/2026-05-09.log`, `.codex/implementation/NEXT_SESSION_PROMPT.md`, and `.codex/implementation/PREVIEW_FINAL_RENDER_PARITY_PLAN_2026-05-09.md`.
+- [x] Update `.codex/records/sessions/2026/05/09.md`, `.codex/handoff/NEXT.md`, and `.codex/features/template-builder/records/2026/05/09-preview-final-render-parity-plan.md`.
 - [x] Run:
   - `clipper_python uv run pytest tests/test_template_builder_subtitle_artifacts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py`
   - `clipper_nestjs npm run build`

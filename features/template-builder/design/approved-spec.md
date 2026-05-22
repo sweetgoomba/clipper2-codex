@@ -5,8 +5,8 @@
 
 ## 기준 문서
 
-- `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`
-- `.codex/design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md`
+- `.codex/features/template-builder/design/legacy-clipper1-template-system.md`
+- `.codex/features/template-builder/design/design-brief.md`
 - visual mockup: `.superpowers/brainstorm/75878-1778126293/content/template-builder-editor-ko-v4.html`
 
 ## 승인된 방향

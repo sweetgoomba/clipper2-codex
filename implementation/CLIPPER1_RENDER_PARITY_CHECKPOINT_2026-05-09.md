@@ -8,7 +8,7 @@
 
 Legacy Clipper1 template render parity는 25개 Clipper1 reference frame fixture 기준 `channelTolerance=32`, `maxMismatchRatio=0.0006`까지 강화됐다.
 
-2026-05-09 정책 전환으로 이 기준은 더 이상 active optimization target이 아니라 legacy compatibility guard로 동결한다. 남은 top text edge를 `0.0004` 이하로 줄이기 위한 추가 픽셀 튜닝은 진행하지 않는다. 새 우선순위는 Template Builder preview와 final render가 같은 결과를 내도록 만드는 preview/final parity다. 상세 정책은 `.codex/implementation/TEMPLATE_RENDERING_POLICY_2026-05-09.md`를 따른다.
+2026-05-09 정책 전환으로 이 기준은 더 이상 active optimization target이 아니라 legacy compatibility guard로 동결한다. 남은 top text edge를 `0.0004` 이하로 줄이기 위한 추가 픽셀 튜닝은 진행하지 않는다. 새 우선순위는 Template Builder preview와 final render가 같은 결과를 내도록 만드는 preview/final parity다. 상세 정책은 `.codex/features/template-builder/records/2026/05/09-template-rendering-policy.md`를 따른다.
 
 이번 세션 시작 시 현재 `uv` 환경의 Pillow가 RAQM 없이 동작하면서 top/bottom text edge가 크게 벌어져 25개 golden 비교가 깨졌다. 기존 Clipper1 venv는 Pillow RAQM/Harfbuzz가 켜져 있었고, Clipper2 uv 환경은 RAQM이 없었다. 이를 `uharfbuzz` 기반 line width fallback으로 보정했다.
 

@@ -11,7 +11,7 @@ Template Builder는 top-level `템플릿` 메뉴에서 system/custom template fa
 
 ## Active References
 
-- [../../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md](../../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md)
-- [../../design/TEMPLATE_BUILDER_APPROVED_SPEC_2026-05-07.md](../../design/TEMPLATE_BUILDER_APPROVED_SPEC_2026-05-07.md)
-- [../../design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md](../../design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md)
-- [../../implementation/TEMPLATE_BUILDER_MANUAL_APP_CHECKLIST_2026-05-10.md](../../implementation/TEMPLATE_BUILDER_MANUAL_APP_CHECKLIST_2026-05-10.md)
+- [records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md](records/2026/05/22-angular-template-builder-and-dance-ui-checkpoint.md)
+- [design/approved-spec.md](design/approved-spec.md)
+- [design/design-brief.md](design/design-brief.md)
+- [runbooks/manual-app-checklist.md](runbooks/manual-app-checklist.md)

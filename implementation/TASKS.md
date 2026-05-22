@@ -38,7 +38,7 @@ Clipper1 편입의 다음 구현 목표는 `clipper1_video_render` 보강이 아
 
 기준 문서:
 
-- `../design/TEMPLATE_BUILDER_APPROVED_SPEC_2026-05-07.md`
+- `../features/template-builder/design/approved-spec.md`
 - `TEMPLATE_BUILDER_IMPLEMENTATION_PLAN_2026-05-07.md`
 
 현재 상태:

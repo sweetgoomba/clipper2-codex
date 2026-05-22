@@ -7,7 +7,7 @@
 
 ```text
 Using Superpowers.
-Clipper2 템플릿 생성기 설계를 이어서 진행하자. 먼저 `.codex/README.md`, `.codex/design/LEGACY_CLIPPER1_TEMPLATE_SYSTEM_2026-05-06.md`, `.codex/design/TEMPLATE_BUILDER_DESIGN_BRIEF_2026-05-06.md`, `.codex/implementation/TEMPLATE_BUILDER_NEXT_SESSION_PROMPT_2026-05-06.md`를 읽어.
+Clipper2 템플릿 생성기 설계를 이어서 진행하자. 먼저 `.codex/README.md`, `.codex/features/template-builder/design/legacy-clipper1-template-system.md`, `.codex/features/template-builder/design/design-brief.md`, `.codex/features/template-builder/records/2026/05/06-next-session-prompt.md`를 읽어.
 
 지금까지 확정된 결정은 유지해:
 - 템플릿 생성기는 플러그인이 아니라 top-level `템플릿` 메뉴다.

@@ -305,7 +305,7 @@ Latest packaged app smoke after style-heavy fixture coverage:
   - `POST /v1/template-builder/preview/renderer-session`: HTTP 201, `time_total=0.259108`, response `status=ready`, `baseUrl=http://127.0.0.1:50304`.
   - Packaged app shutdown also shut down packaged NestJS and the Python renderer worker.
 - Manual app testing:
-  - Added `.codex/implementation/TEMPLATE_BUILDER_MANUAL_APP_CHECKLIST_2026-05-10.md`.
+  - Added `.codex/features/template-builder/runbooks/manual-app-checklist.md`.
   - The next user-facing verification step is to run the packaged app and follow that checklist.
 
 Foreground-bounds guard diagnostics completed:
