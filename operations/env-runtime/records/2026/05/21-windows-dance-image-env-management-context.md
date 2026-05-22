@@ -4,7 +4,7 @@
 
 관련 설계 문서:
 
-- `.codex/design/2026-05-21-execution-env-mode-design.md`
+- `.codex/operations/env-runtime/records/2026/05/21-execution-env-mode-design.md`
 
 ## 시작점
 
@@ -280,7 +280,7 @@ Windows dance highlight 멤버 이미지 0건 문제의 직접 원인은 image s
 
 따라서 다음 구현은 단순한 key 복사가 아니라 실행 모드와 env loading을 먼저 바로잡는 방향으로 진행해야 한다.
 
-기준 설계는 `.codex/design/2026-05-21-execution-env-mode-design.md`를 따른다.
+기준 설계는 `.codex/operations/env-runtime/records/2026/05/21-execution-env-mode-design.md`를 따른다.
 
 ## 재검토 후 구현 범위 정정
 

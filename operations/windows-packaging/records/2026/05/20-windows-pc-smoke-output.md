@@ -13,7 +13,7 @@
 
   ## Guide Progress
 
-  - Followed guide: /Users/jina/project/adlight/.codex/implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_CONFIGURABLE_ROOT_2026-05-20.md
+  - Followed guide: /Users/jina/project/adlight/.codex/operations/windows-packaging/runbooks/windows-build-guide-configurable-root.md
   - Completed through step: ~12
   - Stopped at: 12
 

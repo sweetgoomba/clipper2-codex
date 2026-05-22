@@ -25,7 +25,7 @@
 
 ## Current References
 
-- [design/2026-05-21-execution-env-mode-design.md](design/2026-05-21-execution-env-mode-design.md)
-- [implementation/2026-05-21-execution-mode-runbook.md](implementation/2026-05-21-execution-mode-runbook.md)
-- [implementation/2026-05-21-windows-dance-image-env-management-context.md](implementation/2026-05-21-windows-dance-image-env-management-context.md)
+- [operations/env-runtime/records/2026/05/21-execution-env-mode-design.md](operations/env-runtime/records/2026/05/21-execution-env-mode-design.md)
+- [operations/env-runtime/runbooks/execution-mode-runbook.md](operations/env-runtime/runbooks/execution-mode-runbook.md)
+- [operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md](operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)

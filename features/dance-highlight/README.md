@@ -11,5 +11,5 @@ Dance Highlight는 artist/member detection, member image selection, reference im
 
 ## Active References
 
-- [../../implementation/2026-05-21-windows-dance-image-env-management-context.md](../../implementation/2026-05-21-windows-dance-image-env-management-context.md)
+- [../../operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md](../../operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md)
 - [../../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md](../../implementation/2026-05-22-angular-template-builder-and-dance-ui-checkpoint.md)

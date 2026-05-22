@@ -447,7 +447,7 @@ smoke 후 남은 `Clipper2` process는 없었다.
 5. 가벼운 plugin start/stop smoke를 진행한다.
 6. `clipper_angular/package-lock.json`, `clipper_electron/package-lock.json` 변경이 필요한 변경인지 확인한다.
    - 단순 npm 버전 metadata churn이면 되돌릴지 결정한다.
-7. Windows build 성공 후 별도 사용자용 guide가 필요하면 `.codex/implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-20.md` 같은 문서로 정리한다.
+7. Windows build 성공 후 별도 사용자용 guide가 필요하면 `.codex/operations/windows-packaging/runbooks/windows-build-guide.md` 같은 문서로 정리한다.
 
 ## 주의사항
 

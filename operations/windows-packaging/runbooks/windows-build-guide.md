@@ -1,58 +1,47 @@
-# Clipper2 Windows Build Guide - Configurable Project Root
+# Clipper2 Windows Build Guide
 
 작성일: 2026-05-20 KST  
-대상: Codex 없이 Windows PC에서 사람이 직접 Clipper2 Windows installer를 빌드하는 절차  
-기준 문서: `.codex/implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-20.md`  
-차이점: 프로젝트 루트를 하드코딩하지 않고 현재 PowerShell 위치에서 `$ProjectRoot`를 지정한다.
+대상: Codex 없이 Windows PC에서 사람이 직접 처음부터 Clipper2 Windows installer를 빌드하는 절차  
+검증 기준 세션: `.codex/operations/windows-packaging/records/2026/05/20-build-session-report.md`
 
 ## 목적
 
-Windows PC에서 프로젝트 루트 생성, repo clone, dependency install, Windows x64 installer build, 기본 smoke test까지 재현한다.
+새 Windows PC에서 프로젝트 루트 생성부터 repo clone, dependency install, Windows x64 installer build, 기본 smoke test까지 같은 순서로 재현한다.
 
-이 문서는 `C:\project\adlight`를 고정 경로로 쓰지 않는다. 먼저 본인 PC의 실제 프로젝트 루트로 이동한 뒤, 현재 위치를 `$ProjectRoot`로 저장하고 이후 명령은 그대로 따라간다.
+이번 가이드는 2026-05-20 Windows PC 세션에서 실제로 통과한 절차를 기준으로 한다.
 
-PowerShell에서 이미 프로젝트 루트로 이동한 상태라면 아래 한 줄로 현재 위치를 프로젝트 루트로 지정한다.
+최종 목표 산출물:
 
-```powershell
-$ProjectRoot = (Get-Location).Path
+```text
+C:\project\adlight\clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe
 ```
 
 ## 중요 원칙
 
-### 1. 현재 위치를 프로젝트 루트로 지정한다
+### 1. ASCII 경로를 사용한다
 
-모든 명령은 `$ProjectRoot`를 기준으로 실행한다. 먼저 프로젝트 루트 폴더로 이동한 뒤, 현재 위치를 `$ProjectRoot`에 저장한다.
+반드시 다음처럼 한글/공백이 없는 경로에서 진행한다.
 
-```powershell
-$ProjectRoot = (Get-Location).Path
+```text
+C:\project\adlight
 ```
 
-다른 PC에서 다른 경로를 써도, 해당 폴더로 이동한 뒤 같은 한 줄을 실행하면 된다.
+피해야 할 예:
 
-주의:
+```text
+C:\Users\<한글사용자명>\Desktop\project\adlight
+```
 
-- PowerShell 창을 새로 열면 `$ProjectRoot` 값은 사라진다.
-- 새 PowerShell 창을 열 때마다 프로젝트 루트로 이동한 뒤 `$ProjectRoot = (Get-Location).Path`를 다시 실행한다.
-- 명령을 복사하기 전에 `Write-Output $ProjectRoot`로 현재 값이 맞는지 확인한다.
-
-### 2. 가능하면 ASCII이고 공백 없는 경로를 쓴다
-
-2026-05-20 Windows 세션에서는 한글 사용자명 경로에서 Node/npm native postinstall 문제가 발생했다.
-
-확인된 증상:
+2026-05-20 세션에서는 한글 사용자명 경로에서 다음 문제가 발생했다.
 
 - Git `.git/index.lock` permission 문제
 - npm native/postinstall 실패
-- `EPERM: operation not permitted, lstat 'C:\Users\<한글사용자명>'`
-- `0xC0000005 Access Violation`
+- `node .\node_modules\esbuild\install.js`가 상위 사용자 폴더 `lstat`에서 `EPERM`
+- Node/native executable `0xC0000005 Access Violation` 계열 crash
 
-`C:\Users\bb\Desktop\project\clipper2`처럼 사용자명과 경로가 ASCII이고 공백이 없다면 우선 진행해도 된다. 문제가 나면 `C:\project\clipper2` 같은 더 짧은 ASCII 경로로 옮긴다.
+따라서 다른 Windows PC에서도 `C:\project\adlight` 같은 ASCII 경로를 우선 사용한다.
 
-### 3. PowerShell에서는 `npm.cmd`를 사용한다
-
-PowerShell execution policy 때문에 `npm`이 막힐 수 있다. 이 문서는 전부 `npm.cmd`를 사용한다.
-
-### 4. clone 대상은 4개 repo뿐이다
+### 2. clone 대상은 4개 repo뿐이다
 
 clone할 repo:
 
@@ -71,13 +60,24 @@ adlight_python
 
 현재 Windows packaging flow는 `adlight_python`에 의존하지 않는다.
 
+### 3. PowerShell에서는 `npm.cmd`를 사용한다
+
+Windows PowerShell execution policy 때문에 `npm`이 `npm.ps1` 로딩 오류로 막힐 수 있다.
+
+따라서 이 가이드에서는 전부 `npm.cmd`를 사용한다.
+
 ## 0. PowerShell 열기
 
 일반 PowerShell을 연다.
 
-관리자 권한이 아닌 일반 사용자 권한으로 먼저 시도한다. 폴더 생성이나 설치 경로에서 권한 문제가 나면 그때 관리자 권한을 검토한다.
+가능하면 관리자 권한이 아닌 일반 사용자 권한으로 먼저 시도한다.  
+`C:\project` 생성이 권한 문제로 실패하면 그때 관리자 권한 PowerShell을 사용하거나, File Explorer에서 `C:\project` 폴더를 만든 뒤 현재 사용자에게 쓰기 권한을 준다.
+
+이후 모든 명령은 PowerShell 기준이다.
 
 ## 1. 필수 도구 확인
+
+다음 명령을 실행한다.
 
 ```powershell
 git --version
@@ -102,37 +102,100 @@ bsdtar 3.8.4
 - npm 사용 가능해야 함
 - `tar --version`이 동작해야 함
 
-Node.js가 없거나 22 미만이면 Node.js 22 x64를 설치한 뒤 PowerShell을 새로 열고 다시 확인한다.
+### 1.1 Node.js 22 설치가 필요한 경우
 
-## 2. 프로젝트 루트 생성 및 설정
+다음 중 하나면 Node.js 22 이상을 먼저 설치한다.
 
-본인 PC의 실제 프로젝트 루트 폴더로 이동한다.
+- `node -v`가 명령을 찾지 못함.
+- `node -v`가 `v18...`, `v20...`처럼 22 미만으로 나옴.
+- `npm.cmd -v`가 명령을 찾지 못함.
 
-```powershell
-Set-Location '<본인 프로젝트 루트 경로>'
+2026-05-20 검증에 사용한 버전은 다음이다.
+
+```text
+node v22.11.0
+npm 10.9.0
 ```
 
-예를 들어 이미 File Explorer나 터미널에서 프로젝트 루트로 이동해 있다면 `Set-Location`은 생략하고 아래부터 실행한다. 현재 위치를 프로젝트 루트로 지정한다.
+#### 설치 방법 A: 공식 MSI installer
+
+브라우저에서 Node.js v22.11.0 Windows x64 installer를 받는다.
+
+```text
+https://nodejs.org/dist/v22.11.0/node-v22.11.0-x64.msi
+```
+
+설치 시 기본 옵션을 사용해도 된다.  
+설치가 끝나면 기존 PowerShell을 닫고 새 PowerShell을 연다.
+
+새 PowerShell에서 다시 확인한다.
 
 ```powershell
-$ProjectRoot = (Get-Location).Path
+node -v
+npm.cmd -v
+where.exe node
+where.exe npm
+```
+
+기대값 예:
+
+```text
+v22.11.0
+10.9.0
+C:\Program Files\nodejs\node.exe
+C:\Program Files\nodejs\npm
+C:\Program Files\nodejs\npm.cmd
+```
+
+#### 설치 방법 B: winget 사용
+
+`winget`을 사용할 수 있으면 아래처럼 설치할 수도 있다.
+
+```powershell
+winget install --id OpenJS.NodeJS --version 22.11.0 --exact
+```
+
+설치 후 기존 PowerShell을 닫고 새 PowerShell을 열어 다시 확인한다.
+
+```powershell
+node -v
+npm.cmd -v
+where.exe node
+where.exe npm
+```
+
+`winget`이 해당 exact version을 찾지 못하면 설치 방법 A의 공식 MSI installer를 사용한다.
+
+주의:
+
+- PowerShell에서 `npm -v`가 execution policy 오류로 실패할 수 있다.
+- 이 경우 Node/npm 설치 실패가 아니라 `npm.ps1` 실행 정책 문제일 수 있다.
+- 이 가이드에서는 항상 `npm.cmd`를 사용한다.
+
+## 2. 프로젝트 루트 생성
+
+```powershell
+New-Item -ItemType Directory -Force C:\project\adlight
+Set-Location C:\project\adlight
 ```
 
 확인:
 
 ```powershell
-Write-Output $ProjectRoot
 Get-Location
 ```
 
-둘 다 같은 경로를 가리켜야 한다.
+기대값:
+
+```text
+Path
+----
+C:\project\adlight
+```
 
 ## 3. 4개 repo clone
 
-이미 clone했다면 이 단계는 건너뛰고 4번으로 간다.
-
 ```powershell
-Set-Location $ProjectRoot
 git clone https://github.com/OhMyMetabuzz/clipper_angular.git clipper_angular
 git clone https://github.com/OhMyMetabuzz/clipper_electron.git clipper_electron
 git clone https://github.com/OhMyMetabuzz/clipper_nestjs.git clipper_nestjs
@@ -142,7 +205,7 @@ git clone https://github.com/OhMyMetabuzz/clipper_python.git clipper_python
 확인:
 
 ```powershell
-Get-ChildItem $ProjectRoot
+Get-ChildItem C:\project\adlight
 ```
 
 기대되는 폴더:
@@ -154,95 +217,99 @@ clipper_nestjs
 clipper_python
 ```
 
-## 4. Branch checkout
+## 4. branch checkout
 
 ### Angular
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_angular')
+Set-Location C:\project\adlight\clipper_angular
 git fetch
 git checkout feature/initial-scaffold
 git status --short --branch
 git rev-parse --short HEAD
 ```
 
-2026-05-20 기준 기대 HEAD:
+2026-05-20 기준 기대값:
 
 ```text
+## feature/initial-scaffold...origin/feature/initial-scaffold
 4501146
 ```
 
 ### Electron
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 git fetch
 git checkout feature/windows-packaging
 git status --short --branch
 git rev-parse --short HEAD
 ```
 
-2026-05-20 기준 기대 HEAD:
+2026-05-20 기준 기대값:
 
 ```text
+## feature/windows-packaging...origin/feature/windows-packaging
 e264865
 ```
 
 ### NestJS
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_nestjs')
+Set-Location C:\project\adlight\clipper_nestjs
 git fetch
 git checkout feature/windows-packaging
 git status --short --branch
 git rev-parse --short HEAD
 ```
 
-2026-05-20 기준 기대 HEAD:
+2026-05-20 기준 기대값:
 
 ```text
+## feature/windows-packaging...origin/feature/windows-packaging
 c33fbd8
 ```
 
 ### Python
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_python')
+Set-Location C:\project\adlight\clipper_python
 git fetch
 git checkout feature/windows-packaging
 git status --short --branch
 git rev-parse --short HEAD
 ```
 
-2026-05-20 기준 기대 HEAD:
+2026-05-20 기준 기대값:
 
 ```text
+## feature/windows-packaging...origin/feature/windows-packaging
 5a61a62
 ```
 
-브랜치가 없거나 checkout이 실패하면 해당 branch/commit이 remote에 push되어 있는지 먼저 확인한다.
+브랜치가 없거나 checkout이 실패하면 Mac mini 쪽 commit/branch가 remote에 push되어 있는지 먼저 확인해야 한다.
 
 ## 5. NestJS env 파일 준비
 
 Windows packaged build에는 다음 파일이 필요하다.
 
-```powershell
-$NestEnv = Join-Path $ProjectRoot 'clipper_nestjs\.env.local'
-Write-Output $NestEnv
+```text
+C:\project\adlight\clipper_nestjs\.env.local
 ```
 
-파일을 편집한다.
+이 파일에는 DB/S3 등 Template Builder official data에 필요한 환경변수가 들어가야 한다.  
+비밀값은 문서, 채팅, git commit에 남기지 않는다.
+
+파일을 편집하려면:
 
 ```powershell
-notepad $NestEnv
+notepad C:\project\adlight\clipper_nestjs\.env.local
 ```
-
-이 파일에는 DB/S3 등 Template Builder official data에 필요한 환경변수가 들어가야 한다. 비밀값은 문서, 채팅, git commit에 남기지 않는다.
 
 저장 후 존재 여부만 확인한다. 내용을 출력하지 않는다.
 
 ```powershell
-Get-Item $NestEnv | Select-Object FullName,Length,LastWriteTime
+Get-Item C:\project\adlight\clipper_nestjs\.env.local | Select-Object FullName,Length,LastWriteTime
 ```
 
 중요:
@@ -253,33 +320,35 @@ Get-Item $NestEnv | Select-Object FullName,Length,LastWriteTime
 
 ## 6. Node dependencies 설치
 
-workspace 안의 npm cache를 사용한다.
-
-```powershell
-$NpmCache = Join-Path $ProjectRoot '.npm-cache'
-Write-Output $NpmCache
-```
+workspace 안의 npm cache를 사용한다.  
+이렇게 하면 한글 사용자명 아래 npm cache/log 경로 문제를 피할 수 있다.
 
 ### Angular
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_angular')
-npm.cmd install --cache $NpmCache
+Set-Location C:\project\adlight\clipper_angular
+npm.cmd install --cache C:\project\adlight\.npm-cache
 ```
+
+성공하면 `added ... packages`가 출력된다.
 
 ### NestJS
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_nestjs')
-npm.cmd install --cache $NpmCache
+Set-Location C:\project\adlight\clipper_nestjs
+npm.cmd install --cache C:\project\adlight\.npm-cache
 ```
+
+성공하면 `added ... packages`가 출력된다.
 
 ### Electron
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
-npm.cmd install --cache $NpmCache
+Set-Location C:\project\adlight\clipper_electron
+npm.cmd install --cache C:\project\adlight\.npm-cache
 ```
+
+성공하면 `added ... packages`가 출력된다.
 
 참고:
 
@@ -290,14 +359,25 @@ npm.cmd install --cache $NpmCache
 ## 7. uv binary 다운로드
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 npm.cmd run fetch-uv
+```
+
+기대 출력:
+
+```text
+Downloading uv-darwin-arm64...
+✓ uv-darwin-arm64
+Downloading uv-darwin-x64...
+✓ uv-darwin-x64
+Downloading uv-win32-x64.exe...
+✓ uv-win32-x64.exe
 ```
 
 확인:
 
 ```powershell
-Get-ChildItem (Join-Path $ProjectRoot 'clipper_electron\resources\bin')
+Get-ChildItem C:\project\adlight\clipper_electron\resources\bin
 ```
 
 중요 파일:
@@ -309,14 +389,14 @@ uv-win32-x64.exe
 Windows build용 `uv.exe` 준비 smoke:
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 node scripts\prepare-uv.mjs win32 x64
 ```
 
 기대 출력:
 
 ```text
-uv-win32-x64.exe -> uv.exe
+✓ uv-win32-x64.exe → uv.exe
 ```
 
 ## 8. Preflight build
@@ -326,7 +406,7 @@ uv-win32-x64.exe -> uv.exe
 ### 8.1 Angular electron build
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_angular')
+Set-Location C:\project\adlight\clipper_angular
 npm.cmd run build:electron -- --progress=false
 ```
 
@@ -334,12 +414,13 @@ npm.cmd run build:electron -- --progress=false
 
 ```text
 Application bundle generation complete.
+Output location: C:\project\adlight\clipper_angular\dist\clipper_angular
 ```
 
 ### 8.2 NestJS bundle
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_nestjs')
+Set-Location C:\project\adlight\clipper_nestjs
 npm.cmd run bundle
 ```
 
@@ -347,12 +428,14 @@ npm.cmd run bundle
 
 ```text
 ncc build src/main.ts -o dist/bundled
+copied C:\project\adlight\clipper_nestjs\src\dance\data -> ...
+copied C:\project\adlight\clipper_nestjs\src\projects\assets -> ...
 ```
 
 ### 8.3 Electron TypeScript build
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 npm.cmd run build
 ```
 
@@ -365,8 +448,14 @@ tsc -p tsconfig.json
 ### 8.4 uv prepare 재확인
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 node scripts\prepare-uv.mjs win32 x64
+```
+
+기대 출력:
+
+```text
+✓ uv-win32-x64.exe → uv.exe
 ```
 
 ## 9. Windows installer build
@@ -374,7 +463,7 @@ node scripts\prepare-uv.mjs win32 x64
 최종 build는 `clipper_electron`에서 실행한다.
 
 ```powershell
-Set-Location (Join-Path $ProjectRoot 'clipper_electron')
+Set-Location C:\project\adlight\clipper_electron
 npm.cmd run build:app:win:x64
 ```
 
@@ -390,14 +479,13 @@ npm.cmd run build:app:win:x64
 성공 시 마지막 출력:
 
 ```text
-Done. Artifacts in dist-app/
+✓ Done. Artifacts in dist-app/
 ```
 
 ## 10. 산출물 확인
 
 ```powershell
-$ElectronRoot = Join-Path $ProjectRoot 'clipper_electron'
-Set-Location $ElectronRoot
+Set-Location C:\project\adlight\clipper_electron
 Get-ChildItem .\dist-app
 ```
 
@@ -440,24 +528,22 @@ True
 
 ### 옵션 A. GUI로 설치
 
-File Explorer에서 installer를 실행한다.
+File Explorer에서 다음 파일을 실행한다.
 
-```powershell
-$Installer = Join-Path $ProjectRoot 'clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe'
-Write-Output $Installer
+```text
+C:\project\adlight\clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe
 ```
 
-가능하면 설치 경로를 프로젝트 루트 아래 smoke 폴더로 지정한다.
+가능하면 설치 경로를 다음처럼 지정한다.
 
-```powershell
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-Write-Output $InstallDir
+```text
+C:\project\adlight\clipper2-smoke-install
 ```
 
 설치 후 확인:
 
 ```powershell
-Test-Path (Join-Path $InstallDir 'Clipper2.exe')
+Test-Path 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
 ```
 
 기대값:
@@ -468,19 +554,20 @@ True
 
 ### 옵션 B. silent install
 
-2026-05-20 세션에서는 silent install command가 timeout에 걸렸지만 설치 결과물은 정상 생성됐다. 오래 걸리면 중단 후 설치 폴더 존재 여부를 확인한다.
+2026-05-20 세션에서는 silent install command가 timeout에 걸렸지만 설치 결과물은 정상 생성됐다.  
+다른 PC에서도 command가 오래 걸리면 중단 후 설치 폴더 존재 여부를 확인한다.
 
 ```powershell
-$Installer = Join-Path $ProjectRoot 'clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe'
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-Start-Process -FilePath $Installer -ArgumentList "/S /D=$InstallDir" -Wait
+$installer = 'C:\project\adlight\clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe'
+$installDir = 'C:\project\adlight\clipper2-smoke-install'
+Start-Process -FilePath $installer -ArgumentList "/S /D=$installDir" -Wait
 ```
 
 확인:
 
 ```powershell
-Test-Path (Join-Path $InstallDir 'Clipper2.exe')
-Get-ChildItem $InstallDir
+Test-Path 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
+Get-ChildItem 'C:\project\adlight\clipper2-smoke-install'
 ```
 
 ## 12. 앱 첫 실행 smoke
@@ -488,12 +575,11 @@ Get-ChildItem $InstallDir
 설치된 앱 실행:
 
 ```powershell
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-$ClipperExe = Join-Path $InstallDir 'Clipper2.exe'
-Start-Process $ClipperExe
+Start-Process 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
 ```
 
-첫 실행은 Python venv 생성 때문에 시간이 걸릴 수 있다. 2분 정도 기다린 뒤 확인한다.
+첫 실행은 Python venv 생성 때문에 시간이 걸릴 수 있다.  
+2분 정도 기다린 뒤 확인한다.
 
 ```powershell
 Test-Path "$env:APPDATA\Clipper2\clipper_venv\Scripts\python.exe"
@@ -524,17 +610,18 @@ Get-Content "$env:APPDATA\Clipper2\logs\main.log" -Tail 120
 
 ## 13. API smoke
 
+이 단계는 app을 자동으로 실행하고, 새로 찍힌 log에서 backend base URL을 찾아 `/v1/health`와 Template Builder family list를 확인한다.
+
 먼저 기존 Clipper2 process가 있으면 종료한다.
 
 ```powershell
 Get-Process Clipper2 -ErrorAction SilentlyContinue | Stop-Process -Force
 ```
 
-그 다음 아래 script를 PowerShell에 붙여넣어 실행한다. `$ProjectRoot`가 현재 PowerShell에 설정되어 있어야 한다.
+그 다음 아래 script를 PowerShell에 붙여넣어 실행한다.
 
 ```powershell
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-$exe = Join-Path $InstallDir 'Clipper2.exe'
+$exe = 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
 $log = Join-Path $env:APPDATA 'Clipper2\logs\main.log'
 
 if (-not (Test-Path -LiteralPath $exe)) {
@@ -594,7 +681,7 @@ finally {
 }
 ```
 
-성공 예:
+2026-05-20 세션의 성공 예:
 
 ```text
 BASE_URL=http://127.0.0.1:64441/v1
@@ -610,8 +697,7 @@ port는 실행마다 달라질 수 있다.
 API smoke 후 사람이 직접 확인한다.
 
 ```powershell
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-Start-Process (Join-Path $InstallDir 'Clipper2.exe')
+Start-Process 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
 ```
 
 확인할 것:
@@ -628,43 +714,35 @@ Start-Process (Join-Path $InstallDir 'Clipper2.exe')
 ## 15. 최종 repo 상태 확인
 
 ```powershell
-$AngularRoot = Join-Path $ProjectRoot 'clipper_angular'
-$ElectronRoot = Join-Path $ProjectRoot 'clipper_electron'
-$NestRoot = Join-Path $ProjectRoot 'clipper_nestjs'
-$PythonRoot = Join-Path $ProjectRoot 'clipper_python'
-
-git -C $AngularRoot status --short --branch
-git -C $ElectronRoot status --short --branch
-git -C $NestRoot status --short --branch
-git -C $PythonRoot status --short --branch
+git -C C:\project\adlight\clipper_angular status --short --branch
+git -C C:\project\adlight\clipper_electron status --short --branch
+git -C C:\project\adlight\clipper_nestjs status --short --branch
+git -C C:\project\adlight\clipper_python status --short --branch
 ```
 
 `npm install` 후 다음 파일이 modified로 표시될 수 있다.
 
 ```text
-clipper_angular\package-lock.json
-clipper_electron\package-lock.json
+C:\project\adlight\clipper_angular\package-lock.json
+C:\project\adlight\clipper_electron\package-lock.json
 ```
 
-2026-05-20 세션에서도 이 두 lockfile이 modified 상태였다. 이 변경은 바로 커밋하지 말고 별도 검토 후 유지/되돌림을 결정한다.
+2026-05-20 세션에서도 이 두 lockfile이 modified 상태였다.  
+이 변경은 바로 커밋하지 말고 별도 검토 후 유지/되돌림을 결정한다.
 
 ## 16. 결과 보고 시 포함할 내용
 
-```powershell
-$AngularRoot = Join-Path $ProjectRoot 'clipper_angular'
-$ElectronRoot = Join-Path $ProjectRoot 'clipper_electron'
-$NestRoot = Join-Path $ProjectRoot 'clipper_nestjs'
-$PythonRoot = Join-Path $ProjectRoot 'clipper_python'
+다른 PC에서 직접 실행한 뒤 결과를 공유할 때는 아래를 적는다.
 
-git -C $AngularRoot rev-parse --short HEAD
-git -C $ElectronRoot rev-parse --short HEAD
-git -C $NestRoot rev-parse --short HEAD
-git -C $PythonRoot rev-parse --short HEAD
+```powershell
+git -C C:\project\adlight\clipper_angular rev-parse --short HEAD
+git -C C:\project\adlight\clipper_electron rev-parse --short HEAD
+git -C C:\project\adlight\clipper_nestjs rev-parse --short HEAD
+git -C C:\project\adlight\clipper_python rev-parse --short HEAD
 ```
 
 보고 항목:
 
-- `$ProjectRoot` 값
 - Node/npm/tar version
 - 각 repo branch/HEAD
 - `npm install` 성공 여부
@@ -681,23 +759,6 @@ git -C $PythonRoot rev-parse --short HEAD
 
 ## Troubleshooting
 
-### `$ProjectRoot`가 비어 있거나 명령이 이상한 경로로 감
-
-확인:
-
-```powershell
-Write-Output $ProjectRoot
-Get-Location
-```
-
-해결:
-
-```powershell
-$ProjectRoot = (Get-Location).Path
-```
-
-PowerShell을 새로 열었다면 `$ProjectRoot`를 다시 설정해야 한다.
-
 ### `npm` 실행이 PowerShell policy로 막힘
 
 증상:
@@ -710,10 +771,10 @@ npm : 이 시스템에서 스크립트를 실행할 수 없으므로 npm.ps1 파
 
 ```powershell
 npm.cmd -v
-npm.cmd install --cache $NpmCache
+npm.cmd install --cache C:\project\adlight\.npm-cache
 ```
 
-이 문서의 모든 npm command는 `npm.cmd`를 사용한다.
+이 가이드의 모든 npm command는 `npm.cmd`를 사용한다.
 
 ### 한글 사용자명 경로에서 Node/npm이 crash
 
@@ -726,8 +787,17 @@ npm.cmd install --cache $NpmCache
 
 해결:
 
-- `$ProjectRoot`를 `C:\project\clipper2` 같은 짧은 ASCII 경로로 바꾼다.
-- npm cache도 `$NpmCache = Join-Path $ProjectRoot '.npm-cache'`를 사용한다.
+- repo workspace를 `C:\project\adlight` 같은 ASCII 경로로 만든다.
+- npm cache도 `--cache C:\project\adlight\.npm-cache`처럼 ASCII 경로를 사용한다.
+
+### `tar --version`이 실패
+
+`fetch-uv`나 Windows runtime download path에서 archive extraction이 실패할 수 있다.
+
+해결:
+
+- Windows 10/11 기본 `tar.exe`가 PATH에 있는지 확인한다.
+- Git Bash나 다른 tar가 PATH를 이상하게 가로채면 PowerShell에서 `where.exe tar`로 확인한다.
 
 ### `.env.local` 없음
 
@@ -739,9 +809,8 @@ npm.cmd install --cache $NpmCache
 해결:
 
 ```powershell
-$NestEnv = Join-Path $ProjectRoot 'clipper_nestjs\.env.local'
-notepad $NestEnv
-Get-Item $NestEnv | Select-Object FullName,Length,LastWriteTime
+notepad C:\project\adlight\clipper_nestjs\.env.local
+Get-Item C:\project\adlight\clipper_nestjs\.env.local | Select-Object FullName,Length,LastWriteTime
 ```
 
 비밀값은 출력하지 않는다.
@@ -757,17 +826,18 @@ Get-Item $NestEnv | Select-Object FullName,Length,LastWriteTime
 
 ### installer silent install이 오래 걸림
 
-확인:
+2026-05-20 세션에서는 silent install command가 timeout에 걸렸지만, 설치 디렉터리와 `Clipper2.exe`는 생성되어 있었다.
+
+해결:
 
 ```powershell
-$InstallDir = Join-Path $ProjectRoot 'clipper2-smoke-install'
-Test-Path (Join-Path $InstallDir 'Clipper2.exe')
+Test-Path 'C:\project\adlight\clipper2-smoke-install\Clipper2.exe'
 Get-Process | Where-Object { $_.ProcessName -like '*Clipper*' -or $_.ProcessName -like '*Setup*' }
 ```
 
 GUI 설치로 다시 확인해도 된다.
 
-## 이 문서에서 아직 보장하지 않는 것
+## 이 가이드에서 아직 보장하지 않는 것
 
 다음은 Windows installer build 이후 별도 QA가 필요하다.
 

@@ -6,7 +6,7 @@
 
 `local`, `devapp`, `packaged` 실행 모드별로 어떤 프로세스를 어떤 명령으로 실행하는지 정리한다.
 
-이 문서는 실행 절차용이다. 실행 모드/env 설계 기준은 `../design/2026-05-21-execution-env-mode-design.md`를 우선한다.
+이 문서는 실행 절차용이다. 실행 모드/env 설계 기준은 `../records/2026/05/21-execution-env-mode-design.md`를 우선한다.
 
 ## 모드 요약
 

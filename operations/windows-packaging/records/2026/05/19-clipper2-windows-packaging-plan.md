@@ -746,7 +746,7 @@ npm run build:app:win:x64
 
 Windows 빌드가 처음 성공하면 다음 문서를 추가하는 것이 좋다.
 
-- `.codex/implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-XX.md`
+- `.codex/operations/windows-packaging/runbooks/windows-build-guide.md`
   - Windows PC setup
   - commands
   - expected output

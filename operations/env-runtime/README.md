@@ -12,6 +12,6 @@ Execution mode, env file ownership, and runtime process boundaries are tracked h
 
 ## Active References
 
-- [../../design/2026-05-21-execution-env-mode-design.md](../../design/2026-05-21-execution-env-mode-design.md)
-- [../../implementation/2026-05-21-execution-mode-runbook.md](../../implementation/2026-05-21-execution-mode-runbook.md)
-- [../../implementation/2026-05-21-windows-dance-image-env-management-context.md](../../implementation/2026-05-21-windows-dance-image-env-management-context.md)
+- [records/2026/05/21-execution-env-mode-design.md](records/2026/05/21-execution-env-mode-design.md)
+- [runbooks/execution-mode-runbook.md](runbooks/execution-mode-runbook.md)
+- [records/2026/05/21-windows-dance-image-env-management-context.md](records/2026/05/21-windows-dance-image-env-management-context.md)

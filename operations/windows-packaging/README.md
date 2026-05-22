@@ -11,6 +11,6 @@ Windows installer build, packaged smoke, and OS-specific build hazards are track
 
 ## Active References
 
-- [../../implementation/2026-05-21-windows-electron-builder-powertoys-ebusy-diagnosis.md](../../implementation/2026-05-21-windows-electron-builder-powertoys-ebusy-diagnosis.md)
-- [../../implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-20.md](../../implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_2026-05-20.md)
-- [../../implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_CONFIGURABLE_ROOT_2026-05-20.md](../../implementation/CLIPPER2_WINDOWS_BUILD_GUIDE_CONFIGURABLE_ROOT_2026-05-20.md)
+- [records/2026/05/21-powertoys-ebusy-diagnosis.md](records/2026/05/21-powertoys-ebusy-diagnosis.md)
+- [runbooks/windows-build-guide.md](runbooks/windows-build-guide.md)
+- [runbooks/windows-build-guide-configurable-root.md](runbooks/windows-build-guide-configurable-root.md)
