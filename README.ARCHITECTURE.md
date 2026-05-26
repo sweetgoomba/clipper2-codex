@@ -1,6 +1,6 @@
 # Architecture Notes
 
-이 문서는 Clipper2의 현재 구조를 빠르게 파악하기 위한 입구다. 자세한 과거 설계는 `design/`과 feature별 `records/`에 남긴다.
+이 문서는 Clipper2의 현재 구조를 빠르게 파악하기 위한 입구다. 팀원에게 설명할 긴 버전은 [design/TEAM_ARCHITECTURE_OVERVIEW.md](design/TEAM_ARCHITECTURE_OVERVIEW.md)를 보고, plugin system의 기술 분석은 [design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)를 본다. 자세한 과거 설계는 `design/`과 feature별 `records/`에 남긴다.
 
 ## Repo Roles
 
@@ -27,6 +27,8 @@
 ## Primary References
 
 - [context/PROJECT_HISTORY_AND_STATUS.md](context/PROJECT_HISTORY_AND_STATUS.md)
+- [design/TEAM_ARCHITECTURE_OVERVIEW.md](design/TEAM_ARCHITECTURE_OVERVIEW.md)
+- [design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
 - [design/BACKEND_ROLE_SPLIT_CURRENT.md](design/BACKEND_ROLE_SPLIT_CURRENT.md)
 - [design/NESTJS_CONTROL_PLANE_REDESIGN.md](design/NESTJS_CONTROL_PLANE_REDESIGN.md)
 - [design/WORKFLOW_CAPABILITY_RESOURCE_ARCHITECTURE.md](design/WORKFLOW_CAPABILITY_RESOURCE_ARCHITECTURE.md)
