@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-05-26
+최신 갱신: 2026-05-27
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -16,23 +16,21 @@
 8. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
 9. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
 10. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
-11. [../records/sessions/2026/05/26.md](../records/sessions/2026/05/26.md)
+11. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Current Repo Heads
 
-2026-05-26 세션 시작 시 직접 확인한 기준:
+2026-05-27 세션 종료 시 직접 확인하고 커밋한 기준:
 
 ```text
-clipper_nestjs:   feature/windows-packaging @ 9cd43f1 Trim optional env placeholders
+clipper_angular:  feature/initial-scaffold  @ 70d6e58 Improve template sample render flow
+clipper_nestjs:   feature/windows-packaging @ 73c2519 Stage template sample media
+clipper_python:   feature/windows-packaging @ 535131c Render sample images as cover
 clipper_electron: feature/windows-packaging @ f701677 Revert "Update electron builder"
-clipper_angular:  feature/initial-scaffold  @ cad4b6c Gate template builder startup on ffmpeg readiness
-clipper_python:   feature/windows-packaging @ 88d22c6 Trim optional env placeholders
-clipper2-codex:   main @ 5aa515c Add technical analysis and architecture overview documents for Clipper2
+clipper2-codex:   main @ this handoff/session documentation commit; check `git log -1 --oneline`
 ```
 
-세션 시작 시 반드시 각 repo에서 `git status -sb`와 `git log -1 --oneline`을 다시 확인한다.
-
-2026-05-26 세션 종료 시 앱 코드 repo는 수정하지 않았다. `.codex` repo에는 handoff/session/worklog 문서 변경이 미커밋 상태로 남아 있다.
+세션 시작 시 반드시 각 repo에서 `git status -sb`와 `git log -1 --oneline`을 다시 확인한다. `.codex`는 별도 git repo다.
 
 ## Active Decisions
 
@@ -44,52 +42,54 @@ clipper2-codex:   main @ 5aa515c Add technical analysis and architecture overvie
 - Windows packaged build 중 PowerToys `Command Palette`를 끈다.
 - `win.asar: false`, electron-builder retry, build script lock handling을 EBUSY 우회로 다시 넣지 않는다.
 - Template Builder는 ffmpeg/ffprobe ready 이후에 본 UI를 시작한다.
+- Template Builder sample render는 Angular 버튼/UI, NestJS recipe/assets, Python ffmpeg renderer가 함께 동작한다.
+- 샘플 렌더의 콘텐츠 이미지는 콘텐츠 영역을 `cover` 방식으로 꽉 채운다. 빈 여백을 만들지 않고 넘친 부분을 중앙 crop한다.
 - root `README.*.md`는 정해진 top-level guide만 둔다.
   - 현재 root README guide: `README.ARCHITECTURE.md`, `README.RUNTIME.md`, `README.FRONTEND.md`, `README.OPERATIONS.md`, `README.DOCS.md`.
   - 팀 설명용/심화 분석 문서는 `design/` 또는 domain folder 아래에 둔다.
 
 ## Last Completed Work
 
-- `.codex`를 독립 git repo로 초기화하고 `sweetgoomba/clipper2-codex`에 연결했다.
-- `.codex/imports/`는 legacy asset / DB backup 성격이라 git ignore 상태로 둔다.
-- `.codex` 문서 구조 리팩토링을 완료했다.
-  - root `README.*.md`를 architecture/runtime/frontend/operations/docs로 분리.
-  - 활성 인계문을 `handoff/NEXT.md`로 축소.
-  - 기존 긴 인계문은 `handoff/archive/2026/05/next-session-prompt-legacy.md`에 보관.
-  - session logs는 `records/sessions/2026/05/`로 이동.
-  - worklog는 `records/worklog/2026/05.md`로 이동.
-  - Windows/env-runtime 문서는 `operations/` 하위로 이동.
-  - Template Builder 문서는 `features/template-builder/` 하위로 이동.
-- `clipper_angular`에서 다음 작업을 완료하고 push했다.
-  - Dance setup vertical scroll.
-  - Dance member image selector centering.
-  - Template Builder thumbnail skeleton component extraction.
-  - Template Builder ffmpeg/ffprobe readiness gate.
-- 2026-05-26 문서화:
-  - [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)를 추가했다.
-    - Clipper2 전체 구조, repo별 책임, 실행 모드, feature 예시, 팀 설명 스크립트.
-  - [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)를 추가했다.
-    - PluginHost, Electron bridge, Python PluginRuntime, job protocol, model install, resource assessment, port/concurrency, extension checklist.
-  - 처음에는 root `README.*.md`로 만들었다가 규칙 위반이라 `design/` 아래로 이동했다.
-  - [../README.ARCHITECTURE.md](../README.ARCHITECTURE.md)에 두 design 문서를 primary reference로 연결했다.
-  - [../records/sessions/2026/05/26.md](../records/sessions/2026/05/26.md)와 [../records/worklog/2026/05.md](../records/worklog/2026/05.md)를 갱신했다.
+- Template Builder sample render UX와 렌더 동작을 수정했다.
+  - `clipper_angular` `70d6e58 Improve template sample render flow`
+    - 상단 `샘플 렌더` 버튼은 결과 화면을 여는 역할만 한다.
+    - 실제 최초 렌더/재렌더는 화면 안의 `렌더 시작` 버튼이 담당한다.
+    - 샘플 렌더 화면에는 "이 화면을 닫아도 진행 중인 샘플 렌더는 계속 진행됩니다." 안내를 둔다.
+    - 샘플 렌더는 가능한 네 비율을 모두 순차 렌더한다.
+    - 플레이어는 shorts 비율로 표시한다.
+    - 샘플 렌더 UI를 inspector에서 page header/overlay로 이동했다.
+    - 편집 저장 시 사용자 템플릿 카드 썸네일은 저장 당시 선택 ratio를 사용한다.
+    - 공식 템플릿 등록 직전에는 4:3 기준 카드 썸네일을 다시 생성한다.
+  - `clipper_nestjs` `73c2519 Stage template sample media`
+    - 샘플 렌더용 기본 콘텐츠 이미지를 `src/projects/assets/template-builder/sample-media.jpg`로 stage한다.
+    - 해당 파일이 없으면 기존 generated PNG fallback을 쓴다.
+    - 단색 `layoutImage`도 render layout layer로 전달해 content 영역 밖 흰 배경 문제를 보정했다.
+  - `clipper_python` `535131c Render sample images as cover`
+    - `effects: [{ type: "none" }]`을 실제로 존중해 자동 팬/줌을 끈다.
+    - 샘플/정지 이미지 기본 렌더를 `contain + pad`가 아니라 `cover + crop`으로 변경했다.
+    - 콘텐츠 영역을 꽉 채우고 넘친 부분은 중앙 crop한다.
+- 검증:
+  - `clipper_angular`: targeted tests `220 SUCCESS`, page-only `60 SUCCESS`, `npm run build` passed, `git diff --check` passed.
+  - `clipper_nestjs`: `npm run build` passed, render payload targeted tests passed, sample render targeted tests passed, `git diff --check` passed.
+  - `clipper_python`: `uv run pytest tests/test_clipper1_video_render_media_looping.py -q` passed (`27 passed`), `git diff --check` passed.
+- 세션 종료 시 앱 코드 repo는 위 커밋들까지 clean 상태다.
 
 ## Next Work
 
-1. 세션 시작 시 `.codex`와 네 앱 repo의 `git status -sb`, `git log -1 --oneline`을 확인한다.
-2. `.codex` 문서 변경 diff를 확인한다.
-   - root `README.*.md` 목록이 정해진 guide만 유지되는지 확인.
-   - 새 문서가 `design/TEAM_ARCHITECTURE_OVERVIEW.md`, `design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md`에 있는지 확인.
-   - 필요하면 `.codex` 문서 변경을 commit/push한다.
-3. Windows packaged smoke에서 아래를 확인한다.
-   - PowerToys `Command Palette` off 상태의 Windows build.
-   - app boot, NestJS health, Template Builder families.
-   - Dance member image candidates가 0개가 아닌지.
-   - Template Builder ffmpeg/ffprobe consent/gate.
-   - ffmpeg/ffprobe 설치 후 text preview artifact와 sample render.
-   - Dance member image selection scroll/centering.
-   - Template Builder thumbnail skeleton UX.
-4. smoke 결과를 `operations/windows-packaging/records/2026/05/` 또는 새 월 폴더에 기록한다.
+1. 세션 시작 시 `.codex`, `clipper_nestjs`, `clipper_electron`, `clipper_angular`, `clipper_python`의 `git status -sb`, `git log -1 --oneline`을 확인한다.
+2. 이번 세션의 앱 커밋들이 remote에 push되어야 하는지 사용자에게 확인하거나, 사용자가 요청하면 repo별로 push한다.
+3. Template Builder sample render smoke를 다시 할 경우 아래를 확인한다.
+   - 새 템플릿 생성 후 단색/이미지 layout 변경 저장.
+   - 샘플 렌더 화면 열기와 `렌더 시작`.
+   - 네 비율 모두 생성.
+   - 콘텐츠 이미지가 각 ratio의 content area를 빈 여백 없이 꽉 채우는지.
+   - content area 밖 layout image 또는 단색 background가 흰색으로 빠지지 않는지.
+   - 화면을 닫아도 렌더 진행이 계속되는지.
+   - 공식 템플릿 등록 후 카드 썸네일이 4:3 기준인지.
+4. Windows packaged smoke가 필요하면 기존 운영 문서 기준을 따른다.
+   - PowerToys `Command Palette` off.
+   - `.env.local` packaged read/copy 금지.
+   - plugin별 env port 나열 금지.
 
 ## Next Session Prompt
 
@@ -109,42 +109,32 @@ Using Superpowers.
 9. `.codex/features/dance-highlight/README.md`
 10. `.codex/design/TEAM_ARCHITECTURE_OVERVIEW.md`
 11. `.codex/design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md`
-12. `.codex/records/sessions/2026/05/26.md`
-
-현재 목표:
-- 2026-05-21에 정리한 `local` / `devapp` / `packaged` env/runtime 구조를 기준으로 이어서 작업한다.
-- Windows packaged build는 PowerToys `Command Palette` 때문에 `EBUSY`가 났던 것이며, Clipper2 코드 문제로 보지 않는다.
-- `win.asar: false`, electron-builder retry, build script lock handling 같은 우회는 다시 넣지 않는다.
-- Windows build 중에는 PowerToys `Command Palette`를 끈다. `Keyboard Manager`는 사용해도 된다.
-- Template Builder는 ffmpeg/ffprobe ready 이후에 본 UI를 시작한다.
-- root `README.*.md`에는 정해진 top-level guide만 둔다. 팀 설명용/심화 분석 문서는 `design/` 또는 domain folder 아래에 둔다.
+12. `.codex/records/sessions/2026/05/27.md`
 
 현재 repo HEAD는 세션 시작 시 직접 `git status -sb`와 `git log -1 --oneline`으로 재확인한다.
 
+현재 기준:
+- `clipper_angular`: `70d6e58 Improve template sample render flow`
+- `clipper_nestjs`: `73c2519 Stage template sample media`
+- `clipper_python`: `535131c Render sample images as cover`
+- `clipper_electron`: `f701677 Revert "Update electron builder"`
+
 다음에 할 일:
 1. `.codex`, `clipper_nestjs`, `clipper_electron`, `clipper_angular`, `clipper_python` 상태를 확인한다.
-2. `.codex` 문서 변경 diff를 확인한다.
-   - 새 문서는 `.codex/design/TEAM_ARCHITECTURE_OVERVIEW.md`, `.codex/design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md`에 있어야 한다.
-   - root `README.*.md`에는 `README.ARCHITECTURE.md`, `README.RUNTIME.md`, `README.FRONTEND.md`, `README.OPERATIONS.md`, `README.DOCS.md`만 있어야 한다.
-   - 필요하면 `.codex` 문서 변경을 commit/push한다.
-3. Windows PC에서 최신 commit pull, secret `.env.*` 파일 존재 확인, PowerToys `Command Palette` off 상태로 Windows packaged build를 실행한다.
-4. installer 생성 후 packaged app smoke를 진행한다.
-5. 특히 아래를 확인한다.
-   - app boot / NestJS health / Template Builder families load
-   - Dance member image 후보가 0개가 아니라 실제로 반환되는지
-   - Template Builder ffmpeg/ffprobe consent/gate가 먼저 동작하는지
-   - ffmpeg/ffprobe 설치 완료 후 text preview artifact와 sample render가 정상 동작하는지
-   - Dance member image selection 스크롤/중앙 정렬
-   - Template Builder thumbnail skeleton UX
-6. smoke 결과를 `.codex/operations/windows-packaging/records/`에 문서화하고 `.codex` repo에 commit/push한다.
+2. 사용자가 요청하면 이번 세션 커밋들을 repo별로 push한다.
+3. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
+   - 샘플 렌더 UI는 Angular, recipe/assets는 NestJS, 실제 MP4 합성은 Python renderer가 담당한다.
+   - 샘플 이미지는 콘텐츠 영역을 `cover + center crop`으로 꽉 채워야 한다.
+   - layout image/단색 background는 content area 밖에서 흰색으로 빠지면 안 된다.
+   - 공식 등록 전 카드 썸네일은 4:3 기준이어야 한다.
+4. 새 분석 문서는 `.codex/design/` 아래에 둔다.
 
 주의:
-- `.codex`는 별도 git repo이므로 문서 변경은 `.codex`에서 따로 commit/push한다.
-- `.codex/imports/`는 ignored 상태로 유지한다.
+- `.codex`는 별도 git repo다.
 - 앱 코드 repo 변경과 `.codex` 문서 변경을 같은 커밋에 섞지 않는다.
 - `.env.local`을 packaged에서 읽거나 복사하는 방향은 금지다.
 - plugin별 env 포트 나열 방식은 금지다.
-- 실제 `.env.<mode>` 파일에 optional blank placeholder를 다시 넣지 않는다.
+- Windows build 중 PowerToys `Command Palette`를 끈다.
 ```
 
 ## Notes
