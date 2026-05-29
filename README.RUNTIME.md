@@ -7,12 +7,15 @@
 - `local`
   - browser 개발 실행.
   - 각 repo의 `.env.local` 사용.
+  - NestJS `WorkflowExecutor`가 Python plugin을 `LocalPluginHost`로 실행하거나 NestJS-native executor를 직접 실행한다.
 - `devapp`
   - unpackaged Electron 개발 앱.
   - 각 repo의 `.env.devapp` 사용.
+  - Electron 창은 띄우지만 Python plugin process는 기본적으로 NestJS `LocalPluginHost` 경로를 따른다.
 - `packaged`
   - 설치형 앱.
   - packaged resource의 `.env.packaged`만 사용.
+  - Python plugin process는 Electron bridge가 host하고, NestJS-native executor는 packaged NestJS process 안에서 실행된다.
 
 ## Hard Rules
 
@@ -22,6 +25,7 @@
 - OS별 env 파일을 만들지 않는다.
 - plugin별 고정 포트는 사용하지 않는다. mode별 port range에서 runtime이 동적으로 할당한다.
 - Python env에는 Naver/Kakao key를 두지 않는다. Dance member image search owner는 NestJS다.
+- `.env.local`을 packaged에서 읽게 만들거나 복사하는 방식으로 WorkflowExecutor/PluginHost 문제를 해결하지 않는다.
 
 ## Current References
 
@@ -29,3 +33,4 @@
 - [operations/env-runtime/runbooks/execution-mode-runbook.md](operations/env-runtime/runbooks/execution-mode-runbook.md)
 - [operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md](operations/env-runtime/records/2026/05/21-windows-dance-image-env-management-context.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)
+- [design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)

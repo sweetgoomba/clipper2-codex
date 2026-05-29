@@ -2,6 +2,8 @@
 
 작성일: 2026-04-29
 
+2026-05-29 현재 상태: 이 문서의 방향은 `WorkflowExecutorRegistry` 도입으로 일부 구현됐다. Angular는 NestJS API만 호출하고, NestJS `JobsService`가 `WorkflowExecutor`를 통해 Python plugin, NestJS-native executor, virtual workflow를 dispatch하는 구조로 이동 중이다. Python process lifecycle은 여전히 `PluginHost`/Electron bridge가 담당한다.
+
 이 문서는 Clipper2에서 NestJS의 역할이 지나치게 축소되는 문제를 바로잡기 위한 설계 초안이다. 기존 `.codex/CLIPPER2_NEXT_ARCHITECTURE_PLAN.md`는 Electron main process에 `PipelineQueueManager`를 두는 방향으로 작성되었지만, 팀의 장기 아키텍처 기준을 고려하면 그 방향은 보완이 필요하다.
 
 핵심 결론:

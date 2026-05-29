@@ -4,6 +4,8 @@
 
 상태: 현재 기준 설계안
 
+2026-05-29 갱신: 이 계획의 runtime 실행 boundary는 `WorkflowExecutorRegistry`로 구체화되기 시작했다. Python runtime plugin은 `PythonPluginWorkflowExecutor`로 감싸고, NestJS-native executor는 Python HTTP/WS server 없이 같은 Plugin Store/job history/start-stop 모델에 들어온다. `PluginHost`는 Python process lifecycle control 계층으로 남긴다.
+
 관련 문서:
 
 - `WORKFLOW_CAPABILITY_RESOURCE_ARCHITECTURE.md`
@@ -89,6 +91,7 @@ Clipper2의 장기 구조는 다음 원칙을 따른다.
 - `Provider`는 capability의 실제 구현체다.
 - `Runtime Process`는 리소스 모니터링과 lifecycle 제어의 대상이다.
 - NestJS는 workflow, job, project, source, capability, provider routing의 control plane이다.
+- NestJS `WorkflowExecutor`는 workflow job 실행 단위이며 Python plugin, NestJS-native executor, virtual workflow를 구분한다.
 - Electron은 OS/native/process/telemetry host adapter다.
 - Python/FastAPI는 model-heavy 또는 video-heavy compute worker다.
 - Angular는 화면과 사용자 interaction만 담당하고 orchestration을 소유하지 않는다.

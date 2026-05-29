@@ -2,7 +2,7 @@
 
 작성일: 2026-04-29
 
-> 개정 필요: 이 문서는 Electron main process에 `PipelineQueueManager`를 두는 방향으로 작성된 초안이다. 이후 NestJS를 팀의 메인 백엔드/control plane으로 유지해야 한다는 기준을 반영해 `.codex/NESTJS_CONTROL_PLANE_REDESIGN.md`를 추가했다. 앞으로의 기준 문서는 NestJS control plane 설계를 우선한다.
+> 개정 필요: 이 문서는 Electron main process에 `PipelineQueueManager`를 두는 방향으로 작성된 초안이다. 이후 NestJS를 팀의 메인 백엔드/control plane으로 유지해야 한다는 기준을 반영해 `.codex/NESTJS_CONTROL_PLANE_REDESIGN.md`를 추가했다. 2026-05-29 기준으로는 NestJS `WorkflowExecutorRegistry`가 `/jobs` 실행 dispatch의 현재 기준이다. 앞으로의 기준 문서는 NestJS control plane 설계와 `WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md`를 우선한다.
 
 이 문서는 현재 Clipper2 구조를 쉽게 다시 설명하고, 다음 큰 리팩터링 축을 어디에 둬야 하는지 정리한다. 핵심 결론은 다음이다.
 

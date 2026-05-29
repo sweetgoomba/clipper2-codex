@@ -2,6 +2,8 @@
 
 작성일: 2026-05-06
 
+2026-05-29 갱신: `/jobs` 실행 단위는 `PluginHost` 직접 호출에서 `WorkflowExecutorRegistry` 기준으로 확장됐다. 이 문서의 역할 분리는 유지하되, Python/FastAPI worker만이 유일한 실행 형태는 아니다. NestJS-native executor도 control plane 내부 실행 단위로 허용한다.
+
 ## 기준 결론
 
 Clipper2의 backend 역할은 다음처럼 나눈다.
@@ -10,8 +12,10 @@ Clipper2의 backend 역할은 다음처럼 나눈다.
 Angular
   -> NestJS App API
       -> workflow / source / job / queue / project / capability / provider routing
+      -> WorkflowExecutor dispatch
       -> Electron Host Bridge when native/process control is needed
       -> Python/FastAPI Compute Workers when Python-heavy execution is needed
+      -> NestJS-native executors when direct service/child_process execution is enough
 
 Electron
   -> packaged desktop host and native/process adapter
@@ -33,7 +37,9 @@ NestJS는 local app API와 control plane이다.
 - project/workspace/project history 저장.
 - ProjectManifest, TemplatePreset, RenderRecipe, VideoRenderJob contract.
 - capability/provider registry와 provider 선택 정책.
+- WorkflowExecutor registry와 `/jobs` executor dispatch.
 - Python/FastAPI worker 호출과 progress/result 수신.
+- NestJS-native executor의 progress/result 기록.
 - packaged mode에서 Electron host bridge를 통한 plugin process/resource 제어 요청.
 
 Clipper1 Phase 1에서 NestJS가 맡은 것:
@@ -66,6 +72,11 @@ Clipper1 Phase 1에서 Python이 맡은 것:
 
 - 실제 MP4 렌더링 provider/runtime은 `clipper1_video_render` worker 경로를 유지한다.
 - NestJS는 RenderRecipe와 VideoRenderJob contract를 만들고, Python worker는 provider 구현체로 실행된다.
+
+참고:
+
+- Python이 자연스러운 작업은 계속 Python/FastAPI worker로 둔다.
+- 간단한 ffmpeg transform처럼 NestJS service/child process로 충분하고 Python SDK가 필요 없는 작업은 NestJS-native `WorkflowExecutor`로 둘 수 있다.
 
 ## Electron 책임
 
@@ -105,5 +116,6 @@ Electron은 backend가 아니라 desktop host adapter다.
 
 - 이 기능은 product state/orchestration인가? 그러면 NestJS.
 - Python model/video compute인가? 그러면 Python/FastAPI worker.
+- NestJS에서 직접 처리 가능한 workflow job인가? 그러면 NestJS-native WorkflowExecutor.
 - OS/native/process/packaging인가? 그러면 Electron host adapter.
 - 화면 상태와 사용자 interaction인가? 그러면 Angular.

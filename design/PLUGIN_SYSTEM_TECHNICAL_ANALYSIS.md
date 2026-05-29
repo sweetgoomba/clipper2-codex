@@ -1,18 +1,22 @@
 # Clipper2 Plugin System Technical Analysis
 
-작성 기준: 2026-05-26 현재 checkout 분석 결과.
+작성 기준: 2026-05-29 현재 checkout 분석 결과.
 
 이 문서는 Clipper2의 plugin system을 기술적으로 설명한다. 팀 공유용 전체 구조 문서인 [TEAM_ARCHITECTURE_OVERVIEW.md](TEAM_ARCHITECTURE_OVERVIEW.md)보다 더 낮은 레벨에서, plugin discovery, process ownership, runtime API, job protocol, model install, resource policy, 확장 절차를 정리한다.
 
 ## 결론 요약
 
-Clipper2의 plugin system은 Python plugin process만 뜻하지 않는다. 현재 구조에서는 다음 네 계층이 함께 plugin system을 만든다.
+Clipper2의 plugin system은 Python plugin process만 뜻하지 않는다. 현재 구조에서는 다음 계층이 함께 plugin/workflow runtime system을 만든다.
 
 ```text
 Angular feature/plugin UI
   -> NestJS plugin API and job control plane
-  -> PluginHost implementation selected by runtime mode
-  -> Python PluginRuntime HTTP/WS server
+  -> WorkflowExecutorRegistry
+      -> PythonPluginWorkflowExecutor
+          -> PluginHost implementation selected by runtime mode
+          -> Python PluginRuntime HTTP/WS server
+      -> NestJS-native workflow executor
+      -> VirtualWorkflowExecutor
 ```
 
 모드별 process ownership은 다르다.
@@ -23,13 +27,20 @@ Angular feature/plugin UI
 
 Angular는 plugin process URL/port를 직접 알면 안 된다. Angular는 NestJS base URL만 알고, plugin start/status/job은 NestJS API로 처리한다.
 
+2026-05-29 기준 핵심 변경:
+
+- `/jobs` 실행 dispatch는 `PluginHost`가 아니라 NestJS `WorkflowExecutorRegistry` 기준이다.
+- `PluginHost`는 Python runtime process lifecycle control에 집중한다.
+- Python runtime plugin, NestJS-native executor, virtual workflow는 `PluginManifestView.runtimeKind`로 구분된다.
+- 첫 NestJS-native 예시는 `simple_ffmpeg_transform` executor다.
+
 ## 용어 구분
 
-현재 코드에서 "plugin"은 세 가지 의미로 쓰인다.
+현재 코드에서 "plugin"은 네 가지 의미로 쓰인다.
 
 ### Runtime plugin
 
-실제 Python process로 실행되는 worker다.
+실제 Python process로 실행되는 worker다. `WorkflowExecutor` 관점에서는 `runtimeKind=python_plugin`으로 노출된다.
 
 현재 runtime plugin:
 
@@ -38,6 +49,16 @@ Angular는 plugin process URL/port를 직접 알면 안 된다. Angular는 NestJ
 - `clipper1_video_render`
 
 각 runtime plugin은 `clipper_python/plugins/<plugin_name>/manifest.json`과 Python package를 가진다. 실행 시 FastAPI HTTP/WS server가 되고, `POST /jobs`, `GET /health`, WebSocket event stream을 제공한다.
+
+### NestJS-native workflow executor
+
+Python HTTP server 없이 NestJS process 안에서 직접 실행되는 workflow executor다. 예를 들어 간단한 ffmpeg 변환처럼 Node child process로 충분한 작업은 Python plugin으로 만들지 않아도 된다.
+
+현재 예시:
+
+- `simple_ffmpeg_transform`
+
+이 종류는 `runtimeKind=nestjs_executor`로 노출된다.
 
 ### Workflow plugin
 
@@ -49,6 +70,7 @@ Angular는 plugin process URL/port를 직접 알면 안 된다. Angular는 NestJ
 - `dialog_highlight`: 사용자 workflow이면서 runtime plugin이다.
 - `clipper1`: 사용자 workflow지만 Python runtime plugin이 아니다. NestJS catalog에 있는 virtual workflow plugin이다.
 - `variation`: 사용자 workflow지만 Python runtime plugin이 아니다. NestJS catalog에 있는 virtual workflow plugin이다.
+- `simple_ffmpeg_transform`: NestJS-native workflow executor 예시다.
 
 ### Utility/runtime worker
 
@@ -97,6 +119,11 @@ NestJS는 plugin control plane이다.
 
 관련 핵심 파일:
 
+- `src/workflows/workflow-executor.ts`
+- `src/workflows/workflow-executor-registry.service.ts`
+- `src/workflows/python-plugin-workflow-executor.ts`
+- `src/workflows/virtual-workflow-executor.ts`
+- `src/workflows/nestjs-ffmpeg-transform.executor.ts`
 - `src/plugins/plugin-host.ts`
 - `src/plugins/plugins.module.ts`
 - `src/plugins/plugins.controller.ts`
@@ -112,12 +139,13 @@ NestJS는 plugin control plane이다.
 
 NestJS 책임:
 
-- PluginHost abstraction 선택.
+- WorkflowExecutorRegistry를 통해 Python plugin, NestJS-native executor, virtual workflow를 dispatch.
+- Python runtime plugin용 PluginHost abstraction 선택.
 - manifest/status/start/stop API 제공.
 - plugin start 전 resource assessment와 admission 처리.
 - job queue와 job repository 관리.
-- plugin runtime에 job 제출.
-- plugin WebSocket event를 받아 NestJS realtime event로 다시 broadcast.
+- executor에 job 제출.
+- Python plugin WebSocket event 또는 NestJS-native executor event를 NestJS realtime event로 다시 broadcast.
 - local/devapp에서 Python process 직접 실행.
 - packaged에서 Electron bridge를 통해 Electron-owned process 제어.
 
@@ -182,13 +210,16 @@ Angular PluginStatusService.refreshAll()
   -> GET <NestJS>/plugins
   -> PluginsController.list()
   -> PluginsService.list()
-  -> PluginHost.listManifests()
-  -> PluginHost.getStatus(name)
+  -> WorkflowExecutorRegistry.list()
+      -> PythonPluginWorkflowExecutor from PluginHost.listManifests()
+      -> NestJS-native executor providers
+      -> VirtualWorkflowExecutor catalog entries
+  -> executor.getManifest() / executor.getStatus()
   -> ResourcePolicy.assessStart(...)
   -> Angular Store/Dashboard render
 ```
 
-NestJS `PluginsService.list()`는 runtime manifest에 virtual workflow manifest를 합친다. `clipper1`, `variation`은 Python process가 없어도 catalog에서 user-visible workflow로 표시될 수 있다.
+NestJS `PluginsService.list()`는 이제 `PluginHost`와 virtual catalog를 직접 섞지 않는다. `WorkflowExecutorRegistry`가 Python runtime plugin, NestJS-native executor, virtual workflow entry를 executor 목록으로 만든다. `clipper1`, `variation`은 Python process가 없어도 catalog에서 user-visible workflow로 표시될 수 있다.
 
 ### Plugin start
 
@@ -198,8 +229,10 @@ Angular PluginStatusService.start(name)
   -> PluginsService.start()
   -> get manifest/status
   -> resource assessment
-  -> PluginHost.ensureStarted(name)
-  -> mode별 process start
+  -> WorkflowExecutor.start(name)
+      -> Python executor: PluginHost.ensureStarted(name)
+      -> NestJS-native executor: internal readiness check
+      -> Virtual workflow: no-op/not-applicable
 ```
 
 resource assessment 결과가 `critical`이면 start가 blocked된다. `warning` 또는 `unknown`이면 사용자의 confirmation이 필요하다.
@@ -213,10 +246,10 @@ Angular feature flow
   -> JobsService.enqueueJob()
   -> JobRepository create waiting snapshot
   -> JobQueue claim
-  -> pluginHost.ensureStarted(pluginName)
-  -> POST <plugin>/jobs { job_id, params }
-  -> WS <plugin>/jobs/:jobId/events
-  -> plugin progress/completed/error
+  -> WorkflowExecutorRegistry.get(pluginName)
+  -> executor.run(context)
+      -> Python executor: PluginHost.ensureStarted + POST/WS plugin protocol
+      -> NestJS-native executor: direct service/child_process execution
   -> JobsService.publish()
   -> RealtimeGateway /v1/events
   -> Angular PluginJobService.watchJob()
@@ -225,13 +258,44 @@ Angular feature flow
 중요한 점:
 
 - Angular는 plugin WebSocket에 직접 붙지 않는다.
-- NestJS가 plugin WebSocket을 보고, 자체 realtime gateway로 변환해서 Angular에 보낸다.
+- Python executor는 plugin WebSocket을 보고, 자체 realtime gateway로 변환해서 Angular에 보낸다.
+- NestJS-native executor는 같은 `WorkflowRunContext`로 progress/completed/error event를 직접 publish한다.
 - Job 상태는 NestJS `JobRepository`에 저장된다.
 - 앱/NestJS restart 시 active job은 interrupted/failed 처리된다.
 
+## WorkflowExecutor abstraction
+
+NestJS의 `/jobs` 실행 확장점은 `WorkflowExecutor`다.
+
+```ts
+interface WorkflowExecutor {
+  readonly pluginName: string;
+  readonly runtimeKind: 'python_plugin' | 'nestjs_executor' | 'virtual_workflow';
+
+  getManifest(): Promise<PluginManifestView>;
+  getStatus(): Promise<PluginStatus>;
+  start(request?: PluginStartRequest): Promise<PluginStartResponse>;
+  stop(): Promise<void>;
+  run(context: WorkflowRunContext): Promise<void>;
+  cancel?(jobId: string, snapshot?: PipelineJobSnapshot): Promise<void>;
+}
+```
+
+초기 구현:
+
+- `PythonPluginWorkflowExecutor`
+  - 기존 Python `/jobs` HTTP submit과 WebSocket event normalize를 담당한다.
+  - process lifecycle은 아래 `PluginHost`에 위임한다.
+- `NestjsFfmpegTransformExecutor`
+  - `simple_ffmpeg_transform` 예시 executor다.
+  - `ffmpeg -version` readiness check 후 job 단위 child process를 실행한다.
+- `VirtualWorkflowExecutor`
+  - Store/Dashboard entry와 route 성격을 명시한다.
+  - 직접 runtime job 대상이 아닐 수 있다.
+
 ## PluginHost abstraction
 
-NestJS의 핵심 확장점은 `PluginHost`다.
+`PluginHost`는 이제 전체 job executor가 아니라 Python runtime process control 계층이다.
 
 ```ts
 abstract class PluginHost {
@@ -473,7 +537,7 @@ OOM/load failure 처리:
 
 ## Manifest schema and catalog
 
-각 Python plugin은 `manifest.json`을 가진다.
+각 Python runtime plugin은 `manifest.json`을 가진다. NestJS-native executor와 virtual workflow는 NestJS 쪽 `PluginManifestView`를 반환한다.
 
 현재 필수 field:
 
@@ -499,7 +563,7 @@ OOM/load failure 처리:
 - `resources.idle_policy`
 - `permissions`
 
-NestJS와 Electron은 manifest를 읽은 뒤 UI/API용 camelCase DTO로 변환한다.
+NestJS와 Electron은 Python manifest를 읽은 뒤 UI/API용 camelCase DTO로 변환한다.
 
 ```text
 display_name -> displayName
@@ -507,6 +571,14 @@ estimated_ram_mb -> estimatedRamMb
 estimated_vram_mb -> estimatedVramMb
 preferred_accelerators -> preferredAccelerators
 safe_to_evict_when_idle -> safeToEvictWhenIdle
+```
+
+NestJS API용 `PluginManifestView`에는 runtime 종류를 나타내는 `runtimeKind`가 붙는다.
+
+```text
+python_plugin
+nestjs_executor
+virtual_workflow
 ```
 
 현재 주의점:
@@ -599,6 +671,25 @@ safe_to_evict_when_idle -> safeToEvictWhenIdle
 - `VIRTUAL_WORKFLOW_PLUGINS`로 취급된다.
 - status는 installed/stopped로 표현된다.
 - start/stop은 runtime process start가 아니라 workflow route 진입과 연결된다.
+
+### `simple_ffmpeg_transform`
+
+성격:
+
+- NestJS-native workflow executor 예시.
+- Python runtime plugin이 아니다.
+
+주요 capability:
+
+- provides: `workflow.simple_ffmpeg_transform`, `video.transform.ffmpeg`
+- requires: `source.ingest`, `ffmpeg.ready`
+
+특징:
+
+- `runtimeKind=nestjs_executor`.
+- `ffmpeg -version` readiness check를 수행한다.
+- job 단위로 `child_process.spawn(ffmpeg, args)`를 실행한다.
+- progress/completed/failed event는 Python WebSocket이 아니라 `WorkflowRunContext`를 통해 NestJS job history에 직접 기록된다.
 
 ## Model install and asset readiness
 
@@ -715,9 +806,11 @@ NestJS job layer가 pipeline concurrency를 제어한다.
 Plugin start error:
 
 ```text
-PluginHost.ensureStarted()
-  -> spawn failure / health timeout / bridge error
-  -> PluginHostUnavailableError or generic error
+WorkflowExecutor.start()
+  -> Python executor: PluginHost.ensureStarted()
+      -> spawn failure / health timeout / bridge error
+      -> PluginHostUnavailableError or generic error
+  -> NestJS-native executor: readiness failure
   -> PluginsController or JobsController maps to HTTP error
   -> Angular displays error
 ```
@@ -732,17 +825,18 @@ Runtime process exit:
 Job error:
 
 ```text
-plugin run_job returns {"error": "..."}
+Python plugin run_job returns {"error": "..."}
   -> Python JobResult status failed
   -> WS completed event with error
+  -> PythonPluginWorkflowExecutor normalizes event
   -> NestJS statusFromEvent marks failed
 ```
 
 또는:
 
 ```text
-plugin WebSocket error/early close
-  -> NestJS publishes failed job event
+NestJS-native executor throws or calls context.fail()
+  -> NestJS publishes failed job event directly
 ```
 
 Cancellation:
@@ -750,8 +844,10 @@ Cancellation:
 ```text
 Angular DELETE /jobs/:jobId
   -> NestJS queue remove
-  -> if plugin baseUrl exists and job is starting/running:
-       DELETE <plugin>/jobs/:jobId
+  -> active AbortController abort
+  -> WorkflowExecutor.cancel(jobId)
+       Python executor: DELETE <plugin>/jobs/:jobId if baseUrl exists
+       NestJS-native executor: terminate active child process if any
   -> NestJS local state cancelled
 ```
 
@@ -775,6 +871,22 @@ Python cancellation is cooperative. Plugin implementation must check `cancel_fla
 14. Smoke in `local`, `devapp`, and `packaged`.
 
 Do not add plugin-specific static port env as the default path.
+
+## Extension checklist: add a NestJS-native workflow executor
+
+1. Add executor under `clipper_nestjs/src/workflows/`.
+2. Implement `WorkflowExecutor`.
+3. Set `runtimeKind: 'nestjs_executor'`.
+4. Return a complete `PluginManifestView` from `getManifest()`.
+5. Implement `start()` as readiness check, not as fake Python process start.
+6. Implement `run(context)` and publish progress/completed/failed via `WorkflowRunContext`.
+7. Implement `cancel(jobId)` if the executor can have active child processes or long-running work.
+8. Register the executor provider in `PluginsModule`.
+9. Add it to `WorkflowExecutorRegistry`.
+10. Add contract tests for registry exposure and unknown plugin behavior.
+11. Smoke in `local`, `devapp`, and `packaged`.
+
+Do not make a NestJS-native executor mimic a Python HTTP/WS server unless there is a real interoperability reason.
 
 ## Extension checklist: add a virtual workflow plugin
 
@@ -875,12 +987,17 @@ Risk:
 
 Likely improvement:
 
-- Decide whether per-plugin concurrency should be enforced in `JobsService`, `PluginHost`, or Python SDK.
+- Decide whether per-plugin concurrency should be enforced in `JobsService`, `WorkflowExecutorRegistry`, individual executors, or Python SDK.
 
 ## Files to read for deeper debugging
 
 NestJS:
 
+- [../../clipper_nestjs/src/workflows/workflow-executor.ts](../../clipper_nestjs/src/workflows/workflow-executor.ts)
+- [../../clipper_nestjs/src/workflows/workflow-executor-registry.service.ts](../../clipper_nestjs/src/workflows/workflow-executor-registry.service.ts)
+- [../../clipper_nestjs/src/workflows/python-plugin-workflow-executor.ts](../../clipper_nestjs/src/workflows/python-plugin-workflow-executor.ts)
+- [../../clipper_nestjs/src/workflows/nestjs-ffmpeg-transform.executor.ts](../../clipper_nestjs/src/workflows/nestjs-ffmpeg-transform.executor.ts)
+- [../../clipper_nestjs/src/workflows/virtual-workflow-executor.ts](../../clipper_nestjs/src/workflows/virtual-workflow-executor.ts)
 - [../../clipper_nestjs/src/plugins/plugin-host.ts](../../clipper_nestjs/src/plugins/plugin-host.ts)
 - [../../clipper_nestjs/src/plugins/plugins.service.ts](../../clipper_nestjs/src/plugins/plugins.service.ts)
 - [../../clipper_nestjs/src/plugins/local-plugin-host.service.ts](../../clipper_nestjs/src/plugins/local-plugin-host.service.ts)

@@ -4,6 +4,8 @@
 
 Status: current draft
 Last verified: 2026-05-04
+
+2026-05-29 update: Clipper1/Variation user-facing entries should be read through the current `virtual_workflow` + `WorkflowExecutor` model. The Python `clipper1_video_render` worker remains a Python runtime plugin behind `PythonPluginWorkflowExecutor`; new NestJS-native workflow jobs can be added as separate executors instead of being forced into Python.
 Applies to:
 
 - `adlight_angular` `feature/d2x-electron`

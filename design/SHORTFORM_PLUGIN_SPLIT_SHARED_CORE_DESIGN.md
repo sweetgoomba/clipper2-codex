@@ -3,6 +3,8 @@
 작성일: 2026-05-06
 상태: 사용자 방향 승인 완료, 구현 계획 작성 중
 
+2026-05-29 갱신: Clipper1/Variation 같은 user-facing workflow entry는 현재 `virtual_workflow`로 표현할 수 있고, 최종 render/job 실행은 NestJS `WorkflowExecutor` 경계로 연결한다. Python render worker는 `PythonPluginWorkflowExecutor`를 통해 유지하고, NestJS-native job이 필요한 경우 별도 executor로 추가한다.
+
 ## 목적
 
 현재 `workflow.clipper_studio` 1차 구현은 Clipper1을 Clipper2에 붙이기 위한 내부 추상화와 provider boundary를 만드는 데에는 도움이 됐지만, 사용자 흐름과 UI/UX가 실제 목표와 맞지 않는다.
