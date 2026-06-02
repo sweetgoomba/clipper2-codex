@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-05-29
+최신 갱신: 2026-06-02
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -18,24 +18,40 @@
 10. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
 11. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
 12. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
-13. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-14. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+13. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
+14. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
+15. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
+16. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+17. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Current Repo Heads
 
-2026-05-29 세션에서 직접 확인하고 main 브랜치로 모은 로컬 기준:
+2026-06-02 세션 시작 시 직접 확인한 로컬 기준:
 
 ```text
 clipper_angular:  main @ 70d6e58 Improve template sample render flow
-clipper_nestjs:   main @ 73c2519 Stage template sample media
+clipper_nestjs:   design/workflow-executor @ ceaa6ab Add workflow executor runtime dispatch
 clipper_python:   main @ 535131c Render sample images as cover
 clipper_electron: main @ f701677 Revert "Update electron builder"
-clipper2-codex:   main @ this handoff/session documentation commit; check `git log -1 --oneline`
+clipper2-codex:   workflow-executor-design @ c76fdaf Add explanatory document for understanding Workflow, Plugin, and Job in Clipper2 architecture
 ```
 
 세션 시작 시 반드시 각 repo에서 `git status -sb`와 `git log -1 --oneline`을 다시 확인한다. `.codex`는 별도 git repo다.
 
+2026-06-02 기준 추가 확인:
+
+```text
+clipper_infra:      feature/infra-initial-setup @ 8226879 feat: add Clipper infra initial setup
+clipper_web_admin:  main, no commits yet; origin/main gone
+clipper_web_api:    main, no commits yet; origin/main gone
+clipper_web_client: main, no commits yet; origin/main gone
+```
+
+`clipper_web_admin`, `clipper_web_api`, `clipper_web_client` 3개 repo는 생성/클론만 된 상태로 확인됐다. `git log -1 --oneline`은 첫 커밋이 없어 실패하는 것이 정상이다.
+
 ### Main Branch Consolidation Notes
+
+아래는 2026-05-29 main branch consolidation 당시의 히스토리 설명이다. 2026-06-02 직접 확인 기준으로 `clipper_python`은 `main...origin/main` ahead/behind가 `0/0`이다.
 
 - `clipper_nestjs`
   - 로컬 `main`을 `feature/windows-packaging`에서 생성했다.
@@ -80,6 +96,8 @@ clipper2-codex:   main @ this handoff/session documentation commit; check `git l
   - 명령어는 팀원이 각자 `PROJECT_ROOT`를 지정해 실행할 수 있게 작성했다.
 - NestJS-native workflow도 Plugin Store/job history/start-stop 모델에 통합하기 위한 설계를 추가했다.
   - `.codex/design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md`
+  - 쉬운 standalone 설명 문서로 `.codex/design/WORKFLOW_PLUGIN_JOB_EASY_EXPLANATION.md`도 추가됐다.
+  - 이 쉬운 설명 문서는 전체 문서 인덱스나 다음 세션 필수 읽기 목록에 넣지 않아도 된다.
   - 현재 Python runtime plugin 중심 구조의 한계를 정리했다.
   - `WorkflowExecutor`, executor registry, Python adapter, NestJS-native ffmpeg executor 방향을 정의했다.
   - 작업 브랜치:
@@ -142,6 +160,31 @@ clipper2-codex:   main @ this handoff/session documentation commit; check `git l
   - `clipper_nestjs`: `npm run build` passed, render payload targeted tests passed, sample render targeted tests passed, `git diff --check` passed.
   - `clipper_python`: `uv run pytest tests/test_clipper1_video_render_media_looping.py -q` passed (`27 passed`), `git diff --check` passed.
 - main branch consolidation 직후 앱 코드 repo는 위 커밋들까지 clean 상태였다. 이후 `clipper_nestjs` `design/workflow-executor`의 WorkflowExecutor 구현은 `ceaa6ab`로 커밋 완료했다.
+- 2026-06-02에는 dohit 인프라 참고 문서 3개를 읽고 Clipper2 설치형 앱 인프라를 이해하기 위한 문서를 시작했다.
+  - 참고 문서:
+    - `/Users/jina/project/dohit-infra/.codex/dohit-infra-easy-guide.md`
+    - `/Users/jina/project/dohit-infra/.codex/dohit-infra-technical-guide.md`
+    - `/Users/jina/project/dohit-infra/.codex/clipper-infra-recommendations.md`
+  - 이해용/기술 문서:
+    - `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`
+    - `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`
+  - 원칙:
+    - dohit은 웹 리워드 서비스라 web/API 서버가 서비스 본체다.
+    - Clipper2는 설치형 Electron 앱이라 서버는 다운로드 페이지, 설치파일 저장소, 업데이트 정보, 계정/API/관리자 기능을 담당한다.
+    - Electron 설치파일은 Docker infra 서버가 아니라 self-hosted CI runner에서 빌드한다.
+    - Windows 설치형 빌드는 code signing 인증서가 설치된 사무실 Windows PC self-hosted runner에서 수행한다.
+    - macOS 설치형 빌드는 별도 Mac mini self-hosted runner에서 수행하는 방향이다.
+    - 코드 push/main merge만으로 설치파일 release가 되면 안 된다.
+    - Windows release는 Windows PC runner에서 `npm run build:app:win:x64`, macOS release는 Mac mini runner에서 `npm run build:app:mac:arm64` 같은 명시적 release build trigger로 실행한다.
+    - Windows/macOS release와 version/update metadata는 플랫폼별로 따로 관리한다.
+    - 설치파일 저장소는 기존처럼 S3를 유지한다.
+    - dev/stage/prod 3환경을 설계한다.
+    - stage/prod는 web/API 배포뿐 아니라 stage/prod 설치파일과 update feed를 나누는 문제다.
+    - 3대 Mac mini 기본 배치는 proxy/prod app, dev/stage app, DB/backup/monitor다.
+    - 문서는 `clipper_infra` repo가 아니라 `.codex`에 둔다.
+    - `clipper_infra`에는 2026-06-02 초기 compose/env/runbook 구성을 생성했다.
+    - 실제 IP, 도메인, S3 bucket, image tag, DB password는 아직 placeholder다.
+    - 검증: dev/stage/prod app compose config, DB compose config, release metadata JSON, monitor JSON passed.
 
 ## Next Work
 
@@ -155,10 +198,15 @@ clipper2-codex:   main @ this handoff/session documentation commit; check `git l
    - `simple_ffmpeg_transform` local/devapp/packaged smoke.
    - packaged Electron에서 NestJS-native ffmpeg path env 표준 확정.
    - 필요한 경우 Angular Plugin Store/job start UI에서 `runtimeKind` 표시/버튼 정책 연결.
-4. 앱 repo의 로컬 `main`을 remote에 push할지 사용자에게 확인하거나, 사용자가 요청하면 repo별로 push한다.
-   - 특히 `clipper_python`은 `origin/main`이 오래된 초기 commit이라 `main...origin/main [ahead 103]`로 보인다.
-   - 이는 feature 개발 이력 103개 commit을 `origin/main`에 올릴 준비가 된 상태다.
-5. Template Builder sample render smoke를 다시 할 경우 아래를 확인한다.
+4. Clipper2 dev/stage/prod 인프라 구현을 이어간다.
+   - 먼저 `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`와 `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`를 읽는다.
+   - `clipper_infra` 초기 구성을 확인한다.
+   - 실제 도메인, 서버 IP, S3 bucket/prefix, image registry/tag, DB password를 확정한다.
+   - `env/*.env.example`을 서버별 실제 env 파일로 복사하고 값을 채운다.
+   - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
+   - `clipper_web_admin`, `clipper_web_api`, `clipper_web_client`는 아직 첫 커밋이 없는 빈 repo다.
+5. 앱 repo의 로컬 `main`을 remote에 push할지 사용자에게 확인하거나, 사용자가 요청하면 repo별로 push한다.
+6. Template Builder sample render smoke를 다시 할 경우 아래를 확인한다.
    - 새 템플릿 생성 후 단색/이미지 layout 변경 저장.
    - 샘플 렌더 화면 열기와 `렌더 시작`.
    - 네 비율 모두 생성.
@@ -166,7 +214,7 @@ clipper2-codex:   main @ this handoff/session documentation commit; check `git l
    - content area 밖 layout image 또는 단색 background가 흰색으로 빠지지 않는지.
    - 화면을 닫아도 렌더 진행이 계속되는지.
    - 공식 템플릿 등록 후 카드 썸네일이 4:3 기준인지.
-6. Windows packaged smoke가 필요하면 기존 운영 문서 기준을 따른다.
+7. Windows packaged smoke가 필요하면 기존 운영 문서 기준을 따른다.
    - PowerToys `Command Palette` off.
    - `.env.local` packaged read/copy 금지.
    - plugin별 env port 나열 금지.
@@ -201,7 +249,11 @@ Using Superpowers.
 - `clipper_nestjs`: `design/workflow-executor @ ceaa6ab Add workflow executor runtime dispatch`
 - `clipper_python`: `main @ 535131c Render sample images as cover`
 - `clipper_electron`: `main @ f701677 Revert "Update electron builder"`
-- `.codex`: `workflow-executor-design`, this documentation commit
+- `.codex`: `workflow-executor-design @ c76fdaf Add explanatory document for understanding Workflow, Plugin, and Job in Clipper2 architecture`
+- `clipper_infra`: `feature/infra-initial-setup @ 8226879 feat: add Clipper infra initial setup`
+- `clipper_web_admin`: `main`, no commits yet
+- `clipper_web_api`: `main`, no commits yet
+- `clipper_web_client`: `main`, no commits yet
 
 다음에 할 일:
 1. `.codex`, `clipper_nestjs`, `clipper_electron`, `clipper_angular`, `clipper_python` 상태를 확인한다.
@@ -213,10 +265,23 @@ Using Superpowers.
    - Python plugin job regression smoke.
    - `simple_ffmpeg_transform` local/devapp/packaged smoke.
    - packaged Electron에서 NestJS-native ffmpeg path env 표준 확정.
-4. 사용자가 요청하면 로컬 main들을 repo별로 push한다.
-   - `clipper_python`의 `main...origin/main [ahead 103]`은 origin/main이 초기 commit에 머물러 있었기 때문에 보이는 commit count다.
-   - 미커밋 변경이나 파일 103개가 아니다.
-5. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
+   - Angular Plugin Store/job UI에서 `runtimeKind` 표시/버튼 정책이 필요한지 검토한다.
+4. Clipper2 dev/stage/prod 인프라 구현을 이어간다.
+   - `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`
+   - `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`
+   - dohit 참고 문서 3개:
+     - `/Users/jina/project/dohit-infra/.codex/dohit-infra-easy-guide.md`
+     - `/Users/jina/project/dohit-infra/.codex/dohit-infra-technical-guide.md`
+     - `/Users/jina/project/dohit-infra/.codex/clipper-infra-recommendations.md`
+   - dohit은 웹 리워드 서비스이고, Clipper2는 설치형 Electron 앱이라는 차이를 먼저 맞춘다.
+   - Windows installer는 사무실 Windows PC runner, macOS installer는 Mac mini runner, 설치파일 저장소는 S3라는 현재 전제를 유지한다.
+   - 코드 push/main merge를 설치파일 release trigger로 삼지 않는다.
+   - 플랫폼별 명시적 release build trigger와 release metadata 구조를 먼저 정한다.
+   - dev/stage/prod 3환경을 기준으로 서버/컨테이너/DB/release/update feed 구조를 정한다.
+   - `clipper_infra`에는 초기 compose/env/runbook 구성이 있다.
+   - 서버 IP, 도메인, proxy, registry, secret 주입, DB/백업 경로를 실제 값으로 채운다.
+5. 사용자가 요청하면 로컬 main들을 repo별로 push한다.
+6. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
    - 샘플 렌더 UI는 Angular, recipe/assets는 NestJS, 실제 MP4 합성은 Python renderer가 담당한다.
    - 샘플 이미지는 콘텐츠 영역을 `cover + center crop`으로 꽉 채워야 한다.
    - layout image/단색 background는 content area 밖에서 흰색으로 빠지면 안 된다.
