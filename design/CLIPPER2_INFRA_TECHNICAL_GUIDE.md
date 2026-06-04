@@ -260,23 +260,79 @@ Notes:
 
 ## Domain Plan
 
-Example domain layout:
+`clipperstudio.ai` is registered at Hosting.KR, but its authoritative name
+servers are Cloudflare:
 
 ```text
-dev.clipper.example.com          -> clipper-web-client-dev
-dev-admin.clipper.example.com    -> clipper-web-admin-dev
-dev-api.clipper.example.com      -> clipper-web-api-dev
-
-stage.clipper.example.com        -> clipper-web-client-stage
-stage-admin.clipper.example.com  -> clipper-web-admin-stage
-stage-api.clipper.example.com    -> clipper-web-api-stage
-
-clipper.example.com              -> clipper-web-client-prod
-admin.clipper.example.com        -> clipper-web-admin-prod
-api.clipper.example.com          -> clipper-web-api-prod
+adele.ns.cloudflare.com
+owen.ns.cloudflare.com
 ```
 
-The exact domains can change, but the mapping should be explicit and documented.
+Therefore DNS record changes are managed in Cloudflare, not Hosting.KR.
+
+Current office WAN IPv4 confirmed from `m2-proxy`:
+
+```text
+112.169.113.138
+```
+
+ipTIME reports this WAN address as dynamic DHCP. ipTIME DDNS is configured:
+
+```text
+metabuzz.iptime.org -> 112.169.113.138
+```
+
+For dev/stage records, prefer Cloudflare DNS-only CNAME records to
+`metabuzz.iptime.org`. A records to `112.169.113.138` work only while the WAN
+IP remains unchanged.
+
+Current ipTIME forwarding:
+
+```text
+80  -> 192.168.0.2:80
+443 -> 192.168.0.2:443
+```
+
+Existing dohit DB WAN forwards `55101/55102/55103` point to `192.168.0.7`.
+Do not add Clipper DB ports `55201/55202/55203` to WAN port forwarding.
+
+Existing legacy Clipper records must be preserved until legacy cutover:
+
+```text
+api.clipperstudio.ai   -> 3.34.33.3
+demo.clipperstudio.ai  -> 121.138.93.3
+```
+
+Dev domain layout:
+
+```text
+dev.clipperstudio.ai          -> clipper-web-client-dev
+dev-admin.clipperstudio.ai    -> clipper-web-admin-dev
+dev-api.clipperstudio.ai      -> clipper-web-api-dev
+```
+
+Stage domain layout:
+
+```text
+stage.clipperstudio.ai        -> clipper-web-client-stage
+stage-admin.clipperstudio.ai  -> clipper-web-admin-stage
+stage-api.clipperstudio.ai    -> clipper-web-api-stage
+```
+
+Prod domain layout after Clipper2 cutover:
+
+```text
+clipperstudio.ai                -> clipper-web-client-prod
+www.clipperstudio.ai            -> clipper-web-client-prod
+admin.clipperstudio.ai          -> clipper-web-admin-prod
+api.clipperstudio.ai            -> clipper-web-api-prod after legacy cutover
+```
+
+`clipperstudio.ai` currently points to a Cloudflare Pages holding page. Replace
+that only when the Clipper2 prod product/download page is ready.
+
+Do not move `api.clipperstudio.ai` to Clipper2 until the legacy Clipper API is
+retired or a cutover window is approved.
 
 ## Container Layout By Server
 

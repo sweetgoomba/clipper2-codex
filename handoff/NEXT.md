@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-06-02
+최신 갱신: 2026-06-04
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -21,19 +21,20 @@
 13. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
 14. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
 15. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
-16. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-17. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+16. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
+17. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+18. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Current Repo Heads
 
-2026-06-02 세션 시작 시 직접 확인한 로컬 기준:
+2026-06-04 로컬 세션에서 문서 수정 전에 직접 재확인한 기준:
 
 ```text
 clipper_angular:  main @ 70d6e58 Improve template sample render flow
 clipper_nestjs:   design/workflow-executor @ ceaa6ab Add workflow executor runtime dispatch
 clipper_python:   main @ 535131c Render sample images as cover
 clipper_electron: main @ f701677 Revert "Update electron builder"
-clipper2-codex:   workflow-executor-design @ c76fdaf Add explanatory document for understanding Workflow, Plugin, and Job in Clipper2 architecture
+clipper2-codex:   workflow-executor-design @ 31e2ce0 docs: document Clipper infra initial setup (문서 수정 전 기준)
 ```
 
 세션 시작 시 반드시 각 repo에서 `git status -sb`와 `git log -1 --oneline`을 다시 확인한다. `.codex`는 별도 git repo다.
@@ -48,6 +49,8 @@ clipper_web_client: main, no commits yet; origin/main gone
 ```
 
 `clipper_web_admin`, `clipper_web_api`, `clipper_web_client` 3개 repo는 생성/클론만 된 상태로 확인됐다. `git log -1 --oneline`은 첫 커밋이 없어 실패하는 것이 정상이다.
+
+2026-06-04 로컬 세션에서도 위 앱 repo/infra repo 상태를 재확인했다. `clipper_web_admin`, `clipper_web_api`, `clipper_web_client`는 여전히 첫 커밋이 없다.
 
 ### Main Branch Consolidation Notes
 
@@ -185,6 +188,39 @@ clipper_web_client: main, no commits yet; origin/main gone
     - `clipper_infra`에는 2026-06-02 초기 compose/env/runbook 구성을 생성했다.
     - 실제 IP, 도메인, S3 bucket, image tag, DB password는 아직 placeholder다.
     - 검증: dev/stage/prod app compose config, DB compose config, release metadata JSON, monitor JSON passed.
+- 2026-06-04에는 다음 실제 서버 세션의 접속지와 첫 환경을 정했다.
+  - 첫 서버 Codex 세션은 `m2-proxy`에서 read-only inventory/preflight로 진행했다.
+  - 첫 실제 Clipper 배포 대상 환경은 `dev`다.
+  - `stage`는 dev health와 DB/backup/proxy route 확인 뒤 진행한다.
+  - `prod`는 stage 검증과 release/update feed 정책 확정 전에는 건드리지 않는다.
+  - `m2-proxy`는 `192.168.0.2`, NPM은 `/Users/metabeojeu/Desktop/infra/proxy-server`에서 실행 중이다.
+  - `m2-stage` 후보는 `192.168.0.23`, `m2-db` 후보는 `192.168.0.7`이다.
+  - NPM active dohit route는 access list 없이 설정되어 있고, NPM admin `81`은 `0.0.0.0`에 bind되어 있으므로 ipTIME에서 WAN 공개 여부를 확인해야 한다.
+  - Clipper 예약 port는 m2-proxy/m2-stage/m2-db 후보에서 충돌이 확인되지 않았다.
+  - `m2-db` preflight도 완료됐다.
+  - `m2-db`는 `192.168.0.7`, dohit DB compose는 `/Users/metabuzz/Desktop/project/dohit-infra/database/postgres/docker-compose.yml`이다.
+  - dohit DB `55101/55102/55103`은 `0.0.0.0`에 bind되어 있고, Clipper DB 예약 port `55201/55202/55203`은 충돌이 없다.
+  - Clipper dev DB는 `CLIPPER_DB_BIND_HOST=192.168.0.7`, source allow `192.168.0.23 -> 192.168.0.7:55203` 방향이 권장된다.
+  - `m2-stage` preflight도 완료됐다.
+  - `m2-stage`는 `192.168.0.23`, dohit dev/stage compose roots are `/Users/metabuzz/Desktop/project/dohit-infra-dev` and `/Users/metabuzz/Desktop/project/dohit-infra-stg`.
+  - dohit dev/stage app ports `42103/43103/42101/43101` are in use, while Clipper app 예약 port `42201/42202/42203`, `42301/42302/42303`, `43201/43202/43203` are free.
+  - m2-stage can reach m2-db `55103`; `55203` is refused because Clipper dev DB is not deployed yet.
+  - Clipper web/admin/API images and `stack.dev.env` are not ready, so web/admin/API deployment is not next.
+  - `clipper_infra/runbooks/deploy-db.md` was updated locally so dev DB can be deployed with `up -d db-dev` without starting stage/prod DB.
+  - `clipperstudio.ai` authoritative DNS is Cloudflare (`adele.ns.cloudflare.com`, `owen.ns.cloudflare.com`), while Hosting.KR is the registrar.
+  - m2-proxy/office WAN IPv4 is `112.169.113.138`, but ipTIME reports it as dynamic DHCP.
+  - ipTIME DDNS `metabuzz.iptime.org` points to `112.169.113.138`.
+  - ipTIME forwards `80/443` to m2-proxy `192.168.0.2`; router remote management is not configured.
+  - Existing WAN forwards `55101/55102/55103` go to dohit DB on `192.168.0.7`; do not add Clipper DB `55201/55202/55203` to WAN forwarding.
+  - Legacy records `api.clipperstudio.ai -> 3.34.33.3` and `demo.clipperstudio.ai -> 121.138.93.3` must not be changed until legacy cutover.
+  - Clipper dev records should be `dev.clipperstudio.ai`, `dev-admin.clipperstudio.ai`, `dev-api.clipperstudio.ai`, initially DNS-only.
+  - Because the WAN IP is dynamic, prefer Cloudflare CNAME records to `metabuzz.iptime.org`; A records to `112.169.113.138` are acceptable only while the WAN IP remains unchanged.
+  - The three dev CNAME records have been created and verified with `dig`; each resolves through `metabuzz.iptime.org` to `112.169.113.138`.
+  - Prod web/download target is `clipperstudio.ai`/`www.clipperstudio.ai` after replacing the current Cloudflare Pages holding page.
+  - `api.clipperstudio.ai` moves to Clipper2 prod API only after legacy Clipper is retired or cutover is approved.
+  - `clipper_infra/proxy/routes.md` and `env/stack.*.env.example` were updated locally to use `clipperstudio.ai` domains and known server LAN IPs.
+  - Next step is actual Clipper dev DB deployment preparation/execution on `m2-db`, not another preflight.
+  - 기록: `.codex/records/sessions/2026/06/04.md`
 
 ## Next Work
 
@@ -200,6 +236,22 @@ clipper_web_client: main, no commits yet; origin/main gone
    - 필요한 경우 Angular Plugin Store/job start UI에서 `runtimeKind` 표시/버튼 정책 연결.
 4. Clipper2 dev/stage/prod 인프라 구현을 이어간다.
    - 먼저 `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`와 `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`를 읽는다.
+   - `m2-proxy` read-only preflight는 완료됐다.
+   - `m2-db` read-only preflight는 완료됐다.
+   - `m2-stage` read-only preflight는 완료됐다.
+   - 다음 단계는 `m2-db`에서 Clipper dev DB deployment prep/execution이다.
+     - `clipper_infra/runbooks/deploy-db.md`의 dev-only command를 따른다.
+     - `CLIPPER_DB_BIND_HOST=192.168.0.7`로 둔다.
+     - `192.168.0.23 -> 192.168.0.7:55203` access만 허용하는 정책을 정한다.
+     - generic `docker compose up -d`는 dev/stage/prod DB를 함께 시작할 수 있으므로 사용하지 않는다.
+     - stage/prod DB port `55201/55202`는 닫힌 상태로 유지한다.
+   - Cloudflare에서는 dev route DNS를 먼저 예약한다.
+     - `dev.clipperstudio.ai` CNAME `metabuzz.iptime.org`
+     - `dev-admin.clipperstudio.ai` CNAME `metabuzz.iptime.org`
+     - `dev-api.clipperstudio.ai` CNAME `metabuzz.iptime.org`
+     - 초기에는 DNS-only 권장. NPM/Let's Encrypt/upstream 확인 후 프록싱 여부를 정한다.
+     - legacy `api.clipperstudio.ai`와 `demo.clipperstudio.ai`는 건드리지 않는다.
+   - 첫 실제 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
    - `clipper_infra` 초기 구성을 확인한다.
    - 실제 도메인, 서버 IP, S3 bucket/prefix, image registry/tag, DB password를 확정한다.
    - `env/*.env.example`을 서버별 실제 env 파일로 복사하고 값을 채운다.
@@ -239,8 +291,12 @@ Using Superpowers.
 11. `.codex/design/TEAM_DEVELOPMENT_GUIDE.md`
 12. `.codex/design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md`
 13. `.codex/design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md`
-14. `.codex/records/sessions/2026/05/29.md`
-15. `.codex/records/sessions/2026/05/27.md`
+14. `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`
+15. `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`
+16. `.codex/records/sessions/2026/06/02.md`
+17. `.codex/records/sessions/2026/06/04.md`
+18. `.codex/records/sessions/2026/05/29.md`
+19. `.codex/records/sessions/2026/05/27.md`
 
 현재 repo HEAD는 세션 시작 시 직접 `git status -sb`와 `git log -1 --oneline`으로 재확인한다.
 
@@ -249,7 +305,7 @@ Using Superpowers.
 - `clipper_nestjs`: `design/workflow-executor @ ceaa6ab Add workflow executor runtime dispatch`
 - `clipper_python`: `main @ 535131c Render sample images as cover`
 - `clipper_electron`: `main @ f701677 Revert "Update electron builder"`
-- `.codex`: `workflow-executor-design @ c76fdaf Add explanatory document for understanding Workflow, Plugin, and Job in Clipper2 architecture`
+- `.codex`: `workflow-executor-design`, 2026-06-04 preflight handoff commit 포함. 세션 시작 시 `git log -1 --oneline`으로 직접 재확인.
 - `clipper_infra`: `feature/infra-initial-setup @ 8226879 feat: add Clipper infra initial setup`
 - `clipper_web_admin`: `main`, no commits yet
 - `clipper_web_api`: `main`, no commits yet
@@ -279,6 +335,10 @@ Using Superpowers.
    - 플랫폼별 명시적 release build trigger와 release metadata 구조를 먼저 정한다.
    - dev/stage/prod 3환경을 기준으로 서버/컨테이너/DB/release/update feed 구조를 정한다.
    - `clipper_infra`에는 초기 compose/env/runbook 구성이 있다.
+   - `m2-proxy`, `m2-db`, `m2-stage` preflight는 완료됐다.
+   - 다음은 m2-db에서 Clipper dev DB만 배포 준비/실행한다.
+   - `clipper_infra/runbooks/deploy-db.md`의 `db-dev` targeted command를 사용하고 generic `up -d`는 사용하지 않는다.
+   - 첫 실제 Clipper 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
    - 서버 IP, 도메인, proxy, registry, secret 주입, DB/백업 경로를 실제 값으로 채운다.
 5. 사용자가 요청하면 로컬 main들을 repo별로 push한다.
 6. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
@@ -286,7 +346,7 @@ Using Superpowers.
    - 샘플 이미지는 콘텐츠 영역을 `cover + center crop`으로 꽉 채워야 한다.
    - layout image/단색 background는 content area 밖에서 흰색으로 빠지면 안 된다.
    - 공식 등록 전 카드 썸네일은 4:3 기준이어야 한다.
-6. 새 분석 문서는 `.codex/design/` 아래에 둔다.
+7. 새 분석 문서는 `.codex/design/` 아래에 둔다.
 
 주의:
 - `.codex`는 별도 git repo다.
