@@ -204,8 +204,10 @@ clipper_web_client: main, no commits yet; origin/main gone
   - `m2-stage` preflight도 완료됐다.
   - `m2-stage`는 `192.168.0.23`, dohit dev/stage compose roots are `/Users/metabuzz/Desktop/project/dohit-infra-dev` and `/Users/metabuzz/Desktop/project/dohit-infra-stg`.
   - dohit dev/stage app ports `42103/43103/42101/43101` are in use, while Clipper app 예약 port `42201/42202/42203`, `42301/42302/42303`, `43201/43202/43203` are free.
-  - m2-stage can reach m2-db `55103`; `55203` is refused because Clipper dev DB is not deployed yet.
-  - Clipper web/admin/API images and `stack.dev.env` are not ready, so web/admin/API deployment is not next.
+  - Clipper dev DB was deployed on m2-db as `clipper-db-dev`, healthy on `192.168.0.7:55203`.
+  - m2-stage can reach m2-db `55203`; `55201/55202` remain refused.
+  - The dev DB password appeared in shared command output. Treat it as exposed and rotate before wiring real app env.
+  - Clipper web/admin/API images and `stack.dev.env` are not ready, so real web/admin/API deployment is not ready yet.
   - `clipper_infra/runbooks/deploy-db.md` was updated locally so dev DB can be deployed with `up -d db-dev` without starting stage/prod DB.
   - `clipperstudio.ai` authoritative DNS is Cloudflare (`adele.ns.cloudflare.com`, `owen.ns.cloudflare.com`), while Hosting.KR is the registrar.
   - m2-proxy/office WAN IPv4 is `112.169.113.138`, but ipTIME reports it as dynamic DHCP.
@@ -216,10 +218,13 @@ clipper_web_client: main, no commits yet; origin/main gone
   - Clipper dev records should be `dev.clipperstudio.ai`, `dev-admin.clipperstudio.ai`, `dev-api.clipperstudio.ai`, initially DNS-only.
   - Because the WAN IP is dynamic, prefer Cloudflare CNAME records to `metabuzz.iptime.org`; A records to `112.169.113.138` are acceptable only while the WAN IP remains unchanged.
   - The three dev CNAME records have been created and verified with `dig`; each resolves through `metabuzz.iptime.org` to `112.169.113.138`.
+  - Temporary `nginx:alpine` containers on m2-stage verified `42203/42303/43203`.
+  - NPM dev proxy hosts were added and external HTTPS checks returned `HTTP/2 200` for all three dev domains.
+  - Observed `strict-transport-security: max-age=63072000; preload`; user decided to keep HSTS enabled for dev.
   - Prod web/download target is `clipperstudio.ai`/`www.clipperstudio.ai` after replacing the current Cloudflare Pages holding page.
   - `api.clipperstudio.ai` moves to Clipper2 prod API only after legacy Clipper is retired or cutover is approved.
   - `clipper_infra/proxy/routes.md` and `env/stack.*.env.example` were updated locally to use `clipperstudio.ai` domains and known server LAN IPs.
-  - Next step is actual Clipper dev DB deployment preparation/execution on `m2-db`, not another preflight.
+  - Next step is Clipper web client/admin/API scaffold and dev Docker image preparation.
   - 기록: `.codex/records/sessions/2026/06/04.md`
 
 ## Next Work
@@ -239,18 +244,27 @@ clipper_web_client: main, no commits yet; origin/main gone
    - `m2-proxy` read-only preflight는 완료됐다.
    - `m2-db` read-only preflight는 완료됐다.
    - `m2-stage` read-only preflight는 완료됐다.
-   - 다음 단계는 `m2-db`에서 Clipper dev DB deployment prep/execution이다.
-     - `clipper_infra/runbooks/deploy-db.md`의 dev-only command를 따른다.
-     - `CLIPPER_DB_BIND_HOST=192.168.0.7`로 둔다.
-     - `192.168.0.23 -> 192.168.0.7:55203` access만 허용하는 정책을 정한다.
-     - generic `docker compose up -d`는 dev/stage/prod DB를 함께 시작할 수 있으므로 사용하지 않는다.
-     - stage/prod DB port `55201/55202`는 닫힌 상태로 유지한다.
+   - `clipper-db-dev` deployment is complete and healthy on `192.168.0.7:55203`.
+     - `55201/55202` remain closed.
+     - m2-stage can reach `192.168.0.7:55203`.
+     - Rotate the exposed dev DB password before using it in app env.
    - Cloudflare에서는 dev route DNS를 먼저 예약한다.
      - `dev.clipperstudio.ai` CNAME `metabuzz.iptime.org`
      - `dev-admin.clipperstudio.ai` CNAME `metabuzz.iptime.org`
      - `dev-api.clipperstudio.ai` CNAME `metabuzz.iptime.org`
      - 초기에는 DNS-only 권장. NPM/Let's Encrypt/upstream 확인 후 프록싱 여부를 정한다.
      - legacy `api.clipperstudio.ai`와 `demo.clipperstudio.ai`는 건드리지 않는다.
+  - NPM dev proxy hosts are already created and route to temporary nginx test containers.
+     - `dev.clipperstudio.ai` -> `192.168.0.23:42203`
+     - `dev-admin.clipperstudio.ai` -> `192.168.0.23:42303`
+     - `dev-api.clipperstudio.ai` -> `192.168.0.23:43203`
+     - HSTS is enabled for dev by user decision.
+     - Remove temporary nginx test containers before deploying real Clipper dev services on these ports.
+   - Next implementation target is `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin`.
+     - Create minimal scaffold and Docker images.
+     - Produce dev image tags matching `clipper_infra/env/stack.dev.env.example`.
+     - Create m2-stage server-local `env/stack.dev.env`.
+     - Replace the temporary nginx containers with real dev services.
    - 첫 실제 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
    - `clipper_infra` 초기 구성을 확인한다.
    - 실제 도메인, 서버 IP, S3 bucket/prefix, image registry/tag, DB password를 확정한다.
@@ -336,9 +350,12 @@ Using Superpowers.
    - dev/stage/prod 3환경을 기준으로 서버/컨테이너/DB/release/update feed 구조를 정한다.
    - `clipper_infra`에는 초기 compose/env/runbook 구성이 있다.
    - `m2-proxy`, `m2-db`, `m2-stage` preflight는 완료됐다.
-   - 다음은 m2-db에서 Clipper dev DB만 배포 준비/실행한다.
-   - `clipper_infra/runbooks/deploy-db.md`의 `db-dev` targeted command를 사용하고 generic `up -d`는 사용하지 않는다.
+   - `clipper-db-dev`도 m2-db에서 배포 완료됐고, m2-stage에서 `192.168.0.7:55203` 접근 확인이 끝났다.
+   - dev Cloudflare DNS와 NPM dev proxy hosts도 완료됐고, 현재 임시 `nginx:alpine` 컨테이너가 dev 도메인 3개에 응답한다.
+   - 다음은 `clipper_web_api`, `clipper_web_client`, `clipper_web_admin` 최소 scaffold와 dev Docker image 준비다.
+   - real dev service 배포 전에는 m2-stage의 임시 `clipper-dev-*-test` nginx containers를 제거한다.
    - 첫 실제 Clipper 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
+   - dev DB password는 공유 출력에 노출됐으므로, 실제 app env에 쓰기 전에 rotate한다.
    - 서버 IP, 도메인, proxy, registry, secret 주입, DB/백업 경로를 실제 값으로 채운다.
 5. 사용자가 요청하면 로컬 main들을 repo별로 push한다.
 6. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
