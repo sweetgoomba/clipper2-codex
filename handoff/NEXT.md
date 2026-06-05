@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-06-04
+최신 갱신: 2026-06-05
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -20,10 +20,12 @@
 12. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
 13. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
 14. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
-15. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
-16. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
-17. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-18. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+15. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
+16. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
+17. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
+18. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
+19. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+20. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Current Repo Heads
 
@@ -51,6 +53,17 @@ clipper_web_client: main, no commits yet; origin/main gone
 `clipper_web_admin`, `clipper_web_api`, `clipper_web_client` 3개 repo는 생성/클론만 된 상태로 확인됐다. `git log -1 --oneline`은 첫 커밋이 없어 실패하는 것이 정상이다.
 
 2026-06-04 로컬 세션에서도 위 앱 repo/infra repo 상태를 재확인했다. `clipper_web_admin`, `clipper_web_api`, `clipper_web_client`는 여전히 첫 커밋이 없다.
+
+2026-06-05 기준 추가 확인:
+
+```text
+clipper_infra:      feature/infra-initial-setup @ 49faa91 feat: split Clipper DB stack into user admin release
+clipper_web_admin:  main @ fef456a feat: add minimal web admin scaffold
+clipper_web_api:    main @ ec13be7 feat: add minimal web API scaffold
+clipper_web_client: main @ 791c935 feat: add minimal web client scaffold
+```
+
+위 4개 repo는 commit/push 완료됐다. `.codex`의 이전 문서 commit `e09fa2e docs: record Clipper web scaffold and DB split`은 사용자가 직접 push했다.
 
 ### Main Branch Consolidation Notes
 
@@ -208,11 +221,15 @@ clipper_web_client: main, no commits yet; origin/main gone
   - `m2-stage` preflight도 완료됐다.
   - `m2-stage`는 `192.168.0.23`, dohit dev/stage compose roots are `/Users/metabuzz/Desktop/project/dohit-infra-dev` and `/Users/metabuzz/Desktop/project/dohit-infra-stg`.
   - dohit dev/stage app ports `42103/43103/42101/43101` are in use, while Clipper app 예약 port `42201/42202/42203`, `42301/42302/42303`, `43201/43202/43203` are free.
-  - Target dev DB deployment is `clipper-db-user-dev`, `clipper-db-admin-dev`, and `clipper-db-release-dev`.
-  - m2-stage still needs verification for `55203/55213/55223` after the split dev DB deployment.
+  - Split dev DB deployment is complete on m2-db:
+    - `clipper-db-user-dev` healthy on `192.168.0.7:55203`
+    - `clipper-db-admin-dev` healthy on `192.168.0.7:55213`
+    - `clipper-db-release-dev` healthy on `192.168.0.7:55223`
+  - m2-stage network verification to all three dev DB ports succeeded.
   - Rotate any exposed dev DB passwords before wiring real app env.
-  - Clipper web/admin/API images and `stack.dev.env` are not ready, so real web/admin/API deployment is not ready yet.
-  - `clipper_infra/runbooks/deploy-db.md` was updated locally so dev DB can be deployed with `up -d db-dev` without starting stage/prod DB.
+  - Clipper web/admin/API scaffold repos are committed and pushed, but dev images still need registry push or server-side build.
+  - `stack.dev.env` is not ready yet, so real web/admin/API deployment is not ready yet.
+  - `clipper_infra/runbooks/deploy-db.md` documents deploying the dev DB stack with `docker compose --env-file ../env/db.dev.env -f compose.yml up -d`.
   - `clipperstudio.ai` authoritative DNS is Cloudflare (`adele.ns.cloudflare.com`, `owen.ns.cloudflare.com`), while Hosting.KR is the registrar.
   - m2-proxy/office WAN IPv4 is `112.169.113.138`, but ipTIME reports it as dynamic DHCP.
   - ipTIME DDNS `metabuzz.iptime.org` points to `112.169.113.138`.
@@ -248,12 +265,15 @@ clipper_web_client: main, no commits yet; origin/main gone
    - `m2-proxy` read-only preflight는 완료됐다.
    - `m2-db` read-only preflight는 완료됐다.
    - `m2-stage` read-only preflight는 완료됐다.
-   - Target split dev DBs are `clipper-db-user-dev` on `55203`, `clipper-db-admin-dev` on `55213`, and `clipper-db-release-dev` on `55223`.
+   - Split dev DBs are deployed and healthy:
+     - `clipper-db-user-dev` on `192.168.0.7:55203`
+     - `clipper-db-admin-dev` on `192.168.0.7:55213`
+     - `clipper-db-release-dev` on `192.168.0.7:55223`
      - DB Compose projects are environment-scoped: `clipper-db-dev`, `clipper-db-stage`, and optional self-hosted `clipper-db-prod`.
      - Prod DB can also be an external PostgreSQL service; in that case DB Compose is not used for prod and app env DB URLs point to the external DB endpoints.
      - DB containers create Postgres databases/users and persistent Docker volumes, not app tables. Tables come from app migrations/seed scripts.
      - `55201/55202/55211/55212/55221/55222` remain closed until stage/prod are ready.
-     - m2-stage needs verification for `192.168.0.7:55203/55213/55223` after deployment.
+     - m2-stage `nc` verification to `55203/55213/55223` succeeded.
      - Rotate any exposed dev DB passwords before using real app env.
    - Cloudflare에서는 dev route DNS를 먼저 예약한다.
      - `dev.clipperstudio.ai` CNAME `metabuzz.iptime.org`
@@ -267,9 +287,9 @@ clipper_web_client: main, no commits yet; origin/main gone
      - `dev-api.clipperstudio.ai` -> `192.168.0.23:43203`
      - HSTS is enabled for dev by user decision.
      - Remove temporary nginx test containers before deploying real Clipper dev services on these ports.
-   - Next implementation target is `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin`.
-     - Create minimal scaffold and Docker images.
-     - Produce dev image tags matching `clipper_infra/env/stack.dev.env.example`.
+   - `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin` minimal scaffolds are committed and pushed.
+     - Local Docker builds passed for dev tags matching `clipper_infra/env/stack.dev.env.example`.
+     - Push images to registry or build them on m2-stage before real dev service deployment.
      - Create m2-stage server-local `env/stack.dev.env`.
      - Replace the temporary nginx containers with real dev services.
    - 첫 실제 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
@@ -278,7 +298,7 @@ clipper_web_client: main, no commits yet; origin/main gone
    - `env/*.env.example`을 서버별 실제 env 파일로 복사하고 값을 채운다.
    - DB env files are split by environment: `db.dev.env`, `db.stage.env`, and optional `db.prod.local.env`.
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
-   - `clipper_web_admin`, `clipper_web_api`, `clipper_web_client` now have minimal Docker-buildable scaffolds locally.
+   - Detailed session design doc: `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`
 5. 앱 repo의 로컬 `main`을 remote에 push할지 사용자에게 확인하거나, 사용자가 요청하면 repo별로 push한다.
 6. Template Builder sample render smoke를 다시 할 경우 아래를 확인한다.
    - 새 템플릿 생성 후 단색/이미지 layout 변경 저장.
@@ -315,10 +335,12 @@ Using Superpowers.
 13. `.codex/design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md`
 14. `.codex/design/CLIPPER2_INFRA_EASY_GUIDE.md`
 15. `.codex/design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md`
-16. `.codex/records/sessions/2026/06/02.md`
-17. `.codex/records/sessions/2026/06/04.md`
-18. `.codex/records/sessions/2026/05/29.md`
-19. `.codex/records/sessions/2026/05/27.md`
+16. `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`
+17. `.codex/records/sessions/2026/06/05.md`
+18. `.codex/records/sessions/2026/06/02.md`
+19. `.codex/records/sessions/2026/06/04.md`
+20. `.codex/records/sessions/2026/05/29.md`
+21. `.codex/records/sessions/2026/05/27.md`
 
 현재 repo HEAD는 세션 시작 시 직접 `git status -sb`와 `git log -1 --oneline`으로 재확인한다.
 
@@ -327,11 +349,11 @@ Using Superpowers.
 - `clipper_nestjs`: `design/workflow-executor @ ceaa6ab Add workflow executor runtime dispatch`
 - `clipper_python`: `main @ 535131c Render sample images as cover`
 - `clipper_electron`: `main @ f701677 Revert "Update electron builder"`
-- `.codex`: `workflow-executor-design`, 2026-06-04 preflight handoff commit 포함. 세션 시작 시 `git log -1 --oneline`으로 직접 재확인.
-- `clipper_infra`: `feature/infra-initial-setup @ 8226879 feat: add Clipper infra initial setup`
-- `clipper_web_admin`: `main`, no commits yet
-- `clipper_web_api`: `main`, no commits yet
-- `clipper_web_client`: `main`, no commits yet
+- `.codex`: `workflow-executor-design`, 2026-06-05 Clipper web DB split/session closeout docs 포함. 세션 시작 시 `git log -1 --oneline`으로 직접 재확인.
+- `clipper_infra`: `feature/infra-initial-setup @ 49faa91 feat: split Clipper DB stack into user admin release`
+- `clipper_web_admin`: `main @ fef456a feat: add minimal web admin scaffold`
+- `clipper_web_api`: `main @ ec13be7 feat: add minimal web API scaffold`
+- `clipper_web_client`: `main @ 791c935 feat: add minimal web client scaffold`
 
 다음에 할 일:
 1. `.codex`, `clipper_nestjs`, `clipper_electron`, `clipper_angular`, `clipper_python` 상태를 확인한다.
@@ -358,9 +380,9 @@ Using Superpowers.
    - dev/stage/prod 3환경을 기준으로 서버/컨테이너/DB/release/update feed 구조를 정한다.
    - `clipper_infra`에는 초기 compose/env/runbook 구성이 있다.
    - `m2-proxy`, `m2-db`, `m2-stage` preflight는 완료됐다.
-   - `clipper-db-dev`도 m2-db에서 배포 완료됐고, m2-stage에서 `192.168.0.7:55203` 접근 확인이 끝났다.
+   - `clipper-db-dev`도 m2-db에서 배포 완료됐고, m2-stage에서 `192.168.0.7:55203/55213/55223` 접근 확인이 끝났다.
    - dev Cloudflare DNS와 NPM dev proxy hosts도 완료됐고, 현재 임시 `nginx:alpine` 컨테이너가 dev 도메인 3개에 응답한다.
-   - 다음은 `clipper_web_api`, `clipper_web_client`, `clipper_web_admin` 최소 scaffold와 dev Docker image 준비다.
+   - 다음은 dev image를 registry에 push하거나 m2-stage에서 server-side build한 뒤 real dev service를 배포하는 것이다.
    - real dev service 배포 전에는 m2-stage의 임시 `clipper-dev-*-test` nginx containers를 제거한다.
    - 첫 실제 Clipper 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
    - dev DB password는 공유 출력에 노출됐으므로, 실제 app env에 쓰기 전에 rotate한다.
