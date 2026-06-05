@@ -199,21 +199,25 @@ clipper_web_client: main, no commits yet; origin/main gone
   - Clipper 예약 port는 m2-proxy/m2-stage/m2-db 후보에서 충돌이 확인되지 않았다.
   - `m2-db` preflight도 완료됐다.
   - `m2-db`는 `192.168.0.7`, dohit DB compose는 `/Users/metabuzz/Desktop/project/dohit-infra/database/postgres/docker-compose.yml`이다.
-  - dohit DB `55101/55102/55103`은 `0.0.0.0`에 bind되어 있고, Clipper DB 예약 port `55201/55202/55203`은 충돌이 없다.
-  - Clipper dev DB는 `CLIPPER_DB_BIND_HOST=192.168.0.7`, source allow `192.168.0.23 -> 192.168.0.7:55203` 방향이 권장된다.
+  - dohit DB `55101/55102/55103`은 `0.0.0.0`에 bind되어 있고, 기존 Clipper DB 예약 port `55201/55202/55203`은 충돌이 없다.
+  - 2026-06-05 기준 목표 DB 모델은 user/admin/release split이다.
+    - user DB ports: dev `55203`, stage `55201`, prod `55202`
+    - admin DB ports: dev `55213`, stage `55211`, prod `55212`
+    - release DB ports: dev `55223`, stage `55221`, prod `55222`
+  - Clipper dev DB는 `CLIPPER_DB_BIND_HOST=192.168.0.7`, source allow `192.168.0.23 -> 192.168.0.7:55203/55213/55223` 방향이 권장된다.
   - `m2-stage` preflight도 완료됐다.
   - `m2-stage`는 `192.168.0.23`, dohit dev/stage compose roots are `/Users/metabuzz/Desktop/project/dohit-infra-dev` and `/Users/metabuzz/Desktop/project/dohit-infra-stg`.
   - dohit dev/stage app ports `42103/43103/42101/43101` are in use, while Clipper app 예약 port `42201/42202/42203`, `42301/42302/42303`, `43201/43202/43203` are free.
-  - Clipper dev DB was deployed on m2-db as `clipper-db-dev`, healthy on `192.168.0.7:55203`.
-  - m2-stage can reach m2-db `55203`; `55201/55202` remain refused.
-  - The dev DB password appeared in shared command output. Treat it as exposed and rotate before wiring real app env.
+  - Target dev DB deployment is `clipper-db-user-dev`, `clipper-db-admin-dev`, and `clipper-db-release-dev`.
+  - m2-stage still needs verification for `55203/55213/55223` after the split dev DB deployment.
+  - Rotate any exposed dev DB passwords before wiring real app env.
   - Clipper web/admin/API images and `stack.dev.env` are not ready, so real web/admin/API deployment is not ready yet.
   - `clipper_infra/runbooks/deploy-db.md` was updated locally so dev DB can be deployed with `up -d db-dev` without starting stage/prod DB.
   - `clipperstudio.ai` authoritative DNS is Cloudflare (`adele.ns.cloudflare.com`, `owen.ns.cloudflare.com`), while Hosting.KR is the registrar.
   - m2-proxy/office WAN IPv4 is `112.169.113.138`, but ipTIME reports it as dynamic DHCP.
   - ipTIME DDNS `metabuzz.iptime.org` points to `112.169.113.138`.
   - ipTIME forwards `80/443` to m2-proxy `192.168.0.2`; router remote management is not configured.
-  - Existing WAN forwards `55101/55102/55103` go to dohit DB on `192.168.0.7`; do not add Clipper DB `55201/55202/55203` to WAN forwarding.
+  - Existing WAN forwards `55101/55102/55103` go to dohit DB on `192.168.0.7`; do not add Clipper DB `55201/55202/55203/55211/55212/55213/55221/55222/55223` to WAN forwarding.
   - Legacy records `api.clipperstudio.ai -> 3.34.33.3` and `demo.clipperstudio.ai -> 121.138.93.3` must not be changed until legacy cutover.
   - Clipper dev records should be `dev.clipperstudio.ai`, `dev-admin.clipperstudio.ai`, `dev-api.clipperstudio.ai`, initially DNS-only.
   - Because the WAN IP is dynamic, prefer Cloudflare CNAME records to `metabuzz.iptime.org`; A records to `112.169.113.138` are acceptable only while the WAN IP remains unchanged.
@@ -244,10 +248,13 @@ clipper_web_client: main, no commits yet; origin/main gone
    - `m2-proxy` read-only preflight는 완료됐다.
    - `m2-db` read-only preflight는 완료됐다.
    - `m2-stage` read-only preflight는 완료됐다.
-   - `clipper-db-dev` deployment is complete and healthy on `192.168.0.7:55203`.
-     - `55201/55202` remain closed.
-     - m2-stage can reach `192.168.0.7:55203`.
-     - Rotate the exposed dev DB password before using it in app env.
+   - Target split dev DBs are `clipper-db-user-dev` on `55203`, `clipper-db-admin-dev` on `55213`, and `clipper-db-release-dev` on `55223`.
+     - DB Compose projects are environment-scoped: `clipper-db-dev`, `clipper-db-stage`, and optional self-hosted `clipper-db-prod`.
+     - Prod DB can also be an external PostgreSQL service; in that case DB Compose is not used for prod and app env DB URLs point to the external DB endpoints.
+     - DB containers create Postgres databases/users and persistent Docker volumes, not app tables. Tables come from app migrations/seed scripts.
+     - `55201/55202/55211/55212/55221/55222` remain closed until stage/prod are ready.
+     - m2-stage needs verification for `192.168.0.7:55203/55213/55223` after deployment.
+     - Rotate any exposed dev DB passwords before using real app env.
    - Cloudflare에서는 dev route DNS를 먼저 예약한다.
      - `dev.clipperstudio.ai` CNAME `metabuzz.iptime.org`
      - `dev-admin.clipperstudio.ai` CNAME `metabuzz.iptime.org`
@@ -269,8 +276,9 @@ clipper_web_client: main, no commits yet; origin/main gone
    - `clipper_infra` 초기 구성을 확인한다.
    - 실제 도메인, 서버 IP, S3 bucket/prefix, image registry/tag, DB password를 확정한다.
    - `env/*.env.example`을 서버별 실제 env 파일로 복사하고 값을 채운다.
+   - DB env files are split by environment: `db.dev.env`, `db.stage.env`, and optional `db.prod.local.env`.
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
-   - `clipper_web_admin`, `clipper_web_api`, `clipper_web_client`는 아직 첫 커밋이 없는 빈 repo다.
+   - `clipper_web_admin`, `clipper_web_api`, `clipper_web_client` now have minimal Docker-buildable scaffolds locally.
 5. 앱 repo의 로컬 `main`을 remote에 push할지 사용자에게 확인하거나, 사용자가 요청하면 repo별로 push한다.
 6. Template Builder sample render smoke를 다시 할 경우 아래를 확인한다.
    - 새 템플릿 생성 후 단색/이미지 layout 변경 저장.

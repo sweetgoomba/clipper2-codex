@@ -134,9 +134,15 @@ Role:
 Recommended containers:
 
 ```text
-clipper-db-dev
-clipper-db-stage
-clipper-db-prod
+clipper-db-user-dev
+clipper-db-admin-dev
+clipper-db-release-dev
+clipper-db-user-stage
+clipper-db-admin-stage
+clipper-db-release-stage
+clipper-db-user-prod
+clipper-db-admin-prod
+clipper-db-release-prod
 clipper-backup-dev
 clipper-backup-stage
 clipper-backup-prod
@@ -147,6 +153,9 @@ Role:
 
 - Dedicated DB host.
 - Environment-specific PostgreSQL containers and volumes.
+- User-facing service data, admin-page operational data, and desktop
+  release/update data are separated into different PostgreSQL containers for
+  each environment.
 - Backup workers.
 - Health monitoring.
 
@@ -221,36 +230,54 @@ clipper-web-api-prod
 Recommended containers:
 
 ```text
-clipper-db-dev
-clipper-db-stage
-clipper-db-prod
+clipper-db-user-dev
+clipper-db-admin-dev
+clipper-db-release-dev
+clipper-db-user-stage
+clipper-db-admin-stage
+clipper-db-release-stage
+clipper-db-user-prod
+clipper-db-admin-prod
+clipper-db-release-prod
 ```
 
 Recommended DB names:
 
 ```text
-clipper_dev
-clipper_stage
-clipper_prod
+clipper_user_dev
+clipper_admin_dev
+clipper_release_dev
+clipper_user_stage
+clipper_admin_stage
+clipper_release_stage
+clipper_user_prod
+clipper_admin_prod
+clipper_release_prod
 ```
 
 Recommended volumes:
 
 ```text
-clipper_postgres_data_dev
-clipper_postgres_data_stage
-clipper_postgres_data_prod
+clipper_postgres_data_user_dev
+clipper_postgres_data_admin_dev
+clipper_postgres_data_release_dev
+clipper_postgres_data_user_stage
+clipper_postgres_data_admin_stage
+clipper_postgres_data_release_stage
+clipper_postgres_data_user_prod
+clipper_postgres_data_admin_prod
+clipper_postgres_data_release_prod
 ```
 
 ## Port Plan
 
 Use a separate range from dohit.
 
-| Env | web client | admin web | API | DB |
-| --- | ---: | ---: | ---: | ---: |
-| stage | 42201 | 42301 | 43201 | 55201 |
-| prod | 42202 | 42302 | 43202 | 55202 |
-| dev | 42203 | 42303 | 43203 | 55203 |
+| Env | web client | admin web | API | user DB | admin DB | release DB |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| stage | 42201 | 42301 | 43201 | 55201 | 55211 | 55221 |
+| prod | 42202 | 42302 | 43202 | 55202 | 55212 | 55222 |
+| dev | 42203 | 42303 | 43203 | 55203 | 55213 | 55223 |
 
 Notes:
 
@@ -294,7 +321,8 @@ Current ipTIME forwarding:
 ```
 
 Existing dohit DB WAN forwards `55101/55102/55103` point to `192.168.0.7`.
-Do not add Clipper DB ports `55201/55202/55203` to WAN port forwarding.
+Do not add Clipper DB ports `55201/55202/55203`, `55211/55212/55213`, or
+`55221/55222/55223` to WAN port forwarding.
 
 Existing legacy Clipper records must be preserved until legacy cutover:
 
@@ -360,9 +388,15 @@ clipper-web-api-stage     : host 43201
 ### Mac mini 3
 
 ```text
-clipper-db-dev       : host 55203
-clipper-db-stage     : host 55201
-clipper-db-prod      : host 55202
+clipper-db-user-dev      : host 55203
+clipper-db-admin-dev     : host 55213
+clipper-db-release-dev   : host 55223
+clipper-db-user-stage    : host 55201
+clipper-db-admin-stage   : host 55211
+clipper-db-release-stage : host 55221
+clipper-db-user-prod     : host 55202
+clipper-db-admin-prod    : host 55212
+clipper-db-release-prod  : host 55222
 clipper-backup-dev
 clipper-backup-stage
 clipper-backup-prod
@@ -377,11 +411,17 @@ Use separate Compose project names.
 clipper-dev
 clipper-stage
 clipper-prod
-clipper-db
+clipper-db-dev
+clipper-db-stage
+clipper-db-prod
 clipper-monitor
 ```
 
 Avoid sharing dohit networks, volumes, DB users, backup paths, or secrets.
+DB Compose projects are environment-scoped. Each DB project contains three
+services, `db-user`, `db-admin`, and `db-release`, with environment-specific
+container names, ports, database names, users, and volumes supplied by the env
+file.
 
 ## Image Build And Deploy Model
 
@@ -605,18 +645,48 @@ stage verified
 Recommended:
 
 ```text
-clipper-db-dev
-  DB: clipper_dev
+clipper-db-user-dev
+  DB: clipper_user_dev
   Backup: optional or short retention
 
-clipper-db-stage
-  DB: clipper_stage
+clipper-db-admin-dev
+  DB: clipper_admin_dev
+  Backup: optional or short retention
+
+clipper-db-release-dev
+  DB: clipper_release_dev
+  Backup: optional or short retention
+
+clipper-db-user-stage
+  DB: clipper_user_stage
   Backup: daily
 
-clipper-db-prod
-  DB: clipper_prod
+clipper-db-admin-stage
+  DB: clipper_admin_stage
+  Backup: daily
+
+clipper-db-release-stage
+  DB: clipper_release_stage
+  Backup: daily
+
+clipper-db-user-prod
+  DB: clipper_user_prod
+  Backup: daily minimum
+
+clipper-db-admin-prod
+  DB: clipper_admin_prod
+  Backup: daily minimum
+
+clipper-db-release-prod
+  DB: clipper_release_prod
   Backup: daily minimum
 ```
+
+Prod DB can be self-hosted with the same DB Compose file on a local Mac mini or
+on a cloud VM. If prod uses an external PostgreSQL service, DB Compose is not
+used for prod; the prod app env points `CLIPPER_USER_DATABASE_URL`,
+`CLIPPER_ADMIN_DATABASE_URL`, and `CLIPPER_RELEASE_DATABASE_URL` at the
+external DB endpoints.
 
 Backup destinations:
 
