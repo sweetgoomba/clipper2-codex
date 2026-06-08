@@ -2,6 +2,8 @@
 
 작성일: 2026-06-05 KST
 
+마지막 갱신: 2026-06-08 KST
+
 ## Scope
 
 이 문서는 2026-06-05 세션에서 정한 Clipper2 web/admin/API scaffold,
@@ -230,12 +232,15 @@ future user portal for account, entitlement, credit, or payment-related flows
 Current scaffold:
 
 ```text
-Nginx static site
-runtime-config.js generated from container env
-API health display
-Windows/macOS download buttons are placeholder/disabled
+Angular 19 app
+placeholder root page only
+Docker image builds Angular output and serves it with Nginx
 Docker-buildable and deployable
 ```
+
+The real client-facing download/login/signup pages are being developed
+separately. Until those changes are merged, the deployed page should remain a
+plain placeholder.
 
 ### clipper_web_admin
 
@@ -253,10 +258,9 @@ admin audit and internal operation tools
 Current scaffold:
 
 ```text
-Nginx static admin page
-runtime-config.js generated from container env
-calls /v1/info
-shows user/admin/release DB configuration status
+Angular 19 app
+placeholder root page only
+Docker image builds Angular output and serves it with Nginx
 Docker-buildable and deployable
 ```
 
@@ -276,7 +280,7 @@ central DB access
 Current scaffold:
 
 ```text
-dependency-free Node HTTP server
+NestJS app
 GET /healthz
 GET /v1/health
 GET /v1/info
@@ -288,8 +292,41 @@ The scaffold does not connect to PostgreSQL yet. It only reports whether
 `USER_DATABASE_URL`, `ADMIN_DATABASE_URL`, and `RELEASE_DATABASE_URL` are
 configured.
 
-The final implementation direction is NestJS, but the current scaffold is kept
-minimal to validate infra, proxy, runtime env, and Docker image wiring first.
+The current NestJS scaffold is still intentionally minimal. It validates infra,
+proxy, runtime env, and Docker wiring before migrations/auth/release metadata
+are implemented.
+
+## Dev App Deployment Strategy
+
+2026-06-08 decision: dev web/admin/API uses server-side builds on m2-stage.
+Registry/GHCR push-pull is not the current dev deployment path.
+
+Recommended m2-stage layout:
+
+```text
+/Users/metabuzz/Desktop/project/clipper2/
+  clipper_infra/
+  clipper_web_client/
+  clipper_web_admin/
+  clipper_web_api/
+```
+
+The app repos are siblings of `clipper_infra`, not ignored subdirectories
+inside the infra repo.
+
+Deployment flow:
+
+```text
+git pull each app repo
+docker build -t clipper-web-client:dev ./clipper_web_client
+docker build -t clipper-web-admin:dev ./clipper_web_admin
+docker build -t clipper-web-api:dev ./clipper_web_api
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate
+```
+
+The Angular web/admin images include Nginx only to serve static Angular build
+output inside their own containers. This is separate from the edge Nginx Proxy
+Manager on m2-proxy.
 
 ## Desktop Local Backend vs Web API
 
@@ -382,13 +419,13 @@ The user pushed that `.codex` commit manually.
 
 - No app DB migrations exist yet.
 - No app tables or seed data exist yet.
-- `clipper_web_api` is not NestJS yet.
-- The local Docker images were built, but dev images were not pushed to a
-  registry during this session.
+- The Angular/NestJS conversion and server-side build runbook updates are local
+  working-tree changes until committed and pushed.
 - Real web/admin/API services are not deployed on m2-stage yet.
-- Temporary Nginx test containers on m2-stage still need removal immediately
-  before deploying real dev services.
+- User reported the temporary Nginx test containers on m2-stage have already
+  been removed.
 - `env/stack.dev.env` still needs to be created on m2-stage with real DB URLs.
+- Exposed dev DB passwords should be rotated before using real app env values.
 - Social login/deep-link design is not finalized.
 - Payment module integration is not finalized. Current payment direction is
   manual bank transfer request/review.
