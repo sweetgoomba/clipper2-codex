@@ -1,30 +1,31 @@
-# Clipper2 Dev Deployment
+# Clipper2 Dev 배포 현황과 운영 가이드
 
-Last updated: 2026-06-08 KST
+마지막 업데이트: 2026-06-08 KST
 
-이 문서는 Clipper2 dev web/admin/API와 dev DB가 현재 어디에 어떻게 배포되어
-있는지, 코드 수정 후 어떻게 다시 배포하는지 정리한 Notion 공유용 문서다.
+이 문서는 Clipper2 dev web/admin/API와 dev DB가 현재 어느 서버에 어떤 구조로
+배포되어 있는지, 코드 수정 후 어떻게 다시 배포하는지 정리한 Notion 공유용
+문서다.
 
-Secret 값과 DB password는 이 문서에 적지 않는다.
+DB 비밀번호, 토큰, secret 값은 이 문서에 적지 않는다.
 
-## Current Status
+## 현재 상태
 
-Dev 배포는 완료되어 있다.
+dev 환경 배포는 완료되어 있다.
 
-| Area | Status |
+| 영역 | 상태 |
 | --- | --- |
-| Dev web | deployed |
-| Dev admin | deployed |
-| Dev API | deployed |
-| Dev DB user/admin/release | deployed |
-| API to DB connectivity | healthy, all three DBs connected |
-| Stage/prod app deployment | not started |
-| DB migrations/tables/seeds | not created yet |
-| Release metadata API | placeholder, `501` |
+| dev web | 배포 완료 |
+| dev admin | 배포 완료 |
+| dev API | 배포 완료 |
+| dev user/admin/release DB | 배포 완료 |
+| API와 DB 연결 | 정상, DB 3개 모두 connected |
+| stage/prod app 배포 | 아직 시작 안 함 |
+| DB migration/table/seed | 아직 없음 |
+| release metadata API | placeholder, `501` |
 
 현재 dev URL:
 
-| URL | Purpose |
+| URL | 용도 |
 | --- | --- |
 | `https://dev.clipperstudio.ai` | public web placeholder |
 | `https://dev-admin.clipperstudio.ai` | admin placeholder |
@@ -32,14 +33,14 @@ Dev 배포는 완료되어 있다.
 
 현재 placeholder 화면:
 
-| URL | Expected content |
+| URL | 기대 화면 |
 | --- | --- |
 | `https://dev.clipperstudio.ai` | `C / CLIPPER2 WEB / Coming Soon` |
 | `https://dev-admin.clipperstudio.ai` | `A / CLIPPER2 ADMIN / Coming Soon` |
 
-API health는 세 DB 연결 상태를 확인한다.
+API health는 DB 3개의 실제 연결 상태를 확인한다.
 
-Expected health shape:
+정상 응답 예:
 
 ```json
 {
@@ -58,29 +59,29 @@ Expected health shape:
 }
 ```
 
-## Server Roles
+## 서버 역할
 
-| Server | LAN IP | Role |
+| 서버 | LAN IP | 역할 |
 | --- | --- | --- |
-| m2-proxy | `192.168.0.2` | Nginx Proxy Manager, public HTTPS entry |
-| m2-stage | `192.168.0.23` | dev app containers: web/admin/API |
-| m2-db | `192.168.0.7` | dev PostgreSQL containers |
+| m2-proxy | `192.168.0.2` | Nginx Proxy Manager, public HTTPS 진입점 |
+| m2-stage | `192.168.0.23` | dev app 컨테이너 실행 서버 |
+| m2-db | `192.168.0.7` | dev PostgreSQL 컨테이너 실행 서버 |
 
-Public internet traffic path:
+외부 요청 흐름:
 
 ```text
 Cloudflare DNS
--> office WAN / ipTIME
+-> 사무실 WAN / ipTIME
 -> m2-proxy Nginx Proxy Manager
--> m2-stage app container port
--> API connects to m2-db PostgreSQL ports
+-> m2-stage app 컨테이너 포트
+-> API가 m2-db PostgreSQL 포트로 연결
 ```
 
-## Git Repos On m2-stage
+## m2-stage의 Git repo 배치
 
-The dev app server uses a server-side build layout.
+dev app 서버는 server-side build 방식으로 운영한다.
 
-Path:
+경로:
 
 ```text
 /Users/metabuzz/Desktop/project/clipper2/
@@ -90,45 +91,46 @@ Path:
   clipper_web_api/
 ```
 
-The app repos are siblings of `clipper_infra`.
+app repo 3개는 `clipper_infra` 안에 넣지 않고 같은 폴더에 sibling으로 둔다.
 
-Current pushed commits:
+현재 push된 기준 commit:
 
-| Repo | Branch | Current commit |
+| Repo | Branch | 현재 commit |
 | --- | --- | --- |
 | `clipper_infra` | `feature/infra-initial-setup` | `decdfa0 docs: document Clipper dev server-side deployment` |
 | `clipper_web_client` | `main` | `e2102db fix: include Angular zone polyfill` |
 | `clipper_web_admin` | `main` | `e21cabe fix: include Angular zone polyfill` |
 | `clipper_web_api` | `main` | `8386865 feat: verify database connections in health checks` |
 
-## Deployment Method
+## 배포 방식
 
-현재 dev는 server-side build 방식이다.
+현재 dev 환경은 server-side build 방식이다.
 
-즉, GitHub Container Registry/GHCR에 이미지를 push/pull하지 않는다. 코드가
-GitHub에 push되면 m2-stage에서 repo를 pull하고, m2-stage에서 Docker image를
-직접 build한 뒤 Docker Compose로 container를 recreate한다.
+즉, GitHub Container Registry/GHCR에 Docker image를 push/pull하지 않는다.
+코드가 GitHub에 push되면 m2-stage에서 해당 repo를 pull하고, m2-stage에서
+Docker image를 직접 build한 뒤 Docker Compose로 컨테이너를 recreate한다.
 
-Code push alone does not deploy automatically.
+코드를 push했다고 자동으로 배포되지는 않는다.
 
-## App Containers On m2-stage
+## m2-stage app 컨테이너
 
-Docker Compose files:
+Docker Compose 파일:
 
 ```text
 /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.yml
 /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.dev.yml
 ```
 
-Server-local env file:
+서버 로컬 env 파일:
 
 ```text
 /Users/metabuzz/Desktop/project/clipper2/clipper_infra/env/stack.dev.env
 ```
 
-Do not commit or paste this env file because it contains real DB passwords.
+이 env 파일에는 실제 DB password가 들어 있으므로 commit하거나 채팅/문서에
+붙여넣지 않는다.
 
-Final dev containers:
+현재 dev 컨테이너:
 
 | Compose service | Container name | Image | Host port |
 | --- | --- | --- | --- |
@@ -136,22 +138,37 @@ Final dev containers:
 | `web-admin` | `clipper-web-admin-dev` | `clipper-web-admin:dev` | `192.168.0.23:42303 -> 80` |
 | `api` | `clipper-web-api-dev` | `clipper-web-api:dev` | `192.168.0.23:43203 -> 43203` |
 
-`web-client` and `web-admin` images build Angular output and serve it through
-Nginx inside each app container. This Nginx is only for static file serving and
-is separate from Nginx Proxy Manager on m2-proxy.
+`web-client`, `web-admin` 이미지는 Angular build output을 만들고, 컨테이너
+내부 Nginx로 정적 파일을 서빙한다. 이 Nginx는 정적 파일 서빙용이고,
+m2-proxy의 Nginx Proxy Manager와 별개다.
 
-`api` runs Node/NestJS directly. It does not include Nginx.
+`api` 이미지는 Node/NestJS runtime이다. API 컨테이너에는 Nginx가 없다.
 
-Important: Compose service names are `web-client`, `web-admin`, and `api`.
-They are not the same as container names.
+주의: Compose service 이름과 container name은 다르다.
 
-For example, this is wrong:
+Compose service 이름:
+
+```text
+web-client
+web-admin
+api
+```
+
+컨테이너 이름:
+
+```text
+clipper-web-client-dev
+clipper-web-admin-dev
+clipper-web-api-dev
+```
+
+예를 들어 아래 명령은 틀린 명령이다.
 
 ```sh
 docker compose up -d --force-recreate clipper-web-api
 ```
 
-Use this instead:
+API만 recreate하려면 service 이름인 `api`를 써야 한다.
 
 ```sh
 docker compose up -d --force-recreate api
@@ -159,16 +176,16 @@ docker compose up -d --force-recreate api
 
 ## Nginx Proxy Manager
 
-Nginx Proxy Manager runs on m2-proxy.
+Nginx Proxy Manager는 m2-proxy에서 실행 중이다.
 
-Known m2-proxy compose root:
+확인된 m2-proxy compose root:
 
 ```text
 /Users/metabeojeu/Desktop/infra/proxy-server
 ```
 
-Public DNS is managed in Cloudflare. The dev records point to the office WAN
-through ipTIME DDNS:
+DNS는 Cloudflare에서 관리한다. dev record는 ipTIME DDNS를 통해 사무실 WAN으로
+향한다.
 
 ```text
 dev.clipperstudio.ai
@@ -177,14 +194,14 @@ dev-api.clipperstudio.ai
 -> metabuzz.iptime.org
 ```
 
-ipTIME forwards public HTTP/HTTPS traffic to m2-proxy:
+ipTIME은 외부 HTTP/HTTPS를 m2-proxy로 포워딩한다.
 
 | External port | Internal target |
 | ---: | --- |
 | `80` | `192.168.0.2:80` |
 | `443` | `192.168.0.2:443` |
 
-NPM proxy hosts:
+NPM proxy host 설정:
 
 | Domain | Upstream |
 | --- | --- |
@@ -192,29 +209,29 @@ NPM proxy hosts:
 | `dev-admin.clipperstudio.ai` | `http://192.168.0.23:42303` |
 | `dev-api.clipperstudio.ai` | `http://192.168.0.23:43203` |
 
-NPM options used for dev:
+dev NPM 옵션:
 
-| Option | Value |
+| 옵션 | 값 |
 | --- | --- |
 | Force SSL | on |
 | HTTP/2 Support | on |
-| HSTS | on, by operator decision |
+| HSTS | on, 운영자 결정 |
 | Websockets Support | on |
 | Block Common Exploits | on |
 | Cache Assets | off |
 
-Do not modify legacy routes without explicit cutover approval:
+명시적인 cutover 승인 전에는 legacy route를 변경하지 않는다.
 
-| Domain | Current purpose |
+| Domain | 현재 용도 |
 | --- | --- |
 | `api.clipperstudio.ai` | legacy Clipper API |
 | `demo.clipperstudio.ai` | legacy Clipper demo |
 
-## Dev Databases On m2-db
+## m2-db dev 데이터베이스
 
-Dev DBs are split into three PostgreSQL containers.
+dev DB는 PostgreSQL 컨테이너 3개로 나뉘어 있다.
 
-| DB role | Container | Host/port | Database | User |
+| DB 역할 | Container | Host/port | Database | User |
 | --- | --- | --- | --- | --- |
 | user | `clipper-db-user-dev` | `192.168.0.7:55203` | `clipper_user_dev` | `clipper_user_dev_user` |
 | admin | `clipper-db-admin-dev` | `192.168.0.7:55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
@@ -226,36 +243,35 @@ DB compose project:
 clipper-db-dev
 ```
 
-DB compose files on m2-db are from:
+m2-db의 DB compose 파일:
 
 ```text
 clipper_infra/db/compose.yml
 clipper_infra/env/db.dev.env
 ```
 
-Actual dev DB bind host is `192.168.0.7`, so m2-stage can access the DBs over
-the LAN. Example env files may contain placeholder/default values; use the
-server-local `db.dev.env` on m2-db as the source of truth.
+실제 dev DB bind host는 `192.168.0.7`이다. 그래서 m2-stage에서 LAN으로 DB에
+접근할 수 있다. example env 파일에는 placeholder/default 값이 있을 수 있으니,
+실제 운영 값은 m2-db 서버 로컬의 `db.dev.env`를 기준으로 본다.
 
-The DB containers create PostgreSQL databases/users and persistent Docker
-volumes. They do not create application tables. Tables will be created later by
-migrations.
+DB 컨테이너는 PostgreSQL database/user와 persistent Docker volume을 만든다.
+애플리케이션 테이블은 아직 만들지 않는다. 테이블은 추후 migration으로 생성한다.
 
-Current DB connection status:
+현재 DB 연결 상태:
 
 | From | Result |
 | --- | --- |
 | m2-stage -> `192.168.0.7:55203` | reachable |
 | m2-stage -> `192.168.0.7:55213` | reachable |
 | m2-stage -> `192.168.0.7:55223` | reachable |
-| `clipper_web_api /v1/health` -> all DBs | connected |
-| local Mac mini -> `192.168.0.7:55203` | timed out in user test |
+| `clipper_web_api /v1/health` -> DB 3개 | connected |
+| local Mac mini -> `192.168.0.7:55203` | user test에서 timeout |
 
-The local Mac mini timeout is a network reachability issue, not a password
-issue. A wrong password would normally produce an authentication error after TCP
-connection succeeds.
+local Mac mini에서 timeout이 나는 것은 password 문제가 아니라 네트워크 도달성
+문제다. password가 틀렸다면 TCP 연결이 된 뒤 PostgreSQL 인증 실패가 나오는
+것이 보통이다.
 
-Do not add Clipper DB ports to WAN port forwarding:
+Clipper DB 포트는 WAN port forwarding으로 열지 않는다.
 
 ```text
 55203
@@ -263,15 +279,15 @@ Do not add Clipper DB ports to WAN port forwarding:
 55223
 ```
 
-## DBeaver Access
+## DBeaver 접속
 
-Recommended:
+권장 방식:
 
-1. Open Google Remote Desktop to m2-stage.
-2. Run DBeaver on m2-stage.
-3. Connect to `192.168.0.7` DB ports from there.
+1. Google Remote Desktop으로 m2-stage에 접속한다.
+2. m2-stage 안에서 DBeaver를 실행한다.
+3. DBeaver에서 `192.168.0.7`의 DB 포트로 접속한다.
 
-DBeaver targets:
+DBeaver 접속 값:
 
 | Connection name | Host | Port | Database | User |
 | --- | --- | ---: | --- | --- |
@@ -279,26 +295,26 @@ DBeaver targets:
 | Clipper admin dev | `192.168.0.7` | `55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
 | Clipper release dev | `192.168.0.7` | `55223` | `clipper_release_dev` | `clipper_release_dev_user` |
 
-If local DBeaver must be used, use VPN or SSH tunnel. Do not expose DB ports on
-the router.
+로컬 DBeaver에서 꼭 접속해야 한다면 VPN 또는 SSH tunnel이 필요하다. router에
+DB 포트를 외부 공개하지 않는다.
 
-There are no application tables yet, so seeing only default PostgreSQL schemas
-is normal.
+아직 application table이 없으므로 DBeaver에서 기본 PostgreSQL schema만
+보이는 것은 정상이다.
 
-## Redeploy After Code Changes
+## 코드 수정 후 재배포
 
-General flow:
+기본 흐름:
 
-1. Developer changes code locally.
-2. Commit and push to GitHub.
-3. On m2-stage, pull the changed repo.
-4. Build the local Docker image on m2-stage.
-5. Recreate the corresponding Docker Compose service.
-6. Verify URL/health.
+1. 개발자가 로컬에서 코드를 수정한다.
+2. commit/push 한다.
+3. m2-stage에서 해당 repo를 pull 한다.
+4. m2-stage에서 Docker image를 build 한다.
+5. Docker Compose service를 recreate 한다.
+6. URL/health를 확인한다.
 
-### Redeploy Web Client
+### Web client 재배포
 
-Run on m2-stage:
+m2-stage에서 실행:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_client
@@ -309,16 +325,16 @@ cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate web-client
 ```
 
-Verify:
+확인:
 
 ```sh
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml ps web-client
 curl -I https://dev.clipperstudio.ai
 ```
 
-### Redeploy Admin
+### Admin 재배포
 
-Run on m2-stage:
+m2-stage에서 실행:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_admin
@@ -329,16 +345,16 @@ cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate web-admin
 ```
 
-Verify:
+확인:
 
 ```sh
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml ps web-admin
 curl -I https://dev-admin.clipperstudio.ai
 ```
 
-### Redeploy API
+### API 재배포
 
-Run on m2-stage:
+m2-stage에서 실행:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_api
@@ -349,14 +365,14 @@ cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate api
 ```
 
-Verify:
+확인:
 
 ```sh
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml ps api
 curl -s https://dev-api.clipperstudio.ai/v1/health
 ```
 
-Expected API health after DB connection checks:
+DB 연결 확인이 포함된 API health 기대값:
 
 ```text
 status: ok
@@ -366,9 +382,9 @@ releaseConnected: true
 checks.user/admin/release.status: ok
 ```
 
-### Rebuild And Recreate All App Services
+### 전체 app service 재배포
 
-Run on m2-stage:
+m2-stage에서 실행:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_client
@@ -388,7 +404,7 @@ docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate
 ```
 
-Verify:
+확인:
 
 ```sh
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml ps
@@ -397,16 +413,16 @@ curl -I https://dev-admin.clipperstudio.ai
 curl -s https://dev-api.clipperstudio.ai/v1/health
 ```
 
-## Useful Commands
+## 자주 쓰는 명령어
 
-List compose service names:
+Compose service 이름 확인:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
 docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml config --services
 ```
 
-Expected:
+기대값:
 
 ```text
 web-client
@@ -414,7 +430,7 @@ api
 web-admin
 ```
 
-Check app containers:
+app 컨테이너 확인:
 
 ```sh
 docker ps --filter name=clipper-web-client-dev
@@ -422,7 +438,7 @@ docker ps --filter name=clipper-web-admin-dev
 docker ps --filter name=clipper-web-api-dev
 ```
 
-Check DB reachability from m2-stage:
+m2-stage에서 DB 접근 확인:
 
 ```sh
 nc -vz 192.168.0.7 55203
@@ -430,28 +446,29 @@ nc -vz 192.168.0.7 55213
 nc -vz 192.168.0.7 55223
 ```
 
-Check DB containers on m2-db:
+m2-db에서 DB 컨테이너 확인:
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/db
 docker compose --env-file ../env/db.dev.env -f compose.yml ps
 ```
 
-## Current Limitations
+## 현재 한계
 
-- No DB migrations yet.
-- No application tables or seed data yet.
-- `GET /v1/releases/latest` still returns `501 release_metadata_not_implemented`.
-- Real client-facing download/login/signup pages are being developed separately.
-- Admin operational features are not implemented yet.
-- S3 installer artifact and update feed integration is not complete yet.
-- Stage/prod app deployment has not started.
+- 아직 DB migration이 없다.
+- 아직 application table이나 seed data가 없다.
+- `GET /v1/releases/latest`는 아직 `501 release_metadata_not_implemented`를
+  반환한다.
+- 실제 client-facing download/login/signup 페이지는 별도로 개발 중이다.
+- admin 운영 기능은 아직 구현되지 않았다.
+- S3 installer artifact와 update feed 연동은 아직 완료되지 않았다.
+- stage/prod app 배포는 아직 시작하지 않았다.
 
-## Rules
+## 운영 규칙
 
-- Do not print or paste DB passwords in chat or docs.
-- Do not commit `stack.dev.env` or `db.dev.env`.
-- Do not open Clipper DB ports to WAN.
-- Do not touch dohit containers, files, or ports during Clipper deployment.
-- Do not change legacy `api.clipperstudio.ai` or `demo.clipperstudio.ai`
-  without explicit cutover approval.
+- DB password, token, secret 값을 채팅이나 문서에 붙여넣지 않는다.
+- `stack.dev.env`, `db.dev.env`를 commit하지 않는다.
+- Clipper DB 포트를 WAN에 공개하지 않는다.
+- Clipper 배포 중 dohit 컨테이너, 파일, 포트를 건드리지 않는다.
+- 명시적인 cutover 승인 없이 legacy `api.clipperstudio.ai`,
+  `demo.clipperstudio.ai`를 변경하지 않는다.
