@@ -106,6 +106,8 @@ DBeaver 관련 주의:
   - `clipper_dev_admin_db` TCP `55213` -> `192.168.0.7:55213`
   - `clipper_dev_release_db` TCP `55223` -> `192.168.0.7:55223`
 - 로컬 DBeaver/로컬 `clipper_web_api`는 `metabuzz.iptime.org:55203/55213/55223`을 사용한다.
+- 사용자가 로컬 Mac mini에서 `nc -vz metabuzz.iptime.org 55203/55213/55223`
+  성공을 확인했고, 로컬 DBeaver에서도 3개 DB 모두 연결 완료했다.
 - 이 방식은 나중에 VPN/SSH tunnel로 교체한다. stage/prod DB ports는 WAN에 열지 않는다.
 
 ### Main Branch Consolidation Notes

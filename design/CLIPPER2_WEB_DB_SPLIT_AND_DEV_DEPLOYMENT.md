@@ -459,6 +459,16 @@ Admin DB:   metabuzz.iptime.org:55213 / clipper_admin_dev   / clipper_admin_dev_
 Release DB: metabuzz.iptime.org:55223 / clipper_release_dev / clipper_release_dev_user
 ```
 
+The user added these ipTIME rules and verified local Mac mini TCP access:
+
+```text
+nc -vz metabuzz.iptime.org 55203 -> succeeded
+nc -vz metabuzz.iptime.org 55213 -> succeeded
+nc -vz metabuzz.iptime.org 55223 -> succeeded
+```
+
+Local DBeaver connections to all three dev databases were also confirmed.
+
 ## Dev App Deployment Completed
 
 On m2-stage:

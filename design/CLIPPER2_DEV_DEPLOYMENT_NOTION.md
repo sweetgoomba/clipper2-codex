@@ -265,11 +265,14 @@ DB 컨테이너는 PostgreSQL database/user와 persistent Docker volume을 만�
 | m2-stage -> `192.168.0.7:55213` | reachable |
 | m2-stage -> `192.168.0.7:55223` | reachable |
 | `clipper_web_api /v1/health` -> DB 3개 | connected |
-| local Mac mini -> `192.168.0.7:55203` | user test에서 timeout |
+| local Mac mini -> `192.168.0.7:55203` | LAN IP direct access timed out |
+| local Mac mini -> `metabuzz.iptime.org:55203` | succeeded after ipTIME forwarding |
+| local Mac mini -> `metabuzz.iptime.org:55213` | succeeded after ipTIME forwarding |
+| local Mac mini -> `metabuzz.iptime.org:55223` | succeeded after ipTIME forwarding |
 
-local Mac mini에서 timeout이 나는 것은 password 문제가 아니라 네트워크 도달성
-문제다. password가 틀렸다면 TCP 연결이 된 뒤 PostgreSQL 인증 실패가 나오는
-것이 보통이다.
+local Mac mini에서 `192.168.0.7`로 timeout이 나는 것은 password 문제가 아니라
+LAN IP 네트워크 도달성 문제다. 포트포워딩 적용 후에는
+`metabuzz.iptime.org`로 접속한다.
 
 초기 원칙은 Clipper DB 포트를 WAN port forwarding으로 열지 않는 것이었지만,
 로컬 Mac에서 DBeaver와 로컬 `clipper_web_api`를 dev DB에 붙여야 하므로
@@ -283,6 +286,16 @@ local Mac mini에서 timeout이 나는 것은 password 문제가 아니라 네�
 | `clipper_dev_user_db` | TCP | `55203` | `192.168.0.7` | `55203` | user dev DB |
 | `clipper_dev_admin_db` | TCP | `55213` | `192.168.0.7` | `55213` | admin dev DB |
 | `clipper_dev_release_db` | TCP | `55223` | `192.168.0.7` | `55223` | release dev DB |
+
+적용 후 로컬 Mac mini에서 확인 완료:
+
+```sh
+nc -vz metabuzz.iptime.org 55203
+nc -vz metabuzz.iptime.org 55213
+nc -vz metabuzz.iptime.org 55223
+```
+
+결과: 3개 모두 `succeeded`.
 
 포트포워딩 추가 후 외부/로컬 개발 환경에서는 LAN IP가 아니라 DDNS host를
 사용한다.
@@ -327,6 +340,8 @@ DBeaver 접속 값:
 | Clipper user dev WAN | `metabuzz.iptime.org` | `55203` | `clipper_user_dev` | `clipper_user_dev_user` |
 | Clipper admin dev WAN | `metabuzz.iptime.org` | `55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
 | Clipper release dev WAN | `metabuzz.iptime.org` | `55223` | `clipper_release_dev` | `clipper_release_dev_user` |
+
+사용자 로컬 DBeaver에서 위 3개 연결 모두 성공 확인됐다.
 
 ## 코드 수정 후 재배포
 
