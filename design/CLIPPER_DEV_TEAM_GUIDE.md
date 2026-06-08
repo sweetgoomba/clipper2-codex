@@ -116,14 +116,15 @@ docker compose up -d --force-recreate api
 
 1. 로컬에서 코드 수정
 2. commit/push
-3. m2-stage에서 해당 repo pull
+3. m2-stage에서 `clipper_infra`와 해당 repo pull
 4. m2-stage에서 Docker build
 5. Compose service recreate
 6. URL/health 확인
 
 일반적으로는 아래 한 줄 명령만 사용하면 된다. 이 스크립트가 내부에서
-`git pull`, Docker build, Compose config 확인, 컨테이너 recreate를 모두
-실행한다.
+`clipper_infra`를 먼저 pull하고, infra가 업데이트되면 새 스크립트로 다시
+실행한 뒤, 선택한 app repo pull, Docker build, Compose config 확인,
+컨테이너 recreate를 모두 실행한다.
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra
@@ -218,7 +219,7 @@ Docker Compose는 기본적으로 compose 파일 옆 또는 project 기준의 `.
 ```
 
 하지만 `./scripts/deploy-dev.sh`가 이 옵션을 내부에서 넣어주므로 팀원은 직접
-입력하지 않아도 된다.
+입력하지 않아도 된다. 이 스크립트는 실행 초기에 `clipper_infra`도 pull한다.
 
 ## DB 접속
 

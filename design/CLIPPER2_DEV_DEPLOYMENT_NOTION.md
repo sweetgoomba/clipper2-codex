@@ -428,13 +428,15 @@ npm run start:local
 
 1. 개발자가 로컬에서 코드를 수정한다.
 2. commit/push 한다.
-3. m2-stage에서 해당 repo를 pull 한다.
+3. m2-stage에서 `clipper_infra`와 해당 repo를 pull 한다.
 4. m2-stage에서 Docker image를 build 한다.
 5. Docker Compose service를 recreate 한다.
 6. URL/health를 확인한다.
 
-평소에는 아래 helper script를 사용한다. 이 스크립트가 `git pull`, Docker
-build, Compose config 확인, service recreate를 모두 실행한다.
+평소에는 아래 helper script를 사용한다. 이 스크립트가 `clipper_infra`를
+먼저 pull하고, infra가 업데이트되면 새 스크립트로 다시 실행한 뒤, 선택한 app
+repo pull, Docker build, Compose config 확인, service recreate를 모두
+실행한다.
 
 ```sh
 cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra
