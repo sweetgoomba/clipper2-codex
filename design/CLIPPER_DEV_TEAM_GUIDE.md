@@ -1,0 +1,207 @@
+# Clipper Dev 협업 가이드
+
+마지막 업데이트: 2026-06-08 KST
+
+팀원이 dev 환경에서 개발/확인/재배포할 때 필요한 최소 정보만 정리한다.
+비밀번호, 토큰, secret 값은 이 문서에 적지 않는다.
+
+## 현재 Dev URL
+
+| URL | 용도 |
+| --- | --- |
+| `https://dev.clipperstudio.ai` | 사용자용 web placeholder |
+| `https://dev-admin.clipperstudio.ai` | admin placeholder |
+| `https://dev-api.clipperstudio.ai/v1/health` | API health |
+
+현재 web/admin은 실제 화면 개발 전 placeholder다.
+
+API health가 정상이라면 DB 3개가 모두 connected로 나온다.
+
+```text
+userConnected: true
+adminConnected: true
+releaseConnected: true
+```
+
+## Repo 위치
+
+m2-stage 서버:
+
+```text
+/Users/metabuzz/Desktop/project/clipper2/
+  clipper_infra/
+  clipper_web_client/
+  clipper_web_admin/
+  clipper_web_api/
+```
+
+현재 dev는 m2-stage에서 직접 Docker image를 build하는 방식이다.
+GitHub에 push했다고 자동 배포되지는 않는다.
+
+## App 컨테이너
+
+| Compose service | Container name | Host port |
+| --- | --- | --- |
+| `web-client` | `clipper-web-client-dev` | `192.168.0.23:42203 -> 80` |
+| `web-admin` | `clipper-web-admin-dev` | `192.168.0.23:42303 -> 80` |
+| `api` | `clipper-web-api-dev` | `192.168.0.23:43203 -> 43203` |
+
+주의: 재배포할 때는 container name이 아니라 Compose service 이름을 쓴다.
+
+예:
+
+```sh
+docker compose up -d --force-recreate api
+```
+
+## 코드 수정 후 재배포
+
+공통 흐름:
+
+1. 로컬에서 코드 수정
+2. commit/push
+3. m2-stage에서 해당 repo pull
+4. m2-stage에서 Docker build
+5. Compose service recreate
+6. URL/health 확인
+
+### Web 재배포
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_client
+git pull --ff-only
+docker build -t clipper-web-client:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate web-client
+curl -I https://dev.clipperstudio.ai
+```
+
+### Admin 재배포
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_admin
+git pull --ff-only
+docker build -t clipper-web-admin:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate web-admin
+curl -I https://dev-admin.clipperstudio.ai
+```
+
+### API 재배포
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_api
+git pull --ff-only
+docker build -t clipper-web-api:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate api
+curl -s https://dev-api.clipperstudio.ai/v1/health
+```
+
+### 전체 재배포
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_client
+git pull --ff-only
+docker build -t clipper-web-client:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_admin
+git pull --ff-only
+docker build -t clipper-web-admin:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_api
+git pull --ff-only
+docker build -t clipper-web-api:dev .
+
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml config --quiet
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate
+```
+
+확인:
+
+```sh
+docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml ps
+curl -I https://dev.clipperstudio.ai
+curl -I https://dev-admin.clipperstudio.ai
+curl -s https://dev-api.clipperstudio.ai/v1/health
+```
+
+## DB 접속
+
+dev DB는 3개로 분리되어 있다.
+
+| 역할 | Host | Port | Database | User |
+| --- | --- | ---: | --- | --- |
+| user | `metabuzz.iptime.org` | `55203` | `clipper_user_dev` | `clipper_user_dev_user` |
+| admin | `metabuzz.iptime.org` | `55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
+| release | `metabuzz.iptime.org` | `55223` | `clipper_release_dev` | `clipper_release_dev_user` |
+
+DBeaver에서도 위 값으로 연결한다.
+password는 팀 내부에서 별도 공유받는다. 채팅이나 문서에 붙여넣지 않는다.
+
+현재 application table은 아직 없으므로 기본 PostgreSQL schema만 보여도 정상이다.
+
+연결 확인:
+
+```sh
+nc -vz metabuzz.iptime.org 55203
+nc -vz metabuzz.iptime.org 55213
+nc -vz metabuzz.iptime.org 55223
+```
+
+## 로컬 API 실행
+
+로컬에서 공유 dev DB에 붙여 `clipper_web_api`를 실행할 때:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_api
+
+export USER_DATABASE_URL='postgresql://clipper_user_dev_user:<PASSWORD>@metabuzz.iptime.org:55203/clipper_user_dev'
+export ADMIN_DATABASE_URL='postgresql://clipper_admin_dev_user:<PASSWORD>@metabuzz.iptime.org:55213/clipper_admin_dev'
+export RELEASE_DATABASE_URL='postgresql://clipper_release_dev_user:<PASSWORD>@metabuzz.iptime.org:55223/clipper_release_dev'
+export CLIPPER_ENV=dev
+export RELEASE_CHANNEL=dev
+export PORT=43203
+
+npm install
+npm run build
+npm start
+```
+
+password에 `@`, `:`, `/`, `?`, `#`, `%`, 공백이 있으면 URL 안에서는
+URL-encode 해야 한다.
+
+## Proxy
+
+Nginx Proxy Manager는 m2-proxy에서 실행 중이다.
+
+| Domain | Upstream |
+| --- | --- |
+| `dev.clipperstudio.ai` | `http://192.168.0.23:42203` |
+| `dev-admin.clipperstudio.ai` | `http://192.168.0.23:42303` |
+| `dev-api.clipperstudio.ai` | `http://192.168.0.23:43203` |
+
+일반 개발자는 보통 NPM 설정을 건드릴 필요가 없다.
+
+## 주의사항
+
+- `stack.dev.env`, `db.dev.env`는 commit하지 않는다.
+- DB password, token, secret 값은 문서/채팅에 남기지 않는다.
+- dohit 컨테이너, 파일, 포트는 건드리지 않는다.
+- legacy `api.clipperstudio.ai`, `demo.clipperstudio.ai`는 건드리지 않는다.
+- dev DB 포트 `55203/55213/55223`은 임시로 열려 있다.
+- stage/prod DB 포트는 WAN에 열지 않는다.
+- stage/prod 배포는 아직 시작하지 않았다.
+
+## 아직 없는 것
+
+- DB migration
+- application table
+- seed data
+- 실제 release metadata API
+- 실제 사용자 다운로드/login/signup 화면
+- admin 운영 기능
