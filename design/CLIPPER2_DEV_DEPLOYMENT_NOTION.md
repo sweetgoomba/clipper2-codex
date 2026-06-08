@@ -354,6 +354,20 @@ DBeaver 접속 값:
 5. Docker Compose service를 recreate 한다.
 6. URL/health를 확인한다.
 
+평소에는 아래 helper script를 사용한다. 이 스크립트가 `git pull`, Docker
+build, Compose config 확인, service recreate를 모두 실행한다.
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra
+./scripts/deploy-dev.sh web
+./scripts/deploy-dev.sh admin
+./scripts/deploy-dev.sh api
+./scripts/deploy-dev.sh all
+```
+
+아래 긴 명령어들은 helper script가 내부에서 하는 일을 이해하거나, 문제가
+생겼을 때 수동으로 확인할 때 사용한다.
+
 ### Web client 재배포
 
 m2-stage에서 실행:
@@ -456,6 +470,18 @@ curl -s https://dev-api.clipperstudio.ai/v1/health
 ```
 
 ## 자주 쓰는 명령어
+
+dev helper script:
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra
+./scripts/deploy-dev.sh web
+./scripts/deploy-dev.sh admin
+./scripts/deploy-dev.sh api
+./scripts/deploy-dev.sh all
+```
+
+`--env-file ../env/stack.dev.env`는 helper script가 내부에서 넣어준다.
 
 Compose service 이름 확인:
 

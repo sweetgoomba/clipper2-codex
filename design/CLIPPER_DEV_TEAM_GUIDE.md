@@ -65,6 +65,21 @@ docker compose up -d --force-recreate api
 5. Compose service recreate
 6. URL/health 확인
 
+일반적으로는 아래 한 줄 명령만 사용하면 된다. 이 스크립트가 내부에서
+`git pull`, Docker build, Compose config 확인, 컨테이너 recreate를 모두
+실행한다.
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra
+./scripts/deploy-dev.sh web
+./scripts/deploy-dev.sh admin
+./scripts/deploy-dev.sh api
+./scripts/deploy-dev.sh all
+```
+
+아래 긴 명령어들은 스크립트가 내부에서 하는 일을 이해하거나, 문제가 생겼을
+때 수동으로 확인할 때만 사용한다.
+
 ### Web 재배포
 
 ```sh
@@ -129,6 +144,21 @@ curl -I https://dev.clipperstudio.ai
 curl -I https://dev-admin.clipperstudio.ai
 curl -s https://dev-api.clipperstudio.ai/v1/health
 ```
+
+## 왜 `--env-file`을 직접 입력하지 않아도 되는가
+
+Docker Compose는 기본적으로 compose 파일 옆 또는 project 기준의 `.env`만
+자동으로 읽는다. 그런데 dev 실제 env 파일은 secret을 분리하기 위해
+`clipper_infra/env/stack.dev.env`에 둔다.
+
+그래서 수동 compose 명령에서는 원래 아래 옵션이 필요하다.
+
+```sh
+--env-file ../env/stack.dev.env
+```
+
+하지만 `./scripts/deploy-dev.sh`가 이 옵션을 내부에서 넣어주므로 팀원은 직접
+입력하지 않아도 된다.
 
 ## DB 접속
 
