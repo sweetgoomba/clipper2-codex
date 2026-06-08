@@ -161,9 +161,17 @@ In this mode, do not run DB Compose for prod. Create the external PostgreSQL
 databases with the selected provider/tooling and set the prod app env:
 
 ```text
-CLIPPER_USER_DATABASE_URL=postgresql://...
-CLIPPER_ADMIN_DATABASE_URL=postgresql://...
-CLIPPER_RELEASE_DATABASE_URL=postgresql://...
+CLIPPER_DATABASE_HOST=...
+CLIPPER_DATABASE_PASSWORD=...
+CLIPPER_USER_DATABASE_PORT=...
+CLIPPER_USER_DATABASE_NAME=...
+CLIPPER_USER_DATABASE_USER=...
+CLIPPER_ADMIN_DATABASE_PORT=...
+CLIPPER_ADMIN_DATABASE_NAME=...
+CLIPPER_ADMIN_DATABASE_USER=...
+CLIPPER_RELEASE_DATABASE_PORT=...
+CLIPPER_RELEASE_DATABASE_NAME=...
+CLIPPER_RELEASE_DATABASE_USER=...
 ```
 
 Docker Compose only creates self-hosted containers on the Docker host where it
@@ -295,18 +303,18 @@ GET /v1/releases/latest -> 501 placeholder
 Docker-buildable and deployable
 ```
 
-`/healthz` and `/v1/health` connect to all three PostgreSQL URLs and run
+`/healthz` and `/v1/health` connect to all three PostgreSQL configs and run
 `SELECT 1`.
 
 Health behavior:
 
 ```text
-200 -> user/admin/release DB URLs are configured and reachable
-503 -> at least one DB URL is missing or unreachable
+200 -> user/admin/release DB configs are configured and reachable
+503 -> at least one DB config is missing or unreachable
 ```
 
 The health response reports non-secret connection status only. It does not
-expose database URLs.
+expose database connection details.
 
 The current NestJS scaffold is still intentionally minimal. It validates infra,
 proxy, runtime env, and Docker wiring before migrations/auth/release metadata
@@ -495,7 +503,8 @@ clipper_infra/env/stack.dev.env
 ```
 
 The env file was copied from `stack.dev.env.example`. The user filled the DB
-passwords manually. No secret values were repeated in chat/logs.
+password manually in split env variables. No secret values were repeated in
+chat/logs.
 
 Final m2-stage containers:
 
