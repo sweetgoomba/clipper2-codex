@@ -412,6 +412,42 @@ nc -vz 192.168.0.7 55213 -> succeeded
 nc -vz 192.168.0.7 55223 -> succeeded
 ```
 
+## DBeaver And Direct DB Access
+
+The dev DB ports are intended to be reachable from m2-stage to m2-db, not from
+arbitrary local machines or the public internet.
+
+Known access behavior:
+
+```text
+m2-stage -> 192.168.0.7:55203/55213/55223 works
+local Mac mini -> 192.168.0.7:55203 timed out in user test
+```
+
+If DBeaver shows:
+
+```text
+Connection attempt timed out
+```
+
+that means TCP network reachability failed before PostgreSQL authentication.
+It is not a database password error. A wrong password would normally produce an
+authentication failure after a connection is established.
+
+Recommended options:
+
+- Run DBeaver on m2-stage through Google Remote Desktop.
+- Or use VPN/SSH tunneling for local DBeaver access.
+- Do not WAN-forward Clipper DB ports.
+
+DBeaver connection targets:
+
+```text
+User DB:    192.168.0.7:55203 / clipper_user_dev    / clipper_user_dev_user
+Admin DB:   192.168.0.7:55213 / clipper_admin_dev   / clipper_admin_dev_user
+Release DB: 192.168.0.7:55223 / clipper_release_dev / clipper_release_dev_user
+```
+
 ## Dev App Deployment Completed
 
 On m2-stage:

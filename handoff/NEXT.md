@@ -91,6 +91,18 @@ clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
 m2-stage에 재배포됐고 dev API health에서 `userConnected`, `adminConnected`,
 `releaseConnected`가 모두 `true`로 확인됐다.
 
+DBeaver 관련 주의:
+
+- 사용자가 로컬 Mac mini에서 `192.168.0.7:55203` DBeaver test connection과
+  `nc -vz 192.168.0.7 55203`을 시도했지만 timeout이었다.
+- 이는 password 문제가 아니라 로컬 Mac mini에서 m2-db LAN IP/port로 TCP
+  도달이 안 되는 문제다.
+- m2-stage에서는 DB 접근이 되고, dev API health도 세 DB connected를
+  확인했다.
+- DBeaver는 Google Remote Desktop으로 m2-stage 안에서 실행하거나,
+  로컬에서 쓰려면 VPN/SSH tunnel을 사용한다.
+- Clipper DB ports `55203/55213/55223`은 WAN port forwarding으로 열지 않는다.
+
 ### Main Branch Consolidation Notes
 
 아래는 2026-05-29 main branch consolidation 당시의 히스토리 설명이다. 2026-06-02 직접 확인 기준으로 `clipper_python`은 `main...origin/main` ahead/behind가 `0/0`이다.
@@ -398,6 +410,8 @@ Using Superpowers.
   - admin DB: 192.168.0.7:55213
   - release DB: 192.168.0.7:55223
 - DB password rotate는 이번 세션에서 신경쓰지 않는다. 다만 secret 값은 채팅/로그에 출력하지 않는다.
+- DBeaver로 DB를 볼 때 로컬 Mac mini에서 `192.168.0.7:55203` timeout이면 password 문제가 아니라 네트워크 도달성 문제다.
+- 권장 DB GUI 접근은 m2-stage 안에서 DBeaver를 실행하는 방식이다. 로컬 DBeaver는 VPN/SSH tunnel 없이는 안 될 수 있다.
 - legacy api.clipperstudio.ai, demo.clipperstudio.ai는 건드리지 않는다.
 - dohit 관련 파일/컨테이너/포트는 건드리지 않는다.
 - Clipper DB 포트는 WAN 공개하지 않는다.
