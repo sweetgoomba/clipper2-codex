@@ -97,10 +97,10 @@ app repo 3개는 `clipper_infra` 안에 넣지 않고 같은 폴더에 sibling�
 
 | Repo | Branch | 현재 commit |
 | --- | --- | --- |
-| `clipper_infra` | `feature/infra-initial-setup` | `decdfa0 docs: document Clipper dev server-side deployment` |
-| `clipper_web_client` | `main` | `e2102db fix: include Angular zone polyfill` |
-| `clipper_web_admin` | `main` | `e21cabe fix: include Angular zone polyfill` |
-| `clipper_web_api` | `main` | `8386865 feat: verify database connections in health checks` |
+| `clipper_infra` | `feature/infra-initial-setup` | `f0cb1f1 fix: use per-database password envs` |
+| `clipper_web_client` | `main` | `7bdaeae chore: move local web port to 4700` |
+| `clipper_web_admin` | `main` | `db26f4d chore: move local admin port to 4701` |
+| `clipper_web_api` | `main` | `0eab250 fix: require per-database passwords` |
 
 ## 배포 방식
 

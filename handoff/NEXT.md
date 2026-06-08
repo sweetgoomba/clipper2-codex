@@ -110,6 +110,25 @@ DBeaver 관련 주의:
   성공을 확인했고, 로컬 DBeaver에서도 3개 DB 모두 연결 완료했다.
 - 이 방식은 나중에 VPN/SSH tunnel로 교체한다. stage/prod DB ports는 WAN에 열지 않는다.
 
+2026-06-08 세션 마무리 기준 추가 변경:
+
+```text
+clipper_infra:      feature/infra-initial-setup @ f0cb1f1 fix: use per-database password envs
+clipper_web_admin:  origin/main @ db26f4d chore: move local admin port to 4701
+clipper_web_api:    origin/main @ 0eab250 fix: require per-database passwords
+clipper_web_client: origin/main @ 7bdaeae chore: move local web port to 4700
+.codex:             workflow-executor-design, verify latest with git log -1
+```
+
+- 로컬 개발 포트는 web `4700`, admin `4701`, API `43203`이다.
+- API DB env는 URL 3개 방식에서 split 변수 방식으로 바뀌었다.
+- app DB password는 DB별 변수로 관리한다:
+  - local API: `USER_DATABASE_PASSWORD`, `ADMIN_DATABASE_PASSWORD`, `RELEASE_DATABASE_PASSWORD`
+  - m2-stage app env: `CLIPPER_USER_DATABASE_PASSWORD`, `CLIPPER_ADMIN_DATABASE_PASSWORD`, `CLIPPER_RELEASE_DATABASE_PASSWORD`
+- `CLIPPER_DATABASE_PASSWORD` 하나짜리 공통 password 변수는 default/example shape에서 제거됐다.
+- `clipper_infra/scripts/deploy-dev.sh`는 이제 실행 초기에 `clipper_infra`를 pull하고, infra가 업데이트되면 새 스크립트로 다시 실행한다.
+- m2-stage의 실제 `clipper_infra/env/stack.dev.env`는 git-tracked 파일이 아니므로 직접 per-DB password split 변수 형식으로 바꿔야 한다. secret 값은 채팅/로그에 출력하지 않는다.
+
 ### Main Branch Consolidation Notes
 
 아래는 2026-05-29 main branch consolidation 당시의 히스토리 설명이다. 2026-06-02 직접 확인 기준으로 `clipper_python`은 `main...origin/main` ahead/behind가 `0/0`이다.
@@ -344,9 +363,9 @@ DBeaver 관련 주의:
        - `/Users/metabuzz/Desktop/project/clipper2/clipper_web_api`
      - App repos are siblings of `clipper_infra`, not ignored subdirectories inside infra.
    - `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin` 2026-06-08 framework corrections are committed and pushed.
-     - `clipper_web_client`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `e2102db fix: include Angular zone polyfill`.
-     - `clipper_web_admin`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `e21cabe fix: include Angular zone polyfill`.
-     - `clipper_web_api`: NestJS scaffold with `/healthz`, `/v1/health`, `/v1/info`, and `/v1/releases/latest` 501 placeholder. Latest `origin/main` `8386865` makes `/healthz` and `/v1/health` verify all three PostgreSQL connections with `SELECT 1`.
+     - `clipper_web_client`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `7bdaeae chore: move local web port to 4700`.
+     - `clipper_web_admin`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `db26f4d chore: move local admin port to 4701`.
+     - `clipper_web_api`: NestJS scaffold with `/healthz`, `/v1/health`, `/v1/info`, and `/v1/releases/latest` 501 placeholder. Latest `origin/main` `0eab250 fix: require per-database passwords` verifies all three PostgreSQL connections with `SELECT 1` and uses per-DB password env variables.
      - m2-stage repo layout is complete under `/Users/metabuzz/Desktop/project/clipper2`.
      - m2-stage server-local `env/stack.dev.env` exists.
      - Real dev services are deployed with server-side built local images.
@@ -365,6 +384,8 @@ DBeaver 관련 주의:
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
    - Detailed session design doc: `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`
 5. Clipper2 web/API 후속 구현을 진행한다.
+   - 먼저 m2-stage에서 `clipper_infra`를 최신화하고 실제 `env/stack.dev.env`를 per-DB password split 변수 형식으로 수정한다.
+   - 그 다음 `./scripts/deploy-dev.sh all`로 최신 infra/app image를 재배포하고 health/browser smoke를 확인한다.
    - `clipper_web_api` migration tooling 결정.
    - user/admin/release DB 첫 schema migration 작성.
    - `/v1/releases/latest` 실제 release metadata 구현.
@@ -388,7 +409,7 @@ DBeaver 관련 주의:
 ```text
 Using Superpowers.
 
-지금 세션은 Clipper2 dev web/admin/API 배포 완료 이후의 후속 작업이다.
+지금 세션은 Clipper dev web/admin/API 배포 완료 이후의 후속 작업이다.
 먼저 아래 상태를 기준으로 현재 repo/server 상태를 확인해줘.
 
 배포 완료된 m2-stage layout:
@@ -404,13 +425,19 @@ Using Superpowers.
 - app repo 3개는 clipper_infra와 sibling이다.
 - m2-stage `clipper_infra/env/stack.dev.env`는 생성되어 있고 secret 값은 채팅/로그에 출력하지 않는다.
 - latest pushed commits:
-  - clipper_infra: feature/infra-initial-setup @ decdfa0
-  - clipper_web_client: main @ e2102db
-  - clipper_web_admin: main @ e21cabe
-  - clipper_web_api: main @ 8386865
+  - clipper_infra: feature/infra-initial-setup @ f0cb1f1
+  - clipper_web_client: main @ 7bdaeae
+  - clipper_web_admin: main @ db26f4d
+  - clipper_web_api: main @ 0eab250
 - clipper_web_client는 Angular 19 placeholder app이고 `zone.js` polyfill 포함 상태여야 한다.
 - clipper_web_admin은 Angular 19 placeholder app이고 `zone.js` polyfill 포함 상태여야 한다.
 - clipper_web_api는 NestJS scaffold이고 `/healthz`, `/v1/health`에서 세 DB에 `SELECT 1`을 실행한다.
+- clipper_web_api DB env는 URL 방식이 아니라 split 변수 방식이다.
+- m2-stage `stack.dev.env`는 반드시 DB별 password 변수를 사용해야 한다:
+  - `CLIPPER_USER_DATABASE_PASSWORD`
+  - `CLIPPER_ADMIN_DATABASE_PASSWORD`
+  - `CLIPPER_RELEASE_DATABASE_PASSWORD`
+- `CLIPPER_DATABASE_PASSWORD` 하나짜리 공통 password 변수는 쓰지 않는다.
 - Angular web/admin Docker image는 Angular build output을 컨테이너 내부 Nginx로 서빙한다.
 - API Docker image는 Node/NestJS runtime이고 Nginx를 포함하지 않는다.
 - m2-db dev DB 3개는 이미 배포 완료:
@@ -426,23 +453,32 @@ Using Superpowers.
 
 해야 할 일:
 1. `.codex/handoff/NEXT.md`, `.codex/records/sessions/2026/06/08.md`,
-   `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`를 먼저 읽는다.
-2. 관련 repo의 상태를 확인한다:
+   `.codex/design/CLIPPER_DEV_TEAM_GUIDE.md`,
+   `.codex/design/CLIPPER2_DEV_DEPLOYMENT_NOTION.md`를 먼저 읽는다.
+2. m2-stage에서 아래를 먼저 실행해 `clipper_infra`를 최신화한다:
+   - `cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra`
+   - `git status --short --branch`
+   - `git pull --ff-only origin feature/infra-initial-setup`
+3. m2-stage의 실제 secret 파일을 확인하되 secret 값은 출력하지 않는다:
+   - `/Users/metabuzz/Desktop/project/clipper2/clipper_infra/env/stack.dev.env`
+   - 기존 `CLIPPER_*_DATABASE_URL` 또는 `CLIPPER_DATABASE_PASSWORD`가 있으면 제거하고 per-DB password split 변수로 바꾼다.
+4. 관련 repo의 상태를 확인한다:
    - clipper_infra
    - clipper_web_client
    - clipper_web_admin
    - clipper_web_api
-3. dev service health/browser smoke를 재확인한다:
+5. `./scripts/deploy-dev.sh all`을 실행해 최신 image/service를 재배포한다.
+6. dev service health/browser smoke를 재확인한다:
    - https://dev.clipperstudio.ai
    - https://dev-admin.clipperstudio.ai
    - https://dev-api.clipperstudio.ai/v1/health
-4. 다음 구현 단계는 infra wiring이 아니라 app 기능이다:
+7. 다음 구현 단계는 infra wiring이 아니라 app 기능이다:
    - clipper_web_api migration tooling 결정
    - user/admin/release DB schema 첫 migration 작성
    - `/v1/releases/latest` 실제 release metadata 구현
    - client download/login/signup 실제 페이지 merge 시 배포 반영 방식 정리
    - admin 운영 기능 범위 결정
-5. stage/prod 배포는 dev 기능과 migration 흐름이 정해진 뒤 진행한다.
+8. stage/prod 배포는 dev 기능과 migration 흐름이 정해진 뒤 진행한다.
 
 문서 기준:
 - if available, read clipper_infra/runbooks/deploy-dev.md,
