@@ -72,7 +72,7 @@ clipper_web_client: main @ 791c935 feat: add minimal web client scaffold
 .codex:             workflow-executor-design, contains m2-stage dev deploy documentation; verify latest with git log -1
 clipper_infra:      feature/infra-initial-setup @ decdfa0 docs: document Clipper dev server-side deployment
 clipper_web_admin:  origin/main @ e21cabe fix: include Angular zone polyfill
-clipper_web_api:    main @ d641942 feat: scaffold NestJS web API
+clipper_web_api:    origin/main @ 8386865 feat: verify database connections in health checks
 clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
 ```
 
@@ -86,6 +86,9 @@ clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
 `clipper_web_client`와 `clipper_web_admin`은 Angular blank screen 원인이던
 `zone.js` polyfill 누락을 각각 `e2102db`, `e21cabe`로 수정했고, 두 commit
 모두 `origin/main`에 push 완료된 것을 로컬에서 `git fetch` 후 확인했다.
+`clipper_web_api`는 이후 `8386865`에서 `/healthz`와 `/v1/health`가 세 DB에
+`SELECT 1`을 실행하는 readiness check를 갖게 됐다. 이 API commit은 아직
+m2-stage에 재배포해야 한다.
 
 ### Main Branch Consolidation Notes
 
@@ -322,7 +325,7 @@ clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
    - `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin` 2026-06-08 framework corrections are committed and pushed.
      - `clipper_web_client`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `e2102db fix: include Angular zone polyfill`.
      - `clipper_web_admin`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx, latest `origin/main` `e21cabe fix: include Angular zone polyfill`.
-     - `clipper_web_api`: NestJS scaffold with `/healthz`, `/v1/health`, `/v1/info`, and `/v1/releases/latest` 501 placeholder.
+     - `clipper_web_api`: NestJS scaffold with `/healthz`, `/v1/health`, `/v1/info`, and `/v1/releases/latest` 501 placeholder. Latest `origin/main` `8386865` makes `/healthz` and `/v1/health` verify all three PostgreSQL connections with `SELECT 1`.
      - m2-stage repo layout is complete under `/Users/metabuzz/Desktop/project/clipper2`.
      - m2-stage server-local `env/stack.dev.env` exists.
      - Real dev services are deployed with server-side built local images.
@@ -341,7 +344,8 @@ clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
    - Detailed session design doc: `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`
 5. Clipper2 web/API 후속 구현을 진행한다.
-   - `clipper_web_api` DB 연결/migration tooling 결정.
+   - `clipper_web_api` `8386865`를 m2-stage에 재배포하고 dev API health에서 세 DB connected 상태를 확인한다.
+   - `clipper_web_api` migration tooling 결정.
    - user/admin/release DB 첫 schema migration 작성.
    - `/v1/releases/latest` 실제 release metadata 구현.
    - client download/login/signup 실제 페이지 merge 시 dev 배포 반영.
@@ -383,10 +387,10 @@ Using Superpowers.
   - clipper_infra: feature/infra-initial-setup @ decdfa0
   - clipper_web_client: main @ e2102db
   - clipper_web_admin: main @ e21cabe
-  - clipper_web_api: main @ d641942
+  - clipper_web_api: main @ 8386865
 - clipper_web_client는 Angular 19 placeholder app이고 `zone.js` polyfill 포함 상태여야 한다.
 - clipper_web_admin은 Angular 19 placeholder app이고 `zone.js` polyfill 포함 상태여야 한다.
-- clipper_web_api는 NestJS scaffold다.
+- clipper_web_api는 NestJS scaffold이고 `/healthz`, `/v1/health`에서 세 DB에 `SELECT 1`을 실행한다.
 - Angular web/admin Docker image는 Angular build output을 컨테이너 내부 Nginx로 서빙한다.
 - API Docker image는 Node/NestJS runtime이고 Nginx를 포함하지 않는다.
 - m2-db dev DB 3개는 이미 배포 완료:
@@ -411,7 +415,8 @@ Using Superpowers.
    - https://dev-admin.clipperstudio.ai
    - https://dev-api.clipperstudio.ai/v1/health
 4. 다음 구현 단계는 infra wiring이 아니라 app 기능이다:
-   - clipper_web_api DB 연결/migration tooling 결정
+   - clipper_web_api `8386865`를 m2-stage에 재배포하고 dev API health에서 세 DB connected 상태 확인
+   - clipper_web_api migration tooling 결정
    - user/admin/release DB schema 첫 migration 작성
    - `/v1/releases/latest` 실제 release metadata 구현
    - client download/login/signup 실제 페이지 merge 시 배포 반영 방식 정리

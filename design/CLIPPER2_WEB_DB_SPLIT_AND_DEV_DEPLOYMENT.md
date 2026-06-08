@@ -295,9 +295,18 @@ GET /v1/releases/latest -> 501 placeholder
 Docker-buildable and deployable
 ```
 
-The scaffold does not connect to PostgreSQL yet. It only reports whether
-`USER_DATABASE_URL`, `ADMIN_DATABASE_URL`, and `RELEASE_DATABASE_URL` are
-configured.
+`/healthz` and `/v1/health` connect to all three PostgreSQL URLs and run
+`SELECT 1`.
+
+Health behavior:
+
+```text
+200 -> user/admin/release DB URLs are configured and reachable
+503 -> at least one DB URL is missing or unreachable
+```
+
+The health response reports non-secret connection status only. It does not
+expose database URLs.
 
 The current NestJS scaffold is still intentionally minimal. It validates infra,
 proxy, runtime env, and Docker wiring before migrations/auth/release metadata
@@ -476,6 +485,7 @@ clipper_web_client  6fa1ffc feat: scaffold Angular dev client
 clipper_web_admin   ffba705 feat: scaffold Angular dev admin
 clipper_web_client  e2102db fix: include Angular zone polyfill
 clipper_web_admin   e21cabe fix: include Angular zone polyfill
+clipper_web_api     8386865 feat: verify database connections in health checks
 ```
 
 `.codex` documentation commits include:
@@ -493,8 +503,9 @@ completed; verify latest `.codex` HEAD with `git log -1 --oneline`.
 
 - No app DB migrations exist yet.
 - No app tables or seed data exist yet.
-- `clipper_web_api` does not connect to PostgreSQL yet; it only checks whether
-  DB env URLs are configured.
+- `clipper_web_api` health checks now connect to PostgreSQL, but no query layer,
+  migrations, tables, or seed data exist yet.
+- `clipper_web_api` `8386865` still needs to be deployed to m2-stage.
 - `GET /v1/releases/latest` is still a `501` placeholder.
 - Social login/deep-link design is not finalized.
 - Payment module integration is not finalized. Current payment direction is
