@@ -505,7 +505,8 @@ completed; verify latest `.codex` HEAD with `git log -1 --oneline`.
 - No app tables or seed data exist yet.
 - `clipper_web_api` health checks now connect to PostgreSQL, but no query layer,
   migrations, tables, or seed data exist yet.
-- `clipper_web_api` `8386865` still needs to be deployed to m2-stage.
+- `clipper_web_api` `8386865` is deployed to m2-stage and dev API health
+  reports all three DBs connected.
 - `GET /v1/releases/latest` is still a `501` placeholder.
 - Social login/deep-link design is not finalized.
 - Payment module integration is not finalized. Current payment direction is

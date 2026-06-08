@@ -87,8 +87,9 @@ clipper_web_client: origin/main @ e2102db fix: include Angular zone polyfill
 `zone.js` polyfill 누락을 각각 `e2102db`, `e21cabe`로 수정했고, 두 commit
 모두 `origin/main`에 push 완료된 것을 로컬에서 `git fetch` 후 확인했다.
 `clipper_web_api`는 이후 `8386865`에서 `/healthz`와 `/v1/health`가 세 DB에
-`SELECT 1`을 실행하는 readiness check를 갖게 됐다. 이 API commit은 아직
-m2-stage에 재배포해야 한다.
+`SELECT 1`을 실행하는 readiness check를 갖게 됐다. 이 API commit은
+m2-stage에 재배포됐고 dev API health에서 `userConnected`, `adminConnected`,
+`releaseConnected`가 모두 `true`로 확인됐다.
 
 ### Main Branch Consolidation Notes
 
@@ -344,7 +345,6 @@ m2-stage에 재배포해야 한다.
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
    - Detailed session design doc: `.codex/design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md`
 5. Clipper2 web/API 후속 구현을 진행한다.
-   - `clipper_web_api` `8386865`를 m2-stage에 재배포하고 dev API health에서 세 DB connected 상태를 확인한다.
    - `clipper_web_api` migration tooling 결정.
    - user/admin/release DB 첫 schema migration 작성.
    - `/v1/releases/latest` 실제 release metadata 구현.
@@ -415,7 +415,6 @@ Using Superpowers.
    - https://dev-admin.clipperstudio.ai
    - https://dev-api.clipperstudio.ai/v1/health
 4. 다음 구현 단계는 infra wiring이 아니라 app 기능이다:
-   - clipper_web_api `8386865`를 m2-stage에 재배포하고 dev API health에서 세 DB connected 상태 확인
    - clipper_web_api migration tooling 결정
    - user/admin/release DB schema 첫 migration 작성
    - `/v1/releases/latest` 실제 release metadata 구현
