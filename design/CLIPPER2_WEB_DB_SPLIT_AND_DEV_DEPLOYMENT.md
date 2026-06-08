@@ -29,6 +29,11 @@ server DB split, dev DB deployment 기준을 정리한다.
 - m2-db에서 Clipper dev DB 3개를 실제 배포했다.
 - m2-stage에서 m2-db의 dev DB port `55203`, `55213`, `55223` 접근을
   확인했다.
+- m2-stage에 Clipper2 dev web/admin/API real services를 server-side build로
+  배포했다.
+- dev 도메인 3개를 health/browser 기준으로 확인했다.
+- Angular blank screen 원인이 `zone.js` polyfill 누락임을 확인하고
+  `clipper_web_client`, `clipper_web_admin`에 수정 커밋을 반영했다.
 
 ## DB Split Decision
 
@@ -234,6 +239,7 @@ Current scaffold:
 ```text
 Angular 19 app
 placeholder root page only
+includes zone.js polyfill
 Docker image builds Angular output and serves it with Nginx
 Docker-buildable and deployable
 ```
@@ -260,6 +266,7 @@ Current scaffold:
 ```text
 Angular 19 app
 placeholder root page only
+includes zone.js polyfill
 Docker image builds Angular output and serves it with Nginx
 Docker-buildable and deployable
 ```
@@ -396,6 +403,64 @@ nc -vz 192.168.0.7 55213 -> succeeded
 nc -vz 192.168.0.7 55223 -> succeeded
 ```
 
+## Dev App Deployment Completed
+
+On m2-stage:
+
+```text
+/Users/metabuzz/Desktop/project/clipper2/
+  clipper_infra/
+  clipper_web_client/
+  clipper_web_admin/
+  clipper_web_api/
+```
+
+Deployment strategy:
+
+```text
+server-side build on m2-stage
+no GHCR/registry push-pull for this first dev deployment
+```
+
+Server-local env:
+
+```text
+clipper_infra/env/stack.dev.env
+```
+
+The env file was copied from `stack.dev.env.example`. The user filled the DB
+passwords manually. No secret values were repeated in chat/logs.
+
+Final m2-stage containers:
+
+```text
+clipper-web-client-dev healthy 192.168.0.23:42203->80/tcp
+clipper-web-admin-dev  healthy 192.168.0.23:42303->80/tcp
+clipper-web-api-dev    healthy 192.168.0.23:43203->43203/tcp
+```
+
+NPM routes:
+
+```text
+dev.clipperstudio.ai        -> http://192.168.0.23:42203
+dev-admin.clipperstudio.ai  -> http://192.168.0.23:42303
+dev-api.clipperstudio.ai    -> http://192.168.0.23:43203
+```
+
+The user corrected an NPM route mismatch where `dev.clipperstudio.ai` was
+initially pointing to the admin upstream.
+
+Final verification:
+
+```text
+https://dev.clipperstudio.ai        -> C / CLIPPER2 WEB / Coming Soon
+https://dev-admin.clipperstudio.ai  -> A / CLIPPER2 ADMIN / Coming Soon
+https://dev-api.clipperstudio.ai/v1/health -> JSON health response
+```
+
+Chrome/CDP verification showed no remaining Angular runtime errors after
+adding the `zone.js` polyfill.
+
 ## Commits And Pushes
 
 Pushed:
@@ -405,32 +470,35 @@ clipper_infra       49faa91 feat: split Clipper DB stack into user admin release
 clipper_web_api     ec13be7 feat: add minimal web API scaffold
 clipper_web_client  791c935 feat: add minimal web client scaffold
 clipper_web_admin   fef456a feat: add minimal web admin scaffold
+clipper_infra       decdfa0 docs: document Clipper dev server-side deployment
+clipper_web_api     d641942 feat: scaffold NestJS web API
+clipper_web_client  6fa1ffc feat: scaffold Angular dev client
+clipper_web_admin   ffba705 feat: scaffold Angular dev admin
+clipper_web_client  e2102db fix: include Angular zone polyfill
+clipper_web_admin   e21cabe fix: include Angular zone polyfill
 ```
 
-`.codex` previous documentation commit:
+`.codex` documentation commits include:
 
 ```text
 e09fa2e docs: record Clipper web scaffold and DB split
+f4207ad docs: hand off Clipper2 dev deploy session
+a289b03 docs: update m2-stage deploy handoff
 ```
 
-The user pushed that `.codex` commit manually.
+This document was updated again after the m2-stage dev deployment was
+completed; verify latest `.codex` HEAD with `git log -1 --oneline`.
 
 ## Still Not Done
 
 - No app DB migrations exist yet.
 - No app tables or seed data exist yet.
-- The Angular/NestJS conversion and server-side build runbook updates are
-  committed and pushed:
-  - `clipper_web_client` `6fa1ffc feat: scaffold Angular dev client`
-  - `clipper_web_admin` `ffba705 feat: scaffold Angular dev admin`
-  - `clipper_web_api` `d641942 feat: scaffold NestJS web API`
-  - `clipper_infra` `decdfa0 docs: document Clipper dev server-side deployment`
-- Real web/admin/API services are not deployed on m2-stage yet.
-- User reported the temporary Nginx test containers on m2-stage have already
-  been removed.
-- `env/stack.dev.env` still needs to be created on m2-stage with real DB URLs.
-- User said not to spend time on dev DB password rotation for this deployment
-  session. Do not print secrets in chat/logs.
+- `clipper_web_api` does not connect to PostgreSQL yet; it only checks whether
+  DB env URLs are configured.
+- `GET /v1/releases/latest` is still a `501` placeholder.
 - Social login/deep-link design is not finalized.
 - Payment module integration is not finalized. Current payment direction is
   manual bank transfer request/review.
+- Real client-facing download/login/signup pages are being developed separately
+  and are not part of the deployed placeholders yet.
+- Stage/prod web/admin/API deployment has not started.
