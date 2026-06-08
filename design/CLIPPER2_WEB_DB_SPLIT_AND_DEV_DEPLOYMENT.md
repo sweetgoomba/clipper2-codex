@@ -419,13 +419,18 @@ The user pushed that `.codex` commit manually.
 
 - No app DB migrations exist yet.
 - No app tables or seed data exist yet.
-- The Angular/NestJS conversion and server-side build runbook updates are local
-  working-tree changes until committed and pushed.
+- The Angular/NestJS conversion and server-side build runbook updates are
+  committed and pushed:
+  - `clipper_web_client` `6fa1ffc feat: scaffold Angular dev client`
+  - `clipper_web_admin` `ffba705 feat: scaffold Angular dev admin`
+  - `clipper_web_api` `d641942 feat: scaffold NestJS web API`
+  - `clipper_infra` `decdfa0 docs: document Clipper dev server-side deployment`
 - Real web/admin/API services are not deployed on m2-stage yet.
 - User reported the temporary Nginx test containers on m2-stage have already
   been removed.
 - `env/stack.dev.env` still needs to be created on m2-stage with real DB URLs.
-- Exposed dev DB passwords should be rotated before using real app env values.
+- User said not to spend time on dev DB password rotation for this deployment
+  session. Do not print secrets in chat/logs.
 - Social login/deep-link design is not finalized.
 - Payment module integration is not finalized. Current payment direction is
   manual bank transfer request/review.

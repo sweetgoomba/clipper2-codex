@@ -69,16 +69,18 @@ clipper_web_client: main @ 791c935 feat: add minimal web client scaffold
 2026-06-08 기준 추가 확인:
 
 ```text
-.codex:             workflow-executor-design @ 35bd1e7 docs: close out Clipper web DB split session, 이후 문서 수정 중
-clipper_infra:      feature/infra-initial-setup @ 49faa91, dev server-side build runbook/env 수정 중
-clipper_web_admin:  main @ fef456a, Angular 19 placeholder 전환 수정 중
-clipper_web_api:    main @ ec13be7, NestJS scaffold 전환 수정 중
-clipper_web_client: main @ 791c935, Angular 19 placeholder 전환 수정 중
+.codex:             workflow-executor-design @ f4207ad docs: hand off Clipper2 dev deploy session
+clipper_infra:      feature/infra-initial-setup @ decdfa0 docs: document Clipper dev server-side deployment
+clipper_web_admin:  main @ ffba705 feat: scaffold Angular dev admin
+clipper_web_api:    main @ d641942 feat: scaffold NestJS web API
+clipper_web_client: main @ 6fa1ffc feat: scaffold Angular dev client
 ```
 
-위 5개 repo의 2026-06-08 변경은 아직 commit/push되지 않았다. m2-stage에서
-server-side build로 배포하려면 먼저 이 변경들을 commit/push하거나, 동일한
-파일 상태를 m2-stage에 반영해야 한다.
+위 5개 repo의 2026-06-08 변경은 commit/push 완료됐다. 사용자가 확인한
+m2-stage 상태는 `/Users/metabuzz/Desktop/project/clipper2` 아래에
+`clipper_infra`만 있고 그 repo도 최신이 아니다. `clipper_infra`는 먼저
+pull하고, `clipper_web_client`, `clipper_web_admin`, `clipper_web_api`는
+해당 경로에 sibling repo로 clone해야 한다.
 
 ### Main Branch Consolidation Notes
 
@@ -241,7 +243,7 @@ server-side build로 배포하려면 먼저 이 변경들을 commit/push하거�
     - `clipper-db-admin-dev` healthy on `192.168.0.7:55213`
     - `clipper-db-release-dev` healthy on `192.168.0.7:55223`
   - m2-stage network verification to all three dev DB ports succeeded.
-  - Rotate any exposed dev DB passwords before wiring real app env.
+  - User said not to spend time on dev DB password rotation for this deployment session. Do not print secrets in chat/logs.
   - Clipper web/admin/API initial scaffold repos were committed and pushed, but the 2026-06-08 Angular 19/NestJS corrections are still local changes until committed and pushed.
   - `stack.dev.env` is not ready yet, so real web/admin/API deployment is not ready yet.
   - `clipper_infra/runbooks/deploy-db.md` documents deploying the dev DB stack with `docker compose --env-file ../env/db.dev.env -f compose.yml up -d`.
@@ -289,7 +291,7 @@ server-side build로 배포하려면 먼저 이 변경들을 commit/push하거�
      - DB containers create Postgres databases/users and persistent Docker volumes, not app tables. Tables come from app migrations/seed scripts.
      - `55201/55202/55211/55212/55221/55222` remain closed until stage/prod are ready.
      - m2-stage `nc` verification to `55203/55213/55223` succeeded.
-     - Rotate any exposed dev DB passwords before using real app env.
+     - User said not to spend time on dev DB password rotation for this deployment session. Do not print secrets in chat/logs.
    - Cloudflare에서는 dev route DNS를 먼저 예약한다.
      - `dev.clipperstudio.ai` CNAME `metabuzz.iptime.org`
      - `dev-admin.clipperstudio.ai` CNAME `metabuzz.iptime.org`
@@ -312,17 +314,17 @@ server-side build로 배포하려면 먼저 이 변경들을 commit/push하거�
        - `/Users/metabuzz/Desktop/project/clipper2/clipper_web_admin`
        - `/Users/metabuzz/Desktop/project/clipper2/clipper_web_api`
      - App repos are siblings of `clipper_infra`, not ignored subdirectories inside infra.
-   - `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin` initial minimal scaffolds are committed and pushed, but 2026-06-08 framework corrections are not pushed yet.
+   - `clipper_web_api`, `clipper_web_client`, and `clipper_web_admin` 2026-06-08 framework corrections are committed and pushed.
      - `clipper_web_client`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx.
      - `clipper_web_admin`: Angular 19 placeholder app, Docker image serves Angular build output with Nginx.
      - `clipper_web_api`: NestJS scaffold with `/healthz`, `/v1/health`, `/v1/info`, and `/v1/releases/latest` 501 placeholder.
      - These new local changes passed npm tests, Docker builds, compose config, and local container smoke.
-     - Commit/push these repo changes before trying to clone/pull/build on m2-stage.
+     - m2-stage currently has only a stale `clipper_infra`; pull it and clone the three app repos before building.
      - Create m2-stage server-local `env/stack.dev.env`.
      - Deploy real dev services to the existing NPM upstream ports.
    - 첫 실제 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
    - `clipper_infra` 초기 구성을 확인한다.
-   - 실제 도메인, 서버 IP, S3 bucket/prefix, secret 주입, DB password를 확정한다.
+   - 실제 도메인, 서버 IP, S3 bucket/prefix, secret 주입, DB 접속정보를 확정한다.
    - `env/*.env.example`을 서버별 실제 env 파일로 복사하고 값을 채운다.
    - DB env files are split by environment: `db.dev.env`, `db.stage.env`, and optional `db.prod.local.env`.
    - backup worker는 아직 README placeholder만 있으므로 실제 backup image/script를 결정해야 한다.
@@ -347,9 +349,14 @@ server-side build로 배포하려면 먼저 이 변경들을 commit/push하거�
 Using Superpowers.
 
 지금 세션은 m2-stage 서버 안에서 진행한다. 목표는 Clipper2 dev web/admin/API
-real service 배포다.
+real service 배포다. 먼저 m2-stage의 repo 배치부터 바로잡는다.
 
-서버 기준 expected layout:
+현재 사용자가 확인한 m2-stage 상태:
+- `/Users/metabuzz/Desktop/project/clipper2` 아래에 `clipper_infra`만 있다.
+- 그 `clipper_infra`도 최신이 아니다.
+- `clipper_web_client`, `clipper_web_admin`, `clipper_web_api`는 아직 clone되어 있지 않다.
+
+서버 기준 expected final layout:
 
 /Users/metabuzz/Desktop/project/clipper2/
   clipper_infra/
@@ -361,6 +368,11 @@ real service 배포다.
 - dev 배포 방식은 server-side build다. GHCR/registry push 방식은 이번 dev
   배포에 쓰지 않는다.
 - app repo 3개는 clipper_infra와 sibling으로 둔다.
+- local에서 필요한 변경은 이미 commit/push 완료됐다. m2-stage에서는 pull/clone하면 된다.
+  - clipper_infra: feature/infra-initial-setup @ decdfa0
+  - clipper_web_client: main @ 6fa1ffc
+  - clipper_web_admin: main @ ffba705
+  - clipper_web_api: main @ d641942
 - clipper_web_client는 Angular 19 placeholder app이어야 한다.
 - clipper_web_admin은 Angular 19 placeholder app이어야 한다.
 - clipper_web_api는 NestJS scaffold이어야 한다.
@@ -374,48 +386,60 @@ real service 배포다.
   - user DB: 192.168.0.7:55203
   - admin DB: 192.168.0.7:55213
   - release DB: 192.168.0.7:55223
-- DB password는 이전 공유 출력에 노출됐으므로 실제 app env에 쓰기 전에
-  rotate 여부를 사용자에게 확인한다.
+- DB password rotate는 이번 세션에서 신경쓰지 않는다. 다만 secret 값은 채팅/로그에 출력하지 않는다.
 - legacy api.clipperstudio.ai, demo.clipperstudio.ai는 건드리지 않는다.
 - dohit 관련 파일/컨테이너/포트는 건드리지 않는다.
 - Clipper DB 포트는 WAN 공개하지 않는다.
 
-중요:
-- 직전 로컬 세션의 Angular 19/NestJS 전환 변경은 아직 commit/push되지 않은
-  상태일 수 있다. m2-stage에서 clone/pull한 repo가 아래 조건을 만족하는지
-  반드시 확인하고, 만족하지 않으면 배포를 멈추고 사용자에게 local 변경
-  commit/push가 필요하다고 말한다.
-  - clipper_web_client package.json에 @angular/core 19.x가 있다.
-  - clipper_web_admin package.json에 @angular/core 19.x가 있다.
-  - clipper_web_api package.json에 @nestjs/core가 있다.
-  - clipper_infra/runbooks/deploy-dev.md에 /Users/metabuzz/Desktop/project/clipper2
-    sibling layout과 server-side build flow가 적혀 있다.
-
 해야 할 일:
-1. /Users/metabuzz/Desktop/project/clipper2 로 이동해 현재 파일/레포 구성을 확인한다.
-2. clipper_infra, clipper_web_client, clipper_web_admin, clipper_web_api가 없으면
-   필요한 repo만 clone한다.
-3. 각 repo에서 git status -sb, git log -1 --oneline을 확인한다.
-4. clipper_web_client/admin/api가 위 기술스택 조건을 만족하는지 확인한다.
-5. m2-stage에서 192.168.0.7:55203/55213/55223 접근을 다시 확인한다.
-6. DB password rotate 여부를 사용자에게 확인한다. 확인 전에는 real
-   stack.dev.env에 노출된 password를 그대로 쓰지 않는다.
-7. clipper_infra/env/stack.dev.env.example을
-   clipper_infra/env/stack.dev.env로 복사하고 실제 dev 값을 채운다.
-8. server-side build:
-   - cd ../clipper_web_client && git pull --ff-only && docker build -t clipper-web-client:dev .
-   - cd ../clipper_web_admin && git pull --ff-only && docker build -t clipper-web-admin:dev .
-   - cd ../clipper_web_api && git pull --ff-only && docker build -t clipper-web-api:dev .
-9. cd ../clipper_infra/apps 후:
-   docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml config
-   docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate
-10. Verify:
-   - docker ps for clipper-web-client-dev, clipper-web-admin-dev, clipper-web-api-dev
-   - local curl to 192.168.0.23:42203/healthz
-   - local curl to 192.168.0.23:42303/healthz
-   - local curl to 192.168.0.23:43203/v1/health
-   - browser or curl checks for dev.clipperstudio.ai, dev-admin.clipperstudio.ai,
-     dev-api.clipperstudio.ai/v1/health
+1. 작업 루트 확인:
+   - cd /Users/metabuzz/Desktop/project/clipper2
+   - pwd
+   - ls -la
+2. 기존 `clipper_infra` 최신화:
+   - cd clipper_infra
+   - git status -sb
+   - git fetch
+   - git checkout feature/infra-initial-setup
+   - git pull --ff-only
+   - git log -1 --oneline
+   - expected: decdfa0 docs: document Clipper dev server-side deployment
+   - 만약 uncommitted local changes 때문에 pull이 막히면 reset/revert하지 말고 멈춰서 사용자에게 말한다.
+3. app repo 3개 clone. `/Users/metabuzz/Desktop/project/clipper2`에서 실행한다.
+   - cd /Users/metabuzz/Desktop/project/clipper2
+   - git clone https://github.com/OhMyMetabuzz/clipper_web_client.git
+   - git clone https://github.com/OhMyMetabuzz/clipper_web_admin.git
+   - git clone https://github.com/OhMyMetabuzz/clipper_web_api.git
+   - 만약 이미 같은 디렉토리가 있으면 덮어쓰지 말고 해당 repo의 `git status -sb`, `git remote -v`, `git pull --ff-only`부터 확인한다.
+4. 각 repo HEAD/기술스택 확인:
+   - clipper_web_client: `git log -1 --oneline` expected `6fa1ffc`; package.json에 `@angular/core` 19.x가 있어야 한다.
+   - clipper_web_admin: `git log -1 --oneline` expected `ffba705`; package.json에 `@angular/core` 19.x가 있어야 한다.
+   - clipper_web_api: `git log -1 --oneline` expected `d641942`; package.json에 `@nestjs/core`가 있어야 한다.
+   - clipper_infra/runbooks/deploy-dev.md에 `/Users/metabuzz/Desktop/project/clipper2` sibling layout과 server-side build flow가 있어야 한다.
+5. m2-stage에서 dev DB 접근을 다시 확인한다:
+   - 192.168.0.7:55203
+   - 192.168.0.7:55213
+   - 192.168.0.7:55223
+6. `clipper_infra/env/stack.dev.env.example`을 `clipper_infra/env/stack.dev.env`로 복사하고 실제 dev 값을 채운다.
+   - secret 값은 채팅에 출력하지 않는다.
+   - DB password rotate는 이번 세션에서 하지 않는다.
+7. server-side build:
+   - cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_client && git pull --ff-only && docker build -t clipper-web-client:dev .
+   - cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_admin && git pull --ff-only && docker build -t clipper-web-admin:dev .
+   - cd /Users/metabuzz/Desktop/project/clipper2/clipper_web_api && git pull --ff-only && docker build -t clipper-web-api:dev .
+8. compose config/deploy:
+   - cd /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps
+   - docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml config
+   - docker compose --env-file ../env/stack.dev.env -f compose.yml -f compose.dev.yml up -d --force-recreate
+9. Verify:
+   - docker ps에서 clipper-web-client-dev, clipper-web-admin-dev, clipper-web-api-dev 확인
+   - curl http://192.168.0.23:42203/healthz
+   - curl http://192.168.0.23:42303/healthz
+   - curl http://192.168.0.23:43203/v1/health
+   - browser or curl checks:
+     - https://dev.clipperstudio.ai
+     - https://dev-admin.clipperstudio.ai
+     - https://dev-api.clipperstudio.ai/v1/health
 
 문서 기준:
 - if available, read clipper_infra/runbooks/deploy-dev.md,
@@ -493,9 +517,9 @@ Using Superpowers.
    - `m2-proxy`, `m2-db`, `m2-stage` preflight는 완료됐다.
    - `clipper-db-dev`도 m2-db에서 배포 완료됐고, m2-stage에서 `192.168.0.7:55203/55213/55223` 접근 확인이 끝났다.
    - dev Cloudflare DNS와 NPM dev proxy hosts도 완료됐다. 사용자는 임시 `nginx:alpine` 컨테이너를 이미 제거했다고 보고했다.
-   - 다음은 2026-06-08 로컬 Angular 19/NestJS 전환 변경을 commit/push한 뒤 m2-stage에서 server-side build로 real dev service를 배포하는 것이다.
+   - 2026-06-08 Angular 19/NestJS 전환 변경은 commit/push 완료됐다. m2-stage에서 `clipper_infra`를 pull하고 app repo 3개를 clone한 뒤 server-side build로 real dev service를 배포한다.
    - 첫 실제 Clipper 배포 환경은 `dev`다. `stage`는 dev 확인 후, `prod`는 stage 검증과 승인 후 진행한다.
-   - dev DB password는 공유 출력에 노출됐으므로, 실제 app env에 쓰기 전에 rotate한다.
+   - 사용자가 dev DB password rotate는 이번 배포 세션에서 신경쓰지 말라고 했다. secret 값은 채팅/로그에 출력하지 않는다.
    - 서버 IP, 도메인, proxy, secret 주입, DB/백업 경로를 실제 값으로 채운다.
 5. 사용자가 요청하면 로컬 main들을 repo별로 push한다.
 6. Template Builder sample render 관련 후속 버그가 입력되면 아래 전제를 유지한다.
