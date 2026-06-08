@@ -54,8 +54,8 @@ DB는 로컬에 새로 띄우지 않고 공유 dev DB를 사용한다.
 
 | App | Local URL | Command |
 | --- | --- | --- |
-| web | `http://localhost:4200` | `npm run start:local` |
-| admin | `http://localhost:4201` | `npm run start:local` |
+| web | `http://localhost:4700` | `npm run start:local` |
+| admin | `http://localhost:4701` | `npm run start:local` |
 | API | `http://localhost:43203` | `npm run start:local` |
 
 API는 로컬 개발 전용 env 파일을 사용한다.

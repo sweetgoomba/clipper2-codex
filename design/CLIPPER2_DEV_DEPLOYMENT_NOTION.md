@@ -362,8 +362,8 @@ dev 서버는 push된 결과를 m2-stage에서 확인하는 용도다. 실제 �
 
 | App | Local URL | Command |
 | --- | --- | --- |
-| web | `http://localhost:4200` | `npm run start:local` |
-| admin | `http://localhost:4201` | `npm run start:local` |
+| web | `http://localhost:4700` | `npm run start:local` |
+| admin | `http://localhost:4701` | `npm run start:local` |
 | API | `http://localhost:43203` | `npm run start:local` |
 
 API는 로컬 개발 전용 env 파일을 사용한다.
