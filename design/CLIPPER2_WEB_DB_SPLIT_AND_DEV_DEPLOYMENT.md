@@ -438,7 +438,10 @@ Recommended options:
 
 - Run DBeaver on m2-stage through Google Remote Desktop.
 - Or use VPN/SSH tunneling for local DBeaver access.
-- Do not WAN-forward Clipper DB ports.
+- Later decision: temporarily use ipTIME WAN port forwarding for Clipper dev DB
+  only, matching the current dohit convenience pattern. Replace this with
+  VPN/SSH tunneling later.
+- Do not WAN-forward Clipper stage/prod DB ports.
 
 DBeaver connection targets:
 
@@ -446,6 +449,14 @@ DBeaver connection targets:
 User DB:    192.168.0.7:55203 / clipper_user_dev    / clipper_user_dev_user
 Admin DB:   192.168.0.7:55213 / clipper_admin_dev   / clipper_admin_dev_user
 Release DB: 192.168.0.7:55223 / clipper_release_dev / clipper_release_dev_user
+```
+
+Temporary WAN-forwarded dev targets:
+
+```text
+User DB:    metabuzz.iptime.org:55203 / clipper_user_dev    / clipper_user_dev_user
+Admin DB:   metabuzz.iptime.org:55213 / clipper_admin_dev   / clipper_admin_dev_user
+Release DB: metabuzz.iptime.org:55223 / clipper_release_dev / clipper_release_dev_user
 ```
 
 ## Dev App Deployment Completed

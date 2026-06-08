@@ -271,13 +271,31 @@ local Mac mini에서 timeout이 나는 것은 password 문제가 아니라 네�
 문제다. password가 틀렸다면 TCP 연결이 된 뒤 PostgreSQL 인증 실패가 나오는
 것이 보통이다.
 
-Clipper DB 포트는 WAN port forwarding으로 열지 않는다.
+초기 원칙은 Clipper DB 포트를 WAN port forwarding으로 열지 않는 것이었지만,
+로컬 Mac에서 DBeaver와 로컬 `clipper_web_api`를 dev DB에 붙여야 하므로
+임시로 dohit과 같은 ipTIME 포트포워딩 방식을 사용하기로 했다. 이 방식은
+나중에 VPN/SSH tunnel 방식으로 교체하는 것이 목표다.
+
+임시 ipTIME 포트포워딩 규칙:
+
+| 규칙 이름 | 프로토콜 | 외부 포트 | 내부 IP | 내부 포트 | 대상 |
+| --- | --- | ---: | --- | ---: | --- |
+| `clipper_dev_user_db` | TCP | `55203` | `192.168.0.7` | `55203` | user dev DB |
+| `clipper_dev_admin_db` | TCP | `55213` | `192.168.0.7` | `55213` | admin dev DB |
+| `clipper_dev_release_db` | TCP | `55223` | `192.168.0.7` | `55223` | release dev DB |
+
+포트포워딩 추가 후 외부/로컬 개발 환경에서는 LAN IP가 아니라 DDNS host를
+사용한다.
 
 ```text
-55203
-55213
-55223
+metabuzz.iptime.org:55203 -> 192.168.0.7:55203 -> clipper-db-user-dev
+metabuzz.iptime.org:55213 -> 192.168.0.7:55213 -> clipper-db-admin-dev
+metabuzz.iptime.org:55223 -> 192.168.0.7:55223 -> clipper-db-release-dev
 ```
+
+이 방식은 PostgreSQL 포트를 인터넷에서 직접 접근 가능하게 만드는 구조다.
+강한 DB password를 사용하고, secret을 문서/채팅에 노출하지 않는다. ipTIME이
+source IP 제한을 지원한다면 허용 IP를 개발자 공인 IP로 제한한다.
 
 ## DBeaver 접속
 
@@ -295,11 +313,20 @@ DBeaver 접속 값:
 | Clipper admin dev | `192.168.0.7` | `55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
 | Clipper release dev | `192.168.0.7` | `55223` | `clipper_release_dev` | `clipper_release_dev_user` |
 
-로컬 DBeaver에서 꼭 접속해야 한다면 VPN 또는 SSH tunnel이 필요하다. router에
-DB 포트를 외부 공개하지 않는다.
+로컬 DBeaver에서 접속하려면 원래는 VPN 또는 SSH tunnel이 더 안전하다. 다만
+현재는 dohit과 같은 임시 운영 방식으로 ipTIME 포트포워딩을 사용한다.
 
 아직 application table이 없으므로 DBeaver에서 기본 PostgreSQL schema만
 보이는 것은 정상이다.
+
+임시 ipTIME 포트포워딩 적용 후 로컬 DBeaver에서 접속할 때는 host를
+`metabuzz.iptime.org`로 둔다.
+
+| Connection name | Host | Port | Database | User |
+| --- | --- | ---: | --- | --- |
+| Clipper user dev WAN | `metabuzz.iptime.org` | `55203` | `clipper_user_dev` | `clipper_user_dev_user` |
+| Clipper admin dev WAN | `metabuzz.iptime.org` | `55213` | `clipper_admin_dev` | `clipper_admin_dev_user` |
+| Clipper release dev WAN | `metabuzz.iptime.org` | `55223` | `clipper_release_dev` | `clipper_release_dev_user` |
 
 ## 코드 수정 후 재배포
 
@@ -468,7 +495,9 @@ docker compose --env-file ../env/db.dev.env -f compose.yml ps
 
 - DB password, token, secret 값을 채팅이나 문서에 붙여넣지 않는다.
 - `stack.dev.env`, `db.dev.env`를 commit하지 않는다.
-- Clipper DB 포트를 WAN에 공개하지 않는다.
+- Clipper dev DB 포트 `55203/55213/55223`만 임시로 ipTIME 포트포워딩을
+  사용한다. 이 방식은 추후 VPN/SSH tunnel로 교체한다.
+- Clipper stage/prod DB 포트는 WAN에 공개하지 않는다.
 - Clipper 배포 중 dohit 컨테이너, 파일, 포트를 건드리지 않는다.
 - 명시적인 cutover 승인 없이 legacy `api.clipperstudio.ai`,
   `demo.clipperstudio.ai`를 변경하지 않는다.

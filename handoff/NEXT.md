@@ -99,9 +99,14 @@ DBeaver 관련 주의:
   도달이 안 되는 문제다.
 - m2-stage에서는 DB 접근이 되고, dev API health도 세 DB connected를
   확인했다.
-- DBeaver는 Google Remote Desktop으로 m2-stage 안에서 실행하거나,
-  로컬에서 쓰려면 VPN/SSH tunnel을 사용한다.
-- Clipper DB ports `55203/55213/55223`은 WAN port forwarding으로 열지 않는다.
+- 이후 사용자는 dohit과 같은 편의성을 위해 Clipper dev DB만 임시로 ipTIME
+  WAN port forwarding 방식으로 열기로 결정했다.
+- 임시 포워딩 규칙:
+  - `clipper_dev_user_db` TCP `55203` -> `192.168.0.7:55203`
+  - `clipper_dev_admin_db` TCP `55213` -> `192.168.0.7:55213`
+  - `clipper_dev_release_db` TCP `55223` -> `192.168.0.7:55223`
+- 로컬 DBeaver/로컬 `clipper_web_api`는 `metabuzz.iptime.org:55203/55213/55223`을 사용한다.
+- 이 방식은 나중에 VPN/SSH tunnel로 교체한다. stage/prod DB ports는 WAN에 열지 않는다.
 
 ### Main Branch Consolidation Notes
 
@@ -273,7 +278,8 @@ DBeaver 관련 주의:
   - m2-proxy/office WAN IPv4 is `112.169.113.138`, but ipTIME reports it as dynamic DHCP.
   - ipTIME DDNS `metabuzz.iptime.org` points to `112.169.113.138`.
   - ipTIME forwards `80/443` to m2-proxy `192.168.0.2`; router remote management is not configured.
-  - Existing WAN forwards `55101/55102/55103` go to dohit DB on `192.168.0.7`; do not add Clipper DB `55201/55202/55203/55211/55212/55213/55221/55222/55223` to WAN forwarding.
+  - Existing WAN forwards `55101/55102/55103` go to dohit DB on `192.168.0.7`.
+  - Later decision: add temporary WAN forwarding for Clipper dev DB ports `55203/55213/55223` only. Do not add Clipper stage/prod DB ports `55201/55202/55211/55212/55221/55222` to WAN forwarding.
   - Legacy records `api.clipperstudio.ai -> 3.34.33.3` and `demo.clipperstudio.ai -> 121.138.93.3` must not be changed until legacy cutover.
   - Clipper dev records should be `dev.clipperstudio.ai`, `dev-admin.clipperstudio.ai`, `dev-api.clipperstudio.ai`, initially DNS-only.
   - Because the WAN IP is dynamic, prefer Cloudflare CNAME records to `metabuzz.iptime.org`; A records to `112.169.113.138` are acceptable only while the WAN IP remains unchanged.
@@ -414,7 +420,7 @@ Using Superpowers.
 - 권장 DB GUI 접근은 m2-stage 안에서 DBeaver를 실행하는 방식이다. 로컬 DBeaver는 VPN/SSH tunnel 없이는 안 될 수 있다.
 - legacy api.clipperstudio.ai, demo.clipperstudio.ai는 건드리지 않는다.
 - dohit 관련 파일/컨테이너/포트는 건드리지 않는다.
-- Clipper DB 포트는 WAN 공개하지 않는다.
+- Clipper dev DB 포트 `55203/55213/55223`은 임시로 ipTIME 포트포워딩을 사용한다. stage/prod DB 포트는 WAN 공개하지 않는다.
 
 해야 할 일:
 1. `.codex/handoff/NEXT.md`, `.codex/records/sessions/2026/06/08.md`,
