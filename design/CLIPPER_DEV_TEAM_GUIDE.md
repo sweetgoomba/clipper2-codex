@@ -38,6 +38,62 @@ m2-stage 서버:
 현재 dev는 m2-stage에서 직접 Docker image를 build하는 방식이다.
 GitHub에 push했다고 자동 배포되지는 않는다.
 
+로컬 개발 repo 위치:
+
+```text
+/Users/jina/project/adlight/
+  clipper_web_client/
+  clipper_web_admin/
+  clipper_web_api/
+```
+
+## 로컬 개발
+
+로컬 개발은 배포된 dev 서버와 별개로, 각 repo를 localhost로 띄우는 방식이다.
+DB는 로컬에 새로 띄우지 않고 공유 dev DB를 사용한다.
+
+| App | Local URL | Command |
+| --- | --- | --- |
+| web | `http://localhost:4200` | `npm run start:local` |
+| admin | `http://localhost:4201` | `npm run start:local` |
+| API | `http://localhost:43203` | `npm run start:local` |
+
+API는 로컬 개발 전용 env 파일을 사용한다.
+
+최초 1회:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_api
+cp env/local.dev.env.example env/local.dev.env
+```
+
+`env/local.dev.env`에 실제 dev DB password를 채운다. 이 파일은 commit하지
+않는다.
+
+web 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_client
+npm install
+npm run start:local
+```
+
+admin 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_admin
+npm install
+npm run start:local
+```
+
+API 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_api
+npm install
+npm run start:local
+```
+
 ## App 컨테이너
 
 | Compose service | Container name | Host port |
@@ -183,24 +239,15 @@ nc -vz metabuzz.iptime.org 55213
 nc -vz metabuzz.iptime.org 55223
 ```
 
-## 로컬 API 실행
+## 로컬 API env
 
-로컬에서 공유 dev DB에 붙여 `clipper_web_api`를 실행할 때:
+로컬 API는 아래 파일을 읽는다.
 
-```sh
-cd /Users/jina/project/adlight/clipper_web_api
-
-export USER_DATABASE_URL='postgresql://clipper_user_dev_user:<PASSWORD>@metabuzz.iptime.org:55203/clipper_user_dev'
-export ADMIN_DATABASE_URL='postgresql://clipper_admin_dev_user:<PASSWORD>@metabuzz.iptime.org:55213/clipper_admin_dev'
-export RELEASE_DATABASE_URL='postgresql://clipper_release_dev_user:<PASSWORD>@metabuzz.iptime.org:55223/clipper_release_dev'
-export CLIPPER_ENV=dev
-export RELEASE_CHANNEL=dev
-export PORT=43203
-
-npm install
-npm run build
-npm start
+```text
+/Users/jina/project/adlight/clipper_web_api/env/local.dev.env
 ```
+
+예시 파일은 `env/local.dev.env.example`이다.
 
 password에 `@`, `:`, `/`, `?`, `#`, `%`, 공백이 있으면 URL 안에서는
 URL-encode 해야 한다.

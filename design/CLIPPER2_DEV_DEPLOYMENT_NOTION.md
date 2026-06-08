@@ -343,6 +343,69 @@ DBeaver 접속 값:
 
 사용자 로컬 DBeaver에서 위 3개 연결 모두 성공 확인됐다.
 
+## 로컬 개발
+
+dev 서버는 push된 결과를 m2-stage에서 확인하는 용도다. 실제 개발은 로컬에서
+각 repo를 localhost로 실행한다. DB는 로컬에 새로 띄우지 않고 공유 dev DB를
+사용한다.
+
+로컬 repo 위치:
+
+```text
+/Users/jina/project/adlight/
+  clipper_web_client/
+  clipper_web_admin/
+  clipper_web_api/
+```
+
+로컬 실행 포트:
+
+| App | Local URL | Command |
+| --- | --- | --- |
+| web | `http://localhost:4200` | `npm run start:local` |
+| admin | `http://localhost:4201` | `npm run start:local` |
+| API | `http://localhost:43203` | `npm run start:local` |
+
+API는 로컬 개발 전용 env 파일을 사용한다.
+
+```text
+/Users/jina/project/adlight/clipper_web_api/env/local.dev.env
+```
+
+최초 1회:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_api
+cp env/local.dev.env.example env/local.dev.env
+```
+
+`env/local.dev.env`에 실제 dev DB password를 채운다. 이 파일은 commit하지
+않는다. DB host는 `metabuzz.iptime.org`를 사용한다.
+
+web 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_client
+npm install
+npm run start:local
+```
+
+admin 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_admin
+npm install
+npm run start:local
+```
+
+API 실행:
+
+```sh
+cd /Users/jina/project/adlight/clipper_web_api
+npm install
+npm run start:local
+```
+
 ## 코드 수정 후 재배포
 
 기본 흐름:
