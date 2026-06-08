@@ -685,9 +685,8 @@ clipper-db-release-prod
 Prod DB can be self-hosted with the same DB Compose file on a local Mac mini or
 on a cloud VM. If prod uses an external PostgreSQL service, DB Compose is not
 used for prod; the prod app env uses split DB connection variables such as
-`CLIPPER_DATABASE_HOST`, `CLIPPER_DATABASE_PASSWORD`, and
-`CLIPPER_*_DATABASE_PORT/NAME/USER`. External/cloud mode can override
-`CLIPPER_*_DATABASE_HOST` per DB.
+`CLIPPER_DATABASE_HOST` and `CLIPPER_*_DATABASE_PORT/NAME/USER/PASSWORD`.
+External/cloud mode can override `CLIPPER_*_DATABASE_HOST` per DB.
 
 Backup destinations:
 

@@ -130,9 +130,8 @@ Docker Compose 파일:
 이 env 파일에는 실제 DB password가 들어 있으므로 commit하거나 채팅/문서에
 붙여넣지 않는다.
 
-DB 접속값은 URL이 아니라 split 변수 형식이다. password는
-`CLIPPER_DATABASE_PASSWORD` 한 곳에 넣고, user/admin/release는
-`CLIPPER_*_DATABASE_PORT/NAME/USER`로 나눈다.
+DB 접속값은 URL이 아니라 split 변수 형식이다. user/admin/release 각각
+`CLIPPER_*_DATABASE_PORT/NAME/USER/PASSWORD`로 나눈다.
 
 현재 dev 컨테이너:
 
@@ -383,20 +382,19 @@ cd /Users/jina/project/adlight/clipper_web_api
 cp env/local.dev.env.example env/local.dev.env
 ```
 
-`env/local.dev.env`에 실제 dev DB password를 `DATABASE_PASSWORD` 한 곳에만
-채운다. 이 파일은 commit하지 않는다. DB host는 `metabuzz.iptime.org`를
-사용한다.
+`env/local.dev.env`에 실제 dev DB password를 DB별로 채운다. 이 파일은
+commit하지 않는다. DB host는 `metabuzz.iptime.org`를 사용한다.
 
 ```text
 DATABASE_HOST=metabuzz.iptime.org
-DATABASE_PASSWORD='<PASSWORD>'
 USER_DATABASE_PORT=55203
 USER_DATABASE_NAME=clipper_user_dev
 USER_DATABASE_USER=clipper_user_dev_user
+USER_DATABASE_PASSWORD='<USER_DB_PASSWORD>'
 ```
 
-admin/release도 같은 형식으로 port/name/user만 다르다. password에 shell
-특수문자가 있으면 작은따옴표로 감싼다. URL-encode는 하지 않는다.
+admin/release도 같은 형식으로 port/name/user/password가 다르다. password에
+shell 특수문자가 있으면 작은따옴표로 감싼다. URL-encode는 하지 않는다.
 
 web 실행:
 
