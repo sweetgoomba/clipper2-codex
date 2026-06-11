@@ -27,6 +27,15 @@
 - Electron은 desktop integration과 packaged process host 역할에 집중한다.
 - plugin별 고정 포트나 Angular의 plugin URL 직접 접근은 금지한다.
 
+## Current Shortform Focus
+
+- 2026-06-11 기준 shortform production의 우선 작업은 project/job/queue 대정리가 아니라 legacy Clipper UI/behavior parity다.
+- 기준 문서:
+  - [features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md](features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md)
+  - [features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md](features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md)
+- `shortform_url`, `shortform_paste`, `shortform_prompt`는 계속 별도 user-visible plugin이다.
+- Phase 1의 `숏폼 생성하기` 버튼은 legacy video-create payload를 console log만 해야 한다. ffmpeg, render job, queue insertion, `/projects` navigation은 금지다.
+
 ## Primary References
 
 - [context/PROJECT_HISTORY_AND_STATUS.md](context/PROJECT_HISTORY_AND_STATUS.md)
