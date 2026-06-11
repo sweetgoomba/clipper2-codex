@@ -4,6 +4,10 @@
 
 앱 소스 코드는 각 repo에 있고, 이 저장소는 판단과 작업 이력을 추적한다.
 
+## Current Focus
+
+2026-06-11 기준 현재 우선 작업은 shortform production의 strict legacy parity port다. 먼저 [features/clipper-studio/README.md](features/clipper-studio/README.md)를 보고, 세부 기준은 [features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md](features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md)를 따른다.
+
 ## 먼저 읽을 문서
 
 1. [handoff/NEXT.md](handoff/NEXT.md)

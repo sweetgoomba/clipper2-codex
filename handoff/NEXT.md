@@ -54,26 +54,38 @@ clipper_electron: main @ f701677 Revert "Update electron builder"
 8. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
 9. [../features/template-builder/README.md](../features/template-builder/README.md)
 10. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
-11. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
-12. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
-13. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
-14. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
-15. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
-16. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
-17. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
-18. [../records/sessions/2026/06/11.md](../records/sessions/2026/06/11.md)
-19. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
-20. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
-21. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
-22. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
-23. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-24. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+11. [../features/clipper-studio/README.md](../features/clipper-studio/README.md)
+12. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md)
+13. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md)
+14. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
+15. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
+16. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
+17. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
+18. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
+19. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
+20. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
+21. [../records/sessions/2026/06/11.md](../records/sessions/2026/06/11.md)
+22. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
+23. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
+24. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
+25. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
+26. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+27. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Historical Repo Heads
 
 최신 2026-06-10 repo 기준은 위 `2026-06-11 Latest Product Terminology Decision` 섹션을 우선한다. 아래 내용은 과거 세션 기록이다.
 
-2026-06-04 로컬 세션에서 문서 수정 전에 직접 재확인한 기준:
+2026-06-11 로컬 세션에서 직접 재확인한 기준:
+
+```text
+clipper_angular: work/clipper1-input-workflow-split @ 993efb2 refactor(shortform): use project terminology
+clipper_nestjs:  work/clipper1-input-workflow-split @ 8ac76d5 refactor(shortform): rename workspace state to project
+```
+
+위 두 브랜치가 shortform plugin split과 최근 project terminology 정정을 포함하는 현재 기준이다. `feature/initial-scaffold`로 돌아가면 필요한 변경이 너무 많이 사라진다.
+
+2026-06-04 로컬 세션에서 문서 수정 전에 직접 재확인한 이전 기준:
 
 ```text
 clipper_angular:  main @ 70d6e58 Improve template sample render flow
@@ -201,6 +213,11 @@ clipper_web_client: origin/main @ 7bdaeae chore: move local web port to 4700
 - `shortform_prompt`, `shortform_url`, `shortform_paste`는 각각 독립된 사용자 플러그인이다.
 - 큐/보관함의 사용자 단위는 Project다. `/jobs`, `VideoRenderJob`, Python runtime `/jobs`는 내부 실행/호환 계층으로 취급한다.
 - 하이라이트 분석 단계 메시지는 유저에게 보여줄 수 있지만, 숏폼/ffmpeg 렌더 세부 메시지는 `영상 생성 중`으로 단순화한다.
+- Shortform production의 현재 1차 작업은 strict legacy parity port다.
+- `shortform_url`, `shortform_paste`, `shortform_prompt`는 별도 user-visible plugin으로 유지한다.
+- 레거시 Clipper shortform UI/스타일/영상 생성 전 동작은 `adlight_angular`와 완전히 동일해야 한다. 차이는 버그다.
+- 1차 작업에서 `숏폼 생성하기` 버튼은 legacy `adlight_python` video-create payload를 console log만 한다.
+- 1차 작업에서 ffmpeg 호출, render job 생성, queue insertion, `/projects` navigation은 금지다.
 - 실행 모드는 `local`, `devapp`, `packaged`.
 - packaged build/runtime은 `.env.local`, `.env.devapp`, generic `.env`를 읽거나 복사하지 않는다.
 - real `.env.<mode>` 파일에 optional blank placeholder를 넣지 않는다.
