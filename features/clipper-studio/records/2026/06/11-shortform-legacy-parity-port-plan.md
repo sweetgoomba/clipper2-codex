@@ -18,6 +18,50 @@
 
 Do not restart from `feature/initial-scaffold`; it drops required plugin split and project terminology work.
 
+## 2026-06-11 Progress Update
+
+This plan has been partially executed on the existing
+`work/clipper1-input-workflow-split` branches.
+
+Completed or substantially implemented:
+
+- Legacy shortform editor assets/styles were ported into Clipper2.
+- Legacy editor styles were scoped to the shortform page instead of leaking into
+  the whole Clipper2 app.
+- Plugin Store detail/open behavior was restored after the style port.
+- The shortform editor opens inside the normal Clipper2 shell with the sidebar
+  visible.
+- `shortform_url`, `shortform_paste`, and `shortform_prompt` remain separate
+  user-visible plugins.
+- Clip-generation modal updates now come from WebSocket events, not SSE.
+- The backend clip-generation path uses provider integrations for LLM script
+  generation, Naver Clova TTS, and Naver image search instead of normal-path
+  dummy clip data.
+- Clip drag/drop and subtitle drag/drop were added.
+- Subtitle hover action lingering and clip-drag temporary scrollbars were
+  improved.
+- The `숏폼 생성하기` boundary remains log-only; render/queue/navigation wiring
+  is still intentionally excluded.
+- The left panel font regression from legacy `rem` variables was fixed with
+  scoped px-based font variables.
+
+Verification already performed:
+
+- Focused Angular shortform/style tests passed.
+- Angular build passed.
+- NestJS build passed.
+- NestJS shortform/WebSocket event tests passed.
+- Browser computed-style check confirmed the shortform left panel font sizes.
+
+Do not treat Phase 1 as complete yet. The remaining tasks below still need a
+strict visual/behavior parity pass against `adlight_angular`, especially for
+the left input panel, center clip/subtitle editor, right controls, modal states,
+preview states, packaged runtime behavior, and full manual plugin flows.
+
+Project-first / Plugin / Queue cleanup is not part of this plan and has not
+started. Keep that work deferred until the shortform legacy parity phase is
+finished and approved.
+
 ## Task 1: Baseline And Contracts
 
 **Files:**
@@ -204,4 +248,3 @@ Do not restart from `feature/initial-scaffold`; it drops required plugin split a
 - [ ] Manual app check confirms pressing `숏폼 생성하기` logs payload only.
 - [ ] Manual app check confirms no `/projects` navigation and no queue/render request.
 - [ ] Document remaining approved exceptions, if any. Unapproved differences are bugs.
-

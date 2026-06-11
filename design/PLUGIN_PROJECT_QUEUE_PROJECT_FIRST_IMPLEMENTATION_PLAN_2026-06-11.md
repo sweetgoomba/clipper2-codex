@@ -10,11 +10,27 @@
 
 ---
 
+## Current Status
+
+Status as of 2026-06-11: **not started**.
+
+This is a future implementation plan, not work completed in the current
+shortform legacy parity session. The agreed execution order is:
+
+1. Finish the shortform legacy UI/pre-render parity port first.
+2. Only after that is stable and approved, start this Project-first / Plugin /
+   Queue terminology and model cleanup.
+
+Do not begin this plan while the shortform legacy parity work is still open.
+In particular, do not mix Project-first queue changes into the shortform UI
+port. The shortform phase may keep the existing Clipper2 shortform APIs and
+current `/jobs`/render compatibility layers.
+
 ## Scope Guard
 
 This plan is Phase 1. It does not remove `/jobs`, delete `VideoRenderJob`, or rename `WorkflowExecutor` globally. Those names remain current implementation details until Project-first behavior is stable.
 
-This plan does implement:
+When this plan is executed later, it implements:
 
 - User plugin vs hidden runtime worker classification.
 - Project status expansion from completed-only to Project lifecycle states.
@@ -1552,32 +1568,31 @@ Expected:
 All three commands exit 0
 ```
 
-- [ ] **Step 4: Update documentation**
+- [ ] **Step 4: Update documentation after this future implementation**
 
-Append a section to `.codex/design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`:
+When this plan is executed later, append an implementation status section to
+`.codex/design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`. Do not add this
+status while the plan is still unstarted.
 
 ```md
-## 2026-06-11 Phase 1 Implementation Status
+## Project-first Implementation Status
 
-- User plugin and hidden runtime worker classification has been added to plugin manifests.
-- Projects can now represent draft/queued/running/completed/failed/cancelled states.
-- Generic plugin projects can be created through `/projects`.
-- Project queue endpoints create internal ProjectRun records while reusing current execution infrastructure.
-- Angular project cards are Project-centered and no longer need synthetic job cards for list rendering.
-- Render worker messages are mapped to product copy such as `영상 생성 중`.
+- Record the actual implemented Project-first changes here.
+- Include only changes that were implemented and verified in that later phase.
+- Do not mark Project-first work complete while shortform legacy parity is still open.
 ```
 
-Append verification commands and results to `.codex/records/sessions/2026/06/11.md`.
+Append verification commands and results to the active session record only after
+the implementation and verification commands have actually run.
 
-Update `.codex/handoff/NEXT.md` latest section with:
+Update `.codex/handoff/NEXT.md` latest section with a completed status only
+after the implementation is finished and verified. Future template:
 
 ```md
-2026-06-11 Phase 1 Project-first implementation:
+Project-first implementation:
 
-- Completed user plugin/runtime worker classification.
-- Added Project lifecycle states and generic project creation.
-- Added ProjectRun queue facade over existing execution layers.
-- Updated Angular project cards and render progress copy.
+- Record the actual completed Project-first changes here.
+- Include only verified changes from that later implementation phase.
 - Verification:
   - `clipper_nestjs npm run build`: exit 0 after implementation
   - `clipper_nestjs node --test test/workflow-executor-registry.test.js test/project-first-queue.test.js test/shortform-project-api.test.js`: exit 0 after implementation

@@ -6,6 +6,28 @@
 
 이 문서의 범위는 플러그인, 프로젝트, 큐, 내부 실행 기록, 진행 메시지다. 기존 코드에 남아 있는 `workflow`, `job`, `workspace` 용어는 현재 구현 상태를 설명할 때만 언급한다.
 
+## 2026-06-11 구현 상태
+
+이 문서는 제품/개발자 용어 기준과 목표 구조를 정리한 문서다. 이 기준에
+맞춘 Project-first / Plugin / Queue 모델 변경은 아직 시작하지 않았다.
+
+현재 합의한 작업 순서:
+
+1. 먼저 숏폼 제작 레거시 UI/pre-render parity를 끝낸다.
+   - 기준 브랜치: `work/clipper1-input-workflow-split`
+   - 유지할 것: `shortform_url`, `shortform_paste`, `shortform_prompt` 3분리,
+     기존 `workspace -> project` 정정, 현재 NestJS shortform API
+   - 목표: `adlight_angular` 레거시 숏폼 제작 화면과 UI/스타일/영상 생성 전
+     동작을 맞춘다.
+   - 하지 않을 것: 큐/프로젝트/잡 모델 대수술
+2. 그 다음 Project-first / Plugin / Queue / terminology 정리를 시작한다.
+   - 큐에 들어가는 단위를 프로젝트로 정리한다.
+   - `/projects`, `/jobs`, `VideoRenderJob`, plugin catalog, ProjectRun,
+     ProjectProgress를 본격 정리한다.
+
+따라서 이 문서 아래의 목표 구조와 구현 원칙은 다음 단계의 기준이며, 현재
+코드에 이미 모두 구현됐다는 의미가 아니다.
+
 ## 핵심 결론
 
 유저가 알아야 하는 제품 개념은 두 개다.

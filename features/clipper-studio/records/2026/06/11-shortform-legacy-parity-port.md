@@ -14,6 +14,15 @@ cleanup. The current branch base should keep the `shortform_url`,
 `shortform_paste`, and `shortform_prompt` plugin split from
 `work/clipper1-input-workflow-split`.
 
+Current sequencing:
+
+1. Finish this shortform legacy UI/pre-render parity work first.
+2. After it is stable and approved, start Project-first / Plugin / Queue model
+   cleanup.
+
+The Project-first / Plugin / Queue cleanup has not started yet. Do not combine
+that refactor with this legacy UI port.
+
 ## Phase 1 Scope
 
 Phase 1 implements everything up to, but not including, actual video generation.
@@ -210,3 +219,110 @@ Phase 1 is complete only when all of these are true:
 - Pressing `숏폼 생성하기` does not call backend video generation, does not enqueue
   anything, and does not navigate to `/projects`.
 
+## 2026-06-11 Implementation Snapshot
+
+The first implementation pass has been applied on top of
+`work/clipper1-input-workflow-split`; do not restart from
+`feature/initial-scaffold`.
+
+Current checked heads:
+
+```text
+clipper_angular: work/clipper1-input-workflow-split @ 8d9d0a5 Fix shortform legacy font sizing
+clipper_nestjs:  work/clipper1-input-workflow-split @ 06e3123 Implement shortform clip generation providers
+```
+
+Implemented so far:
+
+- `shortform_url`, `shortform_paste`, and `shortform_prompt` remain separate
+  Store plugins.
+- The shortform editor opens inside the normal Clipper2 app shell, keeping the
+  Clipper2 sidebar visible.
+- Store cards are selected first; plugin open action lives in the right detail
+  panel. A legacy `.actions` CSS collision was fixed so Store styling is not
+  changed by the shortform editor styles.
+- Legacy shortform assets and editor styles were ported into the Clipper2
+  shortform editor.
+- Legacy styles were scoped to the shortform editor instead of staying global.
+  This protects Store, Dashboard, Projects, and Template Builder from Clipper1
+  reset/common/edit CSS.
+- The shortform editor has clip drag/drop and subtitle drag/drop support.
+- Subtitle row hover action behavior was tightened so add/delete/preview buttons
+  do not visibly linger across many rows during fast mouse movement.
+- Clip drag no longer creates temporary scrollbars inside the clip container.
+- The clip-generation modal is updated by NestJS WebSocket events. Clipper2 does
+  not use legacy SSE for this pre-render clip generation path.
+- `숏폼 생성하기` remains log-only for Phase 1. It must not enqueue, render, or
+  navigate.
+- The scoped legacy font variable fix restored left-panel text sizing without
+  reintroducing the legacy global `html { font-size: 62.5%; }` reset.
+
+Backend/pre-render status:
+
+- The normal clip-generation path now uses configured provider integrations
+  instead of hard-coded dummy clip data:
+  - configured LLM script provider
+  - Naver Clova TTS
+  - Naver image search
+- NestJS broadcasts clip-generation progress events over WebSocket.
+- Naver image no-result cases should not break the whole clip list.
+- Local `.clipper_data/` is runtime data and is ignored by git. Packaged app
+  runtime data belongs under the OS app-data directory, e.g.
+  `/Users/jina/Library/Application Support/Clipper2` on macOS.
+
+Verification already run:
+
+- Focused Angular tests passed after the legacy port/style isolation work.
+- Angular build passed.
+- NestJS build passed.
+- NestJS shortform/event tests passed.
+- Browser computed-style check confirmed the left panel font regression fix:
+  tab `16px`, input `13px`, button `16px`, root `html` `16px`.
+
+Known gap:
+
+- A full Angular run still had an unrelated pre-existing Template Builder
+  snapshot failure around `layoutImage` being undefined. It is not part of this
+  shortform parity pass.
+
+## Remaining Work After Snapshot
+
+Phase 1 is still not complete. The remaining work is to close every visible and
+behavioral mismatch against the legacy `adlight_angular` shortform screen.
+
+Manual browser checks still required:
+
+- Plugin Store selection/detail/open flow for all three shortform plugins.
+- URL input mode.
+- Prompt input mode and prompt helper expanded/collapsed behavior.
+- Paste input mode.
+- Clip-generation modal progression from WebSocket events. The first visible
+  stage must be text analysis, then later stages should advance from backend
+  events.
+- Generated clip cards, thumbnail placeholders, image/video preview states, and
+  broken-asset fallback.
+- Clip drag/drop order and subtitle drag/drop order.
+- Subtitle add/delete/edit/preview hover and focus behavior.
+- TTS/BGM controls and preview/play/stop behavior.
+- Title, logo, template/style controls.
+- Empty states, disabled states, active states, hover states, focus states, and
+  responsive layout.
+- `숏폼 생성하기` click behavior:
+  - logs the legacy payload
+  - does not call render/video/queue APIs
+  - does not navigate to `/projects`
+
+Implementation still needed:
+
+- Continue legacy parity fixes in the left input panel, center clip/subtitle
+  editor, right control panel, modal states, and preview panel.
+- Harden local/devapp/packaged env setup for LLM, Naver Clova TTS, and Naver
+  image search so configuration errors are clear.
+- Validate packaged app behavior separately, especially data paths, bundled env,
+  and WebSocket delivery.
+- Only after user approval of the UI/pre-render parity, start the Project-first
+  / Plugin / Queue cleanup. That later phase should make Project the queue and
+  archive unit, separate user plugins from hidden runtime workers, and add a
+  ProjectRun/ProjectProgress facade over `/jobs` and `VideoRenderJob`.
+- Actual video-generation queue/archive wiring is after that cleanup, not part
+  of this legacy UI parity phase.

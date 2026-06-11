@@ -28,7 +28,8 @@
 - 숏폼/ffmpeg 렌더 세부 단계는 유저에게 그대로 보여주지 않는다. `영상 생성 중`, `영상 생성 완료`, `영상 생성 실패`처럼 단순화한다.
 - 목표 구조는 `/jobs` 중심이 아니라 Project-first다: `Project 생성 -> ProjectRun 생성 -> 큐 대기/실행 -> 같은 Project 상태/결과 갱신`.
 - 기존 `/jobs`, `VideoRenderJob`, Python runtime `/jobs`는 당장 삭제하지 않고 compatibility/internal 실행 계층으로 다룬다.
-- Phase 1 구현 계획은 Project-first facade를 추가하는 방식이다. 전역 `WorkflowExecutor` rename이나 `/jobs` 삭제는 Phase 1 범위가 아니다.
+- Project-first 구현 계획은 Project-first facade를 추가하는 방식이다. 전역 `WorkflowExecutor` rename이나 `/jobs` 삭제는 첫 구현 범위가 아니다.
+- 단, Project-first / Plugin / Queue 모델 변경은 아직 시작하지 않았다. 현재 진행 순서는 먼저 shortform legacy UI/pre-render parity를 끝내고, 그 다음에 Project-first / Plugin / Queue 정리를 시작하는 것이다.
 
 2026-06-10 기준 주요 repo 확인:
 
@@ -41,6 +42,72 @@ clipper_electron: main @ f701677 Revert "Update electron builder"
 ```
 
 2026-06-11 `.codex` 문서 작업 시작 시 기존 `implementation/*` 삭제 상태가 이미 있었다. 이 삭제들은 이번 용어 문서 작업에서 만든 변경이 아니므로 임의 복구하지 않는다.
+
+2026-06-11 후속 shortform legacy parity 구현 이후 로컬 확인 기준:
+
+```text
+clipper_angular:  work/clipper1-input-workflow-split @ 8d9d0a5 Fix shortform legacy font sizing
+clipper_nestjs:   work/clipper1-input-workflow-split @ 06e3123 Implement shortform clip generation providers
+.codex:           clipper1-input-workflow-docs @ 3594f97 Merge branch 'project-first-plugin-queue-docs' into clipper1-input-workflow-docs
+```
+
+`clipper_angular`와 `clipper_nestjs`는 이 확인 시점에 working tree가 clean이고 tracking branch 대비 ahead 표시가 없었다. `.codex`는 이 문서 갱신 전까지 clean이었다.
+
+## Current Execution Order
+
+현재 합의된 작업 순서:
+
+1. 숏폼 제작 레거시 UI/pre-render parity 먼저 완료.
+   - 기준: `work/clipper1-input-workflow-split`
+   - 유지: 세 shortform 플러그인 분리, `workspace -> project` 정정, 현재 NestJS shortform API
+   - 목표: `adlight_angular` 레거시 UI/스타일/영상 생성 전 동작과 동일하게 맞추기
+   - 금지: 큐/프로젝트/잡 모델 대수술, render/queue 연결, `/projects` navigation
+2. 그 다음 Project-first / Plugin / Queue / terminology 정리.
+   - 큐에 들어가는 유저 단위를 Project로 정리
+   - `/projects`, `/jobs`, `VideoRenderJob`, plugin catalog, ProjectRun, ProjectProgress 정리
+   - Angular Project card와 archive/queue 표시 모델 정리
+
+2번은 아직 구현하지 않았다. 현재 작성된 Project-first 문서는 다음 단계 계획서이며 완료 기록이 아니다.
+
+## 2026-06-11 Shortform Legacy Port State
+
+이번 세션에서 완료/반영된 것:
+
+- `.worktrees` 임시 작업 공간은 필요한 변경 반영 후 제거했다.
+- `clipper_nestjs/.clipper_data/`는 로컬 NestJS runtime data로 확인했고 gitignore에 추가했다. packaged app runtime data는 macOS 기준 `/Users/jina/Library/Application Support/Clipper2` 아래에 저장되는 것이 기준이다.
+- `shortform_url`, `shortform_paste`, `shortform_prompt`는 계속 별도 user-visible plugin이다.
+- Shortform editor는 Clipper2 shell 안에서 열리며, 왼쪽 Clipper2 sidebar가 유지된다.
+- Plugin Store는 카드 클릭 후 오른쪽 detail panel에서 플러그인을 여는 기존 Clipper2 동작으로 복구했다.
+- Legacy Clipper1 shortform UI/assets/styles를 Clipper2 shortform editor에 가져왔다.
+- Legacy reset/common/edit CSS가 Store/Dashboard/Projects/Template Builder에 영향을 주지 않도록 shortform editor scope로 분리했다.
+- Legacy `.actions` CSS와 Store detail action 영역 충돌을 수정했다.
+- Clip drag/drop, subtitle drag/drop, subtitle hover action 잔상 개선, clip drag 중 scrollbar 생김 방지를 반영했다.
+- Shortform clip-generation modal은 NestJS WebSocket event로 갱신한다. Clipper2 pre-render clip generation은 SSE를 쓰지 않는다.
+- NestJS shortform clip generation은 normal path에서 고정 dummy data를 쓰지 않고 configured LLM script provider, Naver Clova TTS, Naver image search를 사용한다.
+- `숏폼 생성하기`는 아직 Phase 1 boundary 그대로다. legacy video-create payload를 console log만 하고 render/queue/navigation은 호출하지 않는다.
+- Shortform left panel font-size 깨짐은 scoped px CSS variables로 수정했다. legacy global `html { font-size: 62.5%; }` reset은 재도입하지 않았다.
+
+검증 완료:
+
+- Angular focused tests passed.
+- Angular build passed.
+- NestJS build passed.
+- NestJS shortform/WebSocket event tests passed.
+- Browser computed style check: shortform left panel tab `16px`, input `13px`, button `16px`, root `html` `16px`.
+
+알려진 gap:
+
+- Full Angular suite에는 기존 Template Builder snapshot 계열 실패가 남아 있었다. `layoutImage` undefined 관련으로, 이번 shortform parity 작업 범위에서는 수정하지 않았다.
+
+다음에 우선 볼 것:
+
+- 실제 브라우저/Electron에서 Plugin Store -> shortform plugin 선택 -> detail panel -> 열기 플로우를 세 플러그인 모두 확인한다.
+- URL/prompt/paste 입력, clip-generation modal stage progression, generated clip card, thumbnail fallback, TTS/BGM controls, title/logo/style controls, preview panel을 legacy `adlight_angular` 기준으로 비교한다.
+- 모달 첫 단계는 `텍스트 분석`부터 켜져야 한다. 이후 단계는 backend WebSocket event로 진행되어야 한다.
+- `숏폼 생성하기`는 계속 log-only인지 확인한다. render/video/queue request와 `/projects` navigation이 있으면 Phase 1 scope violation이다.
+- local/devapp/packaged mode별 LLM/Naver Clova TTS/Naver image env 로딩을 정리하고, 누락 시 앱에서 이해 가능한 에러를 보여주도록 개선한다.
+- packaged app에서 runtime data path, bundled env, WebSocket delivery, provider availability를 별도로 검증한다.
+- UI/pre-render parity가 사용자에게 승인된 뒤에만 Project-first / Plugin / Queue 정리를 시작한다. 실제 video generation과 queue/archive 연동은 그 다음 단계로 다룬다.
 
 ## 먼저 읽기
 
