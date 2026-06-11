@@ -1,34 +1,77 @@
 # Next Handoff
 
-최신 갱신: 2026-06-08
+최신 갱신: 2026-06-11
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
+
+## 2026-06-11 Latest Product Terminology Decision
+
+2026-06-10의 `workspace -> project` 정정 이후, 2026-06-11에 사용자-facing 제품 용어 기준을 다시 확정했다.
+
+먼저 읽을 문서:
+
+- [../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md)
+- [../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md)
+
+확정 기준:
+
+- 유저가 알아야 하는 핵심 개념은 `플러그인`과 `프로젝트` 두 개다.
+- 플러그인은 스토어에 보이는 설치/실행 단위다.
+- `shortform_prompt`, `shortform_url`, `shortform_paste`는 각각 독립된 사용자 플러그인이다. 하나의 shortform 플러그인 안의 입력 모드로 취급하지 않는다.
+- 프로젝트는 플러그인을 열어 사용자가 만들기 시작한 작업물이다.
+- 큐에 들어가는 사용자 단위도 프로젝트이고, 완료 후 보관함/프로젝트 페이지에 남는 단위도 프로젝트다.
+- `workflow`, `job`, `pipeline`, `runtime`, `worker`는 유저에게 노출하지 않는다. 기존 코드와 기술 문서에서 현재 구현을 설명할 때만 쓴다.
+- `Plugin catalog`는 개발자 입장에서 플러그인 목록의 원본 데이터/registry를 뜻한다. 사용자 플러그인 목록과 숨김 runtime worker 목록을 분리해야 한다.
+- `clipper1_video_render`는 유저가 직접 여는 플러그인이 아니라 숏폼 플러그인들이 의존하는 hidden `RuntimeWorker`다.
+- `task`라는 단어는 신규 제품/문서 용어로 쓰지 않는다. 내부 실행 기록은 `ProjectRun`, worker 원본 진행은 `RuntimeProgress`, 사용자 표시 진행은 `ProjectProgress`/`ProgressStep`으로 구분한다.
+- 하이라이트 분석 진행 단계는 유저에게 자세히 보여줄 수 있다. 예: `문장 위치를 영상과 맞추고 있습니다`.
+- 숏폼/ffmpeg 렌더 세부 단계는 유저에게 그대로 보여주지 않는다. `영상 생성 중`, `영상 생성 완료`, `영상 생성 실패`처럼 단순화한다.
+- 목표 구조는 `/jobs` 중심이 아니라 Project-first다: `Project 생성 -> ProjectRun 생성 -> 큐 대기/실행 -> 같은 Project 상태/결과 갱신`.
+- 기존 `/jobs`, `VideoRenderJob`, Python runtime `/jobs`는 당장 삭제하지 않고 compatibility/internal 실행 계층으로 다룬다.
+- Phase 1 구현 계획은 Project-first facade를 추가하는 방식이다. 전역 `WorkflowExecutor` rename이나 `/jobs` 삭제는 Phase 1 범위가 아니다.
+
+2026-06-10 기준 주요 repo 확인:
+
+```text
+.codex:           clipper1-input-workflow-docs @ 77dcb9c docs(shortform): add phase 3 session handoff
+clipper_angular:  work/clipper1-input-workflow-split @ 993efb2 refactor(shortform): use project terminology
+clipper_nestjs:   work/clipper1-input-workflow-split @ 8ac76d5 refactor(shortform): rename workspace state to project
+clipper_python:   main @ 535131c Render sample images as cover
+clipper_electron: main @ f701677 Revert "Update electron builder"
+```
+
+2026-06-11 `.codex` 문서 작업 시작 시 기존 `implementation/*` 삭제 상태가 이미 있었다. 이 삭제들은 이번 용어 문서 작업에서 만든 변경이 아니므로 임의 복구하지 않는다.
 
 ## 먼저 읽기
 
 1. [../README.md](../README.md)
-2. [../README.ARCHITECTURE.md](../README.ARCHITECTURE.md)
-3. [../README.RUNTIME.md](../README.RUNTIME.md)
-4. [../README.OPERATIONS.md](../README.OPERATIONS.md)
-5. [../operations/env-runtime/README.md](../operations/env-runtime/README.md)
-6. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
-7. [../features/template-builder/README.md](../features/template-builder/README.md)
-8. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
-9. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
-10. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
-11. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
-12. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
-13. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
-14. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
-15. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
-16. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
-17. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
-18. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
-19. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
-20. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-21. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+2. [../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md)
+3. [../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md)
+4. [../README.ARCHITECTURE.md](../README.ARCHITECTURE.md)
+5. [../README.RUNTIME.md](../README.RUNTIME.md)
+6. [../README.OPERATIONS.md](../README.OPERATIONS.md)
+7. [../operations/env-runtime/README.md](../operations/env-runtime/README.md)
+8. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
+9. [../features/template-builder/README.md](../features/template-builder/README.md)
+10. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
+11. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
+12. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
+13. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
+14. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
+15. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
+16. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
+17. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
+18. [../records/sessions/2026/06/11.md](../records/sessions/2026/06/11.md)
+19. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
+20. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
+21. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
+22. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
+23. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+24. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
-## Current Repo Heads
+## Historical Repo Heads
+
+최신 2026-06-10 repo 기준은 위 `2026-06-11 Latest Product Terminology Decision` 섹션을 우선한다. 아래 내용은 과거 세션 기록이다.
 
 2026-06-04 로컬 세션에서 문서 수정 전에 직접 재확인한 기준:
 
@@ -154,6 +197,10 @@ clipper_web_client: origin/main @ 7bdaeae chore: move local web port to 4700
 
 ## Active Decisions
 
+- 사용자-facing 핵심 개념은 `플러그인`과 `프로젝트`다.
+- `shortform_prompt`, `shortform_url`, `shortform_paste`는 각각 독립된 사용자 플러그인이다.
+- 큐/보관함의 사용자 단위는 Project다. `/jobs`, `VideoRenderJob`, Python runtime `/jobs`는 내부 실행/호환 계층으로 취급한다.
+- 하이라이트 분석 단계 메시지는 유저에게 보여줄 수 있지만, 숏폼/ffmpeg 렌더 세부 메시지는 `영상 생성 중`으로 단순화한다.
 - 실행 모드는 `local`, `devapp`, `packaged`.
 - packaged build/runtime은 `.env.local`, `.env.devapp`, generic `.env`를 읽거나 복사하지 않는다.
 - real `.env.<mode>` 파일에 optional blank placeholder를 넣지 않는다.

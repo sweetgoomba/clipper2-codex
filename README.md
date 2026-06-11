@@ -15,7 +15,7 @@
 ## Top-Level Guides
 
 - [README.ARCHITECTURE.md](README.ARCHITECTURE.md)
-  - repo 역할, backend/frontend/process boundary, workflow capability 구조.
+  - repo 역할, backend/frontend/process boundary, plugin/project 구조.
 - [README.RUNTIME.md](README.RUNTIME.md)
   - `local` / `devapp` / `packaged`, env 파일 소유권, port/runtime 정책.
 - [README.FRONTEND.md](README.FRONTEND.md)
@@ -33,6 +33,15 @@
 - [operations/windows-packaging/README.md](operations/windows-packaging/README.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)
 - [records/README.md](records/README.md)
+
+## Current Product Terms
+
+- [design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md](design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md)
+  - 2026-06-11 확정 기준. 유저에게 노출되는 핵심 개념은 `플러그인`과 `프로젝트`다.
+  - `shortform_prompt`, `shortform_url`, `shortform_paste`는 각각 사용자 플러그인이다.
+  - 큐/보관함의 사용자 단위는 `Project`이며, 기존 `workflow`/`job`은 현재 코드와 내부 실행 설명에서만 사용한다.
+- [design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md](design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md)
+  - 위 제품 용어 기준을 코드에 반영하기 위한 Phase 1 구현 계획이다.
 
 ## Current Legacy Areas
 
