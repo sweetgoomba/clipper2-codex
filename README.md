@@ -47,6 +47,11 @@
 - [design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md](design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md)
   - 위 제품 용어 기준을 코드에 반영하기 위한 Phase 1 구현 계획이다.
 
+## Current UI References
+
+- [design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md](design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md)
+  - Clipper2 앱 전체의 모달/오버레이 사용처와 shared confirmation modal 교체 후보를 정리한 인벤토리다.
+
 ## Current Legacy Areas
 
 아직 이관 중인 기존 폴더다. 새 문서는 가능하면 domain index 아래에 추가한다.

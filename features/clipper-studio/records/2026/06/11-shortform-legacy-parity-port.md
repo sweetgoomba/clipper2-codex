@@ -285,6 +285,25 @@ Known gap:
   snapshot failure around `layoutImage` being undefined. It is not part of this
   shortform parity pass.
 
+## 2026-06-12 Modal Follow-Up
+
+During the shortform regenerate-clips confirmation work, Clipper2 app-wide
+modal usage was inventoried. No broad modal migration should be mixed into the
+shortform legacy parity work.
+
+Reference:
+
+- [Clipper2 Modal Usage Inventory](../../../../../design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md)
+
+Current decision:
+
+- Keep the shortform regenerate-clips confirmation on the shared confirmation
+  modal.
+- Do not convert ffmpeg/model consent, progress dialogs, preview overlays, or
+  Template Builder form overlays as part of this phase.
+- Future candidates are Template Builder native dirty-cancel `window.confirm`
+  and the Template Builder delete confirmation overlay.
+
 ## Remaining Work After Snapshot
 
 Phase 1 is still not complete. The remaining work is to close every visible and
