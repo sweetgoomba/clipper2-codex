@@ -17,6 +17,28 @@ Clipper2 앱 전체의 모달/오버레이 사용처를 조사했고, 현재는 
 - Dashboard admission dialog는 detail rows/badge가 있어 shared modal 확장 후 검토한다.
 - ffmpeg/model consent, 숏폼 생성 진행, 템플릿 샘플 렌더, 프로젝트/이미지 preview, 입력 form overlays는 단순 confirmation modal로 교체하지 않는다.
 
+## 2026-06-12 Template Simplification Decision
+
+숏폼 제작 페이지의 템플릿/레이아웃 작업에 들어가기 전, Template Builder와 shortform template 사용 방향이 크게 바뀌었다.
+
+먼저 읽을 문서:
+
+- [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
+
+확정 기준:
+
+- 기존 full Template Builder 구현은 단순화 작업 전 archive branch로 보존한다.
+- active branch에서는 기존 Template Builder를 simplified model로 직접 교체한다. product-visible full Template Builder route를 병행 유지하지 않는다.
+- 새 템플릿은 `main_title1`, `main_title2`, `caption`만 사용한다.
+- `sub_title`, `bottom_title`, `logo`는 새 템플릿/숏폼 제작 flow에서 제거한다.
+- 메인타이틀은 두 줄 구조를 유지한다.
+- 템플릿 하나는 ratio 하나만 가진다. 허용 ratio는 `1:1`, `4:3`이다.
+- 기존 official legacy 템플릿은 새 숏폼 제작 템플릿 목록에서 사용하지 않는다.
+- 숏폼 제작 페이지의 `레이아웃` 섹션은 `템플릿`으로 바꾸고, ratio 선택과 타이틀 체크박스는 제거한다.
+- 선택한 템플릿의 ratio가 preview와 최종 render payload/recipe를 결정한다.
+- 새 preview는 legacy still preview가 아니라 timeline preview여야 한다. 재생/seek, TTS, BGM, media, main title lines, caption overlay가 필요하다.
+- 브라우저 preview만으로 FFmpeg/Python 최종 렌더와 pixel-identical 보장은 불가능하다. 빠른 interactive preview와 render-engine confirmation preview를 분리하는 hybrid 방향을 기준으로 한다.
+
 ## 2026-06-11 Latest Product Terminology Decision
 
 2026-06-10의 `workspace -> project` 정정 이후, 2026-06-11에 사용자-facing 제품 용어 기준을 다시 확정했다.
@@ -127,32 +149,33 @@ clipper_nestjs:   work/clipper1-input-workflow-split @ 06e3123 Implement shortfo
 1. [../README.md](../README.md)
 2. [../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md)
 3. [../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md](../design/PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md)
-4. [../design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md](../design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md)
-5. [../README.ARCHITECTURE.md](../README.ARCHITECTURE.md)
-6. [../README.RUNTIME.md](../README.RUNTIME.md)
-7. [../README.OPERATIONS.md](../README.OPERATIONS.md)
-8. [../operations/env-runtime/README.md](../operations/env-runtime/README.md)
-9. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
-10. [../features/template-builder/README.md](../features/template-builder/README.md)
-11. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
-12. [../features/clipper-studio/README.md](../features/clipper-studio/README.md)
-13. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md)
-14. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md)
-15. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
-16. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
-17. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
-18. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
-19. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
-20. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
-21. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
-22. [../records/sessions/2026/06/12.md](../records/sessions/2026/06/12.md)
-23. [../records/sessions/2026/06/11.md](../records/sessions/2026/06/11.md)
-24. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
-25. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
-26. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
-27. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
-28. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
-29. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
+4. [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
+5. [../design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md](../design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md)
+6. [../README.ARCHITECTURE.md](../README.ARCHITECTURE.md)
+7. [../README.RUNTIME.md](../README.RUNTIME.md)
+8. [../README.OPERATIONS.md](../README.OPERATIONS.md)
+9. [../operations/env-runtime/README.md](../operations/env-runtime/README.md)
+10. [../operations/windows-packaging/README.md](../operations/windows-packaging/README.md)
+11. [../features/template-builder/README.md](../features/template-builder/README.md)
+12. [../features/dance-highlight/README.md](../features/dance-highlight/README.md)
+13. [../features/clipper-studio/README.md](../features/clipper-studio/README.md)
+14. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port.md)
+15. [../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md](../features/clipper-studio/records/2026/06/11-shortform-legacy-parity-port-plan.md)
+16. [../design/TEAM_ARCHITECTURE_OVERVIEW.md](../design/TEAM_ARCHITECTURE_OVERVIEW.md)
+17. [../design/TEAM_DEVELOPMENT_GUIDE.md](../design/TEAM_DEVELOPMENT_GUIDE.md)
+18. [../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md](../design/WORKFLOW_EXECUTOR_PLUGIN_RUNTIME_DESIGN.md)
+19. [../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md](../design/PLUGIN_SYSTEM_TECHNICAL_ANALYSIS.md)
+20. [../design/CLIPPER2_INFRA_EASY_GUIDE.md](../design/CLIPPER2_INFRA_EASY_GUIDE.md)
+21. [../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md](../design/CLIPPER2_INFRA_TECHNICAL_GUIDE.md)
+22. [../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md](../design/CLIPPER2_WEB_DB_SPLIT_AND_DEV_DEPLOYMENT.md)
+23. [../records/sessions/2026/06/12.md](../records/sessions/2026/06/12.md)
+24. [../records/sessions/2026/06/11.md](../records/sessions/2026/06/11.md)
+25. [../records/sessions/2026/06/08.md](../records/sessions/2026/06/08.md)
+26. [../records/sessions/2026/06/05.md](../records/sessions/2026/06/05.md)
+27. [../records/sessions/2026/06/02.md](../records/sessions/2026/06/02.md)
+28. [../records/sessions/2026/06/04.md](../records/sessions/2026/06/04.md)
+29. [../records/sessions/2026/05/29.md](../records/sessions/2026/05/29.md)
+30. [../records/sessions/2026/05/27.md](../records/sessions/2026/05/27.md)
 
 ## Historical Repo Heads
 

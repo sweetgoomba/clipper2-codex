@@ -1,0 +1,292 @@
+# Template Simplification And Shortform Preview
+
+Date: 2026-06-12
+Status: approved product direction, implementation not started
+
+## Summary
+
+Template Builder and shortform template usage are moving from the existing full
+legacy-compatible template model to a simplified template model.
+
+The new template model keeps only:
+
+- `main_title1`
+- `main_title2`
+- `caption`
+
+The following legacy template roles are removed from new templates and from the
+shortform production page:
+
+- `sub_title`
+- `bottom_title`
+- `logo`
+
+Main title remains a two-line title. It is not collapsed into one field.
+
+Each template has exactly one ratio. A template is either `1:1` or `4:3`.
+Templates no longer contain four ratio variants under one family.
+
+Existing official legacy templates are not used by the new shortform production
+template list.
+
+## Scope Split
+
+This change has two related but separate workstreams.
+
+### Shortform Production Page
+
+The immediate shortform production page must stop exposing controls that no
+longer exist in the simplified template model.
+
+Required UI changes:
+
+- Rename the `레이아웃` section to `템플릿`.
+- Remove ratio selection.
+- Remove title visibility checkboxes.
+- Show a template list and let the user select one template.
+- The selected template determines the output ratio.
+- The selected template is reflected in preview and in the final render payload.
+
+Required data changes:
+
+- `renderSettings.ratio` must no longer be a user-selected control.
+- The selected template must carry its own ratio, either `1:1` or `4:3`.
+- The generated video must use the selected template ratio.
+- `sub_title`, `bottom_title`, and `logo` must not be populated from fallback UI text.
+- `main_title1` and `main_title2` must come from generated title data or user edits.
+
+Current known gap:
+
+- Clipper2 already asks the script generator for `main_title1`,
+  `main_title2`, `sub_title`, and `bottom_title`, and the normalizer returns
+  `mainTitle1`, `mainTitle2`, `subTitle`, and `bottomTitle`.
+- `ShortformProjectService.generateClips()` currently drops those generated
+  title fields when it maps the draft to `ShortformProject`.
+- Angular `ShortformProject` has no generated title fields, so the shortform
+  page falls back to `project.title`. For prompt projects, `project.title` is
+  currently derived from the prompt text.
+- Before final render payload parity, generated `mainTitle1` and `mainTitle2`
+  must be stored in the shortform project and initialized into the page title
+  state.
+
+### Template Builder Simplification
+
+Before changing Template Builder code, preserve the current full Template
+Builder implementation on archive branches.
+
+Recommended archive branch name:
+
+```text
+archive/template-builder-full-2026-06-12
+```
+
+Current local heads at the time this design was written:
+
+```text
+clipper_angular: 9c23235 Polish shortform style controls
+clipper_nestjs:  4504b55 Update shortform audio presets
+clipper_python:  535131c Render sample images as cover
+.codex:          dc504ef docs: record Clipper2 modal inventory
+```
+
+Create archive branches before any simplification implementation in repos that
+will be touched. At minimum this means `clipper_angular` and `clipper_nestjs`.
+Include `clipper_python` if renderer/template behavior changes there. Include
+`.codex` if preserving the old Template Builder documentation line is useful.
+
+After archive branches exist, the current working branches should directly
+replace the existing Template Builder with the simplified model. Do not keep a
+parallel full Template Builder route in the active product.
+
+## Simplified Template Domain
+
+### Template
+
+```text
+SimplifiedTemplate
+  id
+  name
+  status: draft | published
+  ratio: 1:1 | 4:3
+  outputSize
+  contentArea
+  layers
+  assets
+  sampleRender
+  createdAt
+  updatedAt
+```
+
+There is no `TemplateFamily` with multiple ratio variants in the new product
+model. A template id points to one ratio and one set of layers.
+
+### Layers
+
+Allowed layers:
+
+```text
+mainTitleLine1
+mainTitleLine2
+caption
+contentArea
+layout/background assets as required by rendering
+```
+
+Removed user-facing layers:
+
+```text
+subTitle
+bottomTitle
+logoImage
+logoText
+```
+
+`contentArea` and layout/background data may remain internal renderer/template
+geometry. They are not user-facing title/logo roles.
+
+### Ratios
+
+Allowed ratios:
+
+```text
+1:1
+4:3
+```
+
+Template creation requires choosing one ratio. Changing ratio after template
+creation should be treated as creating a different template, not as adding a
+variant to the same template.
+
+## Existing Official Legacy Templates
+
+Existing official legacy templates must not be shown in the new shortform
+template picker.
+
+They may remain in code/data for historical reference, golden-frame tests, or
+archive branches, but they are not product-visible templates for the simplified
+shortform flow.
+
+The new shortform template picker must use a new simplified catalog. New built-in
+templates should be authored directly in the simplified model.
+
+## Shortform Preview Direction
+
+The legacy Clipper1 shortform preview was an approximate still preview. It
+showed a selected clip asset with title/caption overlays when users interacted
+with clip subtitles. The new Clipper2 preview should be a timeline preview.
+
+Required behavior:
+
+- Provide a real play/pause preview control.
+- Play through clips as a video-like timeline.
+- Clicking a caption-level play button seeks to that caption start time.
+- TTS audio plays during preview.
+- BGM plays during preview.
+- The preview renders the selected clip media asset.
+- The preview overlays `main_title1`, `main_title2`, and the active caption.
+- The preview uses the selected template ratio.
+- The preview updates when the selected template changes.
+
+Removed preview behavior:
+
+- No `sub_title` overlay.
+- No `bottom_title` overlay.
+- No `logo` overlay.
+- No ratio picker independent of the selected template.
+
+## Preview And Final Render Parity
+
+Browser HTML/CSS preview cannot guarantee pixel-identical output with the final
+FFmpeg/Python render. The main differences are font shaping, line breaks, image
+crop/scale, overlay composition, timing, and audio mixing.
+
+Use a hybrid preview strategy:
+
+1. Fast interactive browser preview for editing:
+   - Uses the same template data model and timing data as final render.
+   - Good enough for editing and timing inspection.
+   - Not presented as pixel-identical proof.
+
+2. Render-engine preview for final confirmation:
+   - Uses the same render recipe/provider path as final output.
+   - Produces a short clip, frame, or low-cost preview artifact.
+   - Used when pixel/renderer parity matters.
+
+The implementation should avoid duplicating template semantics separately in
+Angular and renderer code. Angular preview may render with HTML/CSS, but it
+should consume the same normalized template contract that the renderer consumes.
+
+## Data Flow Target
+
+```text
+Script generation
+  -> ShortformProject generated titles:
+       mainTitle1
+       mainTitle2
+  -> Shortform clips:
+       narration lines
+       media assets
+       TTS artifact URLs
+  -> Simplified template selection:
+       templateId
+       ratio
+       layer geometry/styles
+  -> Browser timeline preview:
+       media + TTS + BGM + main titles + caption
+  -> Final render payload/recipe:
+       same templateId/ratio/layers/titles/captions/audio
+```
+
+## Implementation Order
+
+1. Preserve existing full Template Builder on archive branches.
+2. Add or define the simplified template contract in documentation and tests.
+3. Fix shortform generated title persistence for `mainTitle1` and `mainTitle2`.
+4. Replace shortform `레이아웃` controls with the simplified `템플릿` picker.
+5. Remove shortform title visibility controls and sub/bottom/logo preview
+   overlays.
+6. Ensure selected template ratio drives shortform preview and render payload.
+7. Build the fast browser timeline preview.
+8. Add render-engine preview only after the fast preview contract and simplified
+   template contract are stable.
+9. Simplify Template Builder itself from full family/variant editing to
+   single-ratio template creation/editing.
+
+## Non-Goals
+
+- Do not start Project-first / Plugin / Queue restructuring as part of this
+  change.
+- Do not keep old official legacy templates visible in the new shortform
+  template picker.
+- Do not maintain a product-visible full Template Builder route after the
+  archive branch is created.
+- Do not promise browser preview pixel identity with FFmpeg output.
+
+## Verification Targets
+
+Shortform:
+
+- Selecting a template updates the preview ratio.
+- The final log/render payload uses the selected template id and ratio.
+- No `sub_title`, `bottom_title`, or `logo` fallback display text leaks into
+  payload.
+- Generated `mainTitle1` and `mainTitle2` appear in preview and payload.
+- Caption-level play seeks to the caption start and plays TTS.
+- BGM and TTS both play in preview without blocking editing.
+
+Template Builder:
+
+- Creating a template requires choosing `1:1` or `4:3`.
+- Created templates have exactly one ratio.
+- Editor exposes only main title line 1, main title line 2, caption, and
+  renderer-required layout/content controls.
+- No sub-title, bottom-title, or logo controls remain in the simplified editor.
+- Sample render uses the simplified template contract.
+
+Renderer:
+
+- Simplified template render payload contains only main title lines and caption
+  overlays.
+- Output dimensions match selected template ratio.
+- Render-engine preview and final render consume the same normalized template
+  contract.

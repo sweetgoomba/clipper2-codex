@@ -49,6 +49,9 @@
 
 ## Current UI References
 
+- [design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
+  - 2026-06-12 확정된 Template Builder 단순화와 숏폼 제작 템플릿/미리보기 방향.
+  - 새 템플릿은 `main_title1`, `main_title2`, `caption`만 사용하고, ratio는 `1:1` 또는 `4:3` 단일 ratio다.
 - [design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md](design/CLIPPER2_MODAL_USAGE_INVENTORY_2026-06-12.md)
   - Clipper2 앱 전체의 모달/오버레이 사용처와 shared confirmation modal 교체 후보를 정리한 인벤토리다.
 
