@@ -1,12 +1,23 @@
 # Template Simplification And Shortform Preview
 
 Date: 2026-06-12
-Status: approved product direction, implementation not started
+Status: approved product direction, implementation in progress
 
 ## Summary
 
 Template Builder and shortform template usage are moving from the existing full
 legacy-compatible template model to a simplified template model.
+
+2026-06-15 sequence refinement:
+
+- Do not build the full shortform preview engine before the simplified Template
+  Builder model is available.
+- First lock the template runtime contract that both Template Builder and the
+  preview/render paths will consume.
+- Then simplify Template Builder so it creates real shortform templates,
+  captures real 9:16 card thumbnails, and stores the runtime contract.
+- Then replace the current static shortform preview box with the browser
+  timeline preview engine.
 
 The new template model keeps only:
 
@@ -144,6 +155,89 @@ logoText
 `contentArea` and layout/background data may remain internal renderer/template
 geometry. They are not user-facing title/logo roles.
 
+## Simplified Template Runtime Contract
+
+The simplified template must not be represented only by a thumbnail and ratio.
+The runtime template contract is the shared source for:
+
+- Template Builder canvas editing.
+- Shortform production template picker.
+- Browser timeline preview.
+- Final render recipe/provider.
+
+The contract should be stored with each template and returned by the shortform
+template catalog API.
+
+Target shape:
+
+```text
+ShortformTemplateRuntimeSpec
+  schemaVersion: shortform-template-runtime.v1
+  templateId
+  ratio: 1:1 | 4:3
+  canvas:
+    width
+    height
+    fps
+    backgroundColor
+  thumbnail:
+    url
+    captureRatio: 9:16
+  regions:
+    clip_media:
+      x, y, width, height
+      fit: cover | contain | fill
+      motionPreset
+    main_title1:
+      x, y, width, height
+      anchor, zIndex
+      textStyle
+    main_title2:
+      x, y, width, height
+      anchor, zIndex
+      textStyle
+    caption:
+      x, y, width, height
+      anchor, zIndex
+      textStyle
+  audio:
+    ttsVolume
+    bgmVolume
+```
+
+Text style must include enough information for both browser preview and final
+render:
+
+```text
+fontFamily
+fontSize
+fontWeight
+lineHeight
+letterSpacing
+color
+textAlign
+backgroundColor
+padding
+borderRadius
+maxLines
+```
+
+Only these public text slots are allowed in the new shortform runtime contract:
+
+```text
+main_title1
+main_title2
+caption
+```
+
+The following slots must not appear in new shortform runtime templates:
+
+```text
+sub_title
+bottom_title
+logo
+```
+
 ### Ratios
 
 Allowed ratios:
@@ -171,21 +265,42 @@ templates should be authored directly in the simplified model.
 
 ## Shortform Preview Direction
 
-The legacy Clipper1 shortform preview was an approximate still preview. It
-showed a selected clip asset with title/caption overlays when users interacted
-with clip subtitles. The new Clipper2 preview should be a timeline preview.
+The current Clipper2 shortform production page preview is still an approximate
+static preview: it shows one selected media asset and one caption text inside a
+ratio box. That is not the target behavior. The new preview should be a
+timeline preview.
 
 Required behavior:
 
 - Provide a real play/pause preview control.
-- Play through clips as a video-like timeline.
+- Play through generated clips as a video-like timeline without pre-rendering an
+  FFmpeg preview file.
 - Clicking a caption-level play button seeks to that caption start time.
-- TTS audio plays during preview.
-- BGM plays during preview.
+- TTS audio plays during preview from each narration line's `ttsAudioUrl`.
+- BGM plays during preview from the selected BGM preset/artifact URL.
 - The preview renders the selected clip media asset.
 - The preview overlays `main_title1`, `main_title2`, and the active caption.
-- The preview uses the selected template ratio.
+- The preview uses the selected template ratio and runtime layout/style
+  contract.
 - The preview updates when the selected template changes.
+- The preview updates when caption text is edited and the regenerated TTS result
+  updates `ttsAudioUrl` or `durationMs`.
+- The preview updates when clips are added, deleted, reordered, or when clip
+  media selection changes.
+
+The browser preview engine should compose:
+
+```text
+ShortformProject clips
+  + narration line text, durationMs, ttsAudioUrl
+  + clip mediaSlots and selected assets
+  + selected BGM
+  + selected ShortformTemplateRuntimeSpec
+  -> interactive DOM/CSS/media/audio timeline preview
+```
+
+The preview engine should not call final render or create a temporary rendered
+video file for normal editing playback.
 
 Removed preview behavior:
 
@@ -240,17 +355,24 @@ Script generation
 ## Implementation Order
 
 1. Preserve existing full Template Builder on archive branches.
-2. Add or define the simplified template contract in documentation and tests.
+2. Add or define the simplified template runtime contract in documentation and
+   tests.
 3. Fix shortform generated title persistence for `mainTitle1` and `mainTitle2`.
 4. Replace shortform `레이아웃` controls with the simplified `템플릿` picker.
 5. Remove shortform title visibility controls and sub/bottom/logo preview
    overlays.
-6. Ensure selected template ratio drives shortform preview and render payload.
-7. Build the fast browser timeline preview.
-8. Add render-engine preview only after the fast preview contract and simplified
-   template contract are stable.
-9. Simplify Template Builder itself from full family/variant editing to
-   single-ratio template creation/editing.
+6. Ensure selected template ratio drives shortform preview and render payload at
+   the static-preview level.
+7. Simplify Template Builder from full family/variant editing to single-ratio
+   shortform template creation/editing.
+8. Make Template Builder save `ShortformTemplateRuntimeSpec` and capture real
+   9:16 shortform thumbnails from the template canvas.
+9. Replace the temporary simplified built-in template catalog with templates
+   produced by the simplified Template Builder path.
+10. Build the browser timeline preview engine that consumes
+    `ShortformTemplateRuntimeSpec` plus `ShortformProject` clips/TTS/media/BGM.
+11. Add render-engine preview only after the browser preview contract and
+    simplified Template Builder contract are stable.
 
 ## Non-Goals
 
