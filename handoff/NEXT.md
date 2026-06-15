@@ -18,11 +18,18 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 현재 app/code commit:
 
 ```text
-clipper_angular: 9b807a3 test: cover shortform thumbnail layout fallback
+clipper_angular: 4f92434 fix: make template builder shortform-only
 clipper_nestjs:  0ce6b27 fix: render builder shortform templates
 ```
 
-문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태와 render path blocker fix를 기록한다.
+최신 follow-up:
+
+```text
+clipper_angular: 4f92434 fix: make template builder shortform-only
+```
+
+문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태, render path blocker fix,
+active `/templates` shortform-only fix를 기록한다.
 
 완료된 것:
 
@@ -62,6 +69,12 @@ clipper_nestjs:  0ce6b27 fix: render builder shortform templates
 - Follow-up blocker fix 완료: Builder `template-builder.v1` shortform preset이
   backend shortform recipe path를 타고 shortform render provider로 resolve되도록
   수정했다.
+- Follow-up UI fix 완료: active `/templates` 페이지가 backend legacy/system
+  Template Builder family를 그대로 보여주지 않도록 `workflowKind:
+  shortform` family만 표시한다. legacy-only 상태에서는 shortform 전용 empty
+  state와 `새 템플릿` CTA를 보여준다. 새 템플릿 모달의 `1:1` / `4:3`
+  선택은 `aria-pressed`와 active styling으로 즉시 구분된다. Shortform editor의
+  사용자 표시 role은 main title 1/main title 2/caption만 남는다.
 
 중요한 현재 판단:
 
