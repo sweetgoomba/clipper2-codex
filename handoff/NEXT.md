@@ -19,10 +19,10 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 
 ```text
 clipper_angular: 9b807a3 test: cover shortform thumbnail layout fallback
-clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
+clipper_nestjs:  0ce6b27 fix: render builder shortform templates
 ```
 
-문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태와 남은 render path blocker를 기록한다.
+문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태와 render path blocker fix를 기록한다.
 
 완료된 것:
 
@@ -59,6 +59,9 @@ clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
 - Task 7 focused verification 완료:
   NestJS build/focused Node tests, Angular focused Karma tests, Angular build,
   양쪽 `git diff --check`가 통과했다.
+- Follow-up blocker fix 완료: Builder `template-builder.v1` shortform preset이
+  backend shortform recipe path를 타고 shortform render provider로 resolve되도록
+  수정했다.
 
 중요한 현재 판단:
 
@@ -66,24 +69,23 @@ clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
 - 사용자가 원하는 최종 preview는 Vrew-like browser timeline preview다.
 - 하지만 preview engine을 아직 만들지 않는다.
 - Template Builder 단순화와 Builder-created template catalog 연결은 진행됐다.
-- 최종 cross-repo review에서 blocking gap이 발견됐다:
+- 최종 cross-repo review에서 blocking gap이 발견됐고 수정했다:
   Angular는 `template_builder.custom` Builder preset을 먼저 노출하고,
   NestJS preset은 `shortformTemplateModel: 'template-builder.v1'`를 내보내지만,
-  backend `RenderRecipeProvider`와 shortform render providers는 아직
-  `simplified.v1`만 처리한다. 따라서 Builder template이 하나라도 있으면
-  shortform render provider resolution이 실패할 수 있다.
-- 이 render path blocker를 고친 뒤 browser timeline preview engine으로 넘어간다.
+  backend `RenderRecipeProvider`와 shortform render providers가 `simplified.v1`만
+  처리하던 문제였다. `0ce6b27`에서 공통 supported shortform template model
+  판정으로 `simplified.v1` / `template-builder.v1`를 같이 처리한다.
+- 이제 browser timeline preview engine으로 넘어간다.
 
 다음 실행:
 
-- `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`를
-  참고하되 Task 1-7은 구현/검증된 상태로 본다.
-- 다음 코드는 Builder `template-builder.v1` shortform preset이 backend render
-  recipe/provider path를 통과하도록 연결하는 blocker fix다.
-- TDD로 cross-repo flow를 재현한다:
-  Builder shortform preset 선택 -> render settings/defaultParams ->
-  backend render recipe -> provider resolution.
-- browser preview engine은 이 blocker가 해결된 뒤 시작한다.
+- `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`는
+  완료된 Builder simplification 기록으로 본다.
+- 다음 코드는 shortform 제작 페이지의 browser timeline preview engine이다.
+- preview engine은 실제 FFmpeg preview 파일을 만들지 않고 브라우저에서
+  clip media/TTS/BGM/main title lines/caption/template runtime spec을 조합해
+  재생해야 한다.
+- template layout/ratio는 Builder `ShortformTemplateRuntimeSpec`에서 가져온다.
 - Project-first / Plugin / Queue cleanup은 아직 시작하지 않는다.
 
 ## 2026-06-12 Clipper2 Modal Inventory
