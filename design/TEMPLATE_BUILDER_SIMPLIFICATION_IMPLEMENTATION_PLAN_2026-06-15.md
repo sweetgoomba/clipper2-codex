@@ -8,6 +8,8 @@
 
 **Tech Stack:** NestJS, Angular standalone components, TypeScript, Karma/Jasmine, Node test runner.
 
+**Progress as of 2026-06-15:** Tasks 1-4 are implemented and committed. The next task is Task 5, Angular Template Builder Single-Ratio Shortform UI. Do not start the browser timeline preview engine before Builder-created templates are flowing through the simplified Builder UI and shortform catalog.
+
 ---
 
 ## Scope
@@ -134,7 +136,7 @@ Not included in this plan:
 - Modify: `clipper_nestjs/src/template-builder/dto/template-builder.dto.ts`
 - Test: `clipper_nestjs/test/shortform-template-runtime-spec.test.js`
 
-- [ ] **Step 1: Write the failing runtime spec test**
+- [x] **Step 1: Write the failing runtime spec test**
 
 Add `clipper_nestjs/test/shortform-template-runtime-spec.test.js`:
 
@@ -190,7 +192,7 @@ test('shortform runtime spec rejects non-shortform ratios', () => {
 });
 ```
 
-- [ ] **Step 2: Run the failing test**
+- [x] **Step 2: Run the failing test**
 
 Run:
 
@@ -202,7 +204,7 @@ node --test test/shortform-template-runtime-spec.test.js
 
 Expected: build fails or the test fails because `shortform-template-runtime-spec` does not exist.
 
-- [ ] **Step 3: Add backend DTO types**
+- [x] **Step 3: Add backend DTO types**
 
 In `clipper_nestjs/src/template-builder/dto/template-builder.dto.ts`, add near the ratio exports:
 
@@ -298,7 +300,7 @@ export interface CreateTemplateBuilderFamilyRequest {
 }
 ```
 
-- [ ] **Step 4: Add runtime spec projector**
+- [x] **Step 4: Add runtime spec projector**
 
 Create `clipper_nestjs/src/template-builder/shortform-template-runtime-spec.ts`:
 
@@ -405,7 +407,7 @@ function textStyleFor(
 }
 ```
 
-- [ ] **Step 5: Run the runtime spec test**
+- [x] **Step 5: Run the runtime spec test**
 
 Run:
 
@@ -417,7 +419,7 @@ node --test test/shortform-template-runtime-spec.test.js
 
 Expected: both tests pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_nestjs
@@ -435,7 +437,7 @@ git commit -m "feat: add shortform template runtime spec"
 - Modify: `clipper_nestjs/src/template-builder/template-builder-validation.service.ts`
 - Test: `clipper_nestjs/test/template-builder-shortform-mode.test.js`
 
-- [ ] **Step 1: Write failing service tests**
+- [x] **Step 1: Write failing service tests**
 
 Create `clipper_nestjs/test/template-builder-shortform-mode.test.js`:
 
@@ -500,7 +502,7 @@ test('shortform template mode rejects unsupported ratios and additional variants
 });
 ```
 
-- [ ] **Step 2: Run failing tests**
+- [x] **Step 2: Run failing tests**
 
 Run:
 
@@ -512,7 +514,7 @@ node --test test/template-builder-shortform-mode.test.js
 
 Expected: tests fail because service does not handle `workflowKind: 'shortform'`.
 
-- [ ] **Step 3: Implement shortform mode in service**
+- [x] **Step 3: Implement shortform mode in service**
 
 In `clipper_nestjs/src/template-builder/template-builder.service.ts`, import:
 
@@ -600,7 +602,7 @@ Update `updateVariant()` before assigning `nextVariants[ratio] = next`:
         : next;
 ```
 
-- [ ] **Step 4: Add shortform validation**
+- [x] **Step 4: Add shortform validation**
 
 In `clipper_nestjs/src/template-builder/template-builder-validation.service.ts`, add validation during `validateVariant()`:
 
@@ -628,7 +630,7 @@ In `clipper_nestjs/src/template-builder/template-builder-validation.service.ts`,
     }
 ```
 
-- [ ] **Step 5: Run backend shortform mode tests**
+- [x] **Step 5: Run backend shortform mode tests**
 
 Run:
 
@@ -640,7 +642,7 @@ node --test test/shortform-template-runtime-spec.test.js test/template-builder-s
 
 Expected: all listed tests pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_nestjs
@@ -657,7 +659,7 @@ git commit -m "feat: support shortform template builder mode"
 - Modify: `clipper_nestjs/src/project-manifest/template-builder-published-preset-source.ts`
 - Test: `clipper_nestjs/test/template-builder-shortform-preset-source.test.js`
 
-- [ ] **Step 1: Write failing preset source test**
+- [x] **Step 1: Write failing preset source test**
 
 Create `clipper_nestjs/test/template-builder-shortform-preset-source.test.js`:
 
@@ -718,7 +720,7 @@ test('template builder published preset source emits shortform templates with si
 });
 ```
 
-- [ ] **Step 2: Run failing test**
+- [x] **Step 2: Run failing test**
 
 Run:
 
@@ -730,7 +732,7 @@ node --test test/template-builder-shortform-preset-source.test.js
 
 Expected: test fails because `TemplateBuilderPublishedPresetSource` still emits legacy slots/workflows.
 
-- [ ] **Step 3: Add shortform preset branch**
+- [x] **Step 3: Add shortform preset branch**
 
 In `clipper_nestjs/src/project-manifest/template-builder-published-preset-source.ts`, add slots:
 
@@ -788,7 +790,7 @@ In `presetFor()`, branch by `family.workflowKind`:
 
 Keep the existing legacy branch for `workflowKind !== 'shortform'`.
 
-- [ ] **Step 4: Run preset source tests**
+- [x] **Step 4: Run preset source tests**
 
 Run:
 
@@ -800,7 +802,7 @@ node --test test/template-builder-shortform-preset-source.test.js test/simplifie
 
 Expected: tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_nestjs
@@ -819,7 +821,7 @@ git commit -m "feat: publish builder shortform templates as presets"
 - Modify: `clipper_angular/src/features/shortform/services/shortform-project.service.ts`
 - Test: `clipper_angular/src/features/shortform/pages/shortform-workflow-page.component.spec.ts`
 
-- [ ] **Step 1: Write failing Angular catalog expectation**
+- [x] **Step 1: Write failing Angular catalog expectation**
 
 In `clipper_angular/src/features/shortform/pages/shortform-workflow-page.component.spec.ts`, update the template catalog test setup so one fixture includes:
 
@@ -847,7 +849,7 @@ expect(component.shortformTemplates()[0].runtimeSpec?.schemaVersion)
   .toBe('shortform-template-runtime.v1');
 ```
 
-- [ ] **Step 2: Run failing Angular spec**
+- [x] **Step 2: Run failing Angular spec**
 
 Run:
 
@@ -858,7 +860,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: fails because `runtimeSpec` is not modeled/mapped.
 
-- [ ] **Step 3: Add Angular runtime spec model**
+- [x] **Step 3: Add Angular runtime spec model**
 
 In `clipper_angular/src/features/shortform/models/shortform-project.ts`, add:
 
@@ -898,7 +900,7 @@ export interface ShortformTemplateCatalogItem {
 }
 ```
 
-- [ ] **Step 4: Map runtime spec in service**
+- [x] **Step 4: Map runtime spec in service**
 
 In `clipper_angular/src/features/shortform/services/shortform-project.service.ts`, extend `TemplatePresetResponse`:
 
@@ -938,7 +940,7 @@ Add:
   }
 ```
 
-- [ ] **Step 5: Prefer Builder shortform presets with fallback**
+- [x] **Step 5: Prefer Builder shortform presets with fallback**
 
 Replace `listShortformTemplates()` with:
 
@@ -966,7 +968,7 @@ Replace `listShortformTemplates()` with:
   }
 ```
 
-- [ ] **Step 6: Run Angular spec**
+- [x] **Step 6: Run Angular spec**
 
 Run:
 
@@ -977,7 +979,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: focused spec passes.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_angular

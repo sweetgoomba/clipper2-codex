@@ -15,13 +15,14 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 - [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
 - [../records/sessions/2026/06/15.md](../records/sessions/2026/06/15.md)
 
-현재 app commit:
+현재 app/code commit:
 
 ```text
-clipper_angular: 6c489b8 feat: add shortform template picker
-clipper_nestjs:  7bce906 feat: add simplified shortform render templates
-.codex:          fc017b3 docs: plan template builder simplification
+clipper_angular: 2e9d5a6 fix: align Angular shortform template contracts
+clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
 ```
+
+문서 repo는 이 handoff update 커밋이 Task 1-4 진행 상태를 기록한다.
 
 완료된 것:
 
@@ -36,6 +37,19 @@ clipper_nestjs:  7bce906 feat: add simplified shortform render templates
 - 새 shortform payload/render path에서는 `sub_title`, `bottom_title`,
   `logo`를 사용하지 않고 `main_title1`, `main_title2`, `caption`만 사용.
 - 임시 simplified shortform template preset/catalog/render baseline 추가.
+- Template Builder simplification plan Task 1 완료:
+  backend `ShortformTemplateRuntimeSpec` contract 추가.
+- Task 2 완료: backend Template Builder shortform mode 추가.
+  shortform family는 `1:1` 또는 `4:3` 단일 ratio만 만들고, legacy roles는
+  runtime spec에 노출하지 않는다.
+- Task 3 완료: Builder-created shortform templates를
+  `template_builder.custom` preset source로 노출.
+  preset은 `clip_media`, `main_title1`, `main_title2`, `caption`, `bgm`만
+  사용하고 Builder card thumbnail을 preview image로 쓴다.
+- Task 4 완료: Angular shortform catalog가 `template_builder.custom`을 먼저
+  로드하고, 없을 때만 `shortform.simplified`로 fallback한다.
+  `ShortformTemplateCatalogItem.runtimeSpec` 매핑과 shallow validation도
+  추가했다.
 
 중요한 현재 판단:
 
@@ -50,7 +64,10 @@ clipper_nestjs:  7bce906 feat: add simplified shortform render templates
 다음 실행:
 
 - `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`를
-  Subagent-Driven 방식으로 Task 1부터 실행한다.
+  Subagent-Driven 방식으로 Task 5부터 실행한다.
+- 다음 Task는 Angular Template Builder Single-Ratio Shortform UI다.
+  create/clone은 `workflowKind: 'shortform'`, ratio는 `1:1` 또는 `4:3`,
+  editor는 content area/layout/main title 1/main title 2/caption만 보여야 한다.
 - 각 task는 TDD, focused verification, commit 단위로 진행한다.
 - browser preview engine은 이 plan 완료 전에는 시작하지 않는다.
 
