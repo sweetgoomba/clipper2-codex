@@ -18,18 +18,19 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 현재 app/code commit:
 
 ```text
-clipper_angular: 4f92434 fix: make template builder shortform-only
+clipper_angular: 41e884e fix: harden shortform template builder thumbnails
 clipper_nestjs:  0ce6b27 fix: render builder shortform templates
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 4f92434 fix: make template builder shortform-only
+clipper_angular: 41e884e fix: harden shortform template builder thumbnails
 ```
 
 문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태, render path blocker fix,
-active `/templates` shortform-only fix를 기록한다.
+active `/templates` shortform-only fix, Template Builder thumbnail/capture
+hardening을 기록한다.
 
 완료된 것:
 
@@ -75,6 +76,14 @@ active `/templates` shortform-only fix를 기록한다.
   state와 `새 템플릿` CTA를 보여준다. 새 템플릿 모달의 `1:1` / `4:3`
   선택은 `aria-pressed`와 active styling으로 즉시 구분된다. Shortform editor의
   사용자 표시 role은 main title 1/main title 2/caption만 남는다.
+- Follow-up thumbnail/capture hardening 완료: `/templates`는
+  `window.clipperBridge.capture`가 없는 localhost browser/dev-server 환경에서
+  새 템플릿 생성과 편집 시작/저장을 막는다. 편집 도중 저장만 막히지 않도록
+  생성/편집 진입 버튼도 disabled 된다. 생성/편집 시 카드 썸네일은 fallback
+  canvas가 아니라 왼쪽 preview frame `.template-workspace__preview-cell
+  .phone-canvas`를 캡쳐한다. Electron packaged app이 hidden/CDP 상태라
+  `requestAnimationFrame`이 멈춰도 80ms paint fallback으로 썸네일 캡쳐/업로드가
+  진행된다.
 
 중요한 현재 판단:
 
@@ -89,6 +98,9 @@ active `/templates` shortform-only fix를 기록한다.
   처리하던 문제였다. `0ce6b27`에서 공통 supported shortform template model
   판정으로 `simplified.v1` / `template-builder.v1`를 같이 처리한다.
 - 이제 browser timeline preview engine으로 넘어간다.
+- Template Builder 페이지는 packaged Electron 앱 기준으로 생성/썸네일 저장까지
+  확인됐다. localhost browser에서는 썸네일 캡쳐 bridge가 없으므로 생성/편집이
+  제한되는 것이 의도된 동작이다.
 
 다음 실행:
 
@@ -99,6 +111,8 @@ active `/templates` shortform-only fix를 기록한다.
   clip media/TTS/BGM/main title lines/caption/template runtime spec을 조합해
   재생해야 한다.
 - template layout/ratio는 Builder `ShortformTemplateRuntimeSpec`에서 가져온다.
+- 시작 전에 `clipper_angular`가 `41e884e`, `clipper_nestjs`가 `0ce6b27` 이상인지
+  확인한다.
 - Project-first / Plugin / Queue cleanup은 아직 시작하지 않는다.
 
 ## 2026-06-12 Clipper2 Modal Inventory

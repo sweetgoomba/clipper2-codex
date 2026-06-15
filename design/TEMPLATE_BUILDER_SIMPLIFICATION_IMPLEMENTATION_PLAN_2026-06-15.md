@@ -8,7 +8,7 @@
 
 **Tech Stack:** NestJS, Angular standalone components, TypeScript, Karma/Jasmine, Node test runner.
 
-**Progress as of 2026-06-15:** Tasks 1-7 were implemented, committed, and focused verification passed. Final cross-repo review found one blocking integration gap before browser timeline preview work: Builder shortform presets are now exposed as `template-builder.v1`, but the backend render recipe/provider path accepted only `simplified.v1`. That blocker was fixed in `clipper_nestjs` `0ce6b27`; Builder shortform presets now use the shortform recipe path and resolve a shortform render provider. Next work is the browser timeline preview engine. Do not start Project-first / Plugin / Queue cleanup.
+**Progress as of 2026-06-15:** Tasks 1-7 were implemented, committed, and focused verification passed. Final cross-repo review found one blocking integration gap before browser timeline preview work: Builder shortform presets are now exposed as `template-builder.v1`, but the backend render recipe/provider path accepted only `simplified.v1`. That blocker was fixed in `clipper_nestjs` `0ce6b27`; Builder shortform presets now use the shortform recipe path and resolve a shortform render provider. Follow-up UI/thumbnail hardening was completed in `clipper_angular` `41e884e`: active `/templates` is shortform-only, localhost browser environments without `window.clipperBridge.capture` cannot start create/edit, and packaged Electron creation captures the left preview frame as the 9:16 gallery thumbnail. Next work is the browser timeline preview engine. Do not start Project-first / Plugin / Queue cleanup.
 
 ---
 
