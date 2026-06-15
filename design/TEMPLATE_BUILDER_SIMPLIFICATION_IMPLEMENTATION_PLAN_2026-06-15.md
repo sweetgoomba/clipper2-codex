@@ -8,7 +8,7 @@
 
 **Tech Stack:** NestJS, Angular standalone components, TypeScript, Karma/Jasmine, Node test runner.
 
-**Progress as of 2026-06-15:** Tasks 1-4 are implemented and committed. The next task is Task 5, Angular Template Builder Single-Ratio Shortform UI. Do not start the browser timeline preview engine before Builder-created templates are flowing through the simplified Builder UI and shortform catalog.
+**Progress as of 2026-06-15:** Tasks 1-7 were implemented, committed, and focused verification passed. Final cross-repo review found one blocking integration gap before browser timeline preview work: Builder shortform presets are now exposed as `template-builder.v1`, but the backend render recipe/provider path still accepts only `simplified.v1`. Fix that render path before starting the browser timeline preview engine. Do not start Project-first / Plugin / Queue cleanup.
 
 ---
 
@@ -1002,7 +1002,7 @@ git commit -m "feat: load builder shortform template specs"
 - Test: `clipper_angular/src/features/template-builder/pages/template-builder-page.component.spec.ts`
 - Test: `clipper_angular/src/features/template-builder/components/template-builder-editor.component.spec.ts`
 
-- [ ] **Step 1: Write failing page spec for create ratio**
+- [x] **Step 1: Write failing page spec for create ratio**
 
 In `template-builder-page.component.spec.ts`, add:
 
@@ -1032,7 +1032,7 @@ it('creates shortform templates with a single selected ratio', async () => {
 });
 ```
 
-- [ ] **Step 2: Write failing editor spec for visible layers**
+- [x] **Step 2: Write failing editor spec for visible layers**
 
 In `template-builder-editor.component.spec.ts`, add:
 
@@ -1054,7 +1054,7 @@ it('shows only shortform template layers in the active product editor', () => {
 });
 ```
 
-- [ ] **Step 3: Run failing Angular Template Builder specs**
+- [x] **Step 3: Run failing Angular Template Builder specs**
 
 Run:
 
@@ -1065,7 +1065,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: specs fail because UI still exposes legacy ratios/layers.
 
-- [ ] **Step 4: Add Angular model constants**
+- [x] **Step 4: Add Angular model constants**
 
 In `models/template-builder.ts`:
 
@@ -1079,7 +1079,7 @@ Add `workflowKind?: TemplateBuilderWorkflowKind` to `TemplateBuilderFamily`.
 
 Add `workflowKind?: TemplateBuilderWorkflowKind` to `CreateTemplateBuilderFamilyRequest`.
 
-- [ ] **Step 5: Update create form state**
+- [x] **Step 5: Update create form state**
 
 In `template-builder-page.component.ts`, add:
 
@@ -1115,7 +1115,7 @@ Update `handleCreateFamily()`:
       });
 ```
 
-- [ ] **Step 6: Update create form HTML**
+- [x] **Step 6: Update create form HTML**
 
 In `template-builder-page.component.html`, add inside the create form before actions:
 
@@ -1138,7 +1138,7 @@ In `template-builder-page.component.html`, add inside the create form before act
 
 Add `data-testid="template-create-open-button"` to the gallery create button output if the button is owned by `TemplateFamilyGalleryComponent`; otherwise add the test id to the existing create request button in that component.
 
-- [ ] **Step 7: Limit editor ratios and layer rows**
+- [x] **Step 7: Limit editor ratios and layer rows**
 
 In `template-builder-editor.component.ts`, replace:
 
@@ -1175,7 +1175,7 @@ Ensure `defaultLayerRows` includes only:
 
 Keep `layoutImage` and `layoutLayers` available through the layout manager because they are renderer-required layout controls.
 
-- [ ] **Step 8: Remove legacy controls from active HTML**
+- [x] **Step 8: Remove legacy controls from active HTML**
 
 In `template-builder-page.component.html`, remove or guard out:
 
@@ -1192,7 +1192,7 @@ In `template-builder-workspace.component.html`, rename:
 
 In `template-builder-inspector.component.html`, guard logo blocks so they never render for `workflowKind === 'shortform'`. The simplest condition is to make `selectedMediaLayerId === 'logoImage'` unreachable in the editor filtered rows. Also remove visible text that says `로고` from any branch that can be reached in shortform mode.
 
-- [ ] **Step 9: Run focused Angular specs**
+- [x] **Step 9: Run focused Angular specs**
 
 Run:
 
@@ -1203,7 +1203,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: focused specs pass.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_angular
@@ -1220,7 +1220,7 @@ git commit -m "feat: simplify template builder for shortform templates"
 - Modify: `clipper_angular/src/features/template-builder/services/template-builder-card-thumbnail.service.ts`
 - Test: `clipper_angular/src/features/template-builder/services/template-builder-card-thumbnail.service.spec.ts`
 
-- [ ] **Step 1: Write failing thumbnail test**
+- [x] **Step 1: Write failing thumbnail test**
 
 In `template-builder-card-thumbnail.service.spec.ts`, add:
 
@@ -1264,7 +1264,7 @@ expect(shortformThumbnailLayerIdsForTest()).toEqual([
 ]);
 ```
 
-- [ ] **Step 2: Run failing test**
+- [x] **Step 2: Run failing test**
 
 Run:
 
@@ -1275,7 +1275,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: fails because thumbnail height follows template canvas ratio and legacy layers are still drawn.
 
-- [ ] **Step 3: Update thumbnail constants and drawing**
+- [x] **Step 3: Update thumbnail constants and drawing**
 
 In `template-builder-card-thumbnail.service.ts`, change constants:
 
@@ -1328,7 +1328,7 @@ Draw only:
     this.drawTextLayer(context, variant.layers.subtitleText, TEMPLATE_BUILDER_PREVIEW_SAMPLE_TEXT.subtitleText, scale, offsetX, offsetY);
 ```
 
-- [ ] **Step 4: Run thumbnail tests**
+- [x] **Step 4: Run thumbnail tests**
 
 Run:
 
@@ -1339,7 +1339,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Users/jina/project/adlight/clipper_angular
@@ -1356,7 +1356,7 @@ git commit -m "feat: capture shortform template thumbnails"
 - Verify changed files only unless a failure points to a required fix.
 - Update: `.codex/handoff/NEXT.md` only if the session handoff needs the new implementation status.
 
-- [ ] **Step 1: Run backend focused tests**
+- [x] **Step 1: Run backend focused tests**
 
 Run:
 
@@ -1368,7 +1368,7 @@ node --test test/shortform-template-runtime-spec.test.js test/template-builder-s
 
 Expected: build succeeds and all listed tests pass.
 
-- [ ] **Step 2: Run frontend focused tests**
+- [x] **Step 2: Run frontend focused tests**
 
 Run:
 
@@ -1379,7 +1379,7 @@ cd /Users/jina/project/adlight/clipper_angular
 
 Expected: focused specs pass.
 
-- [ ] **Step 3: Run frontend build**
+- [x] **Step 3: Run frontend build**
 
 Run:
 
@@ -1390,7 +1390,7 @@ npm run build
 
 Expected: Angular build succeeds.
 
-- [ ] **Step 4: Check diffs**
+- [x] **Step 4: Check diffs**
 
 Run:
 
@@ -1405,7 +1405,7 @@ git status --short
 
 Expected: no whitespace errors. Status shows only files touched by this plan plus pre-existing shortform work.
 
-- [ ] **Step 5: Record next handoff if implementation is not completed in one session**
+- [x] **Step 5: Record next handoff if implementation is not completed in one session**
 
 If implementation stops before all tasks are complete, update `/Users/jina/project/adlight/.codex/handoff/NEXT.md` with:
 
@@ -1429,7 +1429,7 @@ Do not start Project-first / Plugin / Queue cleanup.
 Do not build the browser preview engine until Builder-created shortform templates are flowing through the catalog.
 ```
 
-- [ ] **Step 6: Commit handoff if changed**
+- [x] **Step 6: Commit handoff if changed**
 
 ```bash
 cd /Users/jina/project/adlight/.codex

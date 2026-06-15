@@ -18,11 +18,11 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 현재 app/code commit:
 
 ```text
-clipper_angular: 2e9d5a6 fix: align Angular shortform template contracts
+clipper_angular: 9b807a3 test: cover shortform thumbnail layout fallback
 clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
 ```
 
-문서 repo는 이 handoff update 커밋이 Task 1-4 진행 상태를 기록한다.
+문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태와 남은 render path blocker를 기록한다.
 
 완료된 것:
 
@@ -50,26 +50,41 @@ clipper_nestjs:  4849b8e fix: list runtime fonts for builder shortform presets
   로드하고, 없을 때만 `shortform.simplified`로 fallback한다.
   `ShortformTemplateCatalogItem.runtimeSpec` 매핑과 shallow validation도
   추가했다.
+- Task 5 완료: Angular Template Builder active UI를 shortform 단일 ratio
+  flow로 단순화했다. create/clone은 `workflowKind: 'shortform'`를 보내고,
+  editor는 content area/layout/main title 1/main title 2/caption만 보여준다.
+- Task 6 완료: Template Builder card thumbnail capture를 9:16 shortform card
+  이미지로 고정했다. fallback canvas는 360x640이고, layout/content/main
+  title 1/main title 2/caption만 그린다.
+- Task 7 focused verification 완료:
+  NestJS build/focused Node tests, Angular focused Karma tests, Angular build,
+  양쪽 `git diff --check`가 통과했다.
 
 중요한 현재 판단:
 
 - 지금 preview 영역은 아직 정적 composition box다.
 - 사용자가 원하는 최종 preview는 Vrew-like browser timeline preview다.
-- 하지만 preview engine을 먼저 만들지 않는다.
-- 먼저 Template Builder를 단순화해서 Builder-created template이
-  `ShortformTemplateRuntimeSpec`과 real 9:16 thumbnail을 만들게 한다.
-- 그 다음 shortform template catalog를 Builder-created templates로 연결한다.
-- 그 다음 browser timeline preview engine을 구현한다.
+- 하지만 preview engine을 아직 만들지 않는다.
+- Template Builder 단순화와 Builder-created template catalog 연결은 진행됐다.
+- 최종 cross-repo review에서 blocking gap이 발견됐다:
+  Angular는 `template_builder.custom` Builder preset을 먼저 노출하고,
+  NestJS preset은 `shortformTemplateModel: 'template-builder.v1'`를 내보내지만,
+  backend `RenderRecipeProvider`와 shortform render providers는 아직
+  `simplified.v1`만 처리한다. 따라서 Builder template이 하나라도 있으면
+  shortform render provider resolution이 실패할 수 있다.
+- 이 render path blocker를 고친 뒤 browser timeline preview engine으로 넘어간다.
 
 다음 실행:
 
 - `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`를
-  Subagent-Driven 방식으로 Task 5부터 실행한다.
-- 다음 Task는 Angular Template Builder Single-Ratio Shortform UI다.
-  create/clone은 `workflowKind: 'shortform'`, ratio는 `1:1` 또는 `4:3`,
-  editor는 content area/layout/main title 1/main title 2/caption만 보여야 한다.
-- 각 task는 TDD, focused verification, commit 단위로 진행한다.
-- browser preview engine은 이 plan 완료 전에는 시작하지 않는다.
+  참고하되 Task 1-7은 구현/검증된 상태로 본다.
+- 다음 코드는 Builder `template-builder.v1` shortform preset이 backend render
+  recipe/provider path를 통과하도록 연결하는 blocker fix다.
+- TDD로 cross-repo flow를 재현한다:
+  Builder shortform preset 선택 -> render settings/defaultParams ->
+  backend render recipe -> provider resolution.
+- browser preview engine은 이 blocker가 해결된 뒤 시작한다.
+- Project-first / Plugin / Queue cleanup은 아직 시작하지 않는다.
 
 ## 2026-06-12 Clipper2 Modal Inventory
 

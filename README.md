@@ -6,7 +6,7 @@
 
 ## Current Focus
 
-2026-06-15 기준 현재 우선 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다. 지금은 browser timeline preview engine을 만들기 전에 Template Builder를 단순화해서 Builder-created shortform templates가 `ShortformTemplateRuntimeSpec`과 real 9:16 thumbnail을 만들고, shortform template catalog로 흘러가게 하는 단계다.
+2026-06-15 기준 현재 우선 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다. Template Builder 단순화와 Builder-created shortform template catalog 연결은 진행됐고, browser timeline preview engine 전에 Builder `template-builder.v1` shortform preset이 backend render recipe/provider path를 통과하도록 남은 blocker를 먼저 고친다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md), [design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md), [design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md), [records/sessions/2026/06/15.md](records/sessions/2026/06/15.md)를 본다.
 
