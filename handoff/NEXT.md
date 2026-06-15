@@ -1,8 +1,58 @@
 # Next Handoff
 
-최신 갱신: 2026-06-12
+최신 갱신: 2026-06-15
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
+
+## 2026-06-15 Current Focus
+
+현재 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다.
+Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
+
+먼저 읽을 문서:
+
+- [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
+- [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
+- [../records/sessions/2026/06/15.md](../records/sessions/2026/06/15.md)
+
+현재 app commit:
+
+```text
+clipper_angular: 6c489b8 feat: add shortform template picker
+clipper_nestjs:  7bce906 feat: add simplified shortform render templates
+.codex:          fc017b3 docs: plan template builder simplification
+```
+
+완료된 것:
+
+- 기존 full Template Builder 보존용 archive branch 생성 완료.
+- `ShortformProject.mainTitle1/mainTitle2` 저장/응답 반영 완료.
+- shortform 제작 페이지의 `레이아웃` 섹션을 `템플릿` 섹션으로 변경.
+- ratio 버튼과 title visibility checkbox 제거.
+- 템플릿 picker를 horizontal thumbnail strip + 더보기 modal 구조로 변경.
+- 템플릿 thumbnail은 임시 PNG 파일 asset으로 제공하며 9:16 shortform card
+  비율로 생성.
+- 오른쪽 템플릿 섹션이 패널 밖으로 넓어지던 레이아웃 버그 수정.
+- 새 shortform payload/render path에서는 `sub_title`, `bottom_title`,
+  `logo`를 사용하지 않고 `main_title1`, `main_title2`, `caption`만 사용.
+- 임시 simplified shortform template preset/catalog/render baseline 추가.
+
+중요한 현재 판단:
+
+- 지금 preview 영역은 아직 정적 composition box다.
+- 사용자가 원하는 최종 preview는 Vrew-like browser timeline preview다.
+- 하지만 preview engine을 먼저 만들지 않는다.
+- 먼저 Template Builder를 단순화해서 Builder-created template이
+  `ShortformTemplateRuntimeSpec`과 real 9:16 thumbnail을 만들게 한다.
+- 그 다음 shortform template catalog를 Builder-created templates로 연결한다.
+- 그 다음 browser timeline preview engine을 구현한다.
+
+다음 실행:
+
+- `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`를
+  Subagent-Driven 방식으로 Task 1부터 실행한다.
+- 각 task는 TDD, focused verification, commit 단위로 진행한다.
+- browser preview engine은 이 plan 완료 전에는 시작하지 않는다.
 
 ## 2026-06-12 Clipper2 Modal Inventory
 
