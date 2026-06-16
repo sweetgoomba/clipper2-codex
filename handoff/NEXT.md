@@ -19,24 +19,23 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 현재 app/code commit:
 
 ```text
-clipper_angular: 05fe9cd feat: add shortform browser timeline preview
-clipper_nestjs:  e45d8ba fix: project builder shortform runtime specs
+clipper_angular: 6143003 fix: stabilize shortform browser preview
+clipper_nestjs:  bbc00f6 fix: serve shortform preview assets in packaged app
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 05fe9cd feat: add shortform browser timeline preview
-clipper_nestjs:  e45d8ba fix: project builder shortform runtime specs
+clipper_angular: 6143003 fix: stabilize shortform browser preview
+clipper_nestjs:  bbc00f6 fix: serve shortform preview assets in packaged app
 ```
 
-2026-06-16 shortform browser timeline preview engine 1차 구현과 Template
-Builder 목록/preview parity 수정은 app repo에 커밋됐다. 다음 세션은 먼저
-pull/status로 push 상태와 로컬 dirty 여부를 확인한다.
+2026-06-16 shortform browser timeline preview engine 1차 구현과 packaged app
+hardening은 app repo에 커밋/푸시됐다. 다음 세션은 먼저 pull/status로 push 상태와
+로컬 dirty 여부를 확인한다.
 
-문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태, render path blocker fix,
-active `/templates` shortform-only fix, Template Builder thumbnail/capture
-hardening을 기록한다.
+문서 repo는 이 handoff update 커밋이 shortform browser preview hardening,
+packaged app font/BGM asset loading fix, 검증 결과를 기록한다.
 
 완료된 것:
 
@@ -109,6 +108,21 @@ hardening을 기록한다.
 - 2026-06-16 preview media 품질 수정 완료:
   preview와 clip thumbnail 후보 모두 이미지/비디오 `contentUrl`을 먼저 쓰고,
   실패한 URL은 `thumbnailUrl`로 fallback한다.
+- 2026-06-16 packaged app preview hardening 완료:
+  preview font URL은 app data absolute path가 아니라
+  `template-assets/...` relative URI를 사용한다. `/v1/template-builder/assets/file`
+  endpoint는 font content type과 missing local asset 404를 처리한다.
+  Electron renderer의 `Origin: file://` font request를 local API CORS에서 허용한다.
+  이 변경으로 preview font가 packaged app에서 적용된다.
+- 2026-06-16 browser preview playback/style polish 완료:
+  seek bar는 `현재 시간 / 총 시간` 표시로 바뀌었고 total duration은 TTS duration
+  pre-measurement로 고정된다. clip/project/TTS update 중 preview는 멈추고 0초로
+  reset된다. caption은 줄 단위 box로 그리며 template line gap을 반영한다.
+  BGM `선택 안 함`, BGM/voice sample과 preview playback 상호 배제, TTS regeneration
+  spinner/status, clip order 보존, clip duration label 갱신을 반영했다.
+- 2026-06-16 debugging 문서 추가 완료:
+  `clipper_nestjs/docs/shortform-browser-preview-debugging-2026-06-16.md`에 symptoms,
+  root causes, debugging evidence, solution, verification, operational notes를 정리했다.
 
 중요한 현재 판단:
 
@@ -123,7 +137,12 @@ hardening을 기록한다.
   처리하던 문제였다. `0ce6b27`에서 공통 supported shortform template model
   판정으로 `simplified.v1` / `template-builder.v1`를 같이 처리한다.
 - 이제 다음 우선순위는 실제 앱에서 Template Builder -> shortform production page
-  왕복 QA와 preview visual parity polish다.
+  왕복 QA와 남은 preview visual parity polish다.
+- packaged app preview font 500의 최종 원인은 CORS였다. Origin 없이 호출하면 200,
+  `Origin: file://`로 호출하면 500이었고, 새 bundle에서는
+  `Access-Control-Allow-Origin: file://`와 함께 font file이 200으로 내려온다.
+- BGM은 명시적으로 `선택 안 함`을 선택할 수 있어야 하고, 이 상태에서는 preview와
+  최종 render 모두 BGM을 생략한다.
 - Template Builder 페이지는 packaged Electron 앱 기준으로 생성/썸네일 저장까지
   확인됐다. localhost browser에서는 썸네일 캡쳐 bridge가 없으므로 생성/편집이
   제한되는 것이 의도된 동작이다.
@@ -132,13 +151,14 @@ hardening을 기록한다.
 
 - `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`는
   완료된 Builder simplification 기록으로 본다.
-- 다음 코드는 browser timeline preview engine 1차 구현의 앱 동작 QA와 visual
+- 다음 코드는 browser timeline preview hardening 이후 남은 앱 동작 QA와 visual
   parity 보정이다.
 - 먼저 `clipper_angular`, `clipper_nestjs`의 branch/status를 확인한다.
 - packaged/local 환경에서 Template Builder 새 템플릿 생성 -> 편집/저장 ->
   shortform 제작 페이지 템플릿 목록 반영 -> 클립 생성 -> preview 재생까지 확인한다.
-- 문제가 보이면 browser preview component와 runtime spec projection을 우선 보정한다.
-- 시작 전에 `clipper_angular`가 `41e884e`, `clipper_nestjs`가 `0ce6b27` 이상인지
+- 문제가 보이면 browser preview component, runtime spec projection, local asset
+  resolver를 우선 보정한다.
+- 시작 전에 `clipper_angular`가 `6143003`, `clipper_nestjs`가 `bbc00f6` 이상인지
   확인한다.
 - Project-first / Plugin / Queue cleanup은 아직 시작하지 않는다.
 
@@ -153,7 +173,7 @@ Using Superpowers.
 .codex/records/sessions/2026/06/16.md를 읽고 현재 상태 파악해.
 
 Project-first / Plugin / Queue 정리는 아직 시작하지 마.
-최근 커밋된 shortform browser timeline preview engine 1차 구현을 이어서
+최근 커밋된 shortform browser timeline preview hardening을 이어서
 검증/폴리시해줘. 우선 git status와 최신 커밋을 확인하고, 가능하면 로컬 앱에서
 Template Builder 새 템플릿 생성/편집/저장 -> shortform 제작 페이지 템플릿 목록
 반영 -> 클립 생성 -> 9:16 browser preview 재생/seek/스타일 반영/원본 이미지 품질을
