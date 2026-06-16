@@ -13,6 +13,10 @@
 
 ## Where To Add New Documents
 
+- 새 Markdown 문서는 기본적으로 이 `.codex` repo 안에만 만든다.
+- `clipper_angular`, `clipper_nestjs`, `adlight_python` 같은 코드 repo에는 새 `*.md`
+  문서나 작업 계획 문서를 추가하지 않는다. 기존 tracked README류를 수정해야 하는
+  명시적 이유가 있을 때만 해당 repo 안에서 수정한다.
 - Feature-specific work:
   - `features/<feature>/records/YYYY/MM/`
 - Build/runtime work:

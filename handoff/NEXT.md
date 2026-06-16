@@ -1,33 +1,64 @@
 # Next Handoff
 
-최신 갱신: 2026-06-16
+최신 갱신: 2026-06-17
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## 2026-06-16 Current Focus
+## 2026-06-17 Current Focus
 
-현재 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다.
+현재 작업은 shortform 제작 페이지 리팩토링 완료 후 URL 입력 백엔드 이식 준비다.
 Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 
 먼저 읽을 문서:
 
 - [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
 - [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
+- [../records/sessions/2026/06/17.md](../records/sessions/2026/06/17.md)
 - [../records/sessions/2026/06/16.md](../records/sessions/2026/06/16.md)
 - [../records/sessions/2026/06/15.md](../records/sessions/2026/06/15.md)
 
 현재 app/code commit:
 
 ```text
-clipper_angular: 6143003 fix: stabilize shortform browser preview
-clipper_nestjs:  bbc00f6 fix: serve shortform preview assets in packaged app
+clipper_angular: 953bf80 refactor: split shortform workflow page
+clipper_nestjs:  c28de6d fix: update shortform paste plugin copy
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 6143003 fix: stabilize shortform browser preview
-clipper_nestjs:  bbc00f6 fix: serve shortform preview assets in packaged app
+clipper_angular: 953bf80 refactor: split shortform workflow page
+clipper_nestjs:  c28de6d fix: update shortform paste plugin copy
+```
+
+2026-06-17 shortform 제작 페이지 리팩토링은 app repo에 커밋됐다. 새 Markdown 작업
+계획 문서는 코드 repo에서 제거하고 `.codex/records/worklog/2026/06/`로 옮겼다.
+앞으로 새 Markdown 문서는 `.codex` repo 안에만 만든다.
+
+2026-06-17 NestJS paste plugin copy 수정도 커밋됐다. `shortform_paste` 설명에서
+`현재 준비 중입니다.`를 제거했고, `test/plugin-catalog.test.js` 회귀 테스트를
+추가했다.
+
+다음 우선순위는 URL로 숏폼 제작 백엔드 이식이다. 현재 NestJS는 URL project creation만
+저장하고, clip generation 때 URL 문자열을 그대로 LLM prompt로 넘긴다. Python legacy는
+URL을 parsed content와 original image list로 변환한 뒤 GPT 호출/clip media 배정에
+사용한다. NestJS에는 `ShortformUrlContentExtractor` provider를 추가하고,
+`generateClips()`에서 URL mode일 때 parsed content를 prompt로 쓰며 원본 이미지를 clip
+media로 우선 배정하는 TDD 작업을 진행한다.
+
+검증 결과:
+
+```text
+clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless '--include=src/features/shortform/**/*.spec.ts'
+  TOTAL: 137 SUCCESS
+- npm run build
+- git diff --check
+
+clipper_nestjs:
+- npm run build
+- node test/plugin-catalog.test.js
+- git diff --check
 ```
 
 2026-06-16 shortform browser timeline preview engine 1차 구현과 packaged app
