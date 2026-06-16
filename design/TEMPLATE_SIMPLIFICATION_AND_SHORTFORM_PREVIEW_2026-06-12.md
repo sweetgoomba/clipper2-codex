@@ -19,6 +19,18 @@ legacy-compatible template model to a simplified template model.
 - Then replace the current static shortform preview box with the browser
   timeline preview engine.
 
+2026-06-16 implementation update:
+
+- The first browser timeline preview engine is implemented in Angular.
+- The preview engine does not create FFmpeg preview files. It composes clips,
+  media, TTS, BGM, main title lines, and captions in the browser.
+- The shortform runtime canvas is now 1080x1920. The original Builder canvas is
+  preserved as `templateCanvas`, and its placement inside the portrait canvas is
+  preserved as `templateFrame`.
+- The shortform production page now loads the user's Builder shortform template
+  list directly from `template_builder.custom`. It no longer falls back to
+  built-in simplified templates when the Builder list is empty.
+
 The new template model keeps only:
 
 - `main_title1`
@@ -176,10 +188,15 @@ ShortformTemplateRuntimeSpec
   templateId
   ratio: 1:1 | 4:3
   canvas:
-    width
-    height
+    width: 1080
+    height: 1920
     fps
     backgroundColor
+  templateCanvas:
+    width
+    height
+  templateFrame:
+    x, y, width, height, scale
   thumbnail:
     url
     captureRatio: 9:16
@@ -218,7 +235,12 @@ color
 textAlign
 backgroundColor
 padding
+borderColor
+borderWidth
 borderRadius
+boxSizing
+outline
+shadow
 maxLines
 ```
 

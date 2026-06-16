@@ -1,10 +1,10 @@
 # Next Handoff
 
-최신 갱신: 2026-06-15
+최신 갱신: 2026-06-16
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## 2026-06-15 Current Focus
+## 2026-06-16 Current Focus
 
 현재 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다.
 Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
@@ -13,20 +13,26 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 
 - [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
 - [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
+- [../records/sessions/2026/06/16.md](../records/sessions/2026/06/16.md)
 - [../records/sessions/2026/06/15.md](../records/sessions/2026/06/15.md)
 
 현재 app/code commit:
 
 ```text
-clipper_angular: 41e884e fix: harden shortform template builder thumbnails
-clipper_nestjs:  0ce6b27 fix: render builder shortform templates
+clipper_angular: 05fe9cd feat: add shortform browser timeline preview
+clipper_nestjs:  e45d8ba fix: project builder shortform runtime specs
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 41e884e fix: harden shortform template builder thumbnails
+clipper_angular: 05fe9cd feat: add shortform browser timeline preview
+clipper_nestjs:  e45d8ba fix: project builder shortform runtime specs
 ```
+
+2026-06-16 shortform browser timeline preview engine 1차 구현과 Template
+Builder 목록/preview parity 수정은 app repo에 커밋됐다. 다음 세션은 먼저
+pull/status로 push 상태와 로컬 dirty 여부를 확인한다.
 
 문서 repo는 이 handoff update 커밋이 Task 5-7 진행 상태, render path blocker fix,
 active `/templates` shortform-only fix, Template Builder thumbnail/capture
@@ -84,12 +90,31 @@ hardening을 기록한다.
   .phone-canvas`를 캡쳐한다. Electron packaged app이 hidden/CDP 상태라
   `requestAnimationFrame`이 멈춰도 80ms paint fallback으로 썸네일 캡쳐/업로드가
   진행된다.
+- 2026-06-16 browser timeline preview engine 1차 구현 완료:
+  Angular production page가 정적 composition box 대신
+  `ShortformBrowserTimelinePreviewComponent`를 사용한다. 브라우저에서 clips,
+  narration/TTS, BGM, media, main title 1/2, caption을 timeline으로 조합해
+  재생/정지/seek한다. 실제 FFmpeg preview 파일은 만들지 않는다.
+- 2026-06-16 Template Builder template parity 수정 완료:
+  shortform 제작 페이지는 `template_builder.custom`만 로드하고
+  `shortform.simplified` fallback을 더 이상 호출하지 않는다. 빌더 목록이 비면
+  제작 페이지 템플릿 목록도 비어 있고, draft/new template도 보존한다.
+  thumbnail/sample render가 아직 없는 새 draft는 1:1/4:3 fallback card로 표시한다.
+- 2026-06-16 runtime/preview spec 수정 완료:
+  backend `ShortformTemplateRuntimeSpec.canvas`는 1080x1920 9:16이고,
+  원래 Builder canvas는 `templateCanvas`, portrait 안 배치 영역은
+  `templateFrame`으로 보존한다. region 좌표와 font/padding/border/outline/shadow
+  값은 9:16 canvas 기준으로 변환된다. Angular preview도 해당 spec을 기준으로
+  위치/폰트/색상/테두리/외곽선/그림자를 반영한다.
+- 2026-06-16 preview media 품질 수정 완료:
+  preview와 clip thumbnail 후보 모두 이미지/비디오 `contentUrl`을 먼저 쓰고,
+  실패한 URL은 `thumbnailUrl`로 fallback한다.
 
 중요한 현재 판단:
 
-- 지금 preview 영역은 아직 정적 composition box다.
-- 사용자가 원하는 최종 preview는 Vrew-like browser timeline preview다.
-- 하지만 preview engine을 아직 만들지 않는다.
+- 정적 composition box는 browser timeline preview component로 교체됐다.
+- 현재 preview는 1차 browser engine이다. render-engine pixel parity가 아니라
+  편집 중 interactive preview가 목표다.
 - Template Builder 단순화와 Builder-created template catalog 연결은 진행됐다.
 - 최종 cross-repo review에서 blocking gap이 발견됐고 수정했다:
   Angular는 `template_builder.custom` Builder preset을 먼저 노출하고,
@@ -97,7 +122,8 @@ hardening을 기록한다.
   backend `RenderRecipeProvider`와 shortform render providers가 `simplified.v1`만
   처리하던 문제였다. `0ce6b27`에서 공통 supported shortform template model
   판정으로 `simplified.v1` / `template-builder.v1`를 같이 처리한다.
-- 이제 browser timeline preview engine으로 넘어간다.
+- 이제 다음 우선순위는 실제 앱에서 Template Builder -> shortform production page
+  왕복 QA와 preview visual parity polish다.
 - Template Builder 페이지는 packaged Electron 앱 기준으로 생성/썸네일 저장까지
   확인됐다. localhost browser에서는 썸네일 캡쳐 bridge가 없으므로 생성/편집이
   제한되는 것이 의도된 동작이다.
@@ -106,14 +132,33 @@ hardening을 기록한다.
 
 - `TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md`는
   완료된 Builder simplification 기록으로 본다.
-- 다음 코드는 shortform 제작 페이지의 browser timeline preview engine이다.
-- preview engine은 실제 FFmpeg preview 파일을 만들지 않고 브라우저에서
-  clip media/TTS/BGM/main title lines/caption/template runtime spec을 조합해
-  재생해야 한다.
-- template layout/ratio는 Builder `ShortformTemplateRuntimeSpec`에서 가져온다.
+- 다음 코드는 browser timeline preview engine 1차 구현의 앱 동작 QA와 visual
+  parity 보정이다.
+- 먼저 `clipper_angular`, `clipper_nestjs`의 branch/status를 확인한다.
+- packaged/local 환경에서 Template Builder 새 템플릿 생성 -> 편집/저장 ->
+  shortform 제작 페이지 템플릿 목록 반영 -> 클립 생성 -> preview 재생까지 확인한다.
+- 문제가 보이면 browser preview component와 runtime spec projection을 우선 보정한다.
 - 시작 전에 `clipper_angular`가 `41e884e`, `clipper_nestjs`가 `0ce6b27` 이상인지
   확인한다.
 - Project-first / Plugin / Queue cleanup은 아직 시작하지 않는다.
+
+다음 세션 시작 프롬프트:
+
+```text
+Using Superpowers.
+
+먼저 .codex/README.md, .codex/handoff/NEXT.md,
+.codex/design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md,
+.codex/design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md,
+.codex/records/sessions/2026/06/16.md를 읽고 현재 상태 파악해.
+
+Project-first / Plugin / Queue 정리는 아직 시작하지 마.
+최근 커밋된 shortform browser timeline preview engine 1차 구현을 이어서
+검증/폴리시해줘. 우선 git status와 최신 커밋을 확인하고, 가능하면 로컬 앱에서
+Template Builder 새 템플릿 생성/편집/저장 -> shortform 제작 페이지 템플릿 목록
+반영 -> 클립 생성 -> 9:16 browser preview 재생/seek/스타일 반영/원본 이미지 품질을
+확인해. 발견한 문제는 작게 수정하고 테스트/빌드까지 돌려줘.
+```
 
 ## 2026-06-12 Clipper2 Modal Inventory
 
