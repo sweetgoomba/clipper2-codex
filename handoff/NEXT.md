@@ -6,7 +6,7 @@
 
 ## 2026-06-17 Current Focus
 
-현재 작업은 shortform 제작 페이지 리팩토링 완료 후 URL 입력 백엔드 이식 준비다.
+현재 작업은 shortform 제작 페이지 리팩토링과 URL 입력 백엔드 1차 이식 이후 QA다.
 Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 
 먼저 읽을 문서:
@@ -21,14 +21,14 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 
 ```text
 clipper_angular: 953bf80 refactor: split shortform workflow page
-clipper_nestjs:  c28de6d fix: update shortform paste plugin copy
+clipper_nestjs:  8ac864c feat: generate shortform clips from URL content
 ```
 
 최신 follow-up:
 
 ```text
 clipper_angular: 953bf80 refactor: split shortform workflow page
-clipper_nestjs:  c28de6d fix: update shortform paste plugin copy
+clipper_nestjs:  8ac864c feat: generate shortform clips from URL content
 ```
 
 2026-06-17 shortform 제작 페이지 리팩토링은 app repo에 커밋됐다. 새 Markdown 작업
@@ -39,12 +39,12 @@ clipper_nestjs:  c28de6d fix: update shortform paste plugin copy
 `현재 준비 중입니다.`를 제거했고, `test/plugin-catalog.test.js` 회귀 테스트를
 추가했다.
 
-다음 우선순위는 URL로 숏폼 제작 백엔드 이식이다. 현재 NestJS는 URL project creation만
-저장하고, clip generation 때 URL 문자열을 그대로 LLM prompt로 넘긴다. Python legacy는
-URL을 parsed content와 original image list로 변환한 뒤 GPT 호출/clip media 배정에
-사용한다. NestJS에는 `ShortformUrlContentExtractor` provider를 추가하고,
-`generateClips()`에서 URL mode일 때 parsed content를 prompt로 쓰며 원본 이미지를 clip
-media로 우선 배정하는 TDD 작업을 진행한다.
+URL로 숏폼 제작 백엔드 1차 이식도 완료됐다. 이전 NestJS는 URL project creation만
+저장하고 clip generation 때 URL 문자열을 그대로 LLM prompt로 넘겼다. 이제
+`ShortformUrlContentExtractor` provider가 URL 본문/이미지를 추출하고,
+`generateClips()`가 URL mode일 때 parsed content를 prompt로 쓰며 원본 이미지를 clip
+media로 우선 배정한다. 지원 대상은 Naver Blog, Tistory, Brunch, generic/news HTML
+fallback이다. 다음 우선순위는 실제 앱/실 URL QA와 selector edge case 보강이다.
 
 검증 결과:
 
@@ -58,6 +58,9 @@ clipper_angular:
 clipper_nestjs:
 - npm run build
 - node test/plugin-catalog.test.js
+- node test/shortform-project-generation-assets.test.js
+- node test/shortform-url-content-extractor.test.js
+- node test/shortform-project-api.test.js
 - git diff --check
 ```
 
