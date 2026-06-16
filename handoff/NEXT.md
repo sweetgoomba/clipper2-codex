@@ -6,10 +6,10 @@
 
 ## 2026-06-17 Current Focus
 
-현재 작업은 shortform 제작 페이지 리팩토링, URL 입력 백엔드 1차 이식 이후 QA와
-shortform render queue 경로 정리다. Project-first / Plugin / Queue 전체 정리는
-아직 시작하지 않았고, shortform의 `숏폼 생성하기` render path만 기존 `/jobs`
-큐로 합류시켰다.
+현재 작업은 shortform 제작 페이지 리팩토링, URL 입력 백엔드 1차 이식 이후 QA,
+shortform render queue 경로 정리, 그리고 Template Builder shortform render output
+contract 정리다. Project-first / Plugin / Queue 전체 정리는 아직 시작하지 않았고,
+shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류시켰다.
 
 먼저 읽을 문서:
 
@@ -23,14 +23,16 @@ shortform render queue 경로 정리다. Project-first / Plugin / Queue 전체 �
 
 ```text
 clipper_angular: 98612db feat: route shortform renders to project queue
-clipper_nestjs:  4b79992 feat: queue shortform renders through python worker
+clipper_nestjs:  d157d84 Fix shortform render output size
+clipper_python:  259b5b6 Fix shortform render canvas contract
 ```
 
 최신 follow-up:
 
 ```text
 clipper_angular: 98612db feat: route shortform renders to project queue
-clipper_nestjs:  4b79992 feat: queue shortform renders through python worker
+clipper_nestjs:  d157d84 Fix shortform render output size
+clipper_python:  259b5b6 Fix shortform render canvas contract
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -50,6 +52,13 @@ clipper_nestjs:  4b79992 feat: queue shortform renders through python worker
   일반 작업 큐에 연결한 상태다.
 - simplified shortform template은 Clipper1 legacy payload로 직접 render하지 않는다.
   실제 render path는 legacy Clipper1 또는 Template Builder custom preset 기준이다.
+- 2026-06-17 추가 수정으로 Template Builder shortform render의 최종 output contract는
+  Python worker와 Nest manifest 모두 1080x1920으로 고정됐다. `contents_ratio`는
+  content area 높이/비율 의미로만 유지한다.
+- 구형 21개 Clipper1 baseline template은 현재 Clipper2 shortform 생성의 실사용 기준이
+  아니다. 다음 renderer 작업은 `mainTitleLine1`, `mainTitleLine2`, clip subtitle
+  1/2줄, layout/background layer, content area, image/GIF/video media 경로를 기준으로
+  진행한다.
 
 검증 결과:
 
@@ -63,7 +72,104 @@ clipper_angular:
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow-page.component.spec.ts
 - npm run build
 - git diff --check
+
+clipper_python:
+- env UV_CACHE_DIR=/private/tmp/clipper-uv-cache uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_uploaded_fonts.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py -q
+  37 passed
 ```
+
+주의: `clipper_nestjs/test/shortform-project-api.test.js`는 sandbox에서 `127.0.0.1`
+listen EPERM으로 직접 실행이 막혔다. 테스트 기대값은 1080x1920으로 갱신했고
+`npm run build`와 Template Builder payload mapper tests는 통과했다.
+
+## 2026-06-17 Video Render Logic Status
+
+이번 세션에서 한 일:
+
+- `clipper_python` `LocalRenderAdapter.render()`가 `recipe.output.width/height`를
+  최종 canvas로 쓰던 문제를 고쳤다. 최종 mp4는 항상 1080x1920이다.
+- `clipper_nestjs` shortform render manifest `outputs[0].width/height`도 항상
+  1080x1920으로 기록한다.
+- Template Builder contract payload에서 image/GIF/video media가 content area에 들어가고
+  main title 1/2, subtitle 1/2줄, layout layer와 함께 1080x1920으로 render되는
+  Python contract test를 추가했다.
+- 잘못 들어갔던 구형 `project.sub_title` y-offset 수정과 `clipper2_template_baseline`
+  PNG 갱신은 제거했다.
+
+명확히 아닌 것:
+
+- `adlight_python/app/services/VideoService.py` 전체를 그대로 포팅한 상태가 아니다.
+- 현재는 기존 `clipper1_video_render/local_render_adapter.py`의 구현을 실제 Clipper2
+  Template Builder shortform contract에 맞춰 보정하고 테스트로 고정한 상태다.
+
+다음 세션에서 이어갈 VideoService parity 작업:
+
+1. `adlight_python/app/services/VideoService.py`와
+   `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
+   를 함수 단위로 대조한다.
+2. 먼저 실사용 Template Builder path만 대상으로 한다.
+   - `mainTitleLine1`
+   - `mainTitleLine2`
+   - clip subtitle 1/2줄
+   - layout/background layer
+   - content area
+   - content area media: image/GIF/video
+   - TTS concat/mix, optional BGM mix
+   - final thumbnail
+3. `VideoService.py`의 아래 함수와 현재 adapter 대응부를 parity checklist로 만든다.
+   - `create_video`
+   - `_process_clips`
+   - `_create_video_from_image`
+   - `_convert_gif_to_video`
+   - `_process_video_clip`
+   - `_create_final_video`
+   - `_generate_subtitle_images`
+   - `_download_tts`
+   - `_concatenate_audios`
+   - `_generate_thumbnail`
+4. "그대로 옮김"이라고 말하려면 최소한 같은 payload에 대해 아래를 검증해야 한다.
+   - final size: 1080x1920
+   - content area geometry
+   - image/GIF/video scale/crop/loop/blur behavior
+   - title/subtitle image frame positions
+   - audio duration/concat/mix behavior
+   - ffmpeg encoding options
+   - output/thumbnail artifact paths
+5. 구형 21개 Clipper1 baseline template은 현 실사용 기준이 아니므로, 다음 parity test는
+   Template Builder custom preset fixture 중심으로 추가한다.
+
+## Project-First / Plugin / Queue Status
+
+진행된 것:
+
+- shortform render submit path는 기존 `/jobs` queue로 들어간다.
+- render 요청 시점에 synthetic completed project를 만드는 경로는 제거했다.
+- 완료 project 기록은 job completion 이후 `ProjectsService.recordCompletedJob()`에서만
+  생성되는 방향으로 맞췄다.
+- Angular `숏폼 생성하기`는 render API 호출 후 작업 보관함 페이지
+  `/projects?plugin=clipper1_video_render&job=...`로 이동한다.
+- job result와 completed project result에 `render_manifest`/`manifest`가 남도록 했다.
+
+아직 남은 큰 작업:
+
+- Project-first 데이터 모델 정리:
+  draft shortform, promoted project, render job, completed artifact 사이 ownership를
+  명확히 분리한다.
+- Plugin contract 정리:
+  `clipper1_video_render` input/output schema, artifact path contract, env/runtime contract,
+  cancellation/progress/error contract를 문서화하고 코드에 고정한다.
+- Queue UI/상태 정리:
+  queued/running/completed/failed/cancelled 전환, retry/cancel, completed job list 이동,
+  project detail 재열기 동작을 실제 앱에서 QA한다.
+- Python worker lifecycle 정리:
+  devapp/packaged에서 worker start/stop, port/baseUrl, job event delivery,
+  output_root 접근 권한을 확인한다.
+- Render artifact persistence 정리:
+  mp4/thumbnail/tts/media asset 경로가 local app storage 기준으로 재열기 가능한지 확인한다.
+- 기존 `VideoRenderJobsService` 또는 old render-provider path 중 더 이상 쓰지 않는 코드는
+  실제 grep 후 제거한다.
+- completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
+  유효한지 end-to-end 검증한다.
 
 2026-06-17 shortform 제작 페이지 리팩토링은 app repo에 커밋됐다. 새 Markdown 작업
 계획 문서는 코드 repo에서 제거하고 `.codex/records/worklog/2026/06/`로 옮겼다.
