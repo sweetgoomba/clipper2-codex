@@ -121,7 +121,7 @@ packaged app font/BGM asset loading fix, 검증 결과를 기록한다.
   BGM `선택 안 함`, BGM/voice sample과 preview playback 상호 배제, TTS regeneration
   spinner/status, clip order 보존, clip duration label 갱신을 반영했다.
 - 2026-06-16 debugging 문서 추가 완료:
-  `clipper_nestjs/docs/shortform-browser-preview-debugging-2026-06-16.md`에 symptoms,
+  `records/worklog/2026/06/shortform-browser-preview-debugging-2026-06-16.md`에 symptoms,
   root causes, debugging evidence, solution, verification, operational notes를 정리했다.
 
 중요한 현재 판단:
