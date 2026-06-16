@@ -6,8 +6,10 @@
 
 ## 2026-06-17 Current Focus
 
-현재 작업은 shortform 제작 페이지 리팩토링과 URL 입력 백엔드 1차 이식 이후 QA다.
-Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
+현재 작업은 shortform 제작 페이지 리팩토링, URL 입력 백엔드 1차 이식 이후 QA와
+shortform render queue 경로 정리다. Project-first / Plugin / Queue 전체 정리는
+아직 시작하지 않았고, shortform의 `숏폼 생성하기` render path만 기존 `/jobs`
+큐로 합류시켰다.
 
 먼저 읽을 문서:
 
@@ -20,15 +22,47 @@ Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
 현재 app/code commit:
 
 ```text
-clipper_angular: 953bf80 refactor: split shortform workflow page
-clipper_nestjs:  8ac864c feat: generate shortform clips from URL content
+clipper_angular: 98612db feat: route shortform renders to project queue
+clipper_nestjs:  4b79992 feat: queue shortform renders through python worker
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 953bf80 refactor: split shortform workflow page
-clipper_nestjs:  8ac864c feat: generate shortform clips from URL content
+clipper_angular: 98612db feat: route shortform renders to project queue
+clipper_nestjs:  4b79992 feat: queue shortform renders through python worker
+```
+
+2026-06-17 shortform render queue follow-up:
+
+- `숏폼 생성하기`는 더 이상 console payload 출력이나 별도
+  `VideoRenderJobsService` synthetic completed project 경로를 사용하지 않는다.
+- Angular는 현재 shortform edit state를 저장한 뒤 render API 응답의 job id로
+  `/projects?plugin=clipper1_video_render&job=...` 이동한다.
+- NestJS shortform render API는 manifest/recipe/legacy payload를 만든 뒤 기존
+  `JobsService`에 `clipper1_video_render` job을 enqueue한다.
+- `/projects` 완료 항목은 `JobsService` 완료 이벤트 이후
+  `ProjectsService.recordCompletedJob()`에서만 생성된다.
+- job result와 completed project result에는 `render_manifest`를 `manifest`로
+  보존한다.
+- `clipper1_video_render` worker는 존재하지만 adlight_python `VideoService.py`의
+  완전 parity 포팅은 아니다. 현재 경로는 기존 Python plugin worker/local adapter를
+  일반 작업 큐에 연결한 상태다.
+- simplified shortform template은 Clipper1 legacy payload로 직접 render하지 않는다.
+  실제 render path는 legacy Clipper1 또는 Template Builder custom preset 기준이다.
+
+검증 결과:
+
+```text
+clipper_nestjs:
+- npm run build
+- node --test test/shortform-project-api.test.js
+- git diff --check
+
+clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow-page.component.spec.ts
+- npm run build
+- git diff --check
 ```
 
 2026-06-17 shortform 제작 페이지 리팩토링은 app repo에 커밋됐다. 새 Markdown 작업
