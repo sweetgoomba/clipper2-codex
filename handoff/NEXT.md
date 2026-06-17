@@ -22,17 +22,17 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 98612db feat: route shortform renders to project queue
-clipper_nestjs:  d157d84 Fix shortform render output size
-clipper_python:  9396094 Fix shortform render VideoService parity gaps
+clipper_angular: 4dffe76 Restore shortform projects from archive cards
+clipper_nestjs:  6e98b15 Queue shortform render preparation immediately
+clipper_python:  d30fc35 Localize shortform render progress
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 98612db feat: route shortform renders to project queue
-clipper_nestjs:  d157d84 Fix shortform render output size
-clipper_python:  9396094 Fix shortform render VideoService parity gaps
+clipper_angular: 4dffe76 Restore shortform projects from archive cards
+clipper_nestjs:  6e98b15 Queue shortform render preparation immediately
+clipper_python:  d30fc35 Localize shortform render progress
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -40,9 +40,11 @@ clipper_python:  9396094 Fix shortform render VideoService parity gaps
 - `숏폼 생성하기`는 더 이상 console payload 출력이나 별도
   `VideoRenderJobsService` synthetic completed project 경로를 사용하지 않는다.
 - Angular는 현재 shortform edit state를 저장한 뒤 render API 응답의 job id로
-  `/projects?plugin=clipper1_video_render&job=...` 이동한다.
-- NestJS shortform render API는 manifest/recipe/legacy payload를 만든 뒤 기존
-  `JobsService`에 `clipper1_video_render` job을 enqueue한다.
+  `/projects?plugin=clipper1_video_render&job=...` 이동한다. backend가 먼저 job을
+  reserve하므로 사용자는 `/projects`에서 즉시 `렌더 준비 중` 큐 항목을 본다.
+- NestJS shortform render API는 먼저 `JobsService.reserve()`로
+  `clipper1_video_render` waiting job을 만들고, asset/manifest/recipe/legacy payload
+  preparation이 끝난 뒤 `JobsService.activateReserved()`로 같은 jobId를 실행 큐에 넣는다.
 - `/projects` 완료 항목은 `JobsService` 완료 이벤트 이후
   `ProjectsService.recordCompletedJob()`에서만 생성된다.
 - job result와 completed project result에는 `render_manifest`를 `manifest`로
@@ -62,6 +64,20 @@ clipper_python:  9396094 Fix shortform render VideoService parity gaps
 - 2026-06-17 follow-up `clipper_python` `9396094`에서
   `local_render_adapter.py`는 유지하고 VideoService parity checklist 기준으로
   Template Builder 실사용 path gap을 보정했다. payload 구조는 바꾸지 않았다.
+- 2026-06-17 follow-up `clipper_nestjs` `6e98b15`에서 shortform render API는
+  heavy asset/manifest/legacy payload preparation 전에 `/jobs` record를 먼저 만들고
+  `렌더 준비 중`으로 큐에 즉시 표시한다. 준비가 끝나면 같은 jobId를 activate해
+  Python worker를 실행한다.
+- 2026-06-17 follow-up `clipper_python` `d30fc35`에서
+  `clipper1_video_render` progress message를 한국어로 바꿨다. `Rendering clip 1/N`의
+  `N`은 user-facing shortform clip 수가 아니라 recipe timeline item/media slot 수이므로
+  `렌더 세그먼트 1/N 처리 중`으로 표시한다.
+- 2026-06-17 follow-up `clipper_angular` `4dffe76`에서 `/projects` 완료 영역은
+  오른쪽 상세 패널 대신 큰 project card grid를 사용한다. Shortform 완료 카드 클릭은
+  레거시 Clipper1처럼 action overlay를 띄우고, `편집` 버튼만
+  `/shortform/<mode>?project=<shortformProjectId>`로 이동해
+  `ShortformWorkflowPageComponent`가 input/clips/styles/templates를 복원한다.
+  `재생` 버튼은 완료 output video overlay를 연다.
 
 검증 결과:
 
@@ -72,11 +88,14 @@ clipper_nestjs:
 - git diff --check
 
 clipper_angular:
-- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow-page.component.spec.ts
+- npm test -- --watch=false --include src/features/shortform/pages/shortform-workflow-page.component.spec.ts --include src/shell/projects/projects-history-list.component.spec.ts
 - npm run build
 - git diff --check
 
 clipper_python:
+- uv run pytest tests/test_clipper1_video_render_remote_assets.py::test_render_execute_stages_remote_media_layout_logo_tts_and_bgm -q
+- uv run pytest tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_text_artifact_job.py -q
+  19 passed
 - uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_motion.py tests/test_clipper1_video_render_uploaded_fonts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_clipper1_video_render_template_styles.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_text_preview_artifact_export_script.py -q
   91 passed
 - uv run pytest -q
@@ -85,10 +104,6 @@ clipper_python:
   `test_clipper2_template_baseline_frames.py` fixture comparisons, which are
   not the current Template Builder shortform path.
 ```
-
-주의: `clipper_nestjs/test/shortform-project-api.test.js`는 sandbox에서 `127.0.0.1`
-listen EPERM으로 직접 실행이 막혔다. 테스트 기대값은 1080x1920으로 갱신했고
-`npm run build`와 Template Builder payload mapper tests는 통과했다.
 
 ## 2026-06-17 Video Render Logic Status
 
@@ -153,12 +168,17 @@ VideoService parity checklist 상태:
 
 진행된 것:
 
-- shortform render submit path는 기존 `/jobs` queue로 들어간다.
+- shortform render submit path는 기존 `/jobs` queue로 들어간다. 2026-06-17
+  `6e98b15` 이후 heavy render preparation 전에 job을 reserve하므로 큐가 즉시 보인다.
 - render 요청 시점에 synthetic completed project를 만드는 경로는 제거했다.
 - 완료 project 기록은 job completion 이후 `ProjectsService.recordCompletedJob()`에서만
   생성되는 방향으로 맞췄다.
 - Angular `숏폼 생성하기`는 render API 호출 후 작업 보관함 페이지
   `/projects?plugin=clipper1_video_render&job=...`로 이동한다.
+- Angular `/projects` completed shortform card는 클릭 시 action overlay를 띄운다.
+  `편집`은 `ShortformWorkflowPageComponent`를 `?project=`로 복원 진입시키고,
+  `재생`은 completed output video overlay를 연다. 오른쪽 inline detail panel은
+  completed card grid 경로에서 제거했다.
 - job result와 completed project result에 `render_manifest`/`manifest`가 남도록 했다.
 
 아직 남은 큰 작업:
