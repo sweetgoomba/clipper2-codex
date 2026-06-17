@@ -31,6 +31,17 @@ legacy-compatible template model to a simplified template model.
   list directly from `template_builder.custom`. It no longer falls back to
   built-in simplified templates when the Builder list is empty.
 
+2026-06-17 render payload update:
+
+- The final Python worker path still consumes the legacy Clipper1 payload shape,
+  so Builder shortform presets must expose the Template Builder render contract
+  as well as the browser `ShortformTemplateRuntimeSpec`.
+- `clipper_nestjs` `af8e838` adds `templateBuilderRenderContract`, layers,
+  content area, and output size to shortform preset default params, and maps
+  `main_title1`/`main_title2` overlay roles back to legacy title payload fields.
+- This keeps the final render aligned with the same content area, layout layer,
+  main title, and caption geometry that the browser preview reads.
+
 The new template model keeps only:
 
 - `main_title1`

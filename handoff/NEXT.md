@@ -23,16 +23,16 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
-clipper_nestjs:  ec50176 Fix shortform render media and BGM mapping
-clipper_python:  d30fc35 Localize shortform render progress
+clipper_nestjs:  af8e838 Fix builder shortform render payload contract
+clipper_python:  8a5436d Verify builder shortform render frame contract
 ```
 
 최신 follow-up:
 
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
-clipper_nestjs:  ec50176 Fix shortform render media and BGM mapping
-clipper_python:  d30fc35 Localize shortform render progress
+clipper_nestjs:  af8e838 Fix builder shortform render payload contract
+clipper_python:  8a5436d Verify builder shortform render frame contract
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -87,6 +87,17 @@ clipper_python:  d30fc35 Localize shortform render progress
 - 2026-06-17 follow-up `clipper_angular` `0c4fb15`에서 완료 shortform card action
   overlay는 selected state가 아니라 hover/focus-within으로 보인다. 완료 이벤트가 카드를
   자동 선택하던 동작도 제거했다.
+- 2026-06-17 follow-up `clipper_nestjs` `af8e838`에서 Template Builder shortform
+  published preset이 legacy render mapper에 필요한 `templateBuilderRenderContract`,
+  `templateBuilderLayers`, `templateBuilderContentArea`, `templateBuilderOutputSize`를
+  `defaultParams`에 포함하도록 고쳤다. 또한 shortform recipe의 `main_title1`,
+  `main_title2` overlay role을 legacy `project.main_title_check/main_title1/main_title2`
+  payload로 매핑한다. 실제 완료 job `shortform_render_1781704268262` recipe를 새 코드로
+  다시 매핑하면 content area는 `y=456,height=1080`, layout layer는 `#0017c7`,
+  main title 두 줄은 보존된다.
+- 2026-06-17 follow-up `clipper_python` `8a5436d`에서 Template Builder contract render
+  test가 ffmpeg output frame을 추출해 background color와 content area media pixel을
+  확인한다. renderer production code 변경은 없다.
 
 검증 결과:
 
@@ -95,6 +106,16 @@ clipper_nestjs:
 - npm run build
 - node --test test/shortform-project-api.test.js
   10 pass
+- node --test test/template-builder-shortform-preset-source.test.js
+  2 pass
+- node --test test/template-builder-render-payload.test.js
+  13 pass
+- node --test test/simplified-shortform-render-recipe-provider.test.js
+  2 pass
+- node --test test/*.test.js
+  120 passed, 24 failed. Remaining failures are existing Template Builder
+  official DB configuration failures (`Template Builder official DB is not
+  configured`), not the shortform render payload path.
 - git diff --check
 
 clipper_angular:
@@ -103,6 +124,8 @@ clipper_angular:
 - git diff --check
 
 clipper_python:
+- uv run pytest tests/test_clipper1_video_render_contract.py -q
+  6 passed
 - uv run pytest tests/test_clipper1_video_render_remote_assets.py::test_render_execute_stages_remote_media_layout_logo_tts_and_bgm -q
 - uv run pytest tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_text_artifact_job.py -q
   19 passed
@@ -113,6 +136,8 @@ clipper_python:
   `test_clipper1_video_render_golden_frames.py` and
   `test_clipper2_template_baseline_frames.py` fixture comparisons, which are
   not the current Template Builder shortform path.
+- uv run pytest -q --ignore=tests/test_clipper1_video_render_golden_frames.py --ignore=tests/test_clipper2_template_baseline_frames.py
+  168 passed, 4 skipped
 ```
 
 ## 2026-06-17 Video Render Logic Status
@@ -129,6 +154,12 @@ clipper_python:
 - Template Builder contract payload에서 image/GIF/video media가 content area에 들어가고
   main title 1/2, subtitle 1/2줄, layout layer와 함께 1080x1920으로 render되는
   Python contract test를 추가했다.
+- Template Builder shortform preset/mapper contract bug를 수정했다. 이전 실제 job은
+  `shortformTemplateRuntimeSpec`에는 올바른 `content y=456`, title/caption 좌표,
+  `#0017c7` layout layer가 있었지만 legacy payload의 `template_settings`가 `{}`이고
+  `project.main_title_check`가 `false`라 Python worker가 흰 배경/상단 content로 렌더했다.
+  새 shortform render job은 preset defaultParams와 mapper에서 contract/layers/title role을
+  보존한다.
 - Template Builder `contentArea` geometry를 `template_settings`가 없을 때 fallback으로
   사용하고, 명시적인 `contents_area_y_offset: 0`은 보존한다.
 - `mainTitleLine2`만 있는 경우에도 legacy text image overlay와 ASS event 경로가
