@@ -22,16 +22,16 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 4dffe76 Restore shortform projects from archive cards
-clipper_nestjs:  6e98b15 Queue shortform render preparation immediately
+clipper_angular: 0c4fb15 Show shortform archive actions on hover
+clipper_nestjs:  ec50176 Fix shortform render media and BGM mapping
 clipper_python:  d30fc35 Localize shortform render progress
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 4dffe76 Restore shortform projects from archive cards
-clipper_nestjs:  6e98b15 Queue shortform render preparation immediately
+clipper_angular: 0c4fb15 Show shortform archive actions on hover
+clipper_nestjs:  ec50176 Fix shortform render media and BGM mapping
 clipper_python:  d30fc35 Localize shortform render progress
 ```
 
@@ -78,6 +78,15 @@ clipper_python:  d30fc35 Localize shortform render progress
   `/shortform/<mode>?project=<shortformProjectId>`로 이동해
   `ShortformWorkflowPageComponent`가 input/clips/styles/templates를 복원한다.
   `재생` 버튼은 완료 output video overlay를 연다.
+- 2026-06-17 follow-up `clipper_nestjs` `ec50176`에서 실제 render media가
+  remote URL artifact일 때 seed placeholder로 대체되던 문제를 고쳤다. Python worker는
+  remote asset staging을 지원하므로 shortform render manifest/legacy payload는 실제
+  clip media URL을 유지한다. 또한 `bgm.bright` 같은 UI catalog id를
+  `artifact.clipper-studio.bgm.legacy.bright` 같은 renderable BGM artifact id로 정규화해
+  BGM 선택 시 render preparation이 실패하지 않게 했다.
+- 2026-06-17 follow-up `clipper_angular` `0c4fb15`에서 완료 shortform card action
+  overlay는 selected state가 아니라 hover/focus-within으로 보인다. 완료 이벤트가 카드를
+  자동 선택하던 동작도 제거했다.
 
 검증 결과:
 
@@ -85,6 +94,7 @@ clipper_python:  d30fc35 Localize shortform render progress
 clipper_nestjs:
 - npm run build
 - node --test test/shortform-project-api.test.js
+  10 pass
 - git diff --check
 
 clipper_angular:
@@ -175,8 +185,9 @@ VideoService parity checklist 상태:
   생성되는 방향으로 맞췄다.
 - Angular `숏폼 생성하기`는 render API 호출 후 작업 보관함 페이지
   `/projects?plugin=clipper1_video_render&job=...`로 이동한다.
-- Angular `/projects` completed shortform card는 클릭 시 action overlay를 띄운다.
-  `편집`은 `ShortformWorkflowPageComponent`를 `?project=`로 복원 진입시키고,
+- Angular `/projects` completed shortform card는 action overlay를 제공한다.
+  2026-06-17 `0c4fb15` 이후 action overlay는 클릭 선택이 아니라 hover/focus-within으로
+  표시된다. `편집`은 `ShortformWorkflowPageComponent`를 `?project=`로 복원 진입시키고,
   `재생`은 completed output video overlay를 연다. 오른쪽 inline detail panel은
   completed card grid 경로에서 제거했다.
 - job result와 completed project result에 `render_manifest`/`manifest`가 남도록 했다.
