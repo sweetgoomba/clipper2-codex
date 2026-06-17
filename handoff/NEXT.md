@@ -24,7 +24,7 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 ```text
 clipper_angular: 98612db feat: route shortform renders to project queue
 clipper_nestjs:  d157d84 Fix shortform render output size
-clipper_python:  259b5b6 Fix shortform render canvas contract
+clipper_python:  9396094 Fix shortform render VideoService parity gaps
 ```
 
 최신 follow-up:
@@ -32,7 +32,7 @@ clipper_python:  259b5b6 Fix shortform render canvas contract
 ```text
 clipper_angular: 98612db feat: route shortform renders to project queue
 clipper_nestjs:  d157d84 Fix shortform render output size
-clipper_python:  259b5b6 Fix shortform render canvas contract
+clipper_python:  9396094 Fix shortform render VideoService parity gaps
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -59,6 +59,9 @@ clipper_python:  259b5b6 Fix shortform render canvas contract
   아니다. 다음 renderer 작업은 `mainTitleLine1`, `mainTitleLine2`, clip subtitle
   1/2줄, layout/background layer, content area, image/GIF/video media 경로를 기준으로
   진행한다.
+- 2026-06-17 follow-up `clipper_python` `9396094`에서
+  `local_render_adapter.py`는 유지하고 VideoService parity checklist 기준으로
+  Template Builder 실사용 path gap을 보정했다. payload 구조는 바꾸지 않았다.
 
 검증 결과:
 
@@ -74,8 +77,13 @@ clipper_angular:
 - git diff --check
 
 clipper_python:
-- env UV_CACHE_DIR=/private/tmp/clipper-uv-cache uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_uploaded_fonts.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py -q
-  37 passed
+- uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_remote_assets.py tests/test_clipper1_video_render_motion.py tests/test_clipper1_video_render_uploaded_fonts.py tests/test_clipper1_video_render_text_artifact_job.py tests/test_clipper1_video_render_template_styles.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_subtitle_artifacts.py tests/test_template_builder_frame_artifacts.py tests/test_template_builder_text_preview_artifact_export_script.py -q
+  91 passed
+- uv run pytest -q
+  170 passed, 4 skipped, 2 failed. Remaining failures are the old
+  `test_clipper1_video_render_golden_frames.py` and
+  `test_clipper2_template_baseline_frames.py` fixture comparisons, which are
+  not the current Template Builder shortform path.
 ```
 
 주의: `clipper_nestjs/test/shortform-project-api.test.js`는 sandbox에서 `127.0.0.1`
@@ -88,11 +96,21 @@ listen EPERM으로 직접 실행이 막혔다. 테스트 기대값은 1080x1920�
 
 - `clipper_python` `LocalRenderAdapter.render()`가 `recipe.output.width/height`를
   최종 canvas로 쓰던 문제를 고쳤다. 최종 mp4는 항상 1080x1920이다.
+- `clipper_python` `9396094`에서 adapter 삭제 대신 유지/정렬 방식을 택했다.
+  `VideoService.py` 함수 기준으로 실제 Template Builder shortform path에 걸리는
+  gap을 좁혔다.
 - `clipper_nestjs` shortform render manifest `outputs[0].width/height`도 항상
   1080x1920으로 기록한다.
 - Template Builder contract payload에서 image/GIF/video media가 content area에 들어가고
   main title 1/2, subtitle 1/2줄, layout layer와 함께 1080x1920으로 render되는
   Python contract test를 추가했다.
+- Template Builder `contentArea` geometry를 `template_settings`가 없을 때 fallback으로
+  사용하고, 명시적인 `contents_area_y_offset: 0`은 보존한다.
+- `mainTitleLine2`만 있는 경우에도 legacy text image overlay와 ASS event 경로가
+  렌더된다.
+- TTS summary는 silence placeholder가 아니라 실제 `tts_url`이 있는 clip 수만 센다.
+- Template Builder text artifact에서 `box.sizing`이 누락된 enabled box는 fixed layer
+  box로 정규화해 artifact PNG size와 metadata frame을 계약 레이어 박스에 맞춘다.
 - 잘못 들어갔던 구형 `project.sub_title` y-offset 수정과 `clipper2_template_baseline`
   PNG 갱신은 제거했다.
 
@@ -102,41 +120,34 @@ listen EPERM으로 직접 실행이 막혔다. 테스트 기대값은 1080x1920�
 - 현재는 기존 `clipper1_video_render/local_render_adapter.py`의 구현을 실제 Clipper2
   Template Builder shortform contract에 맞춰 보정하고 테스트로 고정한 상태다.
 
-다음 세션에서 이어갈 VideoService parity 작업:
+VideoService parity checklist 상태:
 
-1. `adlight_python/app/services/VideoService.py`와
-   `clipper_python/plugins/clipper1_video_render/clipper1_video_render/local_render_adapter.py`
-   를 함수 단위로 대조한다.
-2. 먼저 실사용 Template Builder path만 대상으로 한다.
-   - `mainTitleLine1`
-   - `mainTitleLine2`
-   - clip subtitle 1/2줄
-   - layout/background layer
-   - content area
-   - content area media: image/GIF/video
-   - TTS concat/mix, optional BGM mix
-   - final thumbnail
-3. `VideoService.py`의 아래 함수와 현재 adapter 대응부를 parity checklist로 만든다.
-   - `create_video`
-   - `_process_clips`
-   - `_create_video_from_image`
-   - `_convert_gif_to_video`
-   - `_process_video_clip`
-   - `_create_final_video`
-   - `_generate_subtitle_images`
-   - `_download_tts`
-   - `_concatenate_audios`
-   - `_generate_thumbnail`
-4. "그대로 옮김"이라고 말하려면 최소한 같은 payload에 대해 아래를 검증해야 한다.
-   - final size: 1080x1920
-   - content area geometry
-   - image/GIF/video scale/crop/loop/blur behavior
-   - title/subtitle image frame positions
-   - audio duration/concat/mix behavior
-   - ffmpeg encoding options
-   - output/thumbnail artifact paths
-5. 구형 21개 Clipper1 baseline template은 현 실사용 기준이 아니므로, 다음 parity test는
-   Template Builder custom preset fixture 중심으로 추가한다.
+- `create_video`: adapter `render()`가 output path/thumbnail/progress/result summary를
+  담당한다. final canvas는 1080x1920 고정이다.
+- `_process_clips`: adapter는 clip별 segment render 후 concat한다. image/GIF/video
+  media type tests가 있다.
+- `_create_video_from_image`: image cover, auto zoom/pan, explicit none effect tests가
+  있다.
+- `_convert_gif_to_video` / `_process_video_clip`: GIF/video는 `-stream_loop -1`,
+  blur background, centered contain foreground 경로를 테스트한다.
+- `_create_final_video`: segment concat, final layout overlay, x264 final options,
+  TTS/BGM mux 경로를 테스트한다.
+- `_generate_subtitle_images`: Template Builder subtitle artifact와 legacy subtitle text
+  image overlay tests가 있다.
+- `_download_tts` / `_concatenate_audios`: adapter는 remote/local audio resolve,
+  clip silence fill, concat, BGM loop/volume, mix summary를 테스트한다.
+- `_generate_thumbnail`: render 결과 thumbnail path를 만들며 execute contract/remote
+  render tests가 검증한다.
+
+남은 renderer 작업:
+
+- 실제 packaged app에서 Template Builder custom preset으로 end-to-end render QA:
+  `숏폼 생성하기` -> `/projects` running -> Python worker render -> completed project 재열기.
+- Angular current branch의 Node preview snapshot export tests는 현재 7 passed, 2 failed
+  상태다. 실패는 Python 변경 없이도 재현되는 Angular preview fixture 기대값 차이
+  (`top: 109.2` vs `0`, style-heavy background transparent)라 별도 Angular 작업으로 본다.
+- 구형 21개 Clipper1 golden/baseline fixture는 현 shortform path가 아니므로 이번 parity
+  작업에서 갱신하지 않는다.
 
 ## Project-First / Plugin / Queue Status
 
