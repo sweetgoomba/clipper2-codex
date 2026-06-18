@@ -23,19 +23,19 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 5175a9d Fix shortform caption outline fill preview
+clipper_angular: 37dea74 Auto-size subtitle height for template typography
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
-clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
+clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 5175a9d Fix shortform caption outline fill preview
+clipper_angular: 37dea74 Auto-size subtitle height for template typography
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
-clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
+clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -135,11 +135,20 @@ clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
   고쳤다. `::before` pseudo layer + `-webkit-text-stroke` 방식은 여전히 윤곽선 색이 흰색
   fill을 덮어 보일 수 있어 제거했고, caption line text 자체의 여러 방향 `text-shadow`로
   outline을 근사한다. shadow는 fill 뒤에 그려져 흰 글자를 덮지 않는다.
+- 2026-06-18 follow-up `clipper_angular` `37dea74`에서 Template Builder 자막 공통 스타일
+  적용 시 `fontSize * lineHeight`, outline, shadow, box border를 반영한 최소 높이를
+  계산해 `subtitleText.height`와 `subtitleText.box.height`를 같이 키운다. 기존 높이가
+  더 크면 줄이지 않는다.
+- 2026-06-18 follow-up `clipper_python` `5eda200`에서 이미 작게 저장된 템플릿도 최종
+  subtitle artifact/render에서 잘리지 않도록 renderer가 저장된 box height와 계산된 최소
+  line box height 중 큰 값을 사용한다.
 
 검증 결과:
 
 ```text
 clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/pages/template-builder-page.component.spec.ts
+  72 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/components/preview/shortform-browser-timeline-preview.component.spec.ts
   18 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/shell/projects/projects.component.spec.ts --include=src/shell/projects/projects-history-list.component.spec.ts
@@ -174,6 +183,12 @@ clipper_electron:
 - git diff --check
 
 clipper_python:
+- uv run pytest tests/test_template_builder_subtitle_artifacts.py -q
+  4 passed
+- uv run pytest tests/test_clipper1_video_render_template_styles.py -q
+  31 passed
+- uv run pytest tests/test_clipper1_video_render_text_artifact_job.py tests/test_template_builder_text_artifacts.py tests/test_template_builder_frame_artifacts.py -q
+  9 passed
 - uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_motion.py tests/test_clipper1_video_render_template_styles.py -q
   72 passed
 - Actual latest outline payload subtitle artifact:
