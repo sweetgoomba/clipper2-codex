@@ -62,6 +62,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      `/projects/:projectId` 상세 라우트에 진입한다.
    - 2026-06-18 `clipper_angular` `5fa436c`에서 상세 라우트 내부를 이전 오른쪽 inline
      detail panel과 같은 header/source/result-section 래퍼 및 스타일로 복원했다.
+   - 2026-06-18 `clipper_angular` `fb03b92`에서 새 상세 라우트가 전역 `.projects-page`
+     result 스타일을 받지 못하던 문제를 고쳤다. `.projects-detail-page`에도 `shorts-frame`,
+     clip row, info panel 공통 스타일을 적용하고, panel 폭을 예전 오른쪽 inline panel에 가까운
+     1022px로 제한했다.
    - 상세 라우트는 일단 기존 `DialogResultDetailComponent`/`DanceResultDetailComponent`와
      이전 inline panel UI를 그대로 사용한다. 나중에 UI 구성은 별도 정리한다.
 3. 작업 보관함 completed card UI redesign
