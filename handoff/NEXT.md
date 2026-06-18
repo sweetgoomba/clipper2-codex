@@ -32,9 +32,9 @@ clipper_python:  5eda200 Guard subtitle artifact height for large typography
 최신 follow-up:
 
 ```text
-clipper_angular: 37dea74 Auto-size subtitle height for template typography
+clipper_angular: e850888 Use shortform template snapshots in preview
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
+clipper_nestjs:  0c78413 Preserve shortform template snapshots
 clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
@@ -43,18 +43,7 @@ clipper_python:  5eda200 Guard subtitle artifact height for large typography
 2026-06-18 사용자와 다시 정리한 현재 남은 작업이다. 구현 순서는 아직 확정하지 않았지만,
 shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아래 항목들이다.
 
-1. Shortform template snapshot/version snapshot
-   - 현재 shortform 원본 project store
-     `~/Library/Application Support/Clipper2/shortform/projects.json`에는
-     `renderSettings.templateId`만 있고 생성/렌더 당시 Template Builder snapshot은 없다.
-   - 완료 render payload에는
-     `legacy_payload.template_builder_render_contract`가 있어 렌더 결과물 보존은 가능하다.
-   - 하지만 예전 project를 `편집`으로 다시 열면 Template Builder 최신본을 다시 참조해,
-     예전 output 영상과 편집 preview가 달라질 수 있다.
-   - 해결 방향: shortform project 자체에 `templateSnapshot` 또는
-     `templateVersionSnapshot`을 저장하고, 편집 화면은 snapshot을 우선 사용한다.
-     최신 template으로 바꾸는 동작은 명시적 `현재 템플릿으로 업데이트` 같은 action으로 둔다.
-2. Project-first / Plugin / Queue 전체 정리
+1. Project-first / Plugin / Queue 전체 정리
    - 상세 기준은 아래 `Project-First / Plugin / Queue Status`와
      `PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`,
      `PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md`를 따른다.
@@ -64,12 +53,12 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      `shortform_render_*`는 queue job,
      `source.shortform_project_*`는 completed manifest의 source asset id다.
    - `promotedProjectId`는 원본 shortform project에서 보관함 project id로 가는 연결고리다.
-3. 작업 보관함 non-shortform project detail flow
+2. 작업 보관함 non-shortform project detail flow
    - 2026-06-17에 `/projects` completed shortform card는 오른쪽 inline detail panel 대신
      hover action overlay + `편집`/`재생`으로 바뀌었다.
    - 하이라이트 등 다른 plugin project는 기존 오른쪽 detail panel 제거 이후, output과
      artifact를 보여줄 plugin별/detail page 또는 공통 detail route가 아직 필요하다.
-4. 작업 보관함 completed card UI redesign
+3. 작업 보관함 completed card UI redesign
    - Clipper2 output 기본값은 숏폼이므로 completed project card thumbnail은 9:16을
      기본 비율로 바꾼다.
    - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 사용한다.
@@ -77,13 +66,13 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      source video frame, first output artifact preview, workflow-specific fallback.
    - card 정보 구조도 다시 정한다. 후보: title, plugin/source mode, duration, clip count,
      completed time, template/ratio, output status badges, action overlay.
-5. 남은 renderer/app QA와 cleanup
+4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
    - Python worker lifecycle: dev/packaged start/stop, port/baseUrl, event delivery,
      output_root access.
    - 더 이상 쓰지 않는 `VideoRenderJobsService`/old render provider path 제거 전 grep.
-6. Preview/URL/fixture follow-up
+5. Preview/URL/fixture follow-up
    - Angular current branch preview snapshot export test 2개 실패는 별도 Angular 작업으로 남김.
    - URL extractor selector edge case와 실제 URL QA 보강.
    - 구형 21개 Clipper1 golden/baseline fixture는 현재 shortform 생성 경로가 아니므로
@@ -193,6 +182,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
 - 2026-06-18 follow-up `clipper_python` `5eda200`에서 이미 작게 저장된 템플릿도 최종
   subtitle artifact/render에서 잘리지 않도록 renderer가 저장된 box height와 계산된 최소
   line box height 중 큰 값을 사용한다.
+- 2026-06-18 follow-up `clipper_nestjs` `0c78413`과 `clipper_angular` `e850888`에서
+  shortform project가 선택 당시 `templateVersionSnapshot`을 저장하고, 편집 재진입 preview와
+  render recipe가 최신 Template Builder catalog보다 snapshot preset/runtimeSpec을 우선 사용하도록
+  바꿨다. 신규 project는 생성/선택 시점의 최신 catalog preset을 새 snapshot으로 캡처한다.
 
 검증 결과:
 
