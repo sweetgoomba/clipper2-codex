@@ -128,13 +128,17 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      보여준다.
    - 같은 후속에서 Clipper card width를 키워 portrait thumbnail 높이를 늘렸고, Clipper row gap,
      thumbnail-date gap, date center alignment를 조정했다.
-  - 2026-06-18 후속 `clipper_angular`에서 row 직접 scrollbar를 숨기고, section 양옆 `<`/`>` 버튼으로
-    `scrollBy` 이동하게 바꿨다. divider line 색은 더 진하게 조정했다. duration badge는 `12s`가 아니라
-    `00:12` timecode 형식이고, source-video/highlight card는 input source video duration을 우선 표시한다.
-    card cursor는 pointer이며 duration pill 배경은 더 투명하게 조정했다.
-  - 2026-06-18 후속 `clipper_angular`에서 row `<`/`>` 버튼을 layout column이 아니라 row 위에 겹치는
-    absolute overlay로 바꿨다. 최신 항목을 보고 있는 시작 위치에서는 `<`를 숨기고, 마지막 project까지
-    보이는 끝 위치에서는 `>`를 숨긴다. 버튼 이동량은 기존 640px에서 `max(960px, row width 90%)`로 키웠다.
+   - 2026-06-18 후속 `clipper_angular`에서 row 직접 scrollbar를 숨기고, section 양옆 `<`/`>` 버튼으로
+     `scrollBy` 이동하게 바꿨다. divider line 색은 더 진하게 조정했다. duration badge는 `12s`가 아니라
+     `00:12` timecode 형식이고, source-video/highlight card는 input source video duration을 우선 표시한다.
+     card cursor는 pointer이며 duration pill 배경은 더 투명하게 조정했다.
+   - 2026-06-18 후속 `clipper_angular`에서 row `<`/`>` 버튼을 layout column이 아니라 row 위에 겹치는
+     absolute overlay로 바꿨다. 최신 항목을 보고 있는 시작 위치에서는 `<`를 숨기고, 마지막 project까지
+     보이는 끝 위치에서는 `>`를 숨긴다. 버튼 이동량은 기존 640px에서 `max(960px, row width 90%)`로 키웠다.
+   - 2026-06-18 후속 `clipper_angular`에서 실행 큐 job이 `completed`로 완료 목록에 들어오면 메인
+     `/projects`에서 해당 `cardKind + pluginLabel` plugin row로 세로 스크롤 이동한다. 해당 row 내부도
+     `scrollTo({ left: 0 })`로 최신 project card가 보이게 되돌린다. `/projects/history/:sectionKey`
+     전체보기 페이지에서는 자동 reveal을 하지 않는다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
