@@ -23,18 +23,18 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 184c96f Fix shortform caption outline preview
+clipper_angular: 38c41b6 Fix shortform archive edit source mode
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  095e61d Map shortform clip provider errors
+clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
 clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 184c96f Fix shortform caption outline preview
+clipper_angular: 38c41b6 Fix shortform archive edit source mode
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  095e61d Map shortform clip provider errors
+clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
 clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 ```
 
@@ -125,11 +125,19 @@ clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 - 2026-06-18 follow-up `clipper_angular` `184c96f`에서 shortform browser preview의 caption
   outline을 fill text 뒤 pseudo layer로 그린다. 굵은 `-webkit-text-stroke`를 실제 fill
   text에 직접 적용해 흰색 글자가 거의 오렌지색처럼 보이던 문제를 막았다.
+- 2026-06-18 follow-up `clipper_angular` `38c41b6`과 `clipper_nestjs` `4d5aa36`에서
+  보관함 완료 카드의 `편집`이 붙여넣기 프로젝트를 `/shortform/prompt`로 열던 문제를
+  고쳤다. 원본 shortform project는 `source.mode=paste`였지만 render manifest
+  `detail.input.mode`가 `editor`로 저장돼 Angular가 prompt fallback을 탔다. 새 manifest는
+  `paste`를 그대로 저장하고, 기존 완료 기록은 Angular가 `sourceAssets.metadata.sourceMode`
+  fallback으로 `/shortform/paste?project=...`를 선택한다.
 
 검증 결과:
 
 ```text
 clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/shell/projects/projects.component.spec.ts --include=src/shell/projects/projects-history-list.component.spec.ts
+  3 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/components/preview/shortform-browser-timeline-preview.component.spec.ts
   18 SUCCESS
 - npm run build
@@ -137,6 +145,8 @@ clipper_angular:
 
 clipper_nestjs:
 - npm run build
+- node --test test/shortform-project-generation-assets.test.js test/shortform-project-api.test.js
+  18 pass
 - node --test test/shortform-project-api.test.js test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js
   19 pass
 - node --test test/shortform-tts-provider.test.js test/shortform-project-generation-assets.test.js test/workflow-executor-registry.test.js test/simplified-shortform-local-ffmpeg-render-provider.test.js
