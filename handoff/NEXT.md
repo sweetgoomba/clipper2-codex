@@ -32,9 +32,9 @@ clipper_python:  5eda200 Guard subtitle artifact height for large typography
 최신 follow-up:
 
 ```text
-clipper_angular: e850888 Use shortform template snapshots in preview
+clipper_angular: b1b7a34 Explain stale shortform template snapshots
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  0c78413 Preserve shortform template snapshots
+clipper_nestjs:  5c7112b Allow refreshing shortform template snapshots
 clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
@@ -186,6 +186,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
   shortform project가 선택 당시 `templateVersionSnapshot`을 저장하고, 편집 재진입 preview와
   render recipe가 최신 Template Builder catalog보다 snapshot preset/runtimeSpec을 우선 사용하도록
   바꿨다. 신규 project는 생성/선택 시점의 최신 catalog preset을 새 snapshot으로 캡처한다.
+- 2026-06-18 follow-up `clipper_nestjs` `5c7112b`과 `clipper_angular` `b1b7a34`에서
+  snapshot preview와 최신 template thumbnail이 다르게 보일 때 사용자에게 생성 당시 템플릿으로
+  preview 중임을 안내하고, 원하면 같은 template id의 최신 catalog preset으로 snapshot을 갱신하는
+  `현재 템플릿 적용` action을 추가했다. Template selector 목록 자체는 최신 catalog 상태를 유지한다.
 
 검증 결과:
 
