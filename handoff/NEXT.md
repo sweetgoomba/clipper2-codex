@@ -424,9 +424,11 @@ VideoService parity checklist 상태:
     `DELETE /projects/:projectId/render-jobs/:renderJobId`
   - `ProjectsService`의 matching public methods와 old render job result를 Clipper Studio manifest에
     반영하던 helper도 제거했다.
-  - `project-manifest` 하위 `VideoRenderJobsService`, provider registry, low-level provider classes는
-    아직 남아 있다. 다음 cleanup은 이 lower-level provider stack이 Template Builder/sample tests에서
-    필요한지 확인한 뒤 제거 범위를 정한다.
+  - `clipper_nestjs` `7f0320d`에서 persisted `VideoRenderJobsService`,
+    `VideoRenderJobRepository`, `video-render-job.dto`도 제거했다.
+  - `VideoRenderProviderRegistry`와 provider classes는 아직 남아 있다. 이 registry는
+    `TemplateBuilderSampleRenderService`가 sample render provider resolution에 사용 중이고,
+    simplified/template-builder render provider tests도 직접 검증하므로 이번 cleanup 대상에서 제외했다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
