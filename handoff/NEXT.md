@@ -23,7 +23,7 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 38c41b6 Fix shortform archive edit source mode
+clipper_angular: 5175a9d Fix shortform caption outline fill preview
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
 clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
@@ -32,7 +32,7 @@ clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 최신 follow-up:
 
 ```text
-clipper_angular: 38c41b6 Fix shortform archive edit source mode
+clipper_angular: 5175a9d Fix shortform caption outline fill preview
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
 clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
@@ -131,15 +131,19 @@ clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
   `detail.input.mode`가 `editor`로 저장돼 Angular가 prompt fallback을 탔다. 새 manifest는
   `paste`를 그대로 저장하고, 기존 완료 기록은 Angular가 `sourceAssets.metadata.sourceMode`
   fallback으로 `/shortform/paste?project=...`를 선택한다.
+- 2026-06-18 follow-up `clipper_angular` `5175a9d`에서 caption outline preview를 다시
+  고쳤다. `::before` pseudo layer + `-webkit-text-stroke` 방식은 여전히 윤곽선 색이 흰색
+  fill을 덮어 보일 수 있어 제거했고, caption line text 자체의 여러 방향 `text-shadow`로
+  outline을 근사한다. shadow는 fill 뒤에 그려져 흰 글자를 덮지 않는다.
 
 검증 결과:
 
 ```text
 clipper_angular:
-- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/shell/projects/projects.component.spec.ts --include=src/shell/projects/projects-history-list.component.spec.ts
-  3 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/components/preview/shortform-browser-timeline-preview.component.spec.ts
   18 SUCCESS
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/shell/projects/projects.component.spec.ts --include=src/shell/projects/projects-history-list.component.spec.ts
+  3 SUCCESS
 - npm run build
 - git diff --check
 
