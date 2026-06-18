@@ -87,6 +87,8 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      안이 아니라 card 최상단 전체 폭 row로 이동했다.
    - 2026-06-18 `clipper_angular` `e757fe9`에서 plugin/workflow kind line을 card 상단 banner처럼
      보이도록 배경, 하단 border, card padding을 덮는 negative margin을 적용했다.
+   - 2026-06-18 `clipper_angular` `c50093d`에서 위 strip-style banner는 되돌리고,
+     plugin/workflow title text 자체만 `완료`/`실패` status와 같은 pill badge 스타일로 바꿨다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
