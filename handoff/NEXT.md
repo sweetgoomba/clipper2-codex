@@ -410,6 +410,12 @@ VideoService parity checklist 상태:
   죽은 UI로 확인되어 삭제했다. `ProjectHistoryService.*VideoRenderJob*` 메서드와 NestJS generic
   output render API는 아직 남아 있으며, 다음 cleanup은 `ProjectsComponent` 내부의 detail/render
   context dead state와 service 메서드 제거 가능성을 별도로 봐야 한다.
+- 2026-06-18 추가 Angular cleanup `clipper_angular` `36ca7fc`에서 `ProjectsComponent`의
+  generic video render provider/job polling, start/cancel action, selected output state를 제거했다.
+  `ProjectHistoryService`의 unused `listVideoRenderProviders()`, `startVideoRenderJob()`,
+  `listVideoRenderJobs()`, `cancelVideoRenderJob()` 클라이언트 메서드와 관련 타입도 제거했다.
+  이제 Angular `src/test`에는 old `VideoRenderJobsService` API caller가 남아 있지 않다.
+  NestJS generic output render API는 아직 서버 호환성 검토 전이므로 유지한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
