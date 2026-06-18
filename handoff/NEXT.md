@@ -402,6 +402,9 @@ VideoService parity checklist 상태:
   `render-jobs/render-jobs.json` store를 만들지 않는 회귀 테스트를 추가했다. 다음 단계에서
   이 generic output render API를 `/jobs`로 통합할지, non-shortform detail flow와 함께
   유지할지 결정해야 한다.
+- 2026-06-18 추가 audit에서 generic project output render API가 `workflow.shortform` manifest를
+  받으면 old `VideoRenderJobsService`로 넘기지 않고 400을 반환하도록 막았다. Shortform 재렌더는
+  `/projects/shortform/projects/:projectId/render-jobs` -> `/jobs` queue path만 사용해야 한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
