@@ -75,8 +75,9 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 우선 사용한다.
    - non-shortform은 source thumbnail보다 completed project result의 첫 clip/render thumbnail을
      우선 사용한다. 결과 thumbnail을 찾지 못할 때만 source thumbnail으로 fallback한다.
-   - card 정보 구조도 다시 정한다. 후보: title, plugin/source mode, duration, clip count,
-     completed time, template/ratio, output status badges.
+   - 2026-06-18 `clipper_angular` `b399f18`에서 card metadata를 정리했다.
+     shortform은 input mode, clip count, duration, template snapshot display name을 표시하고,
+     non-shortform은 completed result clips 기준 clip count/duration을 표시한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
