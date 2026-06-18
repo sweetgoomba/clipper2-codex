@@ -405,6 +405,11 @@ VideoService parity checklist 상태:
 - 2026-06-18 추가 audit에서 generic project output render API가 `workflow.shortform` manifest를
   받으면 old `VideoRenderJobsService`로 넘기지 않고 400을 반환하도록 막았다. Shortform 재렌더는
   `/projects/shortform/projects/:projectId/render-jobs` -> `/jobs` queue path만 사용해야 한다.
+- 2026-06-18 Angular audit에서 generic output render 버튼을 담고 있던
+  `ProjectsDetailPanelComponent`는 현재 `projects.component.html`에서 더 이상 렌더되지 않는
+  죽은 UI로 확인되어 삭제했다. `ProjectHistoryService.*VideoRenderJob*` 메서드와 NestJS generic
+  output render API는 아직 남아 있으며, 다음 cleanup은 `ProjectsComponent` 내부의 detail/render
+  context dead state와 service 메서드 제거 가능성을 별도로 봐야 한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
