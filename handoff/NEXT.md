@@ -23,19 +23,19 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 0c4fb15 Show shortform archive actions on hover
+clipper_angular: 184c96f Fix shortform caption outline preview
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  095e61d Map shortform clip provider errors
-clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
+clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: 0c4fb15 Show shortform archive actions on hover
+clipper_angular: 184c96f Fix shortform caption outline preview
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
 clipper_nestjs:  095e61d Map shortform clip provider errors
-clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
+clipper_python:  d743cdd Fix shortform TTS tail and outline subtitles
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -113,10 +113,28 @@ clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
   저장됐다. 첫 500 stack은 앱 데이터 로그에 없었다. `clipper_nestjs` `095e61d`에서
   `generateClips()`의 provider/network plain `Error`를 `ServiceUnavailableException`으로
   매핑해 외부 provider transient failure가 generic 500으로 보이지 않게 했다.
+- 2026-06-18 follow-up `clipper_python` `d743cdd`에서 마지막 TTS tail이 잘리는 문제를
+  고쳤다. 원인은 auto zoom/pan frame count floor로 segment video가 payload duration보다
+  짧아질 수 있는 점, AAC concat demuxer `-c copy`의 timestamp/tail 손실 가능성, 최종 mux
+  `-shortest`였다. frame count는 `ceil(duration * 30)`, TTS/BGM concat은 filter concat
+  re-encode, final mux는 no `-shortest`로 바꿨다.
+- 같은 `clipper_python` `d743cdd`에서 세 번째 Template Builder outline subtitle이 실제
+  render에서 사라지던 문제를 고쳤다. `subtitleText.box.enabled=false`이고
+  `subtitleBox.visible=false`인 no-box caption template을 1px fallback으로 처리하던 것이
+  원인이며, 이제 visible `subtitleText` layer height/style을 fallback으로 사용한다.
+- 2026-06-18 follow-up `clipper_angular` `184c96f`에서 shortform browser preview의 caption
+  outline을 fill text 뒤 pseudo layer로 그린다. 굵은 `-webkit-text-stroke`를 실제 fill
+  text에 직접 적용해 흰색 글자가 거의 오렌지색처럼 보이던 문제를 막았다.
 
 검증 결과:
 
 ```text
+clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/components/preview/shortform-browser-timeline-preview.component.spec.ts
+  18 SUCCESS
+- npm run build
+- git diff --check
+
 clipper_nestjs:
 - npm run build
 - node --test test/shortform-project-api.test.js test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js
@@ -141,12 +159,11 @@ clipper_electron:
 - npm run build
 - git diff --check
 
-clipper_angular:
-- npm test -- --watch=false --include src/features/shortform/pages/shortform-workflow-page.component.spec.ts --include src/shell/projects/projects-history-list.component.spec.ts
-- npm run build
-- git diff --check
-
 clipper_python:
+- uv run pytest tests/test_clipper1_video_render_contract.py tests/test_clipper1_video_render_media_looping.py tests/test_clipper1_video_render_motion.py tests/test_clipper1_video_render_template_styles.py -q
+  72 passed
+- Actual latest outline payload subtitle artifact:
+  image_size=(877, 171), alpha_bbox=(10, 8, 867, 171)
 - uv run pytest tests/test_template_builder_video_frame_extraction.py tests/test_clipper1_video_render_contract.py::test_local_render_adapter_uses_standard_ffmpeg_env tests/test_clipper1_video_render_media_looping.py -q
   30 passed
 - uv run pytest tests/test_clipper1_video_render_contract.py -q
