@@ -56,8 +56,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
 2. 작업 보관함 non-shortform project detail flow
    - 2026-06-17에 `/projects` completed shortform card는 오른쪽 inline detail panel 대신
      hover action overlay + `편집`/`재생`으로 바뀌었다.
-   - 하이라이트 등 다른 plugin project는 기존 오른쪽 detail panel 제거 이후, output과
-     artifact를 보여줄 plugin별/detail page 또는 공통 detail route가 아직 필요하다.
+   - 2026-06-18 `clipper_angular` `60a0b83`에서 non-shortform 완료 카드도 playable
+     `outputVideoUrl`이 있으면 hover overlay의 `재생` 액션으로 output preview를 열 수 있게 복구했다.
+   - 하이라이트 등 다른 plugin project의 상세 artifact/output 탐색은 아직 plugin별/detail page 또는
+     공통 detail route가 필요하다.
 3. 작업 보관함 completed card UI redesign
    - Clipper2 output 기본값은 숏폼이므로 completed project card thumbnail은 9:16을
      기본 비율로 바꾼다.
@@ -382,9 +384,10 @@ VideoService parity checklist 상태:
   queued/running/completed/failed/cancelled 전환, retry/cancel, completed job list 이동,
   project detail 재열기 동작을 실제 앱에서 QA한다.
 - 작업 보관함 non-shortform project detail flow:
-  shortform 완료 card는 `편집`/`재생` action overlay를 갖지만, 하이라이트 등 다른 plugin
-  project는 output/artifact를 보여줄 plugin별/detail page 또는 공통 detail route가 아직
-  필요하다.
+  shortform 완료 card는 `편집`/`재생` action overlay를 갖고, 2026-06-18 `clipper_angular`
+  `60a0b83` 이후 non-shortform 완료 card도 playable output이 있으면 `재생` action으로 preview를
+  열 수 있다. 하이라이트 등 다른 plugin project의 artifact/output 상세 탐색은 plugin별/detail page
+  또는 공통 detail route가 아직 필요하다.
 - 작업 보관함 completed card UI redesign:
   thumbnail을 9:16 기본 비율로 바꾸고, shortform은 render thumbnail을 사용한다.
   non-shortform thumbnail 정책과 card에 표시할 metadata/title/status/action 배치를 다시
