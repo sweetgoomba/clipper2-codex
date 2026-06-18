@@ -23,18 +23,18 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: 37dea74 Auto-size subtitle height for template typography
+clipper_angular: dba0a36 Highlight expanded queue bottom border
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
+clipper_nestjs:  0370d89 Remove Clipper Studio project API
 clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: b1b7a34 Explain stale shortform template snapshots
+clipper_angular: dba0a36 Highlight expanded queue bottom border
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  5c7112b Allow refreshing shortform template snapshots
+clipper_nestjs:  0370d89 Remove Clipper Studio project API
 clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
