@@ -38,6 +38,57 @@ clipper_nestjs:  4d5aa36 Preserve paste shortform render input mode
 clipper_python:  5eda200 Guard subtitle artifact height for large typography
 ```
 
+## Current Open Work Queue
+
+2026-06-18 사용자와 다시 정리한 현재 남은 작업이다. 구현 순서는 아직 확정하지 않았지만,
+shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아래 항목들이다.
+
+1. Shortform template snapshot/version snapshot
+   - 현재 shortform 원본 project store
+     `~/Library/Application Support/Clipper2/shortform/projects.json`에는
+     `renderSettings.templateId`만 있고 생성/렌더 당시 Template Builder snapshot은 없다.
+   - 완료 render payload에는
+     `legacy_payload.template_builder_render_contract`가 있어 렌더 결과물 보존은 가능하다.
+   - 하지만 예전 project를 `편집`으로 다시 열면 Template Builder 최신본을 다시 참조해,
+     예전 output 영상과 편집 preview가 달라질 수 있다.
+   - 해결 방향: shortform project 자체에 `templateSnapshot` 또는
+     `templateVersionSnapshot`을 저장하고, 편집 화면은 snapshot을 우선 사용한다.
+     최신 template으로 바꾸는 동작은 명시적 `현재 템플릿으로 업데이트` 같은 action으로 둔다.
+2. Project-first / Plugin / Queue 전체 정리
+   - 상세 기준은 아래 `Project-First / Plugin / Queue Status`와
+     `PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`,
+     `PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md`를 따른다.
+   - 현재 ID 구조:
+     `shortform_project_*`는 편집 원본 project,
+     `shortform_*`는 promoted/completed render project,
+     `shortform_render_*`는 queue job,
+     `source.shortform_project_*`는 completed manifest의 source asset id다.
+   - `promotedProjectId`는 원본 shortform project에서 보관함 project id로 가는 연결고리다.
+3. 작업 보관함 non-shortform project detail flow
+   - 2026-06-17에 `/projects` completed shortform card는 오른쪽 inline detail panel 대신
+     hover action overlay + `편집`/`재생`으로 바뀌었다.
+   - 하이라이트 등 다른 plugin project는 기존 오른쪽 detail panel 제거 이후, output과
+     artifact를 보여줄 plugin별/detail page 또는 공통 detail route가 아직 필요하다.
+4. 작업 보관함 completed card UI redesign
+   - Clipper2 output 기본값은 숏폼이므로 completed project card thumbnail은 9:16을
+     기본 비율로 바꾼다.
+   - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 사용한다.
+   - non-shortform thumbnail 정책은 다시 결정한다. 후보: plugin-provided thumbnail,
+     source video frame, first output artifact preview, workflow-specific fallback.
+   - card 정보 구조도 다시 정한다. 후보: title, plugin/source mode, duration, clip count,
+     completed time, template/ratio, output status badges, action overlay.
+5. 남은 renderer/app QA와 cleanup
+   - packaged app에서 Template Builder custom preset end-to-end render QA.
+   - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
+   - Python worker lifecycle: dev/packaged start/stop, port/baseUrl, event delivery,
+     output_root access.
+   - 더 이상 쓰지 않는 `VideoRenderJobsService`/old render provider path 제거 전 grep.
+6. Preview/URL/fixture follow-up
+   - Angular current branch preview snapshot export test 2개 실패는 별도 Angular 작업으로 남김.
+   - URL extractor selector edge case와 실제 URL QA 보강.
+   - 구형 21개 Clipper1 golden/baseline fixture는 현재 shortform 생성 경로가 아니므로
+     후순위/별도 경로로 유지한다.
+
 2026-06-17 shortform render queue follow-up:
 
 - `숏폼 생성하기`는 더 이상 console payload 출력이나 별도
@@ -296,15 +347,30 @@ VideoService parity checklist 상태:
 
 아직 남은 큰 작업:
 
+- Shortform template snapshot/version snapshot:
+  shortform project는 현재 `renderSettings.templateId`만 저장하므로, Template Builder
+  최신본이 수정되면 예전 project의 편집 preview가 output 영상과 달라질 수 있다.
+  원본 project에 template snapshot/version snapshot을 저장하고 편집 화면이 이를 우선
+  사용하게 한다.
 - Project-first 데이터 모델 정리:
   draft shortform, promoted project, render job, completed artifact 사이 ownership를
-  명확히 분리한다.
+  명확히 분리한다. 현재 `shortform_project_*`는 편집 원본, `shortform_*`는
+  promoted/completed render project, `shortform_render_*`는 job, `promotedProjectId`는
+  원본에서 promoted project로 가는 연결고리다.
 - Plugin contract 정리:
   `clipper1_video_render` input/output schema, artifact path contract, env/runtime contract,
   cancellation/progress/error contract를 문서화하고 코드에 고정한다.
 - Queue UI/상태 정리:
   queued/running/completed/failed/cancelled 전환, retry/cancel, completed job list 이동,
   project detail 재열기 동작을 실제 앱에서 QA한다.
+- 작업 보관함 non-shortform project detail flow:
+  shortform 완료 card는 `편집`/`재생` action overlay를 갖지만, 하이라이트 등 다른 plugin
+  project는 output/artifact를 보여줄 plugin별/detail page 또는 공통 detail route가 아직
+  필요하다.
+- 작업 보관함 completed card UI redesign:
+  thumbnail을 9:16 기본 비율로 바꾸고, shortform은 render thumbnail을 사용한다.
+  non-shortform thumbnail 정책과 card에 표시할 metadata/title/status/action 배치를 다시
+  설계한다.
 - Python worker lifecycle 정리:
   devapp/packaged에서 worker start/stop, port/baseUrl, job event delivery,
   output_root 접근 권한을 확인한다.
