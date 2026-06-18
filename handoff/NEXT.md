@@ -196,11 +196,20 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
   않는다. 선택 asset 다운로드가 실패하면 remote-url artifact를 넘기지 않고 기존 asset preparer가
   만든 local fallback media를 사용한다. 또한 Python worker job이 failed/cancelled로 끝나면 원본
   `shortform_project_*`의 status/lastError도 failed로 동기화한다.
+- 2026-06-18 follow-up `clipper_nestjs` `3165b79`과 `clipper_angular` `e3b6f32`에서
+  stale template snapshot 안내 오탐을 고쳤다. 기존에는 snapshot runtimeSpec과 최신 runtimeSpec의
+  JSON 차이만으로 안내를 띄워, 템플릿 수정 후 새로 생성한 프로젝트도 안내가 뜰 수 있었다. 이제
+  Template Builder preset catalog가 `updatedAt`을 내려주고, Angular는 최신 template `updatedAt`이
+  project snapshot `capturedAt`보다 늦고 runtimeSpec도 다를 때만 안내를 띄운다.
 
 검증 결과:
 
 ```text
 clipper_angular:
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow.store.spec.ts
+  9 SUCCESS
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow-page.component.spec.ts --include=src/features/shortform/services/shortform-project.service.spec.ts
+  68 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/template-builder/pages/template-builder-page.component.spec.ts
   72 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/components/preview/shortform-browser-timeline-preview.component.spec.ts
@@ -212,6 +221,10 @@ clipper_angular:
 
 clipper_nestjs:
 - npm run build
+- node --test test/template-builder-shortform-preset-source.test.js
+  2 pass
+- node --test test/template-builder-shortform-preset-source.test.js test/shortform-project-generation-assets.test.js test/simplified-shortform-render-recipe-provider.test.js
+  19 pass
 - node --test test/shortform-project-generation-assets.test.js test/shortform-project-api.test.js
   18 pass
 - node --test test/shortform-project-generation-assets.test.js test/shortform-project-api.test.js test/simplified-shortform-render-recipe-provider.test.js
