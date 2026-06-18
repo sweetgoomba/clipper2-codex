@@ -429,6 +429,12 @@ VideoService parity checklist 상태:
   - `VideoRenderProviderRegistry`와 provider classes는 아직 남아 있다. 이 registry는
     `TemplateBuilderSampleRenderService`가 sample render provider resolution에 사용 중이고,
     simplified/template-builder render provider tests도 직접 검증하므로 이번 cleanup 대상에서 제외했다.
+- 2026-06-18 `clipper_nestjs` `4dfe604`에서 `VideoRenderProviderRegistry`의 남은 역할을
+  "persisted render jobs"가 아니라 "render recipe provider resolution"으로 고정했다.
+  - 새 `test/render-provider-registry-boundary.test.js`는 registry가 project-manifest barrel에 남고,
+    removed `VideoRenderJobsService`는 export되지 않으며, registry error wording이
+    `render recipe provider` 기준임을 검증한다.
+  - `TemplateBuilderSampleRenderService`의 sample render provider resolution 경로는 유지한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
