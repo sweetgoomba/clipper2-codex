@@ -69,13 +69,14 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - 상세 라우트는 일단 기존 `DialogResultDetailComponent`/`DanceResultDetailComponent`와
      이전 inline panel UI를 그대로 사용한다. 나중에 UI 구성은 별도 정리한다.
 3. 작업 보관함 completed card UI redesign
-   - Clipper2 output 기본값은 숏폼이므로 completed project card thumbnail은 9:16을
-     기본 비율로 바꾼다.
-   - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 사용한다.
-   - non-shortform thumbnail 정책은 다시 결정한다. 후보: plugin-provided thumbnail,
-     source video frame, first output artifact preview, workflow-specific fallback.
+   - 2026-06-18 `clipper_angular` `fd6e55a`에서 completed card hover overlay action을 제거하고,
+     카드 하단에 항상 보이는 action button 영역을 둔다.
+   - completed project card thumbnail은 9:16 기본 비율이다.
+   - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 우선 사용한다.
+   - non-shortform은 source thumbnail보다 completed project result의 첫 clip/render thumbnail을
+     우선 사용한다. 결과 thumbnail을 찾지 못할 때만 source thumbnail으로 fallback한다.
    - card 정보 구조도 다시 정한다. 후보: title, plugin/source mode, duration, clip count,
-     completed time, template/ratio, output status badges, action overlay.
+     completed time, template/ratio, output status badges.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
