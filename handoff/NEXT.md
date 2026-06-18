@@ -145,8 +145,8 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - 2026-06-18 후속 정정으로 실행 큐 expanded 상태의 `queue-shell` padding은 제거했다. shell padding은
      `queue-bar`와 `queue-popover` 사이를 갈라 보이게 하고, popover padding 증가는 내부 padding 경계에
      glow가 생겨 보이게 하므로 사용하지 않는다. `queue-popover`는 기본 padding `16px`를 유지하고
-     `overflow: visible`로 두며, expanded `queue-popover::after`를 `bottom: -1px`, `height: 1px`로
-     실제 popover 하단 edge에 붙여 하단 glow를 그린다.
+     `overflow: visible`로 둔다. 하단 glow는 pseudo-element가 아니라 expanded `queue-popover` 자체의
+     `border-bottom-color`와 `box-shadow`로 직접 강조한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
