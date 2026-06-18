@@ -415,7 +415,18 @@ VideoService parity checklist 상태:
   `ProjectHistoryService`의 unused `listVideoRenderProviders()`, `startVideoRenderJob()`,
   `listVideoRenderJobs()`, `cancelVideoRenderJob()` 클라이언트 메서드와 관련 타입도 제거했다.
   이제 Angular `src/test`에는 old `VideoRenderJobsService` API caller가 남아 있지 않다.
-  NestJS generic output render API는 아직 서버 호환성 검토 전이므로 유지한다.
+- 2026-06-18 추가 NestJS cleanup `clipper_nestjs` `a5dbe9a`에서 generic project output render API를
+  제거했다.
+  - 제거된 route: `GET /projects/:projectId/outputs/:outputId/render-providers`,
+    `POST /projects/:projectId/outputs/:outputId/render-jobs`,
+    `GET /projects/:projectId/render-jobs`,
+    `GET /projects/:projectId/render-jobs/:renderJobId`,
+    `DELETE /projects/:projectId/render-jobs/:renderJobId`
+  - `ProjectsService`의 matching public methods와 old render job result를 Clipper Studio manifest에
+    반영하던 helper도 제거했다.
+  - `project-manifest` 하위 `VideoRenderJobsService`, provider registry, low-level provider classes는
+    아직 남아 있다. 다음 cleanup은 이 lower-level provider stack이 Template Builder/sample tests에서
+    필요한지 확인한 뒤 제거 범위를 정한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
