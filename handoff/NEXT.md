@@ -114,6 +114,13 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      low-level provider 파일은 기능 의존성 때문에 유지한다.
    - 실제 앱 내부 저장소 `/Users/jina/Library/Application Support/Clipper2/projects/projects.json`에서도
      `clipper_studio_*` project 13개와 matching outputRoot directory 13개를 삭제했다.
+   - 2026-06-18 후속 `clipper_angular`에서 project card 자체 border/background/padding을 제거했다.
+     카드 내부 plugin name top row도 제거해 thumbnail이 바로 맨 위에 온다. Clipper card는 thumbnail/date만,
+     source-video/highlight card는 thumbnail/source-video-title/date만 표시한다. `완료` status,
+     `history-title`, `history-footer`, `history-card-actions`는 card에서 제거했다.
+   - plugin별 project section은 grid가 아니라 한 줄 horizontal scroll row로 표시하고, plugin section
+     사이에는 full-width divider line을 둔다. `source-video-title`은 정확히 2줄 높이로 고정하고 긴 제목은
+     ellipsis 처리한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
