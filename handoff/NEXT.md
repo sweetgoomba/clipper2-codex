@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-06-17
+최신 갱신: 2026-06-18
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -15,6 +15,7 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 
 - [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
 - [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
+- [../records/sessions/2026/06/18.md](../records/sessions/2026/06/18.md)
 - [../records/sessions/2026/06/17.md](../records/sessions/2026/06/17.md)
 - [../records/sessions/2026/06/16.md](../records/sessions/2026/06/16.md)
 - [../records/sessions/2026/06/15.md](../records/sessions/2026/06/15.md)
@@ -23,16 +24,18 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
-clipper_nestjs:  af8e838 Fix builder shortform render payload contract
-clipper_python:  8a5436d Verify builder shortform render frame contract
+clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
+clipper_nestjs:  b4739c6 Use app ffmpeg env in NestJS
+clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
 ```
 
 최신 follow-up:
 
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
-clipper_nestjs:  af8e838 Fix builder shortform render payload contract
-clipper_python:  8a5436d Verify builder shortform render frame contract
+clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
+clipper_nestjs:  b4739c6 Use app ffmpeg env in NestJS
+clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
 ```
 
 2026-06-17 shortform render queue follow-up:
@@ -98,12 +101,21 @@ clipper_python:  8a5436d Verify builder shortform render frame contract
 - 2026-06-17 follow-up `clipper_python` `8a5436d`에서 Template Builder contract render
   test가 ffmpeg output frame을 추출해 background color와 content area media pixel을
   확인한다. renderer production code 변경은 없다.
+- 2026-06-18 follow-up에서 app ffmpeg/ffprobe env contract를 정리했다.
+  packaged 앱 전용 설치 경로는 `userData/bin/ffmpeg`, `userData/bin/ffprobe`이고,
+  런타임 표준 env는 `FFMPEG_BIN`, `FFPROBE_BIN`이다.
+  `clipper_electron` `d461dfd`는 NestJS/Python runtime에 이 경로를 주입하고 NestJS
+  preflight에서 `ensureFfmpeg()`를 보장한다. `clipper_nestjs` `b4739c6`은 TTS
+  ffprobe, source ingest, NestJS ffmpeg executor가 표준 env만 보게 했고,
+  `clipper_python` `c2e54c7`은 Python plugin 직접 lookup을 표준 env로 통일했다.
 
 검증 결과:
 
 ```text
 clipper_nestjs:
 - npm run build
+- node --test test/shortform-tts-provider.test.js test/shortform-project-generation-assets.test.js test/workflow-executor-registry.test.js test/simplified-shortform-local-ffmpeg-render-provider.test.js
+  11 pass
 - node --test test/shortform-project-api.test.js
   10 pass
 - node --test test/template-builder-shortform-preset-source.test.js
@@ -118,12 +130,18 @@ clipper_nestjs:
   configured`), not the shortform render payload path.
 - git diff --check
 
+clipper_electron:
+- npm run build
+- git diff --check
+
 clipper_angular:
 - npm test -- --watch=false --include src/features/shortform/pages/shortform-workflow-page.component.spec.ts --include src/shell/projects/projects-history-list.component.spec.ts
 - npm run build
 - git diff --check
 
 clipper_python:
+- uv run pytest tests/test_template_builder_video_frame_extraction.py tests/test_clipper1_video_render_contract.py::test_local_render_adapter_uses_standard_ffmpeg_env tests/test_clipper1_video_render_media_looping.py -q
+  30 passed
 - uv run pytest tests/test_clipper1_video_render_contract.py -q
   6 passed
 - uv run pytest tests/test_clipper1_video_render_remote_assets.py::test_render_execute_stages_remote_media_layout_logo_tts_and_bgm -q
