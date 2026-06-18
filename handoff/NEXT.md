@@ -190,6 +190,12 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
   snapshot preview와 최신 template thumbnail이 다르게 보일 때 사용자에게 생성 당시 템플릿으로
   preview 중임을 안내하고, 원하면 같은 template id의 최신 catalog preset으로 snapshot을 갱신하는
   `현재 템플릿 적용` action을 추가했다. Template selector 목록 자체는 최신 catalog 상태를 유지한다.
+- 2026-06-18 follow-up `clipper_nestjs` `1740bd7`에서 shortform render 준비 중 선택된
+  원격 clip media만 output root 아래 `draft/assets/remote`로 materialize한 뒤 Python worker
+  payload/manifest에 local source-file로 넘기도록 바꿨다. 선택되지 않은 후보 asset은 다운로드하지
+  않는다. 선택 asset 다운로드가 실패하면 remote-url artifact를 넘기지 않고 기존 asset preparer가
+  만든 local fallback media를 사용한다. 또한 Python worker job이 failed/cancelled로 끝나면 원본
+  `shortform_project_*`의 status/lastError도 failed로 동기화한다.
 
 검증 결과:
 
@@ -208,6 +214,8 @@ clipper_nestjs:
 - npm run build
 - node --test test/shortform-project-generation-assets.test.js test/shortform-project-api.test.js
   18 pass
+- node --test test/shortform-project-generation-assets.test.js test/shortform-project-api.test.js test/simplified-shortform-render-recipe-provider.test.js
+  27 pass
 - node --test test/shortform-project-api.test.js test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js
   19 pass
 - node --test test/shortform-tts-provider.test.js test/shortform-project-generation-assets.test.js test/workflow-executor-registry.test.js test/simplified-shortform-local-ffmpeg-render-provider.test.js
