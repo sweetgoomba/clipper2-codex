@@ -25,7 +25,7 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  b4739c6 Use app ffmpeg env in NestJS
+clipper_nestjs:  095e61d Map shortform clip provider errors
 clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
 ```
 
@@ -34,7 +34,7 @@ clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
 ```text
 clipper_angular: 0c4fb15 Show shortform archive actions on hover
 clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  b4739c6 Use app ffmpeg env in NestJS
+clipper_nestjs:  095e61d Map shortform clip provider errors
 clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
 ```
 
@@ -108,12 +108,19 @@ clipper_python:  c2e54c7 Use standard ffmpeg env in plugins
   preflight에서 `ensureFfmpeg()`를 보장한다. `clipper_nestjs` `b4739c6`은 TTS
   ffprobe, source ingest, NestJS ffmpeg executor가 표준 env만 보게 했고,
   `clipper_python` `c2e54c7`은 Python plugin 직접 lookup을 표준 env로 통일했다.
+- 2026-06-18 URL clip generation QA에서 사용자가 본 500은 같은 running endpoint
+  재호출 시 201 Created로 성공했고, `shortform_project_1781746600126`에 clips 8개가
+  저장됐다. 첫 500 stack은 앱 데이터 로그에 없었다. `clipper_nestjs` `095e61d`에서
+  `generateClips()`의 provider/network plain `Error`를 `ServiceUnavailableException`으로
+  매핑해 외부 provider transient failure가 generic 500으로 보이지 않게 했다.
 
 검증 결과:
 
 ```text
 clipper_nestjs:
 - npm run build
+- node --test test/shortform-project-api.test.js test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js
+  19 pass
 - node --test test/shortform-tts-provider.test.js test/shortform-project-generation-assets.test.js test/workflow-executor-registry.test.js test/simplified-shortform-local-ffmpeg-render-provider.test.js
   11 pass
 - node --test test/shortform-project-api.test.js
