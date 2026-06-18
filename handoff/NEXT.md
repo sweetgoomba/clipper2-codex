@@ -78,6 +78,11 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - 2026-06-18 `clipper_angular` `b399f18`에서 card metadata를 정리했다.
      shortform은 input mode, clip count, duration, template snapshot display name을 표시하고,
      non-shortform은 completed result clips 기준 clip count/duration을 표시한다.
+   - 2026-06-18 `clipper_angular` `2e3a8b5`에서 사용자 확인 후 card layout을 다시 정리했다.
+     모든 thumbnail은 카드 내부 높이를 채우는 9:16 영역으로 표시하고, duration은 thumbnail 우하단
+     badge로 겹쳐 표시한다. card chip에서는 source mode, clip count, template name을 제거했다.
+     shortform plugin label은 `URL로 숏폼 제작`/`붙여넣기로 숏폼 제작`/`프롬프트로 숏폼 제작`으로
+     표시한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
