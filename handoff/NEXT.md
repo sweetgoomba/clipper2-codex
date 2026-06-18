@@ -83,6 +83,8 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      badge로 겹쳐 표시한다. card chip에서는 source mode, clip count, template name을 제거했다.
      shortform plugin label은 `URL로 숏폼 제작`/`붙여넣기로 숏폼 제작`/`프롬프트로 숏폼 제작`으로
      표시한다.
+   - 2026-06-18 `clipper_angular` `cb8598e`에서 plugin/workflow kind line을 thumbnail/content grid
+     안이 아니라 card 최상단 전체 폭 row로 이동했다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
