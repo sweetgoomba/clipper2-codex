@@ -60,8 +60,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      잘못된 변경(`60a0b83`)을 되돌렸다.
    - 2026-06-18 `clipper_angular` `92a54b9`에서 non-shortform 완료 카드는 `결과 보기` 액션으로
      `/projects/:projectId` 상세 라우트에 진입한다.
-   - 상세 라우트는 일단 기존 `DialogResultDetailComponent`/`DanceResultDetailComponent`를 그대로
-     사용한다. 나중에 UI 구성은 별도 정리한다.
+   - 2026-06-18 `clipper_angular` `5fa436c`에서 상세 라우트 내부를 이전 오른쪽 inline
+     detail panel과 같은 header/source/result-section 래퍼 및 스타일로 복원했다.
+   - 상세 라우트는 일단 기존 `DialogResultDetailComponent`/`DanceResultDetailComponent`와
+     이전 inline panel UI를 그대로 사용한다. 나중에 UI 구성은 별도 정리한다.
 3. 작업 보관함 completed card UI redesign
    - Clipper2 output 기본값은 숏폼이므로 completed project card thumbnail은 9:16을
      기본 비율로 바꾼다.
@@ -210,6 +212,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
 
 ```text
 clipper_angular:
+- npm run build
+- ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/shell/projects/projects-history-list.component.spec.ts --include=src/shell/projects/projects.component.spec.ts --include=src/app/app.routes.spec.ts
+  11 SUCCESS
+- git diff --check
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow.store.spec.ts
   9 SUCCESS
 - ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include=src/features/shortform/pages/shortform-workflow-page.component.spec.ts --include=src/features/shortform/services/shortform-project.service.spec.ts
