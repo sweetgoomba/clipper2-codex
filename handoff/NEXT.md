@@ -139,6 +139,8 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      `/projects`에서 해당 `cardKind + pluginLabel` plugin row로 세로 스크롤 이동한다. 해당 row 내부도
      `scrollTo({ left: 0 })`로 최신 project card가 보이게 되돌린다. `/projects/history/:sectionKey`
      전체보기 페이지에서는 자동 reveal을 하지 않는다.
+   - 2026-06-18 후속 `clipper_angular`에서 실행 큐 expanded 상태에만 하단 `18px` padding을 추가해
+     popover 하단 border/glow가 아래 archive 영역과 붙어서 잘려 보이지 않도록 했다. 접힌 queue 간격은 유지한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
