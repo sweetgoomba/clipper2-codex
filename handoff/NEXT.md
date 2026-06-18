@@ -142,8 +142,9 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - 2026-06-18 후속 정정으로 완료 job 최신순 입력 때문에 방금 완료된 plugin section이 맨 위로
      재배치되던 문제를 막았다. `/projects` plugin section 순서는 `클리퍼`, `대사 하이라이트`,
      `안무 하이라이트`로 고정하고, 완료 reveal은 순서를 바꾸지 않고 해당 section 위치로만 세로 스크롤한다.
-   - 2026-06-18 후속 `clipper_angular`에서 실행 큐 expanded 상태에만 하단 `18px` padding을 추가해
-     popover 하단 border/glow가 아래 archive 영역과 붙어서 잘려 보이지 않도록 했다. 접힌 queue 간격은 유지한다.
+   - 2026-06-18 후속 정정으로 실행 큐 expanded 상태의 `queue-shell` padding은 제거했다. shell padding은
+     `queue-bar`와 `queue-popover` 사이를 갈라 보이게 하므로, expanded `queue-popover`에만
+     `padding-bottom: 34px`를 적용해 popover 하단 내부 여백을 확보한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
