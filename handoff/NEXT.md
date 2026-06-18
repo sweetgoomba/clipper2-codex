@@ -394,8 +394,14 @@ VideoService parity checklist 상태:
   output_root 접근 권한을 확인한다.
 - Render artifact persistence 정리:
   mp4/thumbnail/tts/media asset 경로가 local app storage 기준으로 재열기 가능한지 확인한다.
-- 기존 `VideoRenderJobsService` 또는 old render-provider path 중 더 이상 쓰지 않는 코드는
-  실제 grep 후 제거한다.
+- 2026-06-18 audit: 기존 `VideoRenderJobsService`는 shortform render path에서는 더 이상
+  사용되지 않지만, generic project output render API
+  `/projects/:projectId/outputs/:outputId/render-jobs`와 Angular
+  `ProjectHistoryService.startVideoRenderJob()`에 아직 연결돼 있어 즉시 삭제 대상이 아니다.
+  `clipper_nestjs` `audit/old-render-path-cleanup`에서 shortform render가 old
+  `render-jobs/render-jobs.json` store를 만들지 않는 회귀 테스트를 추가했다. 다음 단계에서
+  이 generic output render API를 `/jobs`로 통합할지, non-shortform detail flow와 함께
+  유지할지 결정해야 한다.
 - completed job이 "완료된 작업" 목록으로 이동하고, 다시 열었을 때 video/thumbnail/manifest가
   유효한지 end-to-end 검증한다.
 
