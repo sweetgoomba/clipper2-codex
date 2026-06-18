@@ -104,6 +104,13 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      버튼을 제거했다. shortform card title은 render/project title fallback보다 render manifest의
      `mainTitle1 + mainTitle2`를 우선 표시한다. source-video card는 landscape source thumbnail
      아래 input video title을 최대 2줄로 표시한다.
+   - 2026-06-18 `clipper_angular` `f9c90c3`에서 section heading을 `프로젝트`로 줄이고 font size를
+     키웠으며, `완료 상태만 보기` 버튼을 제거했다. plugin section heading도 키우고 `(count)`를 붙인다.
+     shortform URL/paste/prompt project는 더 이상 mode별 섹션으로 나누지 않고 `클리퍼` 섹션 하나로
+     묶는다. ProjectHistoryService는 `clipper_studio` project를 local project list에서 제외하고,
+     unused `clipper-studio-result-detail` component와 `Clipper Studio` formatter label을 제거했다.
+     실제 앱 내부 저장소 `/Users/jina/Library/Application Support/Clipper2/projects/projects.json`에서도
+     `clipper_studio_*` project 13개와 matching outputRoot directory 13개를 삭제했다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
