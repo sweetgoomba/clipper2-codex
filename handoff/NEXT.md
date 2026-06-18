@@ -121,6 +121,13 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - plugin별 project section은 grid가 아니라 한 줄 horizontal scroll row로 표시하고, plugin section
      사이에는 full-width divider line을 둔다. `source-video-title`은 정확히 2줄 높이로 고정하고 긴 제목은
      ellipsis 처리한다.
+   - 2026-06-18 후속 `clipper_angular`에서 메인 `/projects`는 plugin section별 최신 10개만 표시하고,
+     초과분이 있으면 row 오른쪽에 `더보기 +N` 카드가 생긴다. `더보기`는
+     `/projects/history/:sectionKey`로 이동해 해당 plugin section 전체를 보여준다. 이 route는
+     `projects/:projectId`보다 먼저 선언한다. 전용 history page는 queue를 숨기고 section 전체 목록만
+     보여준다.
+   - 같은 후속에서 Clipper card width를 키워 portrait thumbnail 높이를 늘렸고, Clipper row gap,
+     thumbnail-date gap, date center alignment를 조정했다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
