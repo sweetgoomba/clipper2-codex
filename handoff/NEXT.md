@@ -91,6 +91,9 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      plugin/workflow title text 자체만 `완료`/`실패` status와 같은 pill badge 스타일로 바꿨다.
    - 2026-06-18 `clipper_angular` `2cc5919`에서 사용자 확인 후 pill badge도 제거했다.
      최종 kind line은 card 최상단 전체 폭 row 위치를 유지하되, banner/pill이 아닌 plain text 스타일이다.
+   - 2026-06-18 `clipper_angular` `48c1342`에서 archive page 용어를 `작업 보관함`/`완료된 작업`에서
+     `프로젝트 보관함`/`프로젝트 내역`으로 바꿨고, completed/history 영역을 감싸던 outer
+     border/background/padding panel을 제거했다. 큐 문맥의 `작업` 용어와 개별 project card border는 유지한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
