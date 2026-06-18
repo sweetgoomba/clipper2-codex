@@ -99,6 +99,11 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      `cardKind`(`shortform-output`/`source-video-output`)를 추가했다. shortform card는 기존
      portrait output thumbnail layout을 유지하고, source-video card는 landscape input source
      thumbnail layout을 사용한다.
+   - 2026-06-18 `clipper_angular` `54b419b`에서 `프로젝트 내역`을 `cardKind + pluginLabel`
+     섹션으로 나눴다. shortform 섹션은 좁고 긴 portrait card grid를 쓰고, 카드 내 `재생`/`편집`
+     버튼을 제거했다. shortform card title은 render/project title fallback보다 render manifest의
+     `mainTitle1 + mainTitle2`를 우선 표시한다. source-video card는 landscape source thumbnail
+     아래 input video title을 최대 2줄로 표시한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
