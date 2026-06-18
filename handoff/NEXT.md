@@ -71,10 +71,11 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
 3. 작업 보관함 completed card UI redesign
    - 2026-06-18 `clipper_angular` `fd6e55a`에서 completed card hover overlay action을 제거하고,
      카드 하단에 항상 보이는 action button 영역을 둔다.
-   - completed project card thumbnail은 9:16 기본 비율이다.
-   - shortform은 최종 render에서 저장하는 `main_thumbnail.jpg`를 우선 사용한다.
-   - non-shortform은 source thumbnail보다 completed project result의 첫 clip/render thumbnail을
-     우선 사용한다. 결과 thumbnail을 찾지 못할 때만 source thumbnail으로 fallback한다.
+   - completed project card thumbnail은 card kind별로 나눈다. shortform은 최종 render에서 저장하는
+     `main_thumbnail.jpg`를 우선 사용하고 9:16 output thumbnail frame을 유지한다.
+   - source-video 계열 non-shortform은 input longform/source thumbnail을 우선 사용하고 16:9
+     source thumbnail frame을 쓴다. source thumbnail이 없을 때만 completed result clip/render
+     thumbnail으로 fallback한다.
    - 2026-06-18 `clipper_angular` `b399f18`에서 card metadata를 정리했다.
      shortform은 input mode, clip count, duration, template snapshot display name을 표시하고,
      non-shortform은 completed result clips 기준 clip count/duration을 표시한다.
@@ -94,6 +95,10 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
    - 2026-06-18 `clipper_angular` `48c1342`에서 archive page 용어를 `작업 보관함`/`완료된 작업`에서
      `프로젝트 보관함`/`프로젝트 내역`으로 바꿨고, completed/history 영역을 감싸던 outer
      border/background/padding panel을 제거했다. 큐 문맥의 `작업` 용어와 개별 project card border는 유지한다.
+   - 2026-06-18 `clipper_angular` `3be569d`에서 archive card view model에
+     `cardKind`(`shortform-output`/`source-video-output`)를 추가했다. shortform card는 기존
+     portrait output thumbnail layout을 유지하고, source-video card는 landscape input source
+     thumbnail layout을 사용한다.
 4. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
