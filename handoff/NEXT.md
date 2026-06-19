@@ -1,20 +1,27 @@
 # Next Handoff
 
-최신 갱신: 2026-06-18
+최신 갱신: 2026-06-19
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## 2026-06-17 Current Focus
+## 2026-06-19 Current Focus
 
-현재 작업은 shortform 제작 페이지 리팩토링, URL 입력 백엔드 1차 이식 이후 QA,
-shortform render queue 경로 정리, 그리고 Template Builder shortform render output
-contract 정리다. Project-first / Plugin / Queue 전체 정리는 아직 시작하지 않았고,
-shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류시켰다.
+4개 레포의 사용자 작업은 현재 원격 `dev`에 들어간 상태다. PR 단계는 생략했다.
+세션 마지막에 4개 레포 모두 로컬 branch를 `dev`로 체크아웃하고 `origin/dev`까지
+fast-forward했으며, 확인용 `.worktrees/origin-dev-20260619` worktree도 제거했다.
+
+다음 세션의 첫 작업은 최신 `dev` 기준 새 브랜치를 만들고, 여러 plugin/runtime을
+연달아 실행할 때 메모리가 부족해져 앱이 종료되거나 다른 앱까지 freeze되는 문제를
+완화하는 것이다. 먼저 Electron/NestJS/Python/Angular 전체의 plugin/runtime/worker
+process lifecycle을 조사하고, idle process cleanup 또는 exclusive plugin group 정책을
+설계한 뒤 사용자 승인 후 구현한다.
 
 먼저 읽을 문서:
 
 - [../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](../design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md)
 - [../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](../design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md)
+- [../design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md](../design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md)
+- [../records/sessions/2026/06/19.md](../records/sessions/2026/06/19.md)
 - [../records/sessions/2026/06/18.md](../records/sessions/2026/06/18.md)
 - [../records/sessions/2026/06/17.md](../records/sessions/2026/06/17.md)
 - [../records/sessions/2026/06/16.md](../records/sessions/2026/06/16.md)
@@ -23,27 +30,39 @@ shortform의 `숏폼 생성하기` render path만 기존 `/jobs` 큐로 합류�
 현재 app/code commit:
 
 ```text
-clipper_angular: dba0a36 Highlight expanded queue bottom border
-clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  0370d89 Remove Clipper Studio project API
-clipper_python:  5eda200 Guard subtitle artifact height for large typography
+clipper_angular:  96cd2f1 test: cover failed highlight project cards
+clipper_electron: 25ac58f Merge branch 'feature/windows-packaging' into merge/dev-selected-20260619
+clipper_nestjs:   d8260fc test: remove archived template builder API tests
+clipper_python:   4922c5c Merge branch 'feature/windows-packaging' into merge/dev-selected-20260619
 ```
 
 최신 follow-up:
 
 ```text
-clipper_angular: dba0a36 Highlight expanded queue bottom border
-clipper_electron: d461dfd Pass app ffmpeg tools to runtimes
-clipper_nestjs:  0370d89 Remove Clipper Studio project API
-clipper_python:  5eda200 Guard subtitle artifact height for large typography
+clipper_angular:  96cd2f1 test: cover failed highlight project cards
+clipper_electron: 25ac58f Merge branch 'feature/windows-packaging' into merge/dev-selected-20260619
+clipper_nestjs:   d8260fc test: remove archived template builder API tests
+clipper_python:   4922c5c Merge branch 'feature/windows-packaging' into merge/dev-selected-20260619
 ```
 
 ## Current Open Work Queue
 
-2026-06-18 사용자와 다시 정리한 현재 남은 작업이다. 구현 순서는 아직 확정하지 않았지만,
-shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아래 항목들이다.
+2026-06-19 기준 현재 남은 작업이다. 다음 세션 첫 작업은 아래 1번이다.
 
-1. Project-first / Plugin / Queue 전체 정리
+1. Plugin/runtime memory pressure and process lifecycle cleanup
+   - 최신 `dev`에서 새 브랜치를 만든다.
+   - 여러 plugin을 이어서 실행하면 메모리 부족으로 Clipper2 앱이 종료되거나 Chrome 등 다른 앱까지
+     freeze되는 문제가 있다.
+   - 먼저 `clipper_electron`, `clipper_nestjs`, `clipper_python`, `clipper_angular`에서
+     plugin/runtime/worker process lifecycle 관리가 이미 존재하는지 조사한다.
+   - 현재 안 쓰이는 NestJS/Python/plugin child process를 종료하는 기능, idle cleanup,
+     job 완료 후 process shutdown, memory pressure 감지 기능이 있는지 확인한다.
+   - 기능이 없으면 구현하고, 있어도 문제가 있으면 수정/개선한다.
+   - memory pressure 감지가 어렵다면 특정 plugin들을 exclusive group으로 묶고,
+     그 group 중 하나가 실행될 때 다른 plugin/runtime process를 종료시키는 정책도 허용된다.
+   - 바로 구현하지 말고 lifecycle 구조와 문제 가능성을 도식화해 사용자에게 먼저 설명한다.
+
+2. Project-first / Plugin / Queue 전체 정리
    - 상세 기준은 아래 `Project-First / Plugin / Queue Status`와
      `PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`,
      `PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md`를 따른다.
@@ -53,7 +72,7 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      `shortform_render_*`는 queue job,
      `source.shortform_project_*`는 completed manifest의 source asset id다.
    - `promotedProjectId`는 원본 shortform project에서 보관함 project id로 가는 연결고리다.
-2. 작업 보관함 non-shortform project detail flow
+3. 작업 보관함 non-shortform project detail flow
    - 2026-06-17에 `/projects` completed shortform card는 오른쪽 inline detail panel 대신
      hover action overlay + `편집`/`재생`으로 바뀌었다.
    - 2026-06-18 `clipper_angular` `a7a1211`에서 non-shortform 완료 카드에 직접 `재생`을 붙인
@@ -68,7 +87,7 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      1022px로 제한했다.
    - 상세 라우트는 일단 기존 `DialogResultDetailComponent`/`DanceResultDetailComponent`와
      이전 inline panel UI를 그대로 사용한다. 나중에 UI 구성은 별도 정리한다.
-3. 작업 보관함 completed card UI redesign
+4. 작업 보관함 completed card UI redesign
    - 2026-06-18 `clipper_angular` `fd6e55a`에서 completed card hover overlay action을 제거하고,
      카드 하단에 항상 보이는 action button 영역을 둔다.
    - completed project card thumbnail은 card kind별로 나눈다. shortform은 최종 render에서 저장하는
@@ -147,13 +166,13 @@ shortform render parity 작업은 먼저 마무리됐고 다음 큰 축은 아�
      glow가 생겨 보이게 하므로 사용하지 않는다. `queue-popover`는 기본 padding `16px`를 유지하고
      `overflow: visible`로 둔다. 하단 glow는 pseudo-element가 아니라 expanded `queue-popover` 자체의
      `border-bottom-color`와 `box-shadow`로 직접 강조한다.
-4. 남은 renderer/app QA와 cleanup
+5. 남은 renderer/app QA와 cleanup
    - packaged app에서 Template Builder custom preset end-to-end render QA.
    - video/thumbnail/manifest/artifact path가 앱 재시작 후에도 열리는지 검증.
    - Python worker lifecycle: dev/packaged start/stop, port/baseUrl, event delivery,
      output_root access.
    - 더 이상 쓰지 않는 `VideoRenderJobsService`/old render provider path 제거 전 grep.
-5. Preview/URL/fixture follow-up
+6. Preview/URL/fixture follow-up
    - Angular current branch preview snapshot export test 2개 실패는 별도 Angular 작업으로 남김.
    - URL extractor selector edge case와 실제 URL QA 보강.
    - 구형 21개 Clipper1 golden/baseline fixture는 현재 shortform 생성 경로가 아니므로
