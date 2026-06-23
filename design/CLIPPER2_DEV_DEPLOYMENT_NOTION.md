@@ -372,13 +372,13 @@ dev 서버는 push된 결과를 m2-stage에서 확인하는 용도다. 실제 �
 API는 로컬 개발 전용 env 파일을 사용한다.
 
 ```text
-/Users/jina/project/adlight/clipper_web_api/env/local.dev.env
+/Users/jina/project/adlight/web/clipper_web_api/env/local.dev.env
 ```
 
 최초 1회:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_api
+cd /Users/jina/project/adlight/web/clipper_web_api
 cp env/local.dev.env.example env/local.dev.env
 ```
 
@@ -399,7 +399,7 @@ shell 특수문자가 있으면 작은따옴표로 감싼다. URL-encode는 하�
 web 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_client
+cd /Users/jina/project/adlight/web/clipper_web_client
 npm install
 npm run start:local
 ```
@@ -407,7 +407,7 @@ npm run start:local
 admin 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_admin
+cd /Users/jina/project/adlight/web/clipper_web_admin
 npm install
 npm run start:local
 ```
@@ -415,7 +415,7 @@ npm run start:local
 API 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_api
+cd /Users/jina/project/adlight/web/clipper_web_api
 npm install
 npm run start:local
 ```

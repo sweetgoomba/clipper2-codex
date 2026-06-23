@@ -1,8 +1,140 @@
 # Next Handoff
 
-최신 갱신: 2026-06-19
+최신 갱신: 2026-06-23
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
+
+## 2026-06-23 Repo Layout And Dev State
+
+`/Users/jina/project/adlight` 루트 자체는 git repo가 아니다. 현재 active app repo는
+8개이며 모두 `dev` 브랜치를 기본 작업 브랜치로 사용한다. 작업은 각 repo에서 새 브랜치를
+만들고 검증 후 `dev`에 merge하는 방식이다.
+
+```text
+desktop/
+  clipper_angular/
+  clipper_nestjs/
+  clipper_python/
+  clipper_electron/
+
+web/
+  clipper_infra/
+  clipper_web_client/
+  clipper_web_api/
+  clipper_web_admin/
+
+legacy/
+  adlight_python/
+  adlight_angular/
+  adlight_nestjs/
+```
+
+`.codex`는 별도 문서 repo다. 앱 코드 repo 변경과 `.codex` 문서 변경은 같은 commit에
+섞지 않는다. 과거 기록에는 경로 이동 전의 `/Users/jina/project/adlight/clipper_*`
+절대 경로가 남아 있을 수 있지만, 새 작업에서는 `desktop/*`, `web/*`, `legacy/*` 경로를
+기준으로 한다.
+
+2026-06-23 fetch 후 8개 active repo 상태:
+
+```text
+desktop/clipper_angular:   dev...origin/dev, clean
+  bdf3434 refactor(angular): move provideDanceApi to dance-highlight.providers.ts (match tts pattern)
+
+desktop/clipper_nestjs:    dev...origin/dev, clean
+  886a5de chore(deps): upgrade NestJS 10→11 (Express 5), align with clipper_web_api
+
+desktop/clipper_python:    dev...origin/dev, clean
+  0314baf Merge branch 'dev' into feature/cross-process-logging
+
+desktop/clipper_electron:  dev...origin/dev, clean
+  e839aca feat(nest-manager): update data directory path for korean_artists.json to match bundle layout
+
+web/clipper_infra:         dev...origin/dev, clean
+  b9dfcdf feat: add Google OAuth and JWT configuration to environment files
+
+web/clipper_web_client:    dev...origin/dev, clean
+  87abf16 feat(scripts): add cache cleaning scripts to package.json
+
+web/clipper_web_api:       dev...origin/dev, has untracked env/local.dev.env
+  c8be471 docs: reference shared NestJS structure standard (ADR-0007), align layering rule
+
+web/clipper_web_admin:     dev...origin/dev, clean
+  d1aa4f5 build(package.json): add clean scripts for cache and dist removal
+```
+
+주의:
+
+- `web/clipper_web_api/env/local.dev.env`는 local secret env 후보이므로 값을 출력하지 않는다.
+  현재 repo의 `.gitignore`에는 `env/`가 없어 미추적 파일로 보인다.
+- 여러 repo의 `origin/HEAD`가 아직 `dev`가 아닌 과거 기본 브랜치를 가리킨다.
+  실제 작업 기준은 `origin/dev`다.
+- 일부 `origin/main`에는 dev에 없는 오래된 README/scaffold commit이 남아 있다. 현재
+  사용자가 확정한 기본 브랜치는 `dev`다.
+
+원격에 남아 있는 dev 미병합 작업 후보:
+
+```text
+desktop/clipper_angular:
+  origin/feature/variation-v2
+    - variation 화면, asset folder/BASE card/clip/sound/BGM/render button UI
+
+desktop/clipper_nestjs:
+  origin/feature/variation-v2
+    - variation asset folder repository/API/render service
+  origin/docs/readme-run-instructions
+    - README run instructions only
+
+desktop/clipper_electron:
+  origin/feat/logs-ipc
+    - clipperBridge.logs openFolder/readAll IPC and sample logs seed script
+  origin/feature/variation-v2
+    - folder/file selection and fs.listMediaFiles/getPathForFile/openFiles IPC
+
+web/clipper_web_api:
+  origin/feat/google-auth
+    - ancestry상 dev 미병합으로 보이나 dev 대비 file diff는 비어 있음. 내용은 dev에 흡수된 것으로 보인다.
+```
+
+최근 dev에 들어간 큰 흐름:
+
+- `desktop/clipper_angular`: structure cleanup, component-per-folder/spec backfill,
+  feature barrel 제거, shared test fake 정리.
+- `desktop/clipper_nestjs`: 4-layer structure unification, 이후 NestJS 11 / Express 5 upgrade.
+- `desktop/clipper_python`: cross-process logging trace context work가 dev와 합쳐진 상태.
+- `desktop/clipper_electron`: cross-process logging, desktop-login merge, bundle data path fix.
+- `web/clipper_*`: billing/admin/auth/dev-login, mockup/admin docs, cache clean scripts,
+  structure standard alignment.
+
+다음 작업 우선순위는 여전히 plugin/runtime process memory pressure and lifecycle cleanup이다.
+먼저 `desktop/clipper_electron`, `desktop/clipper_nestjs`, `desktop/clipper_python`,
+`desktop/clipper_angular`의 process lifecycle/cleanup/stop/memory-pressure 정책을 조사하고,
+구조와 문제 가능성을 설명한 뒤 구현 계획을 제안한다.
+
+## 2026-06-23 Web Admin App Version Management Notes
+
+`web/clipper_web_admin`에서 앱 버전 관리 mock 화면을 검토했다.
+
+```text
+branch: feat/admin-version-management-ui
+commit: f04230a feat: add admin version management mock screens
+```
+
+현재 볼 수 있는 화면:
+
+- `/versions`: 공통 앱 release + OS별 artifact 방식
+- `/versions2`: macOS/Windows 독립 release stream 비교안
+
+관련 설계 문서:
+
+- [../design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md](../design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md)
+
+핵심 판단:
+
+- 최종 방식은 아직 확정하지 않는다.
+- 현재 Clipper는 공통 Electron 앱/공통 desktop repo 묶음이므로 `/versions`가 기본 후보에 가깝다.
+- 그러나 Windows는 코드서명 준비가 되어 있고 macOS는 아직 공증/서명 준비가 안 되어 `xattr` 수동 안내가 필요한 상태라, OS별 배포 현실을 보면 `/versions2`가 더 자연스럽게 느껴지는 이유도 타당하다.
+- 다음 설계에서는 “제품 버전”과 “실제 배포 artifact”를 분리해서 본다.
+- DB/API는 release보다 artifact를 더 진실에 가까운 단위로 보고, `release_download_targets.current_artifact_id`가 artifact를 직접 가리키는 구조를 우선 검토한다.
 
 ## 2026-06-19 Current Focus
 

@@ -7,14 +7,14 @@
 아래 자동 local guard는 개발자가 Template Builder preview/final 렌더링 관련 코드를 바꾼 뒤 실행하는 별도 검증 도구다. 일반 앱 사용 중에 실행되는 기능이 아니고, 이번 수동 확인을 위해 사용자가 반드시 직접 실행해야 하는 명령도 아니다.
 
 ```bash
-cd clipper_python
+cd desktop/clipper_python
 uv run python scripts/run_template_builder_preview_final_guard.py --output-root /tmp/template-builder-preview-final-guard
 ```
 
 ## 현재 빌드
 
-- 앱: `/Users/jina/project/adlight/clipper_electron/dist-app/mac-arm64/Clipper2.app`
-- DMG: `/Users/jina/project/adlight/clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`
+- 앱: `/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`
+- DMG: `/Users/jina/project/adlight/desktop/clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`
 - 사용한 빌드 명령: `source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`
 - 이 local build는 code signing이 되어 있지 않다. 그래서 macOS에서 미서명 앱 경고가 나올 수 있다.
 
@@ -45,8 +45,8 @@ uv run python scripts/run_template_builder_preview_final_guard.py --output-root 
 - `clipper_nestjs node --test` for Template Builder validation/api/render-payload/render-contract/sample-render/text-artifact: 34 tests passed.
 - `clipper_python uv run pytest` for subtitle artifacts/media looping/text preview/export/template styles/guard runner: 52 tests passed.
 - `clipper_electron source ~/.zshrc && nvm use 22 && npm run build:app:mac:arm64`: passed.
-- Latest app: `/Users/jina/project/adlight/clipper_electron/dist-app/mac-arm64/Clipper2.app`
-- Latest DMG: `/Users/jina/project/adlight/clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`
+- Latest app: `/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`
+- Latest DMG: `/Users/jina/project/adlight/desktop/clipper_electron/dist-app/Clipper2-0.0.1-arm64.dmg`
 
 최신 Template Builder editor usability 수정 이후 rebuild 대상:
 

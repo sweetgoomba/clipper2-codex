@@ -37,20 +37,20 @@ nvm use 22
 모드별 env 파일이 준비되어 있어야 한다.
 
 ```text
-clipper_nestjs/.env.local
-clipper_nestjs/.env.devapp
-clipper_nestjs/.env.packaged
-clipper_python/.env.local
-clipper_python/.env.devapp
-clipper_python/.env.packaged
-clipper_electron/.env.devapp
+desktop/clipper_nestjs/.env.local
+desktop/clipper_nestjs/.env.devapp
+desktop/clipper_nestjs/.env.packaged
+desktop/clipper_python/.env.local
+desktop/clipper_python/.env.devapp
+desktop/clipper_python/.env.packaged
+desktop/clipper_electron/.env.devapp
 ```
 
 실제 env 파일에는 값을 넣을 항목만 둔다. blank placeholder를 schema 맞춤 목적으로 남기지 않는다.
 
-`clipper_electron`은 직접 소비하는 mode env가 `devapp`뿐이다. `packaged`에서는 Electron이 `clipper_nestjs/.env.packaged`, `clipper_python/.env.packaged`를 packaged resources에서 읽는다.
+`desktop/clipper_electron`은 직접 소비하는 mode env가 `devapp`뿐이다. `packaged`에서는 Electron이 `desktop/clipper_nestjs/.env.packaged`, `desktop/clipper_python/.env.packaged`를 packaged resources에서 읽는다.
 
-`clipper_nestjs/.env.packaged`에는 Template Builder official DB 연결값이 있어야 한다. packaged build preflight는 `CLIPPER2_TEMPLATE_DB_*` 누락 시 실패해야 한다.
+`desktop/clipper_nestjs/.env.packaged`에는 Template Builder official DB 연결값이 있어야 한다. packaged build preflight는 `CLIPPER2_TEMPLATE_DB_*` 누락 시 실패해야 한다.
 
 표준 repo 배치에서는 `CLIPPER_PYTHON_ROOT` 같은 absolute path를 설정하지 않는다. NestJS dev runtime은 sibling `../clipper_python`을 찾고, packaged runtime은 bundled resources에서 Python root를 계산한다.
 
@@ -61,35 +61,35 @@ clipper_electron/.env.devapp
 복사 대상:
 
 ```text
-clipper_nestjs/.env.local
-clipper_nestjs/.env.devapp
-clipper_nestjs/.env.packaged
-clipper_python/.env.local
-clipper_python/.env.devapp
-clipper_python/.env.packaged
-clipper_electron/.env.devapp
+desktop/clipper_nestjs/.env.local
+desktop/clipper_nestjs/.env.devapp
+desktop/clipper_nestjs/.env.packaged
+desktop/clipper_python/.env.local
+desktop/clipper_python/.env.devapp
+desktop/clipper_python/.env.packaged
+desktop/clipper_electron/.env.devapp
 ```
 
 복사하지 않는 파일:
 
 ```text
-clipper_electron/.env.local
-clipper_electron/.env.packaged
-clipper_nestjs/.env
-clipper_python/.env
+desktop/clipper_electron/.env.local
+desktop/clipper_electron/.env.packaged
+desktop/clipper_nestjs/.env
+desktop/clipper_python/.env
 root .env
 ```
 
 현재 실제 env 파일의 key 구성:
 
 ```text
-clipper_nestjs/.env.local: NEST_PORT, image search keys, plugin port range, Template Builder DB/S3 keys
-clipper_nestjs/.env.devapp: NEST_PORT, image search keys, plugin port range, Template Builder DB/S3 keys
-clipper_nestjs/.env.packaged: image search keys, plugin port range, Template Builder DB/S3 keys
-clipper_python/.env.local: OPENAI_API_KEY
-clipper_python/.env.devapp: OPENAI_API_KEY
-clipper_python/.env.packaged: OPENAI_API_KEY
-clipper_electron/.env.devapp: CLIPPER_RENDERER_URL, CLIPPER_NEST_BASE_URL
+desktop/clipper_nestjs/.env.local: NEST_PORT, image search keys, plugin port range, Template Builder DB/S3 keys
+desktop/clipper_nestjs/.env.devapp: NEST_PORT, image search keys, plugin port range, Template Builder DB/S3 keys
+desktop/clipper_nestjs/.env.packaged: image search keys, plugin port range, Template Builder DB/S3 keys
+desktop/clipper_python/.env.local: OPENAI_API_KEY
+desktop/clipper_python/.env.devapp: OPENAI_API_KEY
+desktop/clipper_python/.env.packaged: OPENAI_API_KEY
+desktop/clipper_electron/.env.devapp: CLIPPER_RENDERER_URL, CLIPPER_NEST_BASE_URL
 ```
 
 현재 실제 env 파일에 없어야 하는 key:
@@ -126,14 +126,14 @@ Mac용 env를 따로 만들지 않는다.
 터미널 1: NestJS
 
 ```bash
-cd /Users/jina/project/adlight/clipper_nestjs
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
 npm run start:local
 ```
 
 터미널 2: Angular
 
 ```bash
-cd /Users/jina/project/adlight/clipper_angular
+cd /Users/jina/project/adlight/desktop/clipper_angular
 npm run start:local
 ```
 
@@ -146,8 +146,8 @@ http://localhost:4200
 읽는 env:
 
 ```text
-clipper_nestjs/.env.local
-clipper_python/.env.local
+desktop/clipper_nestjs/.env.local
+desktop/clipper_python/.env.local
 ```
 
 프로세스 흐름:
@@ -165,40 +165,40 @@ Browser Angular
 터미널 1: NestJS
 
 ```bash
-cd /Users/jina/project/adlight/clipper_nestjs
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
 npm run start:devapp
 ```
 
 터미널 2: Angular dev server
 
 ```bash
-cd /Users/jina/project/adlight/clipper_angular
+cd /Users/jina/project/adlight/desktop/clipper_angular
 npm run start:devapp
 ```
 
 터미널 3: Electron
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 npm run start:devapp
 ```
 
 읽는 env:
 
 ```text
-clipper_nestjs/.env.devapp
-clipper_python/.env.devapp
-clipper_electron/.env.devapp
+desktop/clipper_nestjs/.env.devapp
+desktop/clipper_python/.env.devapp
+desktop/clipper_electron/.env.devapp
 ```
 
-`clipper_electron/.env.devapp`의 핵심 값:
+`desktop/clipper_electron/.env.devapp`의 핵심 값:
 
 ```env
 CLIPPER_RENDERER_URL=http://localhost:4200
 CLIPPER_NEST_BASE_URL=http://127.0.0.1:9019/v1
 ```
 
-`clipper_electron/.env.devapp`에는 Python root나 plugin URL을 넣지 않는다. devapp Electron은 renderer URL과 NestJS base URL만 알아야 한다.
+`desktop/clipper_electron/.env.devapp`에는 Python root나 plugin URL을 넣지 않는다. devapp Electron은 renderer URL과 NestJS base URL만 알아야 한다.
 
 프로세스 흐름:
 
@@ -216,7 +216,7 @@ Electron devapp
 Mac ARM64:
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 source ~/.zshrc
 nvm use 22
 npm run build:app:mac:arm64
@@ -225,7 +225,7 @@ npm run build:app:mac:arm64
 Mac x64:
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 source ~/.zshrc
 nvm use 22
 npm run build:app:mac:x64
@@ -234,7 +234,7 @@ npm run build:app:mac:x64
 Windows x64:
 
 ```powershell
-cd C:\path\to\adlight\clipper_electron
+cd C:\path\to\adlight\desktop\clipper_electron
 node -v
 npm run build:app:win:x64
 ```
@@ -256,8 +256,8 @@ Angular build:packaged
 packaged build가 포함해야 하는 env:
 
 ```text
-clipper_nestjs/.env.packaged
-clipper_python/.env.packaged
+desktop/clipper_nestjs/.env.packaged
+desktop/clipper_python/.env.packaged
 ```
 
 packaged build가 포함하면 안 되는 env:
@@ -273,14 +273,14 @@ packaged build가 포함하면 안 되는 env:
 Mac ARM64 빌드 결과를 터미널에서 실행하면 로그를 직접 볼 수 있다.
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 ./dist-app/mac-arm64/Clipper2.app/Contents/MacOS/Clipper2
 ```
 
 Finder 방식으로 실행할 수도 있다.
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 open dist-app/mac-arm64/Clipper2.app
 ```
 
@@ -305,7 +305,7 @@ packaged에서는 NestJS port가 고정값이 아니다. 터미널 실행 로그
 Electron packaged runtime을 대체하는 공식 실행 방식은 아니다. NestJS bundle/env 확인용 smoke로만 사용한다.
 
 ```bash
-cd /Users/jina/project/adlight/clipper_nestjs
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
 npm run build
 npm run start:packaged
 ```
@@ -317,7 +317,7 @@ npm run start:packaged
 Angular:
 
 ```bash
-cd /Users/jina/project/adlight/clipper_angular
+cd /Users/jina/project/adlight/desktop/clipper_angular
 npm run build:local
 npm run build:devapp
 npm run build:packaged
@@ -326,7 +326,7 @@ npm run build:packaged
 NestJS:
 
 ```bash
-cd /Users/jina/project/adlight/clipper_nestjs
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
 npm run build
 npm run bundle
 ```
@@ -334,7 +334,7 @@ npm run bundle
 Electron TypeScript:
 
 ```bash
-cd /Users/jina/project/adlight/clipper_electron
+cd /Users/jina/project/adlight/desktop/clipper_electron
 npm run build
 ```
 

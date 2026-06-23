@@ -4,13 +4,56 @@
 
 앱 소스 코드는 각 repo에 있고, 이 저장소는 판단과 작업 이력을 추적한다.
 
+## Current Repo Layout
+
+2026-06-23 기준 `/Users/jina/project/adlight` 루트 자체는 git repo가 아니다.
+앱 소스는 하위 repo로 나뉘고, 모든 active app repo의 기본 작업 브랜치는 `dev`다.
+
+```text
+desktop/
+  clipper_angular/
+  clipper_nestjs/
+  clipper_python/
+  clipper_electron/
+
+web/
+  clipper_infra/
+  clipper_web_client/
+  clipper_web_api/
+  clipper_web_admin/
+
+legacy/
+  adlight_python/
+  adlight_angular/
+  adlight_nestjs/
+```
+
+작업은 각 repo에서 새 브랜치를 만들고 검증 후 `dev`에 merge한다. `.codex`는
+별도 문서 repo이며 앱 코드 repo와 commit을 섞지 않는다.
+
+과거 session record와 archive 문서에는 경로 이동 전의
+`/Users/jina/project/adlight/clipper_*` 또는 `adlight_*` 절대 경로가 남아 있을 수 있다.
+새 작업과 현재 runbook에서는 위 새 경로를 기준으로 한다.
+
 ## Current Focus
 
-2026-06-15 기준 현재 우선 작업은 shortform 제작 페이지의 템플릿/레이아웃/미리보기 라인이다. Template Builder 단순화, Builder-created shortform template catalog 연결, Builder `template-builder.v1` render recipe/provider blocker fix, active `/templates` shortform-only 정리가 진행됐다. 다음은 `ShortformTemplateRuntimeSpec`을 소비하는 browser timeline preview engine이다.
+2026-06-23 기준 현재 첫 작업은 `desktop/*` 4개 repo의 plugin/runtime process
+memory pressure와 lifecycle cleanup 조사다. 여러 plugin/runtime을 연달아 실행할 때
+메모리 부족으로 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이는 방향을 먼저 조사한다.
 
-먼저 [handoff/NEXT.md](handoff/NEXT.md), [design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md](design/TEMPLATE_SIMPLIFICATION_AND_SHORTFORM_PREVIEW_2026-06-12.md), [design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md](design/TEMPLATE_BUILDER_SIMPLIFICATION_IMPLEMENTATION_PLAN_2026-06-15.md), [records/sessions/2026/06/15.md](records/sessions/2026/06/15.md)를 본다.
+먼저 [handoff/NEXT.md](handoff/NEXT.md),
+[records/sessions/2026/06/19.md](records/sessions/2026/06/19.md),
+[design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md](design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md)를 본다.
 
-Project-first / Plugin / Queue 정리는 아직 시작하지 않는다.
+Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
+
+## Current Design Notes
+
+- [design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md](design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md)
+  - `web/clipper_web_admin` 앱 버전 관리 mock 화면(`/versions`, `/versions2`) 비교 문서다.
+  - 최종 방식은 아직 확정하지 않는다. 공통 제품 버전과 OS별 artifact 배포 현실을 분리해서 본다.
+  - Windows 코드서명 준비 완료, macOS 공증/서명 미완료 및 `xattr` 수동 안내 상황 때문에 `/versions2`가 더 정직하게 느껴지는 이유도 기록했다.
+  - 다음 설계에서는 release보다 artifact provenance를 1차 진실로 두는 방안을 우선 검토한다.
 
 ## 먼저 읽을 문서
 

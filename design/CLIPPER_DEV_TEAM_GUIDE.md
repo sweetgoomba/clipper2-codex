@@ -63,7 +63,7 @@ API는 로컬 개발 전용 env 파일을 사용한다.
 최초 1회:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_api
+cd /Users/jina/project/adlight/web/clipper_web_api
 cp env/local.dev.env.example env/local.dev.env
 ```
 
@@ -73,7 +73,7 @@ commit하지 않는다.
 web 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_client
+cd /Users/jina/project/adlight/web/clipper_web_client
 npm install
 npm run start:local
 ```
@@ -81,7 +81,7 @@ npm run start:local
 admin 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_admin
+cd /Users/jina/project/adlight/web/clipper_web_admin
 npm install
 npm run start:local
 ```
@@ -89,7 +89,7 @@ npm run start:local
 API 실행:
 
 ```sh
-cd /Users/jina/project/adlight/clipper_web_api
+cd /Users/jina/project/adlight/web/clipper_web_api
 npm install
 npm run start:local
 ```
@@ -248,7 +248,7 @@ nc -vz metabuzz.iptime.org 55223
 로컬 API는 아래 파일을 읽는다.
 
 ```text
-/Users/jina/project/adlight/clipper_web_api/env/local.dev.env
+/Users/jina/project/adlight/web/clipper_web_api/env/local.dev.env
 ```
 
 예시 파일은 `env/local.dev.env.example`이다.

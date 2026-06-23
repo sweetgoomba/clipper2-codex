@@ -4,21 +4,32 @@
 
 ## Repo Roles
 
-- `clipper_angular`
+- `desktop/clipper_angular`
   - 사용자 UI.
   - NestJS API만 호출한다.
   - plugin process URL/port를 직접 알지 않는다.
-- `clipper_nestjs`
+- `desktop/clipper_nestjs`
   - 앱 control plane.
   - project, template, source, 현재 코드의 workflow/job 실행 호환 계층, WorkflowExecutor dispatch를 담당한다.
   - 목표 제품 모델은 Project-first다. 큐/보관함 사용자 단위는 job이 아니라 Project다.
   - local/devapp에서는 Python plugin process를 `PluginHost`로 직접 실행할 수 있고, NestJS-native executor도 직접 실행할 수 있다.
-- `clipper_electron`
+- `desktop/clipper_electron`
   - desktop host/native adapter.
   - packaged NestJS spawn, packaged Python plugin process host, ffmpeg/model download IPC, file dialog, packaging을 담당한다.
-- `clipper_python`
+- `desktop/clipper_python`
   - Python worker/plugin 구현.
   - `dialog_highlight`, `dance_highlight`, `clipper1_video_render` 같은 compute runtime을 담는다.
+- `web/clipper_infra`
+  - Clipper web/dev/stage/prod infra, compose, proxy/env/runbook을 담당한다.
+- `web/clipper_web_client`
+  - public web/download/client surface.
+- `web/clipper_web_api`
+  - web service API, auth, billing/license, release metadata, DB access를 담당한다.
+- `web/clipper_web_admin`
+  - admin/operator console UI.
+
+`legacy/adlight_python`, `legacy/adlight_angular`, `legacy/adlight_nestjs`는 Clipper1/adlight
+참조용 legacy repo다. 새 Clipper2 작업의 기본 대상은 아니다.
 
 ## Current Boundary
 

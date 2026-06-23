@@ -6,11 +6,11 @@
 
 - `local`
   - browser 개발 실행.
-  - 각 repo의 `.env.local` 사용.
+  - `desktop/clipper_nestjs`, `desktop/clipper_python`의 `.env.local` 사용.
   - NestJS `WorkflowExecutor`가 Python plugin을 `LocalPluginHost`로 실행하거나 NestJS-native executor를 직접 실행한다.
 - `devapp`
   - unpackaged Electron 개발 앱.
-  - 각 repo의 `.env.devapp` 사용.
+  - `desktop/clipper_nestjs`, `desktop/clipper_python`, `desktop/clipper_electron`의 `.env.devapp` 사용.
   - Electron 창은 띄우지만 Python plugin process는 기본적으로 NestJS `LocalPluginHost` 경로를 따른다.
 - `packaged`
   - 설치형 앱.
