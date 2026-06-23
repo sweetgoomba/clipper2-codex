@@ -27,6 +27,24 @@
 - Python env에는 Naver/Kakao key를 두지 않는다. Dance member image search owner는 NestJS다.
 - `.env.local`을 packaged에서 읽게 만들거나 복사하는 방식으로 WorkflowExecutor/PluginHost 문제를 해결하지 않는다.
 
+## Plugin Runtime Lifecycle
+
+2026-06-23 초기 구현 기준으로 `desktop/clipper_nestjs`는 heavy Python plugin을 exclusive group으로
+묶어, 새 plugin 실행 전 같은 group의 idle peer runtime을 종료할 수 있다. 이 기능은 아직 실제 앱
+runtime에서 최종 검증되지 않았다.
+
+NestJS env keys:
+
+```text
+CLIPPER_PLUGIN_RUNTIME_EXCLUSIVE_GROUP=dance_highlight,dialog_highlight,clipper1_video_render
+CLIPPER_PLUGIN_RUNTIME_IDLE_SHUTDOWN_MS=60000
+CLIPPER_PLUGIN_RUNTIME_HEALTH_TIMEOUT_MS=800
+```
+
+정책 문서:
+
+- [design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md)
+
 ## Current References
 
 - [operations/env-runtime/records/2026/05/21-execution-env-mode-design.md](operations/env-runtime/records/2026/05/21-execution-env-mode-design.md)

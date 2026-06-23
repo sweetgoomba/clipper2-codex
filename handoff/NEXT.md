@@ -71,6 +71,75 @@ web/clipper_web_admin:     dev...origin/dev, clean
 - 일부 `origin/main`에는 dev에 없는 오래된 README/scaffold commit이 남아 있다. 현재
   사용자가 확정한 기본 브랜치는 `dev`다.
 
+## 2026-06-23 Plugin Runtime Memory Management Handoff
+
+관련 문서:
+
+- [../design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](../design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md)
+- [../standards/GIT_COMMIT_MESSAGE_POLICY.md](../standards/GIT_COMMIT_MESSAGE_POLICY.md)
+
+현재 branch/commit:
+
+```text
+desktop/clipper_nestjs:
+  branch: feature/plugin-runtime-memory-management
+  pushed HEAD: a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
+  also contains: dded94b chore(template-builder): remove legacy template families and S3 storage
+
+desktop/clipper_angular:
+  branch: feature/plugin-runtime-memory-management
+  pushed HEAD: 652bc44 chore(template-builder): remove legacy template builder UI paths
+
+desktop/clipper_python:
+  branch: feature/plugin-runtime-memory-management
+  pushed HEAD: 84a1d44 chore(clipper1): remove legacy template assets
+
+desktop/clipper_electron:
+  branch: feature/plugin-runtime-memory-management
+  HEAD: e839aca feat(nest-manager): update data directory path for korean_artists.json to match bundle layout
+  이번 plugin runtime memory management 커밋 없음
+```
+
+중요: plugin/runtime memory management는 완료가 아니라 초기 구현 상태다. 사용자는 아직 실제 앱에서
+검증하지 않았다.
+
+NestJS에 구현된 것:
+
+- `PythonRuntimeLifecyclePolicy` 추가.
+- `PYTHON_RUNTIME_LIFECYCLE_OPTIONS` DI token으로 env 기반 설정 주입.
+- `CLIPPER_PLUGIN_RUNTIME_EXCLUSIVE_GROUP`, `CLIPPER_PLUGIN_RUNTIME_IDLE_SHUTDOWN_MS`,
+  `CLIPPER_PLUGIN_RUNTIME_HEALTH_TIMEOUT_MS` 지원.
+- Python workflow executor가 실행 전 idle exclusive peer를 종료하고, 실행 후 idle stop을 예약한다.
+- `/health`에서 `active_jobs` 또는 `activeJobs`가 0일 때만 `safeToEvictWhenIdle` plugin을 종료한다.
+
+검증된 것:
+
+```text
+desktop/clipper_nestjs npm run build
+desktop/clipper_nestjs node --test test/python-runtime-lifecycle-policy.test.js
+desktop/clipper_nestjs node --test test/*.test.js
+desktop/clipper_nestjs git diff --check
+```
+
+결과:
+
+- build pass
+- lifecycle policy test 3/3 pass
+- 전체 Node test 148/148 pass
+- diff check pass
+
+다음 세션 첫 확인:
+
+1. 실제 local/devapp/packaged runtime에서 `dance_highlight`, `dialog_highlight`,
+   `clipper1_video_render`를 연달아 실행해 idle peer process가 종료되는지 확인한다.
+2. 각 Python plugin `/health` payload가 `active_jobs` 또는 `activeJobs`를 정확히 제공하는지 확인한다.
+3. heavy plugin manifest에 `resourceProfile.idlePolicy.safeToEvictWhenIdle === true`가 설정되어 있는지 확인한다.
+4. Electron packaged mode에서 `PluginHost.stop()`이 child process를 실제 종료하는지 확인한다.
+5. 부족하면 Electron/Python/NestJS lifecycle 개선을 추가 구현한다.
+
+커밋 메시지는 반드시 Conventional Commit 형식을 따른다. type 없는 `Add ...`, `Remove ...`,
+`Update ...` 메시지는 금지한다.
+
 원격에 남아 있는 dev 미병합 작업 후보:
 
 ```text
@@ -106,9 +175,8 @@ web/clipper_web_api:
   structure standard alignment.
 
 다음 작업 우선순위는 여전히 plugin/runtime process memory pressure and lifecycle cleanup이다.
-먼저 `desktop/clipper_electron`, `desktop/clipper_nestjs`, `desktop/clipper_python`,
-`desktop/clipper_angular`의 process lifecycle/cleanup/stop/memory-pressure 정책을 조사하고,
-구조와 문제 가능성을 설명한 뒤 구현 계획을 제안한다.
+단, NestJS에는 위 초기 구현이 들어간 상태이므로 다음 세션은 구현 완료로 가정하지 말고
+실제 runtime 관찰과 gap 확인부터 시작한다.
 
 ## 2026-06-23 Web Admin App Version Management Notes
 

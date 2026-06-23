@@ -38,10 +38,17 @@ legacy/
 ## Current Focus
 
 2026-06-23 기준 현재 첫 작업은 `desktop/*` 4개 repo의 plugin/runtime process
-memory pressure와 lifecycle cleanup 조사다. 여러 plugin/runtime을 연달아 실행할 때
-메모리 부족으로 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이는 방향을 먼저 조사한다.
+memory pressure와 lifecycle cleanup이다. 여러 plugin/runtime을 연달아 실행할 때
+메모리 부족으로 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이는 방향이다.
+
+1차 구현은 `desktop/clipper_nestjs` `feature/plugin-runtime-memory-management`
+브랜치의 `a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy`에 있다.
+이 구현은 완료 판정 전 단계다. 다음 세션에서는 실제 local/devapp/packaged runtime에서
+idle peer process 종료, `/health active_jobs`, Electron-hosted child process stop 동작을
+먼저 검증한다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md),
+[design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md),
 [records/sessions/2026/06/19.md](records/sessions/2026/06/19.md),
 [design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md](design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md)를 본다.
 
@@ -49,6 +56,11 @@ Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
 
 ## Current Design Notes
 
+- [design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md)
+  - plugin/runtime memory pressure 완화를 위한 2026-06-23 초기 구현 상태 문서다.
+  - `PythonRuntimeLifecyclePolicy`의 현재 범위, env 옵션, 검증 결과, 아직 실제 앱에서
+    확인해야 할 runtime gap을 정리했다.
+  - 완료 문서가 아니라 다음 세션의 이어받기 기준이다.
 - [design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md](design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md)
   - `web/clipper_web_admin` 앱 버전 관리 mock 화면(`/versions`, `/versions2`) 비교 문서다.
   - 최종 방식은 아직 확정하지 않는다. 공통 제품 버전과 OS별 artifact 배포 현실을 분리해서 본다.
@@ -65,6 +77,9 @@ Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
 
 ## Top-Level Guides
 
+- [standards/GIT_COMMIT_MESSAGE_POLICY.md](standards/GIT_COMMIT_MESSAGE_POLICY.md)
+  - 모든 app repo와 `.codex` repo 커밋 메시지는 Conventional Commit 형식을 따른다.
+  - type 없는 `Add ...`, `Remove ...`, `Update ...` 메시지는 금지한다.
 - [README.ARCHITECTURE.md](README.ARCHITECTURE.md)
   - repo 역할, backend/frontend/process boundary, plugin/project 구조.
 - [README.RUNTIME.md](README.RUNTIME.md)
