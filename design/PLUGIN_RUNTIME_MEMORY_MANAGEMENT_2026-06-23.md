@@ -28,6 +28,8 @@ desktop/clipper_electron: feature/plugin-runtime-memory-management
 clipper_nestjs:
   dded94b chore(template-builder): remove legacy template families and S3 storage
   a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
+  fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
+  ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
 
 clipper_angular:
   652bc44 chore(template-builder): remove legacy template builder UI paths
@@ -37,7 +39,7 @@ clipper_python:
 
 clipper_electron:
   e839aca feat(nest-manager): update data directory path for korean_artists.json to match bundle layout
-  (이번 plugin runtime memory commit 없음)
+  b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
 ```
 
 `cleanup/remove-legacy-templates` worktree는 제거했다. cleanup branch는 원격에 남아 있고,
@@ -73,16 +75,24 @@ desktop/clipper_nestjs/test/python-runtime-lifecycle-policy.test.js
 환경 변수:
 
 ```text
-CLIPPER_PLUGIN_RUNTIME_EXCLUSIVE_GROUP=dance_highlight,dialog_highlight,clipper1_video_render
+CLIPPER_PLUGIN_RUNTIME_EXCLUSIVE_GROUP=dance_highlight,dialog_highlight,clipper1_video_render,tts_supertonic
 CLIPPER_PLUGIN_RUNTIME_IDLE_SHUTDOWN_MS=60000
 CLIPPER_PLUGIN_RUNTIME_HEALTH_TIMEOUT_MS=800
 ```
 
 기본값:
 
-- exclusive group: `dance_highlight,dialog_highlight,clipper1_video_render`
+- exclusive group: `dance_highlight,dialog_highlight,clipper1_video_render,tts_supertonic`
 - idle shutdown delay: `60000ms`
 - health timeout: `800ms`
+
+2026-06-24 추가:
+
+- actual sequential smoke에서 `tts_supertonic`이 default group 밖이면 heavy peer와 함께 남는 것을 확인했다.
+- `tts_supertonic`은 manifest상 `safe_to_evict_when_idle=true`이고 Supertonic ONNX runtime을 로드하므로
+  default exclusive group에 포함했다.
+- `TtsPluginClient`는 workflow executor를 거치지 않으므로 synthesis 전 `prepareForRun()`,
+  완료 후 `scheduleIdleStop()`을 직접 호출하도록 변경했다.
 
 ## Verification Performed
 
@@ -102,22 +112,33 @@ git diff --check
 - `test/*.test.js`: 148/148 pass
 - `git diff --check`: pass
 
-## Not Yet Complete
+## 2026-06-24 Verification Addendum
 
-이 기능은 아직 사용자가 실제 앱에서 수동 테스트하지 않았다. 다음 세션에서 완료로 취급하지 말고
-runtime 관찰부터 다시 해야 한다.
+완료한 actual smoke:
+
+```text
+local:    dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
+devapp:   dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
+packaged: dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
+```
+
+결과:
+
+- `dance_highlight`, `dialog_highlight`, `tts_supertonic` model/runtime start 확인.
+- `dance_highlight`, `dialog_highlight` job 중 `/health.active_jobs > 0` 관찰, 완료 후 `0` 확인.
+- 각 다음 plugin start에서 이전 idle peer가 Python `/shutdown`으로 종료되고 `lastExitCode=0`.
+- rebuilt packaged Electron mode에서도 bridge 경유 child process 종료 확인.
+
+## Remaining Follow-up
 
 남은 확인/구현 후보:
 
-1. local/devapp/packaged에서 실제 plugin을 연달아 실행했을 때 이전 Python process가 종료되는지 확인한다.
-2. `dance_highlight`, `dialog_highlight`, `clipper1_video_render`의 `/health` payload가 실제로
-   `active_jobs` 또는 `activeJobs`를 제공하는지 확인한다.
-3. `safeToEvictWhenIdle`이 세 heavy plugin manifest에 실제로 설정되어 있는지 확인한다.
-4. Electron-hosted packaged mode에서 `PluginHost.stop()`이 실제 child process를 종료하는지 확인한다.
-5. idle stop timer가 job 완료 후 너무 빨리/느리게 동작하지 않는지 사용성 관점에서 확인한다.
-6. plugin 실행 중 cancel/error path에서도 idle cleanup이 안전한지 확인한다.
-7. OS memory pressure 감지 또는 process RSS 기준 eviction이 필요한지 판단한다.
-8. Angular UI에는 아직 runtime cleanup 상태나 memory pressure 표시가 없다. 필요 여부를 별도 판단한다.
+1. 실제 정상 영상 asset으로 full pipeline output까지 확인한다. 이번 smoke는 invalid mp4로 model load,
+   active_jobs, peer eviction, process shutdown을 검증했다.
+2. idle stop timer가 job 완료 후 너무 빨리/느리게 동작하지 않는지 사용성 관점에서 확인한다.
+3. plugin 실행 중 cancel/error path에서도 idle cleanup이 안전한지 확인한다.
+4. OS memory pressure 감지 또는 process RSS 기준 eviction이 필요한지 판단한다.
+5. Angular UI에는 아직 runtime cleanup 상태나 memory pressure 표시가 없다. 필요 여부를 별도 판단한다.
 
 ## Next Session Start Prompt
 

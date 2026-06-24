@@ -188,7 +188,8 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
+  HEAD: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
+  previous stop commit: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
   previous lifecycle commit: a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
 
 desktop/clipper_electron:
@@ -207,12 +208,16 @@ desktop/clipper_python:
 확인한 것:
 
 - `clipper1_video_render` actual runtime smoke에서 `/health.active_jobs === 0` 확인.
+- `dance_highlight`, `dialog_highlight`, `tts_supertonic` actual sequential smoke를 local/devapp/packaged mode에서 확인.
+- `dance_highlight`, `dialog_highlight` actual job 중 `/health.active_jobs > 0`을 관찰했고, job 종료 후 `0`으로 돌아오는 것을 확인.
 - local mode에서 job 완료 후 idle stop이 Python `/shutdown`을 호출하고 process가 exit code 0으로 종료됨.
 - devapp mode에서 동일하게 idle stop 후 child process가 실제 종료됨.
 - rebuilt packaged Electron app에서 idle stop과 explicit `POST /plugins/:name/stop` 모두 Python `/shutdown`을 거쳐
   child process가 exit code 0으로 종료됨.
 - Electron packaged bridge `PluginHost.stop()` 경로는
   Electron bridge -> bundled NestJS `LocalPluginManager.stop()` -> Python `/shutdown` -> process exit까지 확인됨.
+- `tts_supertonic`은 기존 default lifecycle group 밖이라 heavy peer와 함께 남는 gap이 있었고,
+  `ef1b23a`에서 default group에 포함하고 `TtsPluginClient`가 lifecycle policy를 거치도록 수정함.
 
 구현한 것:
 
@@ -220,6 +225,8 @@ desktop/clipper_python:
 - Electron main `PluginProcess.stop()`도 동일하게 `/shutdown`을 먼저 요청한다.
 - `/shutdown` 실패 또는 timeout 시 SIGTERM, 이후 SIGKILL까지 기다리고, SIGKILL 후에도 종료되지 않으면 error를 던진다.
 - 두 repo 모두 stop helper 단위 테스트를 추가했다.
+- NestJS default Python runtime exclusive group에 `tts_supertonic`을 추가했다.
+- `TtsPluginClient`가 synthesis 전 `prepareForRun()`, 완료 후 `scheduleIdleStop()`을 호출한다.
 
 검증:
 
@@ -235,6 +242,10 @@ desktop/clipper_nestjs node --test test/*.test.js
 desktop/clipper_nestjs git diff --check
 
 desktop/clipper_electron npm run build:app:mac:arm64
+actual sequential smoke:
+  local:    dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
+  devapp:   dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
+  packaged: dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
 rebuilt packaged app smoke:
   idle stop: clipper1_video_render PID terminated, lastExitCode=0
   explicit stop: clipper1_video_render PID terminated, lastExitCode=0
@@ -244,9 +255,6 @@ rebuilt packaged app smoke:
 
 - `desktop/clipper_electron npm test`는 현재 package script가 `node --test test/`를 실행해 Node 24에서
   `Cannot find module .../test`로 실패한다. 동등한 glob 실행인 `node --test test/*.js test/*.mjs`는 통과했다.
-- `dance_highlight`, `dialog_highlight`, `tts_supertonic`의 actual sequential smoke는 모델 다운로드/로드 비용 때문에
-  이번 세션에서 실행하지 않았다. heavy manifest의 `safe_to_evict_when_idle`과 NestJS policy unit test는 확인됐지만,
-  실제 heavy model process를 연달아 띄우는 최종 수동 검증은 별도 세션에서 진행한다.
 
 ## 2026-06-23 Web Admin App Version Management Notes
 
