@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-06-23
+최신 갱신: 2026-06-24
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -177,6 +177,76 @@ web/clipper_web_api:
 다음 작업 우선순위는 여전히 plugin/runtime process memory pressure and lifecycle cleanup이다.
 단, NestJS에는 위 초기 구현이 들어간 상태이므로 다음 세션은 구현 완료로 가정하지 말고
 실제 runtime 관찰과 gap 확인부터 시작한다.
+
+## 2026-06-24 Plugin Runtime Lifecycle Verification
+
+2026-06-24에 local/devapp/packaged runtime에서 실제 Python plugin process lifecycle을 확인하고
+부족한 stop 경로를 보강했다.
+
+현재 branch/commit:
+
+```text
+desktop/clipper_nestjs:
+  branch: feature/plugin-runtime-memory-management
+  HEAD: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
+  previous lifecycle commit: a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
+
+desktop/clipper_electron:
+  branch: feature/plugin-runtime-memory-management
+  HEAD: b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
+
+desktop/clipper_angular:
+  branch: feature/plugin-runtime-memory-management
+  HEAD: 652bc44 chore(template-builder): remove legacy template builder UI paths
+
+desktop/clipper_python:
+  branch: feature/plugin-runtime-memory-management
+  HEAD: 84a1d44 chore(clipper1): remove legacy template assets
+```
+
+확인한 것:
+
+- `clipper1_video_render` actual runtime smoke에서 `/health.active_jobs === 0` 확인.
+- local mode에서 job 완료 후 idle stop이 Python `/shutdown`을 호출하고 process가 exit code 0으로 종료됨.
+- devapp mode에서 동일하게 idle stop 후 child process가 실제 종료됨.
+- rebuilt packaged Electron app에서 idle stop과 explicit `POST /plugins/:name/stop` 모두 Python `/shutdown`을 거쳐
+  child process가 exit code 0으로 종료됨.
+- Electron packaged bridge `PluginHost.stop()` 경로는
+  Electron bridge -> bundled NestJS `LocalPluginManager.stop()` -> Python `/shutdown` -> process exit까지 확인됨.
+
+구현한 것:
+
+- NestJS `LocalPluginProcess.stop()`이 SIGTERM 전에 Python plugin `/shutdown`을 먼저 요청한다.
+- Electron main `PluginProcess.stop()`도 동일하게 `/shutdown`을 먼저 요청한다.
+- `/shutdown` 실패 또는 timeout 시 SIGTERM, 이후 SIGKILL까지 기다리고, SIGKILL 후에도 종료되지 않으면 error를 던진다.
+- 두 repo 모두 stop helper 단위 테스트를 추가했다.
+
+검증:
+
+```text
+desktop/clipper_electron npm run build
+desktop/clipper_electron node --test test/child-process-stop.test.js
+desktop/clipper_electron node --test test/*.js test/*.mjs
+desktop/clipper_electron git diff --check
+
+desktop/clipper_nestjs npm run build
+desktop/clipper_nestjs node --test test/local-plugin-process-stop.test.js
+desktop/clipper_nestjs node --test test/*.test.js
+desktop/clipper_nestjs git diff --check
+
+desktop/clipper_electron npm run build:app:mac:arm64
+rebuilt packaged app smoke:
+  idle stop: clipper1_video_render PID terminated, lastExitCode=0
+  explicit stop: clipper1_video_render PID terminated, lastExitCode=0
+```
+
+주의:
+
+- `desktop/clipper_electron npm test`는 현재 package script가 `node --test test/`를 실행해 Node 24에서
+  `Cannot find module .../test`로 실패한다. 동등한 glob 실행인 `node --test test/*.js test/*.mjs`는 통과했다.
+- `dance_highlight`, `dialog_highlight`, `tts_supertonic`의 actual sequential smoke는 모델 다운로드/로드 비용 때문에
+  이번 세션에서 실행하지 않았다. heavy manifest의 `safe_to_evict_when_idle`과 NestJS policy unit test는 확인됐지만,
+  실제 heavy model process를 연달아 띄우는 최종 수동 검증은 별도 세션에서 진행한다.
 
 ## 2026-06-23 Web Admin App Version Management Notes
 
