@@ -188,7 +188,8 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: d8d8f82 fix(template-builder): remove official template DB integration
+  HEAD: 78d80e8 fix(plugin-runtime): clean up health wait exit listeners
+  previous listener cleanup target commit: d8d8f82 fix(template-builder): remove official template DB integration
   previous lifecycle/cancel commit: a2efd95 fix(plugin-runtime): stop managed runtime on cancelled jobs
   previous cancel/lifecycle diagnostics commit: a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
   previous retry commit: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
@@ -198,7 +199,8 @@ desktop/clipper_nestjs:
 
 desktop/clipper_electron:
   branch: feature/plugin-runtime-memory-management
-  HEAD: 1ea4234 fix(template-builder): remove official DB packaging gate
+  HEAD: d1a9ab0 fix(plugin-runtime): clean up health wait exit listeners
+  previous listener cleanup target commit: 1ea4234 fix(template-builder): remove official DB packaging gate
   previous test script commit: abafc4c test(electron): run node tests with file globs
   previous stop commit: b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
 
@@ -461,29 +463,48 @@ packaged verification:
   non-Pretendard preview text artifacts: 17/17 rendered, bad frame count 0
 ```
 
-Next session first task:
+Template Builder preview-artifact MaxListeners follow-up:
 
 ```text
-Investigate the Electron packaged Template Builder preview-artifact smoke warning:
+Resolved the Electron packaged Template Builder preview-artifact smoke warning:
 
   MaxListenersExceededWarning: Possible EventEmitter memory leak detected.
   11 exit listeners added to [ChildProcess]. MaxListeners is 10.
 
-Context:
-  It appeared once while rendering 17 Template Builder text preview artifacts through packaged Clipper2.
-  The artifacts rendered successfully, API verification passed, and app/plugin shutdown completed, so this is a
-  listener-lifecycle cleanup follow-up rather than a functional failure.
+Root cause:
+  waitForHealthOrDeath() attached a one-shot ChildProcess exit listener before polling /health.
+  When /health succeeded, the process stayed alive and the exit listener was never removed.
+  Repeated ensureStarted() calls against the same live clipper1_video_render worker accumulated listeners.
 
-Start from:
-  desktop/clipper_electron feature/plugin-runtime-memory-management
-  desktop/clipper_nestjs feature/plugin-runtime-memory-management
-  use Node v22.22.2, not the default shell Node v24
+Fix:
+  desktop/clipper_electron d1a9ab0
+    PluginProcess.onceExited() now returns a cleanup function.
+    LocalPluginManager.waitForHealthOrDeath() calls cleanup when health wait settles.
+    Added test/plugin-manager-exit-listener.test.js.
 
-Expected approach:
-  Reproduce with packaged or targeted child-process/plugin-host test.
-  Trace where repeated `exit` listeners are attached to the same ChildProcess.
-  Add a focused regression test before changing behavior.
-  Keep dev/main untouched; merge any child branch back into feature/plugin-runtime-memory-management only.
+  desktop/clipper_nestjs 78d80e8
+    LocalPluginProcess.onceExited() now returns a cleanup function.
+    LocalPluginHost.waitForHealthOrDeath() calls cleanup when health wait settles.
+    Added test/local-plugin-host-exit-listener.test.js.
+
+Verification:
+  Node v22.22.2 was PATH-pinned for all commands.
+  Electron targeted warning-as-error repro => exit listeners 0.
+  NestJS targeted warning-as-error repro => exit listeners 0.
+  Electron npm test => 25/25 pass.
+  Electron targeted lifecycle tests => 3/3 pass.
+  NestJS targeted lifecycle/template-artifact tests escalated => 15/15 pass.
+  Electron npm run build pass.
+  NestJS npm run build pass.
+  Electron/NestJS git diff --check pass.
+  Electron npm run build:app:mac:arm64 pass when rerun escalated.
+
+Known unrelated test issue:
+  NestJS full node --test test/*.test.js:
+    sandbox run failed on listen EPERM.
+    escalated run reached 153/158 pass.
+    five failures are repeatable shortform-project-api dry-run render job timeouts.
+    The same file fails the same five cases when run alone escalated, so track separately from listener cleanup.
 ```
 
 ## 2026-06-23 Web Admin App Version Management Notes
@@ -555,20 +576,25 @@ clipper_python:   4922c5c Merge branch 'feature/windows-packaging' into merge/de
 
 ## Current Open Work Queue
 
-2026-06-24 기준 현재 남은 작업이다. 다음 세션 첫 작업은 아래 1번이다.
+2026-06-24 기준 현재 남은 작업이다.
 
-1. Electron packaged Template Builder preview-artifact `MaxListenersExceededWarning` follow-up
-   - packaged app에서 Template Builder text preview artifact 17개를 연속 렌더하는 검증 중
-     `11 exit listeners added to [ChildProcess]` warning이 한 번 찍혔다.
-   - 렌더/API/shutdown은 정상이라 기능 실패는 아니지만, 같은 child process에 exit listener가
-     누적되는 경로가 있는지 확인해야 한다.
-   - `desktop/clipper_electron`과 필요 시 `desktop/clipper_nestjs`의
-     `feature/plugin-runtime-memory-management`에서 진행한다.
-   - default shell Node v24가 아니라 Node v22.22.2를 PATH로 고정해서 재현/테스트한다.
-   - 먼저 재현 또는 targeted regression test를 만들고, 반복 attach 위치를 추적한 뒤 수정한다.
-   - `dev`/`main`은 건드리지 않는다. child branch를 만들면 다시 `feature/plugin-runtime-memory-management`로만 합친다.
+1. Push 또는 merge 판단
+   - `desktop/clipper_electron` `feature/plugin-runtime-memory-management`는
+     `origin/feature/plugin-runtime-memory-management` 대비 ahead 1:
+     `d1a9ab0 fix(plugin-runtime): clean up health wait exit listeners`.
+   - `desktop/clipper_nestjs` `feature/plugin-runtime-memory-management`는
+     `origin/feature/plugin-runtime-memory-management` 대비 ahead 1:
+     `78d80e8 fix(plugin-runtime): clean up health wait exit listeners`.
+   - `dev`/`main` merge는 아직 하지 않았다.
 
-2. Project-first / Plugin / Queue 전체 정리
+2. Shortform render dry-run test timeout 확인
+   - NestJS full test escalated run에서 `test/shortform-project-api.test.js` 5개가
+     `pipeline job did not finish`로 timeout.
+   - 같은 file 단독 escalated 실행에서도 같은 5개가 재현됨.
+   - job은 `render_prepare_pending=false` 이후 `running`에 머무는 상태로 보였고,
+     listener cleanup과는 별도 worker/job completion issue로 분리한다.
+
+3. Project-first / Plugin / Queue 전체 정리
    - 상세 기준은 아래 `Project-First / Plugin / Queue Status`와
      `PLUGIN_PROJECT_QUEUE_TERMINOLOGY_2026-06-11.md`,
      `PLUGIN_PROJECT_QUEUE_PROJECT_FIRST_IMPLEMENTATION_PLAN_2026-06-11.md`를 따른다.

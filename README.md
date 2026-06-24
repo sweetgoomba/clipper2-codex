@@ -44,7 +44,8 @@ memory pressure와 lifecycle cleanup이다. 여러 plugin/runtime을 연달아 �
 현재 작업 branch는 각 desktop repo의 `feature/plugin-runtime-memory-management`다.
 2026-06-24 세션에서 local/devapp/packaged runtime의 idle peer process 종료,
 `/health.active_jobs`, Electron-hosted child process stop, packaged memory lifecycle probe를
-검증했고, Template Builder official DB/S3 remnants 제거 follow-up도 같은 feature branch로 합쳤다.
+검증했고, Template Builder official DB/S3 remnants 제거 follow-up과 preview artifact
+`MaxListenersExceededWarning` exit listener cleanup도 같은 feature branch에 커밋했다.
 `dev`/`main` merge는 아직 하지 않았다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md),
