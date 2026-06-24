@@ -188,13 +188,15 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
+  HEAD: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
+  previous TTS lifecycle commit: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
   previous stop commit: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
   previous lifecycle commit: a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
 
 desktop/clipper_electron:
   branch: feature/plugin-runtime-memory-management
-  HEAD: b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
+  HEAD: abafc4c test(electron): run node tests with file globs
+  previous stop commit: b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
 
 desktop/clipper_angular:
   branch: feature/plugin-runtime-memory-management
@@ -218,6 +220,9 @@ desktop/clipper_python:
   Electron bridge -> bundled NestJS `LocalPluginManager.stop()` -> Python `/shutdown` -> process exit까지 확인됨.
 - `tts_supertonic`은 기존 default lifecycle group 밖이라 heavy peer와 함께 남는 gap이 있었고,
   `ef1b23a`에서 default group에 포함하고 `TtsPluginClient`가 lifecycle policy를 거치도록 수정함.
+- packaged cancel probe에서 NestJS job cancel은 즉시 `cancelled`가 되지만 Python `/health.active_jobs`가
+  잠시 1로 남는 것을 확인했다. 기존 idle stop timer는 이 시점에 한 번만 확인하고 끝날 수 있어,
+  장시간 cancelled job 이후 process가 유휴로 남을 수 있었다.
 
 구현한 것:
 
@@ -227,6 +232,9 @@ desktop/clipper_python:
 - 두 repo 모두 stop helper 단위 테스트를 추가했다.
 - NestJS default Python runtime exclusive group에 `tts_supertonic`을 추가했다.
 - `TtsPluginClient`가 synthesis 전 `prepareForRun()`, 완료 후 `scheduleIdleStop()`을 호출한다.
+- `11979f3`에서 scheduled idle stop이 `/health.active_jobs > 0` 때문에 stop하지 못한 경우,
+  plugin이 여전히 running이고 `safeToEvictWhenIdle`이면 같은 idle delay로 재확인하도록 수정했다.
+- `abafc4c`에서 Electron test script를 Node 22 호환 glob 실행으로 고정했다.
 
 검증:
 
@@ -234,6 +242,7 @@ desktop/clipper_python:
 desktop/clipper_electron npm run build
 desktop/clipper_electron node --test test/child-process-stop.test.js
 desktop/clipper_electron node --test test/*.js test/*.mjs
+desktop/clipper_electron nvm use 22 && npm test
 desktop/clipper_electron git diff --check
 
 desktop/clipper_nestjs npm run build
@@ -288,12 +297,38 @@ packaged normal-video memory lifecycle probe:
     tts pids: 86854, 90612; max sampled RSS=562 MB
     all observed peer evictions exited with lastExitCode=0
     generated cycle-1/cycle-2 dance_meta.json and dialog manifest.json
+
+packaged cancel/error/idle probe:
+  app:
+    existing packaged Clipper2 primary instance
+    packaged NestJS API: http://127.0.0.1:62052/v1
+  summary:
+    /tmp/clipper-packaged-cancel-error-idle-2026-06-24T04-21-42-900Z/cancel-error-idle-summary.json
+  result:
+    missing source file and corrupt mp4 fail in NestJS validation before plugin start
+    TTS idle reuse window: same PID reused within 30s, stopped after the 60s idle window with lastExitCode=0
+    dance cancel: NestJS job became cancelled immediately, Python active_jobs stayed 1 until worker finished, then stopped with lastExitCode=0
+    output-root error probe started dance_highlight PID 6054, failed inside plugin with read-only filesystem error,
+      then /health.active_jobs returned 0 and idle stop terminated the process with lastExitCode=0
+
+Node/test baseline:
+  desktop/clipper_electron/.nvmrc is 22
+  final Electron verification used Node v22.22.2
+  npm test now runs node --test "test/*.js" "test/*.mjs" and passes 23/23
+  desktop/clipper_nestjs final build/test verification also used Node v22.22.2
+
+dashboard inventory and gap:
+  current /dashboard refreshes plugin status, resource snapshot, and jobs every 3s
+  current resource panel shows memory percent/used/total, CPU load/cores, OS/arch,
+    tracked process count, GPU/VRAM summary, and per-process PID/RSS/CPU rows
+  current plugin panel shows runtime plugin rows, install/start/stop actions, port/runtime age,
+    accelerator labels, resource warnings, estimated RAM/VRAM, PID/RSS/CPU when running,
+    lastError on error, and a bulk "stop evictable runtimes" action
+  current idle cleanup label uses Angular/NestJS app job count, not Python plugin /health.active_jobs
+  next UI improvement should extend plugin status with plugin health activeJobs and lifecycle metadata,
+    then change the existing idle cleanup row to distinguish app job active vs runtime active job,
+    show scheduled cleanup/remaining time, expose lastExitCode, and explain exclusive-group peer eviction
 ```
-
-주의:
-
-- `desktop/clipper_electron npm test`는 현재 package script가 `node --test test/`를 실행해 Node 24에서
-  `Cannot find module .../test`로 실패한다. 동등한 glob 실행인 `node --test test/*.js test/*.mjs`는 통과했다.
 
 ## 2026-06-23 Web Admin App Version Management Notes
 
