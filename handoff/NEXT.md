@@ -263,6 +263,31 @@ real full pipeline output smoke:
     2 passed in 242.54s
     dialog output includes /tmp/clipper-youtube-real-output-with-llm/dialog/json/manifest.json
     dance output includes /tmp/clipper-youtube-real-output-with-llm/dance/json/dance_meta.json and montage mp4 files
+
+packaged normal-video memory lifecycle probe:
+  sequence:
+    cycle 1: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+    cycle 2: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+  app:
+    dist-app/mac-arm64/Clipper2.app/Contents/MacOS/Clipper2
+    packaged NestJS API: http://127.0.0.1:60929/v1
+  input:
+    dance_highlight: /tmp/clipper-youtube-real-input/CHp0Kaidr14.mp4
+    dialog_highlight: /tmp/clipper-youtube-real-input/ulQr-_f3DG8.mp4
+  output:
+    /tmp/clipper-packaged-memory-probe-2026-06-24T04-02-46-162Z
+    summary: /tmp/clipper-packaged-memory-probe-2026-06-24T04-02-46-162Z/memory-probe-summary.json
+  result:
+    completed=6, failures=0
+    max plugin process count=1
+    final running plugins=none
+    final plugin process count=0
+    max sampled relevant RSS=3386 MB
+    dance pids: 82940, 86976; max sampled RSS=2996 MB; active_jobs observed 1 -> 0
+    dialog pids: 84373, 88382; max sampled RSS=1553 MB; active_jobs observed 1 -> 0
+    tts pids: 86854, 90612; max sampled RSS=562 MB
+    all observed peer evictions exited with lastExitCode=0
+    generated cycle-1/cycle-2 dance_meta.json and dialog manifest.json
 ```
 
 주의:

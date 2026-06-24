@@ -147,6 +147,30 @@ result:
 - `dialog_highlight` output: `/tmp/clipper-youtube-real-output-with-llm/dialog/json/manifest.json`.
 - `dance_highlight` output: `/tmp/clipper-youtube-real-output-with-llm/dance/json/dance_meta.json` and montage mp4 files.
 
+packaged normal-video memory lifecycle probe:
+
+```text
+app:
+  dist-app/mac-arm64/Clipper2.app/Contents/MacOS/Clipper2
+
+sequence:
+  cycle 1: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+  cycle 2: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+
+result:
+  completed=6
+  failures=0
+  max plugin process count=1
+  final plugin process count=0
+  max sampled relevant RSS=3386 MB
+```
+
+- `dance_highlight` PIDs `82940`, `86976`; max sampled RSS `2996 MB`; `/health.active_jobs` observed `1 -> 0`.
+- `dialog_highlight` PIDs `84373`, `88382`; max sampled RSS `1553 MB`; `/health.active_jobs` observed `1 -> 0`.
+- `tts_supertonic` PIDs `86854`, `90612`; max sampled RSS `562 MB`.
+- All observed peer evictions exited with `lastExitCode=0`.
+- Summary JSON: `/tmp/clipper-packaged-memory-probe-2026-06-24T04-02-46-162Z/memory-probe-summary.json`.
+
 ## Remaining Follow-up
 
 남은 확인/구현 후보:
