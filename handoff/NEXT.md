@@ -188,7 +188,8 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
+  HEAD: a2efd95 fix(plugin-runtime): stop managed runtime on cancelled jobs
+  previous cancel/lifecycle diagnostics commit: a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
   previous retry commit: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
   previous TTS lifecycle commit: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
   previous stop commit: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
@@ -201,7 +202,8 @@ desktop/clipper_electron:
 
 desktop/clipper_angular:
   branch: feature/plugin-runtime-memory-management
-  HEAD: 1460727 feat(plugin-runtime): show lifecycle diagnostics on dashboard
+  HEAD: 3d4c231 test(template-builder): align specs with current ratios
+  previous dashboard lifecycle UI commit: 1460727 feat(plugin-runtime): show lifecycle diagnostics on dashboard
   previous cleanup commit: 652bc44 chore(template-builder): remove legacy template builder UI paths
 
 desktop/clipper_python:
@@ -244,6 +246,10 @@ desktop/clipper_python:
   `/health.active_jobs > 0`인 runtime은 정리하지 않는다.
 - `1460727`에서 dashboard plugin row가 runtime active job 수, 다음 idle cleanup 확인 시간,
   마지막 종료 코드, exclusive-group 기반 자동 정리 설명을 표시하도록 수정했다.
+- `a2efd95`에서 NestJS job cancel 후 host-owned, safe-to-evict Python runtime을 즉시 stop하도록 수정했다.
+  external/static runtime host는 그대로 둔다.
+- `3d4c231`에서 current ratio policy(`16:9`, `4:3`, `1:1`, shortform `1:1`/`4:3`)에 맞게
+  TemplateBuilder Karma spec 기대값을 정리했다.
 
 검증:
 
@@ -354,13 +360,48 @@ packaged app smoke after a5a6003/1460727:
     GET /v1/plugins returned participatesInExclusiveGroup=true and the default exclusive group
     packaged app shutdown closed NestJS with exit code 0
 
-known verification note:
-  Angular full Karma run currently fails in existing TemplateBuilderEditorComponent specs, not dashboard specs:
-    - TemplateBuilderEditorComponent applies the current layout to sibling ratios without touching non-layout layers
-    - TemplateBuilderEditorComponent does not apply layout when the selected ratio is not a sync source
-  Dashboard targeted spec passes 2/2.
-  Plain `ng build` can abort in the Angular persistent cache native layer on this machine; `CI=1 ng build`
-  and `CI=1 npm run build:packaged` pass.
+final follow-up after a2efd95/3d4c231:
+  NestJS Node v22.22.2:
+    npm run build pass
+    node --test test/python-runtime-lifecycle-policy.test.js 8/8 pass
+    node --test test/*.test.js 157/157 pass
+    npm run bundle pass
+    git diff --check pass before commit
+  Angular Node v22.22.2:
+    ./node_modules/.bin/tsc -p tsconfig.app.json --noEmit pass
+    ./node_modules/.bin/tsc -p tsconfig.spec.json --noEmit pass
+    ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless 638/638 pass
+    CI=1 npm run build:packaged -- --progress=false pass
+    git diff --check pass before commit
+  Electron Node v22.22.2:
+    npm run build pass
+    npm test 23/23 pass
+    CI=1 npm run build:app:mac:arm64 rebuilt Angular/NestJS/Electron and packaged .app,
+      then failed only at GitHub publish because GH_TOKEN is not set
+    npx electron-builder --mac --arm64 --publish never pass
+  packaged cancel/error/idle probe:
+    app API: http://127.0.0.1:51660/v1
+    summary: /tmp/clipper-packaged-cancel-error-idle-2026-06-24T05-44-04-496Z/cancel-error-idle-summary.json
+    completed=3, failures=0
+    error path stayed stopped after NestJS validation failure
+    TTS reused PID 4968 inside the 30s idle window and stopped after the idle window
+    dance cancel observed active_jobs=1 before cancel, job became cancelled, and after DELETE
+      dance_highlight was already stopped; observedActiveAfterCancel=null, stoppedWithin100s=true
+  packaged normal-video memory lifecycle probe:
+    app API: http://127.0.0.1:51660/v1
+    summary: /tmp/clipper-packaged-memory-probe-2026-06-24T05-46-03-415Z/memory-probe-summary.json
+    completed=6, failures=0, sampleCount=81
+    max plugin process count=1
+    final running plugins=none
+    final plugin process count=0
+    max sampled relevant RSS=2833 MB
+    max sampled plugin RSS: dance_highlight=2462 MB, dialog_highlight=1543 MB, tts_supertonic=563 MB
+    active job values stayed within expected 0/1 samples; activeMismatchCount=0
+  process cleanup:
+    after packaged app shutdown, pgrep found no Clipper2/dance_highlight/dialog_highlight/tts_supertonic/clipper1_video_render processes
+  known verification note:
+    The default shell still resolves `node` to v24.3.0. Final verification evidence above used PATH-pinned Node v22.22.2.
+    Direct `ng` invocations without the Node 22 PATH are not valid evidence for this branch.
 ```
 
 ## 2026-06-23 Web Admin App Version Management Notes

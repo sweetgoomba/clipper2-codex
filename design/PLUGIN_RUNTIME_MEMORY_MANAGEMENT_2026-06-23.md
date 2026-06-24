@@ -30,9 +30,14 @@ clipper_nestjs:
   a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
   fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
   ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
+  11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
+  a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
+  a2efd95 fix(plugin-runtime): stop managed runtime on cancelled jobs
 
 clipper_angular:
   652bc44 chore(template-builder): remove legacy template builder UI paths
+  1460727 feat(plugin-runtime): show lifecycle diagnostics on dashboard
+  3d4c231 test(template-builder): align specs with current ratios
 
 clipper_python:
   84a1d44 chore(clipper1): remove legacy template assets
@@ -40,6 +45,7 @@ clipper_python:
 clipper_electron:
   e839aca feat(nest-manager): update data directory path for korean_artists.json to match bundle layout
   b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
+  abafc4c test(electron): run node tests with file globs
 ```
 
 `cleanup/remove-legacy-templates` worktree는 제거했다. cleanup branch는 원격에 남아 있고,
@@ -171,14 +177,80 @@ result:
 - All observed peer evictions exited with `lastExitCode=0`.
 - Summary JSON: `/tmp/clipper-packaged-memory-probe-2026-06-24T04-02-46-162Z/memory-probe-summary.json`.
 
+## 2026-06-24 Final Verification Addendum
+
+`a2efd95` 이후 cancel path에서 NestJS job cancel이 Python worker를 즉시 정리하도록 보강했다.
+host-owned packaged/local/devapp runtime이고 manifest가 `safeToEvictWhenIdle=true`일 때만 stop하며,
+external/static runtime host는 stop하지 않는다.
+
+최신 packaged cancel/error/idle probe:
+
+```text
+app API:
+  http://127.0.0.1:51660/v1
+summary:
+  /tmp/clipper-packaged-cancel-error-idle-2026-06-24T05-44-04-496Z/cancel-error-idle-summary.json
+result:
+  completed=3
+  failures=0
+  TTS reused PID 4968 inside the 30s idle window and then stopped after the idle window
+  dance cancel observed active_jobs=1 before cancel
+  after DELETE, dance_highlight was already stopped
+  observedActiveAfterCancel=null
+  stoppedWithin100s=true
+```
+
+최신 packaged normal-video memory lifecycle probe:
+
+```text
+app API:
+  http://127.0.0.1:51660/v1
+summary:
+  /tmp/clipper-packaged-memory-probe-2026-06-24T05-46-03-415Z/memory-probe-summary.json
+sequence:
+  cycle 1: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+  cycle 2: dance_highlight full pipeline -> dialog_highlight full pipeline -> tts_supertonic generate
+result:
+  completed=6
+  failures=0
+  sampleCount=81
+  max plugin process count=1
+  final running plugins=none
+  final plugin process count=0
+  max sampled relevant RSS=2833 MB
+  max sampled plugin RSS:
+    dance_highlight=2462 MB
+    dialog_highlight=1543 MB
+    tts_supertonic=563 MB
+  active job values stayed within expected 0/1 samples
+```
+
+Angular TemplateBuilder follow-up:
+
+```text
+commit:
+  3d4c231 test(template-builder): align specs with current ratios
+reason:
+  full Karma failures were stale expectations from the current ratio policy
+  TEMPLATE_BUILDER_RATIOS = 16:9, 4:3, 1:1
+  SHORTFORM_TEMPLATE_BUILDER_RATIOS = 1:1, 4:3
+verification:
+  Node v22.22.2
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless
+  TOTAL: 638 SUCCESS
+```
+
+After packaged app shutdown, no `Clipper2`, `dance_highlight`, `dialog_highlight`,
+`tts_supertonic`, or `clipper1_video_render` process remained.
+
 ## Remaining Follow-up
 
-남은 확인/구현 후보:
+현재 요청된 lifecycle/cancel/TemplateBuilder verification 범위에서 별도 남은 follow-up은 없다.
+다만 제품 hardening 관점에서 아래 항목은 추후 필요할 때 다시 판단한다.
 
-1. idle stop timer가 job 완료 후 너무 빨리/느리게 동작하지 않는지 사용성 관점에서 확인한다.
-2. plugin 실행 중 cancel/error path에서도 idle cleanup이 안전한지 확인한다.
-3. OS memory pressure 감지 또는 process RSS 기준 eviction이 필요한지 판단한다.
-4. Angular UI에는 아직 runtime cleanup 상태나 memory pressure 표시가 없다. 필요 여부를 별도 판단한다.
+1. idle stop timer가 실제 사용자 워크플로에서 너무 빠르거나 느린지 장시간 사용성 관점에서 조정한다.
+2. OS memory pressure/RSS 기반 eviction threshold를 더 공격적으로 둘지 별도 제품 기준으로 판단한다.
+3. Dashboard UI에 현재 diagnostics보다 더 많은 memory trend/history를 보여줄지 사용자 요구가 생기면 재검토한다.
 
 ## Next Session Start Prompt
 
