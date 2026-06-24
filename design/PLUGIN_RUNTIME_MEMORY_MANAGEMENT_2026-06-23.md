@@ -129,16 +129,32 @@ packaged: dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_su
 - 각 다음 plugin start에서 이전 idle peer가 Python `/shutdown`으로 종료되고 `lastExitCode=0`.
 - rebuilt packaged Electron mode에서도 bridge 경유 child process 종료 확인.
 
+정상 영상 full pipeline output smoke:
+
+```text
+input:
+  dance_highlight: YouTube CHp0Kaidr14 -> /tmp/clipper-youtube-real-input/CHp0Kaidr14.mp4
+  dialog_highlight: YouTube ulQr-_f3DG8 -> /tmp/clipper-youtube-real-input/ulQr-_f3DG8.mp4
+
+command:
+  CLIPPER_E2E_OUTPUT_ROOT=/tmp/clipper-youtube-real-output-with-llm
+  uv run --extra test pytest tests/e2e/test_real_pipeline.py -v -s
+
+result:
+  2 passed in 242.54s
+```
+
+- `dialog_highlight` output: `/tmp/clipper-youtube-real-output-with-llm/dialog/json/manifest.json`.
+- `dance_highlight` output: `/tmp/clipper-youtube-real-output-with-llm/dance/json/dance_meta.json` and montage mp4 files.
+
 ## Remaining Follow-up
 
 남은 확인/구현 후보:
 
-1. 실제 정상 영상 asset으로 full pipeline output까지 확인한다. 이번 smoke는 invalid mp4로 model load,
-   active_jobs, peer eviction, process shutdown을 검증했다.
-2. idle stop timer가 job 완료 후 너무 빨리/느리게 동작하지 않는지 사용성 관점에서 확인한다.
-3. plugin 실행 중 cancel/error path에서도 idle cleanup이 안전한지 확인한다.
-4. OS memory pressure 감지 또는 process RSS 기준 eviction이 필요한지 판단한다.
-5. Angular UI에는 아직 runtime cleanup 상태나 memory pressure 표시가 없다. 필요 여부를 별도 판단한다.
+1. idle stop timer가 job 완료 후 너무 빨리/느리게 동작하지 않는지 사용성 관점에서 확인한다.
+2. plugin 실행 중 cancel/error path에서도 idle cleanup이 안전한지 확인한다.
+3. OS memory pressure 감지 또는 process RSS 기준 eviction이 필요한지 판단한다.
+4. Angular UI에는 아직 runtime cleanup 상태나 memory pressure 표시가 없다. 필요 여부를 별도 판단한다.
 
 ## Next Session Start Prompt
 

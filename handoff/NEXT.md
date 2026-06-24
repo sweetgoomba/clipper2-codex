@@ -249,6 +249,20 @@ actual sequential smoke:
 rebuilt packaged app smoke:
   idle stop: clipper1_video_render PID terminated, lastExitCode=0
   explicit stop: clipper1_video_render PID terminated, lastExitCode=0
+
+real full pipeline output smoke:
+  input:
+    dance_highlight: YouTube CHp0Kaidr14, downloaded as /tmp/clipper-youtube-real-input/CHp0Kaidr14.mp4
+    dialog_highlight: YouTube ulQr-_f3DG8, downloaded as /tmp/clipper-youtube-real-input/ulQr-_f3DG8.mp4
+  command:
+    CLIPPER_E2E_DANCE_VIDEO=/tmp/clipper-youtube-real-input/CHp0Kaidr14.mp4
+    CLIPPER_E2E_DIALOG_VIDEO=/tmp/clipper-youtube-real-input/ulQr-_f3DG8.mp4
+    CLIPPER_E2E_OUTPUT_ROOT=/tmp/clipper-youtube-real-output-with-llm
+    uv run --extra test pytest tests/e2e/test_real_pipeline.py -v -s
+  result:
+    2 passed in 242.54s
+    dialog output includes /tmp/clipper-youtube-real-output-with-llm/dialog/json/manifest.json
+    dance output includes /tmp/clipper-youtube-real-output-with-llm/dance/json/dance_meta.json and montage mp4 files
 ```
 
 주의:
