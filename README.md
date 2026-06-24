@@ -37,15 +37,15 @@ legacy/
 
 ## Current Focus
 
-2026-06-23 기준 현재 첫 작업은 `desktop/*` 4개 repo의 plugin/runtime process
+2026-06-24 기준 현재 첫 작업은 `desktop/*` 4개 repo의 plugin/runtime process
 memory pressure와 lifecycle cleanup이다. 여러 plugin/runtime을 연달아 실행할 때
 메모리 부족으로 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이는 방향이다.
 
-1차 구현은 `desktop/clipper_nestjs` `feature/plugin-runtime-memory-management`
-브랜치의 `a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy`에 있다.
-이 구현은 완료 판정 전 단계다. 다음 세션에서는 실제 local/devapp/packaged runtime에서
-idle peer process 종료, `/health active_jobs`, Electron-hosted child process stop 동작을
-먼저 검증한다.
+현재 작업 branch는 각 desktop repo의 `feature/plugin-runtime-memory-management`다.
+2026-06-24 세션에서 local/devapp/packaged runtime의 idle peer process 종료,
+`/health.active_jobs`, Electron-hosted child process stop, packaged memory lifecycle probe를
+검증했고, Template Builder official DB/S3 remnants 제거 follow-up도 같은 feature branch로 합쳤다.
+`dev`/`main` merge는 아직 하지 않았다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md),
 [design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md),

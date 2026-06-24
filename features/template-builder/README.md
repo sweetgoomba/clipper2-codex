@@ -13,7 +13,11 @@ Template Builder는 top-level `템플릿` 메뉴에서 system/custom template fa
 - Template Builder 목록 API 자체는 ffmpeg/ffprobe를 직접 쓰지 않는다.
 - 페이지 진입 시 text preview renderer worker를 warm-up하고, sample render 기능도 `clipper1_video_render` worker를 사용하므로 본 UI는 ffmpeg/ffprobe ready 이후에 시작한다.
 - card thumbnail loading은 `TemplateFamilyThumbnailComponent`가 skeleton/load/error 상태를 관리한다.
-- official template registry, S3 asset, local custom JSON persistence가 함께 존재한다.
+- official template registry / official Template DB / S3 asset registry 경로는 제거 대상이며,
+  2026-06-24 `feature/plugin-runtime-memory-management`에서 NestJS/Electron packaged remnants를 제거했다.
+- 현재 Template Builder family persistence는 local JSON store와 local `template-assets` 파일을 기준으로 본다.
+- custom template 삭제 API는 해당 family의 `template-assets/<familyId>`도 삭제한다. 백업에서 JSON만 복원하면
+  thumbnail/font 파일 참조가 깨질 수 있으므로 asset directory도 함께 복원하거나 참조를 재생성해야 한다.
 
 ## Active References
 

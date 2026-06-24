@@ -188,7 +188,8 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: a2efd95 fix(plugin-runtime): stop managed runtime on cancelled jobs
+  HEAD: d8d8f82 fix(template-builder): remove official template DB integration
+  previous lifecycle/cancel commit: a2efd95 fix(plugin-runtime): stop managed runtime on cancelled jobs
   previous cancel/lifecycle diagnostics commit: a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
   previous retry commit: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
   previous TTS lifecycle commit: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
@@ -197,7 +198,8 @@ desktop/clipper_nestjs:
 
 desktop/clipper_electron:
   branch: feature/plugin-runtime-memory-management
-  HEAD: abafc4c test(electron): run node tests with file globs
+  HEAD: 1ea4234 fix(template-builder): remove official DB packaging gate
+  previous test script commit: abafc4c test(electron): run node tests with file globs
   previous stop commit: b18f424 fix(plugin-runtime): gracefully stop Electron-hosted Python runtime
 
 desktop/clipper_angular:
@@ -250,6 +252,9 @@ desktop/clipper_python:
   external/static runtime host는 그대로 둔다.
 - `3d4c231`에서 current ratio policy(`16:9`, `4:3`, `1:1`, shortform `1:1`/`4:3`)에 맞게
   TemplateBuilder Karma spec 기대값을 정리했다.
+- `d8d8f82`에서 NestJS Template Builder official DB/Postgres/S3 registry integration remnants를 제거했다.
+  Template Builder family list는 local JSON store만 사용한다.
+- `1ea4234`에서 Electron packaged build의 `CLIPPER2_TEMPLATE_DB_*` env gate를 제거했다.
 
 검증:
 
@@ -404,6 +409,83 @@ final follow-up after a2efd95/3d4c231:
     Direct `ng` invocations without the Node 22 PATH are not valid evidence for this branch.
 ```
 
+Template Builder packaged-store follow-up from the same session:
+
+```text
+problem:
+  packaged Template Builder page returned 500 for /v1/template-builder/families because official Template DB remnants
+  still existed after the product decision to remove official DB/S3 registry paths.
+
+code fixes:
+  desktop/clipper_nestjs d8d8f82
+    removed official DB repository/provider/Postgres adapter/env requirement
+    added no-official-DB regression test
+  desktop/clipper_electron 1ea4234
+    removed CLIPPER2_TEMPLATE_DB_* packaged build gate
+    added build-script regression test
+
+branch consolidation:
+  fix/template-builder-packaged-store was fast-forward merged into feature/plugin-runtime-memory-management
+  in desktop/clipper_nestjs and desktop/clipper_electron.
+  dev/main were not touched.
+
+current push state:
+  desktop/clipper_nestjs feature/plugin-runtime-memory-management is ahead of origin by 1
+  desktop/clipper_electron feature/plugin-runtime-memory-management is ahead of origin by 1
+  desktop/clipper_angular and desktop/clipper_python are clean and aligned with origin feature branch
+```
+
+Template Builder local user-data repair:
+
+```text
+root cause:
+  API delete removes template-assets/<familyId>. JSON-only restore made five visible shortform templates point to
+  missing card thumbnail PNGs and missing uploaded font files.
+
+backup:
+  ~/Library/Application Support/Clipper2/templates/template-builder.backup-before-font-thumbnail-repair-2026-06-24T08-04-00-605Z.json
+
+repair:
+  restored/generated 5 card thumbnail PNG files at the existing cardThumbnailUri paths
+  copied 7 missing uploaded font files back into template-assets
+  removed 36 legacy clipperstudio.s3 font references
+  mapped JalnanGothic to local asset files
+  mapped legacy Pretendard URLs to bundled template-builder/fonts/Pretendard-SemiBold.otf
+
+packaged verification:
+  GET /v1/template-builder/families => 200
+  5 visible shortform families
+  thumbnails: 5/5 image/png 200
+  font endpoints: 35/35 200
+  legacy S3 font refs: 0
+  non-Pretendard preview text artifacts: 17/17 rendered, bad frame count 0
+```
+
+Next session first task:
+
+```text
+Investigate the Electron packaged Template Builder preview-artifact smoke warning:
+
+  MaxListenersExceededWarning: Possible EventEmitter memory leak detected.
+  11 exit listeners added to [ChildProcess]. MaxListeners is 10.
+
+Context:
+  It appeared once while rendering 17 Template Builder text preview artifacts through packaged Clipper2.
+  The artifacts rendered successfully, API verification passed, and app/plugin shutdown completed, so this is a
+  listener-lifecycle cleanup follow-up rather than a functional failure.
+
+Start from:
+  desktop/clipper_electron feature/plugin-runtime-memory-management
+  desktop/clipper_nestjs feature/plugin-runtime-memory-management
+  use Node v22.22.2, not the default shell Node v24
+
+Expected approach:
+  Reproduce with packaged or targeted child-process/plugin-host test.
+  Trace where repeated `exit` listeners are attached to the same ChildProcess.
+  Add a focused regression test before changing behavior.
+  Keep dev/main untouched; merge any child branch back into feature/plugin-runtime-memory-management only.
+```
+
 ## 2026-06-23 Web Admin App Version Management Notes
 
 `web/clipper_web_admin`에서 앱 버전 관리 mock 화면을 검토했다.
@@ -473,20 +555,18 @@ clipper_python:   4922c5c Merge branch 'feature/windows-packaging' into merge/de
 
 ## Current Open Work Queue
 
-2026-06-19 기준 현재 남은 작업이다. 다음 세션 첫 작업은 아래 1번이다.
+2026-06-24 기준 현재 남은 작업이다. 다음 세션 첫 작업은 아래 1번이다.
 
-1. Plugin/runtime memory pressure and process lifecycle cleanup
-   - 최신 `dev`에서 새 브랜치를 만든다.
-   - 여러 plugin을 이어서 실행하면 메모리 부족으로 Clipper2 앱이 종료되거나 Chrome 등 다른 앱까지
-     freeze되는 문제가 있다.
-   - 먼저 `clipper_electron`, `clipper_nestjs`, `clipper_python`, `clipper_angular`에서
-     plugin/runtime/worker process lifecycle 관리가 이미 존재하는지 조사한다.
-   - 현재 안 쓰이는 NestJS/Python/plugin child process를 종료하는 기능, idle cleanup,
-     job 완료 후 process shutdown, memory pressure 감지 기능이 있는지 확인한다.
-   - 기능이 없으면 구현하고, 있어도 문제가 있으면 수정/개선한다.
-   - memory pressure 감지가 어렵다면 특정 plugin들을 exclusive group으로 묶고,
-     그 group 중 하나가 실행될 때 다른 plugin/runtime process를 종료시키는 정책도 허용된다.
-   - 바로 구현하지 말고 lifecycle 구조와 문제 가능성을 도식화해 사용자에게 먼저 설명한다.
+1. Electron packaged Template Builder preview-artifact `MaxListenersExceededWarning` follow-up
+   - packaged app에서 Template Builder text preview artifact 17개를 연속 렌더하는 검증 중
+     `11 exit listeners added to [ChildProcess]` warning이 한 번 찍혔다.
+   - 렌더/API/shutdown은 정상이라 기능 실패는 아니지만, 같은 child process에 exit listener가
+     누적되는 경로가 있는지 확인해야 한다.
+   - `desktop/clipper_electron`과 필요 시 `desktop/clipper_nestjs`의
+     `feature/plugin-runtime-memory-management`에서 진행한다.
+   - default shell Node v24가 아니라 Node v22.22.2를 PATH로 고정해서 재현/테스트한다.
+   - 먼저 재현 또는 targeted regression test를 만들고, 반복 attach 위치를 추적한 뒤 수정한다.
+   - `dev`/`main`은 건드리지 않는다. child branch를 만들면 다시 `feature/plugin-runtime-memory-management`로만 합친다.
 
 2. Project-first / Plugin / Queue 전체 정리
    - 상세 기준은 아래 `Project-First / Plugin / Queue Status`와
