@@ -188,7 +188,8 @@ web/clipper_web_api:
 ```text
 desktop/clipper_nestjs:
   branch: feature/plugin-runtime-memory-management
-  HEAD: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
+  HEAD: a5a6003 feat(plugin-runtime): expose lifecycle diagnostics and pressure cleanup
+  previous retry commit: 11979f3 fix(plugin-runtime): retry idle stop after active jobs finish
   previous TTS lifecycle commit: ef1b23a fix(plugin-runtime): include TTS runtime in lifecycle policy
   previous stop commit: fbf7b41 fix(plugin-runtime): gracefully stop local Python runtime
   previous lifecycle commit: a978ea7 feat(plugin-runtime): add Python runtime lifecycle policy
@@ -200,7 +201,8 @@ desktop/clipper_electron:
 
 desktop/clipper_angular:
   branch: feature/plugin-runtime-memory-management
-  HEAD: 652bc44 chore(template-builder): remove legacy template builder UI paths
+  HEAD: 1460727 feat(plugin-runtime): show lifecycle diagnostics on dashboard
+  previous cleanup commit: 652bc44 chore(template-builder): remove legacy template builder UI paths
 
 desktop/clipper_python:
   branch: feature/plugin-runtime-memory-management
@@ -235,6 +237,13 @@ desktop/clipper_python:
 - `11979f3`에서 scheduled idle stop이 `/health.active_jobs > 0` 때문에 stop하지 못한 경우,
   plugin이 여전히 running이고 `safeToEvictWhenIdle`이면 같은 idle delay로 재확인하도록 수정했다.
 - `abafc4c`에서 Electron test script를 Node 22 호환 glob 실행으로 고정했다.
+- `a5a6003`에서 `/v1/plugins`와 `/v1/plugins/:name/status`의 Python plugin status에
+  `runtimeHealth.activeJobs`와 lifecycle metadata를 포함하도록 확장했다.
+- `a5a6003`에서 heavy Python plugin 시작 전 projected memory headroom이 낮으면
+  Electron/NestJS resource snapshot의 plugin RSS를 보고 idle safe-to-evict runtime을 RSS 큰 순서로 정리한다.
+  `/health.active_jobs > 0`인 runtime은 정리하지 않는다.
+- `1460727`에서 dashboard plugin row가 runtime active job 수, 다음 idle cleanup 확인 시간,
+  마지막 종료 코드, exclusive-group 기반 자동 정리 설명을 표시하도록 수정했다.
 
 검증:
 
@@ -250,7 +259,14 @@ desktop/clipper_nestjs node --test test/local-plugin-process-stop.test.js
 desktop/clipper_nestjs node --test test/*.test.js
 desktop/clipper_nestjs git diff --check
 
+desktop/clipper_angular ./node_modules/.bin/tsc -p tsconfig.app.json --noEmit
+desktop/clipper_angular ./node_modules/.bin/tsc -p tsconfig.spec.json --noEmit
+desktop/clipper_angular ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/shell/dashboard/dashboard.component.spec.ts
+desktop/clipper_angular CI=1 npm run build:packaged -- --progress=false
+desktop/clipper_angular git diff --check
+
 desktop/clipper_electron npm run build:app:mac:arm64
+desktop/clipper_electron npx electron-builder --mac --arm64 --publish never
 actual sequential smoke:
   local:    dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
   devapp:   dance_highlight -> dialog_highlight -> clipper1_video_render -> tts_supertonic -> dance_highlight
@@ -318,16 +334,33 @@ Node/test baseline:
   desktop/clipper_nestjs final build/test verification also used Node v22.22.2
 
 dashboard inventory and gap:
-  current /dashboard refreshes plugin status, resource snapshot, and jobs every 3s
-  current resource panel shows memory percent/used/total, CPU load/cores, OS/arch,
+  /dashboard refreshes plugin status, resource snapshot, and jobs every 3s
+  resource panel shows memory percent/used/total, CPU load/cores, OS/arch,
     tracked process count, GPU/VRAM summary, and per-process PID/RSS/CPU rows
-  current plugin panel shows runtime plugin rows, install/start/stop actions, port/runtime age,
+  plugin panel shows runtime plugin rows, install/start/stop actions, port/runtime age,
     accelerator labels, resource warnings, estimated RAM/VRAM, PID/RSS/CPU when running,
     lastError on error, and a bulk "stop evictable runtimes" action
-  current idle cleanup label uses Angular/NestJS app job count, not Python plugin /health.active_jobs
-  next UI improvement should extend plugin status with plugin health activeJobs and lifecycle metadata,
-    then change the existing idle cleanup row to distinguish app job active vs runtime active job,
-    show scheduled cleanup/remaining time, expose lastExitCode, and explain exclusive-group peer eviction
+  idle cleanup label now prefers Python plugin /health.active_jobs over NestJS app job count
+  plugin rows show scheduled cleanup countdown, lastExitCode, and exclusive-group peer eviction explanation
+
+packaged app smoke after a5a6003/1460727:
+  built:
+    dist-app/mac-arm64/Clipper2.app
+    dist-app/Clipper2-0.0.1-arm64.dmg
+  API:
+    http://127.0.0.1:64942/v1
+  checked:
+    GET /v1/plugins returned Python plugin status.lifecycle.safeToEvictWhenIdle=true
+    GET /v1/plugins returned participatesInExclusiveGroup=true and the default exclusive group
+    packaged app shutdown closed NestJS with exit code 0
+
+known verification note:
+  Angular full Karma run currently fails in existing TemplateBuilderEditorComponent specs, not dashboard specs:
+    - TemplateBuilderEditorComponent applies the current layout to sibling ratios without touching non-layout layers
+    - TemplateBuilderEditorComponent does not apply layout when the selected ratio is not a sync source
+  Dashboard targeted spec passes 2/2.
+  Plain `ng build` can abort in the Angular persistent cache native layer on this machine; `CI=1 ng build`
+  and `CI=1 npm run build:packaged` pass.
 ```
 
 ## 2026-06-23 Web Admin App Version Management Notes
