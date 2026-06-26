@@ -37,18 +37,19 @@ legacy/
 
 ## Current Focus
 
-2026-06-24 기준 현재 첫 작업은 `desktop/*` 4개 repo의 plugin/runtime process
-memory pressure와 lifecycle cleanup이다. 여러 plugin/runtime을 연달아 실행할 때
-메모리 부족으로 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이는 방향이다.
+2026-06-26 기준 `desktop/*` 4개 repo의 `feature/plugin-runtime-memory-management`
+작업은 `dev`에 반영된 상태다. 여러 plugin/runtime을 연달아 실행할 때 메모리 부족으로
+Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이기 위해 Python runtime lifecycle,
+idle peer stop, child process stop, dashboard diagnostics, Template Builder official
+DB/S3 remnants 제거, preview artifact health-wait exit listener cleanup을 포함했다.
 
-현재 작업 branch는 각 desktop repo의 `feature/plugin-runtime-memory-management`다.
-2026-06-24 세션에서 local/devapp/packaged runtime의 idle peer process 종료,
-`/health.active_jobs`, Electron-hosted child process stop, packaged memory lifecycle probe를
-검증했고, Template Builder official DB/S3 remnants 제거 follow-up과 preview artifact
-`MaxListenersExceededWarning` exit listener cleanup도 같은 feature branch에 커밋했다.
-`dev`/`main` merge는 아직 하지 않았다.
+현재 `desktop/clipper_angular`, `desktop/clipper_electron`, `desktop/clipper_nestjs`,
+`desktop/clipper_python` 원본 checkout은 모두 `dev...origin/dev` clean 상태다. 2026-06-26
+fetch 시 `origin/dev`가 이미 검증한 merge commit을 가리키고 있어 로컬 `dev`만
+fast-forward했다. push는 이 세션에서 수행하지 않았다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md),
+[records/sessions/2026/06/26.md](records/sessions/2026/06/26.md),
 [design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md),
 [records/sessions/2026/06/19.md](records/sessions/2026/06/19.md),
 [design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md](design/ANGULAR_DEV_STRUCTURE_REFACTOR_ANALYSIS_2026-06-19.md)를 본다.
@@ -63,10 +64,11 @@ Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
     확인해야 할 runtime gap을 정리했다.
   - 완료 문서가 아니라 다음 세션의 이어받기 기준이다.
 - [design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md](design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md)
-  - `web/clipper_web_admin` 앱 버전 관리 mock 화면(`/versions`, `/versions2`) 비교 문서다.
-  - 최종 방식은 아직 확정하지 않는다. 공통 제품 버전과 OS별 artifact 배포 현실을 분리해서 본다.
-  - Windows 코드서명 준비 완료, macOS 공증/서명 미완료 및 `xattr` 수동 안내 상황 때문에 `/versions2`가 더 정직하게 느껴지는 이유도 기록했다.
-  - 다음 설계에서는 release보다 artifact provenance를 1차 진실로 두는 방안을 우선 검토한다.
+  - `web/clipper_web_admin` 앱 버전 관리 mock 화면(`/versions`, `/versions2`) 비교 후,
+    2026-06-26 확정된 공통 product version + OS별 artifact 정책을 기록한 문서다.
+  - 최종 방식은 `/versions`다. macOS/Windows 독립 버전 스트림(`/versions2`)은 채택하지 않는다.
+  - `dev -> alpha`, `stage/release -> rc`, `production/tag -> stable` 채널 기준과 SemVer bump 기준을 기록했다.
+  - `release_versions` / `release_builds` / `release_artifacts` 분리, release coordinator 배치, desktop release branch, git tag/source snapshot, build runner, stable publish 조건, rollback/pulled/superseded 상태, platform별 auto update suppression 정책을 정리했다.
 
 ## 먼저 읽을 문서
 

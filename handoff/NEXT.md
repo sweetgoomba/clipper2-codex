@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-06-24
+최신 갱신: 2026-06-26
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -70,6 +70,171 @@ web/clipper_web_admin:     dev...origin/dev, clean
   실제 작업 기준은 `origin/dev`다.
 - 일부 `origin/main`에는 dev에 없는 오래된 README/scaffold commit이 남아 있다. 현재
   사용자가 확정한 기본 브랜치는 `dev`다.
+
+## 2026-06-26 Desktop Plugin Runtime Work Merged To Dev
+
+`desktop/*` 4개 repo의 `feature/plugin-runtime-memory-management` 작업은 최신 `origin/dev`
+위 merge-test 브랜치에서 충돌 해결과 검증을 마친 뒤 `dev`에 반영됐다.
+
+현재 desktop 원본 checkout 상태:
+
+```text
+desktop/clipper_angular:
+  branch: dev
+  state: dev...origin/dev, clean
+  HEAD: 9f141e8 Merge feature/plugin-runtime-memory-management into dev merge-test
+  parents: de7848e origin/dev before merge, 3f247d3 feature branch
+
+desktop/clipper_electron:
+  branch: dev
+  state: dev...origin/dev, clean
+  HEAD: 559673d Merge feature/plugin-runtime-memory-management into dev merge-test
+  parents: 3f94f18 origin/dev before merge, d1a9ab0 feature branch
+
+desktop/clipper_nestjs:
+  branch: dev
+  state: dev...origin/dev, clean
+  HEAD: 5f5fb1a Merge feature/plugin-runtime-memory-management into dev merge-test
+  parents: f2bcc8f origin/dev before merge, 4436c4b feature branch
+
+desktop/clipper_python:
+  branch: dev
+  state: dev...origin/dev, clean
+  HEAD: e34cdbc Merge feature/plugin-runtime-memory-management into dev merge-test
+  parents: 90f89d1 origin/dev before merge, ec5ff36 feature branch
+```
+
+중요:
+
+- 이 세션에서는 `git push`를 하지 않았다.
+- merge 직전 `git fetch origin` 후 `origin/dev`가 이미 위 merge commit들을 가리키고 있었다.
+  따라서 로컬 `dev`는 `pull --ff-only origin dev`로 fast-forward만 했다.
+- 임시 merge-test worktree는 `/private/tmp/adlight-merge-check/plugin-runtime-memory-management-20260626-latest`
+  아래에 detached HEAD 상태로 남겨뒀다.
+- merge-test 브랜치명은 `merge-test/plugin-runtime-memory-management-into-dev-20260626`였다.
+
+충돌 해결 기준:
+
+- Angular는 최신 `origin/dev`의 one-component-per-dir 구조를 따랐다.
+  `template-builder-page`는 `src/features/template-builder/pages/template-builder-page/` 하위 경로가 정본이다.
+- Angular Template Builder의 logo/admin/official remnants는 feature branch 기준으로 제거 상태를 유지했다.
+  `logoImageUploadRequest`, `logoText`, `adminPassword`, `systemTemplateEditMode`,
+  `handleRegisterOfficial` 검색 결과는 merge-test 검증 당시 0건이었다.
+- Angular dashboard spec은 최신 dev의 runtime confirmation/admission 테스트와 feature branch의
+  lifecycle diagnostics 테스트를 함께 유지했다.
+- NestJS `tts-plugin.client.ts`는 최신 dev의 `withTraceHeader()`와 feature branch의
+  `PythonRuntimeLifecyclePolicy` lifecycle hook을 함께 유지했다.
+- Electron/Python은 merge conflict 없이 자동 merge됐다.
+
+최종 검증:
+
+```text
+Node: /Users/jina/.nvm/versions/node/v22.22.2/bin/node
+
+desktop/clipper_angular:
+  npm run build pass
+  targeted Karma tests => TOTAL: 237 SUCCESS
+
+desktop/clipper_electron:
+  npm run build pass
+  targeted node tests => 4/4 pass
+  npm run build:app:mac:arm64 pass
+
+desktop/clipper_nestjs:
+  npm run build pass
+  targeted node tests => 13/13 pass
+
+desktop/clipper_python:
+  uv run --with pytest python -m pytest tests/test_template_builder_text_renderer.py -q
+  => 8 passed
+
+all desktop repos:
+  git diff --check pass
+```
+
+Electron packaged build note:
+
+- `desktop/clipper_electron npm run build:app:mac:arm64`는 내부에서
+  `desktop/clipper_angular npm run build:packaged -- --progress=false`를 먼저 실행한다.
+- 최신 Angular `origin/dev`는 `pretendard`, `material-symbols` CSS를 `angular.json` global styles에 추가했다.
+- 원본 checkout 전환 직후 `desktop/clipper_angular/node_modules`에 이 두 패키지가 없어 packaged build가 실패했다.
+- `desktop/clipper_angular`에서 Node v22.22.2로 `npm install --prefer-offline` 실행 후 `added 2 packages`가 나왔고,
+  Angular packaged build와 Electron mac arm64 packaged build가 모두 통과했다.
+
+## 2026-06-26 App Version / Release Policy
+
+관련 문서:
+
+- [../design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md](../design/APP_VERSION_MANAGEMENT_APPROACHES_2026-06-23.md)
+
+확정 방향:
+
+- 관리자 버전 관리는 `/versions` 방식, 즉 공통 product version + OS별 artifact 방식으로 확정한다.
+- `/versions2`의 macOS/Windows 독립 버전 스트림은 채택하지 않는다.
+- macOS/Windows user-facing version은 항상 하나로 관리한다. Windows-only fix여도 다음 공통 patch version으로 올린다.
+- stable publish는 필수 OS/arch artifact가 모두 build/sign/notarize/verify된 뒤에만 가능하다.
+- build/release는 수동 PC 접속 명령이 아니라 관리자 화면 또는 release coordinator의 단일 명령으로 Windows runner와 macOS runner에 동시에 job을 보내는 방향이다.
+- macOS signing/notarization은 일반 Linux Docker로 처리할 수 없고 macOS host/keychain/Apple credential이 필요하다.
+
+Release coordinator 배치:
+
+- 본체는 `web/clipper_web_api`의 release module에 둔다. release DB, build job 상태, publish/pull/rollback, download/update target의 SoT다.
+- `web/clipper_web_admin`은 operator UI다. release 생성, build 생성, artifact/log 확인, stable promote, pull/rollback을 제공한다.
+- `web/clipper_infra`는 runner 설치/운영, S3 prefix, signing/notarization secret, runbook/compose를 담당한다. release 상태의 정본을 갖지 않는다.
+- `desktop/clipper_electron`은 실제 packaging script와 release metadata 주입을 담당한다.
+
+DB 모델 변경:
+
+- `release_versions`는 `2.5.1` 같은 제품 버전 단위다. 여기에 `build_number`를 직접 두지 않는다.
+- `release_builds`를 별도로 둔다. `build_number`, `display_version`, `artifact_version`, build source snapshot, build status를 가진다.
+- `release_artifacts`는 OS/arch 설치 파일 단위이고 `release_build_id`를 참조한다.
+- `release_artifact_attempts`는 같은 artifact job을 재시도한 이력을 저장한다.
+- stable로 publish되는 macOS/Windows artifact는 같은 `release_build` 아래에 묶이고 같은 build number를 공유한다.
+- `build_number`는 release coordinator가 발급하는 전역 단조 증가 번호이며 제품 버전마다 1부터 다시 시작하지 않는다.
+
+코드 배포와 앱 릴리즈:
+
+- web repo의 `prod` deploy는 실제 prod container/page/API를 바꾸는 운영 배포다.
+- desktop repo의 `prod` branch에 코드가 있다고 해서 사용자가 바로 app update를 받는 것은 아니다.
+- desktop stable release는 build/sign/notarize/upload/QA/manual promote 후 `release_download_targets`와 `release_update_targets`가 바뀔 때 사용자에게 반영된다.
+- 성공 artifact는 S3에 올라갈 수 있지만, target pointer에 연결되기 전까지 사용자에게 배포된 것이 아니다.
+
+Desktop branch/tag 정책:
+
+- 기본 환경 브랜치는 `dev`, `stage`, `prod`를 유지한다.
+- `release/<version>`은 필요할 때만 만드는 desktop 안정화 브랜치다. 환경 브랜치가 아니라 특정 버전 RC/QA 작업대다.
+- QA가 며칠 이상 걸리거나 다음 기능 개발이 stage에 병행되면 desktop 4개 repo에 `release/2.5.0` 같은 브랜치를 만든다.
+- stable release마다 desktop 4개 repo 모두에 annotated tag, 예: `v2.5.0`, 를 찍는 방식을 기본으로 한다.
+- source snapshot은 계속 필요하다. tag는 git 이름표이고, snapshot은 release DB에 남는 multi-repo commit/tag 조합 기록이다.
+- 같은 commit에 `v2.5.0`, `v2.5.1`처럼 여러 tag가 붙을 수 있다. 변경 없는 repo가 여러 제품 release에 포함된 정상 상황이다.
+
+채널/브랜치 기준:
+
+```text
+dev -> alpha
+stage or release/<version> -> rc
+production/release tag -> stable 후보, 수동 publish 승인 후 stable
+```
+
+`beta`는 지금 당장 필수 채널이 아니다. 외부 베타 프로그램이 필요해질 때 추가한다.
+
+버전/상태 기준:
+
+- SemVer: `MAJOR.MINOR.PATCH`.
+- `MAJOR`: 호환성 파괴, 큰 migration, 런타임 호환 정책 변경.
+- `MINOR`: 기존 호환성을 유지하는 사용자 기능/플러그인/workflow 추가.
+- `PATCH`: 버그 수정, 설치/서명/공증 수정, 보안 patch, OS-only hotfix.
+- `stable`: 현재 일반 사용자에게 배포 중인 정식 버전.
+- `superseded`: 정상적으로 더 새 stable에 의해 대체된 과거 버전.
+- `pulled`: 한때 배포됐지만 문제로 다운로드/auto update 대상에서 내려진 버전.
+
+Rollback 정책:
+
+- 다운로드/auto update target rollback과 설치된 앱 downgrade를 구분한다.
+- 일반 정책은 설치된 앱을 낮은 버전으로 내리지 않는다.
+- 문제 release는 `pulled`로 표시하고 신규 다운로드 target을 마지막 정상 artifact로 임시 변경할 수 있다.
+- 이미 문제 버전을 설치한 사용자는 `2.4.3 -> 2.4.1` downgrade가 아니라 `2.4.4` 같은 더 높은 patch release로 복구한다.
+- 공통 product version은 유지하되, no-op OS artifact는 platform/arch별 `auto_update_enabled=false` 같은 예외로 업데이트 알림을 숨길 수 있다. 단, 코드/데이터/보안/호환성 변화가 없는 경우에만 허용한다.
 
 ## 2026-06-23 Plugin Runtime Memory Management Handoff
 
