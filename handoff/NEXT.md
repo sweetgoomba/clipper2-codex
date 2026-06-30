@@ -1,8 +1,327 @@
 # Next Handoff
 
-최신 갱신: 2026-06-26
+최신 갱신: 2026-06-30
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
+
+## 2026-06-30 Release Platform Integration Current Handoff
+
+현재 작업 브랜치:
+
+```text
+web/clipper_infra:       feature/release-platform-integration @ 236c399
+web/clipper_web_api:     feature/release-platform-integration @ 230a26f
+web/clipper_web_admin:   feature/release-platform-integration @ 203e920
+desktop/clipper_electron: feature/release-platform-integration @ 3b13a7a
+desktop/clipper_angular: feature/release-platform-integration @ 460211e
+desktop/clipper_nestjs:  feature/release-platform-integration @ c524646
+desktop/clipper_python:  feature/release-platform-integration @ e34cdbc
+clipper_docs:            main @ 9a244d6
+```
+
+중요 전제:
+
+- Mac mini 로컬에서는 코드/문서 수정과 단위 테스트/web build만 수행한다.
+- Windows container 실행/빌드/서명/S3 검증은 Windows new runner PC에서 수행한다.
+- m2-stage/m2-db 검증은 dev 환경 기준으로 하되 현재 release integration 코드는
+  `feature/release-platform-integration`에서 검증 중이다.
+- secret-bearing 파일과 env 값은 출력/커밋하지 않는다.
+
+이번 세션에 추가로 완료/검증된 것:
+
+- Windows dev S3 upload mode end-to-end 검증 완료.
+- runner installer version이 release payload version을 따르도록 검증.
+  - 예: release `0.0.3` -> `clipperstudio Setup 0.0.3.exe`.
+- Windows runner에서 build 9 성공:
+  - code signing 성공.
+  - Authenticode 검증 성공.
+  - S3 upload 성공:
+    `s3://clipperstudio/dev/windows/0.0.3/build-9/clipperstudio Setup 0.0.3.exe`.
+  - API report success:
+    `2510ff8f-a4eb-4f9b-906e-c5b46adff026`.
+- Admin `정식 배포` 버튼으로 build 9 Windows artifact를 stable target에 publish.
+- B' update-feed 방식 검증 완료.
+  - S3에는 `latest.yml`을 올리지 않는다.
+  - API가 stable target/artifact metadata로 `latest.yml`을 동적 생성한다.
+  - 확인 URL:
+    `https://dev-api.clipperstudio.ai/releases/updates/stable/windows/x64/latest.yml`
+    -> `200`.
+  - feed가 가리키는 S3 installer URL도 `200`.
+- `release_artifacts.sha512` migration registration/API validation/runner report 보강.
+- `API_KEY_ENC_SECRET`이 API container로 전달되도록 compose 보강.
+- `admin.datasource.ts`가 `CLIPPER_ADMIN_DATABASE_*` split env를 쓰도록 수정.
+- Windows runner runtime 검증 중 발생한 운영 이슈 처리:
+  - runner token pair 불일치로 source snapshot 401 발생 -> runner env token 정합 필요 확인.
+  - `CLIPPER_RELEASE_API_BASE_URL=http://localhost:3000` 오설정 -> runner report 실패 원인 확인.
+  - `electron-updater` dependency missing -> Windows runner workspace에서 `install-windows-deps.ps1` 재실행 필요 확인.
+  - build 8은 실패 report가 API에 못 들어가 `building`으로 남았고, 수동 runner report로 `blocked/failed` 처리 완료.
+
+현재 dev release DB에서 검증된 핵심 상태:
+
+```text
+Build 8: windows x64 failed, build blocked
+Build 9: windows x64 succeeded/uploaded/signed, build published
+stable/windows/x64 target -> build 9 artifact
+```
+
+새로 문서화한 follow-up:
+
+- `clipper_docs/todos/2026-06-30-release-console-followups.md`
+  - 설치 파일 표 정렬/페이징/저장 위치/시도 열/publish 버튼 피드백.
+  - `/versions` 내부 섹션 라우팅.
+  - 릴리즈 준비 폼 레이아웃/릴리즈 노트 표시 정책.
+  - Coordinator 버튼 정렬과 macOS runner 상태 오표시.
+  - 이벤트 탭 페이징과 event coverage 확장.
+  - `clipper_web_client` 다운로드 페이지를 정식 배포된 Windows artifact에 연결.
+  - 다운로드 버튼을 Windows/Mac으로 분리하고, Mac은 당분간 출시 준비중 상태로 표시.
+- 기존 publish authz/confirmation 후속:
+  `clipper_docs/todos/2026-06-30-release-publish-authz-confirmation.md`.
+
+남은 주요 TODO:
+
+1. `desktop/clipper_electron/scripts/build-app.mjs --output-dir` 공식 지원.
+   - 현재 runner는 `electron-builder.yml` 임시 rewrite로 output dir을 바꾼다.
+2. runner output cleanup 정책.
+   - `C:\runner-output\dist-app`, `C:\runner-output\signed` 정리/보존 기준 결정.
+3. 실제 installer 실행/update detection 테스트.
+   - 현재 feed와 S3 다운로드는 검증됨.
+   - 앱 `0.0.3`에서 `0.0.4` publish 후 electron-updater 감지까지 별도 검증 필요.
+4. `clipper_web_client` 다운로드 페이지 연결.
+   - 정식 배포된 stable Windows artifact가 다운로드되게 연결한다.
+   - 다운로드 버튼은 Windows/Mac으로 분리한다.
+   - Mac은 당분간 출시 준비중 메시지만 표시하고, macOS runner/build 구현과 연결하지 않는다.
+5. macOS runner 구현은 당분간 비범위.
+   - Windows runner만으로 출시한다.
+   - 단, Admin/API에서 macOS runner가 없는 상태를 `online`으로 표시하는 문제는 고친다.
+6. QA/approval/publish flow 운영화.
+   - publish confirmation/authz는 별도 TODO 문서에 있음.
+7. Admin release console UX 정리.
+   - 상세 항목은 release-console follow-up TODO 참조.
+8. dev release DB 테스트 데이터 정리 여부 결정.
+9. Windows runner 운영화.
+   - startup/restart policy, health monitoring, firewall/LAN 접근 정책.
+10. `feature/release-platform-integration`을 언제 `dev`에 merge할지 결정.
+   - snapshot 대상 5개 repo에도 feature branch가 있음.
+
+## 2026-06-30 02:56 Release Runner Current Handoff
+
+2026-06-29부터 2026-06-30 새벽까지 진행한 release management runtime /
+direct Windows runner 작업은 `dev`에 병합되고 m2-stage, Windows runner PC,
+m2-db checkout까지 `dev` 기준으로 맞춰졌다.
+
+중요 전제:
+
+- 다음 작업은 새 feature branch에서 시작한다.
+- `main`은 건드리지 않는다.
+- Windows container 실행/빌드/서명/S3 검증은 Windows new runner PC에서 수행한다.
+- Mac에서는 코드 수정과 단위 테스트/web build까지만 한다.
+- secret-bearing 파일과 env 값은 출력/커밋하지 않는다.
+
+현재 `dev` HEAD:
+
+```text
+web/clipper_infra:     75e1307 Merge remote-tracking branch 'origin/feat/release-management-runtime' into dev
+web/clipper_web_api:   5b40558 Merge remote-tracking branch 'origin/feat/release-management-runtime' into dev
+web/clipper_web_admin: 125fa3a Merge remote-tracking branch 'origin/feat/release-management-runtime' into dev
+```
+
+이번 세션에 완료/검증된 것:
+
+- Admin `Windows 빌드 시작` -> `clipper_web_api` -> Windows runner container
+  `/jobs/start` direct start flow 구현.
+- runner job claim polling 제거. 브라우저가 runner를 직접 호출하지 않는다.
+- source snapshot capture도 Windows runner container에서 수행.
+- Windows runner container가 checkout/build/sign/report 수행.
+- `CLIPPER_RELEASE_SKIP_UPLOAD=1` dry-run일 때 artifact status는 `local_verified`.
+- Admin은 `local_verified`를 `로컬 검증 완료`, build `ready`를 `QA 대기`로 표시.
+- Coordinator `Windows 빌드 시작` 버튼은 요청 중 spinner/disabled와 성공/실패 feedback 표시.
+- Windows runner container에서 `npm run build:app:win:x64`, SSL.com CodeSignTool signing,
+  Authenticode `Valid`, API report success까지 검증.
+- artifact key collision 해결. 새 key는
+  `clipper2/dev/windows/<release-version>/build-<build-number>/<file>` 형태.
+- infra README/runbook에 m2-stage/Windows runner 명령과 env file 위치 문서화.
+
+검증 결과:
+
+```text
+web/clipper_infra:
+  node --test runner/*.test.mjs runner/windows/*.test.mjs
+  21 pass, 1 skip
+
+web/clipper_web_api:
+  npm test -- --runInBand
+  93 pass
+  npm run build
+  pass
+
+web/clipper_web_admin:
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless
+  61 success
+  npm run build
+  pass
+```
+
+배포/서버 상태:
+
+- m2-stage:
+  - `/Users/metabuzz/Desktop/project/clipper2`
+  - `clipper_infra`, `clipper_web_api`, `clipper_web_admin` 모두 `dev`.
+  - `./scripts/deploy-dev.sh api`, `./scripts/deploy-dev.sh admin` 완료.
+  - `https://dev-api.clipperstudio.ai/health` 정상.
+- Windows runner PC:
+  - `C:\Users\Metabuzz00\Desktop\project\clipper`
+  - `web\clipper_infra`는 `dev`.
+  - `sync-windows-workspace.ps1 -Branch dev`로 desktop repos와 `clipper_web_api` sync 완료.
+  - Docker image rebuild 완료.
+  - Build 4 report success:
+    `df48e154-3cc0-4662-81c9-1a2bbfc381a9`.
+- m2-db:
+  - `/Users/metabuzz/Desktop/project/clipper2/clipper_infra`
+  - `dev...origin/dev`.
+  - `clipper-db-admin-dev`, `clipper-db-user-dev`, `clipper-db-release-dev` 모두 healthy.
+  - DB containers는 재기동하지 않았다.
+
+release DB 현재 테스트 기록:
+
+```text
+Build 4: windows x64 succeeded, local_verified, signed
+Build 3: windows x64 succeeded, local_verified, signed
+Build 2: windows x64 failed
+Build 1: windows x64 succeeded, local_verified, signed
+```
+
+Build 3/4는 새 S3 key 구조를 사용한다. Build 1은 이전 dry-run key 구조가 남아 있지만
+테스트 기록으로 보존했다.
+
+다음 세션 우선순위:
+
+1. S3 upload mode 전환.
+   - Windows runner 실행에서 `CLIPPER_RELEASE_SKIP_UPLOAD=1` 제거.
+   - AWS secret은 `C:\secure\clipper-aws.env` 같은 mounted env file 사용.
+   - 실제 S3 upload 후 API artifact status `uploaded`, `uploaded_at` populated 확인.
+   - Admin 설치 파일 다운로드/public URL 동작 확인.
+2. `desktop/clipper_electron/scripts/build-app.mjs` output dir 공식 지원.
+   - 예: `node scripts/build-app.mjs win32 x64 --output-dir C:\runner-output\dist-app`.
+   - 현재 runner의 `electron-builder.yml` 임시 수정 우회를 제거한다.
+3. runner output cleanup 정책 추가.
+   - job 시작 전 `C:\runner-output\dist-app`, `C:\runner-output\signed` 정리.
+   - upload 성공 후 container 내부 산출물 보존/삭제 정책 결정.
+4. artifact download/install verification flow 정리.
+   - Admin 설치 파일 화면 다운로드 확인.
+   - client page 다운로드 연결 필요 범위 결정.
+5. macOS runner 상태 표시 정정.
+   - 현재 방침: macOS runner 구현은 당분간 비범위이며 Windows runner만으로 출시한다.
+   - 단, macOS runner가 없는데 `online`으로 표시되는 문제는 Admin/API에서 고친다.
+6. QA/approval/publish flow 보강.
+   - QA 대기 -> 승인 -> target promotion/stable publish 운영 흐름 연결.
+7. dev release DB 테스트 데이터 정리 여부 결정.
+   - Build 2 failed 기록과 Build 1 old key 구조는 테스트 흔적이다.
+8. runner 운영화.
+   - Windows startup/restart policy, health monitoring, firewall/LAN 접근 정책.
+9. `feat/release-management-runtime` branch 정리 여부 확인.
+   - 이미 `dev`에 merge됐다.
+   - 삭제는 사용자 확인 후에만 진행한다.
+
+상세 세션 기록:
+
+- [records/sessions/2026/06/29.md](../records/sessions/2026/06/29.md)
+- [records/sessions/2026/06/30.md](../records/sessions/2026/06/30.md)
+
+## Historical Context: 2026-06-29 Release Management Runtime / Windows Runner Handoff
+
+이 섹션은 2026-06-29 당시 상태 기록이다. 2026-06-30 현재 상태는 위
+`2026-06-30 02:56 Release Runner Current Handoff` 섹션이 우선한다.
+
+2026-06-29 당시 진행 중인 작업은 관리자 버전관리 페이지와 release runner runtime이었다.
+
+활성 브랜치:
+
+```text
+web/clipper_web_admin: feat/release-management-runtime
+  HEAD: 7b9a21e feat: connect version console to release runtime
+
+web/clipper_web_api: feat/release-management-runtime
+  HEAD: 86289a0 feat: add release management runtime
+
+web/clipper_infra: feat/release-management-runtime
+  HEAD: 2d61769 fix: allow node 22 for windows runner
+```
+
+`dev`/`main`은 건드리지 않는다. 세 repo 모두 local/origin 같은 브랜치 상태로 확인됐다.
+
+관리자 UI 상태:
+
+- `/versions` 콘솔형 UI로 통합.
+- `/versions2` 제거.
+- 좌측 메뉴: 개요, 릴리즈, 빌드, 설치 파일, 배포 타겟, Coordinator, 이벤트.
+- 중복 최근 이벤트 블럭 제거. 이벤트 메뉴에서만 노출.
+- 소스 스냅샷 상세는 릴리즈 row click 모달.
+- snapshot pin 버튼 loading/disabled feedback 추가.
+- 릴리즈 discard 기능 추가.
+- 새 릴리즈 준비 version validation 추가. `0.0.1` stable semver만 허용, branch name은 현재 자유 입력.
+- `아티팩트`는 `설치 파일`로 변경.
+- `Version Console` 메뉴 문구 제거.
+
+API/runtime 상태:
+
+- `web/clipper_web_api`에 release management runtime과 runner claim/report endpoint 추가.
+- build 상태 갱신은 초기에는 page refresh 기준이다. polling/SSE/WebSocket은 사용자 요청으로 제외했다.
+- 현재 `web/clipper_infra/runner/release-runner.mjs`는 runner가 API에서 job을 claim하는 pull 방식이다.
+- 사용자는 pull vs push 방식은 더 고민하겠다고 했다. 다음 구현에서 네트워크 흐름을 바꾸기 전에 다시 합의한다.
+
+Windows runner 검증 상태:
+
+- 이전 Windows Home/Core PC는 Windows containers 불가라 Docker runner 후보에서 제외.
+- 검증 성공 PC:
+
+```text
+OS: Windows 10 Pro 19045
+Workspace: C:\Users\Metabuzz00\Desktop\project\clipper
+CodeSignTool: C:\tools\CodeSignTool-v1.3.2-windows
+Docker image baseline: mcr.microsoft.com/windows/servercore:ltsc2019
+Node: v22.22.2
+```
+
+- Docker Windows engine 전환 성공: `docker info --format '{{.OSType}}' => windows`.
+- `servercore:ltsc2019` Hyper-V isolation container 실행 성공.
+- host smoke build 성공:
+
+```text
+C:\Users\Metabuzz00\Desktop\project\clipper\desktop\clipper_electron\dist-app\Clipper2 Setup 0.0.1.exe
+```
+
+- Docker container 안에서 CodeSignTool help/sign help 성공.
+- Docker container 안에서 실제 SSL.com signing 성공.
+- `Get-AuthenticodeSignature` 결과 `Status: Valid`, signer `METABUZZ Co.,Ltd`, timestamp present.
+
+관련 문서:
+
+- [../operations/windows-packaging/release-runner-docker-codesign-2026-06-29.md](../operations/windows-packaging/release-runner-docker-codesign-2026-06-29.md)
+- [../records/sessions/2026/06/29.md](../records/sessions/2026/06/29.md)
+
+비밀값 주의:
+
+- `/Users/jina/project/adlight/sign-and-publish.js`는 기존 runner PC에서 복사한 secret-bearing 파일이다.
+- `/Users/jina/project/adlight/code_signing_tool-2025-11-03.log`도 credential ID/signature material이 있으므로 커밋하지 않는다.
+- `/Users/jina/project/adlight/docker-codesign-help-command.txt`와 `docker-codesign-sign-command.txt`는 명령만 있고 secret은 없다.
+
+다음 작업:
+
+1. `web/clipper_infra`에 Windows runner Dockerfile 추가. base는 `servercore:ltsc2019`.
+2. container entrypoint 추가.
+3. `sign-windows-artifact.ps1` 같은 signing helper 추가:
+   - mounted CodeSignTool을 writable path로 copy.
+   - artifact sign.
+   - Authenticode status verify.
+   - invalid signature면 fail.
+4. release runner build flow에서 `npm run build:app:win:x64` 후 signing 실행.
+5. `signatureStatus=signed`는 verification pass 후에만 report.
+6. secret storage 방식 결정:
+   - local env file,
+   - Windows Credential Manager,
+   - mounted secret file,
+   - other secret manager.
+7. 관리자 UI `빌드 시작`부터 runner claim/build/sign/report까지 end-to-end 검증.
 
 ## 2026-06-23 Repo Layout And Dev State
 
