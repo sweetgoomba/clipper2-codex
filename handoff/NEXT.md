@@ -6,16 +6,16 @@
 
 ## 2026-06-30 Release Platform Integration Current Handoff
 
-현재 작업 브랜치:
+현재 기준 브랜치:
 
 ```text
-web/clipper_infra:       feature/release-platform-integration @ 236c399
-web/clipper_web_api:     feature/release-platform-integration @ 230a26f
-web/clipper_web_admin:   feature/release-platform-integration @ 203e920
-desktop/clipper_electron: feature/release-platform-integration @ 3b13a7a
-desktop/clipper_angular: feature/release-platform-integration @ 460211e
-desktop/clipper_nestjs:  feature/release-platform-integration @ c524646
-desktop/clipper_python:  feature/release-platform-integration @ e34cdbc
+web/clipper_infra:       dev @ 34524f4
+web/clipper_web_api:     dev @ 51e51ce
+web/clipper_web_admin:   dev @ 6c0dfc7
+desktop/clipper_electron: dev @ 47358cd
+desktop/clipper_angular: dev @ 460211e
+desktop/clipper_nestjs:  dev @ c524646
+desktop/clipper_python:  dev @ e34cdbc
 clipper_docs:            main @ 9a244d6
 ```
 
@@ -23,8 +23,8 @@ clipper_docs:            main @ 9a244d6
 
 - Mac mini 로컬에서는 코드/문서 수정과 단위 테스트/web build만 수행한다.
 - Windows container 실행/빌드/서명/S3 검증은 Windows new runner PC에서 수행한다.
-- m2-stage/m2-db 검증은 dev 환경 기준으로 하되 현재 release integration 코드는
-  `feature/release-platform-integration`에서 검증 중이다.
+- release integration feature branch는 최신 `dev`에 병합/푸시됐다.
+- runner PC와 m2-stage는 이제 `dev`로 checkout/pull해서 검증한다.
 - secret-bearing 파일과 env 값은 출력/커밋하지 않는다.
 
 이번 세션에 추가로 완료/검증된 것:
@@ -54,7 +54,13 @@ clipper_docs:            main @ 9a244d6
   - runner token pair 불일치로 source snapshot 401 발생 -> runner env token 정합 필요 확인.
   - `CLIPPER_RELEASE_API_BASE_URL=http://localhost:3000` 오설정 -> runner report 실패 원인 확인.
   - `electron-updater` dependency missing -> Windows runner workspace에서 `install-windows-deps.ps1` 재실행 필요 확인.
-  - build 8은 실패 report가 API에 못 들어가 `building`으로 남았고, 수동 runner report로 `blocked/failed` 처리 완료.
+- build 8은 실패 report가 API에 못 들어가 `building`으로 남았고, 수동 runner report로 `blocked/failed` 처리 완료.
+- `feature/release-platform-integration`을 최신 `dev`에 병합/푸시 완료.
+  - 병합/푸시 repo:
+    `web/clipper_infra`, `web/clipper_web_api`, `web/clipper_web_admin`,
+    `desktop/clipper_electron`.
+  - `desktop/clipper_angular`, `desktop/clipper_nestjs`, `desktop/clipper_python`은
+    feature와 `dev`가 동일해서 병합 커밋이 필요 없었다.
 
 현재 dev release DB에서 검증된 핵심 상태:
 
@@ -100,8 +106,6 @@ stable/windows/x64 target -> build 9 artifact
 8. dev release DB 테스트 데이터 정리 여부 결정.
 9. Windows runner 운영화.
    - startup/restart policy, health monitoring, firewall/LAN 접근 정책.
-10. `feature/release-platform-integration`을 언제 `dev`에 merge할지 결정.
-   - snapshot 대상 5개 repo에도 feature branch가 있음.
 
 ## 2026-06-30 02:56 Release Runner Current Handoff
 
