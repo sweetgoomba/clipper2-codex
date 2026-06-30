@@ -9,7 +9,7 @@
 현재 기준 브랜치:
 
 ```text
-web/clipper_infra:       dev @ 34524f4
+web/clipper_infra:       dev @ 6b2b6fb
 web/clipper_web_api:     dev @ 51e51ce
 web/clipper_web_admin:   dev @ 6c0dfc7
 desktop/clipper_electron: dev @ 47358cd
@@ -24,7 +24,7 @@ clipper_docs:            main @ 9a244d6
 - Mac mini 로컬에서는 코드/문서 수정과 단위 테스트/web build만 수행한다.
 - Windows container 실행/빌드/서명/S3 검증은 Windows new runner PC에서 수행한다.
 - release integration feature branch는 최신 `dev`에 병합/푸시됐다.
-- runner PC와 m2-stage는 이제 `dev`로 checkout/pull해서 검증한다.
+- runner PC, m2-stage, m2-db는 `dev` 기준으로 다시 맞췄다.
 - secret-bearing 파일과 env 값은 출력/커밋하지 않는다.
 
 이번 세션에 추가로 완료/검증된 것:
@@ -61,12 +61,34 @@ clipper_docs:            main @ 9a244d6
     `desktop/clipper_electron`.
   - `desktop/clipper_angular`, `desktop/clipper_nestjs`, `desktop/clipper_python`은
     feature와 `dev`가 동일해서 병합 커밋이 필요 없었다.
+- `dev` merge 후 `web/clipper_infra/apps/compose.yml`에 `API_KEY_ENC_SECRET`
+  중복 mapping이 생겨 m2-stage compose config가 실패했다.
+  - root cause: 최신 `dev`와 feature 양쪽에서 같은 env key를 다른 위치에 추가한 merge 결과.
+  - fix: 중복된 두 번째 mapping 제거.
+  - `web/clipper_infra` fix commit: `6b2b6fb`.
+  - 검증: `docker compose --env-file env/stack.dev.env.example -f apps/compose.yml config --quiet`,
+    `node --test runner/*.test.mjs runner/windows/*.test.mjs` 통과.
+- m2-stage는 `dev @ 6b2b6fb`로 pull 후 API/Admin 재배포 완료.
+- m2-db는 `clipper_infra`만 `dev @ 6b2b6fb`로 fast-forward pull 완료.
+  - DB containers는 재기동하지 않았다.
+  - `clipper-db-admin-dev`, `clipper-db-user-dev`, `clipper-db-release-dev` 모두 `Up`/`healthy`.
+- Windows runner PC도 `dev` 기준으로 다시 맞추고 runner container 기준 검증을 이어갔다.
+- release `0.0.4`, build 10 Windows artifact build/sign/upload 성공.
+  - block map 생성:
+    `C:\runner-output\dist-app\clipperstudio Setup 0.0.4.exe.blockmap`.
+  - code signing 성공.
+  - Authenticode 검증 성공.
+  - S3 upload 성공:
+    `s3://clipperstudio/dev/windows/0.0.4/build-10/clipperstudio Setup 0.0.4.exe`.
+  - API report success:
+    `09180076-9dc4-4d7c-9629-69edeba0e174`.
 
 현재 dev release DB에서 검증된 핵심 상태:
 
 ```text
 Build 8: windows x64 failed, build blocked
 Build 9: windows x64 succeeded/uploaded/signed, build published
+Build 10: windows x64 succeeded/uploaded/signed
 stable/windows/x64 target -> build 9 artifact
 ```
 
@@ -90,8 +112,9 @@ stable/windows/x64 target -> build 9 artifact
 2. runner output cleanup 정책.
    - `C:\runner-output\dist-app`, `C:\runner-output\signed` 정리/보존 기준 결정.
 3. 실제 installer 실행/update detection 테스트.
-   - 현재 feed와 S3 다운로드는 검증됨.
-   - 앱 `0.0.3`에서 `0.0.4` publish 후 electron-updater 감지까지 별도 검증 필요.
+   - 현재 `0.0.3` stable feed와 S3 다운로드는 검증됨.
+   - `0.0.4` Windows artifact build/sign/S3 upload까지 완료됨.
+   - 다음에는 `0.0.4` publish 후 설치된 앱의 electron-updater 감지까지 별도 검증 필요.
 4. `clipper_web_client` 다운로드 페이지 연결.
    - 정식 배포된 stable Windows artifact가 다운로드되게 연결한다.
    - 다운로드 버튼은 Windows/Mac으로 분리한다.
@@ -106,6 +129,31 @@ stable/windows/x64 target -> build 9 artifact
 8. dev release DB 테스트 데이터 정리 여부 결정.
 9. Windows runner 운영화.
    - startup/restart policy, health monitoring, firewall/LAN 접근 정책.
+
+다음 세션 시작 문구:
+
+```text
+Using Superpowers.
+
+작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
+
+먼저 .codex/handoff/NEXT.md 와 .codex/records/sessions/2026/06/30.md 를 읽고
+현재 상태를 파악해줘.
+
+release-platform-integration 작업은 최신 dev에 merge/push 되었고,
+runner PC / m2-stage / m2-db도 dev 기준으로 다시 맞춰져 있어.
+Windows runner 기준 release 0.0.4 build 10은 build/sign/S3 upload/report success까지
+확인됐어. stable target은 마지막 문서 기준 build 9를 가리키고 있고,
+0.0.4 stable publish와 설치된 앱의 electron-updater update detection 검증은 아직 남아 있어.
+
+이번 세션은 Mac mini 로컬에서 코드/문서 수정과 로컬 테스트를 진행하고,
+Windows container 실행/빌드/서명/S3 검증은 Windows runner PC에서 수행해야 한다는
+전제로 진행해줘.
+
+secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
+NEXT.md의 남은 TODO를 기준으로, 0.0.4 publish/update detection 검증과
+release console / web client download page 후속 작업부터 차근차근 진행하자.
+```
 
 ## 2026-06-30 02:56 Release Runner Current Handoff
 
