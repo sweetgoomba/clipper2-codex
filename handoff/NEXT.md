@@ -1,8 +1,231 @@
 # Next Handoff
 
-최신 갱신: 2026-06-30
+최신 갱신: 2026-07-02
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
+
+## 2026-07-02 Desktop Secretless Provider Routing / Dialog Pipeline Current Handoff
+
+Release/version-management work is still paused. The current priority is installed desktop app correctness.
+
+Current pushed feature branch heads:
+
+```text
+web/clipper_web_api:       c0f54bf feat: add dialog highlight llm endpoint
+desktop/clipper_nestjs:    4def63c feat: orchestrate dialog highlight in nestjs
+desktop/clipper_python:    d5b24d8 refactor: remove direct dialog llm provider calls
+desktop/clipper_electron:  cd798ba build: reject packaged provider secrets
+desktop/clipper_angular:   7c77745 feat: map provider routing errors
+```
+
+Feature branch commits not yet in `origin/dev`:
+
+```text
+web/clipper_web_api:
+  c0f54bf feat: add dialog highlight llm endpoint
+
+desktop/clipper_nestjs:
+  45df395 feat: add desktop web api client
+  e2436ae refactor: route dance image search through web api
+  f91c4ee feat: add dialog highlight web api client
+  4def63c feat: orchestrate dialog highlight in nestjs
+
+desktop/clipper_python:
+  fe223e3 feat: make dance face matching Windows-safe
+  1cea9ee feat: add dialog highlight stage contracts
+  665c173 refactor: extract dialog media analysis stage
+  f8e49e3 refactor: split dialog highlight media stages
+  d5b24d8 refactor: remove direct dialog llm provider calls
+
+desktop/clipper_electron:
+  bc69b54 fix: isolate packaged plugin virtualenvs
+  cd798ba build: reject packaged provider secrets
+
+desktop/clipper_angular:
+  adef4f8 fix: route shortform edits to source project
+  b581987 fix: require consent for packaged media tools
+  934c7df fix: keep plugin install state pending
+  7c77745 feat: map provider routing errors
+```
+
+Branch/push state:
+
+- All five active repos are on `feature/plugin-runtime-isolation` and match their origin tracking branch:
+  - `web/clipper_web_api`
+  - `desktop/clipper_nestjs`
+  - `desktop/clipper_python`
+  - `desktop/clipper_electron`
+  - `desktop/clipper_angular`
+- `desktop/clipper_nestjs` had already been pushed from another session/PC.
+- `web/clipper_web_api` briefly had `c0f54bf` on local `dev`; it was moved to `feature/plugin-runtime-isolation`, pushed there, and local `dev` was reset to `origin/dev @ 51e51ce`.
+- Do not push these plugin-runtime-isolation commits directly to `dev`.
+
+Completed architecture changes:
+
+- Packaged app startup venv was split from plugin-specific venv work:
+  - startup sync no longer installs every plugin dependency before opening the app window.
+  - packaged plugins use isolated virtualenvs/install state instead of blocking first launch on heavy optional dependencies.
+- Dance Highlight face matching is Windows-safe:
+  - removed the direct `insightface` dependency from the dance plugin path.
+  - OpenCV/ONNX-based face model loading and clustering tests were added.
+  - segment face sampling/mapping was improved to reduce anonymous or zero-clip member results.
+- Shortform edit routing now prefers the source project id from render result metadata/manifest/source asset metadata, fixing Windows packaged edit pages that opened with clips/settings missing.
+- Packaged media tool readiness now requires consent:
+  - ffmpeg/ffprobe should not be silently auto-downloaded.
+  - the UI should remain in a consent/install-required state until the user approves media tool setup.
+- Plugin store install state stays pending until install completion, instead of showing installed before the final completion event/snackbar.
+- Dance member image search now routes through `web_api`; desktop direct Naver/Kakao fallback is removed.
+- Dialog Highlight is now staged:
+  - local NestJS orchestrates.
+  - Python performs media stages only.
+  - web_api owns LLM provider calls and credentials.
+- Dialog Python no-stage execution no longer runs the legacy monolithic OpenAI path.
+- Dialog Python package no longer imports/depends on OpenAI and no longer reads provider env names.
+- Packaged Electron build guard rejects forbidden provider secret key names in packaged resources/env files.
+- Angular maps provider routing machine codes to Korean user-facing messages.
+
+Additional local changes after the pushed feature heads above:
+
+- `desktop/clipper_nestjs` fixes devapp/local Plugin Store install-state drift:
+  - `LocalPluginHost` now checks actual model files instead of treating plugin manifest discovery as installed.
+  - Stale `.ready` markers no longer make model-backed plugins look installed when model files are missing.
+  - `CLIPPER_ELECTRON_USER_DATA_DIR` can override the inferred Electron `Clipper2` userData path for tests/unusual local setups.
+  - New regression: `test/local-plugin-host-install-state.test.js`.
+- `desktop/clipper_electron` fixes devapp Plugin Store install button flow:
+  - `modelDownload.modelsNeeded()` now reports actual model-file state in devapp too.
+  - Dev plugin processes use `uv run --project <clipper_python>` with Electron userData as `cwd`, so downloaded model assets land where install-state checks look.
+  - New regression: `test/model-download-info.test.mjs`; `test/plugin-process-packaged-paths.test.js` covers dev plugin `cwd`.
+- `desktop/clipper_electron` now includes fresh-reset scripts:
+  - `scripts/reset-macos.sh`
+  - `scripts/reset-windows.ps1`
+  - Scope includes packaged Electron app data, downloaded ffmpeg/ffprobe, plugin model markers/files, HuggingFace cache by default, repo-local Dance model artifacts, and local NestJS `.clipper_data`.
+  - The scripts also stop the default local NestJS devapp listener on port `9019` and any `NEST_PORT` declared in local Nest env files.
+  - The first reset script missed `desktop/clipper_nestjs/.clipper_data`, which is why old project library entries could survive in devapp.
+- `web/clipper_web_api` local Dance image search 401 fix:
+  - `POST /media/search` no longer uses `MediaSearchServiceTokenGuard` while desktop auth/token wiring is intentionally deferred.
+  - Added `media-search.controller.spec.ts` to prevent reintroducing this guard before the auth design lands.
+- `desktop/clipper_nestjs` local Dance image search 503 diagnostics:
+  - `WebApiClient` now preserves non-2xx web_api response details in `WebApiProviderError.message`.
+  - This distinguishes missing usable `naver_search_keys` rows from `API_KEY_ENC_SECRET` decrypt failures.
+- `desktop/clipper_python` YouTube ingest fix:
+  - `yt-dlp` lock updated from `2026.3.17` to `2026.6.9`.
+  - The failed Dance URL `CHp0Kaidr14` was verified with the updated tool:
+    - `uv run python -m yt_dlp --version` -> `2026.06.09`
+    - format probe passed without 403.
+    - small 360p download probe to `/private/tmp` passed without 403.
+- `desktop/clipper_nestjs` YouTube/web_api failure classification:
+  - YouTube `HTTP Error 403: Forbidden` download failures now map to `AUTH_REQUIRED` instead of disappearing behind generic `validation`.
+  - Source ingest recognizes YouTube 403 as an auth-required case.
+  - `WebApiNotConfiguredError`, `WebApiProviderError`, and `WebApiUnreachableError` now classify as `dependency`.
+  - Stable web_api error `code` values (`web_api_not_configured`, `web_api_unreachable`, `provider_failed`) are propagated to job failure events.
+- `desktop/clipper_angular` job failure headline fix:
+  - Existing failed jobs with raw `yt-dlp ... HTTP Error 403: Forbidden` in `detail` now display the YouTube login/download problem instead of only `입력을 다시 확인해주세요`.
+- Shortform prompt clip generation secretless routing:
+  - `desktop/clipper_nestjs` now injects `WebApiClipperStudioScriptGenerator` for `ClipperStudioScriptGenerator`.
+  - Shortform script generation calls `web_api` `POST /llm/script` through `WebApiClient`.
+  - Desktop ShortformModule no longer registers the local OpenAI/Ollama/remote_proxy script providers in its execution path.
+  - `web/clipper_web_api` `POST /llm/script` no longer requires `ScriptServiceTokenGuard` while desktop auth/token wiring is deferred.
+  - Existing web_api `.env` has `OPENAI_API_KEY` configured (presence only verified; value was not printed).
+- These changes are local working-tree changes unless committed later. They are not included in the pushed feature head list above.
+
+Local verification completed:
+
+```text
+web/clipper_web_api:
+  npm test -- dialog-highlight-llm.service.spec.ts --runInBand  # pass, 4
+  npm test -- search.service.spec.ts --runInBand                # pass, 6
+  npm run build                                                 # pass
+
+desktop/clipper_nestjs:
+  npm run build                                                 # pass
+  node --test web-api/dance/dialog/workflow focused tests        # pass, 46
+
+desktop/clipper_python:
+  uv run --package clipper-plugin-dialog-highlight python -m pytest dialog focused tests -q  # pass, 17
+  forbidden provider source scan under dialog_highlight package  # no matches
+
+desktop/clipper_electron:
+  npm test -- test/packaged-secret-scan.test.js                  # pass, 58
+  npm run build                                                  # pass
+
+desktop/clipper_angular:
+  npm test -- --watch=false --include src/core/errors/error-catalog.spec.ts  # pass, 12
+  npm run build                                                              # pass
+```
+
+Additional local verification after the devapp Plugin Store install-state fix:
+
+```text
+desktop/clipper_nestjs:
+  npm run build  # pass
+  node --test test/local-plugin-host-install-state.test.js test/local-plugin-host-exit-listener.test.js test/plugin-host-module-wiring.test.js test/workflow-executor-registry.test.js test/dialog-highlight-workflow-executor.test.js test/plugins-service-runtime-diagnostics.test.js  # pass, 27
+
+desktop/clipper_electron:
+  npm run build  # pass
+  node --test test/model-download-info.test.mjs test/plugin-install-state.test.mjs test/plugin-process-packaged-paths.test.js test/plugin-manager-plugin-venv.test.js test/plugin-manager-exit-listener.test.js  # pass, 11
+
+web/clipper_web_api:
+  npm test -- media-search.controller.spec.ts media-search-service-token.guard.spec.ts search.service.spec.ts --runInBand  # pass, 11
+  npm run build  # pass
+
+desktop/clipper_nestjs:
+  npm run build && node --test test/web-api-client.test.js  # pass, 7
+  npm run build && node --test test/error-code.test.js test/job-failure-event.test.js test/web-api-client.test.js test/dialog-highlight-web-api-client.test.js  # pass, 23
+
+desktop/clipper_angular:
+  npm test -- --watch=false --browsers=ChromeHeadless --include src/core/errors/job-failure-headline.spec.ts --include src/core/errors/error-catalog.spec.ts  # pass, 17
+
+desktop/clipper_python:
+  uv sync --all-packages  # pass, local venv now has yt-dlp 2026.06.09
+  uv run python -m yt_dlp --version  # 2026.06.09
+  uv run python -m yt_dlp --simulate --skip-download --no-playlist -F <Dance failed YouTube URL>  # pass
+  uv run python -m yt_dlp --no-playlist --force-overwrites -f 18 -o /private/tmp/clipper-ytdlp-probe.%(ext)s <Dance failed YouTube URL>  # pass
+
+web/clipper_web_api local runtime:
+  npm run start:dev  # running locally on port 3000 after sandbox-escalated start
+  curl -sS http://127.0.0.1:3000/health  # user/release/admin db all ok
+  curl -sS -X POST http://127.0.0.1:3000/media/search ...  # pass, usable Naver key row present
+
+web/clipper_web_api:
+  npm run build  # pass
+  npm test -- script.controller.spec.ts script-service-token.guard.spec.ts script.service.spec.ts --runInBand  # pass, 22
+
+desktop/clipper_nestjs:
+  npm run build && node --test test/shortform-script-generator-wiring.test.js test/web-api-client.test.js test/clipper-studio-script-generator.test.js test/shortform-project-generation-assets.test.js  # pass, 24
+
+runtime smoke:
+  curl -sS -o /tmp/clipper-llm-script-empty-body.json -w "%{http_code}" -X POST http://127.0.0.1:3000/llm/script -H 'Content-Type: application/json' -d '{}'  # 400, proves no service-token 401
+  curl -sS http://127.0.0.1:9019/v1/health  # ok
+```
+
+Manual installed-app verification still needed on macOS and Windows after pulling these commits:
+
+1. Fresh reset and first launch opens a window.
+2. ffmpeg/ffprobe consent flow is visible and does not require app restart.
+3. Plugin Store install state shows model-backed plugins as uninstalled after fresh reset and remains pending until the install really completes.
+4. Dance Highlight installs/runs on Windows without requiring MSVC Build Tools.
+5. Dance result member list/anonymous cluster assignment still needs quality spot-checks with known sample videos.
+6. Shortform project edit opens the original project clips/settings on Windows packaged builds.
+7. Dance image search succeeds only through configured/reachable web_api.
+8. Dialog Highlight succeeds without desktop-bundled OpenAI key when web_api is configured.
+9. Missing/unreachable web_api/provider configuration shows clear provider routing errors.
+10. Packaged env/resource files contain no forbidden provider key names.
+11. Windows runner/manual packaged build/sign/upload should be resumed only after installed app behavior is accepted.
+
+Fresh reset commands:
+
+```powershell
+cd C:\path\to\project\desktop\clipper_electron
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\reset-windows.ps1 -ConfirmReset
+```
+
+```bash
+cd /Users/jina/project/adlight/desktop/clipper_electron
+scripts/reset-macos.sh --yes
+```
+
+Detailed session record: `.codex/records/sessions/2026/07/02.md`.
 
 ## 2026-06-30 Release Platform Integration Current Handoff
 
@@ -2541,3 +2764,88 @@ Using Superpowers.
 - 앱 코드 repo 변경과 `.codex` 문서 변경은 같은 커밋에 섞지 않는다.
 - 과거 경로를 이관할 때는 `git mv`를 우선 사용하고, 링크 확인은 `rg`로 한다.
 - root `README.*.md`를 새로 늘리지 않는다. cross-cutting design 문서는 `design/`, feature 문서는 `features/<feature>/`, operations 문서는 `operations/<domain>/` 아래에 둔다.
+
+## Current Shortform Installed-App State
+
+- Prompt shortform script generation is routed through `desktop/clipper_nestjs -> web/clipper_web_api -> OpenAI`.
+- Prompt shortform TTS is not routed through `web_api`.
+- Installed-app TTS must use embedded `tts_supertonic`.
+- `desktop/clipper_nestjs` shortform TTS now defaults to:
+  - provider: `tts.supertone`
+  - speaker: `F2`
+  - speed: `1`
+  - artifact format: `.wav` / `audio/wav`
+- Naver Clova is no longer wired as a shortform TTS provider and no Clova fallback/migration path should be added.
+- Supertonic TTS speed follow-up:
+  - Root cause of "TTS sounds cut/too short" was Clova-era default speed `1.6` plus Angular default helper preferring `1.6`/`1.4` over provider preset defaults.
+  - The installed app now uses Supertonic for shortform TTS.
+  - User-facing shortform clip generation playback speed now defaults to `1.2`.
+    - Nest project default render settings: `ttsSpeed: 1.2`.
+    - Supertonic shortform preset default: `speed.default: 1.2`.
+    - Angular style helpers and legacy style panel prefer `1.2` when supported.
+  - A second root cause was confirmed for deliberate fast-speed regeneration:
+    - passing user speed directly into Supertonic model synthesis can lose beginning/end speech content at faster speeds.
+    - `tts_supertonic` now always calls the Supertonic model with stable speed `1.0` and applies requested playback speed as pitch-preserving wav post-processing.
+    - The first simple-resampling post-processing attempt was rejected because it raised voice pitch at faster speeds; it has been replaced with a numpy phase-vocoder time-stretch path.
+    - This avoids requiring FFmpeg or extra runtime consent for TTS regeneration.
+  - Previously generated projects/wav files keep their old speed; retest with a newly generated project after restarting services.
+- Before manual prompt shortform retest, reset local app/runtime data so previously created projects with old `tts.naver_clova` render settings do not affect the result.
+- Verification already run:
+  - `desktop/clipper_nestjs`: `npm run build && node --test test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js test/shortform-script-generator-wiring.test.js`
+  - `desktop/clipper_nestjs`: `node --test --test-name-pattern "shortform style catalogs expose BGM and TTS presets" test/shortform-project-api.test.js`
+  - `desktop/clipper_nestjs`: `npm run build`
+  - `desktop/clipper_nestjs`: `node --test test/shortform-tts-provider.test.js`
+  - `desktop/clipper_nestjs`: `node --test test/shortform-project-generation-assets.test.js`
+  - `desktop/clipper_angular`: `./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/features/shortform/pages/shortform-workflow-style.spec.ts`
+  - `desktop/clipper_angular`: `npm run build`
+  - `desktop/clipper_nestjs`: `npm run build && node --test test/shortform-tts-provider.test.js test/shortform-project-generation-assets.test.js` -> 17 passed after the `1.2` default update.
+  - `desktop/clipper_angular`: `./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/features/shortform/pages/shortform-workflow-style.spec.ts --include src/features/shortform/components/workflow/shortform-legacy-style-panel/shortform-legacy-style-panel.component.spec.ts --include src/features/shortform/pages/shortform-workflow-page/shortform-workflow-page.component.spec.ts` -> 68 passed after the `1.2` default update.
+  - `desktop/clipper_angular`: `npm run build` passed after the `1.2` default update.
+  - `desktop/clipper_python`: `uv run --with pytest --with httpx --package clipper-plugin-tts-supertonic python -m pytest tests/test_tts_supertonic_synthesis.py tests/test_tts_supertonic_route.py tests/test_tts_supertonic_runtime.py -q` -> 10 passed
+  - Runtime smoke: `GET /v1/projects/shortform/tts/presets?locale=ko-KR` returned 10 `tts.supertone` presets.
+- Known gap:
+  - `desktop/clipper_nestjs`: `node --test test/shortform-project-api.test.js` currently fails because that test harness does not configure/mock `CLIPPER_WEB_API_BASE_URL`.
+  - Do not interpret this as a TTS speed regression; it is a web_api-only media/LLM test-harness follow-up.
+
+## Current Dialog Highlight web_api State
+
+- `clipper_web_api` health was verified alive on `127.0.0.1:3000`.
+- `clipper_nestjs` health was verified alive on `127.0.0.1:9019`.
+- A live NestJS dance endpoint using the same `WebApiClient` successfully reached web_api.
+- Dialog Highlight failure `web_api is unreachable` was caused by the desktop `WebApiClient` 30s timeout being too short for LLM steps and being reported as generic unreachable.
+- Follow-up failure `web_api request failed: HTTP 502: provider_failed: OpenAI Responses request failed: The operation was aborted due to timeout` proved the request reached web_api, but web_api's own OpenAI Responses call timed out.
+- `desktop/clipper_nestjs` now has:
+  - per-request `WebApiClient.postJson(..., { timeoutMs })`;
+  - `WebApiTimeoutError` with code `web_api_timeout`;
+  - Dialog Highlight web_api calls defaulting to `240000ms`;
+  - optional override `DIALOG_HIGHLIGHT_WEB_API_TIMEOUT_MS`.
+- `web/clipper_web_api` Dialog Highlight LLM calls now have:
+  - OpenAI Responses default timeout `180000ms`;
+  - timeout-specific provider message `provider_failed: OpenAI Responses request timed out after <ms>ms`.
+- `web/clipper_web_api` Dialog Highlight LLM route now logs request lifecycle at the controller boundary:
+  - request start: `dialog_highlight.llm request requestId=<id> operation=<operation> locale=<locale>`;
+  - completion: `dialog_highlight.llm completed requestId=<id> operation=<operation> elapsedMs=<ms>`;
+  - failure: `dialog_highlight.llm failed requestId=<id> operation=<operation> status=<httpStatus> elapsedMs=<ms> message=<error>`;
+  - request input/prompt payload is intentionally not logged.
+- Verification:
+  - `desktop/clipper_nestjs`: `npm run build && node --test test/web-api-client.test.js test/dialog-highlight-web-api-client.test.js test/dialog-highlight-workflow-executor.test.js test/error-code.test.js` -> 39 passed.
+  - `web/clipper_web_api`: `npm test -- --runInBand src/modules/dialog-highlight/presentation/dialog-highlight-llm.controller.spec.ts src/modules/dialog-highlight/application/dialog-highlight-llm.service.spec.ts` -> 8 passed.
+  - `web/clipper_web_api`: `npm run build` passed.
+- Manual retest requires restarting `clipper_nestjs`/Electron; the running PID from before this change still has the old 30s timeout code.
+
+## Current Plugin Store Install State
+
+- Plugin Store now blocks concurrent plugin installs in `desktop/clipper_angular`.
+- The root cause was that a second install click could reset shared `ModelDownloadService`/`FfmpegDownloadService` state while the first plugin install was still running.
+- Current behavior:
+  - only one plugin install flow can run at a time.
+  - selecting/navigating to another plugin is still allowed.
+  - another uninstalled plugin's install button is disabled with `다른 플러그인 설치 중`.
+  - repeated install clicks during the active flow do not reset model/ffmpeg install state.
+- Verification already run:
+  - `desktop/clipper_angular`: `./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/shell/store/store/store.component.spec.ts --include src/shell/store/plugin-detail/plugin-detail.component.spec.ts`
+- Manual retest:
+  - reset app data.
+  - start Dialog Highlight install.
+  - before it finishes, select Dance Highlight.
+  - expected: Dance install is disabled until Dialog install completes, then Dance can be installed normally.

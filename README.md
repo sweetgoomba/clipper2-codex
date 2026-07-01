@@ -37,6 +37,13 @@ legacy/
 
 ## Current Focus
 
+2026-06-30 기준 `web/clipper_infra`, `web/clipper_web_api`,
+`web/clipper_web_admin`의 `feat/release-management-runtime` 작업은 `dev`에 병합됐다.
+Admin `Windows 빌드 시작` -> `clipper_web_api` -> Windows runner container `/jobs/start`
+direct flow가 m2-stage와 Windows new runner PC에서 dry-run upload mode로 검증됐다.
+다음 세션의 우선순위는 S3 upload mode 전환, `desktop/clipper_electron` output dir 공식 지원,
+runner output cleanup, macOS direct runner 설계다.
+
 2026-06-26 기준 `desktop/*` 4개 repo의 `feature/plugin-runtime-memory-management`
 작업은 `dev`에 반영된 상태다. 여러 plugin/runtime을 연달아 실행할 때 메모리 부족으로
 Clipper2 앱 또는 다른 앱까지 freeze되는 문제를 줄이기 위해 Python runtime lifecycle,
@@ -49,6 +56,7 @@ fetch 시 `origin/dev`가 이미 검증한 merge commit을 가리키고 있어 �
 fast-forward했다. push는 이 세션에서 수행하지 않았다.
 
 먼저 [handoff/NEXT.md](handoff/NEXT.md),
+[records/sessions/2026/06/30.md](records/sessions/2026/06/30.md),
 [records/sessions/2026/06/26.md](records/sessions/2026/06/26.md),
 [design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md](design/PLUGIN_RUNTIME_MEMORY_MANAGEMENT_2026-06-23.md),
 [records/sessions/2026/06/19.md](records/sessions/2026/06/19.md),
