@@ -4,6 +4,316 @@
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
+## Active Handoff: 2026-07-02 Installed App Integration
+
+이 섹션이 현재 기준이다. 아래의 긴 과거/중간 스냅샷은 상세 이력으로만 본다.
+
+Release/version-management work is still paused. The current priority is installed desktop app correctness, local/manual verification, and then Windows packaged verification. Do not resume 0.0.4 stable publish or updater detection until the installed app behavior below is accepted.
+
+### Next Session Prompt
+
+```text
+Using Superpowers.
+
+작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
+
+먼저 .codex/handoff/NEXT.md 와 .codex/records/sessions/2026/07/02.md 를 읽고 현재 상태를 파악해줘.
+이번 세션은 설치형 앱 완성/검증을 우선하며, release/version publish 작업은 아직 재개하지 마.
+secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
+
+현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 커밋되어 있고 아직 push 전이다.
+.codex는 docs-old-render-path-cleanup 브랜치에 문서 커밋이 있다.
+
+먼저 각 repo의 git status/log를 확인하고, 아래 우선순위대로 진행해줘:
+1. 최신 커밋들을 원격에 push할지 확인/진행
+2. Mac mini에서 앱 초기화 후 web_api + desktop Nest + Electron devapp으로 fresh manual smoke
+3. Windows test PC에서 pull/build/install/manual smoke
+4. 남은 TODO 중 높은 우선순위부터 처리
+```
+
+### Current Branch/Commit State
+
+These commits are local feature-branch heads at the end of this session unless a later session pushes them.
+
+```text
+desktop/clipper_angular:  feature/plugin-runtime-isolation @ ca71561 fix(shortform): polish clip generation defaults
+desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 19015ee fix(errors): classify provider and YouTube failures
+desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
+desktop/clipper_electron: feature/plugin-runtime-isolation @ ebe4cae fix(runtime): reset plugin asset state locally
+web/clipper_web_api:      feature/plugin-runtime-isolation @ 9532093 fix(dialog): log LLM calls and extend timeout
+.codex:                   docs-old-render-path-cleanup, see latest git log; includes e80e164 and this closeout docs update
+```
+
+Per-repo local commits not yet pushed at closeout:
+
+```text
+desktop/clipper_angular:
+  3b11280 fix(auth): keep newer desktop session
+  c7db2e4 fix(shell): remove native navigation tooltips
+  ab68b2e fix(store): block concurrent plugin installs
+  ca71561 fix(shortform): polish clip generation defaults
+
+desktop/clipper_nestjs:
+  26ba140 fix(plugins): gate runtime on asset install state
+  9b475cf feat(dialog): run LLM stages through web api
+  e7f9441 feat(shortform): use web api and Supertonic providers
+  19015ee fix(errors): classify provider and YouTube failures
+
+desktop/clipper_python:
+  4405cad fix(tts): preserve pitch for playback speed
+
+desktop/clipper_electron:
+  df952b1 fix(auth): redact desktop login tokens
+  ebe4cae fix(runtime): reset plugin asset state locally
+
+web/clipper_web_api:
+  c4d9779 fix(auth): show desktop login completion page
+  5c8f96f feat(desktop): allow local provider proxy calls
+  9532093 fix(dialog): log LLM calls and extend timeout
+```
+
+Do not push any of these directly to `dev`. Push feature branches only, unless the user explicitly changes the release plan.
+
+### Session Flow Summary
+
+1. Started from the previous release handoff: `release-platform-integration` had been merged/pushed to latest `dev`; Windows runner had confirmed release `0.0.4 build 10` build/sign/S3 upload/report success; `stable` still pointed at build 9; stable publish/update detection remained.
+2. Release work was paused after a Windows installed-app failure: S3-downloaded `clipperstudio Setup 0.0.3` launched with no visible window.
+3. Helped bootstrap the separate Windows PC: Codex CLI path issue was resolved, repos were to be cloned under `C:\Users\metabuzz_jmj\Desktop\project\clipper`, and the Windows diagnosis session was instructed.
+4. Windows diagnosis found the first-run app window was blocked by packaged startup `ensureVenv()`:
+   - startup sync pulled in the full Python workspace;
+   - `dance_highlight -> insightface==0.7.3` attempted a Windows source build;
+   - the PC had no MSVC Build Tools;
+   - `main.ts` opened the window only after `ensureVenv()`, so users saw no app window.
+5. We decided not to require MSVC Build Tools from users. The direction became proper runtime isolation plus Windows-safe Dance dependencies.
+6. InsightFace commercial/distribution risk and Windows wheel risk were investigated. The Dance path moved to OpenCV YuNet/SFace instead of `insightface`.
+7. Dance Highlight was changed and tested:
+   - startup venv no longer installs every plugin dependency before app window open;
+   - Dance face matching moved to OpenCV YuNet/SFace;
+   - Mac unit/e2e pipeline tests passed;
+   - user manually confirmed Dance install/model flow and project generation.
+8. Dance result quality issues were found:
+   - some members appeared with 0 clips while anonymous clusters held their clips;
+   - manual anonymous-cluster-to-member mapping was added;
+   - member profile/exclusion direction was discussed for retired or irrelevant members;
+   - segment face sampling was improved by selecting more/better frames per segment.
+9. Windows manual build from the feature branch succeeded. The app launched and Dance plugin worked, but new installed-app issues were discovered.
+10. Windows edit-page issue was fixed:
+    - rendered result could choose a render/output project id instead of source project id;
+    - edit routing now resolves the original source project from metadata/manifest/source asset metadata.
+11. ffmpeg/ffprobe readiness behavior was corrected:
+    - no silent auto-download;
+    - packaged UI should require explicit consent/install flow;
+    - old copy that suggested restarting the app was considered misleading.
+12. Plugin install state was corrected:
+    - reset app data should show model-backed plugins as uninstalled;
+    - local/devapp NestJS now checks real model asset presence rather than only plugin manifests;
+    - Electron devapp model-download IPC also checks real files;
+    - reset scripts were added for macOS and Windows.
+13. Plugin Store concurrent install was blocked:
+    - only one plugin install flow can run at a time;
+    - this prevents shared download/install state from being reset by a second click.
+14. Secretless provider routing became the main architecture:
+    - desktop should not carry provider secrets in packaged resources;
+    - Dance member image search routes through `web_api`;
+    - prompt shortform script generation routes through `web_api`;
+    - Dialog Highlight LLM stages route through `web_api`;
+    - local unauthenticated desktop access is temporary until auth/token design lands.
+15. Dialog Highlight pipeline was split:
+    - Python performs media stages only;
+    - local NestJS orchestrates stages;
+    - web_api owns LLM provider calls and credentials.
+16. Dialog Highlight timeout/logging was fixed:
+    - desktop NestJS `WebApiClient` timeout was too short and mislabeled as `web_api is unreachable`;
+    - Dialog calls now use longer per-request timeout;
+    - web_api OpenAI Responses timeout was extended;
+    - web_api logs request/completion/failure for Dialog LLM operations without logging prompts/payloads;
+    - user confirmed a full Dialog Highlight run reached and completed all LLM stages.
+17. Prompt shortform was routed and fixed:
+    - script generation calls web_api/OpenAI;
+    - TTS must use embedded Supertonic, not Naver Clova;
+    - Supertonic fast speed no longer passes speed into model synthesis directly;
+    - plugin synthesizes at stable model speed `1.0` then applies pitch-preserving playback-speed post-processing;
+    - default clip/TTS speed is now `1.2`.
+18. Electron/auth fixes were added:
+    - local dev auth can target local `CLIPPER_WEB_API_BASE_URL`;
+    - deep-link token logs are redacted;
+    - stale `/me` validation should not clear a newer desktop session;
+    - web_api desktop OAuth callback shows a completion page and should not leave a confusing "back to app" button.
+19. Angular/UI fixes were added:
+    - removed unwanted native tooltip text from shell navigation;
+    - removed Material progress bar from the clip generation modal where custom stage imagery is used.
+20. All app repos were committed in related groups. No push was performed after the latest commit batch.
+
+### Verification Already Run
+
+```text
+desktop/clipper_electron:
+  npm run build && npm test
+  -> 65 tests passed
+
+desktop/clipper_python:
+  uv run --with pytest --with httpx --package clipper-plugin-tts-supertonic python -m pytest tests/test_tts_supertonic_synthesis.py tests/test_tts_supertonic_route.py tests/test_tts_supertonic_runtime.py -q
+  -> 10 tests passed
+
+web/clipper_web_api:
+  npm test -- --runInBand src/modules/dialog-highlight/presentation/dialog-highlight-llm.controller.spec.ts src/modules/dialog-highlight/application/dialog-highlight-llm.service.spec.ts src/modules/auth/presentation/auth.controller.spec.ts src/modules/api-keys/presentation/media-search.controller.spec.ts src/modules/shortform-script/presentation/script.controller.spec.ts
+  npm run build
+  -> 5 suites / 15 tests passed, build passed
+
+desktop/clipper_nestjs:
+  npm run build
+  node --test test/web-api-client.test.js test/dialog-highlight-web-api-client.test.js test/dialog-highlight-workflow-executor.test.js test/dialog-highlight-python-stage-runner.test.js test/error-code.test.js test/job-failure-event.test.js test/local-plugin-host-install-state.test.js test/clipper-studio-script-generator.test.js test/shortform-script-generator-wiring.test.js test/shortform-clip-generation-events.test.ts test/shortform-project-generation-assets.test.js test/shortform-tts-provider.test.js
+  -> 74 tests passed
+
+desktop/clipper_angular:
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/features/shortform/pages/shortform-workflow-style.spec.ts --include src/features/shortform/components/workflow/shortform-legacy-style-panel/shortform-legacy-style-panel.component.spec.ts --include src/features/shortform/pages/shortform-workflow-page/shortform-workflow-page.component.spec.ts
+  npm run build
+  -> 68 tests passed, build passed
+```
+
+Known verification caveat:
+
+- `desktop/clipper_nestjs`: full `node --test test/shortform-project-api.test.js` still needs harness work because it does not configure/mock `CLIPPER_WEB_API_BASE_URL`. Do not treat this specific full-file failure as a TTS or runtime regression without first fixing the harness.
+
+### Immediate Next Priorities
+
+1. Decide whether to push the local feature-branch commits:
+   - `desktop/clipper_angular` ahead 4.
+   - `desktop/clipper_nestjs` ahead 4.
+   - `desktop/clipper_python` ahead 1.
+   - `desktop/clipper_electron` ahead 2.
+   - `web/clipper_web_api` ahead 3.
+   - `.codex` ahead with documentation commits.
+2. Run a fresh Mac mini manual smoke from reset:
+   - reset app/runtime data with `desktop/clipper_electron/scripts/reset-macos.sh --yes`;
+   - start `web/clipper_web_api` with `npm run start:dev`;
+   - start `desktop/clipper_nestjs` with `npm run start:devapp`;
+   - start `desktop/clipper_electron` with `npm run start:devapp`;
+   - login through desktop OAuth;
+   - install Dialog and Dance plugins one at a time;
+   - run prompt shortform generation/render and verify Supertonic TTS at default `1.2`;
+   - run Dialog Highlight and verify staged progress/output/edit page;
+   - run Dance Highlight and verify member mapping/manual anonymous assignment/output/edit page.
+3. Run Windows test PC verification after pulling feature branches:
+   - use project root `C:\Users\metabuzz_jmj\Desktop\project\clipper`;
+   - pull all repos on `feature/plugin-runtime-isolation`;
+   - use Electron-bundled uv if system `uv` is missing;
+   - build with `desktop\clipper_electron npm run build:app:win:x64`;
+   - install the generated app;
+   - reset runtime data with `desktop\clipper_electron\scripts\reset-windows.ps1 -ConfirmReset`;
+   - verify first launch, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, and edit pages.
+4. Do not resume release/stable publish work until Mac and Windows installed-app smoke are accepted.
+
+### Carry-Forward TODOs
+
+#### Release / Version Management
+
+- `0.0.4` stable publish is still not done.
+- Installed app `electron-updater` update detection from the previous stable target still needs verification.
+- Windows runner build/sign/S3 upload/report should be repeated from the accepted feature branch after installed app smoke passes.
+- Release Console follow-ups remain:
+  - publish confirmation/authz details;
+  - artifact/stable target UX;
+  - release-runner status polish.
+- Web client download page follow-ups remain.
+
+#### Cross-Repo Push / Branch Hygiene
+
+- Confirm all five app repos are on `feature/plugin-runtime-isolation`.
+- Push feature branches only after user approval.
+- Do not push these commits to `dev` directly.
+- `.codex` is a separate repo; documentation commits must stay separate from app repo commits.
+- After push, record pushed heads in this handoff.
+
+#### Mac / Windows Manual Verification
+
+- Mac fresh-reset smoke is still needed after the latest commits.
+- Windows test PC pull/build/install smoke is still needed after the latest commits.
+- Windows runner PC packaged build/sign/S3 workflow is still needed after manual behavior is accepted.
+- Confirm no raw OAuth tokens, provider API keys, or secret env values appear in desktop/web_api logs.
+- Confirm packaged env/resources contain no forbidden provider secret names.
+
+#### Dance Highlight
+
+- Investigate remaining zero-clip member cases such as Kazuha/Hanni-style failures with saved artifacts/logs.
+- Build a small quality benchmark across known samples:
+  - KiiiKiii;
+  - NewJeans;
+  - LE SSERAFIM;
+  - at least one low-resolution or side-angle-heavy video.
+- Confirm manual anonymous cluster mapping UX:
+  - user selection should require confirmation before merge;
+  - wrong selection needs a correction/rollback path;
+  - anonymous clusters should still be inspectable after failed/uncertain mapping.
+- Finish member profile/exclusion model:
+  - retired/non-participating members can be excluded from a specific profile/setup;
+  - existing cached artist/member data can be reset safely by scripts;
+  - excluded members should not block image selection or appear as zero-clip required targets.
+- Keep full-frame face detection plus pose-head matching as a deferred design item; it may improve accuracy but can also introduce new false matches, so do not implement without a focused design/test pass.
+- Continue improving segment face sample selection if quality gaps remain.
+
+#### Dialog Highlight
+
+- Manual smoke must verify staged queue progress does not stick at `100%` before the whole workflow completes.
+- If long videos still hit web_api/OpenAI timeout, reduce/chunk prompt inputs or split stages further instead of only increasing timeouts.
+- Keep web_api Dialog LLM logging at lifecycle metadata only; do not log prompts, transcripts, provider keys, or raw payloads.
+- Confirm Dialog Highlight works in Windows packaged app without desktop-bundled OpenAI keys.
+
+#### Prompt Shortform / TTS
+
+- Manual smoke must verify:
+  - script generation routes through web_api;
+  - created project defaults to `ttsSpeed: 1.2`;
+  - generated Supertonic wavs do not clip beginning/end speech;
+  - faster regenerated speeds preserve pitch.
+- Fix `desktop/clipper_nestjs` `test/shortform-project-api.test.js` harness so it configures/mocks `CLIPPER_WEB_API_BASE_URL`.
+- Confirm rendered final videos match raw wav timing after pitch-preserving time-stretch.
+- Do not reintroduce Naver Clova or any fallback TTS provider for installed app shortform.
+
+#### Plugin Store / Runtime Assets
+
+- Manual retest concurrent install block:
+  - start Dialog install;
+  - attempt Dance install before Dialog finishes;
+  - expected: Dance install button disabled with `다른 플러그인 설치 중`;
+  - after Dialog finishes, Dance install can run normally.
+- Confirm fresh reset shows model-backed plugins as `미설치`.
+- Confirm Dance install persists required model files where local/devapp and packaged install-state checks expect them.
+- Confirm Dialog install persists required HuggingFace/cache assets and status changes only after completion.
+- Confirm reset scripts remove:
+  - Electron app data;
+  - local NestJS `.clipper_data`;
+  - plugin model markers/files;
+  - downloaded ffmpeg/ffprobe;
+  - HuggingFace cache by default.
+- Confirm ffmpeg/ffprobe flow:
+  - no silent auto-download;
+  - user sees explicit consent/install state;
+  - copy does not incorrectly require app restart.
+
+#### Auth / Security / Provider Routing
+
+- Temporary unauthenticated local desktop access to web_api endpoints must be replaced by proper desktop auth/service token once auth/permissions design lands.
+- Keep current no-fallback policy:
+  - Dance image search through web_api only;
+  - prompt script generation through web_api only;
+  - Dialog LLM through web_api only;
+  - no direct desktop OpenAI/Naver provider fallback.
+- Verify local/dev/prod base URL configuration:
+  - desktop devapp should use local web_api when configured;
+  - packaged builds should use the intended environment URL;
+  - errors should clearly distinguish missing config, unreachable api, provider failure, and timeout.
+- Desktop OAuth callback completion page should not show a redundant "open app" button after the browser already triggered the app deep link.
+- Keep token logging redacted.
+
+#### Documentation / Test Hygiene
+
+- Later, consolidate the older `NEXT.md` sections so stale "pushed head" snapshots cannot confuse the next session.
+- Keep `stdout v:1 JSON Lines` contract cleanup as a TODO:
+  - current concern is not that progress is broken;
+  - the concern is stdout/log/control-event contracts should be documented and separated clearly for Electron consumers.
+- Full Angular suite may still have unrelated Template Builder snapshot failures from earlier history; verify before using full-suite failures as regressions for this work.
+
 ## 2026-07-02 Desktop Secretless Provider Routing / Dialog Pipeline Current Handoff
 
 Release/version-management work is still paused. The current priority is installed desktop app correctness.
