@@ -21,7 +21,7 @@ Using Superpowers.
 이번 세션은 설치형 앱 완성/검증을 우선하며, release/version publish 작업은 아직 재개하지 마.
 secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
 
-현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 있고 origin tracking branch와 동기화되어 있다.
+현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 있다. 일부 repo는 origin tracking branch보다 앞서 있으며 아직 push 전이다.
 .codex는 docs-old-render-path-cleanup 브랜치에 문서 커밋이 있다.
 
 먼저 각 repo의 git status/log를 확인하고, 아래 우선순위대로 진행해줘:
@@ -33,15 +33,15 @@ secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
 
 ### Current Branch/Commit State
 
-These are the current pushed feature-branch heads as of the latest session update.
+These are the current local feature-branch heads as of the latest session update. Some are not pushed yet.
 
 ```text
-desktop/clipper_angular:  feature/plugin-runtime-isolation @ eb767a2 fix(template-builder): render default template thumbnails
-desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 3133015 feat(template-builder): add default shortform template
+desktop/clipper_angular:  feature/plugin-runtime-isolation @ d7ef5e6 Refine template builder editing workflow
+desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 8e55d76 Fix shortform project API test web API harness
 desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
-desktop/clipper_electron: feature/plugin-runtime-isolation @ d8e6cba feat(build): add local API packaged app build
-web/clipper_web_api:      feature/plugin-runtime-isolation @ 9532093 fix(dialog): log LLM calls and extend timeout
-.codex:                   docs-old-render-path-cleanup @ 925d396 docs: finalize installed app session handoff
+desktop/clipper_electron: feature/plugin-runtime-isolation @ d239e03 Require explicit ffmpeg consent before install
+web/clipper_web_api:      feature/plugin-runtime-isolation @ 2817381 Harden OpenAI JSON responses for script flows
+.codex:                   docs-old-render-path-cleanup @ 6eff8f2 Document shortform API harness cleanup
 ```
 
 Latest feature-branch commits now pushed:
@@ -227,16 +227,7 @@ Resolved verification caveat:
 
 ### Immediate Next Priorities
 
-1. Run the remaining Mac mini packaged-app smoke items from reset:
-   - reset app/runtime data with `desktop/clipper_electron/scripts/reset-macos.sh --yes`;
-   - start `web/clipper_web_api` with `npm run start:dev`;
-   - build packaged local-api app with `desktop/clipper_electron npm run build:app:mac:arm64:local-api`;
-   - run the built `Clipper2.app`;
-   - login through desktop OAuth;
-   - install Dialog and Dance plugins one at a time;
-   - rerun Dialog Highlight after the sentence-split batching/JSON-mode fix;
-   - verify ffmpeg/ffprobe consent/install state flow.
-2. Run Windows test PC verification after pulling feature branches:
+1. Run Windows test PC verification after pulling feature branches:
    - use project root `C:\Users\metabuzz_jmj\Desktop\project\clipper`;
    - pull all repos on `feature/plugin-runtime-isolation`;
    - use Electron-bundled uv if system `uv` is missing;
@@ -244,7 +235,13 @@ Resolved verification caveat:
    - install the generated app;
    - reset runtime data with `desktop\clipper_electron\scripts\reset-windows.ps1 -ConfirmReset`;
    - verify first launch, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, and edit pages.
-3. Do not resume release/stable publish work until Mac and Windows installed-app smoke are accepted.
+2. Finish auth/security/provider-routing follow-ups:
+   - replace temporary unauthenticated local desktop access to web_api endpoints with proper desktop auth/service token design;
+   - keep the no-fallback provider policy;
+   - verify local/dev/prod web_api base URL behavior and error classification.
+3. Do not resume release/stable publish work until Windows installed-app smoke is accepted.
+
+Mac packaged-app smoke and ffmpeg/ffprobe consent/install-state flow were user-confirmed done on 2026-07-02.
 
 ### Carry-Forward TODOs
 
@@ -264,22 +261,21 @@ Resolved verification caveat:
 - Confirm all five app repos are on `feature/plugin-runtime-isolation`.
 - Do not push these commits to `dev` directly.
 - `.codex` is a separate repo; documentation commits must stay separate from app repo commits.
-- Feature branches are currently pushed to origin; before any future release/dev merge, re-check all repo status/logs.
+- Several local feature branches are ahead of origin; before any future release/dev merge, re-check all repo status/logs and push only approved feature branches.
 - Optional cleanup later: decide whether to delete pushed helper branches such as `fix/default-template-thumbnails` after they are no longer needed.
 
 #### Mac / Windows Manual Verification
 
-- Mac fresh-reset smoke only has the remaining items listed in Immediate Next Priorities; Template Builder, Dance Highlight, Prompt Shortform/TTS, plugin reset state, plugin asset persistence, and render timing checks were user-confirmed done.
+- Mac fresh-reset packaged-app smoke is user-confirmed done.
 - Windows test PC pull/build/install smoke is still needed after the latest commits.
 - Windows runner PC packaged build/sign/S3 workflow is still needed after manual behavior is accepted.
-- Confirm no raw OAuth tokens, provider API keys, or secret env values appear in desktop/web_api logs.
-- Confirm packaged env/resources contain no forbidden provider secret names.
+- Secret/log checks for the Mac smoke were user-confirmed done; repeat on Windows packaged smoke.
 
-Template Builder/default template and Dance Highlight active smoke TODOs were user-confirmed done during TODO review.
+Template Builder/default template, Dance Highlight active smoke, Prompt Shortform/TTS, plugin reset state, plugin asset persistence, render timing, and ffmpeg/ffprobe consent/install-state flow were user-confirmed done during TODO review.
 
 #### Dialog Highlight
 
-- Rerun Dialog Highlight after rebuilding/restarting local web_api and packaged app with:
+- Mac packaged-app Dialog Highlight rerun was user-confirmed done after:
   - desktop NestJS sentence-split batching with adjacent context shots;
   - target-only merge so context shot results are not saved as final `llm_sentences`;
   - web_api OpenAI Responses JSON mode;
@@ -294,12 +290,7 @@ Prompt Shortform/TTS generation, default `ttsSpeed: 1.2`, wav edge clipping, spe
 
 #### Plugin Store / Runtime Assets
 
-- Confirm ffmpeg/ffprobe flow:
-  - no silent auto-download;
-  - user sees explicit consent/install state;
-  - copy does not incorrectly require app restart.
-
-Plugin Store concurrent install block, reset script removal scope, fresh-reset model-backed plugin `미설치` state, and Dialog/Dance asset persistence across restart were user-confirmed done during TODO review.
+Plugin Store concurrent install block, reset script removal scope, fresh-reset model-backed plugin `미설치` state, Dialog/Dance asset persistence across restart, and ffmpeg/ffprobe consent/install-state flow were user-confirmed done during TODO review.
 
 #### Auth / Security / Provider Routing
 
@@ -316,13 +307,18 @@ Plugin Store concurrent install block, reset script removal scope, fresh-reset m
 
 #### Documentation / Test Hygiene
 
-- Later, consolidate the older `NEXT.md` sections so stale "pushed head" snapshots cannot confuse the next session.
-- Keep `stdout v:1 JSON Lines` contract cleanup as a TODO:
-  - current concern is not that progress is broken;
-  - the concern is stdout/log/control-event contracts should be documented and separated clearly for Electron consumers.
-- Full Angular suite may still have unrelated Template Builder snapshot failures from earlier history; verify before using full-suite failures as regressions for this work.
+- `NEXT.md` now treats this top `Active Handoff` section as the only current TODO source; lower sections are historical snapshots only.
+- stdout/log/control-event contract is documented in `.codex/design/DESKTOP_STDOUT_AND_CONTROL_EVENT_CONTRACT_2026-07-02.md`.
+- `.codex/todos/2026-07-01-desktop-stdout-event-contract.md` is marked documented, with only a long-term physical channel separation follow-up.
+- Full Angular suite passed in the latest documented run (`809 success`); rerun relevant suites before treating future failures as regressions.
 
-## 2026-07-02 Desktop Secretless Provider Routing / Dialog Pipeline Current Handoff
+## Historical Handoff Snapshots (Reference Only)
+
+The sections below are retained for detailed history. They are not the source of current TODOs,
+branch heads, or next-session priorities. Use the top `Active Handoff` section above for current
+state.
+
+### 2026-07-02 Desktop Secretless Provider Routing / Dialog Pipeline Current Handoff
 
 Release/version-management work is still paused. The current priority is installed desktop app correctness.
 

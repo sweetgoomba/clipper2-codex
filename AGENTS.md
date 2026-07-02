@@ -130,6 +130,7 @@ clipper_docs/               크로스-레포 메타 (adr·architecture·playbook
   `{"v":1,"ts":<ISO-8601 UTC+ms>,"level":<trace|debug|info|warn|error|fatal>,"src":<main|renderer|nest|python.{plugin}>,"msg":<str>,"trace"?:<8-hex>,"ctx"?:{…}}`.
 - **수집 = Electron main 깔때기(funnel).** main/renderer=`electron-log`; 자식(nest/python) stdout을 main이 캡처 → 소스별 `~/Library/Logs/Clipper2/*.jsonl`(5MB 회전, `.old` 1개). 비유효 줄은 main이 스키마로 감싸 **항상 유효 JSON 보장**.
 - **레포별 emit 책임:** electron=`electron-log` JSON 포맷, angular=`electron-log/renderer` funnel(`src:"renderer"`), nest=커스텀 `JsonLogger`(stdout JSON, `src:"nest"`), python=`structlog`(stdout JSON, `src:"python.{plugin}"`). **stdout 텍스트 로그 금지 — JSON 줄만.**
+- **stdout 제어 이벤트 예외:** Python plugin startup/model-install 단계에서는 `model_loading`, `download_progress`만 stdout 제어 이벤트로 허용한다. 일반 job progress는 plugin HTTP runtime의 WebSocket progress 계약을 사용한다. 정본은 `design/DESKTOP_STDOUT_AND_CONTROL_EVENT_CONTRACT_2026-07-02.md`.
 - **trace 상관추적:** 한 사용자 액션을 프로세스 너머로 묶는 8-hex ID. HTTP 헤더 `x-trace-id`로 전파(nest=AsyncLocalStorage, python=contextvar). 디버그 뷰어(`clipper_angular` 설정→로그)가 소스·레벨·검색·trace로 조회.
 - **에러 퍼널(2026-06-23):** 두 백엔드의 미처리 예외·잡 실패를 이 로그에 trace·스택과 함께 남기는 전역 핸들러(§2.3, 응답 형식 무변경).
 - **⚠️ 규칙화 전 머지 확인:** 베이스 v1(Tier 2 구조화 로깅)은 dev 반영. **trace wiring(SP1/SP2)·에러 퍼널은 로컬 브랜치·MERGE-READY(미머지)** — dev 반영 후 규칙으로 굳힌다. 비범위 = 서버 전송·Sentry·OTel·라이브 tail.
