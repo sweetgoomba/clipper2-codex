@@ -221,9 +221,9 @@ desktop/clipper_angular:
   -> 75 success, 87 success, 13 success, 809 success, build passed
 ```
 
-Known verification caveat:
+Resolved verification caveat:
 
-- `desktop/clipper_nestjs`: full `node --test test/shortform-project-api.test.js` still needs harness work because it does not configure/mock `CLIPPER_WEB_API_BASE_URL`. Do not treat this specific full-file failure as a TTS or runtime regression without first fixing the harness.
+- `desktop/clipper_nestjs` `node --test test/shortform-project-api.test.js` now configures a mock `CLIPPER_WEB_API_BASE_URL` through the test harness and passes.
 
 ### Immediate Next Priorities
 
@@ -288,7 +288,6 @@ Template Builder/default template and Dance Highlight active smoke TODOs were us
 
 #### Prompt Shortform / TTS
 
-- Fix `desktop/clipper_nestjs` `test/shortform-project-api.test.js` harness so it configures/mocks `CLIPPER_WEB_API_BASE_URL`.
 - Do not reintroduce Naver Clova or any fallback TTS provider for installed app shortform.
 
 Prompt Shortform/TTS generation, default `ttsSpeed: 1.2`, wav edge clipping, speed pitch preservation, and final render timing were user-confirmed done during TODO review.
