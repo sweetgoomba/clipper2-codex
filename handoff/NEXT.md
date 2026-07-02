@@ -39,7 +39,7 @@ These are the current local feature-branch heads as of the latest session update
 desktop/clipper_angular:  feature/plugin-runtime-isolation @ d7ef5e6 Refine template builder editing workflow
 desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 8e55d76 Fix shortform project API test web API harness
 desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
-desktop/clipper_electron: feature/plugin-runtime-isolation @ e75a96e Fix Windows local API smoke build updater behavior
+desktop/clipper_electron: feature/plugin-runtime-isolation @ a9cf9c1 Document local API packaged app builds
 web/clipper_web_api:      feature/plugin-runtime-isolation @ 2817381 Harden OpenAI JSON responses for script flows
 .codex:                   docs-old-render-path-cleanup @ 6eff8f2 Document shortform API harness cleanup
 ```
@@ -181,6 +181,19 @@ Do not push any of these directly to `dev`. Push feature branches only, unless t
     - `build:app:win:x64:local-api` now writes runtime config with `autoUpdateDisabled: true`;
     - packaged runtime config maps that to `CLIPPER_AUTO_UPDATE_DISABLED=1` for updater setup;
     - Windows local-api `--dir` builds add `--config.win.signAndEditExecutable=false` to avoid winCodeSign/symlink failures during smoke builds.
+29. Windows local-api smoke was later paused as a private-only debug path, not a team/public README path:
+    - the separate Windows Codex session pulled `desktop/clipper_electron @ a9cf9c1`;
+    - local `web/clipper_web_api` was running and `/health` returned 200 with user/admin/release DB ok;
+    - env file presence and forbidden packaged provider-secret key names were checked without printing values;
+    - `scripts\reset-windows.ps1 -ConfirmReset` stopped at `Stopping Clipper2 and managed plugin processes...`;
+    - likely cause: `Stop-ProcessByCommandLinePattern 'clipper_electron'` matched the PowerShell command line that was running the reset script from a `clipper_electron` path and killed its own shell;
+    - `Clipper2.exe` was not launched, so updater behavior and UI smoke were not checked in that run;
+    - public `desktop/clipper_electron/README.md` local-api/no-sign Windows guidance was removed afterward. Keep this context in `.codex` only.
+30. The Windows reset self-kill risk was fixed in `desktop/clipper_electron`:
+    - `reset-windows.ps1` now protects the current PowerShell `$PID` from command-line pattern kills;
+    - the broad `clipper_electron` command-line kill was replaced with a narrower dev Electron executable path pattern;
+    - static regression coverage was added in `test/reset-windows-script.test.js`;
+    - macOS verification ran `npm test` and `git diff --check`, but actual PowerShell execution still needs a Windows PC.
 
 ### Verification Already Run
 
@@ -244,15 +257,13 @@ Resolved verification caveat:
 
 ### Immediate Next Priorities
 
-1. Run Windows test PC verification after pulling feature branches:
+1. Re-decide the Windows test PC verification path after pulling feature branches:
    - use project root `C:\Users\metabuzz_jmj\Desktop\project\clipper`;
    - pull all repos on `feature/plugin-runtime-isolation`;
-   - use Electron-bundled uv if system `uv` is missing;
-   - start local `web\clipper_web_api` with `npm run start:dev`;
-   - build with `desktop\clipper_electron npm run build:app:win:x64:local-api`;
-   - reset runtime data with `desktop\clipper_electron\scripts\reset-windows.ps1 -ConfirmReset`;
-   - run the generated `desktop\clipper_electron\dist-app\win-unpacked\Clipper2.exe`;
-   - verify first launch, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, and edit pages.
+   - default assumption after the latest user decision: Windows should not run a local web_api/local-api smoke path unless explicitly requested as private debugging;
+   - prefer a normal deployed-web_api packaged-app verification path once the user chooses the exact Windows build/run method;
+- reset runtime data with the updated `reset-windows.ps1`, then confirm on Windows that the PowerShell session survives the reset;
+   - verify first launch, login, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, edit pages, and secret/log hygiene.
 2. Finish auth/security/provider-routing follow-ups:
    - replace temporary unauthenticated local desktop access to web_api endpoints with proper desktop auth/service token design;
    - keep the no-fallback provider policy;
@@ -285,7 +296,9 @@ Mac packaged-app smoke and ffmpeg/ffprobe consent/install-state flow were user-c
 #### Mac / Windows Manual Verification
 
 - Mac fresh-reset packaged-app smoke is user-confirmed done.
-- Windows test PC local-api unpacked smoke must be rerun after `desktop/clipper_electron @ e75a96e`.
+- Windows test PC local-api unpacked smoke is paused and should not be treated as the default team/public path.
+- The latest Windows attempt stopped during `reset-windows.ps1 -ConfirmReset` because the `clipper_electron` command-line kill pattern likely matched the reset-running PowerShell session itself; the script has since been narrowed, but actual Windows execution still needs confirmation.
+- Windows manual verification should use a deployed-web_api packaged-app path once the user confirms the exact build/run method.
 - Windows runner PC packaged build/sign/S3 workflow is still needed after manual behavior is accepted.
 - Secret/log checks for the Mac smoke were user-confirmed done; repeat on Windows packaged smoke.
 
