@@ -21,30 +21,30 @@ Using Superpowers.
 이번 세션은 설치형 앱 완성/검증을 우선하며, release/version publish 작업은 아직 재개하지 마.
 secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
 
-현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 커밋되어 있고 아직 push 전이다.
+현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 있고 origin tracking branch와 동기화되어 있다.
 .codex는 docs-old-render-path-cleanup 브랜치에 문서 커밋이 있다.
 
 먼저 각 repo의 git status/log를 확인하고, 아래 우선순위대로 진행해줘:
-1. 최신 커밋들을 원격에 push할지 확인/진행
-2. Mac mini에서 앱 초기화 후 web_api + desktop Nest + Electron devapp으로 fresh manual smoke
-3. Windows test PC에서 pull/build/install/manual smoke
-4. 남은 TODO 중 높은 우선순위부터 처리
+1. Mac mini에서 최신 packaged app/local-api 빌드로 fresh manual smoke
+2. Windows test PC에서 pull/build/install/manual smoke
+3. 남은 TODO 중 높은 우선순위부터 처리
+4. Mac/Windows 설치형 앱 smoke가 승인되기 전까지 release/version publish는 재개하지 않기
 ```
 
 ### Current Branch/Commit State
 
-These commits are local feature-branch heads at the end of this session unless a later session pushes them.
+These are the current pushed feature-branch heads as of the latest session update.
 
 ```text
-desktop/clipper_angular:  feature/plugin-runtime-isolation @ ca71561 fix(shortform): polish clip generation defaults
-desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 19015ee fix(errors): classify provider and YouTube failures
+desktop/clipper_angular:  feature/plugin-runtime-isolation @ eb767a2 fix(template-builder): render default template thumbnails
+desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 3133015 feat(template-builder): add default shortform template
 desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
-desktop/clipper_electron: feature/plugin-runtime-isolation @ ebe4cae fix(runtime): reset plugin asset state locally
+desktop/clipper_electron: feature/plugin-runtime-isolation @ d8e6cba feat(build): add local API packaged app build
 web/clipper_web_api:      feature/plugin-runtime-isolation @ 9532093 fix(dialog): log LLM calls and extend timeout
-.codex:                   docs-old-render-path-cleanup, see latest git log; includes e80e164 and this closeout docs update
+.codex:                   docs-old-render-path-cleanup @ 925d396 docs: finalize installed app session handoff
 ```
 
-Per-repo local commits not yet pushed at closeout:
+Latest feature-branch commits now pushed:
 
 ```text
 desktop/clipper_angular:
@@ -52,12 +52,15 @@ desktop/clipper_angular:
   c7db2e4 fix(shell): remove native navigation tooltips
   ab68b2e fix(store): block concurrent plugin installs
   ca71561 fix(shortform): polish clip generation defaults
+  eb767a2 fix(template-builder): render default template thumbnails
 
 desktop/clipper_nestjs:
   26ba140 fix(plugins): gate runtime on asset install state
   9b475cf feat(dialog): run LLM stages through web api
   e7f9441 feat(shortform): use web api and Supertonic providers
   19015ee fix(errors): classify provider and YouTube failures
+  4abd210 chore(env): remove deprecated .env.packaged file
+  3133015 feat(template-builder): add default shortform template
 
 desktop/clipper_python:
   4405cad fix(tts): preserve pitch for playback speed
@@ -65,6 +68,7 @@ desktop/clipper_python:
 desktop/clipper_electron:
   df952b1 fix(auth): redact desktop login tokens
   ebe4cae fix(runtime): reset plugin asset state locally
+  d8e6cba feat(build): add local API packaged app build
 
 web/clipper_web_api:
   c4d9779 fix(auth): show desktop login completion page
@@ -73,6 +77,10 @@ web/clipper_web_api:
 ```
 
 Do not push any of these directly to `dev`. Push feature branches only, unless the user explicitly changes the release plan.
+
+`desktop/clipper_angular` and `desktop/clipper_nestjs` also have pushed helper branches named
+`fix/default-template-thumbnails`; those commits were fast-forward merged back into
+`feature/plugin-runtime-isolation`.
 
 ### Session Flow Summary
 
@@ -143,6 +151,26 @@ Do not push any of these directly to `dev`. Push feature branches only, unless t
     - removed unwanted native tooltip text from shell navigation;
     - removed Material progress bar from the clip generation modal where custom stage imagery is used.
 20. All app repos were committed in related groups. No push was performed after the latest commit batch.
+21. Packaged-app build config was clarified:
+    - default packaged mac arm64 build uses deployed web_api;
+    - new `desktop/clipper_electron` command `npm run build:app:mac:arm64:local-api` builds a packaged app that points at local `http://127.0.0.1:3000`;
+    - build-time runtime config was verified without printing secret env values.
+22. `desktop/clipper_nestjs/.env.packaged` was removed from git tracking with `git rm --cached`; secret-bearing env files remain untracked.
+23. Template Builder default shortform template was added:
+    - empty local template store now exposes one read-only built-in shortform template;
+    - default template uses the same baseline as "새 템플릿 만들기";
+    - read-only delete is blocked by existing readonly checks;
+    - template badges such as `사용자 템플릿` were removed from builder cards.
+24. Default template thumbnail behavior was corrected:
+    - Template Builder gallery captures the live preview DOM for the built-in default card thumbnail;
+    - no fake SVG thumbnail is used;
+    - object URLs are cleaned up.
+25. Live preview thumbnail capture was hardened:
+    - while `phone-canvas` is captured, preview-grid scrollbars are hidden so small Electron windows do not bake scrollbars into card thumbnails.
+26. Shortform production template selector now receives an actual default builder thumbnail:
+    - `TemplateBuilderPublishedPresetSource` emits `preview.remoteImageUrl` for the default shortform template;
+    - a browser-rendered `default-shortform.png` asset is bundled and served via `template-presets/template-builder/assets/:fileName`;
+    - packaged asset path resolution was verified.
 
 ### Verification Already Run
 
@@ -169,6 +197,28 @@ desktop/clipper_angular:
   ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless --include src/features/shortform/pages/shortform-workflow-style.spec.ts --include src/features/shortform/components/workflow/shortform-legacy-style-panel/shortform-legacy-style-panel.component.spec.ts --include src/features/shortform/pages/shortform-workflow-page/shortform-workflow-page.component.spec.ts
   npm run build
   -> 68 tests passed, build passed
+
+Latest Template Builder/default-template verification:
+
+desktop/clipper_electron:
+  npm run build:app:mac:arm64:local-api
+  node scripts/assert-no-packaged-secrets.mjs ...
+  packaged runtime config check
+  -> build passed, packaged secret guard passed, runtime_config=local-api
+
+desktop/clipper_nestjs:
+  npm run build
+  node --test test/template-builder-api.test.js test/template-builder-preset-source.test.js test/template-builder-shortform-preset-source.test.js test/simplified-shortform-template-preset-source.test.js
+  packaged asset resolution check for default-shortform.png
+  -> 14 tests passed, packaged_asset_resolution=ok
+
+desktop/clipper_angular:
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadlessNoSandbox --include src/features/template-builder/pages/template-builder-page/template-builder-page.component.spec.ts
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadlessNoSandbox --include src/features/template-builder/components/template-family-card/template-family-card.component.spec.ts --include src/features/template-builder/components/template-family-gallery/template-family-gallery.component.spec.ts --include src/features/template-builder/pages/template-builder-redesign-preview/template-builder-redesign-preview.component.spec.ts --include src/features/template-builder/pages/template-builder-page/template-builder-page.component.spec.ts
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadlessNoSandbox --include src/features/shortform/services/shortform-project.service.spec.ts --include src/features/shortform/components/template/shortform-template-selector/shortform-template-selector.component.spec.ts
+  ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadlessNoSandbox
+  npm run build -- --progress=false
+  -> 75 success, 87 success, 13 success, 809 success, build passed
 ```
 
 Known verification caveat:
@@ -177,24 +227,16 @@ Known verification caveat:
 
 ### Immediate Next Priorities
 
-1. Decide whether to push the local feature-branch commits:
-   - `desktop/clipper_angular` ahead 4.
-   - `desktop/clipper_nestjs` ahead 4.
-   - `desktop/clipper_python` ahead 1.
-   - `desktop/clipper_electron` ahead 2.
-   - `web/clipper_web_api` ahead 3.
-   - `.codex` ahead with documentation commits.
-2. Run a fresh Mac mini manual smoke from reset:
+1. Run the remaining Mac mini packaged-app smoke items from reset:
    - reset app/runtime data with `desktop/clipper_electron/scripts/reset-macos.sh --yes`;
    - start `web/clipper_web_api` with `npm run start:dev`;
-   - start `desktop/clipper_nestjs` with `npm run start:devapp`;
-   - start `desktop/clipper_electron` with `npm run start:devapp`;
+   - build packaged local-api app with `desktop/clipper_electron npm run build:app:mac:arm64:local-api`;
+   - run the built `Clipper2.app`;
    - login through desktop OAuth;
    - install Dialog and Dance plugins one at a time;
-   - run prompt shortform generation/render and verify Supertonic TTS at default `1.2`;
-   - run Dialog Highlight and verify staged progress/output/edit page;
-   - run Dance Highlight and verify member mapping/manual anonymous assignment/output/edit page.
-3. Run Windows test PC verification after pulling feature branches:
+   - rerun Dialog Highlight after the sentence-split batching/JSON-mode fix;
+   - verify ffmpeg/ffprobe consent/install state flow.
+2. Run Windows test PC verification after pulling feature branches:
    - use project root `C:\Users\metabuzz_jmj\Desktop\project\clipper`;
    - pull all repos on `feature/plugin-runtime-isolation`;
    - use Electron-bundled uv if system `uv` is missing;
@@ -202,7 +244,7 @@ Known verification caveat:
    - install the generated app;
    - reset runtime data with `desktop\clipper_electron\scripts\reset-windows.ps1 -ConfirmReset`;
    - verify first launch, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, and edit pages.
-4. Do not resume release/stable publish work until Mac and Windows installed-app smoke are accepted.
+3. Do not resume release/stable publish work until Mac and Windows installed-app smoke are accepted.
 
 ### Carry-Forward TODOs
 
@@ -220,76 +262,45 @@ Known verification caveat:
 #### Cross-Repo Push / Branch Hygiene
 
 - Confirm all five app repos are on `feature/plugin-runtime-isolation`.
-- Push feature branches only after user approval.
 - Do not push these commits to `dev` directly.
 - `.codex` is a separate repo; documentation commits must stay separate from app repo commits.
-- After push, record pushed heads in this handoff.
+- Feature branches are currently pushed to origin; before any future release/dev merge, re-check all repo status/logs.
+- Optional cleanup later: decide whether to delete pushed helper branches such as `fix/default-template-thumbnails` after they are no longer needed.
 
 #### Mac / Windows Manual Verification
 
-- Mac fresh-reset smoke is still needed after the latest commits.
+- Mac fresh-reset smoke only has the remaining items listed in Immediate Next Priorities; Template Builder, Dance Highlight, Prompt Shortform/TTS, plugin reset state, plugin asset persistence, and render timing checks were user-confirmed done.
 - Windows test PC pull/build/install smoke is still needed after the latest commits.
 - Windows runner PC packaged build/sign/S3 workflow is still needed after manual behavior is accepted.
 - Confirm no raw OAuth tokens, provider API keys, or secret env values appear in desktop/web_api logs.
 - Confirm packaged env/resources contain no forbidden provider secret names.
 
-#### Dance Highlight
-
-- Investigate remaining zero-clip member cases such as Kazuha/Hanni-style failures with saved artifacts/logs.
-- Build a small quality benchmark across known samples:
-  - KiiiKiii;
-  - NewJeans;
-  - LE SSERAFIM;
-  - at least one low-resolution or side-angle-heavy video.
-- Confirm manual anonymous cluster mapping UX:
-  - user selection should require confirmation before merge;
-  - wrong selection needs a correction/rollback path;
-  - anonymous clusters should still be inspectable after failed/uncertain mapping.
-- Finish member profile/exclusion model:
-  - retired/non-participating members can be excluded from a specific profile/setup;
-  - existing cached artist/member data can be reset safely by scripts;
-  - excluded members should not block image selection or appear as zero-clip required targets.
-- Keep full-frame face detection plus pose-head matching as a deferred design item; it may improve accuracy but can also introduce new false matches, so do not implement without a focused design/test pass.
-- Continue improving segment face sample selection if quality gaps remain.
+Template Builder/default template and Dance Highlight active smoke TODOs were user-confirmed done during TODO review.
 
 #### Dialog Highlight
 
-- Manual smoke must verify staged queue progress does not stick at `100%` before the whole workflow completes.
-- If long videos still hit web_api/OpenAI timeout, reduce/chunk prompt inputs or split stages further instead of only increasing timeouts.
-- Keep web_api Dialog LLM logging at lifecycle metadata only; do not log prompts, transcripts, provider keys, or raw payloads.
-- Confirm Dialog Highlight works in Windows packaged app without desktop-bundled OpenAI keys.
+- Rerun Dialog Highlight after rebuilding/restarting local web_api and packaged app with:
+  - desktop NestJS sentence-split batching with adjacent context shots;
+  - target-only merge so context shot results are not saved as final `llm_sentences`;
+  - web_api OpenAI Responses JSON mode;
+  - web_api prompt labels for `CONTEXT` vs `TARGET` shots.
+- The observed failure was `sentence_split` timing out in local web_api after 180000ms. The failing artifact had about 663s duration, 256 STT segments, 171 non-empty shots, and about 4k shot text chars; content was not printed.
 
 #### Prompt Shortform / TTS
 
-- Manual smoke must verify:
-  - script generation routes through web_api;
-  - created project defaults to `ttsSpeed: 1.2`;
-  - generated Supertonic wavs do not clip beginning/end speech;
-  - faster regenerated speeds preserve pitch.
 - Fix `desktop/clipper_nestjs` `test/shortform-project-api.test.js` harness so it configures/mocks `CLIPPER_WEB_API_BASE_URL`.
-- Confirm rendered final videos match raw wav timing after pitch-preserving time-stretch.
 - Do not reintroduce Naver Clova or any fallback TTS provider for installed app shortform.
+
+Prompt Shortform/TTS generation, default `ttsSpeed: 1.2`, wav edge clipping, speed pitch preservation, and final render timing were user-confirmed done during TODO review.
 
 #### Plugin Store / Runtime Assets
 
-- Manual retest concurrent install block:
-  - start Dialog install;
-  - attempt Dance install before Dialog finishes;
-  - expected: Dance install button disabled with `다른 플러그인 설치 중`;
-  - after Dialog finishes, Dance install can run normally.
-- Confirm fresh reset shows model-backed plugins as `미설치`.
-- Confirm Dance install persists required model files where local/devapp and packaged install-state checks expect them.
-- Confirm Dialog install persists required HuggingFace/cache assets and status changes only after completion.
-- Confirm reset scripts remove:
-  - Electron app data;
-  - local NestJS `.clipper_data`;
-  - plugin model markers/files;
-  - downloaded ffmpeg/ffprobe;
-  - HuggingFace cache by default.
 - Confirm ffmpeg/ffprobe flow:
   - no silent auto-download;
   - user sees explicit consent/install state;
   - copy does not incorrectly require app restart.
+
+Plugin Store concurrent install block, reset script removal scope, fresh-reset model-backed plugin `미설치` state, and Dialog/Dance asset persistence across restart were user-confirmed done during TODO review.
 
 #### Auth / Security / Provider Routing
 
@@ -303,8 +314,6 @@ Known verification caveat:
   - desktop devapp should use local web_api when configured;
   - packaged builds should use the intended environment URL;
   - errors should clearly distinguish missing config, unreachable api, provider failure, and timeout.
-- Desktop OAuth callback completion page should not show a redundant "open app" button after the browser already triggered the app deep link.
-- Keep token logging redacted.
 
 #### Documentation / Test Hygiene
 
@@ -3159,3 +3168,70 @@ Using Superpowers.
   - start Dialog Highlight install.
   - before it finishes, select Dance Highlight.
   - expected: Dance install is disabled until Dialog install completes, then Dance can be installed normally.
+
+## Current Shortform Packaged-App Follow-up
+
+- During packaged local-api testing, the user found that editing a successfully generated paste shortform project did not restore the original pasted editor contents.
+- Root cause:
+  - `ShortformWorkflowPageComponent` restored `project.source.html` into the paste input state.
+  - `ShortformLegacyInputPanelComponent` rendered a raw `contenteditable` div but never synchronized that restored state back into the editor DOM.
+- Fix:
+  - `desktop/clipper_angular` now syncs saved paste HTML into the paste editor DOM when the current DOM differs from restored input state.
+  - The sync is guarded by normalized equality so normal typing does not rewrite the editor on every change.
+- The user also saw intermittent shortform render failures:
+  - `Shortform render requires a legacy Clipper1 or Template Builder template preset`
+  - failed jobs had a selected Template Builder template id, but no render manifest because render prepare failed before activation.
+- Root cause:
+  - `RenderRecipeProvider` could build a snapshot-backed Template Builder recipe, but `LegacyClipper1RenderPayloadMapper` re-required the template from the live catalog and ignored the already-built recipe params when catalog lookup was unavailable.
+  - Later prompt runs could succeed when that live catalog path happened to be available; it was not specific to URL/prompt/paste input mode.
+- Fix:
+  - `desktop/clipper_nestjs` legacy render payload mapper now falls back to Template Builder params already present in the render recipe when catalog lookup is unavailable.
+- Verification:
+  - `desktop/clipper_angular`: shortform legacy input panel spec -> 13 success.
+  - `desktop/clipper_angular`: shortform workflow page spec -> 60 success.
+  - `desktop/clipper_angular`: `npm run build -- --progress=false` -> pass.
+  - `desktop/clipper_nestjs`: `node --test test/simplified-shortform-render-recipe-provider.test.js test/template-builder-render-payload.test.js` -> 17 passed.
+  - `desktop/clipper_nestjs`: `npm run build` -> pass.
+  - `desktop/clipper_electron`: `npm run build:app:mac:arm64:local-api` -> pass.
+  - `desktop/clipper_electron`: `node scripts/assert-no-packaged-secrets.mjs` -> pass.
+  - Packaged runtime config was checked by key/host classification only; the local-api build uses a loopback web_api base URL.
+- Manual retest target:
+  - Restart/reopen the rebuilt packaged app.
+  - Open an existing paste shortform project and confirm pasted text/images appear in the editor.
+  - Re-run URL/prompt/paste shortform render with the selected Template Builder default template.
+- Latest paste clip-generation follow-up:
+  - User saw `POST /v1/projects/shortform/projects/<id>/clips` return 503 with traces `0a1165a0` and then `e7bcd083`.
+  - Root cause from packaged NestJS log:
+    - `0a1165a0`: `web_api` returned 502 because OpenAI `llm.script` output was invalid JSON.
+    - `e7bcd083`: after adding JSON output format directly to the primary request, OpenAI returned HTTP 400.
+    - The pasted source content and env values were not printed.
+  - Fix:
+    - `web/clipper_web_api` keeps `web_search_preview` on the primary shortform script generation request.
+    - The primary web-search request does not combine `web_search_preview` with `text: { format: { type: "json_object" } }`.
+    - If the primary web-search response is malformed JSON, `web_api` sends a second no-tools JSON repair request with `text: { format: { type: "json_object" } }`.
+    - Existing strict JSON parsing and `clips[]` validation remain in place.
+  - Verification:
+    - `web/clipper_web_api`: shortform script spec -> 19 passed.
+    - `web/clipper_web_api`: shortform script + Dialog Highlight specs -> 29 passed.
+    - `web/clipper_web_api`: `npm run build` -> pass.
+  - Manual retest note:
+    - If local `web/clipper_web_api npm run start:dev` does not auto-reload, restart it before retrying paste clip generation.
+- Latest media-search follow-up:
+  - User saw `POST /v1/projects/shortform/projects/<id>/clips` return 502 with trace `61075652`.
+  - Root cause from packaged NestJS log:
+    - script generation and Supertonic TTS had already succeeded.
+    - generated image search failed at `media.search.remote_proxy.image` because remote media.search provider returned HTTP 502.
+  - Fix:
+    - automatic shortform clip generation now treats generated media search provider failure as non-fatal.
+    - if a generated image search provider fails, the clip is still created with TTS/narration and an empty media pool/slots.
+    - missing media search provider configuration still remains fatal.
+    - manual per-clip media search/import APIs still surface search errors.
+  - Verification:
+    - `desktop/clipper_nestjs`: focused generated media provider failure test -> passed.
+    - `desktop/clipper_nestjs`: shortform generation assets + media search routing tests -> 18 passed.
+    - `desktop/clipper_nestjs`: `npm run build` -> pass.
+    - `desktop/clipper_electron`: `npm run build:app:mac:arm64:local-api` -> pass.
+    - `desktop/clipper_electron`: packaged secret guard -> pass.
+    - Packaged runtime config loopback check -> pass.
+  - Manual retest note:
+    - Reopen the rebuilt packaged app from `desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`.
