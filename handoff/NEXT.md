@@ -39,7 +39,7 @@ These are the current local feature-branch heads as of the latest session update
 desktop/clipper_angular:  feature/plugin-runtime-isolation @ d7ef5e6 Refine template builder editing workflow
 desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 8e55d76 Fix shortform project API test web API harness
 desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
-desktop/clipper_electron: feature/plugin-runtime-isolation @ d239e03 Require explicit ffmpeg consent before install
+desktop/clipper_electron: feature/plugin-runtime-isolation @ e75a96e Fix Windows local API smoke build updater behavior
 web/clipper_web_api:      feature/plugin-runtime-isolation @ 2817381 Harden OpenAI JSON responses for script flows
 .codex:                   docs-old-render-path-cleanup @ 6eff8f2 Document shortform API harness cleanup
 ```
@@ -171,6 +171,16 @@ Do not push any of these directly to `dev`. Push feature branches only, unless t
     - `TemplateBuilderPublishedPresetSource` emits `preview.remoteImageUrl` for the default shortform template;
     - a browser-rendered `default-shortform.png` asset is bundled and served via `template-presets/template-builder/assets/:fileName`;
     - packaged asset path resolution was verified.
+27. Windows local-api smoke reached app launch but was stopped before manual UI smoke:
+    - app repos were pulled to `feature/plugin-runtime-isolation`;
+    - `web/clipper_web_api` was bootstrapped locally and `/health` returned 200;
+    - Windows local-api Electron build produced `dist-app\win-unpacked` after a manual no-sign electron-builder rerun;
+    - app logs showed packaged NestJS ready and ffmpeg/ffprobe missing, with no silent media-tool download;
+    - updater check started automatically and logged missing `app-update.yml`, so smoke was stopped to respect the no-updater condition.
+28. Electron local-api smoke build was fixed after that Windows finding:
+    - `build:app:win:x64:local-api` now writes runtime config with `autoUpdateDisabled: true`;
+    - packaged runtime config maps that to `CLIPPER_AUTO_UPDATE_DISABLED=1` for updater setup;
+    - Windows local-api `--dir` builds add `--config.win.signAndEditExecutable=false` to avoid winCodeSign/symlink failures during smoke builds.
 
 ### Verification Already Run
 
@@ -178,6 +188,13 @@ Do not push any of these directly to `dev`. Push feature branches only, unless t
 desktop/clipper_electron:
   npm run build && npm test
   -> 65 tests passed
+
+  latest Windows local-api smoke fix:
+  npm run build
+  node --test test/build-runtime-config.test.mjs
+  node --test test/packaged-runtime-config.test.js
+  npm test
+  -> build passed; focused tests passed; 78 tests passed
 
 desktop/clipper_python:
   uv run --with pytest --with httpx --package clipper-plugin-tts-supertonic python -m pytest tests/test_tts_supertonic_synthesis.py tests/test_tts_supertonic_route.py tests/test_tts_supertonic_runtime.py -q
@@ -231,9 +248,10 @@ Resolved verification caveat:
    - use project root `C:\Users\metabuzz_jmj\Desktop\project\clipper`;
    - pull all repos on `feature/plugin-runtime-isolation`;
    - use Electron-bundled uv if system `uv` is missing;
-   - build with `desktop\clipper_electron npm run build:app:win:x64`;
-   - install the generated app;
+   - start local `web\clipper_web_api` with `npm run start:dev`;
+   - build with `desktop\clipper_electron npm run build:app:win:x64:local-api`;
    - reset runtime data with `desktop\clipper_electron\scripts\reset-windows.ps1 -ConfirmReset`;
+   - run the generated `desktop\clipper_electron\dist-app\win-unpacked\Clipper2.exe`;
    - verify first launch, plugin installs, prompt shortform, Dialog Highlight, Dance Highlight, and edit pages.
 2. Finish auth/security/provider-routing follow-ups:
    - replace temporary unauthenticated local desktop access to web_api endpoints with proper desktop auth/service token design;
@@ -267,7 +285,7 @@ Mac packaged-app smoke and ffmpeg/ffprobe consent/install-state flow were user-c
 #### Mac / Windows Manual Verification
 
 - Mac fresh-reset packaged-app smoke is user-confirmed done.
-- Windows test PC pull/build/install smoke is still needed after the latest commits.
+- Windows test PC local-api unpacked smoke must be rerun after `desktop/clipper_electron @ e75a96e`.
 - Windows runner PC packaged build/sign/S3 workflow is still needed after manual behavior is accepted.
 - Secret/log checks for the Mac smoke were user-confirmed done; repeat on Windows packaged smoke.
 
