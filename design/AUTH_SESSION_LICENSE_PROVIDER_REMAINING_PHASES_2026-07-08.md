@@ -49,6 +49,7 @@
   - Dance Highlight pipeline 시작: `dance_highlight.extract`, 영상 길이 시작 분 단위 `ceil(sourceDurationSec / 60) * 50` credits.
   - Dance reference/member image search, clip media search 등 provider search: 사용자 크레딧 차감 대상 아님.
   - Variation 영상 생성: 2026-07-09 첫 구현 완료. 정책은 `영상 생성` 또는 `변형하고 영상까지` 실행 시 생성 영상 1개당 20 credits.
+  - Variation render queue 등록 이후 개별 render job 실패: 실패한 영상 개수만큼 `variation.render` 단가를 부분 환불한다. 현재 단가 기준 실패 job 1개당 20 credits.
 
 ### 1.4 Provider credential/runtime
 
@@ -457,15 +458,18 @@ admin 화면 표시:
 - 완료: quote/start billing input에 `generatedVideoCount`를 포함한다.
 - 완료: desktop Angular Variation UI에서 실제 생성 영상 수를 계산해 quote/confirm을 띄운다.
 - 완료: local NestJS Variation render queue 시작 전에 web_api `/operations/start`를 호출하고, queue submission 성공/실패를 succeed/fail로 보고한다.
+- 완료: queue submission 이후 개별 render job이 비동기로 실패하면 실패한 job 개수만큼 부분 환불한다.
+  - `credit_ledger.reference_key`는 `variation.render:<batchId>:<jobId>` 형태로 저장해 같은 failed job 중복 환불을 막는다.
+  - `operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적 증가시킨다.
+  - retry로 새 jobId가 생성되면 그 retry job 실패는 별도 failed job으로 본다.
 - 남음: `/llm/variation`이 실제 영상 생성 operation에 필요한 provider 호출인지, preview/free AI copy provider usage인지 정책을 확정한 뒤 operationRunId 또는 usageContext를 연결한다.
-- 남음: Variation render job이 queue submission 이후 비동기로 실패했을 때 `variation.render` run을 환불할지, 부분 환불이 필요한지, 현재처럼 queue submission 성공을 과금 성공으로 볼지 운영 정책을 확정한다.
 
 검증:
 
 - generatedVideoCount가 1/20일 때 quote와 start cost가 각각 20/400 credits로 일치한다.
 - 잔액 부족이면 render queue가 시작되지 않는다.
 - queue submission 실패 시 refund ledger가 남는다.
-- queue submission 이후 개별 render job 실패 환불은 후속 정책 결정 후 검증한다.
+- queue submission 이후 개별 render job 실패는 failed job 단위로 partial refund ledger가 남는다.
 - provider 호출은 credit ledger가 아니라 provider usage log에만 남는다.
 
 ### Phase 8F. Session/device retention and privacy operations
@@ -568,7 +572,7 @@ admin 화면 표시:
 
 ### `/llm/variation`
 
-2026-07-09에 과금 정책은 확정됐고, 첫 구현이 완료됐다. Variation 영상 생성은 generated video 1개당 20 credits로 과금한다.
+2026-07-09에 과금 정책은 확정됐고, render billing과 개별 render job 실패 부분 환불 구현이 완료됐다. Variation 영상 생성은 generated video 1개당 20 credits로 과금한다.
 
 남은 구현 전까지:
 
@@ -589,7 +593,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 1. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 완전 제거는 이 뒤 마지막에 진행.
 2. Phase 8G: operator/admin session hardening. `operator_sessions` 분리 구조로 refresh rotation/session revoke/list를 추가.
-3. Phase 8J follow-up: `/llm/variation` provider usage 전환 여부와 queue 이후 render job 실패 환불 정책 결정.
+3. Phase 8J follow-up: `/llm/variation` provider usage 전환 여부 결정.
 4. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 재검증.
 5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
 6. Phase 10: end-to-end billing QA.

@@ -1946,6 +1946,8 @@ dance setup 단계가 제품 operation run 전에도 검색할 수 있어 바로
 
 2026-07-09 결정: 실제 영상 생성 과금 operation은 `variation.render`로 확정했다. `영상 생성` 또는 `변형하고 영상까지`에서 최종 생성될 영상 1개당 20 credits를 차감한다. `/llm/variation`은 AI copy preview/provider usage 후속으로 남기며, `variation.render` credit ledger와 섞지 않는다.
 
+2026-07-09 추가 결정: `variation.render` queue submission 이후 개별 render job이 실패하면 실패한 영상 개수만큼 부분 환불한다. web_api는 `POST /operations/:runId/refund`와 `credit_ledger.reference_key`로 idempotent partial refund를 처리하고, desktop NestJS는 batch item 실패를 감지해 `variation.render:<batchId>:<jobId>` reference key로 보고한다. `operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적한다.
+
 ### 11.3 error classification
 
 provider-backed 단계와 operation start/fail/succeed는 사용자가 이해할 수 있는 실패로 분류한다.

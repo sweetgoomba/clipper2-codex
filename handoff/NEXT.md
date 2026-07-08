@@ -52,10 +52,10 @@ clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex
 - 실제 구현은 작은 phase별 커밋으로 나눈다.
 - TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
 
-Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up, Phase 8J Variation render billing 첫 구현은 완료되어 있다.
+Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up, Phase 8J Variation render billing/개별 render job 실패 부분 환불은 완료되어 있다.
 우선 Phase 9 provider credential rotation 운영 로직/스테이징 검증을 진행해줘.
 OpenAI env fallback 완전 제거는 provider rotation 검증 뒤 마지막에 진행해줘.
-Phase 8J follow-up으로 `/llm/variation` provider usage 전환 여부와 queue 이후 render job 실패 환불 정책 결정이 남아 있다.
+Phase 8J follow-up으로 `/llm/variation` provider usage 전환 여부 결정이 남아 있다.
 ```
 
 ### 2026-07-07 설계 결정 요약
@@ -466,7 +466,11 @@ Variation 과금 정책은 2026-07-09에 확정됐다.
 `desktop_angular`는 `영상 생성`/`변형하고 영상까지`에서 실제 생성 영상 수로 quote/confirm을 띄우고, 차감 후 snackbar를 표시한다.
 `desktop_nestjs`는 Variation render queue submission 전에 `/operations/start`를 호출하고, submission 성공/실패를 succeed/fail로 보고한다.
 `web_admin` `/operation-policies`는 `베리에이션 영상 생성`, `생성 영상 1개당` 단위를 표시한다.
-남은 Phase 8J follow-up은 `/llm/variation` provider usage 전환 여부와 queue submission 이후 render job 실패 환불 정책 결정이다.
+2026-07-09 현재 Phase 8J queue submission 이후 개별 render job 실패 부분 환불도 완료됐다.
+`web_api`는 `POST /operations/:runId/refund`와 `credit_ledger.reference_key` idempotency column/index를 추가했다.
+`desktop_nestjs`는 Variation batch record에 billing snapshot을 저장하고, failed item을 감지하면 `variation.render:<batchId>:<jobId>` reference key로 실패 job 1개당 `variation.render` 단가를 부분 환불 보고한다.
+`operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적 증가한다.
+남은 Phase 8J follow-up은 `/llm/variation` provider usage 전환 여부 결정이다.
 
 관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
 권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.
