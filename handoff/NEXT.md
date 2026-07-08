@@ -1,12 +1,520 @@
 # Next Handoff
 
-최신 갱신: 2026-07-02
+최신 갱신: 2026-07-08 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-02 Installed App Integration
+## Active Handoff: 2026-07-07 Auth/Session/License/Provider Implementation Entry
 
-이 섹션이 현재 기준이다. 아래의 긴 과거/중간 스냅샷은 상세 이력으로만 본다.
+이 섹션이 현재 기준이다. 아래 2026-07-03 설치형 앱 integration 섹션은 상세 이력으로만 본다.
+
+이번 다음 작업은 release/version publish가 아니다. 목표는 설치형 앱의 auth/session/license/credit/provider routing 후속 구현이다. secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 않는다.
+
+현재 세션에서 전체 설계는 `.codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md`에 정리했다. `clipper_docs`에는 아직 추가하지 않는다. 설계가 구현 중 검증되고 팀 합의가 끝나기 전까지는 `.codex`를 로컬 문서 컨텍스트로 사용한다.
+
+### Next Session Prompt
+
+```text
+Using Superpowers.
+
+작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
+
+먼저 아래 문서를 읽고 현재 상태를 파악해줘.
+- .codex/AGENTS.md
+- .codex/handoff/NEXT.md
+- .codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md
+- .codex/design/AUTH_SESSION_LICENSE_PROVIDER_REMAINING_PHASES_2026-07-08.md
+- .codex/records/sessions/2026/07/07.md
+
+이번 세션은 auth/session/license/credit/provider routing 구현을 이어서 진행한다.
+release/version publish 작업은 재개하지 마.
+secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
+clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex 문서에만 반영해.
+
+먼저 모든 관련 repo의 git status/log를 확인해줘.
+현재 작업 브랜치는 아래 이름으로 이미 생성되어 있다.
+브랜치명:
+  feature/auth-session-license-provider-20260707
+
+대상 repo:
+  desktop/clipper_angular
+  desktop/clipper_electron
+  desktop/clipper_nestjs
+  desktop/clipper_python
+  web/clipper_web_api
+  web/clipper_web_admin
+  web/clipper_web_client
+  web/clipper_infra
+
+주의:
+- dirty worktree가 있으면 임의로 revert/reset하지 말고 먼저 보고해.
+- dev pull/새 브랜치 생성은 이미 이전 세션에서 수행했다. 반복이 필요해 보이면 먼저 보고해.
+- 실제 구현은 작은 phase별 커밋으로 나눈다.
+- TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
+
+Phase 1-6과 Phase 7-1/7-2/7-3/7-4/7-5/7-6/7-7/7-8/7-9는 완료되어 있다.
+우선 Phase 7-10 provider credential 운영/스테이징 검증 절차 또는 OpenAI env fallback 완전 제거 여부 결정을 이어서 진행해줘.
+```
+
+### 2026-07-07 설계 결정 요약
+
+채택:
+
+```text
+short-lived JWT access token
++ long-lived opaque refresh token
++ server-side session table
++ refresh token rotation
++ desktop one-time code exchange
+```
+
+인증/세션:
+
+- Google OAuth 단독 로그인 유지
+- 앱 메인 화면 진입 전 로그인 필요
+- desktop deep link는 `clipper://auth/callback?token=<JWT>`가 아니라 `clipper://auth/callback?code=<one-time-code>`
+- web_api가 one-time code를 교환해 access/refresh token을 발급
+- access token은 RS256 JWT
+- refresh token은 opaque random string
+- refresh token 원문은 클라이언트에만 저장, 서버 DB에는 hash 저장
+- Electron은 token bundle을 `safeStorage`로 저장
+- local browser dev는 별도 dev fallback 허용 가능
+- user JWT와 operator JWT는 audience/type/session 정책을 분리
+- `JWT_SECRET`은 legacy fallback/operator/admin 경로 때문에 아직 남아 있지만, 목표 구조가 아니다. 다음 auth cleanup에서는 operator/admin token key를 user token과 분리한 뒤 `JWT_SECRET` fallback을 제거해야 한다.
+
+local NestJS:
+
+- local NestJS는 최종 auth truth가 아니다.
+- local NestJS는 JWT public key PEM으로 access token을 1차 검증한다.
+- public key는 secret이 아니며 MVP에서는 앱 resource PEM으로 포함한다.
+- 최종 session revoke/license/credit/operation 판단은 web_api가 한다.
+- refresh token과 provider key는 local NestJS/Python plugin에 넘기지 않는다.
+
+이용권:
+
+- 한 user의 active license는 최대 1개
+- active license가 있으면 새 승인 license는 queued
+- credit 소진 시 active license는 active_depleted
+- queued license는 자동 시작하지 않는다.
+- 사용자가 "다음 이용권 시작"을 눌러야 queued license가 active 된다.
+- 기존 credit/기간 흡수/병합 없음
+- MVP에서 credit top-up은 만들지 않음
+
+operation/credit:
+
+- 크레딧 차감 단위는 provider API 호출이 아니라 사용자-facing 제품 operation이다.
+- billing strategy MVP는 `charge_then_refund`
+- 제품 시작 시 차감, local job 성공 시 유지, 실패 시 refund ledger 생성
+- 멀티 디바이스 초과 차감은 web_api `/operations/start` transaction/lock으로 막는다.
+- stale running operation은 MVP에서 자동 환불보다 admin review가 안전하다.
+
+operation_policies:
+
+- `operation_key`를 안정 식별자로 사용한다. 예: `dance_highlight.extract`
+- DB 내부 id는 코드에서 직접 참조하지 않는다.
+- `operation_id`, `execution_mode`, `enabled` 기반 설계는 MVP에서 제거했다.
+- `billing_strategy`, `operation_run.status`, `credit_ledger.type`, `provider_scope`는 enum으로 관리한다.
+- `OPERATION_DEFINITIONS` code registry + 명시적 seed/upsert로 row를 생성한다.
+- seed는 `ON CONFLICT (operation_key) DO NOTHING` 원칙으로 기존 관리자 수정값을 덮어쓰지 않는다.
+- 관리자 CRUD는 Read + 제한적 Update만 허용한다.
+- Create/Delete는 일반 관리자 CRUD로 열지 않는다.
+
+플러그인 스토어:
+
+- MVP에서 플랜별 플러그인 노출/잠금/상위 플랜 유도 정책은 제외한다.
+- MVP에서 플러그인 스토어 목록은 web_api DB가 아니라 로컬 앱 manifest/catalog/Angular visible list 기준으로 유지한다.
+- web_api는 "플러그인 카드를 보여줄지"가 아니라 "실제 제품 실행을 허용할지"를 판단한다.
+- desktop UI plugin/navigation metadata SoT는 현재 `desktop/clipper_angular/src/core/navigation/app-navigation-metadata.ts`다.
+- cross-repo plugin metadata SoT는 아직 미결정이다. `desktop/clipper_nestjs` plugin catalog, `desktop/clipper_python/plugins/*/manifest.json`, Angular navigation metadata 사이에 `displayName`/`description` drift 가능성이 남아 있다.
+- `shortform_url`, `shortform_paste`, `shortform_prompt`, `variation` 같은 virtual workflow는 Python manifest가 없어서 NestJS catalog와 Angular metadata 중복이 특히 남는다. 다음 설계에서 shared JSON/catalog, generated adapter, 또는 drift validate script 중 하나를 결정한다.
+- repo/build boundary가 섞이므로 Angular TS 파일을 NestJS에서 직접 import하거나 NestJS TS 파일을 Angular에서 직접 import하는 방식은 현재 채택하지 않는다.
+- 하이라이트 진입 화면은 `app-page contentAlign="center"`를 사용한다. 로컬 파일 입력도 YouTube와 동일하게 `영상 확인` 화면을 먼저 거친 뒤, 확인 버튼에서만 크레딧 확인 모달을 띄운다. 확인 카드 back wording은 `다시 선택`이다.
+
+provider:
+
+- provider key는 설치형 앱에 넣지 않는다.
+- provider credential은 DB 암호화 저장 중심으로 통일한다.
+- OpenAI env fallback은 migration 기간에만 허용하고, 안정화 후 제거한다.
+- provider endpoint는 user JWT + operationRunId 소유권 + provider scope enum을 확인한다.
+- provider_usage는 audit/rotation 분석용이고 사용자 크레딧을 추가 차감하지 않는다.
+
+### 구현 진행 현황 (2026-07-08 KST)
+
+작업 브랜치:
+
+```text
+feature/auth-session-license-provider-20260707
+```
+
+완료:
+
+```text
+Phase 1: web_api session/refresh/desktop exchange
+  web/clipper_web_api
+    04d5c2e feat(auth): add session token service
+    11844cf feat(auth): persist user sessions
+    9aba1ea feat(auth): sign user session tokens
+    3a2a340 feat(auth): add desktop session endpoints
+
+Phase 2: Electron token store/deep link
+  desktop/clipper_electron
+    d7408b3 feat(auth): exchange desktop login codes
+    b989d39 chore(auth): include public key resource path
+  desktop/clipper_angular
+    6c62b42 fix(auth): align deep link payload type
+
+Phase 3: Angular auth refresh layer
+  desktop/clipper_electron
+    70e207f feat(auth): refresh desktop token bundles
+  desktop/clipper_angular
+    051306f feat(auth): refresh access tokens
+
+Phase 4: local NestJS JWT prefilter and user token relay
+  desktop/clipper_nestjs
+    e33baf6 feat(auth): verify local user access tokens
+  desktop/clipper_angular
+    c2e2838 feat(auth): attach user token to local api
+  desktop/clipper_electron
+    cdcd8b8 chore(auth): pass public key path to local api
+
+Phase 5a: web_api operation policy/ledger foundation
+  web/clipper_web_api
+    91257f0 feat(operations): add billable operation ledger
+
+Phase 5b-1: shortform.create operationRunId authz and reporting
+  web/clipper_web_api
+    72953c4 feat(operations): authorize script generation runs
+  desktop/clipper_nestjs
+    4db3593 feat(shortform): report billable operation runs
+
+Phase 5b-2: provider usage and dialog_highlight.extract operationRunId authz/reporting
+  web/clipper_web_api
+    7ea3014 feat(operations): record script provider usage
+    f31591d feat(dialog): authorize provider llm runs
+  desktop/clipper_nestjs
+    2619e8e feat(dialog): report billable llm operation runs
+
+Phase 5b-3: dance_highlight.extract workflow operation reporting
+  desktop/clipper_nestjs
+    f6acb38 feat(dance): report billable workflow runs
+
+Phase 5b-4a: media.search provider operation context/authz transition
+  desktop/clipper_nestjs
+    41ddb34 feat(media): relay operation context to search provider
+  web/clipper_web_api
+    ce81289 feat(media): authorize operation search usage
+
+Phase 6: license one-active/queue/depleted lifecycle
+  web/clipper_web_api
+    4b89ec6 feat(billing): add queued license lifecycle
+
+Phase 7-1: OpenAI provider credential DB resolver
+  web/clipper_web_api
+    78907c6 feat(providers): resolve OpenAI credentials from database
+
+Phase 7-2: provider credential admin API/source-status
+  web/clipper_web_api
+    93ea025 feat(providers): expose credential sources in admin api
+  web/clipper_web_admin
+    df5d6f2 feat(admin): display provider credential sources
+
+Phase 7-3: OpenAI credential admin create/edit UI
+  web/clipper_web_admin
+    79a631c feat(admin): manage OpenAI provider credentials
+
+Phase 7-4: Naver provider_credentials migration
+  web/clipper_web_api
+    d7797d1 feat(providers): migrate Naver keys to provider credentials
+
+Phase 7-5: OpenAI env fallback opt-in cleanup
+  web/clipper_web_api
+    5e14ae9 feat(providers): gate OpenAI env fallback
+
+Phase 7-6: legacy Naver key runtime cleanup
+  web/clipper_web_api
+    c246366 chore(providers): remove legacy Naver key runtime
+
+Phase 7-7: OpenAI runtime credential status API
+  web/clipper_web_api
+    4501b36 feat(providers): expose OpenAI runtime status
+
+Phase 7-8: OpenAI runtime status admin UI
+  web/clipper_web_admin
+    a1f8ba4 feat(admin): show OpenAI runtime status
+
+Phase 7-9: Naver runtime credential status
+  web/clipper_web_api
+    9191dab feat(providers): expose Naver runtime status
+    6313ef1 fix(providers): type Naver credential client id column
+  web/clipper_web_admin
+    961f18c feat(admin): show Naver runtime status
+```
+
+Phase 3 구현 메모:
+
+- Electron main에 `clipper:auth:refreshToken` IPC를 추가하고 refresh token rotation 응답의 새 token bundle을 저장한다.
+- Angular `AuthBackend`/bridge에 `refreshToken()`을 추가했다.
+- `AuthStore.loadSession()`은 exp 임박 access JWT를 proactive refresh하고, `/me` 401에는 refresh single-flight 후 한 번 retry한다.
+- refresh token 원문은 Angular로 전달하지 않고 Electron main token bundle 저장소 안에만 둔다.
+
+Phase 4 구현 메모:
+
+- local NestJS `CLIPPER_AUTH_MODE=jwt`에서 user access JWT를 RS256/public key로 1차 검증한다.
+- 검증 claim은 `iss=clipper-web-api`, `aud=clipper-user`, `typ=user`, `sub`, `sid`, `exp`를 확인한다.
+- public key는 `CLIPPER_AUTH_JWT_PUBLIC_KEY`, `USER_JWT_PUBLIC_KEY`, `CLIPPER_AUTH_JWT_PUBLIC_KEY_PATH` 순으로 읽고 캐시한다.
+- `web/clipper_web_api` commit `5bcefbf`에서 `USER_JWT_PRIVATE_KEY`가 설정된 경우 user JWT 서명이 module-level `JWT_SECRET`보다 private key를 우선 사용하도록 고쳤다. 후속으로 operator/admin JWT도 별도 key/secret으로 분리하고 legacy `JWT_SECRET` fallback을 제거해야 한다.
+- Angular는 local NestJS `/v1/*` 요청에만 user bearer token을 붙인다. web_api `/me`/auth 요청에는 붙이지 않는다.
+- Angular WebSocket은 access token을 URL query가 아니라 `Sec-WebSocket-Protocol`의 `clipper.jwt.<token>`로 전달한다.
+- local NestJS `AuthContext`는 검증된 `sessionId`와 `accessToken`을 보존해 web_api 호출에 relay할 수 있다.
+- `WebApiClient.postJson()`은 per-request bearer relay를 지원한다.
+- Shortform web_api script generator는 현재 user bearer token을 `/llm/script` 호출에 relay한다.
+- Electron은 bundled local NestJS 시작 env에 packaged public key path 기본값을 주입한다. `CLIPPER_AUTH_MODE=jwt`를 강제하지는 않는다.
+Phase 5a 구현 메모:
+
+- `modules/operations` feature를 추가했다.
+- admin DB migration `1783500000000-CreateOperationLedger`가 `operation_policies`, `operation_runs`, `credit_ledger`, `provider_usage`를 만든다.
+- `operation_billing_strategy`, `operation_run_status`, `credit_ledger_type`, `credit_ledger_reason`, `provider_scope` enum을 추가했다.
+- `provider_scopes`는 제품 operation별 허용 provider scope 배열로 JSONB 저장한다.
+- 기본 operation definitions는 user-facing 제품 단위만 seed한다: `shortform.create`, `dialog_highlight.extract`, `dance_highlight.extract`.
+- provider call 단위인 `media.search`는 operation policy로 seed하지 않는다.
+- `OperationPolicySeeder`는 app boot 시 `ON CONFLICT (operation_key) DO NOTHING`으로 없는 row만 seed한다.
+- `/operations/:operationKey/quote`, `/operations/start`, `/operations/:runId/succeed`, `/operations/:runId/fail`를 추가했다.
+- `/operations/start`는 active license bucket을 `pessimistic_write`로 잠그고 charge ledger를 남긴다.
+- `/operations/:runId/fail`은 charge ledger 기준으로 refund ledger를 남기고 `tokens_used`를 되돌린다.
+- OpenAPI raw response 계약을 `docs/api/openapi.yaml`에 추가했다.
+
+Phase 5b-1 구현 메모:
+
+- web_api `/llm/script`에 user JWT guard를 적용했다.
+- `/llm/script` request DTO에 `operationRunId`를 필수로 추가했다.
+- `/llm/script`는 `OperationsService.authorizeProviderUse(userId, operationRunId, 'openai')`를 통과해야 provider 호출을 수행한다.
+- `/llm/script` 성공 시 `provider_usage`에 `openai` 사용 기록을 남긴다.
+- OpenAPI에 `/llm/script` provider-backed endpoint 계약을 추가했다.
+- local NestJS에 `WebApiOperationRunService`를 추가했다.
+- local shortform clip generation은 bearer token이 있을 때 `/operations/start`로 `shortform.create` run을 만들고, `/llm/script`에 `operationRunId`를 전달한다.
+- local shortform generation 성공 시 `/operations/:runId/succeed`, 생성 중 오류 시 `/operations/:runId/fail`을 호출한다.
+- operation reporting 실패는 원래 생성 결과/오류를 가리지 않도록 warn 로그만 남긴다.
+
+Phase 5b-2 구현 메모:
+
+- web_api `OperationsService.recordProviderUsage()`와 TypeORM repository 저장 경로를 추가했다.
+- web_api `/dialog-highlight/llm`에 user JWT guard를 적용했다.
+- `/dialog-highlight/llm` request DTO에 `operationRunId`를 필수로 추가했다.
+- `/dialog-highlight/llm`은 `OperationsService.authorizeProviderUse(userId, operationRunId, 'openai')`를 통과해야 provider 호출을 수행한다.
+- `/dialog-highlight/llm` 성공 시 `provider_usage`에 `openai` 사용 기록을 남긴다. metadata에는 endpoint와 dialog LLM operation명을 남긴다.
+- OpenAPI에 `/dialog-highlight/llm` provider-backed raw response 계약을 추가했다.
+- local NestJS `WorkflowRunContext`에 auth context를 추가하고, `JobQueueEntry`를 통해 in-memory로 access token을 전달한다. job snapshot에는 access token을 저장하지 않는다.
+- local dialog workflow는 bearer token이 있을 때 `/operations/start`로 `dialog_highlight.extract` run을 만들고, 모든 dialog LLM web_api 호출에 같은 `operationRunId`와 bearer token을 전달한다.
+- local dialog workflow 완료 시 `/operations/:runId/succeed`, provider/workflow 오류 시 `/operations/:runId/fail`을 호출한다.
+- dialog operation reporting 실패는 원래 workflow 결과/오류를 가리지 않도록 warn 로그만 남긴다.
+
+Phase 5b-3 구현 메모:
+
+- local NestJS `JobsService`에 `dance_highlight -> dance_highlight.extract` billable workflow mapping을 추가했다.
+- `dance_highlight` workflow job은 caller bearer token이 있을 때 `/operations/start`로 `dance_highlight.extract` run을 만든다.
+- workflow가 `completed`로 끝나면 `/operations/:runId/succeed`, `failed`/기타 terminal 상태면 `/operations/:runId/fail`을 호출한다.
+- job snapshot에는 access token을 저장하지 않는 기존 Phase 5b-2 원칙을 유지한다.
+- `dialog_highlight`와 `shortform.create`는 이미 각각 executor/service 내부에서 reporting하므로 JobsService generic mapping에 넣지 않았다.
+
+Phase 5b-4a 구현 메모:
+
+- local shortform 자동 생성 미디어 검색은 `shortform.create` operation run이 있을 때 remote media provider 호출에 caller bearer token과 `operationRunId`를 전달한다.
+- local `RemoteProxyClipperStudioImageSearchProvider`는 caller bearer token을 `Authorization: Bearer ...`로 우선 사용하고, body에 `operationRunId`를 포함한다.
+- web_api `/media/search`는 transition 호환을 위해 optional user JWT guard를 사용한다.
+- `/media/search` body에 `operationRunId`가 있으면 `OperationsService.authorizeProviderUse(userId, runId, 'naver_image')`를 통과한 뒤 Naver 검색을 실행하고, 성공 시 `provider_usage`를 기록한다.
+- `/media/search` body에 `operationRunId`가 없으면 기존 setup/manual 호출 호환을 위해 검색을 허용한다. 이는 dance setup 단계가 아직 제품 operation run 전에도 검색을 수행할 수 있기 때문이다.
+- provider 호출 단위인 `media.search`는 별도 operation policy로 추가하지 않았다.
+- `/llm/variation` provider routing은 이번 범위에서 의도적으로 skip한다. Variation 기능/UX와 과금 기준을 먼저 파악해야 하므로, 임의로 `variation.generate` 같은 billable operation을 추가하지 않는다.
+- 이 skip은 known deferred gap이다. 따라서 "모든 provider endpoint가 user JWT + operationRunId로 전환됨"이라고 표현하지 않는다.
+
+Phase 6 구현 메모:
+
+- `licenses.status` enum을 추가했다: `queued`, `active`, `active_depleted`, `expired`, `depleted`, `cancelled`.
+- 기존 license row는 migration에서 만료/소진 여부에 따라 `expired`, `active_depleted`, `active`로 backfill한다.
+- `starts_at`/`expires_at`는 queued license를 위해 nullable로 변경했다.
+- 운영자 승인 시 현재 active/active_depleted license가 남아 있으면 새 license는 `queued`로 생성한다.
+- 현재 active license 조회/operation charge/legacy consume은 `active` 상태의 license만 차감 대상으로 사용한다.
+- credit이 0이 되면 license는 `active_depleted`가 된다. 실패 refund로 credit이 복구되면 유효기간 내에서는 다시 `active`가 된다.
+- `GET /licenses/current`는 현재 started license만 잔액으로 계산하고, queued summary를 함께 반환한다.
+- `POST /licenses/queued/start`를 추가했다. remaining credit이 있는 active license나 running refundable operation이 있으면 409를 반환한다.
+- queued start 시 기존 depleted/expired started license를 종료 상태로 확정하고, 첫 queued license에 `startsAt`/`expiresAt`를 설정해 active로 전환한다.
+- OpenAPI raw response 계약에 license lifecycle 상태와 queued start endpoint를 반영했다.
+
+Phase 7-1 구현 메모:
+
+- admin DB에 `provider_credentials` 테이블을 추가했다.
+- `ProviderCredentialsModule`과 `OpenAiCredentialService`를 추가했다.
+- OpenAI credential resolver는 active DB credential을 우선 복호화해서 사용하고, 없으면 migration 기간에도 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`일 때만 `OPENAI_API_KEY` env fallback을 사용한다.
+- DB credential 복호화 실패/빈 secret/미설정은 secret 원문 없이 503으로 매핑한다.
+- `shortform.create` `/llm/script`와 `dialog_highlight.extract` `/dialog-highlight/llm` 경로가 새 resolver를 통해 OpenAI bearer key를 가져온다.
+- 기존 Naver `naver_search_keys` rotation 모델은 아직 그대로 유지한다.
+- `/llm/variation` provider routing/과금 정책은 여전히 defer 상태다. 이번 슬라이스는 variation provider routing을 건드리지 않았다.
+
+Phase 7-2 구현 메모:
+
+- web_api 기존 `/admin/api-keys` surface를 유지하면서 Naver legacy key와 OpenAI provider credential을 함께 반환한다.
+- Naver 응답은 기존 `clientId`, `secretMasked`, `dailyUsed`, `dailyLimit`, `priority` shape를 유지하고, `provider='naver'`, `source='database'`, `maskedKey`를 추가했다.
+- OpenAI DB credential 응답은 `provider='openai'`, `source='database'`, `maskedKey`, `status`, `priority`를 반환한다. secret 원문/암호문은 반환하지 않는다.
+- active OpenAI DB credential이 없고 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`와 `OPENAI_API_KEY` env fallback이 모두 있으면 `id='env:openai'`, `provider='openai'`, `source='env'`, `status='active'` synthetic row를 반환한다.
+- `/admin/api-keys` create/update/delete/activate가 `provider='openai'` DB credential도 처리한다. active 전환 시 같은 provider의 기존 active DB credential은 standby로 내린다.
+- web_admin API key 화면은 provider-aware response를 매핑하고 OpenAI source를 표시한다.
+- 기존 Naver `naver_search_keys` rotation 모델은 아직 유지했다.
+
+Phase 7-3 구현 메모:
+
+- web_admin OpenAI section에 DB credential 추가/수정 form을 연결했다.
+- OpenAI credential 생성은 `/admin/api-keys`에 `provider='openai'`, `label`, `secret`, `priority`를 보낸다.
+- OpenAI credential 수정은 `label`, `priority`를 보내고, secret input이 비어 있으면 기존 secret 유지를 위해 `secret` field를 보내지 않는다.
+- OpenAI DB row는 활성전환/수정/삭제 액션을 제공한다.
+- OpenAI env fallback synthetic row는 표시 전용으로 두고 `env에서 관리`로 노출한다.
+- web_admin mock API도 OpenAI create response를 provider-aware shape로 반환한다.
+- 기존 Naver create/edit/test UI는 변경하지 않았다.
+- secret 원문은 목록 응답/화면에 표시하지 않는다.
+- 기존 Naver `naver_search_keys` rotation 모델은 아직 유지했다.
+
+Phase 7-4 구현 메모:
+
+- `provider_credentials`에 Naver rotation/search에 필요한 nullable metadata 컬럼을 추가했다: `client_id`, `daily_used`, `daily_limit`, `usage_date`.
+- admin migration `1783800000000-AddNaverProviderCredentialMetadata`는 기존 `naver_search_keys.client_secret_enc` 암호문을 복호화하지 않고 그대로 `provider_credentials.secret_enc`로 복사한다.
+- migration은 `naver_search_keys` row를 `provider='naver'`로 backfill한다.
+- 여러 active legacy row가 있거나 이미 active Naver provider credential이 있으면 `provider_credentials`의 one-active unique index 충돌을 피하도록 legacy active row를 standby로 강등한다.
+- `ProviderBackedApiKeysRepository`를 추가했고, Nest `ApiKeysRepository` injection을 기존 `TypeOrmApiKeysRepository`에서 provider-backed adapter로 전환했다.
+- Search/rotation service의 `NaverSearchKey` 계약은 유지했다. 따라서 `/media/search`, `/admin/api-keys/test`, daily limit/rotation 경로는 provider-backed repository를 통해 동작한다.
+- `ApiKeysService.list()`는 provider repository에서 Naver row를 직접 provider view로 중복 표시하지 않고, Naver row는 adapter가 반환한 legacy-compatible view로만 표시한다.
+- 기존 `naver_search_keys` table/entity/repository는 migration source와 rollback context로 남아 있다. 이번 슬라이스에서는 drop하지 않았다.
+- OpenAI env fallback은 아직 남아 있지만 Phase 7-5에서 명시적 flag 기반 opt-in으로 제한했다.
+
+Phase 7-5 구현 메모:
+
+- OpenAI env fallback은 더 이상 `OPENAI_API_KEY` 존재만으로 사용되지 않는다.
+- `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`가 설정된 경우에만 `OpenAiCredentialService`가 `OPENAI_API_KEY` fallback을 사용한다.
+- `/admin/api-keys` env synthetic row도 같은 flag가 켜져 있을 때만 노출한다.
+- active DB credential이 있으면 기존처럼 DB credential을 우선 사용하고 env fallback은 사용하지 않는다.
+- fallback flag가 꺼져 있고 active DB credential이 없으면 provider call은 secret 원문 없이 503으로 실패한다.
+- 이 단계는 완전 제거 전 안전장치다. 다음 단계에서 flag와 fallback branch 자체를 제거할지, 운영 migration window를 더 둘지 결정한다.
+
+Phase 7-6 구현 메모:
+
+- 더 이상 런타임에서 쓰지 않는 `NaverSearchKeyEntity`와 `TypeOrmApiKeysRepository`를 삭제했다.
+- admin TypeORM datasource entities에서 `NaverSearchKeyEntity` 등록을 제거했다.
+- `ApiKeysRepository` runtime injection은 Phase 7-4의 `ProviderBackedApiKeysRepository` 유지다.
+- `naver_search_keys` table을 생성하는 historical migration과 provider_credentials backfill migration의 raw SQL 참조는 보존했다.
+- 이번 슬라이스는 table drop migration을 추가하지 않았다. 실제 운영 DB migration/rollback 안전성을 확인한 뒤 별도 슬라이스에서 판단한다.
+- `rg "NaverSearchKeyEntity|TypeOrmApiKeysRepository" src`는 결과가 없어야 한다.
+
+Phase 7-7 구현 메모:
+
+- `OpenAiCredentialService.inspectRuntime()`을 추가했다.
+- 새 admin endpoint는 `GET /admin/api-keys/providers/openai/runtime-status`다.
+- 응답은 secret 원문/암호문을 반환하지 않는다.
+- 응답 shape는 `provider`, `ready`, `source`, `fallbackEnabled`, 선택적 `activeCredentialId`, 선택적 `reason`이다.
+- `source='database'`이면 active DB credential을 복호화 시도해 ready 여부를 판단한다.
+- `source='env'`는 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`와 `OPENAI_API_KEY`가 모두 있을 때만 나온다.
+- `source='none'`, `reason='not_configured'`이면 active DB credential도 없고 env fallback도 비활성/미설정이라는 뜻이다.
+- 실제 OpenAI provider 호출은 하지 않는다. 운영 검증 endpoint는 비용/외부 의존성 없이 runtime credential 선택 상태를 확인하는 용도다.
+
+Phase 7-8 구현 메모:
+
+- web_admin API models에 `OpenAiRuntimeStatus`를 추가했다.
+- `ApiKeysApiService.getOpenAiRuntimeStatus()`가 `GET /admin/api-keys/providers/openai/runtime-status`를 호출한다.
+- API key 화면 OpenAI section 상단에 runtime strip을 추가했다.
+- runtime strip은 `Runtime`, status chip, `source/fallback/activeCredentialId`만 표시한다.
+- mock API는 OpenAI env fallback active 상태를 반환한다.
+- secret 원문/암호문은 화면에 표시하지 않는다.
+- 실제 OpenAI 호출/테스트 버튼은 추가하지 않았다.
+
+Phase 7-9 구현 메모:
+
+- web_api에 `GET /admin/api-keys/providers/naver/runtime-status`를 추가했다.
+- `RotationService.previewRuntime()`은 DB mutation이나 실제 Naver provider 호출 없이 현재 사용할 후보 credential과 usable/exhausted/disabled count를 계산한다.
+- `SearchService.inspectRuntime()`은 후보 credential 복호화 가능 여부만 확인하고 secret 원문/암호문을 반환하지 않는다.
+- 응답 shape는 `provider`, `ready`, `source`, `usableCredentialCount`, `exhaustedCredentialCount`, `disabledCredentialCount`, 선택적 `activeCredentialId`, 선택적 `reason`이다.
+- web_admin API key 화면 Naver section 상단에 runtime strip을 추가했다.
+- runtime strip은 status chip과 `사용 가능/소진/제외` count 및 선택적 activeCredentialId만 표시한다.
+- 실제 Naver 검색 호출은 추가하지 않았다. 기존 `테스트 검색` 버튼이 실제 provider 호출 검증 경로로 남아 있다.
+- 로컬 admin DB migration smoke 중 `ProviderCredentialEntity.clientId` nullable union 컬럼의 TypeORM inferred type이 `Object`가 되어 Postgres metadata validation이 실패하는 문제가 발견되어, `client_id` column type을 `varchar`로 명시했다.
+
+다음 구현 진입점:
+
+```text
+Phase 7-10: provider credential 운영/스테이징 검증 절차 또는 OpenAI env fallback 완전 제거 여부 결정
+```
+
+### 권장 구현 순서
+
+큰 작업이므로 한 번에 끝내려고 하지 말고 phase별로 나눈다.
+
+```text
+Phase 0
+  dev 최신화, 새 브랜치 생성, repo별 현재 테스트 명령 확인
+
+Phase 1: web_api session/refresh/desktop exchange
+  user_sessions table
+  desktop_auth_codes table
+  RS256 access JWT 발급/검증
+  refresh token hash 저장/rotation
+  /auth/desktop/exchange
+  /auth/refresh
+  /auth/logout
+  /auth/sessions 최소 구현
+
+Phase 2: Electron token store/deep link
+  deep link token -> code 변경
+  exchange API 호출
+  auth.bin token bundle 저장
+  safeStorage production fallback 정책 정리
+  local NestJS public key PEM app resource 포함
+
+Phase 3: Angular auth refresh layer
+  access token proactive/reactive refresh
+  single-flight refresh
+  /me restore 개선
+  logout/relogin branch 처리
+
+Phase 4: local NestJS JWT prefilter and user token relay
+  protected product start route Authorization 수신
+  JWT public key PEM load/cache
+  RS256/aud/iss/typ/exp 1차 검증
+  WebApiClient Bearer relay
+  @BillableOperation(operationKey) 또는 동등 interceptor
+
+Phase 5: web_api operation policy/ledger/provider authz
+  operation_policies table
+  enum 관리
+  OPERATION_DEFINITIONS seed/upsert
+  /operations/:operationKey/quote
+  /operations/start
+  /operations/:runId/succeed
+  /operations/:runId/fail
+  operation_runs/credit_ledger/provider_usage
+  provider endpoints user JWT + operationRunId 보호
+
+Phase 6: license one-active/queue/depleted 정리
+  active_depleted
+  queued user-start endpoint
+  자동 queued activation 제거
+
+Phase 7: provider credential 통합
+  Naver 중심 key 모델을 provider_credentials로 일반화
+  OpenAI DB encrypted credential
+  admin API key page source/status 정리
+```
+
+### 2026-07-07 구현 진입 판단
+
+현재 대화 컨텍스트가 길어졌다. 실제 구현은 새 세션에서 시작하는 것이 안전하다.
+
+이 세션에서 한 일:
+
+- auth/session/license/provider target design을 `.codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md`에 정리
+- operation policy를 `operation_key`, enum, code registry + seed/upsert 방식으로 정리
+- 플랜별 플러그인 노출/잠금은 MVP 제외로 결정
+- 플러그인 스토어 목록은 로컬 앱 기준 유지로 결정
+- 이 `NEXT.md`를 다음 세션용 구현 진입 handoff로 갱신
+
+## Previous Handoff: 2026-07-03 Installed App Integration
+
+이 섹션은 이전 기준이다. 설치형 앱 integration 상세 이력으로만 본다.
 
 Release/version-management work is still paused. The current priority is installed desktop app correctness, local/manual verification, and then Windows packaged verification. Do not resume 0.0.4 stable publish or updater detection until the installed app behavior below is accepted.
 
@@ -17,32 +525,46 @@ Using Superpowers.
 
 작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
 
-먼저 .codex/handoff/NEXT.md 와 .codex/records/sessions/2026/07/02.md 를 읽고 현재 상태를 파악해줘.
+먼저 .codex/handoff/NEXT.md, .codex/records/sessions/2026/07/02.md, .codex/records/sessions/2026/07/03.md 를 읽고 현재 상태를 파악해줘.
 이번 세션은 설치형 앱 완성/검증을 우선하며, release/version publish 작업은 아직 재개하지 마.
 secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
 
-현재 코드 repo들은 feature/plugin-runtime-isolation 브랜치에 있다. 일부 repo는 origin tracking branch보다 앞서 있으며 아직 push 전이다.
-.codex는 docs-old-render-path-cleanup 브랜치에 문서 커밋이 있다.
+현재 app repo들은 integration/plugin-runtime-isolation-review2-20260703 브랜치에 있고 원격에 push되어 있다.
+.codex는 git 연결/푸시 없이 로컬 문서 컨텍스트로만 사용 중이다.
 
 먼저 각 repo의 git status/log를 확인하고, 아래 우선순위대로 진행해줘:
 1. Mac mini에서 최신 packaged app/local-api 빌드로 fresh manual smoke
-2. Windows test PC에서 pull/build/install/manual smoke
+2. Windows test PC에서 reset-windows.ps1 fix 단독 확인 후 원격 web_api 기준 packaged smoke
 3. 남은 TODO 중 높은 우선순위부터 처리
 4. Mac/Windows 설치형 앱 smoke가 승인되기 전까지 release/version publish는 재개하지 않기
 ```
 
 ### Current Branch/Commit State
 
-These are the current local feature-branch heads as of the latest session update. Some are not pushed yet.
+These are the current integration branch heads as of the latest session update. They have been pushed.
 
 ```text
-desktop/clipper_angular:  feature/plugin-runtime-isolation @ d7ef5e6 Refine template builder editing workflow
-desktop/clipper_nestjs:   feature/plugin-runtime-isolation @ 8e55d76 Fix shortform project API test web API harness
-desktop/clipper_python:   feature/plugin-runtime-isolation @ 4405cad fix(tts): preserve pitch for playback speed
-desktop/clipper_electron: feature/plugin-runtime-isolation @ a9cf9c1 Document local API packaged app builds
-web/clipper_web_api:      feature/plugin-runtime-isolation @ 2817381 Harden OpenAI JSON responses for script flows
-.codex:                   docs-old-render-path-cleanup @ 6eff8f2 Document shortform API harness cleanup
+desktop/clipper_angular:  integration/plugin-runtime-isolation-review2-20260703 @ 376e4f3 Enable opening Variation from plugin store
+desktop/clipper_nestjs:   integration/plugin-runtime-isolation-review2-20260703 @ 3655c12 Cover packaged BGM lookup from resources root
+desktop/clipper_electron: integration/plugin-runtime-isolation-review2-20260703 @ 079cef8 Merge feature/plugin-runtime-isolation into dev
+desktop/clipper_python:   integration/plugin-runtime-isolation-review2-20260703 @ dec0286 Merge feature/plugin-runtime-isolation into dev
+web/clipper_web_api:      integration/plugin-runtime-isolation-review2-20260703 @ 46cf304 Merge feature/plugin-runtime-isolation into dev
 ```
+
+Recent 2026-07-03 follow-up fixes on the integration branch:
+
+```text
+desktop/clipper_angular:
+  5564501 Fix virtual workflow install after ffmpeg consent
+  a643353 Sync selected plugin detail after install
+  376e4f3 Enable opening Variation from plugin store
+
+desktop/clipper_nestjs:
+  c54cb8b Fix packaged shortform BGM asset lookup
+  3655c12 Cover packaged BGM lookup from resources root
+```
+
+See `.codex/records/sessions/2026/07/03.md` for the complete session record.
 
 Latest feature-branch commits now pushed:
 
@@ -3261,3 +3783,253 @@ Using Superpowers.
     - Packaged runtime config loopback check -> pass.
   - Manual retest note:
     - Reopen the rebuilt packaged app from `desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`.
+
+## Current Shortform TTS Playback Auth Fix
+
+- User live-tested Electron devapp login and prompt shortform clip generation successfully.
+- TTS synthesis itself succeeded; `clipper_nestjs` log showed Supertonic `/tts` calls returning 200 and WAV artifacts being saved.
+- Playback failure root cause:
+  - browser media requests for `tts/<artifactId>/file` do not carry Angular/Electron bearer headers.
+  - with `CLIPPER_AUTH_MODE=jwt`, local NestJS rejected those `<audio>`/metadata requests with `Missing bearer token`.
+- Fix in progress/completed:
+  - `desktop/clipper_nestjs` now issues short-lived opaque `mediaToken` tickets for shortform TTS file URLs.
+  - tickets are local process-memory mappings of owner/project/artifact/expiry only; JWT/access token/provider key material is not placed in URLs.
+  - TTS file endpoint keeps bearer auth when Authorization is present and falls back to ticket resolver when no bearer can be attached.
+  - transient `ttsAudioUrl` values are stripped before project persistence and regenerated for list/get/update/media-edit responses.
+  - `desktop/clipper_angular` preserves `mediaToken` when rewriting saved TTS URLs to the current backend port.
+- Verification run:
+  - `desktop/clipper_nestjs`: `node --test test/shortform-tts-file-ticket.test.js` -> 2 passed.
+  - `desktop/clipper_nestjs`: `npm run build` -> pass.
+  - `desktop/clipper_nestjs`: `git diff --check` -> pass.
+  - `desktop/clipper_angular`: focused shortform project service spec -> 10 passed.
+  - `desktop/clipper_angular`: `npm run build` -> pass.
+  - `desktop/clipper_angular`: `git diff --check` -> pass.
+- Manual retest needed:
+  - restart `desktop/clipper_nestjs` devapp so it runs the new ticket code.
+  - reload/restart Electron renderer so Angular runs the new URL preservation code.
+  - create or open a shortform project with TTS and confirm audio preview plays without `Missing bearer token`.
+
+## Current Project Artifact Playback Auth Fix
+
+- User confirmed shortform TTS preview now plays in Electron devapp.
+- Follow-up issue:
+  - after clicking `숏폼 생성하기`, the render job completed and appeared in project history.
+  - project thumbnail was blank and generated video would not play.
+  - `clipper_nestjs` logged `Missing bearer token` for:
+    - `GET /v1/projects/<projectId>/file?path=renders%2Fmain_thumbnail.jpg`
+    - `GET /v1/projects/<projectId>/file?path=renders%2Fmain.mp4`
+- Root cause:
+  - render itself completed.
+  - project artifact thumbnail/video are loaded by browser `<img>`/`<video>`, which cannot attach Angular bearer headers.
+  - `ProjectsController.getFile()` previously required bearer auth unconditionally.
+- Fix:
+  - `desktop/clipper_nestjs` now exposes `POST /v1/projects/:projectId/file-tickets` for authenticated renderer requests.
+  - local NestJS issues short-lived opaque media tokens for specific project file paths.
+  - `GET /v1/projects/:projectId/file` keeps bearer auth when Authorization is present and falls back to media token validation when bearer cannot be attached.
+  - `desktop/clipper_angular` caches project file media tokens during project refresh/getByJob/detail/manifest loads.
+  - `ProjectHistoryService.projectFileUrl()` appends cached `mediaToken` to thumbnail/video URLs when available.
+  - tokens do not contain JWT/access token/provider key material and are stored only in local process memory on the server side.
+- Follow-up fix:
+  - stored shortform render metadata can contain both absolute `video_path`/`thumbnail_path` and relative `video_relative_path`/`thumbnail_relative_path`.
+  - Angular now sends only project-relative paths to `/file-tickets`.
+  - local NestJS skips invalid project file paths in a batch ticket request instead of failing tokens for otherwise valid paths.
+  - Angular no longer returns tokenless `/projects/:projectId/file` URLs while a media ticket is not cached yet, preventing one-off unauthorized thumbnail requests during project archive refresh.
+- Verification run:
+  - `desktop/clipper_nestjs`: `node --test test/project-file-media-ticket.test.js test/shortform-tts-file-ticket.test.js test/project-output-render-path.test.js test/variation-batch-retry-zip.test.js` -> 38 passed after the absolute-path follow-up.
+  - `desktop/clipper_nestjs`: `npm run build` -> pass.
+  - `desktop/clipper_angular`: focused `project-history` + `projects` specs -> 20 passed.
+  - `desktop/clipper_angular`: `npm run build` -> pass.
+- Manual retest result:
+  - User restarted the devapp flow and confirmed completed shortform output appears in project history.
+  - User confirmed project thumbnail renders and generated MP4 playback works.
+  - User then smoke-tested Dance Highlight end-to-end:
+    - web_api routed Naver image search through DB provider credentials.
+    - plugin pipeline completed, project queue/job flow completed, and output was added to completed projects.
+    - project archive thumbnail, project detail thumbnails, and video playback all rendered.
+  - No provider secret/env values or raw API keys were recorded.
+
+## Current Dialog Highlight Install State Fix
+
+- User observed Dialog Highlight install staying in progress without a completion state.
+- After app restart, the plugin incorrectly appeared as `설치됨`.
+- Running the plugin then failed at startup:
+  - project queue stayed around pipeline start.
+  - plugin dashboard showed `오류`.
+  - local NestJS reported `Plugin on port 54800 did not become healthy within 60s`.
+- Root cause:
+  - model-backed plugin install state treated HuggingFace/model files as the source of truth.
+  - Electron and local NestJS auto-restored `.ready` markers when files existed.
+  - Dialog Highlight model files/cache can exist even when the plugin never reached `/health`.
+- Fix:
+  - `desktop/clipper_electron` now writes a JSON ready marker only after plugin startup health check succeeds.
+  - `desktop/clipper_electron` install-state check now requires both model files and a validated JSON ready marker for model-backed plugins.
+  - `desktop/clipper_nestjs` uses the same validated marker rule and no longer auto-restores `.ready` from files alone.
+  - legacy timestamp-only `.ready` markers are treated as invalid, so old partial installs are not shown as installed.
+  - local plugin startup timeout is configurable through `CLIPPER_PLUGIN_START_TIMEOUT_MS` and defaults to 300000 ms instead of the prior hard-coded 60 s.
+- Verification run:
+  - `desktop/clipper_electron`: `node --test test/plugin-install-state.test.mjs` -> 7 passed.
+  - `desktop/clipper_electron`: `node --test test/model-download-info.test.mjs` -> passed.
+  - `desktop/clipper_electron`: `npm test` -> 100 passed.
+  - `desktop/clipper_electron`: `npm run build` -> pass.
+  - `desktop/clipper_electron`: `git diff --check` -> pass.
+  - `desktop/clipper_nestjs`: related plugin install/runtime tests -> 15 passed.
+  - `desktop/clipper_nestjs`: `npm run build` -> pass.
+  - `desktop/clipper_nestjs`: `git diff --check` -> pass.
+- Manual retest needed:
+  - restart local NestJS and Electron devapp after rebuilding.
+  - Dialog Highlight should no longer show `설치됨` from an old timestamp marker.
+  - reinstall/start should only mark installed after the plugin becomes healthy.
+- Follow-up:
+  - User reset app data and intentionally quit during Dialog Highlight `faster-whisper-small` download.
+  - HuggingFace cache contained only a `*.incomplete` blob, but the install modal reported `faster-whisper-small` as already installed.
+  - Electron and local NestJS now ignore `*.incomplete` and zero-byte HF blobs when deciding model presence.
+  - Verification: Electron full test suite passed 102 tests; NestJS related plugin tests passed 16 tests.
+- Follow-up:
+  - User retried Dialog Highlight install and observed the download UI staying at 0% for a long time.
+  - Electron logs showed HuggingFace HEAD and Xet read-token requests but no `download_progress` event.
+  - Local Xet logs and HF cache showed the `.incomplete` file growing/reconstructing, so the transfer was active while `tqdm_class` progress was not emitted.
+  - `desktop/clipper_python` now polls the HuggingFace `.incomplete` blob size during dialog model prefetch and emits monotonic progress for Xet/native transfer paths.
+  - Verification: isolated dialog HF progress regression test passed; ruff passed; py_compile passed; `git diff --check` passed.
+  - Broader dialog pytest commands were attempted but the current `uv` test runner environment lacked or mismatched Python 3.11 binary dependencies (`numpy`, `uvicorn`/`pydantic_core`), so those commands were not usable as signal for this code change.
+- Follow-up:
+  - User observed Dialog Highlight hanging after `faster-whisper-small` small files downloaded.
+  - HF cache inspection showed `config.json`, `tokenizer.json`, and `vocabulary.txt` snapshot links existed, but `model.bin` snapshot link did not.
+  - A previous full-size `model.bin` `.incomplete` blob remained from the interrupted Xet transfer.
+  - The next run held/updated the HF lock but did not turn the stale `.incomplete` into a final snapshot file.
+  - `desktop/clipper_python` now removes orphan complete-size `.incomplete` blobs before prefetch when the expected snapshot file is missing.
+  - Smaller partial `.incomplete` blobs are preserved for normal resume/progress.
+  - Verification: dialog HF progress tests passed 2 tests; ruff passed; py_compile passed; `git diff --check` passed.
+- Follow-up:
+  - User still saw `faster-whisper-small` as `이미 설치됨` while `model.bin` snapshot was missing.
+  - Root cause: Electron/local NestJS still accepted any non-incomplete HF blob as model presence, so metadata blobs (`config.json`, `tokenizer.json`, `vocabulary.txt`) made the model look installed.
+  - Electron/local NestJS now require model-specific snapshot filenames for HF model presence and no longer use generic `blobs/` fallback.
+  - Verification: Electron full test suite passed 103 tests; NestJS related plugin tests passed 17 tests; builds/diff checks passed.
+- Follow-up:
+  - User retried Dialog Highlight download with `HF_TOKEN`; unauthenticated HF warning disappeared, but download still stalled after HEAD.
+  - Root cause 1: `desktop/clipper_python` prefetch trusted `snapshot_download(..., local_files_only=True)` even when the snapshot only had metadata files and the expected large file (`model.bin`) was missing.
+  - Fix: prefetch now verifies the expected large snapshot filename before returning, removes stale complete-size `.incomplete`, and passes `HF_TOKEN`/`HUGGINGFACE_HUB_TOKEN` explicitly to HuggingFace calls when present.
+  - Commit: `desktop/clipper_python` `b3828a6 fix(dialog): require large hf model snapshot`.
+  - Verification: `uv run pytest tests/test_dialog_hf_progress.py -q` -> 4 passed; ruff, py_compile, `git diff --check` passed.
+- Follow-up:
+  - User still saw the dialog download stall around the large model file.
+  - Local inspection showed old dialog Python processes still holding the HuggingFace `model.bin` lock. They were terminated, and the lock owner cleared.
+  - New Xet logs then showed the transfer path receiving repeated HuggingFace CDN range `500` responses, while `HF_TOKEN`/CAS token refresh was successful. This was not an auth failure.
+  - Fix: Dialog Highlight now disables `hf-xet` by default at package import time and again before model prefetch, so the model download uses the standard HuggingFace HTTP path.
+  - Commit: `desktop/clipper_python` `cf09810 fix(dialog): disable unstable hf xet downloads`.
+  - Verification: `uv run pytest tests/test_dialog_hf_progress.py -q` -> 6 passed; ruff, py_compile, `git diff --check` passed.
+  - Manual retest needed: fully restart Electron/local NestJS so no old Python plugin process remains, then retry Dialog Highlight install/download.
+- Follow-up:
+  - User confirmed Dialog Highlight install completion snackbar appeared, but Plugin Store still displayed `미설치`/`설치하기`.
+  - Root cause: HuggingFace snapshot files are symlinks to `blobs/`, but Electron/local NestJS install-state checks only accepted `Dirent.isFile()`. The validated ready marker and model blobs existed, but `model.bin`/OpenCLIP snapshot symlinks were treated as missing.
+  - Fix: Electron/local NestJS install-state now accepts snapshot symlinks and verifies the symlink target with `statSync(...).size > 0`.
+  - Commits:
+    - `desktop/clipper_nestjs` `d270cd0 fix(plugins): detect hf snapshot symlinks`
+    - `desktop/clipper_electron` `dc5ced7 fix(plugins): detect hf snapshot symlinks`
+  - Verification:
+    - `desktop/clipper_nestjs`: symlink RED test failed before fix, related plugin tests -> 18 passed, build/diff check passed.
+    - `desktop/clipper_electron`: symlink RED test failed before fix, `npm test` -> 104 passed, build/diff check passed.
+    - Live local NestJS status after fix: `GET /v1/plugins/dialog_highlight/status` returned `installState: installed`.
+- Follow-up:
+  - User confirmed Plugin Store updated to installed, but clicking the Dialog Highlight sidebar entry still opened the AI model needed modal.
+  - Root cause: Angular readiness still called Electron `modelDownload.modelsNeeded()` for `pluginModel` requirements even when `PluginStatusService` already had the plugin marked `installed`. If Electron IPC/renderer state was stale, it could re-open the model consent modal despite backend install state being installed.
+  - Fix: `desktop/clipper_angular` readiness skips model consent checks for already-installed plugins and resets stale consent/error prompts for the same plugin before continuing to warmup.
+  - Commit: `desktop/clipper_angular` `cf2defb fix(readiness): skip model prompt for installed plugins`.
+  - Verification: readiness RED tests failed before fix, focused readiness test -> 7 passed, dialog setup test -> 15 passed, `npm run build`/`git diff --check` passed.
+
+### Follow-up: manual operation smoke and DB audit
+
+- User confirmed Electron devapp login and real product smoke results:
+  - Shortform prompt flow succeeded: clip generation, TTS preview audio, render queue/completion, archive thumbnail, and video playback.
+  - Dance Highlight succeeded end-to-end: pipeline, queue/completed project, archive/detail thumbnails, and videos.
+  - Dialog Highlight succeeded end-to-end after install-state/readiness fixes: pipeline, queue/completed project, archive/detail thumbnails, and videos.
+- DB audit for recent 24h operation/credit/provider records:
+  - `operation_runs` and `credit_ledger` matched; anomaly query returned 0 rows.
+  - failed `dialog_highlight.extract` run refunded the full charged credits.
+  - succeeded `shortform.create`, `dance_highlight.extract`, and `dialog_highlight.extract` runs charged expected credits.
+  - `provider_usage` recorded OpenAI usage for shortform/dialog runs.
+  - `dance_highlight.extract` had 0 provider_usage rows even though setup-time Naver image search occurred. This remains a known transition gap because current Dance reference image search can occur before the billable workflow run exists.
+- Follow-up policy note:
+  - Do not force setup-time Dance reference search into `dance_highlight.extract` without UX/policy design.
+  - Future phase should decide whether Dance reference search becomes part of an explicit preflight/quote flow, a free setup provider action with audit-only tracking, or a search step moved after `/operations/start`.
+
+### Follow-up: Settings page license/credit summary
+
+- User found the Settings page license/credit rows were hardcoded dummy values.
+- Fix:
+  - `web/clipper_web_api` keeps `tokenBalance` compatibility and adds `creditBalance`, `creditAllowance`, and `creditsUsed` to `GET /licenses/current`.
+  - `desktop/clipper_nestjs` adds `GET /v1/licenses/current` as a thin authenticated proxy to web_api `GET /licenses/current`.
+  - `desktop/clipper_angular` Settings page uses `SettingsAccountService` and replaces hardcoded `무료 플랜`, `460 / 500`, and fixed progress with live license summary state.
+- Verification:
+  - `web/clipper_web_api`: `npm test -- licenses.service.spec.ts licenses.controller.spec.ts --runInBand` -> 8 passed; `npm run build` -> passed.
+  - `desktop/clipper_nestjs`: RED tests confirmed missing `WebApiClient.getJson` and missing local license proxy; `node --test test/web-api-client.test.js test/license-current-proxy.test.js` -> 13 passed; `npm run build` -> passed.
+  - `desktop/clipper_angular`: RED tests confirmed missing settings account service; focused settings specs -> 10 passed; `npm run build` -> passed.
+- Follow-up UI polish:
+  - Settings credit bar was replaced with a custom segmented credit meter so total track, remaining credits, and used credits are visually distinct.
+  - The meter includes `사용 N` legend text and progressbar aria attributes.
+  - Verification: RED settings component test failed before fix; focused settings component spec -> 10 passed; `npm run build` and `git diff --check` passed.
+  - User noted the used segment was still too close to the track/background color.
+  - Follow-up fix increased the used segment contrast with warning-colored fill, stripe overlay, and a divider; the legend dot now matches the stronger used color.
+  - Verification: focused settings component spec -> 11 passed; `npm run build` and `git diff --check` passed.
+- Follow-up: Settings "이용권 신청" button
+  - User observed the button did nothing.
+  - Root cause: `desktop/clipper_angular` rendered the button without a click handler; `web/clipper_web_client` also did not preserve `/app/purchase` through the web login callback when the browser was not already logged in.
+  - Fix:
+    - `desktop/clipper_electron` exposes a narrow `external.openWebClientPath(path)` bridge and only accepts relative web-client paths.
+    - Electron maps local web_api (`localhost`/`127.0.0.1`) to local web client `http://localhost:4201`, and maps dev/stage/prod API domains to the matching web client origins. `CLIPPER_WEB_CLIENT_BASE_URL` can override the derived origin.
+    - `desktop/clipper_angular` Settings opens `/app/purchase` through the Electron bridge, with a local browser fallback.
+    - `web/clipper_web_client` carries `returnUrl=/app/purchase` through Google login and returns to it after callback.
+  - Commits:
+    - `desktop/clipper_electron` `91691ec feat(external): open web client purchase links`
+    - `desktop/clipper_angular` `82b01f5 feat(settings): open license purchase page`
+    - `web/clipper_web_client` `d522f88 fix(auth): preserve purchase return url`
+  - Verification:
+    - `desktop/clipper_electron`: RED module-missing test failed before fix; `npm test` -> 107 passed; `npm run build` passed.
+    - `desktop/clipper_angular`: RED settings spec failed because bridge was not called; focused settings spec -> 12 passed; `npm run build` passed.
+    - `web/clipper_web_client`: RED auth-api export missing before fix; focused auth/login/callback specs -> 5 passed; `npm run build` passed.
+    - `web/clipper_web_client` full `ng test` still has an unrelated existing timeout in `mockApiInterceptor returns mock current license for GET /licenses/current`; the same spec fails when run alone.
+- Follow-up: queued license visibility
+  - User clarified `/admin/approvals` can stay request-approval oriented; it does not need to show active vs queued lifecycle.
+  - Root causes:
+    - `web/clipper_web_client` history labels did not include the `queued` display status, so queued licenses appeared with a blank status.
+    - `desktop/clipper_angular` Settings showed only the active/current plan and did not expose queued license count/details or a purchase-history link.
+    - `web/clipper_web_api` `GET /licenses/current` exposed only queued count/next id, not enough detail for Settings to show multiple queued license names.
+  - Fix:
+    - `web/clipper_web_api` adds `queuedLicenses[]` with plan name and credit summary to current license.
+    - `web/clipper_web_client` history maps `queued` to `시작 대기` and keeps lifecycle statuses typed.
+    - `desktop/clipper_angular` Settings shows `시작 대기 N개 · ...` under the active plan and adds a `구매 내역` button opening `/app/history`.
+  - Commits:
+    - `web/clipper_web_api` `646d13d feat(billing): expose queued license summaries`
+    - `web/clipper_web_client` `cee0da3 fix(history): label queued license requests`
+    - `desktop/clipper_angular` `2999873 feat(settings): show queued licenses`
+  - Verification:
+    - `web/clipper_web_api`: RED queuedLicenses assertion failed before fix; `npm test -- licenses.service.spec.ts licenses.controller.spec.ts --runInBand` -> 8 passed; `npm run build` passed.
+    - `web/clipper_web_client`: RED queued status type/label failed before fix; focused history/auth specs -> 3 passed; `npm run build` passed.
+    - `desktop/clipper_angular`: RED queuedLicenses type/history button tests failed before fix; focused settings specs -> 15 passed; `npm run build` passed.
+    - `git diff --check` passed in all three repos.
+- Follow-up: admin API key Runtime detail internal id
+  - User noticed an extra trailing string in `web_admin /api-keys` Runtime detail after Naver/OpenAI status counts.
+  - Root cause: the trailing value was `activeCredentialId`, an internal provider credential UUID, not the API key/secret. `web_admin` appended it in `openAiRuntimeDetail`/`naverRuntimeDetail`.
+  - Fix: `web/clipper_web_admin` no longer displays `activeCredentialId` in Runtime detail. API/runtime logic was not changed.
+  - Commit: `web/clipper_web_admin` `d7df31e fix(api-keys): hide runtime credential ids`.
+  - Verification: RED runtime detail spec failed before fix; focused api-keys component spec -> 13 passed; `npm run build` and `git diff --check` passed.
+- Follow-up: web session/device privacy hardening
+  - User requested login device implementation, privacy-policy content notes, admin raw IP/device id hiding, later retention/deletion TODOs, and log redaction for token/refresh token/provider key/local paths.
+  - Fix:
+    - `web/clipper_web_api` web Google callback now creates a `user_sessions` row and issues a `sid` access JWT.
+    - web refresh token is kept out of URL/localStorage and sent only as an HttpOnly cookie.
+    - `/auth/refresh` supports both desktop body refresh token and web HttpOnly cookie refresh.
+    - `/auth/sessions` returns current-session marker and privacy-preserving device metadata (`clientKind`, browser/OS names, masked IP) without refresh hash/IP hash/raw IP.
+    - `DELETE /auth/sessions/:id` revokes only another session owned by the current user.
+    - user DB migration adds `client_kind`, `browser_name`, `os_name`, `ip_masked`, `ip_hash`.
+    - `web/clipper_web_client /app/account` shows real login devices and supports remote logout for non-current sessions.
+    - Electron and local NestJS JSON logs redact token, refresh token, provider key shapes, and local absolute paths.
+    - Electron auth token-store no longer logs the local auth bundle path.
+    - `.codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md` now includes privacy-policy draft items, admin raw-value hiding rules, and next-phase retention/deletion TODOs.
+  - Next:
+    - Decide session/device retention period.
+    - Decide deletion/account-withdrawal handling for session/device/security logs.
+    - Add credit ledger user/admin views with session/device attribution.
+    - Add admin external API usage log view; provider calls remain audit logs, not extra credit billing units.
+  - Documentation:
+    - Detailed current-state and remaining-phase checklist is in `.codex/design/AUTH_SESSION_LICENSE_PROVIDER_REMAINING_PHASES_2026-07-08.md`.
+    - It includes the user-added gaps: charge confirmation UX, operation policy admin, credit ledger history, external API usage log, video-duration pricing, session/device privacy retention/deletion, JWT fallback cleanup, provider credential operation checks, and `/llm/variation` deferral.

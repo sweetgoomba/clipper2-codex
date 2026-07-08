@@ -259,7 +259,7 @@ admin 화면 표시:
 - admin은 user별 필터가 가능하다.
 - user는 타 user ledger를 볼 수 없다.
 
-### Phase 8E. Desktop navigation/plugin metadata SoT cleanup
+### Phase 8H. Desktop navigation/plugin metadata SoT cleanup
 
 목표: desktop Angular의 nav label, page title/subtitle, plugin store display name이 중복 하드코딩되지 않고 한 메타데이터에서 파생되게 한다.
 
@@ -280,42 +280,57 @@ admin 화면 표시:
 - desktop Angular 관련 spec과 build를 통과해야 한다.
 - 새 nav/page/plugin label 추가 시 같은 문자열을 component template에 다시 하드코딩하지 않는다.
 
-### Phase 8F. Cross-repo Python plugin manifest/catalog SoT
+### Phase 8I. Cross-repo plugin manifest/catalog/navigation metadata SoT
 
-목표: Python plugin 표시 metadata가 repo 간 수동 복붙으로 drift되지 않게 한다.
+목표: plugin 표시 metadata가 repo 간 수동 복붙으로 drift되지 않게 한다.
 
 현재 관찰:
 
 - `desktop/clipper_python/plugins/*/manifest.json`은 Python plugin 자체 배포 단위의 manifest다.
 - `desktop/clipper_nestjs/src/modules/plugins/domain/plugin-catalog.ts`에도 Python plugin `displayName`/`description`/capability/resource/model 정보가 일부 중복되어 있다.
+- `desktop/clipper_nestjs/src/modules/plugins/domain/plugin-catalog.ts`에는 `shortform_url`, `shortform_paste`, `shortform_prompt`, `variation` 같은 virtual workflow plugin metadata도 들어 있다.
+- `desktop/clipper_angular/src/core/navigation/app-navigation-metadata.ts`에는 같은 virtual workflow의 nav label, page title, plugin store display name, route, icon이 들어 있다.
 - `LocalPluginHost`는 `CLIPPER_PYTHON_ROOT/plugins/*/manifest.json`을 읽어 `PluginManifestView`를 만든다.
 - packaged/Electron mode에서도 Electron plugin host가 Python plugin manifest를 읽어 NestJS에 전달한다.
 - `StaticPluginHost`와 virtual workflow fallback은 `PLUGIN_CATALOG`를 사용한다.
 - Angular plugin detail은 API 응답의 `manifest.description`을 표시한다.
+- Angular plugin store/list/navigation은 desktop UI 표시명에 대해 `app-navigation-metadata.ts`를 우선 사용한다.
 
 문제:
 
 - 같은 description이 `clipper_python` manifest와 `clipper_nestjs` catalog에 동시에 존재한다.
+- `붙여넣기로 숏폼 제작` 같은 shortform virtual workflow 표시명이 `clipper_nestjs` catalog와 `clipper_angular` navigation metadata에 동시에 존재한다.
 - local/devapp/Electron에서는 Python manifest 값이 직접 쓰이고, static/fallback 경로에서는 NestJS catalog 값이 쓰일 수 있다.
+- virtual workflow는 Python manifest가 없으므로 현재는 NestJS catalog와 Angular UI metadata가 각각 필요하지만, 표시명/설명/route 의도는 drift될 수 있다.
 - 서로 다른 repo 파일이므로 단순히 한 파일만 남기는 방식의 SoT는 현재 구조에서 어렵다.
 
 현재 결정:
 
 - 지금은 구현 변경하지 않고 문서화만 한다.
-- 다음 설계 때 Python plugin metadata SoT를 다시 결정한다.
+- 다음 설계 때 cross-repo plugin metadata SoT를 다시 결정한다.
+- 지금 당장 `desktop_angular`가 `desktop_nestjs` TS 파일을 import하거나, 반대로 NestJS가 Angular TS 파일을 import하는 방식은 채택하지 않는다. 두 repo의 TypeScript project/rootDir/build boundary가 다르고, frontend/backend ownership도 섞인다.
 
 추천 방향:
 
 1. Python plugin의 원본 SoT는 `desktop/clipper_python/plugins/*/manifest.json`으로 둔다.
-2. NestJS catalog는 virtual workflow와 보강 metadata 중심으로 축소한다.
-3. NestJS가 Python plugin 표시 metadata가 필요하면 가능하면 Python manifest를 읽거나, monorepo root 기준 sync/validate script로 drift를 검출한다.
-4. cross-repo 특성상 당장 하나의 파일로 강제하기보다 CI/test 또는 sync script로 “두 값이 다르면 실패”시키는 방식이 현실적이다.
+2. Virtual workflow의 원본 SoT는 별도 shared JSON/catalog 후보를 검토한다. 예: `desktop/shared/plugin-catalog/*.json` 또는 monorepo root shared manifest.
+3. Angular는 shared JSON에서 page/nav/store metadata를 생성하거나 adapter로 읽는다.
+4. NestJS는 shared JSON에서 `PluginManifestView` 기본 표시 metadata를 생성하고, capability/resource/model 같은 server-only 보강 metadata만 자기 catalog에서 유지한다.
+5. 구조 변경 폭을 줄이는 1차 대안은 sync/validate script로 drift를 검출하는 것이다. 즉 당장 하나의 파일로 강제하기보다 CI/test에서 “중복 필드가 다르면 실패”시키는 방식이 현실적이다.
 
 검토해야 할 선택지:
 
 - Runtime read: NestJS가 `CLIPPER_PYTHON_ROOT`의 manifest를 읽는다.
 - Validate script: `clipper_python` manifest와 `clipper_nestjs` catalog의 중복 필드를 비교해 drift를 실패 처리한다.
-- Shared package/json: 별도 shared manifest package를 만들고 두 repo가 소비한다. 구조 변경 폭이 가장 크다.
+- Shared package/json: 별도 shared manifest package를 만들고 `clipper_angular`/`clipper_nestjs`/필요 시 `clipper_python`이 소비한다. 구조 변경 폭이 가장 크지만 장기 SoT로 가장 명확하다.
+
+명시적 후속 작업:
+
+- `shortform_url`, `shortform_paste`, `shortform_prompt`, `variation`의 `displayName`/설명/route/icon ownership을 정한다.
+- Python plugin `dance_highlight`, `dialog_highlight`, `tts_supertonic`, `clipper_video_render`의 표시 metadata ownership을 정한다.
+- shared JSON을 도입할 경우 Angular/NestJS build에서 repo 바깥 파일을 어떻게 포함할지 결정한다.
+- shared JSON을 도입하지 않을 경우 drift validate script와 테스트를 추가한다.
+- 관리자/사용자에게 노출되는 label과 내부 operation/plugin key를 분리해, label 변경이 billing operation key나 route key를 바꾸지 않게 한다.
 
 현재 구현 상태:
 
@@ -500,6 +515,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 3. Phase 8C: operation policy admin.
 4. Phase 8E: external API usage log admin.
 5. Phase 8F/G: privacy retention과 operator auth hardening.
-6. Phase 9: provider credential operation/staging hardening.
+6. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
+7. Phase 9: provider credential operation/staging hardening.
 
 Phase 8A와 8B는 같은 pricing input 모델을 공유하므로 같은 설계 안에서 다루되, 구현 커밋은 API DTO/pricing, local proxy, Angular UX로 나누는 것이 좋다.
