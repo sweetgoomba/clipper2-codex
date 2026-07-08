@@ -1620,6 +1620,7 @@ provider_credentials
   daily_limit         일일 제한량
   usage_date          사용량 집계 날짜
   priority            rotation 우선순위
+  deleted_at          soft delete 시각. null이면 운영 목록/rotation 후보
   last_tested_at
   last_error_code
 ```
@@ -1635,16 +1636,17 @@ provider_credentials
 provider 사용 audit 테이블 예시:
 
 ```text
-provider_usage
+  provider_usage
   id                         provider usage ID
-  operation_run_id           어떤 제품 실행 내부에서 발생한 provider 호출인지
+  operation_run_id           어떤 제품 실행 내부에서 발생한 provider 호출인지. setup/manual 호출은 null 가능
   user_id
-  provider                   naver/openai 등 provider 종류
-  credential_id              사용한 provider_credentials.id
-  endpoint_key               media.search/llm.script 같은 내부 endpoint 이름
-  status                     succeeded/failed
-  provider_request_id        provider 응답의 request id가 있으면 저장
-  error_code                 실패 시 내부 표준 error code
+  session_id                 가능하면 호출한 session
+  usage_context              operation_run_id가 없을 때의 audit context
+  provider_scope             naver_image/openai 등 provider scope
+  provider_name              실제 호출 provider name
+  provider_credential_id     사용한 provider_credentials.id. admin UI/API에는 raw UUID를 표시하지 않음
+  unit_count                 provider 호출 단위 수
+  metadata                   endpoint 등 non-secret context
   created_at
 ```
 
@@ -2024,6 +2026,7 @@ provider_credentials
   priority
   last_tested_at
   last_error_code
+  deleted_at
   created_at
   updated_at
 ```
@@ -2035,6 +2038,8 @@ metadata_json
 ```
 
 단, secret 원문은 metadata에 넣지 않는다.
+
+`status='disabled'`와 `deleted_at IS NOT NULL`은 구분한다. `disabled`는 일시 제외 상태로 나중에 다시 `standby` 또는 `active`로 바꿀 수 있다. delete는 row를 보존한 soft delete이며, 운영 목록/runtime candidate/rotation 대상에서 제외한다. provider usage 과거 로그는 FK로 soft-deleted credential row를 join하되, admin 화면에는 label/status/deleted 여부만 보여주고 raw provider credential UUID나 key id는 표시하지 않는다.
 
 ### 12.3 OpenAI key 처리
 

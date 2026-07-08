@@ -54,6 +54,8 @@
 
 - OpenAI/Naver provider credential은 DB encrypted credential 중심으로 이동함.
 - admin API key page는 Runtime 상태를 보여주되 internal credential id를 UI에 표시하지 않음.
+- provider credential delete는 hard delete가 아니라 `deleted_at` soft delete로 처리함. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
+- `provider_usage`는 사용된 provider credential을 internal FK로 저장하고, admin `/api-usage`에는 raw UUID/key id 없이 credential label/status/deleted 여부만 표시함.
 - OpenAI env fallback은 migration window용 opt-in으로 축소됨. 완전 제거는 아직 남음.
 - Naver legacy key runtime은 정리됨.
 
@@ -391,23 +393,24 @@ admin 화면 표시:
   - `provider_usage` row를 최신순 cursor page로 조회한다.
   - `operation_run_id`가 있는 row는 `provider_usage -> operation_runs -> operation_policies`를 LEFT JOIN해 product operation key/name과 run status를 반환한다.
   - `operation_run_id`가 없는 row는 `usageContext`를 표시명/식별자로 사용한다.
-  - 응답 metadata에서 secret/token/password/api key/client secret/key id 계열 key는 제외한다.
+  - 응답 metadata에서 secret/token/password/api key/client secret/key id/credential id 계열 key는 제외한다.
   - `provider_usage.operation_run_id`를 nullable로 전환하고 `session_id`, `usage_context`를 추가하는 admin migration을 추가했다.
+  - `provider_usage.provider_credential_id`를 추가해 사용 credential을 internal FK로 저장한다.
+  - `provider_credentials.deleted_at`을 추가해 API key delete를 soft delete로 바꿨고, runtime/list/detail 조회는 deleted row를 제외한다.
 - `desktop/clipper_nestjs`:
   - Dance reference image search는 `/media/search`에 `usageContext='dance.reference_search'`를 전달한다.
   - Shortform manual clip media search는 caller bearer token과 `usageContext='media.manual_search'`를 전달한다.
   - Remote media search proxy는 `operationRunId`가 없는 authenticated search에 `usageContext='media.manual_search'`를 전달한다.
 - `web_admin`:
   - `/api-usage` route와 상단 nav `API 사용` 추가.
-  - 외부 API 사용 로그 페이지에서 일시, provider, 제품 기능, operation key, run status, unit count, context metadata를 표시한다.
+  - 외부 API 사용 로그 페이지에서 일시, provider, credential label/status, 제품 기능, operation key, run status, unit count, context metadata를 표시한다.
   - operation run 없는 row는 operation key 위치에 `usageContext`를 표시하고, 상태는 `-`로 표시한다.
   - cursor 기반 `더 보기`로 이전 로그를 append한다.
-  - 화면에서도 secret/token/password/api key/client secret/key id 계열 metadata key를 한 번 더 제외한다.
+  - 화면에서도 secret/token/password/api key/client secret/key id/credential id 계열 metadata key를 한 번 더 제외한다.
 
 현재 gap:
 
-- 일부 provider 호출만 `provider_usage`에 기록된다. 현재 확인된 setup/manual Naver image search gap은 닫혔다.
-- `provider_usage`는 provider credential id/key id를 저장하지 않는다.
+- 일부 provider 호출만 `provider_usage`에 기록된다. 현재 확인된 setup/manual Naver image search gap과 credential attribution gap은 닫혔다.
 - OpenAI `/llm/variation`은 제품 기능/과금 정책이 deferred라 provider usage 전환 대상에서 제외되어 있다.
 
 필수 작업:
@@ -415,19 +418,21 @@ admin 화면 표시:
 - provider usage 기록 모델은 “operation run 선택적 연결 + usageContext”로 1차 정리했다.
 - 추가 provider 호출이 생기면 setup/manual search에는 `usageContext`를 남긴다. 예: `dance.reference_search`, `media.manual_search`.
 - userId/sessionId는 가능한 범위에서 기록한다.
-- providerCredentialId는 internal UUID로만 저장하고, admin UI에는 원문 전체를 표시하지 않는다. 필요하면 label 또는 짧은 prefix만 표시한다.
-- provider credential usage attribution을 저장할지 결정한다.
+- providerCredentialId는 internal FK로만 저장하고, admin UI/API에는 원문 UUID/key id를 표시하지 않는다.
+- 과거 로그 표시는 provider credential row를 soft delete로 보존하고, admin UI에는 label/status/deleted 여부만 표시한다.
 
 중요 정책:
 
 - provider image/media search는 사용자 credit 차감 대상이 아니다.
 - provider 사용 로그는 운영/비용 분석/rotation/debug용이다.
+- `disabled` credential은 나중에 다시 standby/active로 바꿀 수 있는 제외 상태다. delete는 `deleted_at`을 찍는 soft delete이며 운영 목록/rotation 후보에서 제외된다.
 
 검증:
 
 - Dance reference image search도 provider usage/audit에 남는다.
 - manual media search도 credit ledger 없이 provider usage/audit에 남는다.
 - provider secret은 response/log/UI 어디에도 나오지 않는다.
+- provider credential raw UUID/key id는 admin `/api-usage` response/UI에 나오지 않는다.
 
 ### Phase 8F. Session/device retention and privacy operations
 
@@ -543,7 +548,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 1. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 확인.
 2. Phase 8D follow-up: ledger filter/date range, historical balance snapshot 정책.
-3. Phase 8E follow-up: provider credential usage attribution 저장/표시 정책, `/llm/variation` 정책 결정 후 provider usage 전환.
+3. Phase 8E follow-up: `/llm/variation` 정책 결정 후 provider usage 전환.
 4. Phase 8F/G: privacy retention과 operator auth hardening.
 5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
 6. Phase 9: provider credential operation/staging hardening.
