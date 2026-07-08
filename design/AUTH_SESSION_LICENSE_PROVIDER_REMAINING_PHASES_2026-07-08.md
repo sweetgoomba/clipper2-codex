@@ -198,7 +198,7 @@
 - `web_api`에 `GET /admin/operation-policies`와 `PATCH /admin/operation-policies/:operationKey` 추가.
 - `web_admin`에 `/operation-policies` 페이지와 `크레딧 정책` 상단 메뉴 추가.
 - MVP 수정 가능 항목은 `creditCost`만 허용한다.
-- admin 응답/화면에 단가 단위를 표시한다. `shortform.create`는 `실행 1회당`, 하이라이트 추출은 `시작 1분당`이다.
+- admin 응답/화면에 단가 단위를 표시한다. `shortform.create`는 `실행 1회당`, 하이라이트 추출은 `영상 1분당`이다.
 - `shortform.create` 표시명은 `클리퍼 숏폼 생성`이다.
 - `Provider` 열은 admin 단가 화면에서 제거했다. `providerScopes`는 실제 provider 사용 전체가 아니라 operation run provider authorization scope라, 이 화면에서 운영 비용/사용 provider처럼 보여주면 오해를 만든다.
 - Create/Delete는 열지 않았다.
