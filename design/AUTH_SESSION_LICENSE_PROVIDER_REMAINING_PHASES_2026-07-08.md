@@ -38,6 +38,7 @@
 - `shortform.create`, `dialog_highlight.extract`, `dance_highlight.extract` 기본 operation definition이 있음.
 - `/operations/start`, succeed/fail, quote 기본 API가 있음.
 - 시작 시 debit, 실패 시 refund ledger를 남기는 `charge_then_refund` 모델이 구현됨.
+- admin `/api-usage`는 기존 `provider_usage`에 기록된 OpenAI/Naver 호출 로그를 조회함.
 - current charge points:
   - Plugin Store 카드 `열기`: 차감 없음.
   - 사이드바 메뉴 이동: 차감 없음.
@@ -269,6 +270,42 @@ admin 화면 표시:
 - admin은 user별 필터가 가능하다.
 - user는 타 user ledger를 볼 수 없다.
 
+현재 구현 상태:
+
+- `web_api`:
+  - user `GET /operations/ledger` 추가.
+  - admin `GET /admin/members/:userId/credit-ledger` 추가.
+  - 두 API 모두 `{ items, nextCursor }` page response를 반환한다.
+  - cursor는 `createdAt + ledgerId` 기준이며 `limit + 1` 조회로 다음 page 여부를 판단한다.
+  - admin DB에 `(user_id, created_at DESC, id DESC)` cursor index migration을 추가했다.
+  - admin DB `credit_ledger`/`operation_runs`/`operation_policies`와 user DB `user_sessions`를 애플리케이션 레이어에서 합쳐 반환한다.
+  - 응답에는 `operationRunId`와 표시용 session summary만 포함한다. raw IP, IP hash, refresh token hash, provider secret, session/device id 원문은 포함하지 않는다.
+- `desktop/clipper_nestjs`:
+  - `GET /v1/operations/ledger` proxy 추가. caller bearer token과 cursor/limit query를 web_api로 relay한다.
+- `desktop/clipper_angular`:
+  - Settings에 최근 크레딧 사용 내역을 표시한다.
+  - 표시 항목은 작업명, 일시, signed credits, session label이다.
+  - Settings에서는 최근 5개만 보여주고 `전체 내역 보기`로 web client `/app/credits`를 외부 브라우저에서 연다.
+- `web/clipper_web_client`:
+  - `/app/credits` 장기 credit ledger 페이지를 추가했다.
+  - `/app/credits` 상단에 현재 credit balance, allowance, used credits, active license, queued license summary를 표시한다.
+  - 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 하단에 append한다.
+- `web/clipper_web_admin`:
+  - `/members` 상세 영역을 목록 하단 카드에서 상시 우측 drawer/detail panel로 변경했다.
+  - drawer는 기본 선택 탭을 이용권으로 두고, 세션/기기, 크레딧 사용 내역 탭을 제공한다.
+  - 세션/기기 탭은 `GET /admin/members/:userId/sessions`에서 받은 sanitized 활성 세션을 표시한다.
+  - 크레딧 사용 내역 탭은 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 append한다.
+  - admin UI에는 raw run id를 직접 표시하지 않는다. API response에는 내부 추적용 `operationRunId`가 남아 있다.
+  - admin 공통 page width를 1320px로 늘려 member drawer와 ledger table을 안정적으로 수용한다.
+
+남은 작업:
+
+- `/app/credits`와 admin drawer에 기간/operation/session 필터 추가 여부 결정.
+- 더 긴 admin ledger 운영을 위한 가상 스크롤 또는 날짜 range query 도입 여부 결정.
+- ledger row의 당시 잔액 snapshot 저장 여부 결정. 현재는 amount 중심 조회이며 historical balance는 없다.
+- 2026-07-09 결정: Phase 8E 첫 슬라이스에서는 balance snapshot migration을 추가하지 않는다. Phase 8D filter/date range 설계 때 `balanceAfter` snapshot 컬럼을 둘지 다시 결정한다.
+- 실패/refund reason을 더 사용자 친화적으로 표시할 mapping.
+
 ### Phase 8H. Desktop navigation/plugin metadata SoT cleanup
 
 목표: desktop Angular의 nav label, page title/subtitle, plugin store display name이 중복 하드코딩되지 않고 한 메타데이터에서 파생되게 한다.
@@ -342,51 +379,30 @@ admin 화면 표시:
 - shared JSON을 도입하지 않을 경우 drift validate script와 테스트를 추가한다.
 - 관리자/사용자에게 노출되는 label과 내부 operation/plugin key를 분리해, label 변경이 billing operation key나 route key를 바꾸지 않게 한다.
 
-현재 구현 상태:
-
-- `web_api`:
-  - user `GET /operations/ledger` 추가.
-  - admin `GET /admin/members/:userId/credit-ledger` 추가.
-  - 두 API 모두 `{ items, nextCursor }` page response를 반환한다.
-  - cursor는 `createdAt + ledgerId` 기준이며 `limit + 1` 조회로 다음 page 여부를 판단한다.
-  - admin DB에 `(user_id, created_at DESC, id DESC)` cursor index migration을 추가했다.
-  - admin DB `credit_ledger`/`operation_runs`/`operation_policies`와 user DB `user_sessions`를 애플리케이션 레이어에서 합쳐 반환한다.
-  - 응답에는 `operationRunId`와 표시용 session summary만 포함한다. raw IP, IP hash, refresh token hash, provider secret, session/device id 원문은 포함하지 않는다.
-- `desktop/clipper_nestjs`:
-  - `GET /v1/operations/ledger` proxy 추가. caller bearer token과 cursor/limit query를 web_api로 relay한다.
-- `desktop/clipper_angular`:
-  - Settings에 최근 크레딧 사용 내역을 표시한다.
-  - 표시 항목은 작업명, 일시, signed credits, session label이다.
-  - Settings에서는 최근 5개만 보여주고 `전체 내역 보기`로 web client `/app/credits`를 외부 브라우저에서 연다.
-- `web/clipper_web_client`:
-  - `/app/credits` 장기 credit ledger 페이지를 추가했다.
-  - `/app/credits` 상단에 현재 credit balance, allowance, used credits, active license, queued license summary를 표시한다.
-  - 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 하단에 append한다.
-- `web/clipper_web_admin`:
-  - `/members` 상세 영역을 목록 하단 카드에서 상시 우측 drawer/detail panel로 변경했다.
-  - drawer는 기본 선택 탭을 이용권으로 두고, 세션/기기, 크레딧 사용 내역 탭을 제공한다.
-  - 세션/기기 탭은 `GET /admin/members/:userId/sessions`에서 받은 sanitized 활성 세션을 표시한다.
-  - 크레딧 사용 내역 탭은 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 append한다.
-  - admin UI에는 raw run id를 직접 표시하지 않는다. API response에는 내부 추적용 `operationRunId`가 남아 있다.
-  - admin 공통 page width를 1320px로 늘려 member drawer와 ledger table을 안정적으로 수용한다.
-
-남은 작업:
-
-- `/app/credits`와 admin drawer에 기간/operation/session 필터 추가 여부 결정.
-- 더 긴 admin ledger 운영을 위한 가상 스크롤 또는 날짜 range query 도입 여부 결정.
-- ledger row의 당시 잔액 snapshot 저장 여부 결정. 현재는 amount 중심 조회이며 historical balance는 없다.
-- 실패/refund reason을 더 사용자 친화적으로 표시할 mapping.
-
 ### Phase 8E. External API usage log
 
 목표: provider 호출을 과금이 아닌 운영 감사/진단 로그로 기록하고 admin에서 볼 수 있게 한다.
 
+현재 구현 상태:
+
+- `web_api`:
+  - admin `GET /admin/provider-usage` 추가.
+  - 기존 `provider_usage` row 중 `operation_run_id`가 있는 로그를 최신순 cursor page로 조회한다.
+  - `provider_usage -> operation_runs -> operation_policies`를 join해 provider scope/name, product operation key/name, run status, unit count, metadata를 반환한다.
+  - 응답 metadata에서 secret/token/password/api key/client secret/key id 계열 key는 제외한다.
+- `web_admin`:
+  - `/api-usage` route와 상단 nav `API 사용` 추가.
+  - 외부 API 사용 로그 페이지에서 일시, provider, 제품 기능, operation key, run status, unit count, context metadata를 표시한다.
+  - cursor 기반 `더 보기`로 이전 로그를 append한다.
+  - 화면에서도 secret/token/password/api key/client secret/key id 계열 metadata key를 한 번 더 제외한다.
+- 이번 슬라이스에서는 schema migration을 추가하지 않았다.
+
 현재 gap:
 
-- 일부 provider 호출은 `operationRunId`와 묶여 기록된다.
+- 일부 provider 호출만 `operationRunId`와 묶여 기록된다.
 - Dance setup-time reference image search처럼 product operation run이 생기기 전 provider 호출은 기록 gap이 있다.
 - `provider_usage`는 provider credential id/key id를 저장하지 않는다.
-- admin 조회 화면이 없다.
+- 현재 `provider_usage.operation_run_id`는 required 구조라 setup/manual provider 호출을 자연스럽게 담기 어렵다.
 
 필수 작업:
 
@@ -522,7 +538,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 1. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 확인.
 2. Phase 8D follow-up: ledger filter/date range, historical balance snapshot 정책.
-3. Phase 8E: external API usage log admin.
+3. Phase 8E follow-up: setup/manual provider usage audit 모델 정리, `operationRunId` optional 연결 또는 별도 provider call log 결정, provider credential label/prefix 표시 정책.
 4. Phase 8F/G: privacy retention과 operator auth hardening.
 5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
 6. Phase 9: provider credential operation/staging hardening.

@@ -1,6 +1,6 @@
 # Next Handoff
 
-최신 갱신: 2026-07-08 KST
+최신 갱신: 2026-07-09 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
@@ -437,12 +437,21 @@ Phase 7-9 구현 메모:
 다음 구현 진입점:
 
 ```text
-Phase 8D/8E: credit ledger follow-up 또는 external API usage log admin
+Phase 8E follow-up 또는 Phase 8D follow-up
 ```
 
 2026-07-09 현재 Phase 8C operation policy admin MVP는 완료됐다.
 `web_api`는 `/admin/operation-policies` list/update를 제공하고, `web_admin`은 `/operation-policies`의 `크레딧 정책` 화면에서 `creditCost`만 수정한다.
 `enabled`, `updatedBy`, 변경 이력/audit은 후속 phase로 남아 있다.
+
+2026-07-09 현재 Phase 8E external API usage log 첫 슬라이스도 완료됐다.
+`web_api`는 기존 `provider_usage` row 중 `operation_run_id`가 있는 로그를 `GET /admin/provider-usage`에서 cursor page로 제공하고, secret/token/password/api key/client secret/key id 계열 metadata는 응답에서 제외한다.
+`web_admin`은 `/api-usage`의 `API 사용` 화면에서 provider, 제품 기능, operation key, 상태, unit count, safe metadata를 표시한다.
+이번 슬라이스에서는 schema migration을 추가하지 않았다.
+남은 Phase 8E gap은 setup/manual provider search처럼 product operation run 이전에 발생하는 호출을 어떻게 audit할지 결정하는 것이다. `operationRunId` optional 연결, 별도 provider call log, provider credential label/prefix 표시 정책을 같이 정해야 한다.
+
+Phase 8D follow-up은 ledger filter/date range와 historical balance snapshot 정책이다.
+현재 ledger 화면은 amount 중심 조회이며 row별 당시 잔액 snapshot은 없다. 2026-07-09 결정으로 Phase 8E first slice에서는 balance snapshot migration을 추가하지 않았다.
 
 ### 권장 구현 순서
 
