@@ -53,9 +53,9 @@ clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex
 - TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
 
 Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up, Phase 8J Variation render billing/개별 render job 실패 부분 환불은 완료되어 있다.
-우선 Phase 9 provider credential rotation 운영 로직/스테이징 검증을 진행해줘.
-OpenAI env fallback 완전 제거는 provider rotation 검증 뒤 마지막에 진행해줘.
-Phase 8J follow-up으로 `/llm/variation` provider usage 전환 여부 결정이 남아 있다.
+2026-07-09 follow-up에서 external API/provider usage log 기능은 보류로 되돌렸다. `web_admin` nav/route/page와 `web_api` provider_usage 기록/조회 runtime surface를 제거했고, admin DB에는 `DropProviderUsage1784700000000` cleanup migration을 추가해 기존 `provider_usage` table/type도 제거한다. 사용자 credit 원장은 `credit_ledger`를 유지한다.
+우선 Phase 9 provider credential rotation 운영/스테이징 검증을 이어서 진행해줘.
+OpenAI env fallback 완전 제거는 2026-07-09 follow-up에서 완료됐다. OpenAI runtime은 DB credential만 사용한다.
 ```
 
 ### 2026-07-07 설계 결정 요약
@@ -136,9 +136,9 @@ provider:
 
 - provider key는 설치형 앱에 넣지 않는다.
 - provider credential은 DB 암호화 저장 중심으로 통일한다.
-- OpenAI env fallback은 migration 기간에만 허용하고, 안정화 후 제거한다.
+- OpenAI env fallback은 제거됐다. OpenAI runtime은 DB credential이 없으면 `not_configured`로 실패한다.
 - provider endpoint는 user JWT + operationRunId 소유권 + provider scope enum을 확인한다.
-- provider_usage는 audit/rotation 분석용이고 사용자 크레딧을 추가 차감하지 않는다.
+- provider_usage 신규 기록/관리자 조회는 2026-07-09 보류로 전환했다. provider endpoint는 owner/scope authz만 유지하고, 사용자 크레딧 원장은 `credit_ledger`만 사용한다.
 
 ### 구현 진행 현황 (2026-07-08 KST)
 
@@ -346,7 +346,7 @@ Phase 7-1 구현 메모:
 
 - admin DB에 `provider_credentials` 테이블을 추가했다.
 - `ProviderCredentialsModule`과 `OpenAiCredentialService`를 추가했다.
-- OpenAI credential resolver는 active DB credential을 우선 복호화해서 사용하고, 없으면 migration 기간에도 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`일 때만 `OPENAI_API_KEY` env fallback을 사용한다.
+- OpenAI credential resolver는 active DB credential만 복호화해서 사용한다. DB credential이 없으면 `not_configured`로 실패하며 env fallback은 없다.
 - DB credential 복호화 실패/빈 secret/미설정은 secret 원문 없이 503으로 매핑한다.
 - `shortform.create` `/llm/script`와 `dialog_highlight.extract` `/dialog-highlight/llm` 경로가 새 resolver를 통해 OpenAI bearer key를 가져온다.
 - 기존 Naver `naver_search_keys` rotation 모델은 아직 그대로 유지한다.
@@ -357,7 +357,7 @@ Phase 7-2 구현 메모:
 - web_api 기존 `/admin/api-keys` surface를 유지하면서 Naver legacy key와 OpenAI provider credential을 함께 반환한다.
 - Naver 응답은 기존 `clientId`, `secretMasked`, `dailyUsed`, `dailyLimit`, `priority` shape를 유지하고, `provider='naver'`, `source='database'`, `maskedKey`를 추가했다.
 - OpenAI DB credential 응답은 `provider='openai'`, `source='database'`, `maskedKey`, `status`, `priority`를 반환한다. secret 원문/암호문은 반환하지 않는다.
-- active OpenAI DB credential이 없고 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`와 `OPENAI_API_KEY` env fallback이 모두 있으면 `id='env:openai'`, `provider='openai'`, `source='env'`, `status='active'` synthetic row를 반환한다.
+- active OpenAI DB credential이 없으면 OpenAI row를 반환하지 않는다. `env:openai` synthetic row는 제거됐다.
 - `/admin/api-keys` create/update/delete/activate가 `provider='openai'` DB credential도 처리한다. active 전환 시 같은 provider의 기존 active DB credential은 standby로 내린다.
 - web_admin API key 화면은 provider-aware response를 매핑하고 OpenAI source를 표시한다.
 - 기존 Naver `naver_search_keys` rotation 모델은 아직 유지했다.
@@ -368,7 +368,7 @@ Phase 7-3 구현 메모:
 - OpenAI credential 생성은 `/admin/api-keys`에 `provider='openai'`, `label`, `secret`, `priority`를 보낸다.
 - OpenAI credential 수정은 `label`, `priority`를 보내고, secret input이 비어 있으면 기존 secret 유지를 위해 `secret` field를 보내지 않는다.
 - OpenAI DB row는 활성전환/수정/삭제 액션을 제공한다.
-- OpenAI env fallback synthetic row는 표시 전용으로 두고 `env에서 관리`로 노출한다.
+- OpenAI env fallback synthetic row와 `env에서 관리` 표시는 제거됐다.
 - web_admin mock API도 OpenAI create response를 provider-aware shape로 반환한다.
 - 기존 Naver create/edit/test UI는 변경하지 않았다.
 - secret 원문은 목록 응답/화면에 표시하지 않는다.
@@ -384,16 +384,14 @@ Phase 7-4 구현 메모:
 - Search/rotation service의 `NaverSearchKey` 계약은 유지했다. 따라서 `/media/search`, `/admin/api-keys/test`, daily limit/rotation 경로는 provider-backed repository를 통해 동작한다.
 - `ApiKeysService.list()`는 provider repository에서 Naver row를 직접 provider view로 중복 표시하지 않고, Naver row는 adapter가 반환한 legacy-compatible view로만 표시한다.
 - 기존 `naver_search_keys` table/entity/repository는 migration source와 rollback context로 남아 있다. 이번 슬라이스에서는 drop하지 않았다.
-- OpenAI env fallback은 아직 남아 있지만 Phase 7-5에서 명시적 flag 기반 opt-in으로 제한했다.
+- OpenAI env fallback은 2026-07-09 follow-up에서 제거됐다.
 
 Phase 7-5 구현 메모:
 
-- OpenAI env fallback은 더 이상 `OPENAI_API_KEY` 존재만으로 사용되지 않는다.
-- `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`가 설정된 경우에만 `OpenAiCredentialService`가 `OPENAI_API_KEY` fallback을 사용한다.
-- `/admin/api-keys` env synthetic row도 같은 flag가 켜져 있을 때만 노출한다.
-- active DB credential이 있으면 기존처럼 DB credential을 우선 사용하고 env fallback은 사용하지 않는다.
-- fallback flag가 꺼져 있고 active DB credential이 없으면 provider call은 secret 원문 없이 503으로 실패한다.
-- 이 단계는 완전 제거 전 안전장치다. 다음 단계에서 flag와 fallback branch 자체를 제거할지, 운영 migration window를 더 둘지 결정한다.
+- OpenAI env fallback은 2026-07-09 follow-up에서 완전 제거됐다.
+- `OpenAiCredentialService`는 더 이상 `OPENAI_API_KEY` 또는 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED`를 runtime credential 결정에 사용하지 않는다.
+- `/admin/api-keys` env synthetic row도 제거됐다.
+- active DB credential이 있으면 DB credential을 사용하고, 없으면 provider call은 secret 원문 없이 503으로 실패한다.
 
 Phase 7-6 구현 메모:
 
@@ -409,10 +407,10 @@ Phase 7-7 구현 메모:
 - `OpenAiCredentialService.inspectRuntime()`을 추가했다.
 - 새 admin endpoint는 `GET /admin/api-keys/providers/openai/runtime-status`다.
 - 응답은 secret 원문/암호문을 반환하지 않는다.
-- 응답 shape는 `provider`, `ready`, `source`, `fallbackEnabled`, 선택적 `activeCredentialId`, 선택적 `reason`이다.
+- 응답 shape는 `provider`, `ready`, `source`, 선택적 `activeCredentialId`, 선택적 `reason`이다.
 - `source='database'`이면 active DB credential을 복호화 시도해 ready 여부를 판단한다.
-- `source='env'`는 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`와 `OPENAI_API_KEY`가 모두 있을 때만 나온다.
-- `source='none'`, `reason='not_configured'`이면 active DB credential도 없고 env fallback도 비활성/미설정이라는 뜻이다.
+- `source='env'`는 더 이상 나오지 않는다.
+- `source='none'`, `reason='not_configured'`이면 active DB credential이 없다는 뜻이다.
 - 실제 OpenAI provider 호출은 하지 않는다. 운영 검증 endpoint는 비용/외부 의존성 없이 runtime credential 선택 상태를 확인하는 용도다.
 
 Phase 7-8 구현 메모:
@@ -420,8 +418,8 @@ Phase 7-8 구현 메모:
 - web_admin API models에 `OpenAiRuntimeStatus`를 추가했다.
 - `ApiKeysApiService.getOpenAiRuntimeStatus()`가 `GET /admin/api-keys/providers/openai/runtime-status`를 호출한다.
 - API key 화면 OpenAI section 상단에 runtime strip을 추가했다.
-- runtime strip은 `Runtime`, status chip, `source/fallback/activeCredentialId`만 표시한다.
-- mock API는 OpenAI env fallback active 상태를 반환한다.
+- runtime strip은 `Runtime`, status chip, DB/none source만 표시한다.
+- mock API도 OpenAI DB credential 상태만 반환한다.
 - secret 원문/암호문은 화면에 표시하지 않는다.
 - 실제 OpenAI 호출/테스트 버튼은 추가하지 않았다.
 
@@ -446,14 +444,11 @@ Phase 9 provider credential 운영 hardening
 `web_api`는 `/admin/operation-policies` list/update를 제공하고, `web_admin`은 `/operation-policies`의 `크레딧 정책` 화면에서 `creditCost`만 수정한다.
 `enabled`, `updatedBy`, 변경 이력/audit은 후속 phase로 남아 있다.
 
-2026-07-09 현재 Phase 8E external API usage log 첫 슬라이스, setup/manual search audit follow-up, provider credential usage attribution follow-up이 완료됐다.
-`web_api`는 `provider_usage` row를 `GET /admin/provider-usage`에서 cursor page로 제공하고, secret/token/password/api key/client secret/key id/credential id 계열 metadata는 응답에서 제외한다.
-`web_admin`은 `/api-usage`의 `API 사용` 화면에서 provider, credential label/status, 제품 기능, operation key, 상태, unit count, safe metadata를 표시한다.
-`provider_usage.operation_run_id`는 nullable로 전환했고 `session_id`, `usage_context`를 추가했다.
-Dance reference image search는 `usageContext='dance.reference_search'`, shortform manual media search/remote proxy no-run search는 `usageContext='media.manual_search'`로 기록된다.
-operation run 없는 row는 admin `/api-usage`에서 usageContext를 operation key 위치에 표시하고 상태는 `-`로 표시한다.
-`provider_usage.provider_credential_id`는 internal FK로 저장한다. admin `/api-usage`에는 raw UUID/key id를 표시하지 않고 provider credential label/status/deleted 여부만 보여준다.
-provider credential delete는 hard delete가 아니라 `deleted_at` soft delete로 처리한다. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
+2026-07-09 현재 Phase 8E external API usage log는 보류로 전환했다.
+사용자 결정에 따라 API/provider usage 기록은 일단 필요하지 않다고 보고, `web_admin`의 `API 사용` nav/route/page/service/mock을 제거했다.
+`web_api`도 `GET /admin/provider-usage`, `OperationsService.recordProviderUsage/listProviderUsage`, TypeORM provider_usage repository/entity 등록, `/media/search`/`/llm/script`/`/dialog-highlight/llm`의 provider usage 기록 호출을 제거했다.
+초기 operation ledger migration에서는 더 이상 `provider_usage`를 만들지 않고, 이미 적용된 DB는 `DropProviderUsage1784700000000` migration으로 `provider_usage` table과 `provider_scope` type을 제거한다. 신규 runtime 기록/조회는 없다.
+provider credential delete는 API usage log 제거와 무관하게 hard delete가 아니라 `deleted_at` soft delete를 유지한다. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
 2026-07-09 현재 Phase 8D follow-up도 완료됐다.
 `web_api`는 `credit_ledger.balance_after` snapshot column을 추가했고, 새 charge/refund ledger row에 작업 처리 후 최종 잔여 credit을 저장한다. 기존 과거 row는 `balance_after=null`로 둔다.
 `GET /operations/ledger`와 `GET /admin/members/:userId/credit-ledger`는 `from`, `to`, `type=charge|refund` filter를 지원한다. date-only filter는 KST 날짜 경계로 해석한다.
@@ -470,21 +465,22 @@ Variation 과금 정책은 2026-07-09에 확정됐다.
 `web_api`는 `POST /operations/:runId/refund`와 `credit_ledger.reference_key` idempotency column/index를 추가했다.
 `desktop_nestjs`는 Variation batch record에 billing snapshot을 저장하고, failed item을 감지하면 `variation.render:<batchId>:<jobId>` reference key로 실패 job 1개당 `variation.render` 단가를 부분 환불 보고한다.
 `operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적 증가한다.
-남은 Phase 8J follow-up은 `/llm/variation` provider usage 전환 여부 결정이다.
+`/llm/variation`은 AI copy preview 성격으로 보고 provider usage 기록 전환은 이번 범위에서 제외한다.
 
 관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
 권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.
 
 2026-07-09 현재 Phase 9 provider credential rotation 첫 hardening을 진행했다.
 Naver credential 모델은 `active` 1개와 `standby` 여러 개를 전제로 한다. `standby`는 자동 rotation 후보이고, `active`가 daily limit에 도달하거나 Naver 429를 받으면 `exhausted`로 내려간 뒤 사용 가능한 `standby` 중 priority가 가장 빠른 키가 `active`로 승격된다.
-수동 전환은 별도 `다음 키로 전환` 버튼을 두지 않고, 기존 row별 `활성전환` 버튼으로 처리한다. 이 버튼은 운영자가 특정 `standby` 키를 직접 골라 현재 active로 올리는 manual failover다.
-`disabled`는 runtime/rotation 후보에서 제외되며, admin UI에서는 직접 `활성전환`하지 않고 먼저 `대기복귀`로 `standby` 상태로 되돌린다. active/standby 키는 `제외` 버튼으로 `disabled` 처리할 수 있다.
+수동 전환은 별도 `다음 키로 전환` 버튼을 두지 않고, 기존 row별 `활성` action으로 처리한다. 이 버튼은 운영자가 특정 `standby` 키를 직접 골라 현재 active로 올리는 manual failover다.
+`disabled`는 runtime/rotation 후보에서 제외되며, admin UI에서는 직접 활성화하지 않고 먼저 Naver `대기`로 `standby` 상태에 되돌린다. active/standby 키는 `제외` 버튼으로 `disabled` 처리할 수 있다.
 Naver 자동 rotation은 한도에 도달한 standby를 후보에서 제외하도록 보강했다.
 Naver active 키를 `제외`하거나 `standby`로 내릴 때 active 0개 상태가 생기지 않도록 web_api에서 guard한다. 사용 가능한 standby가 있으면 같은 요청 안에서 즉시 active로 승격하고, 없으면 요청을 거부한다.
-2026-07-09 follow-up에서 OpenAI active demotion 정책을 더 보수적으로 수정했다. OpenAI active credential은 `제외` 시 standby를 자동 승격하지 않는다. 운영자는 먼저 다른 OpenAI credential을 `활성전환`해 active를 명시적으로 바꾼 뒤 기존 credential을 제외해야 한다.
+2026-07-09 follow-up에서 OpenAI는 Naver식 rotation 대상이 아니라 단일 DB key 모델로 정리했다. OpenAI DB credential은 최대 1개만 허용하고, label은 `OpenAI API Key`, status는 `active`, priority는 `0`으로 고정한다. OpenAI 키가 이미 있으면 admin UI의 `+ 키 추가` 버튼은 숨긴다.
 Naver runtime status는 후보 credential status를 응답한다. active 후보면 `DB credential 준비됨`, active 없이 standby 후보만 있으면 admin UI에서 `대기 키 자동 승격 가능` warn 상태로 표시한다.
-OpenAI는 Naver와 같은 quota rotation을 적용하지 않고 active 1개 + standby 수동 전환 모델을 유지한다. OpenAI standby/failover 운영 검증은 계속 남아 있다.
-OpenAI env fallback 완전 제거는 provider credential rotation 운영 검증 뒤 마지막에 진행한다.
+OpenAI는 Naver와 같은 quota rotation을 적용하지 않는다. admin UI의 OpenAI row에는 `수정`, `삭제`, `테스트`만 남기고 `활성`/`제외`/`대기` 상태 작업은 표시하지 않는다.
+2026-07-09 follow-up에서 admin API key page 작업 UX를 정리했다. Naver의 `테스트`는 별도 column으로 두고, `작업` column은 `수정`, `삭제`, `...`만 노출한다. `활성`, `제외`, `대기`는 Naver `...` menu 안에 있고, 삭제/상태 변경은 browser confirm이 아니라 admin modal로 확인한다. OpenAI DB credential test도 추가했으며, OpenAI API 연결 결과는 `ok`, HTTP status, safe error code만 표시한다. OpenAI masked key column은 prefix 일부와 suffix 4자만 표시하고, secret/암호문/raw credential UUID는 표시하지 않는다.
+2026-07-09 follow-up에서 OpenAI env fallback을 완전 제거했다. `OpenAiCredentialService`, `ScriptService`, `DialogHighlightLlmService`, `VariationService`는 더 이상 `OPENAI_API_KEY`를 runtime credential로 읽지 않고, admin API key UI도 `source='env'`/fallback 표시를 제거했다.
 
 ### 권장 구현 순서
 

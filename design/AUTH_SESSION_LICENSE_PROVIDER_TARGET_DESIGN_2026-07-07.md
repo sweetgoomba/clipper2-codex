@@ -61,7 +61,7 @@ provider key는 설치형 앱에 넣지 않는다. provider key는 web_api가 �
 | operation | 사용자-facing 제품 실행 단위. 예: 템플릿 생성, 숏폼 생성, 대사 하이라이트 추출, 안무영상 하이라이트 추출 |
 | credit cost | 제품 operation 실행 시 차감할 이용권 크레딧 수. 기존 코드/문서의 `token` 용어와 같은 과금 단위를 가리키며, 사용자-facing 표현은 `credit`으로 정리한다 |
 | provider credential | Naver, OpenAI 등 외부 provider 호출에 필요한 서버 보유 자격증명 |
-| provider usage | 제품 operation 내부에서 발생한 외부 provider 호출 기록. 예: Dance Highlight 실행 중 Naver 이미지 검색 |
+| provider usage | 제품 operation 내부에서 발생한 외부 provider 호출 기록. 2026-07-09 현재 제품/관리자 기능에서는 신규 기록과 조회를 비활성화했고, DB cleanup migration으로 기존 `provider_usage` table/type도 제거한다. 사용자 credit 원장은 `credit_ledger`만 유지한다 |
 | local-execution feature | 기능 본체가 로컬 앱/local NestJS에서 실행되는 기능. 제품 시작 권한 확인은 web_api를 거칠 수 있다 |
 | provider-backed feature | 제품 실행 중 외부 provider 호출이 포함되는 기능. provider 호출은 web_api가 수행한다 |
 | billable operation | 크레딧 차감/환불/audit의 기준이 되는 사용자-facing 제품 실행 단위 |
@@ -1650,7 +1650,7 @@ provider 사용 audit 테이블 예시:
   created_at
 ```
 
-`provider_usage`는 비용/audit/rotation 분석용이다. 사용자 크레딧 차감의 원장은 `credit_ledger`이고, provider 호출 횟수 자체가 별도 사용자 과금 단위가 되지는 않는다.
+2026-07-09 정책 변경: `provider_usage` 신규 기록과 admin 조회 화면은 비활성화한다. 초기 operation ledger migration은 더 이상 `provider_usage`를 만들지 않고, 이미 적용된 DB는 cleanup migration으로 `provider_usage` table과 `provider_scope` type을 제거한다. `web_api` runtime/controller/service/repository와 `web_admin` nav/route/page에서도 provider usage surface를 제거한다. 사용자 크레딧 차감과 운영 조회의 기준은 `operation_runs` + `credit_ledger`로 둔다. provider 호출 횟수 자체는 별도 사용자 과금 단위가 아니다.
 
 ### 10.2 operation quote와 사용자 확인 모달
 
@@ -1900,7 +1900,7 @@ provider endpoint는 "비용이 발생할 수 있는 서버 자원"이므로 반
 - 모두 user JWT 필요
 - 필요한 경우 active license 필요
 - 제품 시작점은 operation policy로 credit cost 결정
-- 제품 내부 provider 단계는 operationRunId에 묶어 provider usage만 기록
+- 제품 내부 provider 단계는 operationRunId로 owner/provider scope를 확인하되, 2026-07-09 현재 provider usage row는 기록하지 않는다.
 - provider credential은 web_api가 선택
 
 ### 11.2 endpoint matrix 초안
@@ -1910,10 +1910,10 @@ provider endpoint는 "비용이 발생할 수 있는 서버 자원"이므로 반
 | `POST /operations/start` | user app | user JWT | operation policy + active license | 필요 시 debit | 없음 |
 | `POST /operations/:runId/succeed` | user app | user JWT + run ownership | 기존 run 확인 | 추가 차감 없음 | 없음 |
 | `POST /operations/:runId/fail` | user app | user JWT + run ownership | 기존 run 확인 | 필요 시 refund | 없음 |
-| `POST /media/search` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider_usage 기록 | DB encrypted Naver credential |
-| `POST /llm/script` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider_usage 기록 | DB encrypted OpenAI credential |
-| `POST /llm/variation` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider_usage 기록 | DB encrypted OpenAI credential |
-| `POST /dialog-highlight/llm` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider_usage 기록 | DB encrypted OpenAI credential |
+| `POST /media/search` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider usage 기록 없음 | DB encrypted Naver credential |
+| `POST /llm/script` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider usage 기록 없음 | DB encrypted OpenAI credential |
+| `POST /llm/variation` | user app | service token guard 유지 | 별도 결정 | `variation.render`와 분리 | DB encrypted OpenAI credential |
+| `POST /dialog-highlight/llm` | user app | user JWT + operationRunId | run owner + provider scope 확인 | 별도 차감 없음, provider usage 기록 없음 | DB encrypted OpenAI credential |
 | admin API key CRUD | operator | operator JWT + permission | 불필요 | 없음 | DB encrypted |
 | release runner callback | runner | service token | 불필요 | 없음 | 없음 |
 
@@ -1924,7 +1924,7 @@ Naver 이미지 검색 자체를 독립 유료 제품으로 판매하기로 결�
 media.search.naver를 별도 operation policy로 만들고 /operations/start에서 charge한다.
 
 현재 Dance Highlight 내부 단계로 쓰는 Naver 검색은
-dance_highlight.extract run에 묶이는 provider usage일 뿐이다.
+dance_highlight.extract run이 이미 과금 단위이므로 별도 과금하지 않는다.
 ```
 
 2026-07-08 구현 transition:
@@ -1934,17 +1934,17 @@ POST /media/search는 기존 dance setup/manual media search 호환을 위해
 operationRunId가 없는 요청을 아직 허용한다.
 
 operationRunId가 포함된 요청은 user JWT가 있어야 하며,
-run owner + provider scope(naver_image)를 확인한 뒤 provider_usage를 기록한다.
+run owner + provider scope(naver_image)를 확인한 뒤 검색을 실행한다. 2026-07-09 현재 provider_usage 기록은 하지 않는다.
 
 최종 목표는 모든 비용 발생 provider 호출을 user JWT + operationRunId로 묶는 것이지만,
 dance setup 단계가 제품 operation run 전에도 검색할 수 있어 바로 필수화하지 않았다.
 ```
 
-`POST /llm/variation`은 아직 static service token guard 상태다. 이를 user JWT + operationRunId 또는 usageContext 기반 provider usage로 전환하려면 variation AI copy generation을 과금 대상 제품 operation으로 볼지, preview/free 성격으로 유지할지 별도 결정해야 한다. 현재 구현의 `ai-cards`는 렌더가 아니라 미리보기 카드 생성 성격이므로, `variation.render` 과금과는 분리한다.
+`POST /llm/variation`은 아직 static service token guard 상태다. 현재 구현의 `ai-cards`는 렌더가 아니라 미리보기 카드 생성 성격이므로, `variation.render` 과금과는 분리한다.
 
 2026-07-08 결정: Variation 기능/UX와 과금 기준을 아직 충분히 파악하지 못했으므로 `/llm/variation` provider routing은 이번 구현 범위에서 의도적으로 defer한다. 이 기간에는 새 `variation.generate` billable operation을 추가하지 않는다.
 
-2026-07-09 결정: 실제 영상 생성 과금 operation은 `variation.render`로 확정했다. `영상 생성` 또는 `변형하고 영상까지`에서 최종 생성될 영상 1개당 20 credits를 차감한다. `/llm/variation`은 AI copy preview/provider usage 후속으로 남기며, `variation.render` credit ledger와 섞지 않는다.
+2026-07-09 결정: 실제 영상 생성 과금 operation은 `variation.render`로 확정했다. `영상 생성` 또는 `변형하고 영상까지`에서 최종 생성될 영상 1개당 20 credits를 차감한다. `/llm/variation`은 AI copy preview 성격으로 유지하며, `variation.render` credit ledger와 섞지 않는다.
 
 2026-07-09 추가 결정: `variation.render` queue submission 이후 개별 render job이 실패하면 실패한 영상 개수만큼 부분 환불한다. web_api는 `POST /operations/:runId/refund`와 `credit_ledger.reference_key`로 idempotent partial refund를 처리하고, desktop NestJS는 batch item 실패를 감지해 `variation.render:<batchId>:<jobId>` reference key로 보고한다. `operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적한다.
 
@@ -2043,19 +2043,19 @@ metadata_json
 
 단, secret 원문은 metadata에 넣지 않는다.
 
-`status='disabled'`와 `deleted_at IS NOT NULL`은 구분한다. `disabled`는 일시 제외 상태로 나중에 다시 `standby` 또는 `active`로 바꿀 수 있다. delete는 row를 보존한 soft delete이며, 운영 목록/runtime candidate/rotation 대상에서 제외한다. provider usage 과거 로그는 FK로 soft-deleted credential row를 join하되, admin 화면에는 label/status/deleted 여부만 보여주고 raw provider credential UUID나 key id는 표시하지 않는다.
+`status='disabled'`와 `deleted_at IS NOT NULL`은 구분한다. `disabled`는 일시 제외 상태로 나중에 다시 `standby` 또는 `active`로 바꿀 수 있다. delete는 row를 보존한 soft delete이며, 운영 목록/runtime candidate/rotation 대상에서 제외한다. 2026-07-09 현재 provider usage 조회는 비활성화됐지만, credential은 운영 자산이므로 실수 복구와 secretless 운영 안정성을 위해 hard delete가 아니라 soft delete를 유지한다.
 
 ### 12.3 OpenAI key 처리
 
-현재 OpenAI key가 env에 있다면 migration 기간에는 명시적 opt-in flag가 켜진 경우에만 fallback을 허용할 수 있다.
+OpenAI key runtime은 DB provider credential만 사용한다. 과거 migration 기간의 env fallback은 2026-07-09 follow-up에서 제거됐다.
 
-권장 migration:
+현재 정책:
 
-1. DB provider credential model에 `openai` 추가
-2. admin API key page에서 OpenAI credential CRUD/테스트 추가
-3. provider call은 DB active credential 우선
-4. DB credential이 없고 `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`이면 env fallback
-5. 운영 안정화 후 opt-in flag와 env fallback branch 제거
+1. DB provider credential model에 `openai`를 둔다.
+2. admin API key page에서 OpenAI credential CRUD/테스트를 제공한다.
+3. provider call은 active DB credential만 사용한다.
+4. DB credential이 없으면 `not_configured`로 실패한다.
+5. `OPENAI_API_KEY`/`OPENAI_API_KEY_ENV_FALLBACK_ENABLED`는 OpenAI runtime credential 결정에 사용하지 않는다.
 
 관리자 페이지에는 모든 provider credential이 보이되 secret 원문은 보여주지 않는다.
 
@@ -2083,12 +2083,23 @@ Naver처럼 quota가 명확한 provider는 rotation이 필요하다.
 - 날짜 변경 시 usage reset
 - disabled credential은 선택하지 않음
 - provider auth failure가 반복되면 credential status를 degraded/exhausted로 전환
-- 수동 failover는 별도 "다음 키로 전환" 액션이 아니라, admin API key row의 `활성전환` 액션으로 특정 standby credential을 active로 승격하는 방식이다.
-- disabled credential은 직접 활성화하지 않고 standby로 복귀한 뒤 필요하면 활성전환한다.
+- 수동 failover는 별도 "다음 키로 전환" 액션이 아니라, admin API key row의 `활성` 액션으로 특정 standby credential을 active로 승격하는 방식이다.
+- disabled credential은 직접 활성화하지 않고 standby로 복귀한 뒤 필요하면 `활성`으로 전환한다. 이 rotation flow는 Naver에 적용한다.
 - active credential을 disabled/standby로 내리는 운영 액션은 active 0개 상태를 만들지 않는다. 사용 가능한 standby가 있으면 같은 요청 안에서 즉시 active로 승격하고, 없으면 요청을 거부한다.
 
-OpenAI는 Naver와 quota 형태가 다를 수 있으므로 동일 rotation 모델을 억지로 적용하지 않는다. provider별 credential strategy를 둔다.
-OpenAI active credential은 `제외` 시 standby를 자동 승격하지 않는다. 운영자는 먼저 다른 OpenAI credential을 `활성전환`해 active를 명시적으로 바꾼 뒤 기존 credential을 제외한다.
+OpenAI는 Naver와 quota 형태가 다르므로 동일 rotation 모델을 적용하지 않는다. 2026-07-09 현재 OpenAI DB credential은 단일 key 모델이다. non-deleted OpenAI credential은 최대 1개만 허용하고, label은 `OpenAI API Key`, status는 `active`, priority는 `0`으로 고정한다. OpenAI key가 이미 있으면 admin UI에서 `+ 키 추가`를 숨긴다.
+
+admin API key page UX:
+
+- provider별 key row의 `테스트`는 별도 column으로 둔다.
+- `작업` column은 기본적으로 `수정`, `삭제`, `...`만 노출한다.
+- Naver의 `활성`, `제외`, `대기` 같은 상태 변경은 `...` 메뉴 안에 둔다.
+- 삭제/활성/제외/대기는 browser `confirm()`이 아니라 admin modal로 한 번 더 확인한다.
+- OpenAI row는 단일 active key이므로 `활성`/`제외`/`대기` 상태 작업을 표시하지 않는다.
+- OpenAI DB key의 masked key column은 운영자가 구분할 수 있도록 prefix 일부와 suffix 4자를 표시한다. 전체 secret 원문/암호문은 절대 반환하거나 표시하지 않는다.
+- OpenAI DB key row는 `등록됨`으로 표시하고, 테스트 성공/실패 후 현재 화면에서는 `등록됨 · 사용 가능` 또는 `등록됨 · 테스트 실패`로 반영한다.
+- Naver key 테스트는 해당 credential로 Naver image search를 4건 이하로 호출해 결과 thumbnail만 보여준다. raw key id/UUID/secret은 표시하지 않는다.
+- OpenAI key 테스트는 해당 DB credential로 OpenAI API 연결 여부만 확인하고 `ok`, HTTP status, safe error code만 보여준다. secret 원문, encrypted secret, raw credential UUID는 표시하지 않는다.
 
 ## 13. OpenAPI와 route 용어 정리
 
@@ -2350,13 +2361,13 @@ admin
 
 ### Phase 7. provider credential 통합
 
-구현 상태: 2026-07-08 `web/clipper_web_api` commit `78907c6`에서 OpenAI DB credential resolver 1차 구현 완료, commit `93ea025`와 `web/clipper_web_admin` commit `df5d6f2`에서 admin API/source-status 표시 완료, `web/clipper_web_admin` commit `79a631c`에서 OpenAI credential create/edit UI 연결 완료, `web/clipper_web_api` commit `d7797d1`에서 Naver key runtime을 `provider_credentials` 기반 adapter로 전환 완료, commit `5e14ae9`에서 OpenAI env fallback을 명시적 opt-in flag 기반으로 제한 완료, commit `c246366`에서 legacy Naver key runtime entity/repository cleanup 완료, commit `4501b36`에서 OpenAI runtime credential status API 추가 완료, `web/clipper_web_admin` commit `a1f8ba4`에서 OpenAI runtime status 표시 완료, `web/clipper_web_api` commit `9191dab`에서 Naver runtime credential status API 추가 완료, `web/clipper_web_admin` commit `961f18c`에서 Naver runtime status 표시 완료. 다음은 provider credential 운영/스테이징 검증 절차 또는 OpenAI env fallback 완전 제거 여부 결정.
+구현 상태: 2026-07-08 `web/clipper_web_api` commit `78907c6`에서 OpenAI DB credential resolver 1차 구현 완료, commit `93ea025`와 `web/clipper_web_admin` commit `df5d6f2`에서 admin API/source-status 표시 완료, `web/clipper_web_admin` commit `79a631c`에서 OpenAI credential create/edit UI 연결 완료, `web/clipper_web_api` commit `d7797d1`에서 Naver key runtime을 `provider_credentials` 기반 adapter로 전환 완료, commit `5e14ae9`에서 OpenAI env fallback을 명시적 opt-in flag 기반으로 제한 완료, commit `c246366`에서 legacy Naver key runtime entity/repository cleanup 완료, commit `4501b36`에서 OpenAI runtime credential status API 추가 완료, `web/clipper_web_admin` commit `a1f8ba4`에서 OpenAI runtime status 표시 완료, `web/clipper_web_api` commit `9191dab`에서 Naver runtime credential status API 추가 완료, `web/clipper_web_admin` commit `961f18c`에서 Naver runtime status 표시 완료. 2026-07-09 follow-up에서 OpenAI env fallback은 완전 제거되어 OpenAI runtime은 DB credential만 사용한다. 다음은 provider credential 운영/스테이징 검증 절차다.
 
 목표:
 
 - Naver 중심 API key 모델을 provider credential 모델로 일반화
 - OpenAI DB encrypted credential 추가
-- env fallback migration
+- OpenAI DB credential-only runtime
 - admin API key page에서 provider source/status 표시
 
 검증:
@@ -2549,7 +2560,7 @@ operation route = 현재 provider별 route 유지 후 policy layer 추가
 차감 = charge_then_refund
 stale operation = MVP에서는 admin review
 devapp userData = packaged와 분리
-OpenAI env fallback = 기본 off, `OPENAI_API_KEY_ENV_FALLBACK_ENABLED=true`에서만 임시 허용, DB credential 안정화 후 제거
+OpenAI env fallback = 제거 완료. OpenAI runtime은 DB credential이 없으면 `not_configured`로 실패
 ```
 
 ## 20. 팀원이 처음 읽을 때의 이해 순서

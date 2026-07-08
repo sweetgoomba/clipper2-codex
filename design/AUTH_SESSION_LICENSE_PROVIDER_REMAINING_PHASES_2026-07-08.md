@@ -57,7 +57,7 @@
 - admin API key page는 Runtime 상태를 보여주되 internal credential id를 UI에 표시하지 않음.
 - provider credential delete는 hard delete가 아니라 `deleted_at` soft delete로 처리함. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
 - `provider_usage`는 사용된 provider credential을 internal FK로 저장하고, admin `/api-usage`에는 raw UUID/key id 없이 credential label/status/deleted 여부만 표시함.
-- OpenAI env fallback은 migration window용 opt-in으로 축소됨. 완전 제거는 아직 남음.
+- OpenAI env fallback은 2026-07-09 follow-up에서 제거됨. OpenAI runtime은 DB credential만 사용하며 DB credential이 없으면 `not_configured`로 실패한다.
 - Naver legacy key runtime은 정리됨.
 
 ### 1.5 Plugin smoke
@@ -538,11 +538,11 @@ admin 화면 표시:
 - staging/prod에서 OpenAI/Naver runtime status 확인.
 - provider credential decrypt failure/empty secret 상태에서 user-facing 오류와 admin runtime 상태 정리.
 - provider usage log와 credential label/rotation 분석 연결.
-- OpenAI env fallback 완전 제거는 credential rotation 운영 검증 후 마지막에 진행한다.
+- OpenAI env fallback 완전 제거는 2026-07-09 follow-up에서 완료됐다. `OPENAI_API_KEY`/`OPENAI_API_KEY_ENV_FALLBACK_ENABLED`는 더 이상 OpenAI runtime credential 결정에 사용하지 않는다.
 
 검증:
 
-- env fallback off 상태에서 DB credential로 Shortform/Dialog 성공.
+- DB credential로 Shortform/Dialog/Variation provider call 성공.
 - Naver DB credential로 Dance reference image search 성공.
 - disabled/exhausted/excluded credential은 runtime resolver에서 제외된다.
 - UI/log/API에 provider secret 원문이 노출되지 않는다.
@@ -591,7 +591,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 추천 순서:
 
-1. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 완전 제거는 이 뒤 마지막에 진행.
+1. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 제거는 완료됐으므로 DB credential-only 상태를 검증한다.
 2. Phase 8G: operator/admin session hardening. `operator_sessions` 분리 구조로 refresh rotation/session revoke/list를 추가.
 3. Phase 8J follow-up: `/llm/variation` provider usage 전환 여부 결정.
 4. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 재검증.
