@@ -437,8 +437,12 @@ Phase 7-9 구현 메모:
 다음 구현 진입점:
 
 ```text
-Phase 7-10: provider credential 운영/스테이징 검증 절차 또는 OpenAI env fallback 완전 제거 여부 결정
+Phase 8D/8E: credit ledger follow-up 또는 external API usage log admin
 ```
+
+2026-07-09 현재 Phase 8C operation policy admin MVP는 완료됐다.
+`web_api`는 `/admin/operation-policies` list/update를 제공하고, `web_admin`은 `/operation-policies`의 `크레딧 정책` 화면에서 `creditCost`만 수정한다.
+`enabled`, `updatedBy`, 변경 이력/audit은 후속 phase로 남아 있다.
 
 ### 권장 구현 순서
 

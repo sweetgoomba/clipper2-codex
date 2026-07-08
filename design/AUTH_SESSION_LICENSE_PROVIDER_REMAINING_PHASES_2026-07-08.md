@@ -193,13 +193,20 @@
 
 목표: 운영자가 product operation별 credit cost/policy를 조회하고 제한적으로 수정할 수 있게 한다.
 
+현재 구현 상태:
+
+- `web_api`에 `GET /admin/operation-policies`와 `PATCH /admin/operation-policies/:operationKey` 추가.
+- `web_admin`에 `/operation-policies` 페이지와 `크레딧 정책` 상단 메뉴 추가.
+- MVP 수정 가능 항목은 `creditCost`만 허용한다.
+- Create/Delete는 열지 않았다.
+- provider credential/key/secret 값은 이 화면과 API 응답에 포함하지 않는다.
+- `enabled`, `updatedBy`, 변경 이력/audit은 아직 별도 phase로 남긴다.
+
 필수 작업:
 
-- web_api admin operation policies list/update API.
-- web_admin operation policy page.
-- code registry가 만든 `operation_key` row는 Create/Delete 없이 Read + 제한 Update만 허용.
+- code registry가 만든 `operation_key` row는 Create/Delete 없이 Read + 제한 Update만 허용한다.
 - seed/upsert는 기존 DB 운영값을 덮어쓰지 않는다.
-- 변경 이력/audit이 필요하면 별도 admin audit phase로 분리.
+- 변경 이력/audit이 필요하면 별도 admin audit phase로 분리한다.
 
 표시 항목:
 
@@ -512,10 +519,9 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 1. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 확인.
 2. Phase 8D follow-up: ledger filter/date range, historical balance snapshot 정책.
-3. Phase 8C: operation policy admin.
-4. Phase 8E: external API usage log admin.
-5. Phase 8F/G: privacy retention과 operator auth hardening.
-6. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
-7. Phase 9: provider credential operation/staging hardening.
+3. Phase 8E: external API usage log admin.
+4. Phase 8F/G: privacy retention과 operator auth hardening.
+5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
+6. Phase 9: provider credential operation/staging hardening.
 
 Phase 8A와 8B는 같은 pricing input 모델을 공유하므로 같은 설계 안에서 다루되, 구현 커밋은 API DTO/pricing, local proxy, Angular UX로 나누는 것이 좋다.
