@@ -52,10 +52,10 @@ clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex
 - 실제 구현은 작은 phase별 커밋으로 나눈다.
 - TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
 
-Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up은 완료되어 있다.
-우선 Phase 8J Variation render billing부터 진행해줘.
-정책: `영상 생성` 또는 `변형하고 영상까지` 버튼에서 생성 영상 1개당 20 credits 차감.
-그 다음 Phase 9 provider credential rotation 운영 로직/스테이징 검증을 진행하고, OpenAI env fallback 완전 제거는 provider rotation 검증 뒤 마지막에 진행해줘.
+Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up, Phase 8J Variation render billing 첫 구현은 완료되어 있다.
+우선 Phase 9 provider credential rotation 운영 로직/스테이징 검증을 진행해줘.
+OpenAI env fallback 완전 제거는 provider rotation 검증 뒤 마지막에 진행해줘.
+Phase 8J follow-up으로 `/llm/variation` provider usage 전환 여부와 queue 이후 render job 실패 환불 정책 결정이 남아 있다.
 ```
 
 ### 2026-07-07 설계 결정 요약
@@ -439,7 +439,7 @@ Phase 7-9 구현 메모:
 다음 구현 진입점:
 
 ```text
-Phase 8D follow-up 또는 Phase 9 provider credential 운영 hardening
+Phase 9 provider credential 운영 hardening
 ```
 
 2026-07-09 현재 Phase 8C operation policy admin MVP는 완료됐다.
@@ -461,7 +461,12 @@ provider credential delete는 hard delete가 아니라 `deleted_at` soft delete�
 
 Variation 과금 정책은 2026-07-09에 확정됐다.
 차감 지점은 `영상 생성` 또는 `변형하고 영상까지` 버튼이며, 생성 영상 1개당 20 credits다. 예: 원본 1개 + 변형 19개로 총 20개 영상이 생성되면 400 credits.
-다음 큰 구현 진입점은 Phase 8J Variation render billing이다. operation key/pricing unit/quote-start billing input/local render queue reporting/provider usage 연결을 한 phase로 묶어 구현한다.
+2026-07-09 현재 Phase 8J Variation render billing 첫 구현도 완료됐다.
+`web_api`는 `variation.render` operation policy와 `per_generated_video` pricing unit을 추가했고, `generatedVideoCount`로 quote/start 비용을 계산한다.
+`desktop_angular`는 `영상 생성`/`변형하고 영상까지`에서 실제 생성 영상 수로 quote/confirm을 띄우고, 차감 후 snackbar를 표시한다.
+`desktop_nestjs`는 Variation render queue submission 전에 `/operations/start`를 호출하고, submission 성공/실패를 succeed/fail로 보고한다.
+`web_admin` `/operation-policies`는 `베리에이션 영상 생성`, `생성 영상 1개당` 단위를 표시한다.
+남은 Phase 8J follow-up은 `/llm/variation` provider usage 전환 여부와 queue submission 이후 render job 실패 환불 정책 결정이다.
 
 관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
 권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.

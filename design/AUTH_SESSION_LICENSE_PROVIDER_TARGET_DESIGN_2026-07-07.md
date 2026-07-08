@@ -1550,8 +1550,8 @@ id
 새 operation 추가 흐름:
 
 ```text
-1. local NestJS 제품 시작점에 @BillableOperation('variation.generate') 추가
-2. web_api OPERATION_DEFINITIONS에 operationKey='variation.generate' 기본 정책 추가
+1. local NestJS 제품 시작점에 stable operation key 연결. 예: `variation.render`
+2. web_api OPERATION_DEFINITIONS에 operationKey='variation.render' 기본 정책 추가
 3. admin DB migration으로 operation_policies 테이블이 없으면 생성
 4. npm run db:seed:operations 같은 명시적 seed 실행
 5. DB에 없으면 insert, 있으면 그대로 둠
@@ -1940,9 +1940,11 @@ run owner + provider scope(naver_image)를 확인한 뒤 provider_usage를 기�
 dance setup 단계가 제품 operation run 전에도 검색할 수 있어 바로 필수화하지 않았다.
 ```
 
-`POST /llm/variation`은 아직 static service token guard 상태다. 이를 user JWT + operationRunId로 전환하려면 먼저 variation AI copy generation의 제품 operation key를 확정해야 한다. 현재 구현의 `ai-cards`는 렌더가 아니라 미리보기 카드 생성 성격이 있으므로, `variation.generate`를 새 billable operation으로 추가할지 또는 별도 preview/free 정책으로 둘지 결정한 뒤 endpoint authz를 전환한다.
+`POST /llm/variation`은 아직 static service token guard 상태다. 이를 user JWT + operationRunId 또는 usageContext 기반 provider usage로 전환하려면 variation AI copy generation을 과금 대상 제품 operation으로 볼지, preview/free 성격으로 유지할지 별도 결정해야 한다. 현재 구현의 `ai-cards`는 렌더가 아니라 미리보기 카드 생성 성격이므로, `variation.render` 과금과는 분리한다.
 
 2026-07-08 결정: Variation 기능/UX와 과금 기준을 아직 충분히 파악하지 못했으므로 `/llm/variation` provider routing은 이번 구현 범위에서 의도적으로 defer한다. 이 기간에는 새 `variation.generate` billable operation을 추가하지 않는다.
+
+2026-07-09 결정: 실제 영상 생성 과금 operation은 `variation.render`로 확정했다. `영상 생성` 또는 `변형하고 영상까지`에서 최종 생성될 영상 1개당 20 credits를 차감한다. `/llm/variation`은 AI copy preview/provider usage 후속으로 남기며, `variation.render` credit ledger와 섞지 않는다.
 
 ### 11.3 error classification
 
