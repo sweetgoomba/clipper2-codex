@@ -2074,12 +2074,17 @@ Naver처럼 quota가 명확한 provider는 rotation이 필요하다.
 
 정책:
 
-- active credential 우선
-- daily limit 도달 시 exhausted
-- standby credential로 전환
+- Naver는 provider별 active credential 1개를 둔다.
+- standby credential은 자동 rotation 후보 pool이다.
+- active credential 우선 사용
+- daily limit 도달 또는 Naver 429 시 active credential을 exhausted로 전환
+- 사용 가능한 standby credential 중 priority가 가장 빠른 credential로 전환
+- dailyUsed가 dailyLimit 이상인 standby credential은 자동 승격 후보에서 제외
 - 날짜 변경 시 usage reset
 - disabled credential은 선택하지 않음
 - provider auth failure가 반복되면 credential status를 degraded/exhausted로 전환
+- 수동 failover는 별도 "다음 키로 전환" 액션이 아니라, admin API key row의 `활성전환` 액션으로 특정 standby credential을 active로 승격하는 방식이다.
+- disabled credential은 직접 활성화하지 않고 standby로 복귀한 뒤 필요하면 활성전환한다.
 
 OpenAI는 Naver와 quota 형태가 다를 수 있으므로 동일 rotation 모델을 억지로 적용하지 않는다. provider별 credential strategy를 둔다.
 

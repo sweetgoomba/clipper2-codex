@@ -475,8 +475,12 @@ Variation 과금 정책은 2026-07-09에 확정됐다.
 관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
 권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.
 
-Provider credential rotation은 Phase 9로 남아 있다.
-Naver는 active/standby/exhausted/disabled 기반 daily limit rotation이 일부 구현되어 있으나 운영 화면/수동 전환/failover 정책을 더 명확히 해야 한다. OpenAI standby/failover rotation은 아직 부족하다.
+2026-07-09 현재 Phase 9 provider credential rotation 첫 hardening을 진행했다.
+Naver credential 모델은 `active` 1개와 `standby` 여러 개를 전제로 한다. `standby`는 자동 rotation 후보이고, `active`가 daily limit에 도달하거나 Naver 429를 받으면 `exhausted`로 내려간 뒤 사용 가능한 `standby` 중 priority가 가장 빠른 키가 `active`로 승격된다.
+수동 전환은 별도 `다음 키로 전환` 버튼을 두지 않고, 기존 row별 `활성전환` 버튼으로 처리한다. 이 버튼은 운영자가 특정 `standby` 키를 직접 골라 현재 active로 올리는 manual failover다.
+`disabled`는 runtime/rotation 후보에서 제외되며, admin UI에서는 직접 `활성전환`하지 않고 먼저 `대기복귀`로 `standby` 상태로 되돌린다. active/standby 키는 `제외` 버튼으로 `disabled` 처리할 수 있다.
+Naver 자동 rotation은 한도에 도달한 standby를 후보에서 제외하도록 보강했다.
+OpenAI는 Naver와 같은 quota rotation을 적용하지 않고 active 1개 + standby 수동 전환 모델을 유지한다. OpenAI standby/failover 운영 검증은 계속 남아 있다.
 OpenAI env fallback 완전 제거는 provider credential rotation 운영 검증 뒤 마지막에 진행한다.
 
 ### 권장 구현 순서
