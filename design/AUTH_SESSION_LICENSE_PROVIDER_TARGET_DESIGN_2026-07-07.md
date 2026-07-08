@@ -2088,6 +2088,7 @@ Naver처럼 quota가 명확한 provider는 rotation이 필요하다.
 - active credential을 disabled/standby로 내리는 운영 액션은 active 0개 상태를 만들지 않는다. 사용 가능한 standby가 있으면 같은 요청 안에서 즉시 active로 승격하고, 없으면 요청을 거부한다.
 
 OpenAI는 Naver와 quota 형태가 다를 수 있으므로 동일 rotation 모델을 억지로 적용하지 않는다. provider별 credential strategy를 둔다.
+OpenAI active credential은 `제외` 시 standby를 자동 승격하지 않는다. 운영자는 먼저 다른 OpenAI credential을 `활성전환`해 active를 명시적으로 바꾼 뒤 기존 credential을 제외한다.
 
 ## 13. OpenAPI와 route 용어 정리
 
