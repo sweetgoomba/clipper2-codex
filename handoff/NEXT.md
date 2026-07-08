@@ -444,11 +444,13 @@ Phase 8E follow-up 또는 Phase 8D follow-up
 `web_api`는 `/admin/operation-policies` list/update를 제공하고, `web_admin`은 `/operation-policies`의 `크레딧 정책` 화면에서 `creditCost`만 수정한다.
 `enabled`, `updatedBy`, 변경 이력/audit은 후속 phase로 남아 있다.
 
-2026-07-09 현재 Phase 8E external API usage log 첫 슬라이스도 완료됐다.
+2026-07-09 현재 Phase 8E external API usage log 첫 슬라이스와 setup/manual search audit follow-up이 완료됐다.
 `web_api`는 기존 `provider_usage` row 중 `operation_run_id`가 있는 로그를 `GET /admin/provider-usage`에서 cursor page로 제공하고, secret/token/password/api key/client secret/key id 계열 metadata는 응답에서 제외한다.
 `web_admin`은 `/api-usage`의 `API 사용` 화면에서 provider, 제품 기능, operation key, 상태, unit count, safe metadata를 표시한다.
-이번 슬라이스에서는 schema migration을 추가하지 않았다.
-남은 Phase 8E gap은 setup/manual provider search처럼 product operation run 이전에 발생하는 호출을 어떻게 audit할지 결정하는 것이다. `operationRunId` optional 연결, 별도 provider call log, provider credential label/prefix 표시 정책을 같이 정해야 한다.
+`provider_usage.operation_run_id`는 nullable로 전환했고 `session_id`, `usage_context`를 추가했다.
+Dance reference image search는 `usageContext='dance.reference_search'`, shortform manual media search/remote proxy no-run search는 `usageContext='media.manual_search'`로 기록된다.
+operation run 없는 row는 admin `/api-usage`에서 usageContext를 operation key 위치에 표시하고 상태는 `-`로 표시한다.
+남은 Phase 8E gap은 provider credential usage attribution 저장/표시 정책과 `/llm/variation` 정책 결정 후 provider usage 전환이다. provider credential id/key id 원문은 admin UI에 노출하지 않는다.
 
 Phase 8D follow-up은 ledger filter/date range와 historical balance snapshot 정책이다.
 현재 ledger 화면은 amount 중심 조회이며 row별 당시 잔액 snapshot은 없다. 2026-07-09 결정으로 Phase 8E first slice에서는 balance snapshot migration을 추가하지 않았다.

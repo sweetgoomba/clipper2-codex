@@ -39,6 +39,7 @@
 - `/operations/start`, succeed/fail, quote 기본 API가 있음.
 - 시작 시 debit, 실패 시 refund ledger를 남기는 `charge_then_refund` 모델이 구현됨.
 - admin `/api-usage`는 기존 `provider_usage`에 기록된 OpenAI/Naver 호출 로그를 조회함.
+- `provider_usage`는 이제 `operationRunId` 없이도 authenticated setup/manual provider search를 `usageContext`로 기록할 수 있음.
 - current charge points:
   - Plugin Store 카드 `열기`: 차감 없음.
   - 사이드바 메뉴 이동: 차감 없음.
@@ -387,31 +388,35 @@ admin 화면 표시:
 
 - `web_api`:
   - admin `GET /admin/provider-usage` 추가.
-  - 기존 `provider_usage` row 중 `operation_run_id`가 있는 로그를 최신순 cursor page로 조회한다.
-  - `provider_usage -> operation_runs -> operation_policies`를 join해 provider scope/name, product operation key/name, run status, unit count, metadata를 반환한다.
+  - `provider_usage` row를 최신순 cursor page로 조회한다.
+  - `operation_run_id`가 있는 row는 `provider_usage -> operation_runs -> operation_policies`를 LEFT JOIN해 product operation key/name과 run status를 반환한다.
+  - `operation_run_id`가 없는 row는 `usageContext`를 표시명/식별자로 사용한다.
   - 응답 metadata에서 secret/token/password/api key/client secret/key id 계열 key는 제외한다.
+  - `provider_usage.operation_run_id`를 nullable로 전환하고 `session_id`, `usage_context`를 추가하는 admin migration을 추가했다.
+- `desktop/clipper_nestjs`:
+  - Dance reference image search는 `/media/search`에 `usageContext='dance.reference_search'`를 전달한다.
+  - Shortform manual clip media search는 caller bearer token과 `usageContext='media.manual_search'`를 전달한다.
+  - Remote media search proxy는 `operationRunId`가 없는 authenticated search에 `usageContext='media.manual_search'`를 전달한다.
 - `web_admin`:
   - `/api-usage` route와 상단 nav `API 사용` 추가.
   - 외부 API 사용 로그 페이지에서 일시, provider, 제품 기능, operation key, run status, unit count, context metadata를 표시한다.
+  - operation run 없는 row는 operation key 위치에 `usageContext`를 표시하고, 상태는 `-`로 표시한다.
   - cursor 기반 `더 보기`로 이전 로그를 append한다.
   - 화면에서도 secret/token/password/api key/client secret/key id 계열 metadata key를 한 번 더 제외한다.
-- 이번 슬라이스에서는 schema migration을 추가하지 않았다.
 
 현재 gap:
 
-- 일부 provider 호출만 `operationRunId`와 묶여 기록된다.
-- Dance setup-time reference image search처럼 product operation run이 생기기 전 provider 호출은 기록 gap이 있다.
+- 일부 provider 호출만 `provider_usage`에 기록된다. 현재 확인된 setup/manual Naver image search gap은 닫혔다.
 - `provider_usage`는 provider credential id/key id를 저장하지 않는다.
-- 현재 `provider_usage.operation_run_id`는 required 구조라 setup/manual provider 호출을 자연스럽게 담기 어렵다.
+- OpenAI `/llm/variation`은 제품 기능/과금 정책이 deferred라 provider usage 전환 대상에서 제외되어 있다.
 
 필수 작업:
 
-- provider usage 기록 모델을 “operation run 선택적 연결”로 정리한다.
-- `operationRunId`는 nullable 또는 별도 `provider_call_logs` 도입을 검토한다.
-- setup/manual search에는 `usageContext`를 남긴다. 예: `dance.reference_search`, `media.manual_search`.
+- provider usage 기록 모델은 “operation run 선택적 연결 + usageContext”로 1차 정리했다.
+- 추가 provider 호출이 생기면 setup/manual search에는 `usageContext`를 남긴다. 예: `dance.reference_search`, `media.manual_search`.
 - userId/sessionId는 가능한 범위에서 기록한다.
 - providerCredentialId는 internal UUID로만 저장하고, admin UI에는 원문 전체를 표시하지 않는다. 필요하면 label 또는 짧은 prefix만 표시한다.
-- admin external API usage page/API 추가.
+- provider credential usage attribution을 저장할지 결정한다.
 
 중요 정책:
 
@@ -538,7 +543,7 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 1. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 확인.
 2. Phase 8D follow-up: ledger filter/date range, historical balance snapshot 정책.
-3. Phase 8E follow-up: setup/manual provider usage audit 모델 정리, `operationRunId` optional 연결 또는 별도 provider call log 결정, provider credential label/prefix 표시 정책.
+3. Phase 8E follow-up: provider credential usage attribution 저장/표시 정책, `/llm/variation` 정책 결정 후 provider usage 전환.
 4. Phase 8F/G: privacy retention과 operator auth hardening.
 5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
 6. Phase 9: provider credential operation/staging hardening.
