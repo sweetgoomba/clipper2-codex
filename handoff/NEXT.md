@@ -480,6 +480,7 @@ Naver credential 모델은 `active` 1개와 `standby` 여러 개를 전제로 �
 수동 전환은 별도 `다음 키로 전환` 버튼을 두지 않고, 기존 row별 `활성전환` 버튼으로 처리한다. 이 버튼은 운영자가 특정 `standby` 키를 직접 골라 현재 active로 올리는 manual failover다.
 `disabled`는 runtime/rotation 후보에서 제외되며, admin UI에서는 직접 `활성전환`하지 않고 먼저 `대기복귀`로 `standby` 상태로 되돌린다. active/standby 키는 `제외` 버튼으로 `disabled` 처리할 수 있다.
 Naver 자동 rotation은 한도에 도달한 standby를 후보에서 제외하도록 보강했다.
+active 키를 `제외`하거나 `standby`로 내릴 때 active 0개 상태가 생기지 않도록 web_api에서 guard한다. 사용 가능한 standby가 있으면 같은 요청 안에서 즉시 active로 승격하고, 없으면 요청을 거부한다. 이 guard는 Naver와 OpenAI provider credential 모두에 적용된다.
 OpenAI는 Naver와 같은 quota rotation을 적용하지 않고 active 1개 + standby 수동 전환 모델을 유지한다. OpenAI standby/failover 운영 검증은 계속 남아 있다.
 OpenAI env fallback 완전 제거는 provider credential rotation 운영 검증 뒤 마지막에 진행한다.
 

@@ -2085,6 +2085,7 @@ Naver처럼 quota가 명확한 provider는 rotation이 필요하다.
 - provider auth failure가 반복되면 credential status를 degraded/exhausted로 전환
 - 수동 failover는 별도 "다음 키로 전환" 액션이 아니라, admin API key row의 `활성전환` 액션으로 특정 standby credential을 active로 승격하는 방식이다.
 - disabled credential은 직접 활성화하지 않고 standby로 복귀한 뒤 필요하면 활성전환한다.
+- active credential을 disabled/standby로 내리는 운영 액션은 active 0개 상태를 만들지 않는다. 사용 가능한 standby가 있으면 같은 요청 안에서 즉시 active로 승격하고, 없으면 요청을 거부한다.
 
 OpenAI는 Naver와 quota 형태가 다를 수 있으므로 동일 rotation 모델을 억지로 적용하지 않는다. provider별 credential strategy를 둔다.
 
