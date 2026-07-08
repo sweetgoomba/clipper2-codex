@@ -48,7 +48,7 @@
   - Dialog Highlight pipeline 시작: `dialog_highlight.extract`, 영상 길이 시작 분 단위 `ceil(sourceDurationSec / 60) * 50` credits.
   - Dance Highlight pipeline 시작: `dance_highlight.extract`, 영상 길이 시작 분 단위 `ceil(sourceDurationSec / 60) * 50` credits.
   - Dance reference/member image search, clip media search 등 provider search: 사용자 크레딧 차감 대상 아님.
-  - `/llm/variation`: 제품 operation policy 미결정으로 deferred.
+  - Variation 영상 생성: 구현 전. 정책은 `영상 생성` 또는 `변형하고 영상까지` 실행 시 생성 영상 1개당 20 credits.
 
 ### 1.4 Provider credential/runtime
 
@@ -282,6 +282,10 @@ admin 화면 표시:
   - cursor는 `createdAt + ledgerId` 기준이며 `limit + 1` 조회로 다음 page 여부를 판단한다.
   - admin DB에 `(user_id, created_at DESC, id DESC)` cursor index migration을 추가했다.
   - admin DB `credit_ledger`/`operation_runs`/`operation_policies`와 user DB `user_sessions`를 애플리케이션 레이어에서 합쳐 반환한다.
+  - admin DB `credit_ledger.balance_after` snapshot column을 추가했다. 새 charge/refund ledger row에는 작업 처리 후 최종 잔여 credit을 저장한다.
+  - 기존 과거 ledger row는 정확한 재구성이 어려우므로 `balance_after=null`로 둔다.
+  - user/admin ledger API는 `from`, `to`, `type=charge|refund` query filter를 지원한다.
+  - `from`/`to` date-only query는 KST 날짜 경계로 해석하며, `to`는 해당 날짜까지 포함하기 위해 다음 날 00:00 KST 미만 조건으로 조회한다.
   - 응답에는 `operationRunId`와 표시용 session summary만 포함한다. raw IP, IP hash, refresh token hash, provider secret, session/device id 원문은 포함하지 않는다.
 - `desktop/clipper_nestjs`:
   - `GET /v1/operations/ledger` proxy 추가. caller bearer token과 cursor/limit query를 web_api로 relay한다.
@@ -293,20 +297,20 @@ admin 화면 표시:
   - `/app/credits` 장기 credit ledger 페이지를 추가했다.
   - `/app/credits` 상단에 현재 credit balance, allowance, used credits, active license, queued license summary를 표시한다.
   - 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 하단에 append한다.
+  - `/app/credits`에 시작일/종료일/유형 필터와 `처리 후 잔여` column을 추가했다.
 - `web/clipper_web_admin`:
   - `/members` 상세 영역을 목록 하단 카드에서 상시 우측 drawer/detail panel로 변경했다.
   - drawer는 기본 선택 탭을 이용권으로 두고, 세션/기기, 크레딧 사용 내역 탭을 제공한다.
   - 세션/기기 탭은 `GET /admin/members/:userId/sessions`에서 받은 sanitized 활성 세션을 표시한다.
   - 크레딧 사용 내역 탭은 처음 20개를 표시하고 `더 보기` 버튼으로 cursor 기반 이전 내역을 append한다.
+  - 크레딧 사용 내역 탭에 시작일/종료일/유형 필터와 `처리 후 잔여` column을 추가했다.
   - admin UI에는 raw run id를 직접 표시하지 않는다. API response에는 내부 추적용 `operationRunId`가 남아 있다.
   - admin 공통 page width를 1320px로 늘려 member drawer와 ledger table을 안정적으로 수용한다.
 
 남은 작업:
 
-- `/app/credits`와 admin drawer에 기간/operation/session 필터 추가 여부 결정.
-- 더 긴 admin ledger 운영을 위한 가상 스크롤 또는 날짜 range query 도입 여부 결정.
-- ledger row의 당시 잔액 snapshot 저장 여부 결정. 현재는 amount 중심 조회이며 historical balance는 없다.
-- 2026-07-09 결정: Phase 8E 첫 슬라이스에서는 balance snapshot migration을 추가하지 않는다. Phase 8D filter/date range 설계 때 `balanceAfter` snapshot 컬럼을 둘지 다시 결정한다.
+- operation key/session filter는 아직 없다. 필요 시 별도 UX로 추가한다.
+- 더 긴 admin ledger 운영을 위한 가상 스크롤은 아직 없다. 현재는 날짜/유형 필터 + cursor 더보기로 운영한다.
 - 실패/refund reason을 더 사용자 친화적으로 표시할 mapping.
 
 ### Phase 8H. Desktop navigation/plugin metadata SoT cleanup
@@ -411,7 +415,7 @@ admin 화면 표시:
 현재 gap:
 
 - 일부 provider 호출만 `provider_usage`에 기록된다. 현재 확인된 setup/manual Naver image search gap과 credential attribution gap은 닫혔다.
-- OpenAI `/llm/variation`은 제품 기능/과금 정책이 deferred라 provider usage 전환 대상에서 제외되어 있다.
+- OpenAI `/llm/variation`은 제품 기능/과금 정책이 2026-07-09에 확정됐지만, 실제 operation policy/start/provider usage 전환 구현은 아직 남아 있다.
 
 필수 작업:
 
@@ -433,6 +437,34 @@ admin 화면 표시:
 - manual media search도 credit ledger 없이 provider usage/audit에 남는다.
 - provider secret은 response/log/UI 어디에도 나오지 않는다.
 - provider credential raw UUID/key id는 admin `/api-usage` response/UI에 나오지 않는다.
+
+### Phase 8J. Variation render billing and provider routing
+
+목표: Variation 영상 생성 버튼을 product operation으로 묶고, 생성 영상 개수만큼 credit을 차감한다.
+
+정책 결정:
+
+- 차감 지점: `영상 생성` 버튼 또는 `변형하고 영상까지` 버튼.
+- 차감 단위: 생성 영상 1개당.
+- 단가: 20 credits / generated video.
+- 예: 원본 1개 + 변형 19개로 총 20개 영상이 생성되면 `20 * 20 = 400 credits`.
+- Plugin Store 카드 열기, variation 페이지 진입, preview/설정 조작은 과금하지 않는다.
+
+필수 작업:
+
+- `variation.render` 또는 동등한 stable operation key를 추가한다.
+- pricing unit에 `per_generated_video`를 추가한다.
+- quote/start billing input에 `generatedVideoCount`를 포함한다.
+- desktop Angular Variation UI에서 실제 생성 영상 수를 계산해 quote/confirm을 띄운다.
+- local NestJS Variation render queue 시작 전에 web_api `/operations/start`를 호출하고, 성공/실패를 succeed/fail로 보고한다.
+- `/llm/variation`이 실제 영상 생성 operation에 필요한 provider 호출이면 operationRunId 또는 usageContext를 연결한다.
+
+검증:
+
+- generatedVideoCount가 1/20일 때 quote와 start cost가 각각 20/400 credits로 일치한다.
+- 잔액 부족이면 render queue가 시작되지 않는다.
+- render 실패 시 refund ledger가 남는다.
+- provider 호출은 credit ledger가 아니라 provider usage log에만 남는다.
 
 ### Phase 8F. Session/device retention and privacy operations
 
@@ -467,11 +499,16 @@ admin 화면 표시:
 
 - user JWT는 RS256 target 구조로 이동 중이다.
 - `JWT_SECRET`은 legacy user/operator/admin fallback 때문에 아직 남아 있다.
+- admin/operator auth는 현재 server-side session/refresh rotation 없이 operator JWT 중심이다.
+- user session과 operator session은 공통 테이블 하나로 합치기보다 `operator_sessions`처럼 분리된 테이블/도메인을 추천한다.
+- user와 operator는 권한 모델, 감사 기준, 사고 영향 범위가 다르므로 session storage를 분리해 blast radius를 줄이는 것이 중요하다.
+- 중복을 줄여야 할 부분은 refresh token hashing, device metadata sanitizer, revoke helper 같은 낮은 수준의 유틸로 제한한다.
 
 필수 작업:
 
 - operator/admin token signing key/secret을 user token과 분리한다.
 - `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 또는 최소 별도 `OPERATOR_JWT_SECRET` 정책을 결정한다.
+- `operator_sessions` table, operator refresh token rotation, operator session revoke/list를 추가한다.
 - `JwtModule`의 module-level `JWT_SECRET` 의존을 줄인다.
 - user token에서 `JWT_SECRET` fallback 제거.
 - operator/admin login smoke 재검증.
@@ -488,11 +525,14 @@ admin 화면 표시:
 
 필수 작업:
 
-- OpenAI env fallback 완전 제거 여부 결정 및 실행.
-- provider credential rotation 운영 절차 문서화.
+- provider credential rotation 운영 절차와 로직을 정리한다.
+- Naver는 active/standby/exhausted/disabled 기반 daily limit rotation이 일부 구현되어 있으나, 운영 화면/수동 전환/실패 시 fallback 정책을 더 명확히 한다.
+- OpenAI는 DB credential resolver는 있으나 standby/failover rotation 로직이 아직 충분하지 않다.
+- credential status 전환 정책을 명확히 한다. `disabled`는 재활성화 가능한 제외, `deleted_at`은 soft delete로 runtime/rotation 후보에서 제외한다.
 - staging/prod에서 OpenAI/Naver runtime status 확인.
 - provider credential decrypt failure/empty secret 상태에서 user-facing 오류와 admin runtime 상태 정리.
 - provider usage log와 credential label/rotation 분석 연결.
+- OpenAI env fallback 완전 제거는 credential rotation 운영 검증 후 마지막에 진행한다.
 
 검증:
 
@@ -526,13 +566,13 @@ admin 화면 표시:
 
 ### `/llm/variation`
 
-현재 제품 operation key가 없다. 사용자가 variation 기능과 과금 포인트를 아직 정확히 파악하지 못한 상태이므로 billable operation으로 묶지 않는다.
+2026-07-09에 과금 정책은 확정됐다. Variation 영상 생성은 generated video 1개당 20 credits로 과금한다.
 
-다음 결정 전까지:
+남은 구현 전까지:
 
-- 새 credit charge point를 만들지 않는다.
-- `variation.generate` 같은 operation key를 임의 추가하지 않는다.
-- preview/free 성격으로 분리할지, generation 단계에서 과금할지 기획 확정 후 진행한다.
+- 새 credit charge point를 임의로 부분 적용하지 않는다.
+- operation key, pricing unit, quote/start billing input, local render queue reporting을 한 phase에서 같이 설계/구현한다.
+- preview/free 성격의 카드 생성과 실제 영상 render generation을 UI/API 레벨에서 명확히 분리한다.
 
 ### Plugin Store open/navigation billing
 
@@ -546,11 +586,11 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 추천 순서:
 
-1. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 확인.
-2. Phase 8D follow-up: ledger filter/date range, historical balance snapshot 정책.
-3. Phase 8E follow-up: `/llm/variation` 정책 결정 후 provider usage 전환.
-4. Phase 8F/G: privacy retention과 operator auth hardening.
+1. Phase 8J: Variation render billing. generated video 1개당 20 credits, quote/start/reporting/provider usage 전환.
+2. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 완전 제거는 이 뒤 마지막에 진행.
+3. Phase 8G: operator/admin session hardening. `operator_sessions` 분리 구조로 refresh rotation/session revoke/list를 추가.
+4. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 재검증.
 5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
-6. Phase 9: provider credential operation/staging hardening.
+6. Phase 10: end-to-end billing QA.
 
 Phase 8A와 8B는 같은 pricing input 모델을 공유하므로 같은 설계 안에서 다루되, 구현 커밋은 API DTO/pricing, local proxy, Angular UX로 나누는 것이 좋다.

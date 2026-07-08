@@ -52,8 +52,10 @@ clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex
 - 실제 구현은 작은 phase별 커밋으로 나눈다.
 - TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
 
-Phase 1-6과 Phase 7-1/7-2/7-3/7-4/7-5/7-6/7-7/7-8/7-9는 완료되어 있다.
-우선 Phase 7-10 provider credential 운영/스테이징 검증 절차 또는 OpenAI env fallback 완전 제거 여부 결정을 이어서 진행해줘.
+Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up은 완료되어 있다.
+우선 Phase 8J Variation render billing부터 진행해줘.
+정책: `영상 생성` 또는 `변형하고 영상까지` 버튼에서 생성 영상 1개당 20 credits 차감.
+그 다음 Phase 9 provider credential rotation 운영 로직/스테이징 검증을 진행하고, OpenAI env fallback 완전 제거는 provider rotation 검증 뒤 마지막에 진행해줘.
 ```
 
 ### 2026-07-07 설계 결정 요약
@@ -452,10 +454,21 @@ Dance reference image search는 `usageContext='dance.reference_search'`, shortfo
 operation run 없는 row는 admin `/api-usage`에서 usageContext를 operation key 위치에 표시하고 상태는 `-`로 표시한다.
 `provider_usage.provider_credential_id`는 internal FK로 저장한다. admin `/api-usage`에는 raw UUID/key id를 표시하지 않고 provider credential label/status/deleted 여부만 보여준다.
 provider credential delete는 hard delete가 아니라 `deleted_at` soft delete로 처리한다. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
-남은 Phase 8E gap은 `/llm/variation` 정책 결정 후 provider usage 전환이다.
+2026-07-09 현재 Phase 8D follow-up도 완료됐다.
+`web_api`는 `credit_ledger.balance_after` snapshot column을 추가했고, 새 charge/refund ledger row에 작업 처리 후 최종 잔여 credit을 저장한다. 기존 과거 row는 `balance_after=null`로 둔다.
+`GET /operations/ledger`와 `GET /admin/members/:userId/credit-ledger`는 `from`, `to`, `type=charge|refund` filter를 지원한다. date-only filter는 KST 날짜 경계로 해석한다.
+`web_client` `/app/credits`와 `web_admin` `/members` credit ledger drawer에는 시작일/종료일/유형 필터와 `처리 후 잔여` column이 추가됐다.
 
-Phase 8D follow-up은 ledger filter/date range와 historical balance snapshot 정책이다.
-현재 ledger 화면은 amount 중심 조회이며 row별 당시 잔액 snapshot은 없다. 2026-07-09 결정으로 Phase 8E first slice에서는 balance snapshot migration을 추가하지 않았다.
+Variation 과금 정책은 2026-07-09에 확정됐다.
+차감 지점은 `영상 생성` 또는 `변형하고 영상까지` 버튼이며, 생성 영상 1개당 20 credits다. 예: 원본 1개 + 변형 19개로 총 20개 영상이 생성되면 400 credits.
+다음 큰 구현 진입점은 Phase 8J Variation render billing이다. operation key/pricing unit/quote-start billing input/local render queue reporting/provider usage 연결을 한 phase로 묶어 구현한다.
+
+관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
+권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.
+
+Provider credential rotation은 Phase 9로 남아 있다.
+Naver는 active/standby/exhausted/disabled 기반 daily limit rotation이 일부 구현되어 있으나 운영 화면/수동 전환/failover 정책을 더 명확히 해야 한다. OpenAI standby/failover rotation은 아직 부족하다.
+OpenAI env fallback 완전 제거는 provider credential rotation 운영 검증 뒤 마지막에 진행한다.
 
 ### 권장 구현 순서
 
