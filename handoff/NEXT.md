@@ -473,11 +473,18 @@ admin DB에 `operator_sessions` table을 추가했고, operator refresh token은
 `/admin/auth/refresh`, `/admin/auth/logout`, `/admin/auth/sessions`, `DELETE /admin/auth/sessions/:id`를 추가했다.
 `OperatorJwtStrategy`는 `typ='operator'`, `sid`, active `operator_sessions` row를 확인한다.
 `web_admin`은 admin refresh token을 저장하고 일반 admin API 401에서 refresh 1회 후 원 요청을 재시도한다.
-`web_admin /operators`에는 모든 operator가 볼 수 있는 `내 로그인 세션` 섹션을 추가했고, 현재 세션이 아닌 세션은 로그아웃시킬 수 있다.
+2026-07-09 follow-up에서 `operators.role`/`operators.status` DB column을 추가했고, operator auth/JWT validate는 payload role이 아니라 DB role/status를 기준으로 판단한다.
+inactive operator는 login/refresh/JWT validate를 통과하지 못한다.
+`/operators`는 super-admin 전용 route/API가 됐고, `내 로그인 세션`은 header profile menu의 `로그인 세션` action에서 `/operator-sessions`로 이동해 확인한다.
+operator seed는 `OPERATOR_SEED_EMAIL`/`OPERATOR_SEED_PASSWORD` 계정을 `super-admin`/`active`로 보장한다.
+일반 관리자 seed가 필요하면 `OPERATOR_SEED_OPERATOR_EMAIL`/`OPERATOR_SEED_OPERATOR_PASSWORD`를 추가로 설정하면 같은 seed script가 `operator`/`active` 계정을 생성 또는 보정한다.
 user JWT는 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY` 또는 `USER_JWT_PRIVATE_KEY_PATH`/`USER_JWT_PUBLIC_KEY_PATH`가 없으면 발급/검증하지 않는다.
 operator/admin JWT는 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY`, 해당 `*_PATH`, `OPERATOR_JWT_SECRET`, 또는 `OPERATOR_JWT_SECRET_PATH` 없이는 발급/검증하지 않는다.
 local/dev의 권장 위치는 gitignore된 `web/clipper_web_api/.secrets/`이며, `.env`에는 secret 값 대신 path를 둔다.
-남은 Phase 8G 후속은 operator role/status DB 반영, permission guard, 실제 local/staging login smoke다.
+2026-07-09 중단 지점:
+`web_api`, `web_admin`, `.codex`에 operator role/status, super-admin 제한, operator session page 분리, optional regular operator seed 문서화 변경이 남아 있으며 커밋/푸시 대상이다.
+로컬 admin DB에는 예전 seed 계정인 `admin@example.local`이 남아 있어 운영자 목록이 3개로 보일 수 있다. 운영 DB 정책은 삭제보다 `inactive` 처리를 우선 검토한다.
+남은 Phase 8G 후속은 API key write/release write/operation policy write 같은 민감 admin endpoint permission guard, operator invite/deactivate write API 실제 구현, 일반 operator 권한 smoke, 실제 local/staging login smoke다.
 
 2026-07-09 현재 Phase 9 provider credential rotation 첫 hardening을 진행했다.
 Naver credential 모델은 `active` 1개와 `standby` 여러 개를 전제로 한다. `standby`는 자동 rotation 후보이고, `active`가 daily limit에 도달하거나 Naver 429를 받으면 `exhausted`로 내려간 뒤 사용 가능한 `standby` 중 priority가 가장 빠른 키가 `active`로 승격된다.

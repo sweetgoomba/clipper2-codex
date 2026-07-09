@@ -512,6 +512,10 @@ admin 화면 표시:
 - user session과 operator session은 공통 테이블 하나로 합치지 않고 `operator_sessions`처럼 분리된 테이블/도메인으로 둔다.
 - user와 operator는 권한 모델, 감사 기준, 사고 영향 범위가 다르므로 session storage를 분리해 blast radius를 줄이는 것이 중요하다.
 - user web session은 desktop/web handoff UX 때문에 metadata 기반 same-device 중복 정리를 적용하지만, operator/admin web session에는 이를 적용하지 않는다. admin은 같은 계정이 여러 브라우저/프로필에서 로그인한 세션을 모두 활성 세션으로 보여주고, 운영자가 명시적으로 로그아웃/revoke하도록 한다.
+- 2026-07-09 follow-up에서 `operators.role`/`operators.status` DB column을 추가했고, `OperatorAuthService`/`OperatorJwtStrategy`는 JWT payload role이 아니라 DB role/status를 기준으로 operator를 반환한다.
+- 2026-07-09 follow-up에서 inactive operator는 login/refresh/JWT validate를 통과하지 못하게 했다.
+- 2026-07-09 follow-up에서 `/operators`는 super-admin 전용 route/API가 됐고, admin login session 관리는 `/operator-sessions` 별도 페이지로 분리했다.
+- 2026-07-09 follow-up에서 operator seed를 확장했다. `OPERATOR_SEED_EMAIL`/`OPERATOR_SEED_PASSWORD`는 `super-admin`/`active`로 보장하고, 선택 env인 `OPERATOR_SEED_OPERATOR_EMAIL`/`OPERATOR_SEED_OPERATOR_PASSWORD`가 둘 다 있으면 일반 `operator`/`active` 계정을 생성 또는 보정한다.
 - 중복을 줄여야 할 부분은 refresh token hashing, device metadata sanitizer, revoke helper 같은 낮은 수준의 유틸로 제한한다.
 
 완료된 작업:
@@ -520,11 +524,14 @@ admin 화면 표시:
 - `operator_sessions` table, operator refresh token rotation, operator session revoke/list를 추가한다.
 - `JwtModule`의 module-level `JWT_SECRET` 의존을 제거한다.
 - user token에서 `JWT_SECRET` fallback 제거.
+- operator role/status를 DB schema에 반영하고, payload role만 믿지 않도록 guard를 정리한다.
+- `/operators` 운영자 관리 API/page는 super-admin 전용으로 제한한다.
 
 남은 작업:
 
-- operator role/status를 DB schema에 실제 반영하고, payload role만 믿지 않도록 guard를 정리한다.
-- permission guard를 추가해 API key write/release write/operator management 같은 민감 admin endpoint를 role/permission별로 제한한다.
+- permission guard를 추가해 API key write/release write/operation policy write 같은 민감 admin endpoint를 role/permission별로 제한한다.
+- operator invite/deactivate 등 운영자 관리 write API를 실제 구현할 때 super-admin 전용으로 제한한다.
+- super-admin이 아닌 일반 operator는 `/operators` 접근과 민감 write API가 차단되고, `/operator-sessions` 자기 세션 관리는 가능한지 smoke 검증한다.
 - operator/admin login smoke 재검증.
 
 검증:
