@@ -750,6 +750,15 @@ service token은 사람 사용자 기능에 쓰지 않는다.
 
 `JWT_SECRET`은 기존 HS256 user token과 operator/admin JWT 흐름을 지탱하던 legacy bootstrap secret이다. desktop local NestJS가 user access token을 public key로 검증해야 하므로 user token의 목표 구조는 RS256 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY`이다.
 
+2026-07-09 구현 상태:
+
+- user JWT는 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY` 전용 RS256 구조로 고정했고 `JWT_SECRET` fallback을 제거했다.
+- operator/admin JWT는 user JWT와 분리된 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 또는 `OPERATOR_JWT_SECRET`만 사용한다.
+- local/dev에서는 `.env`에 secret 값을 직접 넣는 방식보다 gitignore된 `web/clipper_web_api/.secrets/` 파일을 만들고 `USER_JWT_PRIVATE_KEY_PATH`, `USER_JWT_PUBLIC_KEY_PATH`, `OPERATOR_JWT_SECRET_PATH`로 참조하는 방식을 권장한다. runtime은 direct env value와 `*_PATH`를 모두 지원한다.
+- `JwtModule` module-level `JWT_SECRET` 등록은 제거했다.
+- admin DB에 `operator_sessions` table을 추가했고, operator refresh token hash 저장/rotation/logout/session list/revoke API를 추가했다.
+- `web_admin`은 access/refresh token bundle 저장과 401 refresh retry를 수행한다.
+
 최종 목표:
 
 - user token은 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY`로만 서명/검증한다.

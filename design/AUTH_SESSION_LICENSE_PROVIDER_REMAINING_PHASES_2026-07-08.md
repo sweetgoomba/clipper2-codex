@@ -503,25 +503,33 @@ admin 화면 표시:
 
 현재 상태:
 
-- user JWT는 RS256 target 구조로 이동 중이다.
-- `JWT_SECRET`은 legacy user/operator/admin fallback 때문에 아직 남아 있다.
-- admin/operator auth는 현재 server-side session/refresh rotation 없이 operator JWT 중심이다.
-- user session과 operator session은 공통 테이블 하나로 합치기보다 `operator_sessions`처럼 분리된 테이블/도메인을 추천한다.
+- 2026-07-09 follow-up에서 user JWT는 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY` 전용 RS256 구조로 고정했고 `JWT_SECRET` fallback을 제거했다.
+- 2026-07-09 follow-up에서 operator/admin JWT는 user JWT와 분리된 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 또는 `OPERATOR_JWT_SECRET`만 사용하도록 변경했다.
+- local/dev에서는 secret 값을 shell command에 매번 직접 넣지 않고, `web/clipper_web_api/.secrets/` 같은 gitignore된 repo-local 파일에 보관한 뒤 `.env`의 `USER_JWT_PRIVATE_KEY_PATH`, `USER_JWT_PUBLIC_KEY_PATH`, `OPERATOR_JWT_SECRET_PATH`로 참조한다. runtime은 direct env value와 `*_PATH`를 모두 지원한다.
+- 2026-07-09 follow-up에서 admin DB에 `operator_sessions` table을 추가했고, operator refresh token hash 저장/rotation/logout/session list/revoke API를 추가했다.
+- `web_admin`은 admin login 응답의 access/refresh token bundle을 저장하고, 일반 admin API 401에서 refresh를 1회 시도한 뒤 원 요청을 재시도한다.
+- `web_admin /operators`는 모든 operator에게 `내 로그인 세션` 섹션을 보여주고, 현재 세션이 아닌 operator session을 로그아웃시킬 수 있다.
+- user session과 operator session은 공통 테이블 하나로 합치지 않고 `operator_sessions`처럼 분리된 테이블/도메인으로 둔다.
 - user와 operator는 권한 모델, 감사 기준, 사고 영향 범위가 다르므로 session storage를 분리해 blast radius를 줄이는 것이 중요하다.
+- user web session은 desktop/web handoff UX 때문에 metadata 기반 same-device 중복 정리를 적용하지만, operator/admin web session에는 이를 적용하지 않는다. admin은 같은 계정이 여러 브라우저/프로필에서 로그인한 세션을 모두 활성 세션으로 보여주고, 운영자가 명시적으로 로그아웃/revoke하도록 한다.
 - 중복을 줄여야 할 부분은 refresh token hashing, device metadata sanitizer, revoke helper 같은 낮은 수준의 유틸로 제한한다.
 
-필수 작업:
+완료된 작업:
 
 - operator/admin token signing key/secret을 user token과 분리한다.
-- `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 또는 최소 별도 `OPERATOR_JWT_SECRET` 정책을 결정한다.
 - `operator_sessions` table, operator refresh token rotation, operator session revoke/list를 추가한다.
-- `JwtModule`의 module-level `JWT_SECRET` 의존을 줄인다.
+- `JwtModule`의 module-level `JWT_SECRET` 의존을 제거한다.
 - user token에서 `JWT_SECRET` fallback 제거.
+
+남은 작업:
+
+- operator role/status를 DB schema에 실제 반영하고, payload role만 믿지 않도록 guard를 정리한다.
+- permission guard를 추가해 API key write/release write/operator management 같은 민감 admin endpoint를 role/permission별로 제한한다.
 - operator/admin login smoke 재검증.
 
 검증:
 
-- `JWT_SECRET` 없이 user desktop login/web login/admin login이 통과한다.
+- `JWT_SECRET` 없이 user desktop login/web login/admin login이 통과한다. 단, smoke 실행 시 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY` 또는 각 `*_PATH`, 그리고 `OPERATOR_JWT_SECRET`/`OPERATOR_JWT_SECRET_PATH` 또는 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 계열 설정이 필요하다.
 - user token으로 admin API 접근 불가.
 - operator token으로 user API 접근 불가.
 

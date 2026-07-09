@@ -82,7 +82,7 @@ short-lived JWT access token
 - Electron은 token bundle을 `safeStorage`로 저장
 - local browser dev는 별도 dev fallback 허용 가능
 - user JWT와 operator JWT는 audience/type/session 정책을 분리
-- `JWT_SECRET`은 legacy fallback/operator/admin 경로 때문에 아직 남아 있지만, 목표 구조가 아니다. 다음 auth cleanup에서는 operator/admin token key를 user token과 분리한 뒤 `JWT_SECRET` fallback을 제거해야 한다.
+- 2026-07-09 follow-up에서 `JWT_SECRET` user/operator fallback은 제거됐다. user JWT는 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY`, operator/admin JWT는 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY` 또는 `OPERATOR_JWT_SECRET`을 사용한다.
 
 local NestJS:
 
@@ -467,8 +467,17 @@ Variation 과금 정책은 2026-07-09에 확정됐다.
 `operation_runs.status`는 queue submission 성공 기준 `succeeded`를 유지하고 `refundedCredits`만 누적 증가한다.
 `/llm/variation`은 AI copy preview 성격으로 보고 provider usage 기록 전환은 이번 범위에서 제외한다.
 
-관리자 세션은 현재 operator JWT 중심이고 user session처럼 server-side session/refresh rotation/revoke/list 구조가 아니다.
-권장 방향은 공통 session table이 아니라 `operator_sessions` 분리 구조다. user/operator 권한 모델과 감사 기준이 달라 blast radius를 줄이는 것이 우선이며, 공통화는 refresh token hash/device sanitizer/revoke helper 같은 낮은 수준 유틸로 제한한다.
+2026-07-09 현재 Phase 8G operator/admin auth hardening 첫 구현이 완료됐다.
+admin DB에 `operator_sessions` table을 추가했고, operator refresh token은 원문 저장 없이 hash만 저장하며 refresh 시 rotation한다.
+`/admin/auth/login`은 access/refresh token bundle과 `sid`가 포함된 operator access JWT를 발급한다.
+`/admin/auth/refresh`, `/admin/auth/logout`, `/admin/auth/sessions`, `DELETE /admin/auth/sessions/:id`를 추가했다.
+`OperatorJwtStrategy`는 `typ='operator'`, `sid`, active `operator_sessions` row를 확인한다.
+`web_admin`은 admin refresh token을 저장하고 일반 admin API 401에서 refresh 1회 후 원 요청을 재시도한다.
+`web_admin /operators`에는 모든 operator가 볼 수 있는 `내 로그인 세션` 섹션을 추가했고, 현재 세션이 아닌 세션은 로그아웃시킬 수 있다.
+user JWT는 `USER_JWT_PRIVATE_KEY`/`USER_JWT_PUBLIC_KEY` 또는 `USER_JWT_PRIVATE_KEY_PATH`/`USER_JWT_PUBLIC_KEY_PATH`가 없으면 발급/검증하지 않는다.
+operator/admin JWT는 `OPERATOR_JWT_PRIVATE_KEY`/`OPERATOR_JWT_PUBLIC_KEY`, 해당 `*_PATH`, `OPERATOR_JWT_SECRET`, 또는 `OPERATOR_JWT_SECRET_PATH` 없이는 발급/검증하지 않는다.
+local/dev의 권장 위치는 gitignore된 `web/clipper_web_api/.secrets/`이며, `.env`에는 secret 값 대신 path를 둔다.
+남은 Phase 8G 후속은 operator role/status DB 반영, permission guard, 실제 local/staging login smoke다.
 
 2026-07-09 현재 Phase 9 provider credential rotation 첫 hardening을 진행했다.
 Naver credential 모델은 `active` 1개와 `standby` 여러 개를 전제로 한다. `standby`는 자동 rotation 후보이고, `active`가 daily limit에 도달하거나 Naver 429를 받으면 `exhausted`로 내려간 뒤 사용 가능한 `standby` 중 priority가 가장 빠른 키가 `active`로 승격된다.
