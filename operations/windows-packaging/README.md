@@ -4,6 +4,9 @@ Windows installer build, packaged smoke, and OS-specific build hazards are track
 
 ## Current Release Runner Status
 
+- 2026-07-10: app identity was reset around `Clipper Studio`, dev release DB was reset, and Windows 0.0.1 remote build/sign/upload/stable target flow was verified.
+- 2026-07-10: packaged Windows JWT auth now requires the packaged user JWT public key resource and packaged NestJS `jwt` mode env to be prepared by the runner env script.
+- 2026-07-10: runner token/start-token mismatch caused source snapshot 401; runner env preparation now passes both explicitly. Do not document token values.
 - 2026-06-29: Windows 10 Pro runner candidate verified for Windows containers.
 - 2026-06-30: direct Windows runner flow was merged to `dev` across
   `web/clipper_infra`, `web/clipper_web_api`, and `web/clipper_web_admin`.
@@ -29,6 +32,7 @@ Detailed runbook:
 
 Latest session record:
 
+- [../../records/sessions/2026/07/10.md](../../records/sessions/2026/07/10.md)
 - [../../records/sessions/2026/06/30.md](../../records/sessions/2026/06/30.md)
 
 ## Current Rules
@@ -42,6 +46,7 @@ Latest session record:
 
 ## Active References
 
+- [records/2026/07/10-windows-runner-dev-release.md](records/2026/07/10-windows-runner-dev-release.md)
 - [records/2026/05/21-powertoys-ebusy-diagnosis.md](records/2026/05/21-powertoys-ebusy-diagnosis.md)
 - [runbooks/windows-build-guide.md](runbooks/windows-build-guide.md)
 - [runbooks/windows-build-guide-configurable-root.md](runbooks/windows-build-guide-configurable-root.md)

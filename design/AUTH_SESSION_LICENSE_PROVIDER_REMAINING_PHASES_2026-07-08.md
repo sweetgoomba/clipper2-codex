@@ -1,6 +1,7 @@
 # Auth/Session/License/Credit/Provider Remaining Phases
 
 작성일: 2026-07-08
+최신 갱신: 2026-07-10
 목적: `AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md` 구현 후속 단계와 사용자가 추가로 지적한 누락 항목을 다음 세션에서 바로 이어갈 수 있게 정리한다.
 
 이 문서는 구현 완료 기록과 남은 작업을 분리한다. secret-bearing 값, env 값, provider key 원문, refresh token 원문, 로컬 사용자 경로 원문은 적지 않는다.
@@ -34,12 +35,11 @@
 
 ### 1.3 Operation/credit foundation
 
-- `operation_policies`, `operation_runs`, `credit_ledger`, `provider_usage` 기반이 생성됨.
+- `operation_policies`, `operation_runs`, `credit_ledger` 기반이 생성됨.
 - `shortform.create`, `dialog_highlight.extract`, `dance_highlight.extract` 기본 operation definition이 있음.
 - `/operations/start`, succeed/fail, quote 기본 API가 있음.
 - 시작 시 debit, 실패 시 refund ledger를 남기는 `charge_then_refund` 모델이 구현됨.
-- admin `/api-usage`는 기존 `provider_usage`에 기록된 OpenAI/Naver 호출 로그를 조회함.
-- `provider_usage`는 이제 `operationRunId` 없이도 authenticated setup/manual provider search를 `usageContext`로 기록할 수 있음.
+- external API/provider usage log는 2026-07-09 follow-up에서 MVP 범위에서 보류/제거했다. 사용자 credit 원장은 `credit_ledger`를 유지한다.
 - current charge points:
   - Plugin Store 카드 `열기`: 차감 없음.
   - 사이드바 메뉴 이동: 차감 없음.
@@ -56,7 +56,7 @@
 - OpenAI/Naver provider credential은 DB encrypted credential 중심으로 이동함.
 - admin API key page는 Runtime 상태를 보여주되 internal credential id를 UI에 표시하지 않음.
 - provider credential delete는 hard delete가 아니라 `deleted_at` soft delete로 처리함. `disabled`는 재활성화 가능한 제외 상태이고, delete는 운영 목록/runtime candidate/rotation에서 제외되는 soft-deleted 상태다.
-- `provider_usage`는 사용된 provider credential을 internal FK로 저장하고, admin `/api-usage`에는 raw UUID/key id 없이 credential label/status/deleted 여부만 표시함.
+- provider credential runtime status/admin UI는 유지하되, external provider usage log 화면과 runtime 기록 surface는 현재 보류 상태다.
 - OpenAI env fallback은 2026-07-09 follow-up에서 제거됨. OpenAI runtime은 DB credential만 사용하며 DB credential이 없으면 `not_configured`로 실패한다.
 - Naver legacy key runtime은 정리됨.
 
@@ -83,7 +83,7 @@
 
 - `operation_run`: 사용자-facing 제품 실행. credit debit/refund 기준.
 - `credit_ledger`: 어떤 operation 때문에 몇 credits가 차감/환불되었는지 기록.
-- `external API usage log` 또는 `provider_usage`: OpenAI/Naver 등 외부 API 호출 감사/운영 진단 로그. 크레딧 차감 단위가 아님.
+- external API usage log: OpenAI/Naver 등 외부 API 호출 감사/운영 진단 로그 후보. 2026-07-09 follow-up에서 MVP surface는 보류/제거했다. 크레딧 차감 단위가 아님.
 
 피해야 할 표현:
 
@@ -389,55 +389,28 @@ admin 화면 표시:
 
 ### Phase 8E. External API usage log
 
-목표: provider 호출을 과금이 아닌 운영 감사/진단 로그로 기록하고 admin에서 볼 수 있게 한다.
+상태: 보류.
 
-현재 구현 상태:
+2026-07-09 follow-up에서 external API/provider usage log는 MVP 범위에서 제거했다. `web_admin` nav/route/page와 `web_api` provider_usage 기록/조회 runtime surface를 제거했고, admin DB cleanup migration으로 기존 `provider_usage` table/type도 제거한다. 사용자 credit 원장은 `credit_ledger`를 유지한다.
 
-- `web_api`:
-  - admin `GET /admin/provider-usage` 추가.
-  - `provider_usage` row를 최신순 cursor page로 조회한다.
-  - `operation_run_id`가 있는 row는 `provider_usage -> operation_runs -> operation_policies`를 LEFT JOIN해 product operation key/name과 run status를 반환한다.
-  - `operation_run_id`가 없는 row는 `usageContext`를 표시명/식별자로 사용한다.
-  - 응답 metadata에서 secret/token/password/api key/client secret/key id/credential id 계열 key는 제외한다.
-  - `provider_usage.operation_run_id`를 nullable로 전환하고 `session_id`, `usage_context`를 추가하는 admin migration을 추가했다.
-  - `provider_usage.provider_credential_id`를 추가해 사용 credential을 internal FK로 저장한다.
-  - `provider_credentials.deleted_at`을 추가해 API key delete를 soft delete로 바꿨고, runtime/list/detail 조회는 deleted row를 제외한다.
-- `desktop/clipper_nestjs`:
-  - Dance reference image search는 `/media/search`에 `usageContext='dance.reference_search'`를 전달한다.
-  - Shortform manual clip media search는 caller bearer token과 `usageContext='media.manual_search'`를 전달한다.
-  - Remote media search proxy는 `operationRunId`가 없는 authenticated search에 `usageContext='media.manual_search'`를 전달한다.
-- `web_admin`:
-  - `/api-usage` route와 상단 nav `API 사용` 추가.
-  - 외부 API 사용 로그 페이지에서 일시, provider, credential label/status, 제품 기능, operation key, run status, unit count, context metadata를 표시한다.
-  - operation run 없는 row는 operation key 위치에 `usageContext`를 표시하고, 상태는 `-`로 표시한다.
-  - cursor 기반 `더 보기`로 이전 로그를 append한다.
-  - 화면에서도 secret/token/password/api key/client secret/key id/credential id 계열 metadata key를 한 번 더 제외한다.
+보류 사유:
 
-현재 gap:
+- provider 호출 자체는 사용자 credit 차감 단위가 아니다.
+- operation billing ledger와 provider 운영 로그가 같은 화면/용어로 보이면 사용자 과금 정책을 오해하게 만든다.
+- credential rotation 분석에 필요한 snapshot/label/deleted 표시 정책을 더 명확히 해야 한다.
 
-- 일부 provider 호출만 `provider_usage`에 기록된다. 현재 확인된 setup/manual Naver image search gap과 credential attribution gap은 닫혔다.
-- OpenAI `/llm/variation`은 제품 기능/과금 정책이 2026-07-09에 확정됐지만, 실제 operation policy/start/provider usage 전환 구현은 아직 남아 있다.
+재개 조건:
 
-필수 작업:
+- 운영 비용 분석 또는 장애 진단 목적이 명확해야 한다.
+- user-facing product operation(`operation_run`, `credit_ledger`)과 external API 운영 로그를 UI/API 용어에서 분리해야 한다.
+- provider credential이 삭제/이름 변경된 뒤 과거 로그를 어떻게 보여줄지 결정해야 한다.
 
-- provider usage 기록 모델은 “operation run 선택적 연결 + usageContext”로 1차 정리했다.
-- 추가 provider 호출이 생기면 setup/manual search에는 `usageContext`를 남긴다. 예: `dance.reference_search`, `media.manual_search`.
-- userId/sessionId는 가능한 범위에서 기록한다.
-- providerCredentialId는 internal FK로만 저장하고, admin UI/API에는 원문 UUID/key id를 표시하지 않는다.
-- 과거 로그 표시는 provider credential row를 soft delete로 보존하고, admin UI에는 label/status/deleted 여부만 표시한다.
+재개 시 원칙:
 
-중요 정책:
-
-- provider image/media search는 사용자 credit 차감 대상이 아니다.
-- provider 사용 로그는 운영/비용 분석/rotation/debug용이다.
-- `disabled` credential은 나중에 다시 standby/active로 바꿀 수 있는 제외 상태다. delete는 `deleted_at`을 찍는 soft delete이며 운영 목록/rotation 후보에서 제외된다.
-
-검증:
-
-- Dance reference image search도 provider usage/audit에 남는다.
-- manual media search도 credit ledger 없이 provider usage/audit에 남는다.
-- provider secret은 response/log/UI 어디에도 나오지 않는다.
-- provider credential raw UUID/key id는 admin `/api-usage` response/UI에 나오지 않는다.
+- raw provider key, provider secret, credential UUID/key id를 UI에 표시하지 않는다.
+- provider call 자체를 사용자 credit 차감 단위로 표현하지 않는다.
+- image/media search 같은 provider-backed search는 사용자 credit 차감 대상이 아니다.
+- 필요한 경우 `credential label snapshot` 또는 soft-deleted credential join 정책을 별도로 설계한다.
 
 ### Phase 8J. Variation render billing and provider routing
 
@@ -516,6 +489,7 @@ admin 화면 표시:
 - 2026-07-09 follow-up에서 inactive operator는 login/refresh/JWT validate를 통과하지 못하게 했다.
 - 2026-07-09 follow-up에서 `/operators`는 super-admin 전용 route/API가 됐고, admin login session 관리는 `/operator-sessions` 별도 페이지로 분리했다.
 - 2026-07-09 follow-up에서 operator seed를 확장했다. `OPERATOR_SEED_EMAIL`/`OPERATOR_SEED_PASSWORD`는 `super-admin`/`active`로 보장하고, 선택 env인 `OPERATOR_SEED_OPERATOR_EMAIL`/`OPERATOR_SEED_OPERATOR_PASSWORD`가 둘 다 있으면 일반 `operator`/`active` 계정을 생성 또는 보정한다.
+- 2026-07-10 session close 기준 dev에는 operator/admin session 기본 구조와 super-admin route 제한이 반영되어 있다.
 - 중복을 줄여야 할 부분은 refresh token hashing, device metadata sanitizer, revoke helper 같은 낮은 수준의 유틸로 제한한다.
 
 완료된 작업:
@@ -552,7 +526,7 @@ admin 화면 표시:
 - credential status 전환 정책을 명확히 한다. `disabled`는 재활성화 가능한 제외, `deleted_at`은 soft delete로 runtime/rotation 후보에서 제외한다.
 - staging/prod에서 OpenAI/Naver runtime status 확인.
 - provider credential decrypt failure/empty secret 상태에서 user-facing 오류와 admin runtime 상태 정리.
-- provider usage log와 credential label/rotation 분석 연결.
+- external API usage log와 credential label/rotation 분석 연결은 Phase 8E 보류 해제 후 다시 결정한다.
 - OpenAI env fallback 완전 제거는 2026-07-09 follow-up에서 완료됐다. `OPENAI_API_KEY`/`OPENAI_API_KEY_ENV_FALLBACK_ENABLED`는 더 이상 OpenAI runtime credential 결정에 사용하지 않는다.
 
 검증:
@@ -600,17 +574,18 @@ Plugin Store 카드 `열기`와 사이드바 navigation은 과금하지 않는�
 
 ### Provider search billing
 
-인물별 이미지 검색, 클립별 미디어 검색, 수동 provider-backed search는 사용자 credit 차감 대상이 아니다. 운영 비용 추적을 위한 external API usage log로만 다룬다.
+인물별 이미지 검색, 클립별 미디어 검색, 수동 provider-backed search는 사용자 credit 차감 대상이 아니다. external API usage log는 현재 MVP에서 보류 상태이므로, 재개 전까지는 사용자-facing credit ledger와 섞지 않는다.
 
 ## 5. 다음 세션 추천 시작점
 
 추천 순서:
 
-1. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 제거는 완료됐으므로 DB credential-only 상태를 검증한다.
-2. Phase 8G: operator/admin session hardening. `operator_sessions` 분리 구조로 refresh rotation/session revoke/list를 추가.
-3. Phase 8J follow-up: `/llm/variation` provider usage 전환 여부 결정.
-4. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 재검증.
-5. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
-6. Phase 10: end-to-end billing QA.
+1. Dev deploy verification: m2-stage에 `web_api`와 `web_client` 최신 dev를 배포하고 `GET /downloads/latest`, landing Windows download 버튼을 확인한다.
+2. Release console verification: web_admin stable target과 public download manifest가 같은 artifact를 가리키는지 확인한다.
+3. Phase 9: provider credential rotation 운영 로직과 staging 검증. OpenAI env fallback 제거는 완료됐으므로 DB credential-only 상태를 검증한다.
+4. Phase 8G follow-up: API key write/release write/operation policy write 같은 민감 admin endpoint에 permission guard를 적용한다.
+5. Phase 8A/8B local migration + manual smoke: 하이라이트 61초/121초 이상 영상 quote와 실제 차감 재검증.
+6. Phase 8H/8I: desktop UI metadata SoT는 유지하고, cross-repo plugin metadata drift 방지 방식을 결정.
+7. Phase 10: end-to-end billing QA.
 
 Phase 8A와 8B는 같은 pricing input 모델을 공유하므로 같은 설계 안에서 다루되, 구현 커밋은 API DTO/pricing, local proxy, Angular UX로 나누는 것이 좋다.

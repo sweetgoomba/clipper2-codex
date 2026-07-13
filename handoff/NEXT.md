@@ -1,16 +1,53 @@
 # Next Handoff
 
-최신 갱신: 2026-07-09 KST
+최신 갱신: 2026-07-10 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-07 Auth/Session/License/Provider Implementation Entry
+## Active Handoff: 2026-07-10 Dev Merge, Release, Download, Packaging Follow-up
 
-이 섹션이 현재 기준이다. 아래 2026-07-03 설치형 앱 integration 섹션은 상세 이력으로만 본다.
+이 섹션이 현재 기준이다. 아래 2026-07-07 auth/session/license/provider 섹션은 상세 설계/이력으로만 본다.
 
-이번 다음 작업은 release/version publish가 아니다. 목표는 설치형 앱의 auth/session/license/credit/provider routing 후속 구현이다. secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 않는다.
+auth/session/license/credit/provider routing 구현은 dev merge 후 통합 정리까지 진행됐다. 이후 release/version 운영을 다시 이어서 dev 환경에서 앱 identity를 `Clipper Studio` 기준으로 정리했고, release DB를 dev 한정으로 reset해 0.0.1부터 다시 시작했다.
 
-현재 세션에서 전체 설계는 `.codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md`에 정리했다. `clipper_docs`에는 아직 추가하지 않는다. 설계가 구현 중 검증되고 팀 합의가 끝나기 전까지는 `.codex`를 로컬 문서 컨텍스트로 사용한다.
+secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 않는다. `clipper_docs`에는 아직 추가하지 말고, 설계/운영 변경은 `.codex` 문서에만 반영한다.
+
+현재 세션 요약:
+
+- `.codex/records/sessions/2026/07/10.md`
+- `.codex/design/RELEASE_VERSION_STATUS_2026-07-10.md`
+- `.codex/operations/env-runtime/records/2026/07/10-auth-runtime-env.md`
+- `.codex/operations/env-runtime/records/2026/07/10-dev-deploy-notes.md`
+- `.codex/operations/windows-packaging/records/2026/07/10-windows-runner-dev-release.md`
+
+현재 코드 repo 상태:
+
+- `desktop/clipper_angular`, `desktop/clipper_electron`, `desktop/clipper_nestjs`, `desktop/clipper_python`, `web/clipper_web_api`, `web/clipper_web_admin`, `web/clipper_web_client`, `web/clipper_infra` 모두 `dev...origin/dev` clean 상태로 확인했다.
+- 마지막 주요 커밋:
+  - `web/clipper_web_api`: `6d39cac fix: expose public download manifest`
+  - `web/clipper_web_admin`: `415b723 fix: improve release detail modal spacing`
+  - `web/clipper_web_client`: `8efca4b feat: split landing download actions`
+  - `web/clipper_infra`: `d10d54e test: update release runner app identity fixture`
+  - `desktop/clipper_electron`: `8eb9ed0 chore: rename packaged app to Clipper Studio`
+  - `desktop/clipper_nestjs`: `0a42a0b chore: align runtime app name with Clipper Studio`
+  - `desktop/clipper_angular`: `612e0b2 chore: update desktop UI app name`
+  - `desktop/clipper_python`: `fdb14f4 docs: clarify python credential boundary`
+
+즉시 확인할 운영 항목:
+
+1. m2-stage에 `web_api` 최신 dev를 배포한 뒤 `GET /downloads/latest`가 stable Windows artifact를 반환하는지 확인한다.
+2. m2-stage에 `web_client` 최신 dev를 배포한 뒤 `https://dev.clipperstudio.ai` Windows 버튼이 installer URL로 이동하는지 확인한다.
+3. web_admin release console에서 0.0.1 stable target과 public download manifest가 같은 artifact를 가리키는지 확인한다.
+4. Windows runner PC에서 runner container health와 token/start-token alignment를 다음 remote build 전에 확인한다.
+5. Mac download는 아직 준비중 상태로 둔다.
+
+남은 큰 작업:
+
+- admin permission guard 세분화: `/operators`, API key 수정/삭제, release publish 등 민감 admin API를 role/status 기반으로 보호한다.
+- operator role/status DB schema와 guard를 더 엄격하게 정리한다.
+- provider credential rotation 운영 검증을 계속한다.
+- session/device 개인정보 보관 기간, 삭제/탈퇴 시 처리 정책, 보안 로그 보관 정책은 별도 정책 결정 후 구현한다.
+- cross-repo plugin metadata SoT는 아직 미결정이다.
 
 ### Next Session Prompt
 
@@ -24,17 +61,19 @@ Using Superpowers.
 - .codex/handoff/NEXT.md
 - .codex/design/AUTH_SESSION_LICENSE_PROVIDER_TARGET_DESIGN_2026-07-07.md
 - .codex/design/AUTH_SESSION_LICENSE_PROVIDER_REMAINING_PHASES_2026-07-08.md
+- .codex/design/RELEASE_VERSION_STATUS_2026-07-10.md
+- .codex/operations/env-runtime/records/2026/07/10-auth-runtime-env.md
+- .codex/operations/env-runtime/records/2026/07/10-dev-deploy-notes.md
+- .codex/operations/windows-packaging/records/2026/07/10-windows-runner-dev-release.md
+- .codex/records/sessions/2026/07/10.md
 - .codex/records/sessions/2026/07/07.md
 
-이번 세션은 auth/session/license/credit/provider routing 구현을 이어서 진행한다.
-release/version publish 작업은 재개하지 마.
+이번 세션은 dev merge 이후 운영/배포 follow-up을 이어서 진행한다.
 secret-bearing 파일이나 env 값은 절대 출력하거나 커밋하지 마.
 clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex 문서에만 반영해.
 
 먼저 모든 관련 repo의 git status/log를 확인해줘.
-현재 작업 브랜치는 아래 이름으로 이미 생성되어 있다.
-브랜치명:
-  feature/auth-session-license-provider-20260707
+현재 기준 브랜치는 각 repo `dev`다. 새 작업이 필요하면 dev 최신에서 feature branch를 별도로 만들고 진행해.
 
 대상 repo:
   desktop/clipper_angular
@@ -48,15 +87,15 @@ clipper_docs에는 아직 문서를 추가하지 말고, 설계 변경은 .codex
 
 주의:
 - dirty worktree가 있으면 임의로 revert/reset하지 말고 먼저 보고해.
-- dev pull/새 브랜치 생성은 이미 이전 세션에서 수행했다. 반복이 필요해 보이면 먼저 보고해.
 - 실제 구현은 작은 phase별 커밋으로 나눈다.
 - TypeORM multi-DB, raw API response, NestJS feature layer 규칙, 상대 import, Angular 4파일 분리/Material token 규칙을 지킨다.
 
-Phase 1-7, Phase 8A-8E 주요 슬라이스, Phase 8D follow-up, Phase 8J Variation render billing/개별 render job 실패 부분 환불은 완료되어 있다.
-2026-07-09 follow-up에서 external API/provider usage log 기능은 보류로 되돌렸다. `web_admin` nav/route/page와 `web_api` provider_usage 기록/조회 runtime surface를 제거했고, admin DB에는 `DropProviderUsage1784700000000` cleanup migration을 추가해 기존 `provider_usage` table/type도 제거한다. 사용자 credit 원장은 `credit_ledger`를 유지한다.
-우선 Phase 9 provider credential rotation 운영/스테이징 검증을 이어서 진행해줘.
-OpenAI env fallback 완전 제거는 2026-07-09 follow-up에서 완료됐다. OpenAI runtime은 DB credential만 사용한다.
+우선 m2-stage에 `web_api`와 `web_client` 최신 dev를 배포하고, `GET /downloads/latest`와 landing Windows 다운로드 버튼을 검증해줘. 그 다음 admin permission guard/operator role-status 정리 또는 provider credential rotation 운영 검증 중 우선순위를 확인하고 진행해줘.
 ```
+
+## Historical Handoff: 2026-07-07 Auth/Session/License/Provider Implementation Entry
+
+이 섹션은 구현 이력으로 남긴다. 현재 다음 작업 기준은 위 2026-07-10 Active Handoff다.
 
 ### 2026-07-07 설계 결정 요약
 
