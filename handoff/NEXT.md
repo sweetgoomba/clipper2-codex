@@ -101,6 +101,101 @@ web/clipper_infra         dev                               clean
 
 위 코드 커밋과 `.codex` 문서는 각 원격 feature 브랜치 및 `.codex/main`에 push했다. deploy/DB 초기화/runner 재시작은 수행하지 않았다. 실제 cookie/env/key/provider secret은 출력·문서화·커밋하지 않았다. `clipper_docs`에는 추가하지 않았다.
 
+### Next Session Prompt
+
+```text
+Using Superpowers.
+
+작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
+
+이전 세션에서 Clipper Studio의 YouTube 인증·다운로드 안정화, macOS packaged QA, Python 3.11 runtime bootstrap 복구, Electron 패스키 검토와 문서화를 완료했다. 모든 변경사항은 저장소별 feature 브랜치와 .codex/main에 commit/push된 상태다.
+
+먼저 다음 문서를 읽고 현재 상태를 정확히 이어받아줘.
+
+- .codex/AGENTS.md
+- .codex/handoff/NEXT.md
+- .codex/records/sessions/2026/07/14.md
+- .codex/design/YOUTUBE_AUTH_DEBUG_TOOL_DESIGN_2026-07-13.md
+- .codex/design/YOUTUBE_AUTH_DEBUG_TOOL_IMPLEMENTATION_PLAN_2026-07-13.md
+- .codex/design/ELECTRON_YOUTUBE_PASSKEY_SUPPORT_REVIEW_2026-07-14.md
+- .codex/design/PASSKEY_DEEP_DIVE_2026-07-14.md
+
+그다음 아래 저장소의 git status, 현재 브랜치, 최근 log와 upstream 동기화 상태를 확인해줘.
+
+- desktop/clipper_angular
+- desktop/clipper_electron
+- desktop/clipper_nestjs
+- desktop/clipper_python
+- web/clipper_web_api
+- web/clipper_web_admin
+- web/clipper_web_client
+- web/clipper_infra
+- .codex
+
+현재 예상 상태:
+
+- desktop/clipper_angular: feature/youtube-auth-diagnostics, clean, origin 동기화
+- desktop/clipper_electron: feature/youtube-auth-diagnostics, clean, origin 동기화
+- desktop/clipper_nestjs: feature/youtube-auth-diagnostics, clean, origin 동기화
+- web/clipper_web_api: feature/youtube-auth-diagnostics, clean, origin 동기화
+- desktop/clipper_python: dev, clean
+- web/clipper_web_admin: dev, clean
+- web/clipper_web_client: dev, clean
+- web/clipper_infra: dev, clean
+- .codex: main, clean, origin 동기화
+
+현재 구현된 주요 내용:
+
+- 공개 YouTube 영상은 익명으로 먼저 처리하고 인증 오류일 때만 Electron 영상용 로그인에서 생성한 관리 쿠키로 재시도한다.
+- 일반 로그인, 채널 멤버십, 비공개, 연령 확인, Premium, anti-bot 오류를 분리해 사용자 안내와 영상용 계정 선택 액션을 제공한다.
+- YouTube 인증 디버그 페이지에서 runtime, 쿠키, 계정 전환 전후 인증 상태, 인증 전략별 metadata/download를 확인할 수 있다.
+- 일반 UNPLAYABLE metadata 응답은 1초 뒤 같은 전략으로 1회 재확인하고, download 403은 새 미디어 주소를 얻어 1초/3초 간격으로 최대 2회 재시도한다.
+- YouTube 주요 과정은 구조화 로그에 남기며 이메일, 쿠키, 토큰, 서명된 미디어 URL은 기록하지 않는다.
+- Dialog Highlight web_api 413 문제는 중복 payload 제거와 1MB JSON limit 명시로 수정됐다.
+- packaged 최초 실행은 시스템 Python 대신 uv 관리 Python 3.11을 준비하고, 잘못되거나 부분 설치된 app-owned venv와 yt-dlp/EJS를 복구한다.
+- 대사/안무 하이라이트의 YouTube URL 입력에서 Enter로 실행할 수 있다.
+- macOS Cmd+Q와 Windows/Linux 창 닫기에 종료 확인을 표시한다.
+- 현재 Electron 35 영상용 로그인 창에서는 패스키가 진행되지 않을 수 있어 `다른 방법 시도` 후 비밀번호·2단계 인증을 사용하도록 안내한다. Electron 업그레이드와 실제 패스키 지원은 별도 작업으로 보류했다.
+
+macOS packaged에서 확인된 내용:
+
+- 멤버십 미보유/보유 영상용 계정 전환에 따른 동일 영상 실패/성공
+- 비공개 영상 권한 안내, 권한 보유 계정 로그인 후 metadata와 Dialog Highlight 성공
+- 이전 web_api 413 실패 영상의 재실행 성공과 결과 품질 확인
+- 새 macOS test1 사용자에서 기존 Python 3.9 부분 설치를 감지해 관리 Python 3.11.14로 복구하고 정상 진입
+- 같은 userData의 두 번째 실행에서 runtime 준비를 재사용하고 불필요한 재설치를 하지 않음
+
+추후 검증으로 남긴 항목:
+
+- 연령 제한, YouTube Premium, anti-bot/추가 로그인 오류
+- 수정 빌드의 완전히 비어 있는 clean userData packaged 최초 실행
+- 플러그인별 venv 또는 모델 설치가 중단·손상된 상태의 복구
+- 인터넷 단절 또는 package 설치 실패 시 다시 시도/앱 종료 흐름
+- Windows packaged app의 cookie/EJS/metadata/download 전체 검증
+
+필요성에 따라 나중에 구현할 항목:
+
+- PO Token
+- 720p 품질 fallback
+- AV1/VP9 명시적 fallback
+- 오프라인 wheel 앱 내장
+- 전역 예외 로그의 `unhandled:` 명칭 분리
+- Electron 업그레이드와 macOS Touch ID/Windows Hello 패스키 지원
+
+중요:
+
+- 예상과 다른 dirty 변경이 있으면 임의로 revert/reset하지 말고 먼저 보고해.
+- .codex는 반드시 main 브랜치에서만 작업해.
+- 실제 쿠키, env 값, JWT key, provider secret을 출력·문서화·커밋하지 마.
+- clipper_docs에는 아직 문서를 추가하지 마.
+- 커밋/푸시/배포/DB 초기화/runner 재시작은 내가 명시적으로 요청할 때만 해.
+- 개발 서버나 Electron 앱도 내가 요청하기 전에는 실행하거나 종료하지 마.
+- TypeORM multi-DB, raw API response, NestJS feature layer와 상대 import, Angular 4파일 분리와 Material token 규칙을 지켜.
+- 상태 확인이 끝날 때까지 코드를 수정하지 마.
+
+먼저 문서와 저장소 상태만 확인해서 보고한 다음, 내가 다음 작업을 지시할 때까지 기다려줘.
+```
+
 ## Previous Handoff: 2026-07-13 YouTube Auth Diagnostics And Packaged Runtime
 
 상세 기록:
