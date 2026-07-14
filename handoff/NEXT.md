@@ -1,12 +1,62 @@
 # Next Handoff
 
-최신 갱신: 2026-07-10 KST
+최신 갱신: 2026-07-13 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-10 Dev Merge, Release, Download, Packaging Follow-up
+## Active Handoff: 2026-07-13 YouTube Auth Diagnostics And Packaged Runtime
 
-이 섹션이 현재 기준이다. 아래 2026-07-07 auth/session/license/provider 섹션은 상세 설계/이력으로만 본다.
+상세 기록:
+
+- `.codex/records/sessions/2026/07/13.md`
+- `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_DESIGN_2026-07-13.md`
+- `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_IMPLEMENTATION_PLAN_2026-07-13.md`
+
+현재 상태:
+
+- 개발자 모드의 `YouTube 디버그` 페이지를 `디버그 로그` 바로 위에 추가했다.
+- Electron 쿠키 파일/내장 세션 상태·삭제·전체 초기화·위치 열기, 내장/외부 로그인, 네 인증 전략, metadata/download 분리 진단을 구현했다.
+- `clipper_nestjs`는 실제 `SourceService` yt-dlp 실행 경로를 재사용하는 raw diagnostic API를 제공한다.
+- packaged local-api build는 `resources/auth/user-jwt-public.local.pem`을 선택하고 package 내부에는 안정적인 `auth/user-jwt-public.pem` 이름으로 포함한다.
+- Electron은 `35.7.0`으로 고정했고 내장 Node.js `22.16.0`을 확인했다.
+- 관리 venv는 `yt-dlp[default]>=2025.12.8`을 설치하며 기존 venv는 EJS marker가 없으면 다음 package app 실행에서 보강한다.
+- 자동 검증은 Angular/NestJS 관련 test/build, Electron build 및 전체 133 tests까지 통과했다.
+
+macOS packaged local-api 수동 결과:
+
+- 전체 초기화 + 인증 없음 + 기본 공개 URL metadata 성공
+- 같은 조건 실제 download 성공: 종료 코드 0, 약 3.9초, 약 97.6 MB
+- 회원 전용 영상 `k_TGyt6E29w`는 종료 코드 1과 `Join this channel` 오류로 실패해 접근 제한 재현
+- `Made for Kids` 공개 영상은 metadata/download 모두 성공했으며 기대 동작
+
+확인된 누락과 다음 우선순위:
+
+1. `authRequired`가 `Join this channel`/`members-only`를 분류하지 못한다. 로그인 필요와 멤버십 entitlement 필요를 구분해야 한다.
+2. 성공 metadata의 `availability`, `age_limit`, format count를 구조화해 raw JSON 검색 없이 확인할 수 있게 한다.
+3. 멤버 권한 계정으로 Electron 내장 로그인 + 관리 쿠키, 외부 로그인 + browser cookie 성공 경로를 확인한다.
+4. 연령 제한, private/premium, IP·guest session 기반 anti-bot 오류를 별도로 검증한다.
+5. 신규 설치/업데이트 시 관리 venv bootstrap이 오프라인에서 실패할 때 앱 진입 차단, 명확한 원인 안내, 재시도, 부분 설치 복구가 구현됐는지 감사한다.
+6. Windows packaged app에서 동일한 cookie/EJS/metadata/download 동작을 스모크한다.
+
+현재 repo 상태:
+
+```text
+desktop/clipper_angular   dev...origin/dev  dirty
+desktop/clipper_electron  dev...origin/dev  dirty
+desktop/clipper_nestjs    dev...origin/dev  dirty
+desktop/clipper_python    dev...origin/dev  clean
+web/clipper_web_api       dev...origin/dev  clean
+web/clipper_web_admin     dev...origin/dev  clean
+web/clipper_web_client    dev...origin/dev  clean
+web/clipper_infra         dev...origin/dev  clean
+.codex                    main...origin/main dirty
+```
+
+변경사항은 아직 commit/push하지 않았다. dirty worktree를 revert/reset하지 말고 현재 변경을 이어서 사용한다. secret-bearing 파일, 실제 cookie/env/key 값은 출력·문서화·커밋하지 않는다. `clipper_docs`에는 아직 추가하지 않는다.
+
+## Previous Handoff: 2026-07-10 Dev Merge, Release, Download, Packaging Follow-up
+
+이 섹션은 2026-07-10 당시 기준이다. 현재 작업 기준은 위 2026-07-13 handoff이며, 아래 2026-07-07 auth/session/license/provider 섹션은 상세 설계/이력으로만 본다.
 
 auth/session/license/credit/provider routing 구현은 dev merge 후 통합 정리까지 진행됐다. 이후 release/version 운영을 다시 이어서 dev 환경에서 앱 identity를 `Clipper Studio` 기준으로 정리했고, release DB를 dev 한정으로 reset해 0.0.1부터 다시 시작했다.
 
