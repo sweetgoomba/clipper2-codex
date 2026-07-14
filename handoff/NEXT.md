@@ -1,10 +1,93 @@
 # Next Handoff
 
-최신 갱신: 2026-07-13 KST
+최신 갱신: 2026-07-14 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-13 YouTube Auth Diagnostics And Packaged Runtime
+## Active Handoff: 2026-07-14 YouTube Source Hardening And Packaged QA
+
+상세 기록:
+
+- `.codex/records/sessions/2026/07/14.md`
+- `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_DESIGN_2026-07-13.md`
+- `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_IMPLEMENTATION_PLAN_2026-07-13.md`
+
+현재 구현/QA 상태:
+
+- 실제 하이라이트 YouTube 경로는 공개 영상은 익명으로 먼저 확인하고, 인증 오류일 때 Electron 내장 로그인에서 내보낸 관리 쿠키 파일로 재시도한다.
+- 채널 멤버십 필요와 일반 로그인 필요를 분리했고, Clipper Studio 로그인과 영상용 YouTube 계정이 별개임을 제품 UI에서 안내한다.
+- 영상용 계정 변경 전후 진단 결과와 개발용 계정 이메일 표시는 YouTube 디버그 페이지에만 유지한다. 제품 로그에는 계정 이메일을 기록하지 않는다.
+- YouTube가 같은 멤버십 영상에 간헐적으로 `Video unavailable. This video is not available`을 반환하는 현상을 실제 패키지 앱에서 확인했다.
+- `unknown` yt-dlp 오류에는 URL/이메일/로컬 경로/쿠키/토큰/서명 값을 제거한 `providerErrorSummary`와 `providerErrorFingerprint`를 기록한다.
+- 위 일반 `UNPLAYABLE` 계열이 metadata 단계에서 나오면 1초 뒤 같은 인증 전략으로 1회만 재확인한다. 구체적인 멤버십/비공개/연령 사유는 두 번째 실제 응답으로만 결정하며 추정하지 않는다.
+- 다운로드의 `media_access_forbidden`은 동일한 품질 선택식을 유지한 채 새 미디어 주소를 얻도록 1초/3초 간격으로 최대 2회 재시도한다.
+- Dialog Highlight web_api 413은 중복 LLM payload를 제거해 실제 실패 프로젝트의 요청을 약 172KB에서 약 13KB로 줄였고, web_api JSON limit도 1MB로 명시했다.
+- packaged 온라인 bootstrap은 시스템 Python을 사용하지 않고 uv 관리 Python 3.11을 명시적으로 설치한다. base와 플러그인별 venv 모두 `--python 3.11 --managed-python`을 사용한다.
+- Python 3.9 또는 실행 불가능한 base venv는 앱 소유 경로만 재생성하고, Python 3.11은 정상이나 yt-dlp/EJS가 빠진 경우에는 패키지 설치만 재실행한다. 모든 검증 성공 후에만 marker를 기록한다.
+- 필수 runtime 준비 실패 시 앱 진입을 차단한다. 네이티브 모달의 `로컬 파일로 계속` 경로는 제품 요구사항에서 제거했고 `다시 시도`/`앱 종료`만 제공한다.
+
+macOS packaged 수동 QA:
+
+- 멤버십 미보유/보유 계정 전환에 따라 동일 영상의 실패/성공과 실제 사용 계정 표시가 기대대로 동작했다.
+- 전체 초기화 후 멤버십 영상이 `members_only`로 안정적으로 분류되는 것을 확인했다. 새 일반 `UNPLAYABLE` 내부 재확인은 수동 재현하지 못했으며 자동 테스트로만 검증했다. 같은 현상이 다시 발생할 때 trace로 확인한다.
+- 이전 공개 영상 download 403 사례는 재검증 시 오류 없이 성공해 재시도 분기를 수동 재현하지 못했다. 다음 실제 403 발생 시 trace로 검증한다.
+- 2026-07-14 16:49에 web_api 413으로 실패했던 동일 YouTube URL의 Dialog Highlight 작업을 19:39에 다시 실행해 성공했다. 보관함 결과와 추출 클립을 확인했고 눈에 띄는 품질 저하는 없었다.
+- 비공개 영상은 권한 안내가 정확히 표시됐다. 해당 영상을 소유한 영상용 YouTube 계정으로 로그인한 뒤 metadata와 Dialog Highlight 전체 작업이 성공했다.
+- 새 `test1` macOS 사용자 첫 실행에서 기존 base venv 명령이 Command Line Tools Python 3.9.6을 선택해 Python 3.10 이상인 yt-dlp 요구사항을 만족하지 못하는 배포 차단 버그를 재현했다.
+- 수정 후 임시 clean HOME에서 앱 내장 uv가 CPython 3.11.14를 다운로드하고 yt-dlp 2026.7.4/EJS 0.8.0을 설치하는 것을 확인했다. 임시 Python 3.9 venv도 3.11.14로 재생성됐다.
+- 새 패키지를 실제 `test1` 계정에서 실행해 기존 Python 3.9.6 부분 설치를 감지하고 CPython 3.11.14로 재생성한 뒤 yt-dlp 2026.07.04/EJS 0.8.0을 준비해 정상 진입하는 것을 확인했다.
+- 같은 userData로 두 번째 실행했을 때 runtime 검사는 약 222ms 만에 `check.started`에서 `check.ready`로 끝났고 Python 다운로드, base venv 재생성, yt-dlp/EJS 재설치가 반복되지 않았다.
+- 두 번째 실행 중 최초 생성된 `clipper_video_render` 플러그인 venv도 관리 CPython 3.11.14를 사용해 26개 패키지를 정상 설치했다. 플러그인별 중단·손상 복구 검증은 별도 보류다.
+
+외부 브라우저 쿠키의 현재 제품 경계:
+
+- YouTube 디버그 페이지는 명시적인 `browser: chrome` 등 외부 브라우저 쿠키 진단을 제공한다.
+- 현재 packaged 하이라이트 제품 경로는 외부 Chrome 쿠키를 기본 사용하지 않는다. Electron은 관리 쿠키 파일 경로만 NestJS에 명시적으로 전달하며, 실행 중 진단도 `cookiesFromBrowser=미설정`, `autoBrowserCookies=꺼짐`이었다.
+- `CLIPPER_YTDLP_COOKIES_FROM_BROWSER`/`CLIPPER_YTDLP_AUTO_BROWSER_COOKIES`로 선택적으로 켤 수 있는 기반 코드는 있지만 현재 제품 기본 UX/설정은 아니다. 따라서 외부 Chrome 쿠키 성공 경로는 출시 필수 QA에서 제외하고 선택 기능을 실제 채택할 때 검증한다.
+
+즉시 남은 작업:
+
+1. Electron YouTube 로그인 창에서 Google 패스키 화면이 진행되지 않는 문제를 조사하고, 지원 또는 명확한 다른 로그인 방법 안내를 구현한다. 비밀번호 + 2단계 인증은 동작한다.
+
+추후 검증으로 명시적으로 보류:
+
+- 연령 제한, YouTube Premium, anti-bot/추가 로그인 오류
+- 수정 빌드의 완전히 비어 있는 clean userData packaged 최초 설치 경로. 실제 `test1` 검증은 수정 전 빌드가 만든 Python 3.9 부분 설치를 수정 빌드가 복구하는 경로였고, clean 경로의 동일한 uv 명령은 격리 자동 검증까지만 완료했다.
+- 플러그인별 venv 또는 모델 설치가 중단·손상된 상태의 복구
+- 오프라인/패키지 설치 실패 시 `다시 시도`/`앱 종료` packaged 수동 QA
+- Windows packaged app 전체 cookie/EJS/metadata/download 검증
+
+추후 필요성에 따라 구현할 항목:
+
+- PO Token 도입
+- 720p 품질 fallback
+- AV1/VP9 명시적 fallback
+- 오프라인 wheel 앱 내장
+- 전역 예외 로그의 `unhandled:` 명칭을 예상된 HTTP 실패와 진짜 미처리 예외로 분리
+
+현재 repo 상태:
+
+```text
+desktop/clipper_angular   feature/youtube-auth-diagnostics  clean, origin 대비 ahead 1
+desktop/clipper_electron  feature/youtube-auth-diagnostics  clean, origin 대비 ahead 3
+desktop/clipper_nestjs    feature/youtube-auth-diagnostics  clean, origin 대비 ahead 3
+desktop/clipper_python    dev                               clean
+web/clipper_web_api       feature/youtube-auth-diagnostics  clean, upstream 미설정
+web/clipper_web_admin     dev                               clean
+web/clipper_web_client    dev                               clean
+web/clipper_infra         dev                               clean
+.codex                    main                              clean, origin 대비 ahead 1
+```
+
+이번 마무리 커밋:
+
+- `desktop/clipper_nestjs` `89a6f39 fix(youtube): recheck generic unavailable metadata`
+- `desktop/clipper_electron` `6f694df fix(runtime): bootstrap managed Python 3.11`
+- `.codex` 문서 커밋은 이 인계문과 세션 기록을 함께 포함한다.
+
+push/deploy/DB 초기화/runner 재시작은 수행하지 않았다. 실제 cookie/env/key/provider secret은 출력·문서화·커밋하지 않는다. `clipper_docs`에는 아직 추가하지 않는다.
+
+## Previous Handoff: 2026-07-13 YouTube Auth Diagnostics And Packaged Runtime
 
 상세 기록:
 
