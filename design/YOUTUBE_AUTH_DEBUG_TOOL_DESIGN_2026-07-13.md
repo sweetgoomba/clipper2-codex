@@ -167,7 +167,9 @@ POST /v1/sources/diagnostics/youtube/run
 
 성공한 메타데이터 JSON에서는 `availability`와 `age_limit`이 접근 제한 판단의 보조 정보다. `availability`는 `public`, `unlisted`, `needs_auth`, `private`, `subscriber_only`, `premium_only` 등을 가질 수 있다. 다만 회원 전용·비공개·anti-bot 상황은 JSON 생성 전에 실패할 수 있으므로 stderr/종료 코드 판정을 함께 유지해야 한다. `Made for Kids`는 공개 범위를 제한하는 인증 상태가 아니며 공개 영상이라면 메타데이터와 다운로드가 인증 없이 성공하는 것이 정상이다.
 
-현재 구현은 `not a bot`, `sign in to confirm`, `login_required`, cookies 안내, 연령 확인 문구를 `authRequired`로 판정한다. `Join this channel`/`members-only` 분류와 성공 JSON의 `availability`/`age_limit` 구조화 표시는 후속 보완 항목이다.
+2026-07-13 최초 구현 시점에는 `not a bot`, `sign in to confirm`, `login_required`, cookies 안내, 연령 확인 문구만 `authRequired`로 판정했다. 당시 `Join this channel`/`members-only` 분류와 성공 JSON의 `availability`/`age_limit` 구조화 표시는 후속 보완 항목이었다.
+
+2026-07-14 후속 구현에서 회원 전용·로그인·비공개·연령 확인·Premium·anti-bot 사유를 분리했고, 성공 metadata의 `availability`, `ageLimit`, `formatCount`를 디버그 UI에 공개 상태·연령 제한·포맷 수로 표시하도록 완료했다. 최신 제품 동작과 QA는 `.codex/records/sessions/2026/07/14.md`를 기준으로 한다.
 
 ## 6. 보안
 
@@ -263,3 +265,7 @@ Clipper Studio packaged app: 개발자 모드 > YouTube 인증 디버그
 - IP·guest session·요청량에 따라 발생하는 anti-bot 로그인 요구
 - macOS 외 Windows packaged app 동일 동작
 - 최초 실행/업데이트 시 관리 venv 설치가 오프라인에서 실패할 때 명시적 안내, 앱 진입 차단, 재시도, 불완전 venv 복구가 구현되어 있는지에 대한 별도 감사
+
+위 목록은 2026-07-13 실측 당시 상태다. 2026-07-14에 Electron 관리 쿠키를 이용한 멤버십 보유/미보유 계정 전환, 비공개 영상 권한 계정 성공, 회원 전용 분류, metadata 요약 필드, 관리 Python 3.11 부분 설치 복구를 후속 검증했다. 외부 브라우저 쿠키, 연령 제한/Premium/anti-bot, 오프라인 실패, Windows packaged 검증은 계속 보류한다.
+
+Electron 35 영상용 로그인 창의 Google 패스키 진행 불가 현상, 현재 우회 안내, Electron/WebAuthn 업그레이드 보류 결정과 재개 조건은 `.codex/design/ELECTRON_YOUTUBE_PASSKEY_SUPPORT_REVIEW_2026-07-14.md`를 따른다.

@@ -10,7 +10,7 @@
 
 ---
 
-사용자 지시에 따라 이 계획의 커밋 단계는 생략한다. 각 저장소는 현재 `dev` 브랜치에서 수정하며, `.codex` 문서만 `main`에 둔다. push·배포·DB·runner 작업은 하지 않는다.
+2026-07-13 최초 실행에서는 사용자 지시에 따라 커밋 단계를 생략하고 각 코드 저장소의 `dev`, `.codex`의 `main`에서 작업했다. 2026-07-14 사용자가 새 기능 브랜치와 분리 커밋을 요청해 코드 변경은 `feature/youtube-auth-diagnostics`, `.codex` 문서는 `main`에 커밋했다. 전체 커밋 목록은 `.codex/records/sessions/2026/07/14.md`를 기준으로 한다. 마무리 단계에서 push·배포·DB·runner 작업은 하지 않았다.
 
 ## Execution Status (2026-07-13)
 
@@ -23,10 +23,14 @@
 - 같은 조건의 실제 다운로드 성공: 종료 코드 0, 약 3.9초, 약 97.6 MB, 임시 파일 정리 경로 사용
 - 회원 전용 영상의 `none + metadata`는 종료 코드 1과 `Join this channel` 오류로 실패해 접근 제한 재현 성공
 - 아동용(`Made for Kids`) 공개 영상은 metadata/download 모두 성공했으며 기대 동작으로 확인
-- 회원 전용 오류를 현재 `authRequired`가 분류하지 못하는 누락 확인; `availability`/`age_limit` 구조화 표시와 함께 후속 보완 필요
-- 로그인 후 관리 쿠키/브라우저 쿠키, 연령 제한, anti-bot, Windows packaged 경로의 수동 검증은 보류
-- 최초 실행/업데이트의 관리 venv 설치가 오프라인에서 실패할 때 안내·앱 진입 차단·재시도·부분 설치 복구가 되는지는 별도 감사 필요
-- 사용자 지시에 따라 commit, push, 배포는 수행하지 않음
+- 2026-07-13 당시 회원 전용 오류를 `authRequired`가 분류하지 못하는 누락을 확인했다.
+- 2026-07-14 후속 완료: 로그인 필요와 회원 전용 entitlement를 분리하고, 비공개·연령 확인·Premium·anti-bot 사유를 구조화했다.
+- 2026-07-14 후속 완료: 성공 metadata의 `availability`, `ageLimit`, `formatCount`를 디버그 UI 요약에 표시한다.
+- 2026-07-13 당시 로그인 후 관리 쿠키/브라우저 쿠키, 연령 제한, anti-bot, Windows packaged 경로의 수동 검증은 보류했다.
+- 2026-07-14 후속 완료: Electron 관리 쿠키로 멤버십 계정 전환과 비공개 영상 권한 계정 성공을 검증했다. 외부 브라우저 쿠키, 연령 제한, Premium, anti-bot, Windows packaged 검증은 계속 보류한다.
+- 2026-07-14 후속 결정: Electron 35의 Google 패스키 진행 불가에 대해 현재 제품은 `다른 방법 시도` 후 비밀번호·2단계 인증 등을 사용하도록 안내한다. Electron 업그레이드와 WebAuthn 구현은 `.codex/design/ELECTRON_YOUTUBE_PASSKEY_SUPPORT_REVIEW_2026-07-14.md`의 별도 작업으로 보류했다.
+- 2026-07-14 후속 완료: 필수 runtime 준비 전 앱 진입 차단, 재시도/앱 종료 선택, 관리 Python 3.11 설치, 잘못된 base venv와 누락 패키지 복구를 구현했다. 인터넷 단절·설치 실패 packaged QA와 플러그인별 중단·손상 복구는 계속 보류한다.
+- 2026-07-13 최초 구현 단계에서는 commit, push, 배포를 수행하지 않았다. 2026-07-14 사용자 요청으로 저장소별 커밋을 만들었고 마무리 단계에서 push·배포는 수행하지 않았다.
 
 ## File Map
 

@@ -11,17 +11,25 @@
 - `.codex/records/sessions/2026/07/14.md`
 - `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_DESIGN_2026-07-13.md`
 - `.codex/design/YOUTUBE_AUTH_DEBUG_TOOL_IMPLEMENTATION_PLAN_2026-07-13.md`
+- `.codex/design/ELECTRON_YOUTUBE_PASSKEY_SUPPORT_REVIEW_2026-07-14.md`
+- `.codex/design/PASSKEY_DEEP_DIVE_2026-07-14.md`
 
 현재 구현/QA 상태:
 
 - 실제 하이라이트 YouTube 경로는 공개 영상은 익명으로 먼저 확인하고, 인증 오류일 때 Electron 내장 로그인에서 내보낸 관리 쿠키 파일로 재시도한다.
 - 채널 멤버십 필요와 일반 로그인 필요를 분리했고, Clipper Studio 로그인과 영상용 YouTube 계정이 별개임을 제품 UI에서 안내한다.
+- 현재 Electron 35 영상용 로그인 창은 패스키 로그인을 지원하지 않는다. YouTube 로그인 액션이 있는 제품 오류에 `다른 방법 시도`를 눌러 비밀번호·2단계 인증 등을 사용하라는 안내를 표시한다.
+- 대사/안무 하이라이트의 YouTube URL 입력에서 Enter를 누르면 각 화면의 영상 불러오기/아티스트 감지 액션을 실행한다.
 - 영상용 계정 변경 전후 진단 결과와 개발용 계정 이메일 표시는 YouTube 디버그 페이지에만 유지한다. 제품 로그에는 계정 이메일을 기록하지 않는다.
+- 성공 metadata의 `availability`, `ageLimit`, `formatCount`는 디버그 UI에 공개 상태·연령 제한·포맷 수로 구조화해 표시한다.
+- 새 userData의 관리 쿠키 파일과 Electron 영상용 인증 세션은 비어 있다. 공개 영상 익명 실행은 쿠키를 만들지 않고, Electron 영상용 로그인 창을 닫을 때만 해당 세션을 Netscape 관리 파일로 내보낸다.
 - YouTube가 같은 멤버십 영상에 간헐적으로 `Video unavailable. This video is not available`을 반환하는 현상을 실제 패키지 앱에서 확인했다.
 - `unknown` yt-dlp 오류에는 URL/이메일/로컬 경로/쿠키/토큰/서명 값을 제거한 `providerErrorSummary`와 `providerErrorFingerprint`를 기록한다.
 - 위 일반 `UNPLAYABLE` 계열이 metadata 단계에서 나오면 1초 뒤 같은 인증 전략으로 1회만 재확인한다. 구체적인 멤버십/비공개/연령 사유는 두 번째 실제 응답으로만 결정하며 추정하지 않는다.
 - 다운로드의 `media_access_forbidden`은 동일한 품질 선택식을 유지한 채 새 미디어 주소를 얻도록 1초/3초 간격으로 최대 2회 재시도한다.
 - Dialog Highlight web_api 413은 중복 LLM payload를 제거해 실제 실패 프로젝트의 요청을 약 172KB에서 약 13KB로 줄였고, web_api JSON limit도 1MB로 명시했다.
+- YouTube 구조화 로그에는 영상 식별용 정규 `sourceUrl`만 기록한다. 공유 URL 쿼리, 서명된 미디어/provider URL, 쿠키, 이메일, 토큰은 기록하지 않는다.
+- macOS 기본 앱 메뉴를 복원해 `Cmd+Q`를 정상화했고, macOS 앱 종료와 Windows/Linux 창 닫기에 취소가 기본인 네이티브 종료 확인을 연결했다. 확인 후 자식 runtime을 정리하며 OS session end에서는 확인을 생략한다.
 - packaged 온라인 bootstrap은 시스템 Python을 사용하지 않고 uv 관리 Python 3.11을 명시적으로 설치한다. base와 플러그인별 venv 모두 `--python 3.11 --managed-python`을 사용한다.
 - Python 3.9 또는 실행 불가능한 base venv는 앱 소유 경로만 재생성하고, Python 3.11은 정상이나 yt-dlp/EJS가 빠진 경우에는 패키지 설치만 재실행한다. 모든 검증 성공 후에만 marker를 기록한다.
 - 필수 runtime 준비 실패 시 앱 진입을 차단한다. 네이티브 모달의 `로컬 파일로 계속` 경로는 제품 요구사항에서 제거했고 `다시 시도`/`앱 종료`만 제공한다.
@@ -45,9 +53,13 @@ macOS packaged 수동 QA:
 - 현재 packaged 하이라이트 제품 경로는 외부 Chrome 쿠키를 기본 사용하지 않는다. Electron은 관리 쿠키 파일 경로만 NestJS에 명시적으로 전달하며, 실행 중 진단도 `cookiesFromBrowser=미설정`, `autoBrowserCookies=꺼짐`이었다.
 - `CLIPPER_YTDLP_COOKIES_FROM_BROWSER`/`CLIPPER_YTDLP_AUTO_BROWSER_COOKIES`로 선택적으로 켤 수 있는 기반 코드는 있지만 현재 제품 기본 UX/설정은 아니다. 따라서 외부 Chrome 쿠키 성공 경로는 출시 필수 QA에서 제외하고 선택 기능을 실제 채택할 때 검증한다.
 
-즉시 남은 작업:
+패스키 관련 현재 결정:
 
-1. Electron YouTube 로그인 창에서 Google 패스키 화면이 진행되지 않는 문제를 조사하고, 지원 또는 명확한 다른 로그인 방법 안내를 구현한다. 비밀번호 + 2단계 인증은 동작한다.
+- Electron `35.7.0`은 이번 작업에서 변경하지 않는다.
+- 패스키 지원은 Electron 업그레이드, `app.configureWebAuthn()`, macOS 서명 entitlement, macOS/Windows packaged QA가 함께 필요하므로 별도 작업으로 보류한다.
+- 개발·CI Node와 Electron 내장 Node는 별도이지만 완전히 무관하지 않다. Electron 40 이상으로 올릴 때는 Node 22 빌드/테스트 경로와 Electron 내장 Node 24 main/preload/utility/yt-dlp EJS 경로를 모두 검증한다.
+- 현재 제품 우회 안내와 재개 조건은 `.codex/design/ELECTRON_YOUTUBE_PASSKEY_SUPPORT_REVIEW_2026-07-14.md`를 기준으로 한다.
+- 패스키의 역사, FIDO2/WebAuthn 구조, 종류, macOS·Windows·Android 동작, 보안 효과와 한계는 `.codex/design/PASSKEY_DEEP_DIVE_2026-07-14.md`에 별도 학습 문서로 정리했다.
 
 추후 검증으로 명시적으로 보류:
 
@@ -68,24 +80,26 @@ macOS packaged 수동 QA:
 현재 repo 상태:
 
 ```text
-desktop/clipper_angular   feature/youtube-auth-diagnostics  clean, origin 대비 ahead 1
-desktop/clipper_electron  feature/youtube-auth-diagnostics  clean, origin 대비 ahead 3
-desktop/clipper_nestjs    feature/youtube-auth-diagnostics  clean, origin 대비 ahead 3
+desktop/clipper_angular   feature/youtube-auth-diagnostics  clean, origin 동기화
+desktop/clipper_electron  feature/youtube-auth-diagnostics  clean, origin 동기화
+desktop/clipper_nestjs    feature/youtube-auth-diagnostics  clean, origin 동기화
 desktop/clipper_python    dev                               clean
-web/clipper_web_api       feature/youtube-auth-diagnostics  clean, upstream 미설정
+web/clipper_web_api       feature/youtube-auth-diagnostics  clean, origin 동기화
 web/clipper_web_admin     dev                               clean
 web/clipper_web_client    dev                               clean
 web/clipper_infra         dev                               clean
-.codex                    main                              clean, origin 대비 ahead 1
+.codex                    main                              clean, origin 동기화
 ```
 
-이번 마무리 커밋:
+이번 세션 커밋:
 
-- `desktop/clipper_nestjs` `89a6f39 fix(youtube): recheck generic unavailable metadata`
-- `desktop/clipper_electron` `6f694df fix(runtime): bootstrap managed Python 3.11`
-- `.codex` 문서 커밋은 이 인계문과 세션 기록을 함께 포함한다.
+- `desktop/clipper_angular`: `77b4ce4`, `af07d62`, `06c3098`, `03d07ba`
+- `desktop/clipper_electron`: `fb60b95`, `70d3374`, `fbf860e`, `756be44`, `97ab0f3`, `6f694df`
+- `desktop/clipper_nestjs`: `cf8cb52`, `83f322e`, `b49815f`, `89a6f39`
+- `web/clipper_web_api`: `b593062`
+- `.codex`: `7877237`, `dae4665`와 이 세션 최종 문서 커밋
 
-push/deploy/DB 초기화/runner 재시작은 수행하지 않았다. 실제 cookie/env/key/provider secret은 출력·문서화·커밋하지 않는다. `clipper_docs`에는 아직 추가하지 않는다.
+위 코드 커밋과 `.codex` 문서는 각 원격 feature 브랜치 및 `.codex/main`에 push했다. deploy/DB 초기화/runner 재시작은 수행하지 않았다. 실제 cookie/env/key/provider secret은 출력·문서화·커밋하지 않았다. `clipper_docs`에는 추가하지 않았다.
 
 ## Previous Handoff: 2026-07-13 YouTube Auth Diagnostics And Packaged Runtime
 
