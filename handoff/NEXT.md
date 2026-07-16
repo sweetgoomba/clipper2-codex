@@ -1,10 +1,630 @@
 # Next Handoff
 
-최신 갱신: 2026-07-14 KST
+최신 갱신: 2026-07-16 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-14 YouTube Source Hardening And Packaged QA
+## Active Handoff: 2026-07-16 AI 숏폼 디렉터 Remotion PoC 결과와 production gate
+
+상세 기록:
+
+- `.codex/records/sessions/2026/07/16.md`
+- `.codex/design/PROMPT_SHORTFORM_QUALITY_AND_HYBRID_GENERATION_DIRECTION_2026-07-15.md`
+- `.codex/design/VIRA_CURRENT_CODE_AUDIT_AND_CLIPPER_EVIDENCE_HANDOFF_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PLUGIN_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PLUGIN_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_VIRA_EVIDENCE_POLICY_AND_STRATEGY_INPUT_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_VIRA_EVIDENCE_POLICY_AND_STRATEGY_INPUT_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_GROUNDED_CONTENT_STRATEGY_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_GROUNDED_CONTENT_STRATEGY_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_NATIVE_VIDEO_PLAN_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_NATIVE_VIDEO_PLAN_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_REPRESENTATIVE_45S_EVAL_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_REPRESENTATIVE_45S_EVAL_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_ASSET_PACK_RESOLUTION_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_ASSET_PACK_RESOLUTION_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PROJECT_ARTIFACT_BINDING_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PROJECT_ARTIFACT_BINDING_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_ASSET_ACQUISITION_AND_MANUAL_REPLACEMENT_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_ASSET_ACQUISITION_AND_MANUAL_REPLACEMENT_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_REPRESENTATIVE_ASSET_ACCEPTANCE_AND_PRODUCTION_READINESS_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_REPRESENTATIVE_ASSET_ACCEPTANCE_AND_PRODUCTION_READINESS_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_SUPERTONIC_TTS_TIMING_ALIGNMENT_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_SUPERTONIC_TTS_TIMING_ALIGNMENT_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_NARRATION_AUDIO_MATERIALIZATION_AND_REGENERATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_NARRATION_AUDIO_MATERIALIZATION_AND_REGENERATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDER_RECIPE_COMPILER_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDER_RECIPE_COMPILER_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PROGRAMMATIC_MOTION_AND_DETERMINISTIC_PREVIEW_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_PROGRAMMATIC_MOTION_AND_DETERMINISTIC_PREVIEW_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_DIAGRAM_STEP_COPY_OWNERSHIP_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_DIAGRAM_STEP_COPY_OWNERSHIP_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDER_INPUT_REVALIDATION_AND_STAGING_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDER_INPUT_REVALIDATION_AND_STAGING_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ADAPTER_AND_OPERATION_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ADAPTER_AND_OPERATION_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_CONFORMANCE_AND_BENCHMARK_ACCEPTANCE_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_CONFORMANCE_AND_BENCHMARK_ACCEPTANCE_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ROLE_ALLOCATION_AND_FIRST_POC_DECISION_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ROLE_ALLOCATION_AND_FIRST_POC_IMPLEMENTATION_PLAN_2026-07-16.md`
+
+초기 legacy adapter 문서는 이력만 보존하며 superseded 상태다.
+
+- `.codex/design/SHORTFORM_VIDEO_PLAN_FOUNDATION_DESIGN_2026-07-16.md`
+- `.codex/design/SHORTFORM_VIDEO_PLAN_FOUNDATION_IMPLEMENTATION_PLAN_2026-07-16.md`
+
+### 현재 결정
+
+- 기존 `프롬프트로 숏폼 제작(shortform_prompt)` 플러그인은 변경하지 않는다.
+- 새 품질 파이프라인은 독립 `shortform_director` / `AI 숏폼 디렉터` 플러그인에서 만든다.
+- 새 플러그인은 legacy clips를 backfill하지 않고 `PlanningContext + native VideoPlan`을 처음부터 소유한다.
+- `VideoPlan`은 creative planning IR, 기존 `render-recipe.v1`은 실행 IR로 역할을 분리한다.
+- 실제 `/Users/jina/project/vira` 현재 코드를 정본으로 삼고 PDF는 방향 참고 자료로만 쓴다.
+- `vira-evidence.v1`은 current/lab/on-demand/legacy lifecycle을 분리하고 surface-lifecycle 조합을 runtime에서 검증한다.
+- 현재 Vira에는 Clipper exporter/API가 없으므로 네트워크나 DB 직접 연동은 하지 않았다.
+- production renderer와 image/video provider는 아직 미정이다.
+- renderer는 상호 배타적인 단일 선택이 아니라 범용 합성, 전문 도식 materialization, 최종 media 처리 역할로 나눈다.
+- 범용 합성은 Remotion을 첫 비프로덕션 PoC로 검증하고 Motion Canvas는 packaging/license/quality gate 실패 시 두 번째 후보로 둔다.
+- 기존 app-managed FFmpeg/ffprobe는 최종 probe, thumbnail과 필요한 mux/normalize 역할을 유지한다.
+- `diagram.sequence-card.v1` 같은 간단한 programmatic motion은 메인 합성기가 직접 구현한다.
+- Manim은 final render 중 즉석 호출하지 않고 복잡한 기술·수학 도식을 checksummed artifact로 먼저 materialize한 뒤 immutable stage에 넣는 전문 renderer 후보로 둔다.
+- 첫 PoC에서는 Angular에 React/Remotion Player를 넣지 않고 같은 RenderRecipe/motion 계약을 Angular preview와 Remotion final/still render가 각각 소비한다.
+- Remotion source/runtime은 Nest `ncc` bundle과 분리하고 production runtime의 자동 browser/native binary download를 허용하지 않는다.
+- Remotion production 후보 승격 전 company license, packaged binary size, supported macOS 범위와 Windows x64를 확인해야 한다.
+- isolated Remotion `4.0.489`/React `19.2.7` representative harness는 구현됐고 automated conformance 7개가 모두 pass했다.
+- raw Remotion video는 41.2초였지만 AAC/container가 41.258667초여서 조건부 FFmpeg audio trim/remux가 실제로 필요했다.
+- 최종 MP4는 41.2초, 30fps, 1080×1920, H.264/AAC이며 progress와 AbortSignal cancel도 실제 render에서 검증했다.
+- visual renderer spot check는 통과했지만 synthetic media라 manual 7축은 pending이고 production adapter는 여전히 0개다.
+- `VideoPlan + AssetPack + narrationAudio`는 strict gate 뒤 기존 `render-recipe.v1`로 결정적으로 컴파일한다.
+- Director recipe는 `shortform.director.hybrid.v1` identity와 `shortform-director-composition.v1` layer metadata를 사용한다.
+- 기존 renderer가 새 recipe를 자동 claim하지 않도록 `shortformTemplateModel`과 legacy provenance를 넣지 않는다.
+- compile endpoint는 owner-scoped read-only preview이며 project/file/operation/render 상태를 변경하지 않는다.
+- `diagram.sequence-card.v1`은 `shortform-director-programmatic-motion.v1` normalized motion 계약을 갖는다.
+- motion sampler는 start/reveal/hold/exit/end 5개 reference frame을 결정적으로 만든다.
+- Angular preview는 RenderRecipe overlay의 동일 motion 값을 소비하며 별도 preview API나 영상 파일을 만들지 않는다.
+- diagram Layer `content`는 sequence-card headline, `programmaticPayload`는 `context/evidence/action` exact copy를 소유한다.
+- web strict draft는 diagram payload object와 non-diagram null을 필수로 생성·검증한다.
+- renderer/compiler/Angular preview는 VideoPlan authored copy를 그대로 소비하며 새 광고 문구를 만들지 않는다.
+- `상황 → 확인 → 행동`은 payload가 없는 기존 저장 plan에만 적용되는 compiler compatibility fallback이다.
+- `planning-context.v2`는 BrandProfile, expanded CampaignBrief, SourcePack claim/provenance를 소유한다.
+- `ContentStrategy`의 Vira 직접 인용은 candidate evidence로 제한하고 context-only/excluded를 분리한다.
+- LLM 전략 생성은 기존 `/llm/script`와 분리된 web API endpoint와 별도 operation을 사용한다.
+- 사용자가 고른 matrix entry와 연결 hypothesis만 native VideoPlan 입력으로 사용한다.
+- LLM 생성 직후 `VideoPlan` timeline은 absolute ms, 0-based contiguous Scene/Beat/Shot이며 timing은 `estimated`다.
+- 현재 Supertonic은 word/sentence timestamp를 반환하지 않고 WAV 경로만 반환하며 Nest가 전체 duration/checksum을 측정한다.
+- cue별 artifact/checksum/text fingerprint/duration exact set이 유효할 때만 plan을 `tts_aligned`로 재배치한다.
+- 순수 TTS alignment fallback은 원본 estimated plan을 변경하지 않는다.
+- `tts-timing-alignment.v1`은 voice/speed 재생성의 누적 오차를 막기 위해 compact estimated timing baseline을 보존한다.
+- `narration-audio-pack.v1`은 현재 VideoPlan에 연결된 Supertonic voice/speed와 cue별 materialized WAV metadata를 저장한다.
+- 나레이션 project JSON에는 파일 경로/URL/provider raw payload/credential을 저장하지 않는다.
+- cue 합성은 순차 실행하고 전체 성공 뒤 project를 한 번 저장한다. 일부 실패 시 새 파일을 제거하고 이전 project/generation을 유지한다.
+- 나레이션 재생성은 직전 aligned timing이 아니라 저장된 estimated baseline에서 다시 시작한다.
+- TTS provider는 기존 공용 Supertonic으로 고정했으며 별도 operation charge는 없다.
+- Layer는 실제 provider/artifact가 아니라 `owned|source|search|generated-*|programmatic|unresolved` 계획 전략만 갖는다.
+- product/evidence visual에는 생성형 route를 금지하고 diagram/text는 programmatic으로 제한한다.
+- 품질 자동화의 첫 단계는 45초 합성 기준편과 `structural_proxy` evaluator이며 production 생성 gate가 아니다.
+- 자동 평가는 blocking/warning과 측정값만 만들고 임의의 100점 총점은 만들지 않는다.
+- source faithfulness, hook strength, script/visual/motion/mobile 품질은 rendered sample의 수동 검토 축으로 남긴다.
+- `asset-pack.v1`은 VideoPlan visual layer의 requirement, AssetRef, binding과 렌더 준비도를 별도 snapshot으로 소유한다.
+- `resolved`는 준비 완료, `missing`은 route는 있으나 실제 ref가 없음, `unresolved`는 route 자체가 미정이라는 뜻이다.
+- AssetRef는 URL/파일 경로가 아니라 project-scoped `(projectId, artifactId)` locator, origin, provenance, rights, availability 메타데이터를 갖는다.
+- production 입력의 첫 범위로 같은 사용자의 로컬 `owned/source` ProjectManifest artifact를 연결할 수 있다.
+- `search|generated-image|generated-video` route에는 provider-neutral acquisition 상태 계약을 두되 실제 provider 실행은 아직 없다.
+- search/generated layer는 로컬 owned/source project artifact로 명시적 manual replacement가 가능하다.
+- planned origin binding과 manual replacement binding을 구분하며 수동 대체를 해제해도 원 acquisition 상태를 보존한다.
+- `asset-production-readiness.v1`은 local resolution, provider outstanding, retryable, blocking 상태를 별도 gate로 계산한다.
+- readiness는 `empty|ready|waiting|blocked`이며 `renderable`은 모든 visual requirement가 해결된 ready에서만 true다.
+- remote provider 결과와 render artifact는 아직 후보가 아니며 provider는 미정이다.
+- 새 project-artifact binding은 artifact kind/media type/size/checksum의 `project-artifact-snapshot.v1`을 AssetRef에 저장한다.
+- snapshot 없는 기존 AssetRef는 manifest metadata 또는 현재 content checksum으로 render-input staging할 수 있다.
+- `POST .../:projectId/render-input-stage`는 current project를 다시 compile한 뒤 exact visual/TTS 파일을 재검증하고 immutable local stage로 고정한다.
+- stage id는 project/recipe/input checksum snapshot에 결정적으로 묶이며 같은 snapshot은 기존 stage를 재사용한다.
+- stage public contract에는 path/URL/internal filename/provider/model/credential이 없고 project JSON도 변경하지 않는다.
+- Angular의 `렌더 입력 고정`은 recipe 확인 뒤에만 보이며 과금·renderer·provider·queue를 실행하지 않는다.
+- private stage manifest는 checksum으로 봉인된 exact RenderRecipe를 함께 보관한다.
+- private execution bundle은 recipe와 sourceId/stagedInputId metadata를 갖고 staged absolute path는 `resolveInput(sourceId)` 호출에서만 해소한다.
+- Director renderer adapter는 original ProjectManifest/source path가 아니라 execution bundle만 소비한다.
+- Director adapter registry는 claim/availability/explicit id를 검증하되 production adapter는 0개이고 generic VideoRenderProvider를 자동 포함하지 않는다.
+- future JobsService params는 path/raw recipe 대신 opaque stage/recipe checksum reference만 저장한다.
+- stage retention class는 active job, retry source, completed source로만 고정했으며 기간/삭제 worker는 아직 없다.
+- adapter가 없으므로 render operation API/Angular render controls/queue executor는 아직 추가하지 않았다.
+- private execution bundle에서 deterministic renderer conformance profile과 canonical staged-input fingerprint를 만든다.
+- profile은 representative output/timeline counts, required capability와 sequence-card 5개 semantic state checksum을 가진다.
+- candidate benchmark는 revision/environment/elapsed/output bytes/optional peak RSS를 기록하지만 performance threshold나 순위에는 쓰지 않는다.
+- 자동 gate 뒤 기존 manual 7축 exact all-pass만 최종 accepted이며 평균·가중치·100점 총점은 없다.
+
+### 구현 상태
+
+```text
+desktop/clipper_angular
+  branch: feat/shortform-director-foundation
+  remote: origin/dev 대비 5 commits behind
+  uncommitted: central plugin registration + features/shortform-director/**
+
+desktop/clipper_nestjs
+  branch: feat/shortform-director-foundation
+  remote: origin/dev 대비 2 commits behind
+  uncommitted: catalog/AppModule + modules/shortform-director/** + foundation test
+
+web/clipper_web_api
+  branch: feat/shortform-director-foundation
+  uncommitted: strategy/video-plan modules + operation policies/migrations
+
+.codex
+  branch: main
+  uncommitted: design/session/handoff only
+
+/Users/jina/project/vira
+  branch: main
+  HEAD at audit: 2f1d1fd
+  read-only audit
+```
+
+현재 구현된 흐름:
+
+```text
+Plugin Store 설치
+  → /shortform/director
+  → campaign prompt + BrandProfile + expanded CampaignBrief + SourcePack claims
+  → optional vira-evidence.v1 JSON paste
+     + lab/legacy explicit opt-in
+  → POST /projects/shortform-director/projects
+  → Vira envelope + current payload validation
+  → candidate/context_only/excluded admission
+  → owner-scoped dedicated JSON store
+  → PlanningContext v2 + contentStrategy:null + empty native VideoPlan
+  → shortform_director.strategy 10 credit quote/confirm
+  → web API strict structured ContentStrategy
+  → candidate evidence/source claim reference 이중 검증
+  → ContentStrategy 저장 + matrix 표시
+  → matrix entry 선택 + shortform_director.video_plan 10 credit quote/confirm
+  → web API strict video-plan-draft.v1
+  → absolute timeline/grounding/hook/CTA/asset route 이중 검증
+  → server provenance + narration cue 조립
+  → native VideoPlan + AssetPack 저장
+  → hierarchy + 에셋 준비도 요약
+
+오프라인 품질 회귀
+  → Vira-shaped synthetic evidence + 승인 claim 2개
+  → 45초 expected ContentStrategy/VideoPlan
+  → 기존 admission/contract validator
+  → video-plan-quality-report.v1
+     ├─ blocking 8개
+     ├─ warning 4개 + structural metrics
+     └─ manual_review_required 7개 축
+
+에셋 readiness
+  → VideoPlan visual layer만 requirement로 변환
+  → programmatic: resolved
+  → owned/source/search/generated + ref 없음: missing
+  → unresolved strategy: unresolved
+  → Angular에서 준비/필요/방식 미정과 pending 위치 표시
+  → owned/source pending layer에서 프로젝트 에셋 선택
+  → 권리 확인 + server-side 소유권/파일/origin 재검증
+  → AssetRef/binding 저장 + readiness 재계산
+  → 연결된 ref 표시/해제
+  → search/generated layer별 provider-neutral AssetAcquisition 생성
+     ├─ not_requested / queued / running
+     └─ succeeded / failed / cancelled
+  → 실제 provider control 없이 현재 상태 표시
+  → image/video compatibility에 맞는 로컬 project artifact 수동 대체
+  → manual-replacement binding 표시, 해제 시 acquisition 상태 복원
+  → 대표 45초 AssetPack acceptance
+     ├─ programmatic 1
+     ├─ planned local 7
+     ├─ manual replacement 1
+     └─ provider required 1
+  → asset-production-readiness.v1
+     ├─ ready
+     ├─ waiting
+     └─ blocked
+  → Angular에서 해결/로컬/Provider/차단 summary 표시
+
+Director narration lifecycle
+  → Supertonic voice / supported speed 선택
+  → cue별 WAV 순차 합성
+  → owner/project hash namespace에 opaque artifact materialization
+  → path/URL 없이 size/checksum/duration/provider metadata만 project에 저장
+  → exact-set validation
+  → compact estimated timing baseline 보존
+  → Scene/Beat/Shot/Layer deterministic reflow
+  → 45,000ms estimated → 41,200ms tts_aligned
+  → 전체 성공 뒤 narration-audio-pack.v1과 project 1회 저장
+  → voice/speed 재생성은 estimated baseline 복원 후 새 generation 생성
+  → 성공 뒤 이전 generation 파일 정리
+  → partial failure는 새 파일 정리 + 이전 project/generation 보존
+  → 기존 AssetPack binding/acquisition/readiness 보존
+  → Angular에서 음성/속도, 생성·재생성, ready cue와 timing 상태 표시
+
+Director RenderRecipe compile preview
+  → tts_aligned VideoPlan + renderable AssetPack + ready narration exact set
+  → timeline hierarchy/containment + current AssetPack recompute 검증
+  → existing render-recipe.v1
+     ├─ external visual timeline 9
+     ├─ programmatic/text overlay 11
+     ├─ TTS audio track 7
+     ├─ caption item 7
+     └─ composition Layer metadata 20
+  → GET /projects/shortform-director/projects/:projectId/render-recipe
+  → project 저장/파일 쓰기/operation charge/renderer 호출 없음
+  → Angular에서 준비 조건이 맞을 때만 실행 레시피 확인
+  → renderer 미선정 · 렌더는 실행하지 않음
+
+Director render input staging
+  → current project strict recompile
+  → RenderRecipe sourceAssetIds exact visual set
+     ├─ ProjectManifest owner/artifact/local access 재검증
+     ├─ AssetRef media kind 재검증
+     └─ bound snapshot | manifest metadata | current content checksum
+  → TTS audio track exact narration set
+     └─ narration pack + timing measurement + actual WAV checksum
+  → temporary directory copy
+  → copied size/checksum 재검증
+  → immutable ready stage rename
+  → opaque stage/input id + visual/narration/byte summary만 응답
+  → project 저장/operation charge/renderer/provider/queue 없음
+
+Director private render execution foundation
+  → private stage manifest에서 exact recipe checksum 재검증
+  → recipe visual/TTS source exact set과 staged input exact set 검증
+  → shortform-director-render-execution-bundle.v1
+     ├─ public-safe stage/recipe/input metadata
+     └─ resolveInput(sourceId)만 private staged path 반환
+  → Director-only renderer adapter registry
+     ├─ explicit id / claim / availability
+     └─ production adapter 0개
+  → shortform-director-render-job-reference.v1
+     └─ project/stage/recipe/checksum/adapter id only
+  → Jobs status retention class
+     ├─ active-job
+     ├─ retry-source
+     └─ completed-source
+  → 실제 renderer/queue/API/UI/cleanup 없음
+
+Director renderer conformance foundation
+  → private execution bundle metadata only
+  → deterministic profile id + input fingerprint
+  → representative expected contract
+     ├─ 41.2s / 30fps / 1080×1920
+     ├─ staged input 13
+     ├─ visual item 9 / TTS 7 / subtitle 7
+     ├─ overlay 11 / composition layer 20
+     └─ sequence-card checkpoint 5
+  → required provider-neutral capability ids
+  → future candidate observed report
+     ├─ exact staged input consumption
+     ├─ output probe + one-frame duration tolerance
+     ├─ timeline/motion conformance
+     └─ raw benchmark metadata, no ranking
+  → automated gate + manual 7-axis exact review
+  → production adapter/API/UI 실행 없음
+
+Renderer 역할 분담 결정
+  → main compositor first PoC: Remotion
+  → main compositor fallback: Motion Canvas
+  → final probe/thumbnail/mux: app-managed FFmpeg/ffprobe
+  → simple sequence-card: main compositor native motion
+  → future complex diagram
+     ├─ Manim or specialist materializer
+     ├─ checksummed project artifact
+     └─ immutable stage input
+  → production renderer registration은 계속 0개
+
+Isolated Remotion representative PoC
+  → nested private package
+     ├─ Remotion 4.0.489
+     └─ React/React DOM 19.2.7
+  → synthetic staged input exact 13
+  → 5 checkpoint still
+  → 41.2s full raw MP4
+  → ffprobe
+     ├─ video 41.2s
+     └─ AAC/container 41.258667s
+  → one-frame tolerance 초과
+  → conditional FFmpeg finalization
+     ├─ video stream copy
+     ├─ audio 41.2s trim/re-encode
+     └─ remux
+  → final 41.2s MP4/H.264/AAC
+  → automated conformance 7/7 pass
+  → manual 7축 pending
+  → AbortSignal cancel 2% smoke pass
+
+Programmatic motion preview
+  → VideoPlan diagram Layer
+     ├─ content: headline
+     └─ programmaticPayload: context/evidence/action exact copy
+  → diagram.sequence-card.v1 overlay
+  → normalized stage + enter/hold/exit sampler
+  → 5개 deterministic reference frame
+  → RenderRecipe params.programmaticMotion
+  → Angular 9:16 frame inspector
+     ├─ 시작
+     ├─ 공개
+     ├─ 유지
+     ├─ 퇴장
+     └─ 끝
+  → canvas/video/audio/autoplay/render 없음
+```
+
+- 이번 Director 작업에서 기존 Angular shortform feature, Nest shortform/shortform-core, web API shortform-script 경로 working-tree 변경은 0이다.
+- remote `origin/dev` 전진으로 현재 feature branch는 Angular 5커밋, Nest 2커밋 뒤이며 merge/rebase하지 않았다.
+- current Vira 코드 모양의 합성 active/lab/on-demand fixture 3종을 추가했다.
+- desktop Nest director 83/83 통과.
+- Director와 기존 generic renderer registry boundary 회귀 합계 84/84 통과.
+- web API 전체 80 suite 431/431 통과.
+- Angular director feature 30/30 통과.
+- Angular 전체 1,535/1,535 통과.
+- 세 저장소 build 통과, web API 새 production source ESLint clean.
+- Vira exporter/API, 새 upload/URL ingestion, search/generation, production renderer/queue는 구현하지 않았다.
+- `shortform_director.strategy`와 `shortform_director.video_plan`은 각각 10 credit 초기 policy지만 migration은 실행하지 않았다.
+- duplicate normalized hook, prohibited expression, VideoPlan grounding coverage를 deterministic validator로 검사한다.
+- 전략 재생성 성공 시 이전 VideoPlan은 empty plan으로 무효화한다.
+- 대표 fixture는 45,000ms, 5 scene, 7 beat, 10 shot, 20 layer이며 narration은 공백 제외 225자/초당 5자다.
+- 품질 evaluator는 grounding, 첫 3초 hook, CTA, 서사, visual coverage, asset authenticity, 금지 표현, disclosure를 blocking으로 검사한다.
+- narration density, shot pacing, text readability, unresolved asset은 warning이며 `passed`를 false로 만들지 않는다.
+- hook 지연, grounding 누락, 생성형 product, narration 과밀, unresolved asset mutation 회귀가 통과한다.
+- evaluator는 순수 domain 객체로만 추가했고 generation service, operation billing, web API, Angular UI에는 연결하지 않았다.
+- 대표 plan은 visual requirement 10개 중 programmatic diagram 1개 resolved, 실제 ref가 필요한 9개 missing, route unresolved 0개다.
+- AssetPack resolver는 origin/media/availability/rights/ref 존재를 검증하고 reason을 보존한다.
+- 새 project와 전략 재생성은 empty AssetPack, 새 VideoPlan은 동일 plan id의 AssetPack을 저장한다.
+- assetPack 없는 저장 JSON은 read 시 메모리에서만 hydration하고 디스크를 rewrite하지 않는다.
+- Angular는 owned/source planned binding과 search/generated manual replacement에 lazy project asset picker, 권리 확인, 연결/해제를 제공한다.
+- search/generated acquisition 상태는 보이지만 provider 실행·재시도·render control은 없다.
+- candidate API는 path/URL/uri를 반환하지 않으며 binding 시점에 project ownership과 로컬 파일 존재를 다시 확인한다.
+- 같은 project artifact를 여러 layer가 하나의 deterministic AssetRef로 공유하고 마지막 binding 해제 때 정리한다.
+- AssetPack은 search/generated layer에 deterministic acquisition을 만들고 구형 JSON의 acquisitions/binding mode를 read-only hydration한다.
+- 수동 대체는 `manual-replacement`와 `manual_replacement_ready`로 식별하며 원 acquisition 이력을 삭제하지 않는다.
+- 대표 acceptance는 visual 10개 중 9개 해결, local 8개, provider-required 1개로 waiting이다.
+- 마지막 search layer까지 수동 대체하면 10/10 ready와 `renderable: true`가 된다.
+- non-retryable failure, succeeded-without-binding, invalid local binding과 unresolved strategy는 blocked다.
+- production readiness도 구형 JSON read 시 메모리에서 재계산하며 read만으로 rewrite하지 않는다.
+- TTS alignment는 `trim + NFC + SHA-256` narration fingerprint와 lowercase SHA-256 audio checksum을 검증한다.
+- Shot은 기존 duration 비율로, Layer는 Shot 상대 구간으로 재배치하며 id/order/copy/grounding/asset strategy는 바꾸지 않는다.
+- aligned plan JSON과 timing metadata는 read-only hydration에서 보존되고 visual AssetPack은 같은 layer id로 유지된다.
+- Director 전용 preset/synthesis/file API, audio materialization, voice/speed 재생성 lifecycle을 구현했다.
+- storage는 `CLIPPER_DATA_DIR/shortform-director/narration-audio` 아래 owner/project hash namespace를 사용한다.
+- legacy project의 narrationAudio는 read-only hydration으로 empty pack을 보강하며 read만으로 파일을 rewrite하지 않는다.
+- 실제 Supertonic 모델 실행은 하지 않았고 fake provider/file fixture로 순차·atomic·cleanup 경계를 검증했다.
+- Director compiler는 대표 41.2초 snapshot을 visual 9, programmatic/text 11, TTS 7, caption 7의 기존 RenderRecipe로 만든다.
+- 같은 project snapshot은 같은 recipe를 만들고 path/URL/provider raw payload/credential은 포함하지 않는다.
+- compile 준비 실패는 HTTP 400이며 preview는 project에 저장하지 않는다.
+- Angular는 recipe summary만 메모리에 보관하고 project mutation 뒤 무효화한다.
+- sequence-card motion은 normalized geometry, cubic-out stagger와 소수점 4자리 frame state를 갖는다.
+- 대표 diagram은 6.9초이며 start/reveal/hold/exit/end reference frame을 recipe에 포함한다.
+- Angular는 기본 hold frame과 5개 frame 선택을 제공하고 exact opacity/translate/scale을 DOM에 적용한다.
+- motion 계약에는 color/font/path/URL/provider/model/credential이 없다.
+- 대표 diagram authored copy는 RenderRecipe motion과 Angular preview까지 그대로 보존된다.
+- 새 diagram draft의 payload 누락·잘못된 step order·중복/prohibited copy와 non-diagram payload를 거부한다.
+- malformed stored payload는 compile error이며, payload가 아예 없는 legacy plan만 generic fallback을 쓴다.
+- staging은 representative ready project의 unique visual 6개와 narration 7개, 총 13개를 immutable copy로 고정한다.
+- changed/missing/remote/wrong-kind visual, bound snapshot mismatch, narration checksum mismatch는 renderer 전에 차단한다.
+- partial copy 실패는 ready stage를 남기지 않으며 source 변경 뒤에도 기존 staged copy는 바뀌지 않는다.
+- project mutation 또는 recipe 재확인 뒤 Angular의 stage preview는 recipe preview와 함께 무효화된다.
+- stage hydration은 exact recipe checksum, staged bytes와 visual/TTS input exact set을 다시 검증한다.
+- sourceId resolver만 private absolute path를 반환하고 bundle/job reference JSON에는 path/URL/raw provider payload가 없다.
+- production Director adapter token은 빈 배열이고 기존 generic renderer 회귀가 통과했다.
+- queue/retry/cancel persistence는 새로 만들지 않고 future JobsService executor가 소유하도록 경계만 고정했다.
+- representative conformance profile은 path resolve 없이 stage/recipe/input metadata만 소비한다.
+- profile은 staged image/video/WAV, layered timeline, subtitle, text overlay, sequence-card motion, MP4/H.264/AAC, progress/cancel capability를 요구한다.
+- output duration tolerance는 한 frame이고 raw benchmark metric은 자동 성능 합격이나 순위에 쓰지 않는다.
+- 자동 통과 뒤 manual 7축 exact all-pass만 accepted이며 malformed/incomplete review는 accepted가 아니다.
+- Remotion/Motion Canvas/FFmpeg/Manim을 current Angular/Nest/Electron/Python packaging과 공식 문서 기준으로 비교했다.
+- Remotion은 layered media/text/caption과 Node progress/cancel API 적합성 때문에 첫 PoC 후보가 됐다.
+- Motion Canvas는 vector diagram 강점이 있지만 Vite/browser runtime과 newer FFmpeg exporter의 packaged automation 경로를 추가 검증해야 한다.
+- current simplified FFmpeg provider는 arbitrary composition layer와 sequence-card motion을 지원하지 않으므로 main compositor가 아니라 final media 역할로 고정했다.
+- Manim 결과는 final adapter 내부에서 즉석 생성하지 않고 future asset materialization과 staging을 거쳐야 한다.
+- nested Remotion dependency, representative projection/composition, full render, progress/cancel와 conformance report harness를 구현했다.
+- raw AAC padding이 한 frame tolerance를 넘는 경우만 FFmpeg가 video copy + audio trim/re-encode + remux한다.
+- representative automated result는 7/7 pass, elapsed 74,257ms, final output 8,082,314 bytes다.
+- checkpoint 5개와 timeline spot frame에서 Korean clipping, safe-zone과 sequence-card state 파손은 보이지 않았다.
+- synthetic media이므로 manual 7축은 pending이고 production accepted가 아니다.
+- nested install tree 약 270MB, macOS arm64 compositor 약 17MB, development composition bundle 약 20MB로 관찰됐다.
+- composition bundle cache/reuse, child-process RSS와 Electron packaging은 아직 하지 않았다.
+- 실제 OpenAI provider 호출은 하지 않았다.
+- commit/push 없음.
+
+### 다음 우선순위
+
+1. grounded ContentStrategy/native VideoPlan/eval/AssetPack/narration/RenderRecipe/motion preview와 두 10 credit 초기 policy를 리뷰한다.
+2. 구현된 immutable stage/private execution bundle/adapter registry/conformance profile diff를 리뷰한다.
+3. 구현된 isolated Remotion harness와 조건부 FFmpeg finalization diff를 리뷰한다.
+4. source revision fingerprint 기반 composition bundle cache/reuse와 Chrome/compositor child tree peak RSS를 추가한다.
+5. 실제 representative asset/audio로 full MP4와 5개 checkpoint still의 manual 7축을 검토한다.
+6. Electron `extraResources` packaged smoke, offline startup, Windows x64와 supported macOS 범위를 검증한다.
+7. Remotion license/Automator 비용과 packaging/quality gate 뒤에만 production adapter 후보로 승격하고, 실패 시 Motion Canvas PoC를 진행한다.
+8. 선택 뒤 JobsService executor, output materialization과 render operation API/Angular queue UX를 구현한다.
+9. stage retention 기간/GC policy를 별도 결정한다.
+10. 실제 acquisition adapter operation/materialization과 provider benchmark를 별도 진행한다.
+11. complex technical diagram 요구가 생기면 Manim 선행 materialization 계약과 PoC를 별도로 설계한다.
+12. 실제 Vira exporter/API snapshot identity/auth 계약은 manual handoff 검증 뒤 별도로 설계한다.
+
+### 안전 경계
+
+- `.codex`는 `main`에서만 작업한다.
+- 실제 cookie/env/JWT/provider secret은 출력·문서화·커밋하지 않는다.
+- `clipper_docs`에는 아직 추가하지 않는다.
+- commit/push/deploy/DB/runner/dev server/Electron 조작은 사용자 요청 전 수행하지 않는다.
+
+## Previous Handoff: 2026-07-15 Shortform Source Images, Dev Integration, And Quality Direction
+
+상세 기록:
+
+- `.codex/records/sessions/2026/07/15.md`
+- `.codex/design/PROMPT_SHORTFORM_QUALITY_AND_HYBRID_GENERATION_DIRECTION_2026-07-15.md`
+- 이전 YouTube 상세: `.codex/records/sessions/2026/07/14.md`
+
+### dev 통합 상태
+
+- 8개 코드 저장소의 `dev`를 최신화했다.
+- `feature/youtube-auth-diagnostics`가 있던 Angular, Electron, NestJS, web_api는 `merge/youtube-auth-diagnostics-into-dev-20260715`를 거쳐 `dev`에 통합했다.
+- YouTube feature 병합 충돌은 없었다.
+- 병합 HEAD:
+  - `desktop/clipper_angular`: `9236798`
+  - `desktop/clipper_electron`: `a77c57a`
+  - `desktop/clipper_nestjs`: `f1e7d63`
+  - `web/clipper_web_api`: `c1c9b31`
+- 2026-07-14까지 작업한 YouTube 인증·다운로드 안정화, packaged Python 3.11 bootstrap, Dialog Highlight 413 수정이 현재 `dev`에 포함돼 있다.
+
+### 숏폼 원본 이미지 기능
+
+- URL 방식과 paste 방식의 원본 이미지를 에셋 교체 dialog의 `원본 이미지` 탭에서 표시한다.
+- 선택한 원본 이미지는 기존 remote import/replace 경로를 사용해 클립 에셋으로 교체된다.
+- paste HTML에서 중복 없는 HTTP(S) 이미지 URL을 추출하고 `data:`/`blob:` URL은 제외한다.
+- NestJS는 paste의 원본 이미지를 project source에 저장하고 자동 클립 생성에서 media search보다 우선 사용한다.
+- 사용자가 실제 제품 흐름을 수동 테스트해 정상 동작을 확인했다.
+
+기능 브랜치와 커밋:
+
+```text
+feature/shortform-generation-plugin-fixes-and-updates
+
+desktop/clipper_angular
+  6fa73fa feat(shortform): add original image asset picker
+  593e2e8 fix(shortform): hide unused creation controls
+  904a1f8 Merge branch 'feature/shortform-generation-plugin-fixes-and-updates' into dev
+
+desktop/clipper_nestjs
+  45a0d1f fix(shortform): reuse pasted source images
+  4e3adab Merge branch 'feature/shortform-generation-plugin-fixes-and-updates' into dev
+```
+
+### 숏폼 UI 정리
+
+- 클립 생성 진행 모달의 동작 없는 닫기 아이콘과 관련 Material icon 의존성·스타일을 제거했다.
+- 실제 숏폼 제작 페이지의 prompt mode 언어 선택 UI를 HTML 주석 처리했다.
+- 내부 기본 언어값과 생성 요청의 language 데이터는 유지했다.
+
+### 검증 상태
+
+- Angular 원본 이미지 관련 focused tests: 97 passed.
+- Angular build: passed.
+- NestJS build: passed.
+- paste 원본 이미지 생성 테스트 격리 실행: passed.
+- 클립 생성 overlay focused test: 1 passed.
+- legacy input panel focused tests: 16 passed.
+- 관련 `git diff --check`: passed.
+- Angular 전체 suite는 1,410/1,505 후 기존 TemplateBuilder timeout/browser disconnect로 종료됐지만 해당 spec 단독 실행은 76 passed였다.
+- NestJS 기존 전체 generation-assets test file에는 constructor fixture 선행 실패가 있고 새 테스트 단독 실행은 통과했다.
+
+### Clipper Studio 소개 문서
+
+- 영문 elevator pitch와 프로젝트 소개 Markdown을 작성했다.
+- 파일: `/Users/jina/project/adlight/CLIPPER_STUDIO_ABOUT.md`
+- 루트는 git 저장소가 아니므로 이 파일은 commit 대상이 아니다.
+
+### NotebookLM/Vira 기반 품질 고도화 방향 — 2026-07-15 PDF 기준 기록
+
+> 아래 Vira 항목은 당시 PDF 기준의 이력이다. 현재 판단은 Active Handoff와 `.codex/design/VIRA_CURRENT_CODE_AUDIT_AND_CLIPPER_EVIDENCE_HANDOFF_2026-07-16.md`를 우선한다.
+
+확인한 내부 자료:
+
+- `/Users/jina/project/adlight/vira/vira-deck.pdf`
+- `/Users/jina/project/adlight/vira/vira-IR_20260616 (3).pdf`
+
+당시 이해:
+
+- 목표는 NotebookLM 복제가 아니라 source grounding, AI creative director와 timeline orchestration을 Clipper의 마케팅·대량 생성 목적에 맞게 적용하는 것이다.
+- Vira는 16개 마케팅 포맷/5개 그룹, 첫 3초·훅, 급상승 이상치, 키워드 추세와 단일 영상 8차원 분석·재현 레시피를 Clipper 입력으로 제공할 수 있다.
+- 제품 루프는 Vira 진단 → Clipper 제작 → ViewX 측정 → 다음 진단·제작 환류다.
+- 사용자 prompt 하나를 확장하는 수준이 아니라 BrandProfile, CampaignBrief, SourcePack, MarketContext와 ContentStrategy를 구조화한다.
+- 한 번에 영상 하나가 아니라 포맷 × 훅 × 타깃 × 소구점 × CTA 조합의 content matrix로 수십·수백 개의 변형을 만든다.
+- 영상 전체에 검색 에셋 또는 생성 에셋 한 방식을 강제하지 않고 Shot/Beat별 hybrid routing을 사용한다.
+- 실제 사람·제품·증거는 실제/원본/검색 에셋, 추상 개념·분위기는 생성 이미지·영상, 비교·관계·숫자는 프로그램 모션과 도식을 우선한다.
+- 렌더 모델은 `VideoPlan → Scene → Beat → Shot → Layer` 시간 기반 IR을 검토한다. 기존 clip은 편집 호환 단위로 남길 수 있다.
+- Supertonic은 유지한다. 범용 timeline renderer는 Remotion/Motion Canvas, 특화 도식은 Manim, 반복 모션은 SVG/Lottie/Rive, 최종 encode/mux/audio mix는 FFmpeg를 우선 비교한다.
+
+NotebookLM 사실 경계:
+
+- 공식 자료로 Short가 약 60초·현재 영어 전용임을 확인했다.
+- 일반 Video Overview의 Nano Banana contextual illustration과 Cinematic의 Gemini 3/Nano Banana Pro/Veo 3 creative-director 구조는 Google이 공개했다.
+- Stable Video Diffusion, SDXL, Manim, Remotion, ChatTTS, ElevenLabs, Suno/Udio와 구체적인 FFmpeg 방식은 NotebookLM 내부 스택으로 확인되지 않았다. 재현 후보이지 확정 사실이 아니다.
+- source grounding도 환각을 완전히 제거하지 않으므로 claim provenance와 품질 검증이 필요하다.
+
+### 다음 기술 작업 우선순위
+
+1. 현재 prompt shortform의 Angular/NestJS/Python/FFmpeg 호출·데이터·렌더 경계를 실제 코드로 감사한다.
+2. 대표 source pack과 45~60초 PoC 한 편의 품질 기준을 정한다.
+3. 기존 clip model compatibility와 새 timeline IR 도입 선택지를 비교한다.
+4. Remotion, Motion Canvas, Manim, SVG/Lottie/Rive의 역할과 packaged 제약을 조사한다.
+5. 최신 open/commercial image·video generation 모델의 품질·비용·latency·license matrix를 공식 자료 기준으로 만든다.
+6. Vira → Clipper 최소 structured handoff schema를 정의한다.
+
+### 기존 YouTube 후속 QA
+
+- 연령 제한, YouTube Premium, anti-bot/추가 로그인 오류
+- 수정 빌드의 완전히 빈 clean userData packaged 최초 실행
+- 플러그인별 venv 또는 모델 설치 중단·손상 복구
+- 인터넷 단절/package 설치 실패 시 다시 시도·앱 종료 흐름
+- Windows packaged app의 cookie/EJS/metadata/download 전체 검증
+- 필요 시 PO Token, 720p 및 AV1/VP9 fallback, offline wheel, `unhandled:` 명칭 분리
+- Electron 업그레이드와 macOS Touch ID/Windows Hello passkey 지원
+
+### 종료 시점 repo 상태
+
+```text
+desktop/clipper_angular   dev   clean, origin/dev 동기화, HEAD 904a1f8
+desktop/clipper_electron  dev   clean, origin/dev 동기화, HEAD a77c57a
+desktop/clipper_nestjs    dev   clean, origin/dev 동기화, HEAD 4e3adab
+desktop/clipper_python    dev   clean, origin/dev 동기화, HEAD fdb14f4
+web/clipper_web_api       dev   clean, origin/dev 동기화, HEAD c1c9b31
+web/clipper_web_admin     dev   clean, origin/dev 동기화, HEAD 70cd4c8
+web/clipper_web_client    dev   clean, origin/dev 동기화, HEAD 802ca57
+web/clipper_infra         dev   clean, origin/dev 동기화, HEAD d10d54e
+.codex                    main  dirty: 2026-07-15 session/design/handoff 문서, commit/push 안 함
+```
+
+### Next Session Prompt
+
+```text
+Using Superpowers.
+
+작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
+
+이전 세션에서 모든 코드 저장소를 dev 최신 상태로 맞추고 YouTube feature를 dev에 통합했다. 이어서 숏폼 URL/paste 원본 이미지를 자동 클립 생성과 에셋 교체 dialog에서 재사용하도록 구현·검증하고 Angular/NestJS dev에 병합했다. NotebookLM Short/Cinematic Video Overview와 Vira 자료를 바탕으로 프롬프트 숏폼 품질 고도화 및 하이브리드 생성 파이프라인의 초기 방향도 정리했다.
+
+먼저 다음 문서를 읽어줘.
+
+- .codex/AGENTS.md
+- .codex/handoff/NEXT.md
+- .codex/records/sessions/2026/07/15.md
+- .codex/design/PROMPT_SHORTFORM_QUALITY_AND_HYBRID_GENERATION_DIRECTION_2026-07-15.md
+- .codex/records/sessions/2026/07/14.md
+
+Vira 자료가 필요하면 다음 PDF를 읽어줘.
+
+- vira/vira-deck.pdf
+- vira/vira-IR_20260616 (3).pdf
+
+그다음 아래 저장소의 git status, 현재 브랜치, 최근 log와 upstream 동기화 상태를 확인해줘.
+
+- desktop/clipper_angular
+- desktop/clipper_electron
+- desktop/clipper_nestjs
+- desktop/clipper_python
+- web/clipper_web_api
+- web/clipper_web_admin
+- web/clipper_web_client
+- web/clipper_infra
+- .codex
+
+예상 상태는 모든 코드 저장소가 dev clean 및 origin/dev 동기화이고, .codex는 main에서 2026-07-15 session/design/handoff 문서만 dirty 상태다. 예상과 다른 변경은 revert/reset하지 말고 먼저 보고해.
+
+다음 큰 작업은 현재 프롬프트 숏폼 생성 파이프라인을 코드 기준으로 감사하고, Vira-grounded input과 VideoPlan/Scene/Beat/Shot/Layer 기반 hybrid rendering architecture를 구체화하는 것이다. 아직 renderer나 image/video provider는 확정하지 않았다.
+
+중요:
+
+- .codex는 반드시 main에서만 작업해.
+- 실제 cookie, env 값, JWT key, provider secret을 출력·문서화·커밋하지 마.
+- clipper_docs에는 아직 문서를 추가하지 마.
+- 커밋/푸시/배포/DB 초기화/runner 재시작은 내가 명시적으로 요청할 때만 해.
+- 개발 서버나 Electron 앱도 내가 요청하기 전에는 실행하거나 종료하지 마.
+- 상태 확인이 끝날 때까지 코드를 수정하지 마.
+
+먼저 문서와 저장소 상태만 확인해서 보고한 다음 다음 지시를 기다려줘.
+```
+
+## Previous Handoff: 2026-07-14 YouTube Source Hardening And Packaged QA
 
 상세 기록:
 
