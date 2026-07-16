@@ -138,21 +138,33 @@
 ```text
 desktop/clipper_angular
   branch: feat/shortform-director-foundation
-  remote: origin/dev 대비 5 commits behind
-  uncommitted: central plugin registration + features/shortform-director/**
+  pushed HEAD: bfaf720 feat(shortform-director): add director workflow UI
+  upstream: origin/feat/shortform-director-foundation exact sync
+  branch divergence: origin/dev 대비 feature 1 commit / dev 5 commits
+  working tree: clean
 
 desktop/clipper_nestjs
   branch: feat/shortform-director-foundation
-  remote: origin/dev 대비 2 commits behind
-  uncommitted: catalog/AppModule + modules/shortform-director/** + foundation test
+  pushed commits:
+    - 9eb8994 feat(shortform-director): add native planning and render foundation
+    - b72e74c feat(shortform-director): add isolated Remotion render PoC
+  upstream: origin/feat/shortform-director-foundation exact sync
+  branch divergence: origin/dev 대비 feature 2 commits / dev 2 commits
+  working tree: clean
 
 web/clipper_web_api
   branch: feat/shortform-director-foundation
-  uncommitted: strategy/video-plan modules + operation policies/migrations
+  pushed HEAD: 5a8424b feat(shortform-director): add grounded planning APIs
+  upstream: origin/feat/shortform-director-foundation exact sync
+  branch divergence: origin/dev 대비 feature 1 commit / dev 0 commits
+  working tree: clean
 
 .codex
   branch: main
-  uncommitted: design/session/handoff only
+  design/session/handoff commit: 6a389a3 docs(shortform-director): record hybrid renderer design and PoC
+  final closure record: current main HEAD
+  upstream: origin/main exact sync after closure push
+  working tree: clean after closure
 
 /Users/jina/project/vira
   branch: main
@@ -348,7 +360,7 @@ Programmatic motion preview
 ```
 
 - 이번 Director 작업에서 기존 Angular shortform feature, Nest shortform/shortform-core, web API shortform-script 경로 working-tree 변경은 0이다.
-- remote `origin/dev` 전진으로 현재 feature branch는 Angular 5커밋, Nest 2커밋 뒤이며 merge/rebase하지 않았다.
+- remote `origin/dev` 전진으로 현재 feature branch에는 Angular 기준 dev 5커밋, Nest 기준 dev 2커밋이 아직 들어오지 않았으며 merge/rebase하지 않았다.
 - current Vira 코드 모양의 합성 active/lab/on-demand fixture 3종을 추가했다.
 - desktop Nest director 83/83 통과.
 - Director와 기존 generic renderer registry boundary 회귀 합계 84/84 통과.
@@ -422,7 +434,10 @@ Programmatic motion preview
 - nested install tree 약 270MB, macOS arm64 compositor 약 17MB, development composition bundle 약 20MB로 관찰됐다.
 - composition bundle cache/reuse, child-process RSS와 Electron packaging은 아직 하지 않았다.
 - 실제 OpenAI provider 호출은 하지 않았다.
-- commit/push 없음.
+- 사용자 명시 요청 뒤 Angular/NestJS/web API 구현을 각각 `feat/shortform-director-foundation`에 커밋·push했다.
+- Angular `bfaf720`, NestJS `9eb8994`와 `b72e74c`, web API `5a8424b`가 각 upstream feature branch와 exact sync다.
+- `.codex`의 전체 설계·세션·handoff 기록은 `6a389a3`으로 `main`에 커밋·push했고, 이 최종 정합성 보정도 `.codex/main` current HEAD로 마감한다.
+- dev merge/rebase, PR 생성, deploy, DB 초기화/migration 실행, runner/dev server/Electron 조작은 하지 않았다.
 
 ### 다음 우선순위
 
