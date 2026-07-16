@@ -454,6 +454,15 @@ Programmatic motion preview
 11. complex technical diagram 요구가 생기면 Manim 선행 materialization 계약과 PoC를 별도로 설계한다.
 12. 실제 Vira exporter/API snapshot identity/auth 계약은 manual handoff 검증 뒤 별도로 설계한다.
 
+### 별도 보류 TODO — 데스크톱 첫 실행과 Plugin Store 초기 로딩
+
+- 분석: `.codex/design/DESKTOP_FIRST_LAUNCH_RUNTIME_AND_PLUGIN_STORE_LOADING_ANALYSIS_2026-07-16.md`
+- TODO: `.codex/todos/2026-07-16-desktop-first-launch-runtime-and-plugin-store-loading.md`
+- 현재 packaged base Python/yt-dlp/EJS 준비는 메인 창을 열기 전에 완료를 기다리는 hard gate이며 UI 뒤의 background 설치가 아니다.
+- UI 표시 뒤 Plugin Store `불러오는 중…`은 NestJS 최초 기동과 `/v1/plugins`의 manifest/status/resource 조회 전체를 기다린다.
+- 저사양 Windows clean/warm/offline baseline, 단계별 계측, first-run 진행 UX, refresh single-flight, catalog/diagnostics 분리와 timeout·재시도를 추후 진행한다.
+- clean Windows에서 앱 무창·장기 hang 또는 실행 실패가 재현되면 P0 release blocker로 승격한다.
+
 ### 안전 경계
 
 - `.codex`는 `main`에서만 작업한다.
