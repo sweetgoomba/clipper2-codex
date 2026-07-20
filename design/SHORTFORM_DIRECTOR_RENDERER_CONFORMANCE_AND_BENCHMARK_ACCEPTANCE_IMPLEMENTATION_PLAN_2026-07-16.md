@@ -45,3 +45,42 @@
 - [x] session/handoff/상위 방향 문서를 갱신한다.
 - [x] renderer/provider/API/UI/Jobs executor/server/Electron/DB/migration/runner를 실행하지 않는다.
 - [x] commit/push/deploy를 실행하지 않는다.
+
+## Task 6 — 2026-07-20 실제 peak RSS evidence 후속 적용
+
+- [x] benchmark Node process와 recursive descendant를 같은 snapshot에서 합산한다.
+- [x] Chrome/Remotion compositor child가 포함되고 unrelated sibling/sampler가 제외되는 RED/GREEN test를 추가한다.
+- [x] 100ms sample의 aggregate peak를 candidate `peakRssBytes`로 연결한다.
+- [x] PID/raw command/path 없이 sample/peak/process-kind만 portable summary에 기록한다.
+- [x] actual full benchmark에서 Chrome, Remotion compositor와 FFmpeg 관측을 확인한다.
+- [x] raw metric을 automated performance threshold나 순위로 승격하지 않는다.
+- [x] Windows sampler와 packaged runtime은 후속 gate로 남긴다.
+
+실행 결과:
+
+- environment: `darwin-arm64-node24-remotion4.0.489-local`
+- sample interval/count: 100ms / 725
+- process-tree peak RSS: 2,296,545,280 bytes
+- candidate benchmark metadata check: pass
+- full automated conformance: 7/7 pass
+- manual review: pending
+
+## Task 7 — 2026-07-20 Motion Canvas cache/RSS evidence
+
+- [x] Motion Canvas static source bundle에 SHA-256 revision cache를 적용한다.
+- [x] 같은 revision의 actual full rerun에서 bundler가 생략되고 `reused`가 기록되는지 확인한다.
+- [x] worker root와 Chrome/FFmpeg recursive descendants의 동시 RSS peak를 측정한다.
+- [x] PID/command/path 없이 portable evidence를 남긴다.
+- [x] representative output/frame count/media contract를 검증한다.
+- [x] raw elapsed/RSS를 Remotion과의 자동 순위나 threshold로 사용하지 않는다.
+
+실행 결과:
+
+- source revision: `sha256:aad28738ac9d7cb12a2603681e593b933d04b7dbc810970cdb97f5cc8c0cf271`
+- cache: `reused`
+- elapsed: 21,037ms
+- output: 2,072,173 bytes, 41.2초, 1,236 frame, 1080×1920, H.264/AAC
+- sample count: 106
+- process-tree peak RSS: 1,941,848,064 bytes
+- observed child: Chrome, FFmpeg, other
+- manual review: synthetic input이므로 pending

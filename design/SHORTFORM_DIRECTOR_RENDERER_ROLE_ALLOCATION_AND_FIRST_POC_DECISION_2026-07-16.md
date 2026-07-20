@@ -1,5 +1,9 @@
 # AI 숏폼 디렉터 — Renderer 역할 분담과 첫 PoC 결정
 
+> 2026-07-20 후속: 사용자가 실제 영상 생성 구현을 manual review보다 먼저 완료하도록 순서를 변경했다. isolated Remotion 후보는 source-checkout application adapter/Jobs/API/Angular까지 연결됐다.
+>
+> 2026-07-20 무료 상용 조건 정정: 이 문서의 Remotion-first 선택과 순차 비교는 의사결정 이력으로 보존한다. 현재 정본은 `SHORTFORM_DIRECTOR_FREE_COMMERCIAL_RENDERER_AND_OS_DECISION_2026-07-20.md`이며, Motion Canvas가 기본 adapter이고 Remotion 코드는 두 번째 fallback으로 삭제 없이 남긴다.
+
 작성일: 2026-07-16 KST
 
 상위 설계:
@@ -328,7 +332,43 @@ ffprobe
 - macOS arm64 compositor package 약 17MB
 - development composition bundle 약 20MB
 
-PoC 성공은 production 채택이 아니다. composition bundle cache/reuse, child-process RSS, Electron packaged resource, Windows와 지원 macOS 범위, license와 실제 asset 기반 manual review가 남아 있다.
+### 2026-07-20 composition cache와 process-tree RSS 후속 결과
+
+production adapter로 확장하지 않고 같은 isolated harness 안에서 남아 있던 두 측정 경계를 닫았다.
+
+composition bundle cache 계약:
+
+- nested PoC의 `src/**`, `package.json`, `package-lock.json`과 명시적 bundle-options revision을 canonical SHA-256 source revision으로 묶는다.
+- cache key는 source revision 하나이며 project별 RenderRecipe/input props나 staged asset은 key에 넣지 않는다.
+- miss는 cache root의 임시 디렉터리에 bundle한 뒤 `index.html`과 portable manifest를 확인하고 fingerprint 디렉터리로 원자적으로 승격한다.
+- hit는 bundler를 다시 호출하지 않고 기존 fingerprint 디렉터리를 `serveUrl`로 재사용한다.
+- 실제 첫 cancel smoke는 `created`, 같은 source revision의 두 번째 cancel smoke와 full benchmark는 `reused`였다.
+- portable run summary에는 source revision과 `created | reused`만 남기고 cache path는 기록하지 않는다.
+- 이는 PoC cache 검증이며 Electron `extraResources` production cache/retention/GC를 구현한 것이 아니다.
+
+peak RSS 계약:
+
+- 100ms 간격으로 benchmark Node process를 root로 삼아 재귀적인 live child tree의 RSS를 같은 snapshot에서 합산한다.
+- unrelated sibling process와 측정용 `ps` process는 제외한다.
+- portable evidence에는 PID, command, executable path를 넣지 않고 peak bytes, sample 수, process 수와 coarse child kind만 남긴다.
+- macOS full benchmark에서 Chrome, Remotion compositor와 FFmpeg child가 실제로 관측됐다.
+- candidate report의 `peakRssBytes`는 root-only가 아니라 이 process-tree 동시 합계이며 여전히 non-gating raw metric이다.
+- 현재 sampler는 macOS/Linux `ps` 경계만 지원한다. Windows x64 방식은 packaged smoke와 함께 별도 검증한다.
+
+후속 representative 결과:
+
+- candidate revision: `remotion-4.0.489-poc.3`
+- composition bundle: same source revision cache `reused`
+- pipeline elapsed: 70,914ms
+- final output: 8,053,591 bytes
+- process-tree sample: 725회
+- process-tree peak RSS: 2,296,545,280 bytes
+- observed child kinds: Chrome, Remotion compositor, FFmpeg 포함
+- final output: 41.2초, 30fps, 1080×1920, MP4/H.264/AAC
+- automated conformance: 7/7 pass
+- evaluation: `manual_review_required`
+
+PoC 성공은 production 채택이 아니다. Electron packaged resource/offline startup, Windows와 지원 macOS 범위, license와 실제 asset 기반 manual review가 남아 있다.
 
 ### Electron packaging 후보 경계
 
@@ -403,3 +443,74 @@ simple diagram은 pass하지만 technical diagram 품질 부족
 - Windows x64와 지원 macOS 범위 packaged smoke
 - 실제 asset/audio 기반 manual 7축 최종 판정
 - commit/push/deploy
+
+## 2026-07-20 application execution 후속
+
+PoC에서 확인한 역할 분담을 바꾸지 않고 application 실행 경계까지 연결했다.
+
+- main compositor: `director.adapter.remotion-local.v1`
+- final probe/conditional duration finalization: existing FFprobe/FFmpeg
+- queue/retry/cancel: existing JobsService
+- private input: exact immutable execution bundle
+- output: Director owner/project-scoped atomic MP4 artifact
+- user control: Angular start/progress/cancel/retry/download
+
+Remotion runtime은 계속 Nest `ncc`와 분리돼 있고 source checkout의 nested pinned package를 child worker가 실행한다. 이 연결은 “실제 영상을 만들 수 있는 구현”이며 “Electron packaged production 승인”은 아니다.
+
+실제 최소 통합 case:
+
+- input: staged PNG 1 + WAV 1
+- output: 1.0초, 30fps, 540×960, MP4/H.264/AAC
+- final rerun elapsed: 약 5.0초
+- output store의 size/SHA-256/media metadata와 MP4 `ftyp` 재검증 통과
+- 외부 provider/network download 없음
+
+남은 역할 결정은 renderer 자체 유무가 아니라 packaging ownership이다. Electron extraResources에서 worker source/bundle, platform compositor, browser를 누가 공급하고 어떤 license/size/OS 범위를 지원할지 결정해야 한다. 실제 representative asset의 manual 7축도 release gate로 남는다.
+
+## 2026-07-20 무료 상용 renderer 정정 결과
+
+Remotion의 실제 합성 적합성은 확인했지만 사용자의 무료 상용 hard constraint상 기본 renderer로 둘 수 없다고 판정했다. 기존 코드는 회귀·비교·명시적 fallback을 위해 그대로 보존한다.
+
+현재 역할:
+
+- main compositor default: `director.adapter.motion-canvas-local.v1`
+- preserved fallback: `director.adapter.remotion-local.v1`
+- final encode/probe: external FFmpeg/FFprobe
+- simple sequence-card: Motion Canvas scene native implementation
+- future complex diagram: staged specialist artifact
+
+Motion Canvas 경로는 공식 FFmpeg exporter 없이 custom headless frame bridge로 구현했다. exact pinned npm dependency graph 133개는 permissive license gate를 통과했다. static composition은 source revision으로 cache하고, browser는 strict loopback asset만 소비하며, PNG frame을 외부 FFmpeg `image2pipe`로 보낸다.
+
+대표 실제 결과:
+
+- 41.2초 / 1,236 frame / 30fps / 1080×1920
+- MP4/H.264/AAC / 2,072,173 bytes
+- same source revision cache `reused`
+- elapsed 21,037ms
+- Node+Chrome+FFmpeg process tree peak RSS 1,941,848,064 bytes
+- actual minimal application integration 1/1 pass
+
+OS 판정:
+
+- macOS arm64 source checkout: verified
+- macOS x64: packaged smoke pending
+- Windows x64: browser/encoder supply, Windows RSS sampler와 packaged smoke pending
+- Linux: current product support target 아님
+
+현재 로컬 FFmpeg는 GPL/libx264 build다. renderer 사용료 문제는 없지만 같은 binary의 packaged 배포에는 GPL 준수 의무가 있으므로, production은 준수 배포 또는 LGPL/platform encoder를 결정한 뒤 승인한다. Remotion 삭제는 현재 또는 다음 자동 단계에 포함하지 않는다.
+
+## 2026-07-20 Electron packaged 결정 후속
+
+위의 “packaged browser 공급 방식 미정” 상태는 Motion Canvas 기본 renderer에 대해 다음처럼 닫았다.
+
+- Motion Canvas static scene은 build time source revision으로 고정해 `extraResources`에 넣는다.
+- Node worker는 ncc ESM bundle로 만들어 isolated package의 121MB `node_modules`를 runtime에 복사하지 않는다.
+- browser는 Puppeteer `25.3.0`과 일치하는 Chrome for Testing `chrome-headless-shell 150.0.7871.24`를 target별로 package한다.
+- runtime에서 Vite build, npm install과 browser download를 하지 않는다.
+- Chromium `ABOUT`/`LICENSE.headless_shell`과 npm license notice를 함께 package한다.
+- FFmpeg/FFprobe는 새로 공급하지 않고 기존 Electron의 사용자 동의 후 `userData/bin` 설치와 Nest path 주입을 그대로 사용한다.
+- Electron utility process에서 worker child만 `ELECTRON_RUN_AS_NODE=1`로 실행한다.
+
+macOS arm64 `.app`/DMG build와 `.app` 내부 resource actual MP4 smoke가 통과했다. package resource는 약 209MB이고, 이 중 browser가 약 203MB다. built `.app`은 약 590MB, DMG는 약 272MB였다. GUI app은 실행하지 않았고 built Electron executable을 Node mode로만 사용했다.
+
+따라서 Motion Canvas의 macOS arm64 packaged 기술 경로는 더 이상 pending이 아니다. 남은 target은 macOS x64/Windows x64, signing/notarization, Windows child-tree RSS, 기존 app-managed FFmpeg/FFprobe release compliance와 실제 asset manual 7축이다. Remotion은 계속 삭제하지 않고 fallback/비교 증거로 보존한다.

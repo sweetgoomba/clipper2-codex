@@ -86,3 +86,26 @@ npm run build
 - Angular director feature: 11/11 통과, production build warning 없이 통과
 - 기존 Angular shortform, Nest shortform/shortform-core, web API shortform-script는 `origin/dev` 대비 diff 0
 - migration, 실제 provider 호출, server/Electron, commit/push/deploy는 실행하지 않음
+
+## Task 7 — 실사용 VideoPlan 교차 필드 실패 보정 — 2026-07-20
+
+- [x] packaged app log에서 실제 세 실패를 trace별로 확인한다.
+- [x] 선택 hook 누락, 선택 CTA 누락, Beat/Shot 시간축 불연속 회귀 테스트를 먼저 실패시킨다.
+- [x] web API에 유효 draft를 바꾸지 않는 deterministic canonicalizer를 추가한다.
+- [x] canonicalization 뒤 기존 strict parser를 다시 실행한다.
+- [x] grounding, 금지 표현, generated product/evidence, diagram payload 검증은 완화하지 않는다.
+- [x] desktop Nest가 upstream provider failure를 HTTP 502와 `provider_failed`로 보존한다.
+- [x] web API 전체, Director 전체, Angular 전체, Electron 전체와 macOS arm64 package를 검증한다.
+- [ ] 별도 승인 뒤 web API를 배포하고 built app에서 실제 VideoPlan 생성 성공을 확인한다.
+
+검증 결과:
+
+- web API VideoPlan service: 11/11
+- web API 전체: 80 suite, 434/434
+- desktop Nest Shortform Director: 106개 중 104 pass, 2 opt-in actual render skip
+- desktop Nest build: pass
+- Angular 전체: 1,542/1,542
+- Electron 전체: 165/165
+- macOS arm64 `.app`/DMG: pass
+
+배포, 실제 provider 재호출, migration, commit/push는 수행하지 않았다.

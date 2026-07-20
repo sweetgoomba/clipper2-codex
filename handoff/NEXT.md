@@ -1,10 +1,10 @@
 # Next Handoff
 
-최신 갱신: 2026-07-16 KST
+최신 갱신: 2026-07-20 KST
 
 이 문서는 다음 세션이 가장 먼저 읽는 압축 인계문이다. 긴 과거 인계는 [archive/2026/05/next-session-prompt-legacy.md](archive/2026/05/next-session-prompt-legacy.md)에 보관한다.
 
-## Active Handoff: 2026-07-16 AI 숏폼 디렉터 Remotion PoC 결과와 production gate
+## Active Handoff: 2026-07-16 AI 숏폼 디렉터 실제 MP4 실행과 남은 release gate
 
 상세 기록:
 
@@ -47,6 +47,7 @@
 - `.codex/design/SHORTFORM_DIRECTOR_RENDERER_CONFORMANCE_AND_BENCHMARK_ACCEPTANCE_IMPLEMENTATION_PLAN_2026-07-16.md`
 - `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ROLE_ALLOCATION_AND_FIRST_POC_DECISION_2026-07-16.md`
 - `.codex/design/SHORTFORM_DIRECTOR_RENDERER_ROLE_ALLOCATION_AND_FIRST_POC_IMPLEMENTATION_PLAN_2026-07-16.md`
+- `.codex/design/SHORTFORM_DIRECTOR_FREE_COMMERCIAL_RENDERER_AND_OS_DECISION_2026-07-20.md`
 
 초기 legacy adapter 문서는 이력만 보존하며 superseded 상태다.
 
@@ -62,19 +63,30 @@
 - 실제 `/Users/jina/project/vira` 현재 코드를 정본으로 삼고 PDF는 방향 참고 자료로만 쓴다.
 - `vira-evidence.v1`은 current/lab/on-demand/legacy lifecycle을 분리하고 surface-lifecycle 조합을 runtime에서 검증한다.
 - 현재 Vira에는 Clipper exporter/API가 없으므로 네트워크나 DB 직접 연동은 하지 않았다.
-- production renderer와 image/video provider는 아직 미정이다.
+- 기본 renderer는 무료 상용 조건을 만족하는 Motion Canvas로 정했고, macOS arm64 packaged worker/static/browser 공급과 actual MP4 smoke까지 완료했다. acquisition은 기존 media.search/Naver, Nano Banana와 Veo를 route별로 자동 사용하도록 연결했다.
 - renderer는 상호 배타적인 단일 선택이 아니라 범용 합성, 전문 도식 materialization, 최종 media 처리 역할로 나눈다.
-- 범용 합성은 Remotion을 첫 비프로덕션 PoC로 검증하고 Motion Canvas는 packaging/license/quality gate 실패 시 두 번째 후보로 둔다.
+- 범용 합성은 `director.adapter.motion-canvas-local.v1`을 기본으로 사용한다. Remotion은 기존 구현을 삭제하지 않고 그 뒤의 명시적 fallback/비교 증거로 보존한다.
 - 기존 app-managed FFmpeg/ffprobe는 최종 probe, thumbnail과 필요한 mux/normalize 역할을 유지한다.
 - `diagram.sequence-card.v1` 같은 간단한 programmatic motion은 메인 합성기가 직접 구현한다.
 - Manim은 final render 중 즉석 호출하지 않고 복잡한 기술·수학 도식을 checksummed artifact로 먼저 materialize한 뒤 immutable stage에 넣는 전문 renderer 후보로 둔다.
-- 첫 PoC에서는 Angular에 React/Remotion Player를 넣지 않고 같은 RenderRecipe/motion 계약을 Angular preview와 Remotion final/still render가 각각 소비한다.
+- Angular에는 React/Remotion Player를 넣지 않았고 같은 RenderRecipe/motion 계약을 Angular preview와 Motion Canvas/보존된 Remotion worker가 소비한다.
 - Remotion source/runtime은 Nest `ncc` bundle과 분리하고 production runtime의 자동 browser/native binary download를 허용하지 않는다.
-- Remotion production 후보 승격 전 company license, packaged binary size, supported macOS 범위와 Windows x64를 확인해야 한다.
+- Remotion은 회사/사용 형태에 따라 유료 조건이 생길 수 있어 무료 상용 production 기본 후보에서 제외했다. 별도 요청 전까지 코드는 보존하되 packaged production으로 승격하지 않는다.
 - isolated Remotion `4.0.489`/React `19.2.7` representative harness는 구현됐고 automated conformance 7개가 모두 pass했다.
 - raw Remotion video는 41.2초였지만 AAC/container가 41.258667초여서 조건부 FFmpeg audio trim/remux가 실제로 필요했다.
 - 최종 MP4는 41.2초, 30fps, 1080×1920, H.264/AAC이며 progress와 AbortSignal cancel도 실제 render에서 검증했다.
-- visual renderer spot check는 통과했지만 synthetic media라 manual 7축은 pending이고 production adapter는 여전히 0개다.
+- `poc.3`은 nested `src/**`/package manifests/bundle-options revision의 SHA-256으로 composition bundle을 cache하며 같은 revision 재실행에서 bundler를 호출하지 않는다.
+- 실제 first cancel smoke는 cache `created`, second cancel smoke와 full benchmark는 `reused`였다.
+- benchmark Node root와 recursive Chrome/Remotion compositor/FFmpeg child tree를 100ms 간격으로 합산한 peak RSS를 candidate metadata에 기록한다.
+- `poc.3` full run은 725 samples, process-tree peak 2,296,545,280 bytes, 70,914ms, 8,053,591 bytes였고 automated conformance 7/7을 유지했다.
+- visual renderer spot check와 source-checkout actual adapter MP4 생성은 통과했지만 synthetic media라 manual 7축과 packaged release 승인은 pending이다.
+- isolated Motion Canvas `3.17.2`/Puppeteer `25.3.0`/Vite `5.4.21` runtime을 exact pin했고 lock graph 133개가 permissive license allowlist를 통과했다.
+- Motion Canvas 공식 FFmpeg exporter는 포함하지 않고 custom frame bridge가 PNG frame을 외부 FFmpeg `image2pipe`로 전달한다.
+- Motion Canvas static bundle은 source SHA-256으로 cache하며 동일 revision 실제 full rerun에서 `reused`를 확인했다.
+- 대표 Motion Canvas 결과는 41.2초, 30fps, 1080×1920, H.264/AAC, 2,072,173 bytes, 21,037ms였다.
+- Motion Canvas process-tree sampler는 Node root와 Chrome/FFmpeg descendants를 포함해 106 samples, peak 1,941,848,064 bytes를 기록했다.
+- macOS arm64는 source checkout과 Electron `.app` 내부 resource 실제 MP4까지 검증했다. macOS x64/Windows x64 packaged/offline smoke와 Windows RSS sampler는 남아 있다.
+- Motion Canvas는 FFmpeg를 새로 묶지 않고 기존 Electron의 기능 접근 동의 후 `userData/bin` 다운로드와 `FFMPEG_BIN`/`FFPROBE_BIN` 경로 전달을 재사용한다. 현재 app-managed 공급물의 GPL/source notice, version/checksum과 H.264 compliance는 앱 공통 release audit으로 남아 있다.
 - `VideoPlan + AssetPack + narrationAudio`는 strict gate 뒤 기존 `render-recipe.v1`로 결정적으로 컴파일한다.
 - Director recipe는 `shortform.director.hybrid.v1` identity와 `shortform-director-composition.v1` layer metadata를 사용한다.
 - 기존 renderer가 새 recipe를 자동 claim하지 않도록 `shortformTemplateModel`과 legacy provenance를 넣지 않는다.
@@ -91,6 +103,9 @@
 - LLM 전략 생성은 기존 `/llm/script`와 분리된 web API endpoint와 별도 operation을 사용한다.
 - 사용자가 고른 matrix entry와 연결 hypothesis만 native VideoPlan 입력으로 사용한다.
 - LLM 생성 직후 `VideoPlan` timeline은 absolute ms, 0-based contiguous Scene/Beat/Shot이며 timing은 `estimated`다.
+- strict JSON Schema로 표현할 수 없는 목표 길이/order/start/parent coverage와 선택 hook/CTA exact copy는 web API가 provider draft를 결정적으로 canonicalize한 뒤 기존 strict validator로 다시 검사한다.
+- canonicalizer는 유효 draft를 그대로 유지하며 grounding ID, 금지 표현, product/evidence asset route와 diagram authored copy 같은 의미 오류는 보정하지 않는다.
+- desktop Nest는 Director web API provider failure를 local 500으로 바꾸지 않고 HTTP 502와 `provider_failed`로 보존한다.
 - 현재 Supertonic은 word/sentence timestamp를 반환하지 않고 WAV 경로만 반환하며 Nest가 전체 duration/checksum을 측정한다.
 - cue별 artifact/checksum/text fingerprint/duration exact set이 유효할 때만 plan을 `tts_aligned`로 재배치한다.
 - 순수 TTS alignment fallback은 원본 estimated plan을 변경하지 않는다.
@@ -109,12 +124,15 @@
 - `resolved`는 준비 완료, `missing`은 route는 있으나 실제 ref가 없음, `unresolved`는 route 자체가 미정이라는 뜻이다.
 - AssetRef는 URL/파일 경로가 아니라 project-scoped `(projectId, artifactId)` locator, origin, provenance, rights, availability 메타데이터를 갖는다.
 - production 입력의 첫 범위로 같은 사용자의 로컬 `owned/source` ProjectManifest artifact를 연결할 수 있다.
-- `search|generated-image|generated-video` route에는 provider-neutral acquisition 상태 계약을 두되 실제 provider 실행은 아직 없다.
+- `owned|source|search|generated-image|generated-video` route는 공통 acquisition 상태를 가지며, campaign 권리 확인 한 번 뒤 자동 local match/search/generation/materialization을 실행한다.
 - search/generated layer는 로컬 owned/source project artifact로 명시적 manual replacement가 가능하다.
+- verified owned inventory가 없는 현재 VideoPlan 입력에서는 provider가 만든 `owned` visual을 `search`로 canonicalize한다.
+- 기존 저장 plan의 owned requirement도 compatible local artifact가 없으면 route를 search로 바꾸고 자동 준비를 계속한다. search 결과를 owned로 위장하지 않는다.
+- `직접 교체`는 연결된 project artifact가 0개여도 현재 기기의 image/video 파일을 Director storage에 직접 업로드해 연결할 수 있다.
 - planned origin binding과 manual replacement binding을 구분하며 수동 대체를 해제해도 원 acquisition 상태를 보존한다.
 - `asset-production-readiness.v1`은 local resolution, provider outstanding, retryable, blocking 상태를 별도 gate로 계산한다.
 - readiness는 `empty|ready|waiting|blocked`이며 `renderable`은 모든 visual requirement가 해결된 ready에서만 true다.
-- remote provider 결과와 render artifact는 아직 후보가 아니며 provider는 미정이다.
+- 검색·생성 결과는 Director owner/project-scoped local artifact와 checksum snapshot으로 materialize되고 immutable staging에서 다시 검증된다.
 - 새 project-artifact binding은 artifact kind/media type/size/checksum의 `project-artifact-snapshot.v1`을 AssetRef에 저장한다.
 - snapshot 없는 기존 AssetRef는 manifest metadata 또는 현재 content checksum으로 render-input staging할 수 있다.
 - `POST .../:projectId/render-input-stage`는 current project를 다시 compile한 뒤 exact visual/TTS 파일을 재검증하고 immutable local stage로 고정한다.
@@ -124,10 +142,11 @@
 - private stage manifest는 checksum으로 봉인된 exact RenderRecipe를 함께 보관한다.
 - private execution bundle은 recipe와 sourceId/stagedInputId metadata를 갖고 staged absolute path는 `resolveInput(sourceId)` 호출에서만 해소한다.
 - Director renderer adapter는 original ProjectManifest/source path가 아니라 execution bundle만 소비한다.
-- Director adapter registry는 claim/availability/explicit id를 검증하되 production adapter는 0개이고 generic VideoRenderProvider를 자동 포함하지 않는다.
-- future JobsService params는 path/raw recipe 대신 opaque stage/recipe checksum reference만 저장한다.
+- Director adapter registry는 claim/availability/explicit id를 검증하고 local Motion Canvas를 먼저, 보존된 local Remotion을 다음에 등록하되 generic VideoRenderProvider를 자동 포함하지 않는다.
+- JobsService params는 path/raw recipe 대신 opaque stage/recipe checksum reference만 저장한다.
 - stage retention class는 active job, retry source, completed source로만 고정했으며 기간/삭제 worker는 아직 없다.
-- adapter가 없으므로 render operation API/Angular render controls/queue executor는 아직 추가하지 않았다.
+- existing JobsService에 public plugin identity를 바꾸지 않는 job-only executor를 연결했다.
+- owner-scoped render start/list/get/cancel/retry/output API와 Angular progress/cancel/retry/MP4 저장 UX를 구현했다.
 - private execution bundle에서 deterministic renderer conformance profile과 canonical staged-input fingerprint를 만든다.
 - profile은 representative output/timeline counts, required capability와 sequence-card 5개 semantic state checksum을 가진다.
 - candidate benchmark는 revision/environment/elapsed/output bytes/optional peak RSS를 기록하지만 performance threshold나 순위에는 쓰지 않는다.
@@ -138,33 +157,81 @@
 ```text
 desktop/clipper_angular
   branch: feat/shortform-director-foundation
-  pushed HEAD: bfaf720 feat(shortform-director): add director workflow UI
+  pushed HEAD: 23324d2 feat(shortform-director): complete creation and render workflow
   upstream: origin/feat/shortform-director-foundation exact sync
-  branch divergence: origin/dev 대비 feature 1 commit / dev 5 commits
-  working tree: clean
+  committed continuation:
+    - Director model/service/page/spec에 actual render operation과 MP4 저장 UX 추가
+    - page header의 API 호출 없는 `완성형 예시 채우기`를 3개 선택 드롭다운으로 확장
+      - SaaS: 40초 programmatic text/sequence-card 캠페인 + synthetic Vira evidence 2개
+      - 엔터: SOURCE MUSIC 공식 `EASY` 발매 자료/YouTube 권리 안내 기반 35초 캠페인 + Vira evidence 없음
+      - 뷰티: LANEIGE/아모레퍼시픽 공식 제품 자료와 화장품법 기반 40초 캠페인 + Vira evidence 없음
+    - strategy 사용자 용어를 `제안 이유`와 `영상 방향`으로 변경
+    - Director HTTP error object를 공용 오류 presentation으로 변환해 `[object Object]` 노출 제거
+    - AssetPack incomplete 상태에 캠페인 권리 확인 + `에셋 자동 준비` 단일 action 추가
+    - 기존 asset picker는 자동 결과의 `직접 교체` fallback으로 유지하고 candidate 0개여도 `내 파일 선택` 제공
+    - 기존 features/shortform 경로 변경 없음
 
 desktop/clipper_nestjs
   branch: feat/shortform-director-foundation
   pushed commits:
     - 9eb8994 feat(shortform-director): add native planning and render foundation
     - b72e74c feat(shortform-director): add isolated Remotion render PoC
+    - d27db82 feat(shortform-director): add automatic assets and local renderers
   upstream: origin/feat/shortform-director-foundation exact sync
-  branch divergence: origin/dev 대비 feature 2 commits / dev 2 commits
-  working tree: clean
+  committed continuation:
+    - isolated PoC cache/RSS modules 2개 추가
+    - dynamic Remotion composition + actual execution worker 추가
+    - 기존 Remotion 코드 보존 상태에서 isolated Motion Canvas package/worker/application adapter 추가
+    - Motion Canvas를 registry 첫 기본 adapter, Remotion을 두 번째 fallback으로 등록
+    - Director output storage/job-only executor/operation API와 테스트 추가
+    - owned/source local match, 기존 media.search/Naver search/download, generated image/video routing coordinator 추가
+    - owned candidate 0개면 Layer/AssetPack route를 search로 전환해 자동 준비를 계속하고, Director 전용 file upload/bind 추가
+    - 검색·생성 결과용 Director local storage와 `automatic-acquisition` binding 추가
+    - managed Director asset을 RenderRecipe와 immutable stage까지 재검증
+    - Jobs registry/ProjectsService에는 Director opaque-reference용 최소 경계만 추가
+    - Director `WebApiProviderError`를 HTTP 502 + `provider_failed`로 변환하고 회귀 테스트 추가
+    - 기존 shortform/shortform-core/generic renderer production source 변경 없음
+
+desktop/clipper_electron
+  branch: dev
+  pushed HEAD: ddf70dc feat(shortform-director): package Motion Canvas runtime
+  upstream: origin/dev exact sync
+  committed continuation:
+    - Motion Canvas static/ncc worker/pinned headless-shell build-time packaging
+    - runtime manifest path validation과 Electron → Nest exact env injection
+    - utility-process child worker `ELECTRON_RUN_AS_NODE=1`
+    - existing app-managed FFmpeg/ffprobe path 재사용
+    - macOS arm64 `.app`/DMG build와 packaged resource tests
 
 web/clipper_web_api
   branch: feat/shortform-director-foundation
-  pushed HEAD: 5a8424b feat(shortform-director): add grounded planning APIs
+  pushed HEAD: 480bc30 feat(shortform-director): add Gemini asset generation
   upstream: origin/feat/shortform-director-foundation exact sync
-  branch divergence: origin/dev 대비 feature 1 commit / dev 0 commits
-  working tree: clean
+  committed continuation:
+    - provider VideoPlan의 hook/CTA/timeline 교차 필드 오류 deterministic canonicalizer 추가
+    - 실제 반복 실패 3종과 strict semantic rejection 회귀 테스트 추가
+    - JWT 보호 Director generated-media endpoint 추가
+    - 관리자 DB의 active Gemini credential로 Nano Banana 9:16 image와 Veo 9:16 video adapter 연결
+    - Gemini key 다중 암호화 저장, 행별 테스트, 수동 active 전환 추가; 자동 로테이션/fallback 없음
+    - verified owned inventory 없는 planner output의 owned visual을 search로 deterministic canonicalize
+    - 실제 provider 호출·배포 없이 fetch mock/build 검증 상태
+
+web/clipper_web_admin
+  branch: feat/shortform-director-foundation
+  pushed HEAD: 8a3333f feat(api-keys): manage Gemini credentials
+  upstream: origin/feat/shortform-director-foundation exact sync
+  committed continuation:
+    - 기존 `/api-keys`에 Gemini 다중 key section 추가
+    - 추가·수정·삭제·대기·수동 활성화·행별 테스트와 runtime 상태 표시
+    - raw key는 입력 직후 API request에만 사용하고 목록에는 마지막 네 자리만 표시
+    - 자동 로테이션 없음 문구와 active key 수동 선택 UX 추가
 
 .codex
   branch: main
-  design/session/handoff commit: 6a389a3 docs(shortform-director): record hybrid renderer design and PoC
-  final closure record: current main HEAD
-  upstream: origin/main exact sync after closure push
-  working tree: clean after closure
+  continuation start HEAD: 4464760
+  upstream: origin/main exact sync at start
+  note: user-provided expected HEAD 6cb4c43와 달랐으나, 4464760은 비충돌 first-launch/Plugin Store 분석 commit이라 보존
+  working tree: cache/RSS, actual render execution, 무료 상용 Motion Canvas, 자동 asset preparation와 owned dead-end 수정 결과 문서화; 세션 종료 commit/push 예정
 
 /Users/jina/project/vira
   branch: main
@@ -177,6 +244,11 @@ web/clipper_web_api
 ```text
 Plugin Store 설치
   → /shortform/director
+  → page header `완성형 예시 채우기`
+     ├─ SaaS · AI 숏폼 디렉터
+     ├─ 엔터 · LE SSERAFIM ‘EASY’
+     ├─ 뷰티 · LANEIGE 워터뱅크
+     └─ API/provider 호출 없이 선택한 전체 intake만 교체
   → campaign prompt + BrandProfile + expanded CampaignBrief + SourcePack claims
   → optional vira-evidence.v1 JSON paste
      + lab/legacy explicit opt-in
@@ -210,27 +282,27 @@ Plugin Store 설치
   → programmatic: resolved
   → owned/source/search/generated + ref 없음: missing
   → unresolved strategy: unresolved
-  → Angular에서 준비/필요/방식 미정과 pending 위치 표시
-  → owned/source pending layer에서 프로젝트 에셋 선택
-  → 권리 확인 + server-side 소유권/파일/origin 재검증
-  → AssetRef/binding 저장 + readiness 재계산
-  → 연결된 ref 표시/해제
-  → search/generated layer별 provider-neutral AssetAcquisition 생성
+  → owned/source/search/generated layer별 provider-neutral AssetAcquisition 생성
      ├─ not_requested / queued / running
      └─ succeeded / failed / cancelled
-  → 실제 provider control 없이 현재 상태 표시
-  → image/video compatibility에 맞는 로컬 project artifact 수동 대체
-  → manual-replacement binding 표시, 해제 시 acquisition 상태 복원
-  → 대표 45초 AssetPack acceptance
-     ├─ programmatic 1
-     ├─ planned local 7
-     ├─ manual replacement 1
-     └─ provider required 1
+  → 캠페인 권리/공급자 조건 한 번 확인
+  → Angular `에셋 자동 준비` 한 번 실행
+     ├─ programmatic: Motion Canvas 직접 생성
+     ├─ owned/source: 기존 local project artifact 우선 자동 매칭
+     ├─ source/search: 기존 remote media.search/Naver 검색·다운로드
+     ├─ generated-image: Nano Banana 9:16 image
+     └─ generated-video: Veo 9:16 MP4
+  → 검색 후보는 공식 SourcePack host/title/해상도/세로 비율 우선
+  → 원본 hotlink 실패 시 thumbnail 포함 최대 6회 시도
+  → owner/project-scoped Director local artifact materialization
+  → AssetRef snapshot + automatic-acquisition binding + readiness 재계산
+  → owned local artifact가 없으면 search route로 자동 전환
+  → 자동 실패·오선택 항목만 project artifact 또는 현재 기기 파일로 `직접 교체`
   → asset-production-readiness.v1
      ├─ ready
      ├─ waiting
      └─ blocked
-  → Angular에서 해결/로컬/Provider/차단 summary 표시
+  → ready면 기존 RenderRecipe compile과 immutable stage로 진행
 
 Director narration lifecycle
   → Supertonic voice / supported speed 선택
@@ -260,7 +332,8 @@ Director RenderRecipe compile preview
   → GET /projects/shortform-director/projects/:projectId/render-recipe
   → project 저장/파일 쓰기/operation charge/renderer 호출 없음
   → Angular에서 준비 조건이 맞을 때만 실행 레시피 확인
-  → renderer 미선정 · 렌더는 실행하지 않음
+  → immutable stage 뒤 local Motion Canvas actual render 가능
+     └─ 보존된 Remotion adapter는 explicit fallback
 
 Director render input staging
   → current project strict recompile
@@ -274,9 +347,9 @@ Director render input staging
   → copied size/checksum 재검증
   → immutable ready stage rename
   → opaque stage/input id + visual/narration/byte summary만 응답
-  → project 저장/operation charge/renderer/provider/queue 없음
+  → stage 준비 자체는 project 저장/operation charge/renderer/provider/queue 없음
 
-Director private render execution foundation
+Director actual render execution
   → private stage manifest에서 exact recipe checksum 재검증
   → recipe visual/TTS source exact set과 staged input exact set 검증
   → shortform-director-render-execution-bundle.v1
@@ -284,14 +357,25 @@ Director private render execution foundation
      └─ resolveInput(sourceId)만 private staged path 반환
   → Director-only renderer adapter registry
      ├─ explicit id / claim / availability
-     └─ production adapter 0개
+     ├─ director.adapter.motion-canvas-local.v1 (default)
+     └─ director.adapter.remotion-local.v1 (preserved fallback)
   → shortform-director-render-job-reference.v1
      └─ project/stage/recipe/checksum/adapter id only
-  → Jobs status retention class
-     ├─ active-job
-     ├─ retry-source
-     └─ completed-source
-  → 실제 renderer/queue/API/UI/cleanup 없음
+  → existing JobsService job-only executor
+     ├─ waiting / starting / running / completed
+     ├─ AbortSignal cancel
+     └─ failed/cancelled exact-reference retry
+  → isolated Motion Canvas child worker
+     ├─ private stdin request
+     ├─ source-revision static bundle cache
+     ├─ loopback staged asset resolver
+     ├─ Puppeteer frame bridge + FFmpeg image2pipe
+     └─ FFprobe output contract
+  → owner/project-scoped atomic MP4 output
+  → Director-only operation/output API
+  → Angular progress/cancel/retry/MP4 저장
+  → macOS arm64 packaged runtime 검증 완료
+  → retention 기간/GC는 미구현
 
 Director renderer conformance foundation
   → private execution bundle metadata only
@@ -309,23 +393,28 @@ Director renderer conformance foundation
      ├─ timeline/motion conformance
      └─ raw benchmark metadata, no ranking
   → automated gate + manual 7-axis exact review
-  → production adapter/API/UI 실행 없음
+  → actual local adapter output도 같은 media contract로 probe
 
 Renderer 역할 분담 결정
-  → main compositor first PoC: Remotion
-  → main compositor fallback: Motion Canvas
+  → free-commercial main compositor: Motion Canvas
+  → preserved optional fallback/comparison: Remotion
   → final probe/thumbnail/mux: app-managed FFmpeg/ffprobe
   → simple sequence-card: main compositor native motion
   → future complex diagram
      ├─ Manim or specialist materializer
      ├─ checksummed project artifact
      └─ immutable stage input
-  → production renderer registration은 계속 0개
+  → source-checkout local application adapter 등록
+  → macOS arm64 packaged 기술 smoke 완료
+  → cross-target/signing/release compliance 승인은 pending
 
 Isolated Remotion representative PoC
   → nested private package
      ├─ Remotion 4.0.489
      └─ React/React DOM 19.2.7
+  → composition source SHA-256
+     ├─ cache miss: temp bundle + manifest + atomic promotion
+     └─ cache hit: same serve bundle reuse, bundler skip
   → synthetic staged input exact 13
   → 5 checkpoint still
   → 41.2s full raw MP4
@@ -338,9 +427,59 @@ Isolated Remotion representative PoC
      ├─ audio 41.2s trim/re-encode
      └─ remux
   → final 41.2s MP4/H.264/AAC
+  → 100ms process-tree RSS sampler
+     ├─ benchmark Node root
+     ├─ Chrome + Remotion compositor + FFmpeg descendants
+     └─ PID/command/path 없는 portable peak evidence
   → automated conformance 7/7 pass
   → manual 7축 pending
   → AbortSignal cancel 2% smoke pass
+
+Isolated Motion Canvas free-commercial renderer
+  → nested private package
+     ├─ @motion-canvas/core/2d/vite-plugin 3.17.2
+     ├─ puppeteer-core 25.3.0
+     └─ Vite 5.4.21 offline build only
+  → exact lock graph license gate
+     └─ permissive allowlist 133/133
+  → official @motion-canvas/ffmpeg 제외
+  → custom headless execution
+     ├─ source SHA-256 static bundle cache
+     ├─ token-protected loopback resolver
+     ├─ browser outbound network 차단
+     ├─ Motion Canvas frame bridge
+     └─ external FFmpeg PNG image2pipe + audio mix
+  → representative 1,236 frame actual render
+     ├─ 41.2s / 30fps / 1080×1920
+     ├─ MP4 / H.264 / AAC / 2,072,173 bytes
+     ├─ same revision cache reused / 21,037ms
+     └─ process-tree peak RSS 1,941,848,064 bytes
+  → Electron build-time packaged runtime
+     ├─ prebuilt source-revision static bundle
+     ├─ ncc ESM worker
+     ├─ chrome-headless-shell 150.0.7871.24
+     ├─ npm/Chromium notices
+     └─ existing app-managed FFmpeg/ffprobe paths
+  → macOS arm64 source + `.app` resource actual MP4 verified
+  → macOS x64/Windows x64 package, signing/compliance, Windows RSS pending
+  → Remotion source/runtime 삭제 없음
+
+Application actual MP4 path
+  → immutable stage id로 POST render-jobs
+  → opaque persisted job reference
+  → job-only Director executor
+  → exact stage/recipe hydration
+  → local Motion Canvas worker by default
+     └─ explicit Remotion fallback preserved
+  → atomic shortform-director-render-output.v1
+  → operation progress/cancel/retry
+  → completed MP4 authenticated download
+  → 실제 최소 통합 case
+     ├─ staged PNG 1 + WAV 1
+     ├─ 1.0s / 30fps / 540×960
+     ├─ MP4 / H.264 / AAC
+     ├─ progress final 1 + ftyp 확인
+     └─ final rerun 약 5.0s
 
 Programmatic motion preview
   → VideoPlan diagram Layer
@@ -362,13 +501,19 @@ Programmatic motion preview
 - 이번 Director 작업에서 기존 Angular shortform feature, Nest shortform/shortform-core, web API shortform-script 경로 working-tree 변경은 0이다.
 - remote `origin/dev` 전진으로 현재 feature branch에는 Angular 기준 dev 5커밋, Nest 기준 dev 2커밋이 아직 들어오지 않았으며 merge/rebase하지 않았다.
 - current Vira 코드 모양의 합성 active/lab/on-demand fixture 3종을 추가했다.
-- desktop Nest director 83/83 통과.
-- Director와 기존 generic renderer registry boundary 회귀 합계 84/84 통과.
-- web API 전체 80 suite 431/431 통과.
-- Angular director feature 30/30 통과.
-- Angular 전체 1,535/1,535 통과.
-- 세 저장소 build 통과, web API 새 production source ESLint clean.
-- Vira exporter/API, 새 upload/URL ingestion, search/generation, production renderer/queue는 구현하지 않았다.
+- desktop Nest Shortform Director 전체는 106개 중 104 pass, 0 fail, opt-in actual renderer 2 skip이다.
+- actual Motion Canvas source integration 별도 실행 1/1 통과.
+- macOS arm64 `.app` 내부 worker/static/headless-shell을 built Electron Node mode에서 실행한 actual Motion Canvas integration 1/1 통과.
+- actual Remotion integration 별도 실행 1/1 통과.
+- web API 전체 80 suite 434/434 통과.
+- web API VideoPlan service 11/11 통과.
+- Angular Director page component suite 23/23 통과했고 기존 Director/render 회귀도 전체 suite에서 유지한다.
+- Angular 전체 1,542/1,542 통과.
+- Nest TypeScript/`ncc` bundle, Angular packaged, Electron TypeScript와 macOS arm64 `.app`/DMG build 통과, isolated Motion Canvas build/license gate 통과.
+- Electron 전체 165/165 통과.
+- Nest 전체 659개 baseline은 Director 밖 기존 fixture/config/mock 실패 61개가 남아 596 pass, 61 fail, 2 skip이다. 이번 범위에서 legacy plugin을 수정하지 않았다.
+- Motion Canvas packaged resource는 약 209MB(browser 약 203MB), built `.app` 약 590MB, DMG 약 272MB다. macOS arm64 산출물은 Developer ID가 없어 unsigned/unnotarized local build다.
+- Vira exporter/API와 URL paste ingestion은 구현하지 않았다. Director 전용 로컬 image/video upload, search/generation provider와 Motion Canvas source/package actual renderer는 구현됐다.
 - `shortform_director.strategy`와 `shortform_director.video_plan`은 각각 10 credit 초기 policy지만 migration은 실행하지 않았다.
 - duplicate normalized hook, prohibited expression, VideoPlan grounding coverage를 deterministic validator로 검사한다.
 - 전략 재생성 성공 시 이전 VideoPlan은 empty plan으로 무효화한다.
@@ -382,7 +527,7 @@ Programmatic motion preview
 - 새 project와 전략 재생성은 empty AssetPack, 새 VideoPlan은 동일 plan id의 AssetPack을 저장한다.
 - assetPack 없는 저장 JSON은 read 시 메모리에서만 hydration하고 디스크를 rewrite하지 않는다.
 - Angular는 owned/source planned binding과 search/generated manual replacement에 lazy project asset picker, 권리 확인, 연결/해제를 제공한다.
-- search/generated acquisition 상태는 보이지만 provider 실행·재시도·render control은 없다.
+- search/generated acquisition 상태는 보이지만 provider 실행·재시도는 없다. render control은 ready immutable stage에만 있다.
 - candidate API는 path/URL/uri를 반환하지 않으며 binding 시점에 project ownership과 로컬 파일 존재를 다시 확인한다.
 - 같은 project artifact를 여러 layer가 하나의 deterministic AssetRef로 공유하고 마지막 binding 해제 때 정리한다.
 - AssetPack은 search/generated layer에 deterministic acquisition을 만들고 구형 JSON의 acquisitions/binding mode를 read-only hydration한다.
@@ -415,44 +560,75 @@ Programmatic motion preview
 - project mutation 또는 recipe 재확인 뒤 Angular의 stage preview는 recipe preview와 함께 무효화된다.
 - stage hydration은 exact recipe checksum, staged bytes와 visual/TTS input exact set을 다시 검증한다.
 - sourceId resolver만 private absolute path를 반환하고 bundle/job reference JSON에는 path/URL/raw provider payload가 없다.
-- production Director adapter token은 빈 배열이고 기존 generic renderer 회귀가 통과했다.
-- queue/retry/cancel persistence는 새로 만들지 않고 future JobsService executor가 소유하도록 경계만 고정했다.
+- Director adapter token에는 local Motion Canvas가 첫 adapter, 보존된 local Remotion이 두 번째 fallback으로 등록됐고 기존 generic renderer/public virtual workflow 경계 회귀가 통과했다.
+- queue/retry/cancel persistence는 새로 만들지 않고 existing JobsService와 job-only executor를 재사용한다.
 - representative conformance profile은 path resolve 없이 stage/recipe/input metadata만 소비한다.
 - profile은 staged image/video/WAV, layered timeline, subtitle, text overlay, sequence-card motion, MP4/H.264/AAC, progress/cancel capability를 요구한다.
 - output duration tolerance는 한 frame이고 raw benchmark metric은 자동 성능 합격이나 순위에 쓰지 않는다.
 - 자동 통과 뒤 manual 7축 exact all-pass만 accepted이며 malformed/incomplete review는 accepted가 아니다.
 - Remotion/Motion Canvas/FFmpeg/Manim을 current Angular/Nest/Electron/Python packaging과 공식 문서 기준으로 비교했다.
-- Remotion은 layered media/text/caption과 Node progress/cancel API 적합성 때문에 첫 PoC 후보가 됐다.
-- Motion Canvas는 vector diagram 강점이 있지만 Vite/browser runtime과 newer FFmpeg exporter의 packaged automation 경로를 추가 검증해야 한다.
+- Remotion은 layered media/text/caption과 Node progress/cancel API 적합성 때문에 첫 PoC였지만 무료 상용 필수 조건 때문에 기본 production 후보에서는 제외했다.
+- Motion Canvas는 custom headless worker로 실제 full MP4까지 검증해 무료 상용 source-checkout 기본 renderer로 승격했다.
 - current simplified FFmpeg provider는 arbitrary composition layer와 sequence-card motion을 지원하지 않으므로 main compositor가 아니라 final media 역할로 고정했다.
 - Manim 결과는 final adapter 내부에서 즉석 생성하지 않고 future asset materialization과 staging을 거쳐야 한다.
 - nested Remotion dependency, representative projection/composition, full render, progress/cancel와 conformance report harness를 구현했다.
 - raw AAC padding이 한 frame tolerance를 넘는 경우만 FFmpeg가 video copy + audio trim/re-encode + remux한다.
 - representative automated result는 7/7 pass, elapsed 74,257ms, final output 8,082,314 bytes다.
+- `poc.3` cache-hit full rerun도 7/7 pass, elapsed 70,914ms, final output 8,053,591 bytes다.
 - checkpoint 5개와 timeline spot frame에서 Korean clipping, safe-zone과 sequence-card state 파손은 보이지 않았다.
-- synthetic media이므로 manual 7축은 pending이고 production accepted가 아니다.
+- synthetic media이므로 manual 7축과 packaged production acceptance는 pending이다.
 - nested install tree 약 270MB, macOS arm64 compositor 약 17MB, development composition bundle 약 20MB로 관찰됐다.
-- composition bundle cache/reuse, child-process RSS와 Electron packaging은 아직 하지 않았다.
+- source revision composition cache/reuse와 child-tree peak RSS는 isolated PoC 안에서 완료했다. Motion Canvas는 build-time source revision static bundle과 ncc worker를 Electron `extraResources`에 넣었고 macOS arm64 `.app` 내부 실행을 검증했다.
+- Motion Canvas source fingerprint cache/reuse와 Chrome/FFmpeg child 포함 peak RSS도 actual full render에서 완료했다.
 - 실제 OpenAI provider 호출은 하지 않았다.
-- 사용자 명시 요청 뒤 Angular/NestJS/web API 구현을 각각 `feat/shortform-director-foundation`에 커밋·push했다.
-- Angular `bfaf720`, NestJS `9eb8994`와 `b72e74c`, web API `5a8424b`가 각 upstream feature branch와 exact sync다.
-- `.codex`의 전체 설계·세션·handoff 기록은 `6a389a3`으로 `main`에 커밋·push했고, 이 최종 정합성 보정도 `.codex/main` current HEAD로 마감한다.
-- dev merge/rebase, PR 생성, deploy, DB 초기화/migration 실행, runner/dev server/Electron 조작은 하지 않았다.
+- 사용자 명시 요청 뒤 continuation 전체를 저장소별로 커밋·push했다.
+- 최종 코드 HEAD는 Angular `23324d2`, NestJS `d27db82`, Electron `ddf70dc`, web API `480bc30`, web admin `8a3333f`다.
+- Angular/NestJS/web API/web admin은 `feat/shortform-director-foundation`, Electron은 `dev`의 각 origin과 exact sync다.
+- `.codex` continuation은 start HEAD `4464760` 위에서 session/design/handoff를 갱신했고 별도 main commit/push로 종료한다.
+- dev merge/rebase, PR 생성, deploy, DB 초기화/migration 실행, runner/dev server/GUI Electron 조작은 하지 않았다. 승인된 package build와 UI 없는 Electron Node-mode smoke만 수행했다.
+- 업종별 3개 `완성형 예시 채우기`를 포함한 macOS arm64 `.app`/DMG를 재빌드했고 `.app` internal Director bundle 포함을 확인했다. GUI 실행과 실제 provider 호출은 하지 않았다.
+- 반복 실패 수정 뒤 macOS arm64 `.app`/DMG를 다시 빌드했고 package 내부 Nest 502 mapping을 확인했다. DMG SHA-256은 `e577403d14c633803d84d4b44f5dfcb5fe2478352c3ce3379876ad234d683262`다.
+- 사용자는 현재 `build:app:mac:arm64:local-api`와 로컬 web API를 사용하므로 VideoPlan canonicalizer 검증에 원격 배포는 필요하지 않다.
+- 자동 asset preparation 추가 뒤 Nest Director 110개 중 108 pass/2 opt-in skip/fail 0, Angular Director 39/39·전체 1,544/1,544, web API Director 23/23, remote media.search 6/6이 통과했다.
+- Gemini admin credential 확장 뒤 web API 전체 448/448와 build, web admin API-key 55/55·기존 깨진 header spec 제외 전체 184/184와 production build가 통과했다.
+- 실제 Nano Banana 첫 호출의 provider body는 기존 adapter가 버려 정확한 세부 사유를 사후 복원할 수 없었다. 다만 Interactions API에 지원되지 않는 `image/png` response MIME을 보내는 확정적인 400 유발 요인을 찾아 `image/jpeg`로 교정했고, 안전한 Google error status/message 전달을 추가했다. web API 전체 82 suites·450/450와 build가 통과했다.
+- 다음 실제 실행은 Veo까지 도달했고 `numberOfVideos isn't supported by this model`이라는 정제된 `INVALID_ARGUMENT`를 확인했다. 출력 1개가 고정인 현재 Veo 3.1 Fast text-to-video 계약에 맞춰 해당 필드만 제거했으며 전체 450/450와 build가 다시 통과했다.
+- 그 다음 실제 실행은 request validation을 통과했지만 Google이 Veo quota/plan/billing 문제로 429 `RESOURCE_EXHAUSTED`를 반환했다. 현재 경계는 코드가 아니라 활성 key project의 Paid 상태·credit·rate/spend quota다.
+- 사용자가 결제수단을 추가했다. Google quota 반영 뒤 같은 generated-video requirement를 재실행하는 실제 확인은 다음 세션에 남겼다.
+- 기존 project의 `owned` requirement에서 local candidate가 0개면 자동 준비와 직접 교체가 모두 막히던 dead-end를 제거했다. 새 plan은 owned inventory 없이 owned를 계획하지 않고, 기존 plan은 search로 자동 전환하며, empty picker는 현재 기기 파일 업로드를 제공한다.
+- 이 마지막 수정 뒤 Nest Director 113개 중 111 pass/2 opt-in skip/fail 0, Angular 37/37, web API 관련 15/15와 세 build가 통과했다.
+- Angular production/packaged build, Nest TypeScript/`ncc` bundle, web API build가 통과했다.
+- 실제 Naver/Google/OpenAI provider 호출은 수행하지 않았다.
 
 ### 다음 우선순위
 
-1. grounded ContentStrategy/native VideoPlan/eval/AssetPack/narration/RenderRecipe/motion preview와 두 10 credit 초기 policy를 리뷰한다.
-2. 구현된 immutable stage/private execution bundle/adapter registry/conformance profile diff를 리뷰한다.
-3. 구현된 isolated Remotion harness와 조건부 FFmpeg finalization diff를 리뷰한다.
-4. source revision fingerprint 기반 composition bundle cache/reuse와 Chrome/compositor child tree peak RSS를 추가한다.
-5. 실제 representative asset/audio로 full MP4와 5개 checkpoint still의 manual 7축을 검토한다.
-6. Electron `extraResources` packaged smoke, offline startup, Windows x64와 supported macOS 범위를 검증한다.
-7. Remotion license/Automator 비용과 packaging/quality gate 뒤에만 production adapter 후보로 승격하고, 실패 시 Motion Canvas PoC를 진행한다.
-8. 선택 뒤 JobsService executor, output materialization과 render operation API/Angular queue UX를 구현한다.
-9. stage retention 기간/GC policy를 별도 결정한다.
-10. 실제 acquisition adapter operation/materialization과 provider benchmark를 별도 진행한다.
-11. complex technical diagram 요구가 생기면 Manim 선행 materialization 계약과 PoC를 별도로 설계한다.
-12. 실제 Vira exporter/API snapshot identity/auth 계약은 manual handoff 검증 뒤 별도로 설계한다.
+1. 사용자가 추가한 Google 결제수단과 quota가 반영됐는지 같은 generated-video requirement를 다시 실행해 확인한다.
+   - 다시 429면 Google AI Studio Usage/Rate limits에서 `veo-3.1-fast-generate-preview` RPM/RPD와 project/account spend cap, Prepay credit을 확인한다.
+   - 자동 key rotation/fallback은 하지 않는다.
+2. 새 `build:app:mac:arm64:local-api` build에서 현재 LE SSERAFIM project의 캠페인 권리를 한 번 확인하고 `에셋 자동 준비`를 재실행한다.
+   - 현재 plan은 source 중심이라 Gemini key 없이 기존 local web API의 Naver 설정만으로 먼저 시험할 수 있다.
+   - 기존 owned layer에 local artifact가 없으면 search로 자동 전환하므로 더 이상 `보유 에셋 없음`에서 멈추지 않는다.
+   - 검색 결과가 준비되면 개별 수동 연결 없이 바로 RenderRecipe → stage로 진행한다.
+3. 자동 결과 목록에서 실제 멤버/앨범/공식 자료가 요구와 맞는지 확인하고, 틀린 소수 항목만 `직접 교체`한다. 연결된 project asset이 없어도 `내 파일 선택`을 사용할 수 있다.
+4. `generated-image|generated-video`가 포함된 plan을 실제 시험할 때 web admin `/api-keys`에서 Gemini key를 등록하고 행별 `테스트` 뒤 사용할 key를 `활성`으로 수동 전환한다.
+   - key는 채팅·문서·commit에 넣지 않고 관리자 입력 폼에만 직접 입력한다.
+   - Nano Banana/Veo 사용량 비용과 provider 정책을 확인한 뒤 실행한다.
+5. 자동 준비 → TTS aligned → immutable stage → Motion Canvas MP4 저장 E2E를 완료한다.
+6. 검색 후보 pixel을 읽는 vision semantic reranking과 실존 인물/제품 동일성 검증을 추가한다.
+7. 공식 동영상 검색과 필요한 구간 자동 추출을 별도 acquisition 품질 slice로 구현한다.
+8. 실제 Naver/Nano Banana/Veo의 품질·비용·latency benchmark와 retry policy를 고정한다.
+9. grounded ContentStrategy/native VideoPlan/eval/AssetPack/narration/RenderRecipe/motion preview와 두 10 credit 초기 policy를 리뷰한다.
+10. macOS x64와 Windows x64에서 구현된 target별 headless-shell package와 offline actual MP4 smoke를 실행한다.
+11. Windows recursive process-tree RSS sampler를 구현한다.
+12. Developer ID signing/notarization 뒤 nested headless-shell 실행과 notice 포함을 확인한다.
+13. 기존 app-managed FFmpeg/FFprobe downloader의 GPL/source notice, exact version/checksum과 H.264 compliance를 앱 공통 release gate로 감사한다.
+14. 대표 peak RSS 약 1.94GB와 package 증분 약 209MB를 낮추되 timeline/output conformance를 유지하는지 측정한다.
+15. 실제 representative asset/audio로 full MP4와 checkpoint의 manual 7축을 검토한다.
+16. stage/output/static-bundle/자동 asset cache retention 기간과 GC policy를 결정한다.
+17. complex technical diagram 요구가 생기면 Manim 선행 materialization 계약과 PoC를 별도로 설계한다.
+18. 실제 Vira exporter/API snapshot identity/auth 계약은 manual handoff 검증 뒤 별도로 설계한다.
+
+Remotion 코드 삭제는 위 단계에 포함하지 않는다. 별도 사용자 요청 전까지 fallback/비교 증거로 보존한다.
 
 ### 별도 보류 TODO — 데스크톱 첫 실행과 Plugin Store 초기 로딩
 
@@ -468,7 +644,7 @@ Programmatic motion preview
 - `.codex`는 `main`에서만 작업한다.
 - 실제 cookie/env/JWT/provider secret은 출력·문서화·커밋하지 않는다.
 - `clipper_docs`에는 아직 추가하지 않는다.
-- commit/push/deploy/DB/runner/dev server/Electron 조작은 사용자 요청 전 수행하지 않는다.
+- commit/push/deploy/DB/runner/dev server/GUI Electron 조작은 사용자 요청 전 수행하지 않는다. 이번 승인 범위에서는 package build와 UI를 띄우지 않는 Electron Node-mode render smoke만 수행했다.
 
 ## Previous Handoff: 2026-07-15 Shortform Source Images, Dev Integration, And Quality Direction
 

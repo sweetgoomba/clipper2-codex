@@ -141,6 +141,22 @@ elapsed/output size/peak RSS는 양수인지와 metadata 완전성만 확인한�
 
 성능 비교는 같은 environment id 안에서만 의미가 있다.
 
+### Process-tree peak RSS 측정 정의
+
+2026-07-20 isolated Remotion harness부터 optional `peakRssBytes`의 측정 범위를 다음처럼 고정했다.
+
+- benchmark Node process를 root로 한다.
+- 한 process snapshot에서 root와 재귀적인 live descendant의 RSS를 합산한다.
+- Chrome renderer/helper, Remotion compositor와 그 아래 media process를 포함한다.
+- unrelated sibling process와 측정용 sampler process는 제외한다.
+- 100ms 간격의 합계 중 최댓값을 `peakRssBytes`로 기록한다.
+- PID, raw command, executable/cache/stage path는 candidate report와 portable summary에 기록하지 않는다.
+- root-only RSS, 개별 child peak의 사후 합산 또는 machine 전체 RSS를 이 값으로 보고하지 않는다.
+
+현재 구현은 macOS/Linux `ps` snapshot을 사용한다. Windows x64는 같은 의미의 process-tree 합계를 제공하는 별도 sampler를 packaged benchmark 전에 검증해야 한다.
+
+첫 실제 full measurement는 `darwin-arm64-node24-remotion4.0.489-local`에서 725 samples와 2,296,545,280 bytes를 기록했고 Chrome, Remotion compositor와 FFmpeg child를 관측했다. 이 값은 metadata validity만 통과했으며 memory 합격선이나 renderer 순위로 사용하지 않았다.
+
 ## Manual 7-axis review
 
 기존 `VideoPlanQualityEvaluator`의 축을 그대로 사용한다.
@@ -220,6 +236,7 @@ profile builder와 evaluator는 pure domain code와 test fixture로만 둔다.
 - profile/report JSON에 path/URL/provider/model/credential이 없다.
 - missing capability/input, wrong output, duration drift 초과, timeline 누락, motion mismatch가 자동 실패한다.
 - benchmark metric 값은 기록되지만 성능 합격/순위에 쓰이지 않는다.
+- `peakRssBytes`는 benchmark root와 recursive child tree의 동시 RSS 합계다.
 - 자동 pass만으로 accepted가 되지 않고 manual 7축이 필요하다.
 - manual exact 7축 all-pass만 accepted다.
 - production adapter는 계속 0개다.
@@ -238,3 +255,26 @@ profile builder와 evaluator는 pure domain code와 test fixture로만 둔다.
 - JobsService executor
 - output artifact와 retention/GC
 - commit/push/deploy
+
+## 2026-07-20 Motion Canvas actual benchmark 적용
+
+기존 conformance profile과 “성능 metric은 비-gating” 원칙을 그대로 새 기본 adapter에 적용했다.
+
+Motion Canvas representative result:
+
+- adapter: `director.adapter.motion-canvas-local.v1`
+- output: 41.2초, 30fps, 1080×1920, MP4/H.264/AAC
+- rendered frames: 1,236
+- output bytes: 2,072,173
+- source revision: `sha256:aad28738ac9d7cb12a2603681e593b933d04b7dbc810970cdb97f5cc8c0cf271`
+- cache-hit elapsed: 21,037ms
+- process-tree samples: 106
+- peak process count: 9
+- peak RSS: 1,941,848,064 bytes
+- child kinds: Chrome, FFmpeg, other
+
+Motion Canvas의 `peakRssBytes`도 worker root와 recursive live child를 같은 snapshot에서 합산한다. Remotion compositor가 없는 대신 Chrome renderer/helper와 FFmpeg encoder를 포함한다. 둘 사이의 elapsed/RSS 숫자는 구현 구조가 다르고 아직 같은 packaged environment가 아니므로 renderer 순위나 자동 합격선으로 사용하지 않는다.
+
+현재 sampler는 macOS/Linux `ps` 기반이다. Windows x64에서는 같은 의미의 recursive process-tree sampler가 없으므로 packaged benchmark 전에 구현해야 한다.
+
+대표 frame inspection에서 처음 발견된 text line-height 겹침은 수정했고 headline/diagram/subtitle separation을 재확인했다. 이는 renderer spot check이며 synthetic asset만 사용했으므로 manual 7축 accepted 판정은 아니다.

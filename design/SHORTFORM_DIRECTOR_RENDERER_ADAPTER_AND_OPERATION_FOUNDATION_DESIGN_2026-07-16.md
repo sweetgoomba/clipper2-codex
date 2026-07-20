@@ -2,6 +2,8 @@
 
 작성일: 2026-07-16 KST
 
+> 2026-07-20 후속: 이 문서의 “실제 renderer/API/UI는 아직 연결하지 않는다”는 원래 foundation 범위는 이력으로 보존한다. 사용자가 수동 품질 검토보다 실제 영상 생성 구현을 먼저 완료하라고 순서를 명시적으로 바꿨고, 아래 `2026-07-20 실행 확장`이 application 경계의 정본이다. 무료 상용 renderer 선택은 `SHORTFORM_DIRECTOR_FREE_COMMERCIAL_RENDERER_AND_OS_DECISION_2026-07-20.md`가 supersede한다.
+
 상위 설계:
 
 - `.codex/design/PROMPT_SHORTFORM_QUALITY_AND_HYBRID_GENERATION_DIRECTION_2026-07-15.md`
@@ -120,6 +122,7 @@ interface ShortformDirectorRendererAdapter {
     bundle: ShortformDirectorRenderExecutionBundle,
     context: {
       operationId: string;
+      ownerSubjectId: string;
       signal: AbortSignal;
       onProgress(progress: number, message: string): void | Promise<void>;
     },
@@ -227,3 +230,130 @@ completed                    → completed-source
 - stage GC worker와 retention 기간
 - acquisition provider
 - DB/migration/server/Electron/commit/push/deploy
+
+## 2026-07-20 실행 확장
+
+### 순서 변경
+
+기존 문서는 manual 7축, packaging, license gate를 통과한 뒤 executor/API/UI를 구현하는 순서를 제안했다. 사용자는 “실제 영상을 먼저 만들어야 품질을 검토할 수 있다”고 명시했다. 따라서 구현 gate와 release gate를 분리했다.
+
+- 구현 gate: ready project가 immutable stage에서 실제 MP4까지 도달해야 한다.
+- release gate: 실제 에셋 manual 7축, Electron packaging/offline, 지원 OS, Remotion license/cost는 계속 남는다.
+- 이 순서 변경은 기존 `shortform_prompt`, provider/acquisition, 배포 범위를 넓히지 않는다.
+
+### 최종 실행 흐름
+
+```text
+ready Director project
+  → exact immutable render-input stage
+  → shortform-director-render-job-reference.v1
+  → existing JobsService waiting/starting/running
+  → job-only ShortformDirector workflow executor
+  → exact execution bundle hydration
+  → director.adapter.remotion-local.v1
+  → isolated Node worker over private stdin
+  → loopback staged asset server
+  → source-revision composition bundle cache
+  → Remotion H.264/AAC render
+  → ffprobe + conditional FFmpeg duration finalization
+  → owner/project-scoped atomic output materialization
+  → path-free operation/result API
+  → Angular progress/cancel/retry/MP4 저장
+```
+
+### JobsService 재사용과 public plugin 경계
+
+새 queue를 만들지 않았다. `WorkflowExecutorRegistry`에 job-only executor map을 추가했다.
+
+- public `list()`와 `get('shortform_director')`는 기존 install-gated virtual workflow를 그대로 반환한다.
+- JobsService의 실행/cancel 해석만 `getJobExecutor()`를 사용한다.
+- Director executor는 module lifecycle에서 job-only로 register/unregister한다.
+- retry는 기존 JobsService가 같은 opaque reference를 복사해 새 job id와 `retryOf`를 만든다.
+- local render는 provider/LLM operation이 아니므로 새 credit charge를 추가하지 않았다.
+
+generic ProjectsService에는 schema로 제한된 두 예외만 뒀다.
+
+- Director render reference에는 generic `project_id`, `title`, absolute `output_root`를 주입하지 않는다.
+- Director render 완료 job은 기존 generic project history로 다시 materialize하지 않는다.
+
+### Local Remotion worker
+
+application adapter는 isolated PoC package의 pinned Remotion runtime을 child worker로 실행한다.
+
+- worker request의 recipe/staged absolute path/output path/cache path는 pipe로만 전달하고 Jobs/API/project JSON에 저장하지 않는다.
+- runtime은 기존 설치된 Chrome, FFmpeg, FFprobe와 nested Remotion package가 모두 있을 때만 `available`이다.
+- browser/native binary 자동 다운로드는 없다.
+- composition metadata는 input projection의 width/height/fps/duration으로 동적으로 계산한다.
+- progress는 JobsService의 0..1 snapshot으로 전달한다.
+- AbortSignal은 worker SIGTERM과 Remotion cancel signal로 연결하며, 종료 지연 시 제한된 SIGKILL fallback을 사용한다.
+- worker 오류 원문과 private path는 public operation result에 넣지 않는다.
+
+### Output materialization
+
+`shortform-director-render-output.v1`은 다음 public metadata만 가진다.
+
+- opaque output id
+- project/stage/recipe/adapter identity
+- safe MP4 filename과 `video/mp4`
+- bytes/SHA-256/duration/dimensions/fps/H.264/AAC
+- createdAt
+
+실제 파일은 `CLIPPER_DATA_DIR` 아래 Director 전용 owner/project hash namespace의 temporary workspace에 생성한다. ffprobe 계약과 filesystem size를 통과한 뒤 SHA-256을 계산하고 metadata와 MP4 directory를 원자적으로 rename한다. 다운로드 시 owner/project/operation output reference를 다시 확인하며 absolute path를 응답 JSON에 노출하지 않는다.
+
+### Render operation API와 Angular
+
+Director 전용 endpoint만 추가했다.
+
+- `POST .../:projectId/render-jobs`
+- `GET .../:projectId/render-jobs`
+- `GET .../:projectId/render-jobs/:operationId`
+- `DELETE .../:projectId/render-jobs/:operationId`
+- `POST .../:projectId/render-jobs/:operationId/retry`
+- `GET .../:projectId/render-outputs/:outputId/file`
+
+operation DTO는 job params/history/auth/path를 반환하지 않는다. Angular는 immutable stage가 준비된 뒤에만 MP4 생성 버튼을 보이고 waiting/starting/running progress, cancel, failed/cancelled retry, completed MP4 저장을 제공한다. React/Remotion Player나 기존 shortform UI는 추가·변경하지 않았다.
+
+### 구현 acceptance와 실제 결과
+
+- application adapter/output/executor/operation 계약 테스트 5개와 Jobs/registry 경계 테스트가 통과했다.
+- 로컬 실제 통합 테스트에서 유효한 staged PNG 1개와 WAV 1개로 1초, 30fps, 540×960 MP4를 생성했다.
+- 최종 파일은 MP4 `ftyp`, H.264 video, AAC audio, width/height, size와 progress `→ 1`을 재검증했다.
+- 실제 local render final rerun은 약 5.0초였다.
+- Nest Director + Jobs/registry 회귀는 101 pass, opt-in actual render 1 pass였다.
+- Angular Director는 33/33, web API Director는 18/18 pass했다.
+- Nest/Angular/web API build가 모두 통과했다.
+
+### 남은 release gate
+
+- actual representative asset/audio manual 7축
+- Electron extraResources와 packaged/offline runtime
+- Windows x64와 지원 macOS 범위
+- Remotion Company License/Automator 비용
+- composition/output/stage retention과 GC 기간
+- thumbnail/inline preview가 제품에 필요한지 결정
+- provider acquisition과 complex diagram materialization
+
+현재 source checkout에서는 실제 영상 생성까지 동작하지만 packaged release 준비 완료를 뜻하지 않는다.
+
+## 2026-07-20 Motion Canvas 기본 adapter 정정
+
+application executor/API/output/Angular 경계는 바꾸지 않고 adapter registry만 다음 순서로 확장했다.
+
+```text
+ShortformDirectorRendererAdapterRegistry
+  ├─ director.adapter.motion-canvas-local.v1  # default
+  └─ director.adapter.remotion-local.v1       # preserved explicit fallback
+```
+
+Motion Canvas worker는 execution bundle 외 project/source state를 읽지 않는다. exact staged bytes를 다시 검사한 뒤 source fingerprint static bundle, strict loopback resolver, Puppeteer frame bridge와 external FFmpeg/FFprobe를 사용한다. official Motion Canvas FFmpeg exporter와 Remotion package를 import하지 않는다.
+
+adapter의 required capability는 staged image/video/WAV, layered composition, timed subtitle, text role, sequence-card, MP4/H.264/AAC와 progress다. AbortSignal이 발생하거나 worker가 cancellation을 보고하면 temporary output workspace를 폐기하고 `{status: 'cancelled'}`를 반환한다.
+
+검증:
+
+- Motion Canvas adapter success/cancel/registry/isolation 4/4
+- 최소 actual render 1/1
+- Shortform Director 전체 103개에서 fail 0
+- 기존 Remotion tests pass, 관련 코드 삭제 없음
+
+release gate는 Remotion 비용 판정이 아니라 Motion Canvas packaged browser/encoder ownership으로 바뀐다. 현재 GPL/libx264 FFmpeg binary를 그대로 묶지 말고 GPL 준수 배포 또는 LGPL/platform encoder를 선택해야 한다. macOS arm64 source checkout만 실제 확인됐고 macOS x64/Windows x64 packaged smoke는 남아 있다.

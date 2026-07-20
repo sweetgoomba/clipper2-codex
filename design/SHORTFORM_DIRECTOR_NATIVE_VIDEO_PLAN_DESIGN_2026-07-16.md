@@ -218,3 +218,32 @@ ContentStrategy matrix entry 클릭
 추가로 ContentStrategy 단계에서 정규화했을 때 같은 hook과 금지 표현을 거부한다. 전략을 다시 생성하면 이전 strategy에서 파생된 VideoPlan은 새 empty plan으로 교체해 stale derivation을 남기지 않는다.
 
 실제 provider 호출은 수행하지 않았다. renderer, image/video provider, AssetRef와 RenderRecipe compiler는 계속 미정·비범위다.
+
+## 실사용 provider draft canonicalization — 2026-07-20
+
+macOS arm64 packaged app에서 LANEIGE 예시로 VideoPlan 생성을 세 번 실행한 결과, provider는 strict JSON Schema 모양은 지켰지만 Schema로 표현할 수 없는 교차 필드 조건을 매번 다르게 위반했다.
+
+1. 첫 scene에 선택 hook 전체가 없음
+2. 마지막 scene에 선택 CTA 전체가 없음
+3. 두 번째 scene의 Beat 합계가 scene 전체 시간을 덮지 않음
+
+이 조건을 같은 provider 재호출의 우연에 맡기지 않는다. web API는 provider JSON을 strict parser에 넣기 전에 다음 결정적 값만 canonicalize한다.
+
+- root duration을 CampaignBrief 목표 길이로 고정
+- Scene/Beat/Shot의 최소 길이를 지키면서 provider duration 비율을 사용해 부모 전체 시간을 정확히 분배
+- 각 계층의 `order`와 absolute `startMs`를 0-based contiguous 값으로 재계산
+- Layer를 재배치된 Shot 안으로 옮기고 각 Shot에 full-shot Layer가 하나 이상 있도록 보정
+- 선택 hook이 누락된 경우 첫 Beat narration 앞에 정확한 hook을 넣음
+- 선택 CTA가 누락된 경우 마지막 Shot의 적절한 text Layer를 CTA로 확정하거나 최대 Layer 수 안에서 CTA Layer를 추가
+
+이미 유효한 draft는 byte-equivalent payload로 유지한다. 다음 항목은 의미를 바꾸거나 가짜 근거를 만들 수 있으므로 보정하지 않고 기존 strict validator가 계속 거부한다.
+
+- unknown/context-only/missing grounding reference
+- 금지 표현
+- 잘못된 product/evidence 생성형 asset route
+- malformed diagram payload와 authored copy
+- 잘못된 id, 필수 구조 또는 문자열 계약
+
+desktop Nest는 web API의 `WebApiProviderError`를 raw Error로 다시 던지지 않고 HTTP 502, code `provider_failed`인 `BadGatewayException`으로 변환한다. operation fail/refund와 이전 VideoPlan 보존은 그대로 유지한다.
+
+packaged app의 기본 runtime은 배포된 web API를 호출한다. 따라서 canonicalizer 코드와 새 앱 package가 로컬에 존재하는 것만으로 현재 설치본의 provider 실패가 해결되지는 않는다. web API 배포는 별도 명시 승인 뒤 수행해야 하며, 그 전에는 실제 provider 재시도를 완료 검증으로 기록하지 않는다.
