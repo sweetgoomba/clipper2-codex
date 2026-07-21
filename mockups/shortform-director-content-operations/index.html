@@ -1,0 +1,2083 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 숏폼 디렉터 — 콘텐츠 운영 목업</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c1110;
+      --surface: #131a18;
+      --surface-2: #19221f;
+      --surface-3: #21302a;
+      --outline: #34443e;
+      --outline-strong: #52675f;
+      --text: #edf5f1;
+      --muted: #a7b8b1;
+      --primary: #4fcf8c;
+      --primary-strong: #7de7aa;
+      --primary-soft: #173c2a;
+      --blue: #7bb7ff;
+      --blue-soft: #182b3f;
+      --orange: #ffbd70;
+      --orange-soft: #3d2c18;
+      --red: #ff8f8f;
+      --red-soft: #3b2020;
+      --shadow: 0 18px 48px rgb(0 0 0 / 28%);
+      --radius-lg: 18px;
+      --radius-md: 13px;
+      --radius-sm: 9px;
+      --sidebar: 278px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background:
+        radial-gradient(circle at 65% -10%, rgb(79 207 140 / 10%), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Pretendard, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    .prototype-banner {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      display: flex;
+      min-height: 34px;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      border-bottom: 1px solid rgb(123 183 255 / 25%);
+      background: #15283a;
+      color: #cfe4ff;
+      font-size: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .app-shell {
+      display: grid;
+      min-height: calc(100vh - 34px);
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 34px;
+      height: calc(100vh - 34px);
+      padding: 22px 16px;
+      border-right: 1px solid var(--outline);
+      background: rgb(14 20 18 / 92%);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 8px 22px;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 11px;
+      background: linear-gradient(145deg, var(--primary), #319b68);
+      color: #07150e;
+      font-weight: 900;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .sidebar-label {
+      margin: 0 8px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .profile-select {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 11px 34px 11px 12px;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-sm);
+      outline: none;
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .profile-select:focus {
+      border-color: var(--primary);
+    }
+
+    .project-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .project-link {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 32px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .project-link:hover {
+      background: var(--surface);
+    }
+
+    .project-link.active {
+      border-color: rgb(79 207 140 / 26%);
+      background: var(--primary-soft);
+    }
+
+    .project-icon {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--surface-3);
+      font-size: 15px;
+    }
+
+    .project-link strong,
+    .project-link span {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .project-link strong {
+      font-size: 13px;
+    }
+
+    .project-link span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .new-project {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px dashed var(--outline-strong);
+      border-radius: 11px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .new-project:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .sidebar-bottom {
+      position: absolute;
+      right: 16px;
+      bottom: 18px;
+      left: 16px;
+    }
+
+    .future-card {
+      padding: 13px;
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--surface), #14221c);
+    }
+
+    .future-card strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .future-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 32px;
+      border-bottom: 1px solid var(--outline);
+      background: rgb(12 17 16 / 75%);
+      backdrop-filter: blur(18px);
+    }
+
+    .breadcrumbs {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumbs strong {
+      color: var(--text);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 9px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border: 1px solid var(--outline);
+      border-radius: 10px;
+      background: var(--surface-2);
+      cursor: pointer;
+    }
+
+    .button:hover {
+      border-color: var(--outline-strong);
+      background: var(--surface-3);
+    }
+
+    .button.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #092016;
+      font-weight: 800;
+    }
+
+    .button.primary:hover {
+      background: var(--primary-strong);
+    }
+
+    .button.ghost {
+      background: transparent;
+    }
+
+    .button.danger {
+      border-color: rgb(255 143 143 / 35%);
+      color: var(--red);
+    }
+
+    .content {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 28px 32px 64px;
+    }
+
+    .project-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing: -0.04em;
+    }
+
+    .project-description {
+      max-width: 780px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .status::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 9px;
+      border: 1px solid var(--outline);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-top: 28px;
+      padding-bottom: 1px;
+      border-bottom: 1px solid var(--outline);
+      overflow-x: auto;
+    }
+
+    .tab {
+      min-width: max-content;
+      padding: 11px 13px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .tab.active {
+      border-bottom-color: var(--primary);
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .view {
+      display: none;
+      padding-top: 24px;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 24px;
+    }
+
+    .metric small {
+      display: block;
+      margin-top: 4px;
+      color: var(--primary);
+      font-size: 10px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgb(255 255 255 / 2%) inset;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .text-button {
+      padding: 5px;
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .track-list,
+    .signal-list,
+    .idea-list,
+    .production-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 11px;
+      padding: 11px;
+      border: 1px solid var(--outline);
+      border-radius: 11px;
+      background: var(--surface-2);
+    }
+
+    .track-icon {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--primary-soft);
+    }
+
+    .track strong,
+    .track span {
+      display: block;
+    }
+
+    .track strong {
+      font-size: 13px;
+    }
+
+    .track span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .count {
+      min-width: 28px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .signal {
+      padding: 13px;
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      background: var(--surface-2);
+    }
+
+    .signal.hot {
+      border-color: rgb(255 189 112 / 35%);
+      background: linear-gradient(145deg, var(--orange-soft), var(--surface-2));
+    }
+
+    .signal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .signal-keyword {
+      font-weight: 850;
+    }
+
+    .trend {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .signal p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .evidence {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--blue);
+      font-size: 10px;
+    }
+
+    .idea {
+      padding: 15px;
+      border: 1px solid var(--outline);
+      border-radius: 13px;
+      background: var(--surface-2);
+    }
+
+    .idea-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .idea h3 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .idea p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .idea-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .idea-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .mini-button {
+      padding: 6px 9px;
+      border: 1px solid var(--outline);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .mini-button:hover,
+    .mini-button.primary {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .badge {
+      min-width: max-content;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .badge.orange {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .badge.green {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .filter {
+      padding: 7px 10px;
+      border: 1px solid var(--outline);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .filter.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .insight-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 16px;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 7px;
+      width: 1px;
+      background: var(--outline);
+      content: "";
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 15px;
+      border: 1px solid var(--outline);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    .timeline-item::before {
+      position: absolute;
+      top: 20px;
+      left: -22px;
+      width: 10px;
+      height: 10px;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      background: var(--primary);
+      content: "";
+    }
+
+    .timeline-item time {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .timeline-item h3 {
+      margin: 6px 0 0;
+      font-size: 15px;
+    }
+
+    .timeline-item p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .source-card {
+      padding: 12px;
+      border: 1px solid var(--outline);
+      border-radius: 11px;
+      background: var(--surface-2);
+    }
+
+    .source-card + .source-card {
+      margin-top: 8px;
+    }
+
+    .source-card strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .source-card span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .production {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) minmax(130px, 0.5fr) auto;
+      align-items: center;
+      gap: 13px;
+      padding: 13px;
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .thumb {
+      display: grid;
+      width: 44px;
+      height: 62px;
+      place-items: center;
+      border-radius: 8px;
+      background:
+        linear-gradient(155deg, rgb(79 207 140 / 42%), transparent 55%),
+        var(--surface-3);
+      font-size: 18px;
+    }
+
+    .production strong,
+    .production span {
+      display: block;
+    }
+
+    .production strong {
+      font-size: 12px;
+    }
+
+    .production span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .progress {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      width: var(--progress);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--primary);
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .settings-nav,
+    .settings-card {
+      padding: 15px;
+      border: 1px solid var(--outline);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .settings-nav button {
+      width: 100%;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .settings-nav button.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--outline);
+    }
+
+    .setting-row:last-child {
+      border-bottom: 0;
+    }
+
+    .setting-row strong,
+    .setting-row span {
+      display: block;
+    }
+
+    .setting-row strong {
+      font-size: 12px;
+    }
+
+    .setting-row span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .mock-value {
+      color: var(--primary);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgb(2 6 5 / 72%);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .wizard {
+      width: min(920px, 100%);
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      border: 1px solid var(--outline-strong);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .wizard-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid var(--outline);
+    }
+
+    .wizard-head h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .wizard-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .icon-button {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--outline);
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 18px 24px 0;
+    }
+
+    .step-mark {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .step-mark::before {
+      position: absolute;
+      z-index: 0;
+      top: 13px;
+      right: 50%;
+      left: -50%;
+      height: 1px;
+      background: var(--outline);
+      content: "";
+    }
+
+    .step-mark:first-child::before {
+      display: none;
+    }
+
+    .step-dot {
+      z-index: 1;
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      border: 1px solid var(--outline);
+      border-radius: 50%;
+      background: var(--surface);
+    }
+
+    .step-mark.active,
+    .step-mark.done {
+      color: var(--primary);
+    }
+
+    .step-mark.active .step-dot,
+    .step-mark.done .step-dot {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .step-mark.done::before,
+    .step-mark.active::before {
+      background: var(--primary);
+    }
+
+    .wizard-body {
+      min-height: 430px;
+      padding: 28px 24px;
+    }
+
+    .wizard-step {
+      display: none;
+    }
+
+    .wizard-step.active {
+      display: block;
+    }
+
+    .wizard-step > h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .wizard-step > p {
+      margin: 8px 0 22px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .purpose-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .purpose {
+      min-height: 138px;
+      padding: 15px;
+      border: 1px solid var(--outline);
+      border-radius: 14px;
+      background: var(--surface-2);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .purpose:hover,
+    .purpose.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .purpose-emoji {
+      font-size: 22px;
+    }
+
+    .purpose strong {
+      display: block;
+      margin-top: 11px;
+      font-size: 13px;
+    }
+
+    .purpose span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .field small {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid var(--outline);
+      border-radius: 10px;
+      outline: none;
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--primary);
+    }
+
+    .option-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .option-chip {
+      padding: 9px 12px;
+      border: 1px solid var(--outline);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .option-chip.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .recommendation {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
+      gap: 14px;
+    }
+
+    .recommend-card {
+      padding: 18px;
+      border: 1px solid var(--outline);
+      border-radius: 15px;
+      background: var(--surface-2);
+    }
+
+    .recommend-card h4 {
+      margin: 0 0 14px;
+      font-size: 14px;
+    }
+
+    .review-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--outline);
+      font-size: 11px;
+    }
+
+    .review-row:last-child {
+      border-bottom: 0;
+    }
+
+    .review-row span {
+      color: var(--muted);
+    }
+
+    .review-row strong {
+      text-align: right;
+    }
+
+    .advanced-note {
+      padding: 14px;
+      border: 1px solid rgb(123 183 255 / 24%);
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: #cfe4ff;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .wizard-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 24px 22px;
+      border-top: 1px solid var(--outline);
+    }
+
+    .step-hint {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .wizard-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 80;
+      right: 24px;
+      bottom: 24px;
+      max-width: 360px;
+      padding: 13px 16px;
+      border: 1px solid rgb(79 207 140 / 36%);
+      border-radius: 11px;
+      background: #173526;
+      color: #c7f6dc;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 180ms ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 1100px) {
+      :root {
+        --sidebar: 238px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dashboard-grid,
+      .insight-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--outline);
+      }
+
+      .sidebar-bottom {
+        position: static;
+        margin-top: 16px;
+      }
+
+      .topbar,
+      .project-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .content {
+        padding: 22px 16px 48px;
+      }
+
+      .topbar {
+        padding: 14px 16px;
+      }
+
+      .purpose-grid,
+      .form-grid,
+      .recommendation,
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .production {
+        grid-template-columns: 44px minmax(0, 1fr);
+      }
+
+      .production > :nth-child(n + 3) {
+        grid-column: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="prototype-banner">
+    UI 목업 · 모든 데이터는 예시이며 API, Vira, DB, provider에 연결되지 않습니다.
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">D</div>
+        <div>
+          <strong>AI 숏폼 디렉터</strong>
+          <span>지속형 콘텐츠 운영</span>
+        </div>
+      </div>
+
+      <p class="sidebar-label">운영 프로필</p>
+      <select class="profile-select" id="profileSelect" aria-label="운영 프로필">
+        <option>엔터테인먼트 운영</option>
+        <option>뷰티 콘텐츠 운영</option>
+        <option>가전 리뷰 채널</option>
+      </select>
+
+      <p class="sidebar-label">콘텐츠 프로젝트</p>
+      <div class="project-list" id="projectList">
+        <button class="project-link active" type="button" data-project="르세라핌">
+          <span class="project-icon">✦</span>
+          <span>
+            <strong>LE SSERAFIM 상시 콘텐츠</strong>
+            <span>인물·아티스트 · 4개 트랙</span>
+          </span>
+        </button>
+        <button class="project-link" type="button" data-project="신인동향">
+          <span class="project-icon">↗</span>
+          <span>
+            <strong>신인 걸그룹 동향</strong>
+            <span>트렌드 큐레이션 · 3개 트랙</span>
+          </span>
+        </button>
+      </div>
+      <button class="new-project" id="openWizard" type="button">
+        <span>＋</span> 새 콘텐츠 프로젝트
+      </button>
+
+      <div class="sidebar-bottom">
+        <div class="future-card">
+          <strong>야간 자동 제작</strong>
+          <p>UI 합의 후 설계할 향후 기능입니다. 현재 목업에서는 실행되지 않습니다.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumbs">
+          엔터테인먼트 운영 / <strong>LE SSERAFIM 상시 콘텐츠</strong>
+        </div>
+        <div class="top-actions">
+          <button class="button ghost" id="mockRefresh" type="button">↻ Vira 새로고침</button>
+          <button class="button primary" id="mockGenerate" type="button">✦ 영상 아이디어 만들기</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="project-head">
+          <div>
+            <p class="eyebrow">인물·아티스트 콘텐츠</p>
+            <h1>LE SSERAFIM 상시 콘텐츠</h1>
+            <p class="project-description">
+              신곡, 멤버별 이슈, 착장과 바이럴 연관어를 지속적으로 관찰하고
+              팬이 지금 궁금해할 숏폼 아이디어를 축적합니다.
+            </p>
+            <div class="chips">
+              <span class="chip">주 플랫폼 · YouTube Shorts</span>
+              <span class="chip">추가 · Instagram Reels</span>
+              <span class="chip">주 시청자 · FEARNOT</span>
+              <span class="chip">한국어</span>
+            </div>
+          </div>
+          <span class="status">운영 중</span>
+        </section>
+
+        <nav class="tabs" aria-label="프로젝트 메뉴">
+          <button class="tab active" type="button" data-view="overview">개요</button>
+          <button class="tab" type="button" data-view="insights">Vira 인사이트</button>
+          <button class="tab" type="button" data-view="ideas">영상 아이디어 <span class="count">12</span></button>
+          <button class="tab" type="button" data-view="productions">제작함 <span class="count">3</span></button>
+          <button class="tab" type="button" data-view="settings">설정</button>
+        </nav>
+
+        <section class="view active" id="view-overview">
+          <div class="summary-grid">
+            <article class="metric">
+              <span>오늘 새 Vira 신호</span>
+              <strong>6</strong>
+              <small>급상승 2개 포함</small>
+            </article>
+            <article class="metric">
+              <span>새 영상 아이디어</span>
+              <strong>12</strong>
+              <small>검토하지 않은 아이디어</small>
+            </article>
+            <article class="metric">
+              <span>제작 중</span>
+              <strong>2</strong>
+              <small>렌더 1 · 에셋 준비 1</small>
+            </article>
+            <article class="metric">
+              <span>이번 주 완성</span>
+              <strong>7</strong>
+              <small>다운로드 대기 3개</small>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <div>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>콘텐츠 트랙</h2>
+                    <p>지속적으로 관찰하고 아이디어를 만들 세부 영역</p>
+                  </div>
+                  <button class="text-button" type="button" data-toast="트랙 편집은 다음 목업에서 다듬을 수 있습니다.">트랙 관리</button>
+                </div>
+                <div class="track-list">
+                  <div class="track">
+                    <span class="track-icon">♫</span>
+                    <span><strong>신곡·무대</strong><span>컴백, 무대 반응, 안무 포인트</span></span>
+                    <span class="count">4</span>
+                  </div>
+                  <div class="track">
+                    <span class="track-icon">◎</span>
+                    <span><strong>멤버별 이슈</strong><span>인터뷰, 일상, 팬 반응</span></span>
+                    <span class="count">3</span>
+                  </div>
+                  <div class="track">
+                    <span class="track-icon">♢</span>
+                    <span><strong>착장 정보</strong><span>브랜드, 스타일링, 유사 아이템</span></span>
+                    <span class="count">2</span>
+                  </div>
+                  <div class="track">
+                    <span class="track-icon">↗</span>
+                    <span><strong>밈·바이럴 연관어</strong><span>갑자기 떠오른 단어와 확산 이유</span></span>
+                    <span class="count">3</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="panel" style="margin-top: 16px;">
+                <div class="panel-head">
+                  <div>
+                    <h2>새 영상 아이디어</h2>
+                    <p>선택한 프로젝트와 최신 근거를 함께 보관합니다.</p>
+                  </div>
+                  <button class="text-button" type="button" data-open-view="ideas">전체 12개 보기</button>
+                </div>
+                <div class="idea-list">
+                  <article class="idea">
+                    <div class="idea-top">
+                      <div>
+                        <h3>왜 갑자기 ‘떡꼬치’가 FEARNOT 사이에서 다시 뜨고 있을까?</h3>
+                        <p>먹방 클립의 확산 시점과 팬 반응을 연결해 35초 스토리로 설명합니다.</p>
+                      </div>
+                      <span class="badge orange">시의성 높음</span>
+                    </div>
+                    <div class="idea-meta">
+                      <span>트랙 · 밈·바이럴 연관어</span>
+                      <span>Vira 근거 3개</span>
+                      <span>오늘 09:20</span>
+                    </div>
+                    <div class="idea-actions">
+                      <button class="mini-button primary" type="button" data-toast="이 아이디어가 제작 선택 상태로 변경되었습니다.">제작 선택</button>
+                      <button class="mini-button" type="button" data-toast="아이디어 상세 화면은 다음 목업에서 조정합니다.">근거 보기</button>
+                      <button class="mini-button" type="button" data-toast="아이디어를 보류했습니다.">보류</button>
+                    </div>
+                  </article>
+                  <article class="idea">
+                    <div class="idea-top">
+                      <div>
+                        <h3>이번 주 무대 착장에서 팬들이 가장 많이 찾은 세 가지 포인트</h3>
+                        <p>공식 무대 자료와 검색 반응을 바탕으로 멤버별 포인트를 정리합니다.</p>
+                      </div>
+                      <span class="badge">새 아이디어</span>
+                    </div>
+                    <div class="idea-meta">
+                      <span>트랙 · 착장 정보</span>
+                      <span>Vira 근거 5개</span>
+                      <span>오늘 08:45</span>
+                    </div>
+                  </article>
+                </div>
+              </article>
+            </div>
+
+            <div>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>지금 뜨는 Vira 신호</h2>
+                    <p>마지막 동기화 · 오늘 09:30</p>
+                  </div>
+                  <button class="text-button" type="button" data-open-view="insights">전체 보기</button>
+                </div>
+                <div class="signal-list">
+                  <article class="signal hot">
+                    <div class="signal-top">
+                      <span class="signal-keyword">떡꼬치</span>
+                      <span class="trend">+184%</span>
+                    </div>
+                    <p>멤버 먹방 클립이 다시 공유되며 연관 검색과 댓글 언급이 동반 상승했습니다.</p>
+                    <div class="evidence">▣ 근거 영상 2개 · 관측 구간 24시간</div>
+                  </article>
+                  <article class="signal">
+                    <div class="signal-top">
+                      <span class="signal-keyword">공항 패션</span>
+                      <span class="trend">+61%</span>
+                    </div>
+                    <p>출국 영상 이후 특정 재킷과 가방 정보 검색이 증가했습니다.</p>
+                    <div class="evidence">▣ 근거 영상 4개 · 관측 구간 48시간</div>
+                  </article>
+                  <article class="signal">
+                    <div class="signal-top">
+                      <span class="signal-keyword">안무 챌린지</span>
+                      <span class="trend">+37%</span>
+                    </div>
+                    <p>크리에이터 참여 영상이 늘며 원본 무대 유입도 함께 상승했습니다.</p>
+                    <div class="evidence">▣ 근거 영상 7개 · 관측 구간 7일</div>
+                  </article>
+                </div>
+              </article>
+
+              <article class="panel" style="margin-top: 16px;">
+                <div class="panel-head">
+                  <div>
+                    <h2>운영 프로필 기본값</h2>
+                    <p>프로젝트별로 필요한 값만 덮어씁니다.</p>
+                  </div>
+                </div>
+                <div class="source-card">
+                  <strong>콘텐츠 성격</strong>
+                  <span>빠르지만 근거가 보이는 팬 친화형 정보 콘텐츠</span>
+                </div>
+                <div class="source-card">
+                  <strong>공통 안전 기준</strong>
+                  <span>확인되지 않은 사생활 추측 금지 · AI 생성 얼굴 금지</span>
+                </div>
+                <div class="source-card">
+                  <strong>기본 배포</strong>
+                  <span>YouTube Shorts 우선 · Instagram Reels 추가</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-insights">
+          <div class="insight-layout">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>Vira 인사이트 타임라인</h2>
+                  <p>실제 구현에서는 Vira API의 id·관측 기간·근거 snapshot을 보관합니다.</p>
+                </div>
+                <button class="button ghost" type="button" data-toast="기간 필터는 UI 검토 후 구체화합니다.">최근 7일⌄</button>
+              </div>
+              <div class="timeline">
+                <article class="timeline-item">
+                  <time>오늘 09:20 · 급상승 연관어</time>
+                  <h3>‘떡꼬치’ 언급량이 24시간 기준 184% 상승</h3>
+                  <p>멤버의 기존 먹방 클립이 커뮤니티에서 다시 확산됐고, 관련 검색어와 댓글이 같은 시간대에 증가했습니다.</p>
+                  <div class="chips">
+                    <span class="chip">멤버별 이슈</span>
+                    <span class="chip">근거 영상 2</span>
+                    <span class="chip">신뢰도 높음</span>
+                  </div>
+                </article>
+                <article class="timeline-item">
+                  <time>어제 18:40 · 검색 반응</time>
+                  <h3>공항 패션 관련 제품 탐색 증가</h3>
+                  <p>출국 영상 공개 이후 재킷, 가방과 유사 제품을 찾는 검색 흐름이 관찰됐습니다.</p>
+                  <div class="chips">
+                    <span class="chip">착장 정보</span>
+                    <span class="chip">근거 영상 4</span>
+                  </div>
+                </article>
+                <article class="timeline-item">
+                  <time>3일 전 · 참여형 포맷</time>
+                  <h3>안무 챌린지 참여 영상이 원본 무대 유입을 견인</h3>
+                  <p>파생 영상 증가와 원본 관련 지표가 같은 구간에서 상승했습니다. 인과 단정 대신 관측 관계로 표시합니다.</p>
+                </article>
+              </div>
+            </article>
+
+            <aside class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>추적 설정</h2>
+                  <p>프로젝트와 트랙에 연결된 mock 설정</p>
+                </div>
+              </div>
+              <div class="source-card">
+                <strong>Entity</strong>
+                <span>LE SSERAFIM · 멤버 5명 · 공식 활동</span>
+              </div>
+              <div class="source-card">
+                <strong>키워드 묶음</strong>
+                <span>신곡, 무대, 착장, 먹방, 챌린지, 인터뷰</span>
+              </div>
+              <div class="source-card">
+                <strong>근거 정책</strong>
+                <span>공식·관측 데이터 우선 · 원인 추정 표시 금지</span>
+              </div>
+              <div class="advanced-note" style="margin-top: 12px;">
+                Vira 연결이 끊기면 마지막 성공 시각과 stale 상태를 표시하고,
+                최신 트렌드를 임의로 생성하지 않습니다.
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-ideas">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>영상 아이디어 보관함</h2>
+                <p>생성된 아이디어는 사라지지 않고 근거·상태와 함께 누적됩니다.</p>
+              </div>
+              <button class="button primary" type="button" data-toast="Mock 아이디어 4개를 생성했습니다.">✦ 새 아이디어 만들기</button>
+            </div>
+            <div class="filters">
+              <button class="filter active" type="button">전체 12</button>
+              <button class="filter" type="button">새 아이디어 6</button>
+              <button class="filter" type="button">검토 중 2</button>
+              <button class="filter" type="button">제작 선택 2</button>
+              <button class="filter" type="button">보류 2</button>
+            </div>
+            <div class="idea-list">
+              <article class="idea">
+                <div class="idea-top">
+                  <div>
+                    <h3>왜 갑자기 ‘떡꼬치’가 FEARNOT 사이에서 다시 뜨고 있을까?</h3>
+                    <p>바이럴의 시작점과 확산 이유를 근거 영상으로 보여주는 이슈 해설형 숏폼.</p>
+                  </div>
+                  <span class="badge orange">시의성 높음</span>
+                </div>
+                <div class="idea-meta">
+                  <span>밈·바이럴 연관어</span><span>Vira signal · signal_mock_204</span><span>공식 근거 1</span><span>오늘 09:20</span>
+                </div>
+                <div class="idea-actions">
+                  <button class="mini-button primary" type="button" data-toast="제작 선택 상태로 이동했습니다.">제작 선택</button>
+                  <button class="mini-button" type="button" data-toast="근거 상세 패널은 다음 UI 검토 항목입니다.">근거 보기</button>
+                  <button class="mini-button" type="button" data-toast="보류 상태로 이동했습니다.">보류</button>
+                  <button class="mini-button" type="button" data-toast="제외 상태로 이동했습니다.">제외</button>
+                </div>
+              </article>
+              <article class="idea">
+                <div class="idea-top">
+                  <div>
+                    <h3>멤버별 공항 패션에서 발견한 이번 주 공통 스타일 코드</h3>
+                    <p>브랜드 단정 없이 공식 영상에서 확인되는 실루엣과 색상 흐름을 정리합니다.</p>
+                  </div>
+                  <span class="badge">새 아이디어</span>
+                </div>
+                <div class="idea-meta">
+                  <span>착장 정보</span><span>Vira 근거 4</span><span>어제 18:40</span>
+                </div>
+              </article>
+              <article class="idea">
+                <div class="idea-top">
+                  <div>
+                    <h3>챌린지 영상이 원본 무대까지 다시 보게 만드는 세 장면</h3>
+                    <p>참여형 영상과 원본 콘텐츠의 관측 관계를 40초 안에 설명합니다.</p>
+                  </div>
+                  <span class="badge green">제작 선택</span>
+                </div>
+                <div class="idea-meta">
+                  <span>신곡·무대</span><span>Vira 근거 7</span><span>3일 전</span>
+                </div>
+              </article>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="view-productions">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>제작함</h2>
+                <p>선택한 아이디어가 기존 VideoPlan→MP4 파이프라인으로 진행됩니다.</p>
+              </div>
+            </div>
+            <div class="production-list">
+              <article class="production">
+                <div class="thumb">▶</div>
+                <div><strong>챌린지 영상이 원본 무대까지 다시 보게 만드는 세 장면</strong><span>Motion Canvas · 40초 · 9:16</span></div>
+                <div><div class="progress" style="--progress: 72%;"><span></span></div><span>렌더 중 72%</span></div>
+                <span class="badge green">제작 중</span>
+              </article>
+              <article class="production">
+                <div class="thumb">◫</div>
+                <div><strong>이번 주 무대 착장의 세 가지 포인트</strong><span>에셋 7개 중 5개 준비</span></div>
+                <div><div class="progress" style="--progress: 44%;"><span></span></div><span>에셋 준비 44%</span></div>
+                <span class="badge">준비 중</span>
+              </article>
+              <article class="production">
+                <div class="thumb">✓</div>
+                <div><strong>컴백 무대에서 팬들이 가장 많이 돌려본 순간</strong><span>1080×1920 · 38초 · H.264/AAC</span></div>
+                <div><div class="progress" style="--progress: 100%;"><span></span></div><span>완료</span></div>
+                <button class="mini-button primary" type="button" data-toast="목업에서는 파일을 다운로드하지 않습니다.">MP4 저장</button>
+              </article>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="settings-grid">
+            <aside class="settings-nav">
+              <button class="active" type="button">프로젝트 정보</button>
+              <button type="button">콘텐츠 트랙</button>
+              <button type="button">Vira 추적</button>
+              <button type="button">표현·안전 기준</button>
+              <button type="button">제작 기본값</button>
+            </aside>
+            <article class="settings-card">
+              <div class="panel-head">
+                <div>
+                  <h2>프로젝트 정보</h2>
+                  <p>운영 프로필 기본값과 다른 값만 관리합니다.</p>
+                </div>
+                <button class="button ghost" type="button" data-toast="설정 편집은 아직 저장되지 않습니다.">편집</button>
+              </div>
+              <div class="setting-row">
+                <div><strong>프로젝트 이름</strong><span>목록과 아이디어 근거에서 사용하는 식별 이름</span></div>
+                <div class="mock-value">LE SSERAFIM 상시 콘텐츠</div>
+              </div>
+              <div class="setting-row">
+                <div><strong>콘텐츠 목적</strong><span>선택한 온보딩 유형</span></div>
+                <div class="mock-value">인물·아티스트 콘텐츠</div>
+              </div>
+              <div class="setting-row">
+                <div><strong>주 플랫폼</strong><span>영상 기획 기본값</span></div>
+                <div class="mock-value">YouTube Shorts</div>
+              </div>
+              <div class="setting-row">
+                <div><strong>추가 플랫폼</strong><span>향후 변형본 제작 대상</span></div>
+                <div class="mock-value">Instagram Reels</div>
+              </div>
+              <div class="setting-row">
+                <div><strong>고급 설정</strong><span>시청자·톤·금지 표현·권리 기준</span></div>
+                <div class="mock-value">8개 추천값 적용</div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="wizardModal" role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
+    <section class="wizard">
+      <header class="wizard-head">
+        <div>
+          <h2 id="wizardTitle">새 콘텐츠 프로젝트</h2>
+          <p>처음에는 핵심만 선택하고 세부 설정은 나중에 바꿀 수 있습니다.</p>
+        </div>
+        <button class="icon-button" id="closeWizard" type="button" aria-label="닫기">×</button>
+      </header>
+
+      <div class="stepper" aria-label="프로젝트 생성 단계">
+        <div class="step-mark active" data-step-mark="1"><span class="step-dot">1</span><span>목적</span></div>
+        <div class="step-mark" data-step-mark="2"><span class="step-dot">2</span><span>대상</span></div>
+        <div class="step-mark" data-step-mark="3"><span class="step-dot">3</span><span>플랫폼</span></div>
+        <div class="step-mark" data-step-mark="4"><span class="step-dot">4</span><span>확인</span></div>
+      </div>
+
+      <div class="wizard-body">
+        <section class="wizard-step active" data-step="1">
+          <h3>어떤 콘텐츠를 계속 만들고 싶나요?</h3>
+          <p>직업이 아니라 운영 목적을 선택합니다. 필요한 설정만 다음 단계에서 보여드립니다.</p>
+          <div class="purpose-grid">
+            <button class="purpose" type="button" data-purpose="브랜드·제품 알리기"><span class="purpose-emoji">◆</span><strong>브랜드·제품 알리기</strong><span>제품의 강점과 공식 정보를 바탕으로 콘텐츠를 만듭니다.</span></button>
+            <button class="purpose" type="button" data-purpose="채널 정기 운영"><span class="purpose-emoji">▣</span><strong>채널 정기 운영</strong><span>한 채널의 주제와 분위기를 유지하며 꾸준히 제작합니다.</span></button>
+            <button class="purpose selected" type="button" data-purpose="인물·아티스트 콘텐츠"><span class="purpose-emoji">✦</span><strong>인물·아티스트 콘텐츠</strong><span>활동, 멤버, 패션, 이슈와 팬 반응을 지속적으로 다룹니다.</span></button>
+            <button class="purpose" type="button" data-purpose="트렌드·정보 큐레이션"><span class="purpose-emoji">↗</span><strong>트렌드·정보 큐레이션</strong><span>시장과 키워드 변화를 관찰해 빠르게 설명합니다.</span></button>
+            <button class="purpose" type="button" data-purpose="전문 지식·교육 콘텐츠"><span class="purpose-emoji">◎</span><strong>전문 지식·교육</strong><span>신뢰 가능한 근거로 복잡한 내용을 쉽게 설명합니다.</span></button>
+            <button class="purpose" type="button" data-purpose="직접 설정"><span class="purpose-emoji">＋</span><strong>직접 설정</strong><span>추천 유형 없이 필요한 항목을 직접 선택합니다.</span></button>
+          </div>
+        </section>
+
+        <section class="wizard-step" data-step="2">
+          <h3>계속 다룰 대상은 무엇인가요?</h3>
+          <p>한 번 정하면 프로젝트의 정체성이 됩니다. 프로젝트는 직접 삭제하거나 보관하기 전까지 유지됩니다.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="subjectType">대상 유형</label>
+              <select id="subjectType">
+                <option>그룹·아티스트</option>
+                <option>인물</option>
+                <option>브랜드</option>
+                <option>제품</option>
+                <option>시장·카테고리</option>
+                <option>주제</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="subjectName">대상 이름</label>
+              <input id="subjectName" value="LE SSERAFIM" placeholder="예: LE SSERAFIM">
+            </div>
+            <div class="field full">
+              <label for="projectName">프로젝트 이름</label>
+              <input id="projectName" value="LE SSERAFIM 상시 콘텐츠">
+              <small>프로젝트 목록에서 구분할 이름입니다. 긴 prompt를 제목으로 사용하지 않습니다.</small>
+            </div>
+          </div>
+          <div class="advanced-note" style="margin-top: 16px;">
+            멤버, 신곡, 착장, 밈 같은 콘텐츠 트랙은 프로젝트를 만든 뒤 추천받고 수정합니다.
+            첫 화면에서 모든 키워드를 입력하지 않습니다.
+          </div>
+        </section>
+
+        <section class="wizard-step" data-step="3">
+          <h3>주로 어디에 올리나요?</h3>
+          <p>계정 연동이 아니라 영상 기획의 기본값을 정하기 위한 선택입니다. 여러 개를 선택할 수 있습니다.</p>
+          <div class="field">
+            <label>배포 플랫폼</label>
+            <div class="option-chips" id="platformOptions">
+              <button class="option-chip selected" type="button" data-platform="YouTube Shorts">YouTube Shorts</button>
+              <button class="option-chip selected" type="button" data-platform="Instagram Reels">Instagram Reels</button>
+              <button class="option-chip" type="button" data-platform="TikTok">TikTok</button>
+              <button class="option-chip" type="button" data-platform="여러 플랫폼">여러 플랫폼</button>
+              <button class="option-chip" type="button" data-platform="아직 정하지 않음">아직 정하지 않음</button>
+            </div>
+            <small>첫 번째 선택을 주 플랫폼으로, 나머지를 추가 플랫폼으로 사용합니다.</small>
+          </div>
+          <div class="form-grid" style="margin-top: 22px;">
+            <div class="field">
+              <label for="language">기본 언어</label>
+              <select id="language"><option>한국어</option><option>영어</option><option>일본어</option></select>
+            </div>
+            <div class="field">
+              <label for="region">주요 지역</label>
+              <select id="region"><option>대한민국</option><option>글로벌</option><option>일본</option><option>북미</option></select>
+            </div>
+          </div>
+        </section>
+
+        <section class="wizard-step" data-step="4">
+          <h3>추천 설정을 확인해주세요</h3>
+          <p>지금 확정하지 않은 값은 추천 기본값으로 시작하고 프로젝트 설정에서 언제든 바꿀 수 있습니다.</p>
+          <div class="recommendation">
+            <div class="recommend-card">
+              <h4>새 콘텐츠 프로젝트</h4>
+              <div class="review-row"><span>목적</span><strong id="reviewPurpose">인물·아티스트 콘텐츠</strong></div>
+              <div class="review-row"><span>프로젝트</span><strong id="reviewProject">LE SSERAFIM 상시 콘텐츠</strong></div>
+              <div class="review-row"><span>대상</span><strong id="reviewSubject">그룹·아티스트 · LE SSERAFIM</strong></div>
+              <div class="review-row"><span>주 플랫폼</span><strong id="reviewPrimary">YouTube Shorts</strong></div>
+              <div class="review-row"><span>추가 플랫폼</span><strong id="reviewSecondary">Instagram Reels</strong></div>
+            </div>
+            <div>
+              <div class="recommend-card">
+                <h4>자동 추천할 초기 트랙</h4>
+                <div class="chips">
+                  <span class="chip">신곡·무대</span>
+                  <span class="chip">멤버별 이슈</span>
+                  <span class="chip">착장 정보</span>
+                  <span class="chip">밈·바이럴</span>
+                </div>
+              </div>
+              <div class="advanced-note" style="margin-top: 12px;">
+                시청자, 콘텐츠 톤, 공식 자료, 금지 표현과 Vira 추적 키워드는
+                추천값을 확인한 뒤 필요할 때만 수정합니다.
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="wizard-actions">
+        <span class="step-hint" id="stepHint">1 / 4 · 하나를 선택하면 다음으로 이동할 수 있습니다.</span>
+        <div class="wizard-buttons">
+          <button class="button ghost" id="prevStep" type="button" hidden>이전</button>
+          <button class="button primary" id="nextStep" type="button">다음</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    (function () {
+      var tabs = Array.from(document.querySelectorAll('.tab'));
+      var views = Array.from(document.querySelectorAll('.view'));
+      var modal = document.getElementById('wizardModal');
+      var currentStep = 1;
+      var selectedPurpose = '인물·아티스트 콘텐츠';
+      var selectedPlatforms = ['YouTube Shorts', 'Instagram Reels'];
+      var toastTimer;
+
+      function showView(name) {
+        tabs.forEach(function (tab) {
+          tab.classList.toggle('active', tab.dataset.view === name);
+        });
+        views.forEach(function (view) {
+          view.classList.toggle('active', view.id === 'view-' + name);
+        });
+      }
+
+      function showToast(message) {
+        var toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2400);
+      }
+
+      function updateWizard() {
+        document.querySelectorAll('.wizard-step').forEach(function (step) {
+          step.classList.toggle('active', Number(step.dataset.step) === currentStep);
+        });
+        document.querySelectorAll('.step-mark').forEach(function (mark) {
+          var stepNumber = Number(mark.dataset.stepMark);
+          mark.classList.toggle('active', stepNumber === currentStep);
+          mark.classList.toggle('done', stepNumber < currentStep);
+        });
+        document.getElementById('prevStep').hidden = currentStep === 1;
+        document.getElementById('nextStep').textContent =
+          currentStep === 4 ? '프로젝트 만들기' : '다음';
+        document.getElementById('stepHint').textContent =
+          currentStep + ' / 4 · ' + [
+            '하나를 선택하면 다음으로 이동할 수 있습니다.',
+            '자유 입력은 대상과 프로젝트 이름만 사용합니다.',
+            '플랫폼은 나중에도 변경할 수 있습니다.',
+            '모든 값은 mock이며 저장되지 않습니다.'
+          ][currentStep - 1];
+
+        if (currentStep === 4) {
+          updateReview();
+        }
+      }
+
+      function updateReview() {
+        var subjectType = document.getElementById('subjectType').value;
+        var subjectName = document.getElementById('subjectName').value || '입력 안 함';
+        var projectName = document.getElementById('projectName').value || subjectName + ' 콘텐츠';
+        document.getElementById('reviewPurpose').textContent = selectedPurpose;
+        document.getElementById('reviewProject').textContent = projectName;
+        document.getElementById('reviewSubject').textContent = subjectType + ' · ' + subjectName;
+        document.getElementById('reviewPrimary').textContent = selectedPlatforms[0] || '아직 정하지 않음';
+        document.getElementById('reviewSecondary').textContent =
+          selectedPlatforms.slice(1).join(', ') || '없음';
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          showView(tab.dataset.view);
+        });
+      });
+
+      document.querySelectorAll('[data-open-view]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          showView(button.dataset.openView);
+        });
+      });
+
+      document.querySelectorAll('[data-toast]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          showToast(button.dataset.toast);
+        });
+      });
+
+      document.querySelectorAll('.project-link').forEach(function (button) {
+        button.addEventListener('click', function () {
+          document.querySelectorAll('.project-link').forEach(function (item) {
+            item.classList.remove('active');
+          });
+          button.classList.add('active');
+          if (button.dataset.project !== '르세라핌') {
+            showToast('이 목업에서는 LE SSERAFIM 프로젝트 화면만 구성했습니다.');
+          }
+        });
+      });
+
+      document.getElementById('profileSelect').addEventListener('change', function (event) {
+        showToast(event.target.value + ' 프로필로 전환하는 mock 동작입니다.');
+      });
+
+      document.getElementById('mockRefresh').addEventListener('click', function () {
+        showToast('Mock Vira 신호를 새로고침했습니다. 실제 API 호출은 없습니다.');
+      });
+
+      document.getElementById('mockGenerate').addEventListener('click', function () {
+        showToast('Mock 영상 아이디어 4개가 보관함에 추가되었습니다.');
+      });
+
+      document.getElementById('openWizard').addEventListener('click', function () {
+        currentStep = 1;
+        updateWizard();
+        modal.classList.add('open');
+      });
+
+      document.getElementById('closeWizard').addEventListener('click', function () {
+        modal.classList.remove('open');
+      });
+
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) modal.classList.remove('open');
+      });
+
+      document.querySelectorAll('.purpose').forEach(function (button) {
+        button.addEventListener('click', function () {
+          document.querySelectorAll('.purpose').forEach(function (item) {
+            item.classList.remove('selected');
+          });
+          button.classList.add('selected');
+          selectedPurpose = button.dataset.purpose;
+        });
+      });
+
+      document.querySelectorAll('.option-chip').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var value = button.dataset.platform;
+          if (value === '아직 정하지 않음') {
+            selectedPlatforms = ['아직 정하지 않음'];
+            document.querySelectorAll('.option-chip').forEach(function (item) {
+              item.classList.toggle('selected', item === button);
+            });
+            return;
+          }
+          selectedPlatforms = selectedPlatforms.filter(function (item) {
+            return item !== '아직 정하지 않음';
+          });
+          var index = selectedPlatforms.indexOf(value);
+          if (index >= 0) {
+            selectedPlatforms.splice(index, 1);
+          } else {
+            selectedPlatforms.push(value);
+          }
+          button.classList.toggle('selected');
+          document.querySelector('[data-platform="아직 정하지 않음"]').classList.remove('selected');
+        });
+      });
+
+      document.getElementById('prevStep').addEventListener('click', function () {
+        if (currentStep > 1) currentStep -= 1;
+        updateWizard();
+      });
+
+      document.getElementById('nextStep').addEventListener('click', function () {
+        if (currentStep < 4) {
+          currentStep += 1;
+          updateWizard();
+          return;
+        }
+        modal.classList.remove('open');
+        showToast('Mock 프로젝트를 만들었습니다. 실제 데이터는 저장되지 않았습니다.');
+      });
+
+      document.querySelectorAll('.filter').forEach(function (button) {
+        button.addEventListener('click', function () {
+          document.querySelectorAll('.filter').forEach(function (item) {
+            item.classList.remove('active');
+          });
+          button.classList.add('active');
+          showToast(button.textContent.trim() + ' 필터를 적용한 mock 상태입니다.');
+        });
+      });
+
+      updateWizard();
+    }());
+  </script>
+</body>
+</html>
