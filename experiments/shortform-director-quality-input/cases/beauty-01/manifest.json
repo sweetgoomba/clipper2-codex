@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "quality-input-pack-manifest.v1",
+  "caseId": "BEAUTY-01",
+  "cutoffAt": "2026-07-24T23:59:59+09:00",
+  "state": "sealed",
+  "fileDigests": {
+    "profile.json": "sha256:2fa1df7a30451d4d67477a4ca0c3d082b74519ea2297f089f668b2607f56d751",
+    "episodes.json": "sha256:14d0b874ce8933ba91ba961f89b218d11d27e3e7fa3c3ee90554ce9266dc8577",
+    "source-cards.json": "sha256:32c6395d3a6d0b52275bc8bcaf7a721dab2afa1a05ee2ababb272d632539ca86",
+    "audience-cards.json": "sha256:e26100181718d9505288eb6cbfa179444e368154e932d1fa369031d688f5fbed",
+    "reference-cards.json": "sha256:8447c378827d06913f8bf430420f5017260e7f03b77aa7e06b07c7061bc3c35f",
+    "vira-evidence.json": "sha256:0d8ffc7b84aa2d108c5dff4d5a37fca978840dc1148bbec295e183e071a8e958",
+    "feedback-cards.json": "sha256:216ba416f1480a8737728cd79380c5d0e0947056640f046817ce2bc83b6fa557"
+  }
+}

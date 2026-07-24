@@ -1,0 +1,12 @@
+{
+  "episodeSchemaVersion": "quality-input-episodes.v1",
+  "caseId": "PRODUCT-01",
+  "episodeA": {
+    "id": "PRODUCT-01-A",
+    "question": "스마트카라 400 Pro 2를 구매하기 전에 용량 외에 처리시간, 필터, 투입 제한, 보조금을 어떻게 확인해야 하는가?"
+  },
+  "episodeB": {
+    "id": "PRODUCT-01-B",
+    "question": "2 L와 5 L 음식물처리기 중 우리 집에 맞는 용량을 고를 때 어떤 사용 패턴을 확인해야 하는가?"
+  }
+}

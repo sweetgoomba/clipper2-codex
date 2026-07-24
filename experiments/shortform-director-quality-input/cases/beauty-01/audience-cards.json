@@ -1,0 +1,74 @@
+{
+  "questions": [
+    {
+      "id": "B-AQ01",
+      "question": "공식 색상표와 내 입술 위 발색이 다른 이유는 무엇인가?",
+      "originClass": "audience_observation",
+      "sourceId": "B-S01",
+      "evidenceLocator": "공식몰 공개 후기 목록, 2025-05-03 색상 차이 관찰 항목"
+    },
+    {
+      "id": "B-AQ02",
+      "question": "원래 입술색이 진하거나 푸를 때 어떤 정보를 먼저 봐야 하는가?",
+      "originClass": "audience_observation",
+      "sourceId": "B-S01",
+      "evidenceLocator": "공식몰 공개 후기 목록, 2025-05-21 입술 바탕색 관찰 항목"
+    },
+    {
+      "id": "B-AQ03",
+      "question": "바른 직후와 시간이 지난 뒤 색이 달라지는가?",
+      "originClass": "audience_observation",
+      "sourceId": "B-S01",
+      "evidenceLocator": "공식몰 공개 후기 목록, 2025-04-27 및 2025-11-10 시간 경과 관찰 항목"
+    },
+    {
+      "id": "B-AQ04",
+      "question": "광택이 남는 것과 착색이 남는 것은 어떻게 다른가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ05",
+      "question": "각질이나 건조함이 있을 때 결과가 어떻게 달라질 수 있는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ06",
+      "question": "한 번 바른 발색과 여러 번 겹친 발색을 어떻게 비교해야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ07",
+      "question": "음식이나 음료 뒤에 무엇을 다시 확인해야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ08",
+      "question": "덧바를 때 색이 탁해지지 않게 하려면 무엇을 봐야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ09",
+      "question": "조명과 카메라 보정이 swatch 판단에 어떤 영향을 주는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "B-AQ10",
+      "question": "“웜톤용/쿨톤용” 한 문장 대신 어떤 조건을 함께 알려줘야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    }
+  ]
+}

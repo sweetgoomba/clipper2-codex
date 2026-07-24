@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "quality-input-pack-manifest.v1",
+  "caseId": "IDOL-01",
+  "cutoffAt": "2026-07-24T23:59:59+09:00",
+  "state": "sealed",
+  "fileDigests": {
+    "profile.json": "sha256:369343cffd1744112d6e8425820e5993df8d0ed4b86ef0bf640ba6807718a90f",
+    "episodes.json": "sha256:ae2a62d504af16339c99dc20a442919539b1cc9e79c42311a7f128b99dac7392",
+    "source-cards.json": "sha256:68200e4cd55fedf38e9bd3ed15abfcca00406f9e40252d27be00d674e26b1f14",
+    "audience-cards.json": "sha256:6fda2c9083baaafe57275585a686b3923f8bf0b1e14f8c0d8439cd5706cc716e",
+    "reference-cards.json": "sha256:becfcea90fd043153eef7e3a84fc8fae28a233bf7129cb0ed19f0de616e1e7f0",
+    "vira-evidence.json": "sha256:0d8ffc7b84aa2d108c5dff4d5a37fca978840dc1148bbec295e183e071a8e958",
+    "feedback-cards.json": "sha256:216ba416f1480a8737728cd79380c5d0e0947056640f046817ce2bc83b6fa557"
+  }
+}

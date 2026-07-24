@@ -1,0 +1,121 @@
+{
+  "cards": [
+    {
+      "id": "I-S01",
+      "sourceClass": "official_fact",
+      "title": "[NOTICE] LE SSERAFIM “PUREFLOW” pt.1 and “CELEBRATION” Release",
+      "publisher": "SOURCE MUSIC",
+      "originalUrl": "https://weverse.io/lesserafim/notice/34880",
+      "publishedAt": "2026-04-13T00:00:00+09:00",
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "verified",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [
+        {
+          "id": "I-S01-C01",
+          "statement": "SOURCE MUSIC 공지는 리드 싱글 CELEBRATION의 발매 시점을 2026-04-24 13:00 KST, 정규 2집 PUREFLOW pt.1의 발매 시점을 2026-05-22 13:00 KST로 안내한다.",
+          "evidenceLocator": "공지 본문 ‘Pre-Order Date’ 아래 발매 일정 목록",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "CELEBRATION과 PUREFLOW pt.1의 KST 발매 일시."
+        },
+        {
+          "id": "I-S01-C02",
+          "statement": "공지는 앨범이 두려움을 인정하고 마주할 때 생기는 변화와 성장을 담으며, CELEBRATION은 그 변화를 받아들여 앞으로 나아갈 힘을 얻는 순간을 축하한다고 설명한다.",
+          "evidenceLocator": "공지 본문 첫 문단의 앨범 및 리드 싱글 설명",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "두려움을 마주한 변화·성장과 앞으로 나아가는 순간의 축하."
+        }
+      ],
+      "contentDigest": "sha256:fd329506c2de160f41efe22aaf05ab8ed63275392048f639443fecc4f434d595",
+      "rightsNote": "공식 발매 일정과 메시지의 사실 근거로만 사용하며 공지 문구와 이미지의 제작물 재사용 권리를 포함하지 않는다.",
+      "notes": "Weverse 공지 본문을 직접 확인했다."
+    },
+    {
+      "id": "I-S02",
+      "sourceClass": "official_fact",
+      "title": "LE SSERAFIM (르세라핌) 'CELEBRATION' OFFICIAL MV",
+      "publisher": "HYBE LABELS",
+      "originalUrl": "https://www.youtube.com/watch?v=a2grcJdfXmY",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "unavailable",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [],
+      "contentDigest": "sha256:d470f02512f16a9e15b169e829303e7b1d092e0ecf5b974070aa025e61d9a480",
+      "rightsNote": "영상 장면과 timestamp를 직접 확인하지 못했으므로 장면 사실을 만들거나 영상·프레임을 재사용하지 않는다.",
+      "notes": "직접 URL은 YouTube footer만 노출해 영상 내용과 timestamp를 검증할 수 없었다."
+    },
+    {
+      "id": "I-S03",
+      "sourceClass": "official_fact",
+      "title": "르세라핌 플레이리스트",
+      "publisher": "Weverse Magazine",
+      "originalUrl": "https://magazine.weverse.io/article/view/1874?artist=LE+SSERAFIM",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "verified",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [
+        {
+          "id": "I-S03-C01",
+          "statement": "사쿠라는 CELEBRATION을 두려움을 알게 된 뒤 더 강해진 자신들을 자축하는 곡으로 설명하고 ‘fearless 2.0’ 파트를 성장과 연결해 소개한다.",
+          "evidenceLocator": "‘르세라핌 - CELEBRATION’ 절, 사쿠라 발언",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "두려움을 알게 된 뒤의 강함, 자축, fearless 2.0과 성장의 연결."
+        },
+        {
+          "id": "I-S03-C02",
+          "statement": "사쿠라는 BOOMPALA가 영원한 것은 없으므로 현재의 두려움도 허상일 수 있다는 메시지를 담는다고 설명한다.",
+          "evidenceLocator": "‘르세라핌 - BOOMPALA’ 절, 사쿠라 발언",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "영원하지 않음과 두려움을 허상으로 보는 BOOMPALA의 메시지."
+        }
+      ],
+      "contentDigest": "sha256:7e719fa5a6eb3bfe9c51ae2f295c92b866ad90868e7a2e25f1bd5f602f813620",
+      "rightsNote": "아티스트에게 귀속된 발언의 의미를 출처와 함께 요약하는 데만 사용하며 원문 문구와 사진을 재사용하지 않는다.",
+      "notes": "발언자와 곡별 heading을 직접 확인했으며 매체의 도입 해석과 멤버 발언을 분리했다."
+    },
+    {
+      "id": "I-E01",
+      "sourceClass": "editorial_interpretation",
+      "title": "LE SSERAFIM’s creature anthem",
+      "publisher": "Weverse Magazine",
+      "originalUrl": "https://magazine.weverse.io/article/view/1881?artist=LE+SSERAFIM&lang=en",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "verified",
+      "permittedUse": [
+        "editorial"
+      ],
+      "claims": [
+        {
+          "id": "I-E01-C01",
+          "statement": "이 리뷰는 CELEBRATION MV의 creature 만남을 복수 대신 손을 내미는 연대의 장면으로 해석한다.",
+          "evidenceLocator": "리뷰 본문, Frankenstein의 creature와 CELEBRATION MV를 연결하는 문단",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "creature를 찾아가 공격 대신 손을 내미는 장면에 대한 편집 해석."
+        },
+        {
+          "id": "I-E01-C02",
+          "statement": "이 리뷰는 CELEBRATION의 축제 에너지 안에 단조 선율과 절제된 안무가 만드는 불확실성이 있다고 해석한다.",
+          "evidenceLocator": "리뷰 본문, ‘festival-like energy’로 시작하는 문단",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "축제 분위기와 불확실한 정서가 공존한다는 편집 해석."
+        }
+      ],
+      "contentDigest": "sha256:a3ae99696c8d248e57d42388b00442732fbd267da36987b7b387d1d82f9d7aa4",
+      "rightsNote": "Weverse Magazine의 편집 해석으로만 인용 출처를 표시하며 공식 사실이나 아티스트 직접 발언으로 승격하지 않고 원문·이미지를 재사용하지 않는다.",
+      "notes": "permittedUse를 editorial 하나로 제한했다. 페이지는 무단 전재·재배포 금지를 명시한다."
+    }
+  ]
+}

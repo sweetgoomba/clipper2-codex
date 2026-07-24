@@ -1,0 +1,14 @@
+{
+  "cards": [
+    {
+      "id": "P-R01",
+      "sourceId": "P-S01",
+      "availability": "verified",
+      "pattern": "두 모델 비교표와 구매 전 checklist의 설명 구조",
+      "allowedInfluence": "비교 구조, pacing과 설명 순서에만 영향을 줄 수 있다.",
+      "forbiddenUse": "브로슈어 문구, 제품 사실, 표 디자인, 사진, 아이콘과 브랜드 정체성을 복제하지 않는다.",
+      "rightsNote": "P-S01의 layout을 pattern으로만 참조하며 새로운 제품 또는 시장 사실을 추가하지 않는다.",
+      "notes": "5 L와 2 L 모델별 사양 배치 및 기능 설명의 순차 구조를 확인했다."
+    }
+  ]
+}

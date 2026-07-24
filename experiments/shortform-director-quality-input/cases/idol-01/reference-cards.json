@@ -1,0 +1,14 @@
+{
+  "cards": [
+    {
+      "id": "I-R01",
+      "sourceId": "I-S02",
+      "availability": "unavailable",
+      "pattern": "timestamp → 공식 문장 → label이 붙은 해석의 3단 구성",
+      "allowedInfluence": "구조, pacing과 설명 순서에만 영향을 줄 수 있으며 검증된 timestamp가 생기기 전에는 사용을 보류한다.",
+      "forbiddenUse": "공식 MV의 장면 사실, 프레임, 영상, 오디오, 문구 또는 브랜드 정체성을 복제하지 않는다.",
+      "rightsNote": "공식 MV는 근거 source일 뿐 production asset 재사용 권리를 뜻하지 않는다.",
+      "notes": "I-S02 영상 내용이 노출되지 않아 timestamp annotation을 만들지 않았다."
+    }
+  ]
+}

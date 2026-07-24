@@ -1,0 +1,15 @@
+{
+  "profileSchemaVersion": "quality-input-profile.v1",
+  "caseId": "PRODUCT-01",
+  "operatorRole": "스마트카라 제품 마케팅 팀",
+  "audience": "1~2인 가구에서 음식물처리기 구매를 검토하는 사람",
+  "desiredAfterState": "자신의 사용량, 설치 환경, 유지관리와 거주지 지원 조건을 확인한 뒤 상담 또는 구매 검토를 이어간다.",
+  "toneRules": [
+    "장점을 설명하되 제한 조건과 지역·시점 차이를 숨기지 않는다."
+  ],
+  "prohibitedClaims": [
+    "“냄새 완전 제거”",
+    "근거 없는 경쟁 우위",
+    "모든 지자체가 같은 보조금을 준다는 표현"
+  ]
+}

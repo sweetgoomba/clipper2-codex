@@ -1,0 +1,12 @@
+{
+  "episodeSchemaVersion": "quality-input-episodes.v1",
+  "caseId": "IDOL-01",
+  "episodeA": {
+    "id": "IDOL-01-A",
+    "question": "공식 설명의 “변화를 받아들이고 앞으로 나아가는 순간을 축하한다”는 메시지가 공식 콘텐츠에서 어떻게 표현되는가?"
+  },
+  "episodeB": {
+    "id": "IDOL-01-B",
+    "question": "`CELEBRATION`과 `BOOMPALA`는 두려움을 받아들이고 놓아주는 과정을 각각 어떻게 다르게 표현하는가?"
+  }
+}

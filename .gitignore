@@ -1,4 +1,5 @@
 imports/
+.superpowers/
 .DS_Store
 *.tmp
 *.bak

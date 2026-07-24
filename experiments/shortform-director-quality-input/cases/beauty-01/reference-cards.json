@@ -1,0 +1,24 @@
+{
+  "cards": [
+    {
+      "id": "B-R01",
+      "sourceUrl": "https://lululandtvblog.blogspot.com/2022/04/romand-blur-fudge-tint-910-11-swatches.html",
+      "availability": "verified",
+      "pattern": "비교 순서와 조건 grid를 고정하는 구성",
+      "allowedInfluence": "비교 구조, 전개 순서, pacing에만 영향을 줄 수 있다.",
+      "forbiddenUse": "원문 문구, 제품 사실, 사진, swatch 이미지, 사이트나 작성자의 정체성을 복제하지 않는다.",
+      "rightsNote": "2022-04-25 공개 페이지의 구조만 참고하며 텍스트와 이미지는 재사용하지 않는다.",
+      "notes": "색상별 gradient/full 순서와 시간 조건을 붙인 transfer 관찰 구조를 직접 확인했다."
+    },
+    {
+      "id": "B-R02",
+      "sourceUrl": "https://www.janelku.com/2024/09/makeup-staples-rom-juicy-lip-tint-and.html",
+      "availability": "partial",
+      "pattern": "입술 상태를 제품 관찰 전에 밝히는 순서",
+      "allowedInfluence": "개인 조건을 먼저 공개하는 구조와 설명 순서에만 영향을 줄 수 있으며, 현재 확인되지 않은 pattern은 사용을 보류한다.",
+      "forbiddenUse": "원문 문구, 제품 사실, 사진, swatch 이미지, 사이트나 작성자의 정체성을 복제하지 않는다.",
+      "rightsNote": "2024-09-17 공개 페이지의 구조만 참고하며 텍스트와 이미지는 재사용하지 않는다.",
+      "notes": "현재 텍스트 본문은 개인 사용 맥락 뒤 swatch를 제시하지만 입술 상태 공개는 확인되지 않아 승인된 pattern을 검증하지 못했다."
+    }
+  ]
+}

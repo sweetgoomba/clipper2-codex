@@ -1,0 +1,15 @@
+{
+  "profileSchemaVersion": "quality-input-profile.v1",
+  "caseId": "EXPERT-01",
+  "operatorRole": "금융 입문 교육 채널",
+  "audience": "예금 금리와 채권 금리를 같은 방식으로 이해해 가격 변동이 낯선 입문자",
+  "desiredAfterState": "기존 고정 coupon 채권과 새 채권의 상대적 매력을 숫자로 설명할 수 있다.",
+  "toneRules": [
+    "수식보다 비교와 도식이 먼저이며, 단순화한 조건을 명시한다."
+  ],
+  "prohibitedClaims": [
+    "개인화 투자 조언",
+    "현재 금리 예측",
+    "채권 가격이 금리 하나로만 결정된다는 표현"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "questions": [
+    {
+      "id": "I-AQ01",
+      "question": "이번 곡에서 무엇을 축하한다는 뜻인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ02",
+      "question": "“두려움이 없다”에서 “두려움을 받아들인다”로 무엇이 달라졌는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ03",
+      "question": "공식 notice의 변화와 성장 메시지는 MV의 어느 장면과 연결되는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ04",
+      "question": "creature는 공식 설명인가, 매체의 해석인가, 영상에서 관찰한 상징인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ05",
+      "question": "“Fearless 2.0”은 멤버가 직접 어떻게 설명했는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ06",
+      "question": "축제 같은 사운드와 불확실한 정서가 함께 느껴지는 이유는 무엇인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ07",
+      "question": "공식 MV에서 반복되는 이동·만남·춤은 어떤 전개를 만드는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ08",
+      "question": "팬이 놓치기 쉬운 공식 source는 무엇인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ09",
+      "question": "매체 해석과 AI의 추가 해석을 어떻게 구분해서 봐야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "I-AQ10",
+      "question": "다음 곡 `BOOMPALA`와 연결하면 메시지가 어떻게 확장되는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    }
+  ]
+}

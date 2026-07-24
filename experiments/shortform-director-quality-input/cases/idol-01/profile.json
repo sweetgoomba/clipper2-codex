@@ -1,0 +1,15 @@
+{
+  "profileSchemaVersion": "quality-input-profile.v1",
+  "caseId": "IDOL-01",
+  "operatorRole": "공식 계정이 아닌 K-pop 콘텐츠 해설 채널",
+  "audience": "노래와 MV를 봤지만 이번 활동의 공식 메시지와 표현 연결을 짧게 이해하고 싶은 팬·일반 시청자",
+  "desiredAfterState": "공식 MV와 앨범 콘텐츠를 다시 보며 장면과 메시지 연결을 확인한다.",
+  "toneRules": [
+    "팬 친화적이되 사실, 매체 해석, AI 해석을 화면에서 구분한다."
+  ],
+  "prohibitedClaims": [
+    "멤버의 사생활·건강 상태 추정",
+    "확인되지 않은 서사",
+    "편집 해석을 아티스트의 직접 발언으로 표시하는 행위"
+  ]
+}

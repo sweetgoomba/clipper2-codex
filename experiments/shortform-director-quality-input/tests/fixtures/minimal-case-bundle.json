@@ -1,0 +1,63 @@
+{
+  "manifest": {
+    "caseId": "BEAUTY-01",
+    "schemaVersion": "quality-input-pack-manifest.v1",
+    "state": "draft",
+    "cutoffAt": "2026-07-24T00:00:00.000Z",
+    "fileDigests": {
+      "profile.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "episodes.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "source-cards.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "audience-cards.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "reference-cards.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "vira-evidence.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "feedback-cards.json": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "profile": {
+    "profileSchemaVersion": "quality-input-profile.v1",
+    "caseId": "BEAUTY-01",
+    "operatorRole": "beauty curator",
+    "audience": "beginners",
+    "desiredAfterState": "can compare products",
+    "toneRules": ["be precise"],
+    "prohibitedClaims": ["do not guarantee results"]
+  },
+  "episodes": {
+    "episodeSchemaVersion": "quality-input-episodes.v1",
+    "caseId": "BEAUTY-01",
+    "episodeA": { "id": "BEAUTY-01-A", "question": "What should viewers compare?" },
+    "episodeB": { "id": "BEAUTY-01-B", "question": "What conditions affect the result?" }
+  },
+  "sources": {
+    "cards": [
+      {
+        "id": "B-S01", "sourceClass": "official_fact", "title": "Source one", "publisher": "Publisher", "originalUrl": "https://example.test/one", "publishedAt": null, "retrievedAt": "2026-07-24T00:00:00.000Z", "cutoffAt": "2026-07-24T00:00:00.000Z", "permittedUse": ["fact"], "rightsNote": "internal evaluation only", "notes": "", "availability": "verified", "contentDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "claims": [{ "id": "B-S01-C01", "statement": "A supported fact", "evidenceLocator": "section 1", "excerptMode": "paraphrase", "evidenceExcerpt": "Short supporting extract" }]
+      },
+      {
+        "id": "B-S02", "sourceClass": "official_fact", "title": "Source two", "publisher": "Publisher", "originalUrl": "https://example.test/two", "publishedAt": "2026-07-23T00:00:00.000Z", "retrievedAt": "2026-07-24T00:00:00.000Z", "cutoffAt": "2026-07-24T00:00:00.000Z", "permittedUse": ["fact"], "rightsNote": "internal evaluation only", "notes": "", "availability": "verified", "contentDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "claims": [{ "id": "B-S02-C01", "statement": "Another supported fact", "evidenceLocator": "section 2", "excerptMode": "short_quote", "evidenceExcerpt": "Short quote" }]
+      },
+      {
+        "id": "B-S03", "sourceClass": "authority_explanation", "title": "Source three", "publisher": "Authority", "originalUrl": "https://example.test/three", "publishedAt": null, "retrievedAt": "2026-07-24T00:00:00.000Z", "cutoffAt": "2026-07-24T00:00:00.000Z", "permittedUse": ["editorial"], "rightsNote": "internal evaluation only", "notes": "", "availability": "partial", "contentDigest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "claims": [{ "id": "B-S03-C01", "statement": "An explanatory fact", "evidenceLocator": "section 3", "excerptMode": "paraphrase", "evidenceExcerpt": "Short supporting extract" }]
+      }
+    ]
+  },
+  "audience": { "questions": [
+    { "id": "Q01", "question": "Question 1", "originClass": "general_reader_question" },
+    { "id": "Q02", "question": "Question 2", "originClass": "general_reader_question" },
+    { "id": "Q03", "question": "Question 3", "originClass": "general_reader_question" },
+    { "id": "Q04", "question": "Question 4", "originClass": "general_reader_question" },
+    { "id": "Q05", "question": "Question 5", "originClass": "general_reader_question" },
+    { "id": "Q06", "question": "Question 6", "originClass": "general_reader_question" },
+    { "id": "Q07", "question": "Question 7", "originClass": "general_reader_question" },
+    { "id": "Q08", "question": "Question 8", "originClass": "general_reader_question" },
+    { "id": "Q09", "question": "Question 9", "originClass": "general_reader_question" },
+    { "id": "Q10", "question": "Question 10", "originClass": "general_reader_question" }
+  ] },
+  "references": { "cards": [{ "id": "B-R01", "pattern": "Compare conditions in order", "allowedInfluence": "structure only", "forbiddenUse": "do not copy facts", "rightsNote": "pattern reference only" }] },
+  "vira": { "state": "provider_not_called", "evidence": [] },
+  "feedback": { "state": "not_collected", "cards": [] }
+}

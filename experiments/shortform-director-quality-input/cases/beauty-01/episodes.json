@@ -1,0 +1,12 @@
+{
+  "episodeSchemaVersion": "quality-input-episodes.v1",
+  "caseId": "BEAUTY-01",
+  "episodeA": {
+    "id": "BEAUTY-01-A",
+    "question": "같은 “젤광” 틴트라도 색, 광택, 착색, 입술 상태에 따라 무엇을 확인해야 하는가?"
+  },
+  "episodeB": {
+    "id": "BEAUTY-01-B",
+    "question": "공식 컬러표와 실제 발색이 다를 수 있는 이유를 설명할 때 어떤 조건을 먼저 밝혀야 하는가?"
+  }
+}

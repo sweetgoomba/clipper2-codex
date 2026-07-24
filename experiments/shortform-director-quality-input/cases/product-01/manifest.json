@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "quality-input-pack-manifest.v1",
+  "caseId": "PRODUCT-01",
+  "cutoffAt": "2026-07-24T23:59:59+09:00",
+  "state": "sealed",
+  "fileDigests": {
+    "profile.json": "sha256:26b6ae8bbfd52e923183652c7c666baa472113dcdbc524cec914ac1aecaec401",
+    "episodes.json": "sha256:6a77a65b2f820b9651afcc935dc7ceb58fe78e49a8acb2dd6973249617ad2202",
+    "source-cards.json": "sha256:a12135ae2c96c4229f8a3a24e4dd1ff07bfc4828915c47117b317d9019d86352",
+    "audience-cards.json": "sha256:585f70139824c74fa11e17b6aa2b375a278d94945bc04c2107adf73fe26515b7",
+    "reference-cards.json": "sha256:0cb7485a830a19c16ad7a5087fa7839d60e10913da8a56f817feabbaf4dd8689",
+    "vira-evidence.json": "sha256:0d8ffc7b84aa2d108c5dff4d5a37fca978840dc1148bbec295e183e071a8e958",
+    "feedback-cards.json": "sha256:216ba416f1480a8737728cd79380c5d0e0947056640f046817ce2bc83b6fa557"
+  }
+}

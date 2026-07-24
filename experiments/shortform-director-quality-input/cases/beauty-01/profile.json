@@ -1,0 +1,15 @@
+{
+  "profileSchemaVersion": "quality-input-profile.v1",
+  "caseId": "BEAUTY-01",
+  "operatorRole": "특정 브랜드를 대변하지 않는 뷰티 큐레이션 채널",
+  "audience": "온라인 발색표만으로 구매를 결정하기 어려운 입문자",
+  "desiredAfterState": "저장 후 자신의 입술 상태·원하는 마무리에 맞춰 후보를 좁힌다.",
+  "toneRules": [
+    "빠르지만 단정 짓지 않고 비교 조건을 먼저 밝힌다."
+  ],
+  "prohibitedClaims": [
+    "“모든 웜톤/쿨톤에게 맞는다”",
+    "실제 사용 없이 지속력·건조함을 확정하는 표현",
+    "생성 이미지로 실제 발색을 재현했다는 인상"
+  ]
+}

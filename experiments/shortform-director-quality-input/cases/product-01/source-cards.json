@@ -1,0 +1,125 @@
+{
+  "cards": [
+    {
+      "id": "P-S01",
+      "sourceClass": "official_fact",
+      "title": "SMARTCARA 2024 BROCHURE",
+      "publisher": "SMARTCARA",
+      "originalUrl": "https://smartcara.com/web/upload/download/SMARTCARA_2024_Brochure.pdf?v3=",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "verified",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [
+        {
+          "id": "P-S01-C01",
+          "statement": "공식 브로슈어는 스마트카라 400 Pro2의 처리 용량을 2 L, 방식을 투입·건조·분쇄·식힘, 처리시간을 2시간 30분~4시간, 설치 방식을 별도 설치 없는 독립형으로 안내한다.",
+          "evidenceLocator": "SMARTCARA 2024 BROCHURE, PDF page 20, ‘PRODUCT LINE-UP’",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "400 Pro2의 용량, 처리 단계, 시간 범위와 독립형 설치 사양."
+        },
+        {
+          "id": "P-S01-C02",
+          "statement": "같은 표는 400 Pro2의 편의 기능으로 절전, 음성 자가진단, 스마트도어락과 자동 세척을 열거한다.",
+          "evidenceLocator": "SMARTCARA 2024 BROCHURE, PDF page 20, ‘편의 기능’",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "절전·자가진단·도어락·자동 세척 기능 목록."
+        }
+      ],
+      "contentDigest": "sha256:c89f37abca014ea6abe322765ed4778f3c057803f1f31da5d890a72add3466ff",
+      "rightsNote": "제품 사양의 공식 근거로만 사용하며 브로슈어 문구, 표 디자인, 사진과 브랜드 자산의 제작물 재사용 권리를 포함하지 않는다.",
+      "notes": "35쪽 PDF를 직접 열어 viewer page 20의 400 Pro2 표를 확인했다."
+    },
+    {
+      "id": "P-S02",
+      "sourceClass": "official_fact",
+      "title": "스마트카라 400 Pro 2 사용자 설명서 PDF 파일",
+      "publisher": "SMARTCARA",
+      "originalUrl": "https://smartcara.com/article/%EC%A0%9C%ED%92%88-%EB%A7%A4%EB%89%B4%EC%96%BC/5/46619/",
+      "publishedAt": "2024-05-20T00:00:00+09:00",
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "partial",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [
+        {
+          "id": "P-S02-C01",
+          "statement": "공식 매뉴얼 게시물은 스마트카라 400 Pro 2의 모델을 SC-D0208로 표시하고 사용자 설명서 PDF가 첨부되어 있다고 안내한다.",
+          "evidenceLocator": "제품 매뉴얼 게시물 본문, ‘스마트카라 400 Pro 2 (SC-D0208)’ 및 첨부파일 행",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "SC-D0208 모델명과 사용자 설명서 PDF 첨부 사실."
+        }
+      ],
+      "contentDigest": "sha256:9157d73d7db25b8c82de6cdc204c18dbaa64ce758a204861955d13240eb11d37",
+      "rightsNote": "직접 확인한 게시물 메타데이터만 사실 근거로 사용하며 설명서 문구와 도해의 제작물 재사용 권리를 포함하지 않는다.",
+      "notes": "게시물과 첨부파일 이름은 확인했지만 PDF 본문을 열지 못해 안전, 투입 제한과 관리 방법은 claim으로 만들지 않았다."
+    },
+    {
+      "id": "P-S03",
+      "sourceClass": "official_fact",
+      "title": "스마트카라 공식 필터·건조통 안내",
+      "publisher": "SMARTCARA",
+      "originalUrl": "https://smartcara.com/article/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD/1/46425/",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "unavailable",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [],
+      "contentDigest": "sha256:1ef284176e93e66c76e2d5e4ce427d301437b9100f18340db43c6a26d4e66210",
+      "rightsNote": "원문을 직접 확인하지 못했으므로 호환성 사실, 문구, 이미지 어느 것도 제작물에 사용하지 않는다.",
+      "notes": "직접 URL이 Cafe24 access challenge로 전환되어 본문과 버전을 확인하지 못했다."
+    },
+    {
+      "id": "P-S04",
+      "sourceClass": "official_fact",
+      "title": "[신청 마감] 2026년 가정용 음식물류폐기물 소형감량기 구매 지원사업 안내",
+      "publisher": "서초구청",
+      "originalUrl": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?bcIdx=409216&cbIdx=57",
+      "publishedAt": "2026-05-20T00:00:00+09:00",
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "verified",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [
+        {
+          "id": "P-S04-C01",
+          "statement": "서초구가 2026-05-20 등록한 공지는 현재 신청 마감 상태이며, 서초구 주민 대상 2026-06-01~06-19 사업에서 구매비의 30% 범위 내 최대 21만 원을 지원한다고 안내한다.",
+          "evidenceLocator": "공지사항 본문 제목·등록일 및 ‘사업개요’·‘신청기간’",
+          "excerptMode": "paraphrase",
+          "evidenceExcerpt": "서초구, 2026-05-20 등록, 신청 마감, 30% 범위 내 최대 21만 원."
+        }
+      ],
+      "contentDigest": "sha256:a7e9ded05f24b534f3127e00afecbd48ef6fb1ef639629e316086de51bd2e31d",
+      "rightsNote": "공공누리 제1유형의 출처표시 조건을 지키며 지역·시점이 붙은 행정 사실로만 사용한다.",
+      "notes": "현재 페이지 제목과 본문에서 지역, 등록일, 마감 상태, 기간과 금액을 함께 확인했다. 전국 공통 혜택으로 일반화하지 않는다."
+    },
+    {
+      "id": "P-S05",
+      "sourceClass": "official_fact",
+      "title": "스마트카라 보조금 FAQ",
+      "publisher": "SMARTCARA",
+      "originalUrl": "https://smartcara.com/article/%EC%9E%90%EC%A3%BC-%EB%AC%BB%EB%8A%94-%EC%A7%88%EB%AC%B8/6/46424/",
+      "publishedAt": null,
+      "retrievedAt": "2026-07-24T15:50:25+09:00",
+      "cutoffAt": "2026-07-24T23:59:59+09:00",
+      "availability": "unavailable",
+      "permittedUse": [
+        "fact"
+      ],
+      "claims": [],
+      "contentDigest": "sha256:964d12341db1f1b131b8c72938187b0560c4bfe80296c317d7fda1e8727b71a2",
+      "rightsNote": "원문을 직접 확인하지 못했으므로 보조금 조건, 문구, 이미지 어느 것도 제작물에 사용하지 않는다.",
+      "notes": "직접 URL이 Cafe24 access challenge로 전환되어 지자체별 제한 문구와 버전을 확인하지 못했다."
+    }
+  ]
+}

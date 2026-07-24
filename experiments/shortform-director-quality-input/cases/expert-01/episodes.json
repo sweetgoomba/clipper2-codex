@@ -1,0 +1,12 @@
+{
+  "episodeSchemaVersion": "quality-input-episodes.v1",
+  "caseId": "EXPERT-01",
+  "episodeA": {
+    "id": "EXPERT-01-A",
+    "question": "시장금리가 3%에서 4%로 오르면 기존 3% 고정금리 채권의 가격은 왜 내려가는가?"
+  },
+  "episodeB": {
+    "id": "EXPERT-01-B",
+    "question": "같은 신용위험과 coupon 조건이라면 만기가 긴 채권이 금리 변화에 더 민감한 이유는 무엇인가?"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "quality-input-pack-manifest.v1",
+  "caseId": "EXPERT-01",
+  "cutoffAt": "2026-07-24T23:59:59+09:00",
+  "state": "sealed",
+  "fileDigests": {
+    "profile.json": "sha256:064e68cb8c4ae1c87aaa7a5f7dcca8c5c4f6b1f36f8de0933c9084e1c0e0e667",
+    "episodes.json": "sha256:362af0cd61f588c6a98a10d685d15a24fdf60348e8317e7349883a7170911a81",
+    "source-cards.json": "sha256:c041be58583db20938827b84c97fe280c0e3a6c35ba71d1fb7ed586dc562e4c2",
+    "audience-cards.json": "sha256:bdfeb87eb8f259945df3b12f654f2bcf79a58729149cd69bdd68799d83d1c5c3",
+    "reference-cards.json": "sha256:74355aa4f74a38b1cc0b0f7c6f59238d82282de4396300bee9631efc7bd5ba82",
+    "vira-evidence.json": "sha256:0d8ffc7b84aa2d108c5dff4d5a37fca978840dc1148bbec295e183e071a8e958",
+    "feedback-cards.json": "sha256:216ba416f1480a8737728cd79380c5d0e0947056640f046817ce2bc83b6fa557"
+  }
+}

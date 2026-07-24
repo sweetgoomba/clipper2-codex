@@ -1,0 +1,74 @@
+{
+  "questions": [
+    {
+      "id": "P-AQ01",
+      "question": "2 L가 우리 집의 하루 음식물 양에 충분한가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ02",
+      "question": "한 번 처리하는 데 실제로 어느 정도 시간을 잡아야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ03",
+      "question": "처리 중 냄새는 어떤 조건에서 달라질 수 있는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ04",
+      "question": "밤에 사용할 때 소음이 생활에 영향을 주는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ05",
+      "question": "필터는 언제 확인하고 어떤 비용을 예상해야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ06",
+      "question": "넣으면 안 되는 음식물이나 재료는 무엇인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ07",
+      "question": "처리 중 추가 투입이 가능한가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ08",
+      "question": "세척과 건조통 관리는 얼마나 자주 필요한가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ09",
+      "question": "설치 공간, 환기, 전원에서 무엇을 확인해야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "P-AQ10",
+      "question": "내 거주지의 보조금 대상·기간·서류는 어디에서 확인해야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    }
+  ]
+}

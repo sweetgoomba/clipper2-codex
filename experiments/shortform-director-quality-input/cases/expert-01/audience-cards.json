@@ -1,0 +1,74 @@
+{
+  "questions": [
+    {
+      "id": "E-AQ01",
+      "question": "coupon 3%와 시장금리 4%는 무엇이 다른가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ02",
+      "question": "기존 채권의 이자가 그대로인데 왜 가격이 변하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ03",
+      "question": "새 채권이 더 높은 이자를 주면 기존 채권을 누가 사는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ04",
+      "question": "가격이 얼마나 내려가야 두 채권의 매력이 비슷해지는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ05",
+      "question": "만기까지 보유하면 중간 가격 하락은 왜 다르게 봐야 하는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ06",
+      "question": "가격과 yield가 반대로 움직인다는 말은 무슨 뜻인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ07",
+      "question": "기준금리와 모든 시장금리는 항상 같은 폭으로 움직이는가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ08",
+      "question": "만기가 길수록 금리 변화에 민감한 이유는 무엇인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ09",
+      "question": "신용위험과 금리위험은 어떻게 다른가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    },
+    {
+      "id": "E-AQ10",
+      "question": "이 설명에서 단순화를 위해 같다고 가정한 조건은 무엇인가?",
+      "originClass": "general_reader_question",
+      "sourceId": null,
+      "evidenceLocator": null
+    }
+  ]
+}
