@@ -480,6 +480,88 @@ Gemini 출력은 다음 검증을 통과해야 한다.
 된다. 영상 후보는 여전히 선택 Topic마다 최소 10개를 생성한다. `레퍼런스 영상 3개`와
 `제작할 영상 후보 10개 이상`은 서로 다른 개념이다.
 
+### 9.1 Topic에서 제작용 영상 후보로 넘기는 실제 근거
+
+Topic의 `evidenceIds`, `audienceSignalIds`, `referencePatternIds`는 로컬 계보의 연결
+키일 뿐 LLM이 이해할 수 있는 내용이 아니다. 제작용 영상 후보 생성 prompt에 이 ID
+배열만 전달하는 것은 금지한다.
+
+후보 생성 preflight는 선택한 Topic의 ID를 immutable artifact에서 실제 내용으로
+해석해 다음 `GroundedCandidateGenerationContextV1`을 먼저 만든다.
+
+```ts
+interface GroundedCandidateGenerationContextV1 {
+  schemaVersion: 'shortform-director-grounded-candidate-context.v1';
+  researchRunId: string;
+  topic: {
+    id: string;
+    title: string;
+    whyNow: string;
+    angle: string;
+  };
+  marketEvidence: Array<{
+    id: string;
+    source: 'google-trends' | 'naver-news' | 'naver-datalab';
+    title: string;
+    summary: string;
+    claims: string[];
+    publishedAt: string | null;
+    artifactId: string;
+  }>;
+  audienceSignals: Array<{
+    id: string;
+    source: 'youtube-comment' | 'youtube-performance';
+    statement: string;
+    publishedAt: string | null;
+    metrics: Record<string, number | null>;
+    artifactId: string;
+  }>;
+  referencePatterns: Array<{
+    id: string;
+    hookFormula: string;
+    scrollStopper: string;
+    format: string;
+    structure: string[];
+    pacing: string[];
+    productionNotes: string[];
+    doNotCopy: string[];
+    evidenceRefs: string[];
+    artifactId: string;
+  }>;
+  limits: {
+    marketEvidence: { available: number; included: number };
+    audienceSignals: { available: number; included: number };
+    referencePatterns: { available: number; included: number };
+  };
+}
+```
+
+ID는 출력 후보가 어떤 근거를 사용했는지 다시 연결하기 위해 내용 옆에 함께 보존한다.
+그러나 prompt의 의미 입력은 반드시 `title`, `summary`, `claims`, `statement`,
+`hookFormula`, `structure`, `pacing` 같은 실제 본문이다.
+
+context builder는 다음 규칙을 지킨다.
+
+- 선택 Topic이 참조한 ID만 포함하고 research run의 모든 원시 결과를 무작정 넣지 않는다.
+- ID를 실제 artifact 내용으로 해석할 수 없으면 후보 생성과 비용 승인을 중단한다.
+- 다른 run·profile의 artifact나 Topic에 없는 ID를 섞지 않는다.
+- 시장 자료는 “무엇을 말할지”, audience signal은 “시청자가 무엇에 반응하는지”,
+  reference pattern은 “어떤 형식으로 전달할지”로 역할을 분리한다.
+- YouTube 영상 속 주장은 market fact로 승격하지 않는다.
+- provider raw body나 전체 transcript를 그대로 넣지 않고 검증·정규화된 관련 필드만
+  deterministic limit 안에서 포함한다.
+- 잘린 항목과 적용된 limit를 context metadata에 기록하며 조용히 누락하지 않는다.
+
+후보 생성 preflight는 이 context의 canonical digest, 실제 입력 크기와 비용을 승인
+snapshot에 묶는다. 승인 뒤 context가 달라지면 기존 승인을 거부한다. 실제 호출에 사용한
+context 전체는 `candidate-generation-input` immutable artifact에 저장한다.
+
+각 생성 후보는 최소 하나의 market evidence와 reference pattern을 참조해야 한다.
+Topic에 audience signal이 있으면 최소 하나를 참조해야 하며, 없으면 임의의 반응을
+만들지 않고 limitation을 남긴다. validator는 후보가 context에 포함되지 않은 ID를
+사용하는 결과를 거부한다. 실제 본문과 후보의 의미 연결은 prompt 지시와 후보의
+`whyNow`, `format`, `outline`을 함께 저장해 사람이 검토할 수 있게 한다.
+
 ## 10. 비용과 호출 상한
 
 Gemini 3.6 Flash의 2026-07-29 기준 Standard 가격:
@@ -550,6 +632,52 @@ Google의 기본 영상 토큰 계산은 약 300 tokens/second다.
 - 영상별 `왜 효과가 있었나`
 - 근거 프레임·자막·장면·provider call 열람
 - 완료 후 추가 정밀 분석
+
+### 11.4 사람이 읽는 조사 근거 보고서
+
+artifact ID와 raw JSON은 감사·디버깅에는 필요하지만 사용자의 첫 화면이 되어서는 안
+된다. 아이디어 찾기 페이지는 선택한 research run의 artifact를 소스별로 묶어 다음
+순서로 보여준다.
+
+1. **조사 개요**
+   - 조사 시각, 기준 기간, 운영 프로필, 입력 키워드
+   - 실제 사용한 검색어
+   - 소스별 성공·부분 실패 상태와 수집 건수
+2. **Google Trends**
+   - 발견한 급상승 검색어, 대략적 트래픽, 게시 시각, 연결된 헤드라인
+3. **네이버 뉴스**
+   - 검색어, 정렬 기준, 검색 기간
+   - 기사 제목, 요약, 게시 시각, 공개 링크
+4. **네이버 데이터랩**
+   - 비교한 키워드 그룹, 조회 기간·단위
+   - 최근 관심도 값과 변화 방향
+5. **YouTube**
+   - 검색어, `viewCount`/`relevance` lane, 조회 기간과 필터
+   - 가져온 영상의 제목, 채널, 게시 시각, 길이, 조회·좋아요·댓글
+   - 후보 제외·추천 이유처럼 이후 계산된 값은 원시 수집값과 구분
+6. **AI 정리 과정**
+   - 목적, provider/model, 입력으로 사용한 소스 종류와 건수
+   - 파싱·검증된 결과 요약, validation 상태, 안전한 usage 정보
+
+화면용 설명을 새 LLM 호출로 생성하거나 별도 진실 원본으로 저장하지 않는다. Angular의
+typed presenter가 저장된 immutable artifact JSON을 결정적으로 읽어 사람이 이해할 수
+있는 presentation model로 변환한다. 따라서 화면 요약과 원본 JSON이 서로 다른 내용을
+말할 수 없다. 지원하지 않는 새 artifact kind는 억지로 추측하지 않고 기술 정보와 원본
+JSON만 제공한다.
+
+`근거와 과정 보기 · artifact.director...`처럼 내부 ID를 주 행동 문구로 노출하지 않는다.
+문맥에 따라 `수집 내용 보기`, `AI 정리 내용 보기`, `검증 내용 보기`를 사용한다. 개별
+상세 패널은 다음 순서를 따른다.
+
+1. 사람이 읽는 제목과 핵심 결과
+2. 요청 조건·수집 시각·결과 목록
+3. 부분 실패 또는 데이터 제한
+4. 접힌 `기술 정보` 안의 artifact ID, run ID, checksum, byte size
+5. 기본으로 접힌 `원본 JSON 보기`
+
+원본 JSON은 사용자가 펼쳤을 때만 포맷해 DOM에 올리며 읽기 전용이다. 실패 artifact도
+빈 성공 카드로 바꾸지 않고 “네이버 뉴스 검색 실패”처럼 소스와 실패 단계를 먼저
+설명한 뒤 안전한 오류 분류를 표시한다.
 
 ## 12. JSON 저장 구조
 
@@ -627,7 +755,8 @@ research-runs/<researchRunId>/
 - desktop → authenticated Web API → Gemini credential 경계
 - parsed analysis의 로컬 JSON 저장과 reload
 - 세 영상 성공 뒤에만 reference pattern 생성
-- Angular 근거·과정에서 저장 artifact 열람
+- Angular 조사 보고서가 저장 artifact만으로 소스별 요약을 구성
+- 개별 근거 패널에서 사람이 읽는 내용 뒤에 접힌 원본 JSON 열람
 
 ### 14.3 첫 live acceptance
 
@@ -645,6 +774,11 @@ research-runs/<researchRunId>/
 8. 영상 속 주장과 검증된 사실이 분리된다.
 9. 세 분석의 공통 패턴이 Topic·영상 후보 생성에 연결된다.
 10. 어떤 단계에서도 runtime fixture·가짜 provider response를 사용하지 않는다.
+11. Google Trends·네이버 뉴스·데이터랩·YouTube의 검색 조건과 결과를 JSON을 읽지
+    않고도 확인할 수 있다.
+12. artifact ID·checksum·원본 JSON은 기술 정보 아래 기본으로 접혀 있다.
+13. 제작용 영상 후보 생성 prompt에는 선택 Topic과 연결된 시장 근거·audience signal·
+    reference pattern의 실제 본문이 포함되고, ID만 단독으로 전달되지 않는다.
 
 ## 15. 참고 자료
 

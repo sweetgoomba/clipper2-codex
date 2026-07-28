@@ -158,6 +158,12 @@ git -C .codex status --short --branch
   - facade 역할로 축소
 - `src/modules/shortform-director/application/shortform-director-research-topic.builder.ts`
   - 검증된 reference patterns 입력
+- `src/modules/shortform-director/application/shortform-director-candidate-generation.service.ts`
+  - Topic ID를 실제 market·audience·reference 본문으로 해석한 context를 inference에 전달
+- `src/modules/shortform-director/application/shortform-director-candidate-production-evidence.projector.ts`
+  - 후보 생성과 장면 제작이 공유하는 typed market evidence projection
+- `src/modules/shortform-director/application/shortform-director-candidate-validator.ts`
+  - 실제 context에 포함된 근거와 pattern만 후보가 참조하도록 검증
 - `src/modules/shortform-director/application/shortform-director-research.models.ts`
   - 공개 후보·선택·preflight·attempt 계약
 - `src/modules/shortform-director/presentation/shortform-director-research.controller.ts`
@@ -170,6 +176,8 @@ git -C .codex status --short --branch
 - `src/modules/shortform-director/domain/reference-candidate.ts`
 - `src/modules/shortform-director/domain/reference-analysis.ts`
 - `src/modules/shortform-director/domain/reference-analysis-cost-estimate.ts`
+- `src/modules/shortform-director/domain/grounded-candidate-generation-context.ts`
+- `src/modules/shortform-director/application/shortform-director-grounded-candidate-context.builder.ts`
 - `src/modules/shortform-director/application/shortform-director-reference-candidate.collector.ts`
 - `src/modules/shortform-director/application/shortform-director-reference-candidate.ranker.ts`
 - `src/modules/shortform-director/application/shortform-director-reference-selection.service.ts`
@@ -200,6 +208,7 @@ git -C .codex status --short --branch
 - `test/shortform-director-reference-analysis-validation.test.js`
 - `test/shortform-director-reference-analysis-orchestrator.test.js`
 - `test/shortform-director-research-orchestrator.test.js`
+- `test/shortform-director-candidate-grounding.test.js`
 - `test/web-api-client.test.js`
 
 ### 2.2 `desktop/clipper_python`
@@ -232,7 +241,7 @@ git -C .codex status --short --branch
 - `src/modules/shortform-director-inference/domain/shortform-director-model-catalog.ts`
 - `src/modules/shortform-director-inference/application/shortform-director-inference.prompt.ts`
   - 실패한 metadata-only `youtube-reference-analysis` 제거,
-    `reference-pattern-synthesis` 추가
+    `reference-pattern-synthesis` 추가, candidate-generation에서 실제 근거 본문 사용
 
 **새 module**
 
@@ -267,6 +276,8 @@ git -C .codex status --short --branch
 - `components/research-reference-analysis-preflight/*`
 - `components/research-reference-analysis-progress/*`
 - `components/research-reference-analysis-detail/*`
+- `components/research-evidence-report/*`
+- `components/research-artifact-summary/*`
 
 페이지는 조율만 하고 후보 선택, 비용 표시, 진행 상태, 상세 분석 렌더링을 각각의
 컴포넌트에 분리한다.
@@ -364,8 +375,12 @@ node --test test/shortform-director-research-orchestrator.test.js
 
 - Modify: `desktop/clipper_nestjs/src/modules/shortform-director/domain/research-cost-estimate.ts`
 - Modify: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-research-preflight.service.ts`
+- Modify: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-research.models.ts`
 - Modify: `desktop/clipper_nestjs/src/modules/shortform-director/presentation/dto/start-shortform-director-research.dto.ts`
 - Test: `desktop/clipper_nestjs/test/shortform-director-research-cost-estimate.test.js`
+- Modify: `desktop/clipper_angular/src/features/shortform-director/models/shortform-director-research.ts`
+- Modify: `desktop/clipper_angular/src/features/shortform-director/components/research-preflight-card/research-preflight-card.component.html`
+- Test: `desktop/clipper_angular/src/features/shortform-director/components/research-preflight-card/research-preflight-card.component.spec.ts`
 
 - [ ] **Step 1: discovery 호출 상한 테스트 작성**
 
@@ -397,6 +412,10 @@ YouTube의 2026-06 이후 granular quota를 하나의 숫자로 합치지 않는
 cd /Users/jina/project/adlight/desktop/clipper_nestjs
 npm run build
 node --test test/shortform-director-research-cost-estimate.test.js
+
+cd /Users/jina/project/adlight/desktop/clipper_angular
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless \
+  --include='src/features/shortform-director/components/research-preflight-card/research-preflight-card.component.spec.ts'
 ```
 
 - [ ] **Step 3: estimate와 approval hash 입력 구현**
@@ -409,6 +428,11 @@ node --test test/shortform-director-research-cost-estimate.test.js
 ```bash
 npm run build
 node --test test/shortform-director-research-cost-estimate.test.js
+
+cd /Users/jina/project/adlight/desktop/clipper_angular
+./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless \
+  --include='src/features/shortform-director/components/research-preflight-card/research-preflight-card.component.spec.ts'
+npm run build
 ```
 
 - [ ] **Step 5: 조건부 체크포인트**
@@ -1167,7 +1191,8 @@ multi-video Google schema와 metadata-only prompt가 active catalog에 남지 �
 - [ ] **Step 4: reference pattern 및 topic publication 구현**
 
 세 분석을 `reference-patterns.json`으로 게시한 뒤 기존 topic builder가 이를 입력으로
-사용하게 한다. topic 이후 기존 영상 후보 10개 생성 계약은 바꾸지 않는다.
+사용하게 한다. topic 이후 영상 후보 최소 10개 생성 수량은 유지하되, 다음 Task에서
+bare ID 입력을 실제 market·audience·reference 본문 context로 교체한다.
 
 - [ ] **Step 5: GREEN 확인**
 
@@ -1189,11 +1214,116 @@ node --test test/shortform-director-research-orchestrator.test.js
 
 ---
 
-## Task 14. Angular 계약·gateway·store에 선택과 polling 연결
+## Task 14. 영상 후보 생성에 실제 조사 근거 본문 전달
+
+**Files**
+
+- Add: `desktop/clipper_nestjs/src/modules/shortform-director/domain/grounded-candidate-generation-context.ts`
+- Add: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-grounded-candidate-context.builder.ts`
+- Modify: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-candidate-generation.service.ts`
+- Modify: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-candidate-production-evidence.projector.ts`
+- Modify: `desktop/clipper_nestjs/src/modules/shortform-director/application/shortform-director-candidate-validator.ts`
+- Modify: `desktop/clipper_nestjs/src/modules/shortform-director/shortform-director.module.ts`
+- Modify: `web/clipper_web_api/src/modules/shortform-director-inference/application/shortform-director-inference.prompt.ts`
+- Modify matching inference prompt specs
+- Test: `desktop/clipper_nestjs/test/shortform-director-candidate-generation.test.js`
+- Test: `desktop/clipper_nestjs/test/shortform-director-candidate-validator.test.js`
+- Add: `desktop/clipper_nestjs/test/shortform-director-candidate-grounding.test.js`
+
+- [ ] **Step 1: 실제 본문 입력 RED 테스트 작성**
+
+선택 Topic의 세 ID 배열을 실제 immutable artifact 내용으로 해석한 뒤에만 candidate
+preflight와 inference를 허용한다.
+
+- `evidenceIds`는 Google Trends·네이버 뉴스·DataLab의 실제 제목, 요약, claims,
+  게시 시각과 source artifact ID로 해석한다.
+- `audienceSignalIds`는 YouTube 성과·댓글의 실제 statement, metrics, 게시 시각으로
+  해석한다.
+- `referencePatternIds`는 정밀 분석 종합의 실제 hook formula, scroll-stopper, format,
+  structure, pacing, production notes, 금지 요소와 evidence refs로 해석한다.
+- inference spy가 받은 input에는 위 실제 본문이 있고, bare ID 배열만 있는 입력은
+  허용하지 않는다.
+- `candidate-generation-input` artifact에는 실제 provider 호출과 동일한 grounded context
+  전체가 저장된다.
+- 다른 run/profile의 artifact, Topic에 없는 ID, 해석 불가능한 ID, 중복 ID가 하나라도
+  있으면 비용 승인과 provider 호출 전에 실패한다.
+- provider raw body, 전체 transcript, media bytes는 candidate prompt에 들어가지 않는다.
+- 각 후보는 market evidence와 reference pattern을 최소 하나씩 참조한다. Topic에
+  audience signal이 있으면 최소 하나를 참조한다.
+- 후보가 context에 없는 ID를 반환하면 기존 validator가 거부한다.
+
+- [ ] **Step 2: 승인 snapshot·비용 RED 테스트 작성**
+
+candidate preflight는 다음을 공개하고 approval hash에 포함한다.
+
+- grounded context canonical digest
+- market/audience/reference 항목 수
+- 실제 bounded prompt byte/token estimate
+- 더 커진 입력 상한을 반영한 최소/최대 비용
+- 적용한 항목·문자 limit와 잘린 항목 수
+
+preflight 뒤 Topic 또는 참조 artifact가 바뀌어 context digest가 달라지면 start를
+거부한다. 비용 승인을 받은 context와 실제 inference input은 canonical JSON 기준으로
+같아야 한다.
+
+- [ ] **Step 3: RED 확인**
+
+```bash
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
+npm run build
+node --test test/shortform-director-candidate-grounding.test.js
+node --test test/shortform-director-candidate-generation.test.js
+node --test test/shortform-director-candidate-validator.test.js
+```
+
+- [ ] **Step 4: grounded context 경계 구현**
+
+`ShortformDirectorGroundedCandidateContextBuilder`가 artifact 로드·소유권 확인·typed
+projection·deterministic bounding을 전담한다. candidate service는 builder가 반환한
+불변 context와 digest만 사용한다. `candidate-generation-input.v2`에는 profile,
+선택 Topic, grounded context, limit metadata와 digest를 저장한다.
+
+기존 production evidence projector의 시장 근거 해석 로직은 공용 typed projection으로
+추출해 후보 생성과 장면 제작이 같은 source item을 서로 다르게 해석하지 않게 한다.
+감사용 inference artifact의 과거 user prompt를 다시 파싱해 근거 DB처럼 사용하는 경로는
+제거한다.
+
+Web API candidate prompt는 다음 역할을 명시한다.
+
+- market evidence에서 주장과 시의성을 가져온다.
+- audience signal에서 시청자 질문·반응을 가져온다.
+- reference pattern에서 훅·구조·리듬을 가져오되 원본 문구·연출을 복제하지 않는다.
+- 출력한 각 ID는 prompt에 실제 본문과 함께 제공된 ID만 사용한다.
+
+- [ ] **Step 5: GREEN 및 회귀 확인**
+
+```bash
+cd /Users/jina/project/adlight/web/clipper_web_api
+npm test -- --runInBand shortform-director-inference
+npm run build
+
+cd /Users/jina/project/adlight/desktop/clipper_nestjs
+npm run build
+node --test test/shortform-director-candidate-grounding.test.js
+node --test test/shortform-director-candidate-generation.test.js
+node --test test/shortform-director-candidate-validator.test.js
+node --test test/shortform-director-candidate-production.test.js
+```
+
+- [ ] **Step 6: 조건부 체크포인트**
+
+사용자가 요청한 경우에만
+`fix(shortform-director): ground candidates in actual research content`로 commit한다.
+
+---
+
+## Task 15. Angular 계약·gateway·store에 선택과 polling 연결
 
 **Files**
 
 - Modify: `desktop/clipper_angular/src/features/shortform-director/models/shortform-director-research.ts`
+- Add: `desktop/clipper_angular/src/features/shortform-director/models/shortform-director-research-artifact-presentation.ts`
+- Test: `desktop/clipper_angular/src/features/shortform-director/models/shortform-director-research-artifact-presentation.spec.ts`
 - Modify: `desktop/clipper_angular/src/features/shortform-director/services/shortform-director-research.gateway.ts`
 - Modify: `desktop/clipper_angular/src/features/shortform-director/services/shortform-director-research.service.ts`
 - Modify: `desktop/clipper_angular/src/features/shortform-director/state/shortform-director-research.store.ts`
@@ -1211,12 +1341,17 @@ node --test test/shortform-director-research-orchestrator.test.js
 - component/store destroy 시 polling을 중단한다.
 - child partial이면 성공한 분석은 남기고 후보 교체 UI로 돌아간다.
 - parent terminal 후 topic을 로드한다.
+- 선택한 research run의 실제 artifact refs를 불러와 ID별로 보존한다.
+- 일부 artifact 로드가 실패해도 성공한 소스 요약은 유지하고 실패 항목을 별도로 남긴다.
+- source call과 inference artifact를 schema/kind별 discriminated presentation model로
+  투영하며 모르는 kind의 내용을 추측하지 않는다.
 
 - [ ] **Step 2: RED 확인**
 
 ```bash
 cd /Users/jina/project/adlight/desktop/clipper_angular
 ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless \
+  --include='src/features/shortform-director/models/shortform-director-research-artifact-presentation.spec.ts' \
   --include='src/features/shortform-director/services/shortform-director-research.service.spec.ts' \
   --include='src/features/shortform-director/state/shortform-director-research.store.spec.ts'
 ```
@@ -1224,13 +1359,16 @@ cd /Users/jina/project/adlight/desktop/clipper_angular
 - [ ] **Step 3: model/gateway/store 구현**
 
 store에는 candidates, selected IDs, selection revision, reference preflight, attempts,
-analyses를 각각 별도 signal로 둔다. `ideas-page`가 HTTP 세부 절차를 직접 조립하지 않게
-한다.
+analyses, artifact map과 artifact별 load failure를 각각 별도 signal로 둔다.
+presentation projector는 immutable artifact JSON에서 화면 모델을 결정적으로 만들며
+화면 설명을 위해 LLM을 추가 호출하거나 별도 요약 artifact를 만들지 않는다.
+`ideas-page`가 HTTP 세부 절차나 JSON field 해석을 직접 조립하지 않게 한다.
 
 - [ ] **Step 4: GREEN 확인**
 
 ```bash
 ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless \
+  --include='src/features/shortform-director/models/shortform-director-research-artifact-presentation.spec.ts' \
   --include='src/features/shortform-director/services/shortform-director-research.service.spec.ts' \
   --include='src/features/shortform-director/state/shortform-director-research.store.spec.ts'
 npm run build
@@ -1243,7 +1381,7 @@ npm run build
 
 ---
 
-## Task 15. 최대 6개 후보와 추천 3개 교체 UI 구현
+## Task 16. 최대 6개 후보와 추천 3개 교체 UI 구현
 
 **Files**
 
@@ -1300,13 +1438,16 @@ npm run build
 
 ---
 
-## Task 16. 두 번째 승인·진행 상태·“왜 효과가 있었나” UI 구현
+## Task 17. 두 번째 승인·진행 상태·분석 및 조사 근거 UI 구현
 
 **Files**
 
 - Add: `desktop/clipper_angular/src/features/shortform-director/components/research-reference-analysis-preflight/*`
 - Add: `desktop/clipper_angular/src/features/shortform-director/components/research-reference-analysis-progress/*`
 - Add: `desktop/clipper_angular/src/features/shortform-director/components/research-reference-analysis-detail/*`
+- Add: `desktop/clipper_angular/src/features/shortform-director/components/research-evidence-report/*`
+- Add: `desktop/clipper_angular/src/features/shortform-director/components/research-artifact-summary/*`
+- Modify: `desktop/clipper_angular/src/features/shortform-director/components/research-artifact-panel/*`
 - Modify: `desktop/clipper_angular/src/features/shortform-director/pages/ideas-page/ideas-page.component.{ts,html,scss,spec.ts}`
 - Modify: `desktop/clipper_angular/src/features/shortform-director/components/research-run-list/*`
 
@@ -1338,7 +1479,32 @@ Revid에서 유용했던 다음 내용을 별도 상세 컴포넌트로 보여�
 - `근거 프레임·자막 보기`
 - `provider 호출 과정 보기`
 
-- [ ] **Step 4: RED 확인**
+- [ ] **Step 4: 사람이 읽는 조사 근거 UI RED 테스트 작성**
+
+아이디어 찾기 페이지의 조사 보고서는 다음을 JSON을 직접 읽지 않고도 확인하게 한다.
+
+- 조사 시각·기간·운영 프로필·입력 키워드와 실제 생성된 검색어
+- Google Trends 급상승 검색어·트래픽·관련 헤드라인
+- 네이버 뉴스 검색어·정렬·기사 제목·요약·게시 시각
+- 네이버 데이터랩 비교 키워드·기간·최근 관심도 변화
+- YouTube 검색어·정렬 lane·필터와 수집 영상·채널·게시 시각·길이·성과 수치
+- AI 정리 목적·provider/model·입력 소스 수·검증된 출력 요약
+- 소스별 성공·부분 실패·수집 건수
+
+`ResearchArtifactSummary`는 artifact kind별 typed presentation model만 받고 raw
+`unknown` JSON을 템플릿에서 직접 탐색하지 않는다. 소스별 정보량이 커지면
+Trends·Naver·DataLab·YouTube·inference presentational subcomponent로 분리한다.
+
+개별 `ResearchArtifactPanel`은 다음을 검증한다.
+
+- `수집 내용 보기`, `AI 정리 내용 보기`, `검증 내용 보기`처럼 문맥에 맞는 문구 사용
+- 핵심 결과와 요청 조건을 먼저 표시
+- artifact ID, run ID, checksum, byte size는 접힌 `기술 정보`에 표시
+- raw payload는 기본으로 접힌 `원본 JSON 보기`를 사용자가 펼친 뒤에만 렌더
+- 알 수 없는 artifact kind는 꾸며내지 않고 기술 정보와 원본 JSON fallback만 표시
+- artifact 하나가 실패해도 나머지 소스 보고서는 유지
+
+- [ ] **Step 5: RED 확인**
 
 ```bash
 cd /Users/jina/project/adlight/desktop/clipper_angular
@@ -1346,35 +1512,45 @@ cd /Users/jina/project/adlight/desktop/clipper_angular
   --include='src/features/shortform-director/components/research-reference-analysis-preflight/*.spec.ts' \
   --include='src/features/shortform-director/components/research-reference-analysis-progress/*.spec.ts' \
   --include='src/features/shortform-director/components/research-reference-analysis-detail/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-evidence-report/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-artifact-summary/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-artifact-panel/*.spec.ts' \
   --include='src/features/shortform-director/pages/ideas-page/ideas-page.component.spec.ts'
 ```
 
-- [ ] **Step 5: 컴포넌트 분리 구현**
+- [ ] **Step 6: 컴포넌트 분리 구현**
 
-`ideas-page`에는 섹션 배치와 store method 호출만 둔다. 분석 상세에서 raw JSON을 직접
-포맷하지 않고 기존 `ResearchArtifactPanel`을 재사용해 저장 artifact를 연다. frame은
-보안 endpoint를 단순 `<img src>`로 직접 연결하지 않고 gateway의 인증된 Blob 요청을
-사용하며 컴포넌트 destroy 때 모든 object URL을 해제한다.
+`ideas-page`에는 섹션 배치와 store method 호출만 둔다. `ResearchEvidenceReport`는
+source별 그룹과 상태를 배치하고, `ResearchArtifactSummary`가 typed presentation
+model을 표시한다. 기존 `ResearchArtifactPanel`은 summary를 먼저 합성하고
+`기술 정보`와 `원본 JSON 보기`를 각각 기본으로 접는다. raw JSON은 펼침 상태에서만
+포맷한다. 분석 상세에서도 같은 panel을 재사용한다.
 
-- [ ] **Step 6: GREEN 확인**
+frame은 보안 endpoint를 단순 `<img src>`로 직접 연결하지 않고 gateway의 인증된 Blob
+요청을 사용하며 컴포넌트 destroy 때 모든 object URL을 해제한다.
+
+- [ ] **Step 7: GREEN 확인**
 
 ```bash
 ./node_modules/.bin/ng test --watch=false --browsers=ChromeHeadless \
   --include='src/features/shortform-director/components/research-reference-analysis-preflight/*.spec.ts' \
   --include='src/features/shortform-director/components/research-reference-analysis-progress/*.spec.ts' \
   --include='src/features/shortform-director/components/research-reference-analysis-detail/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-evidence-report/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-artifact-summary/*.spec.ts' \
+  --include='src/features/shortform-director/components/research-artifact-panel/*.spec.ts' \
   --include='src/features/shortform-director/pages/ideas-page/ideas-page.component.spec.ts'
 npm run build
 ```
 
-- [ ] **Step 7: 조건부 체크포인트**
+- [ ] **Step 8: 조건부 체크포인트**
 
 사용자가 요청한 경우에만
 `feat(shortform-director): show reference analysis evidence`로 commit한다.
 
 ---
 
-## Task 17. 오류 문구·보안·전체 계약 회귀 검증
+## Task 18. 오류 문구·보안·전체 계약 회귀 검증
 
 **Files**
 
@@ -1462,7 +1638,7 @@ git -C /Users/jina/project/adlight/.codex diff --check
 
 ---
 
-## Task 18. 명시적 승인 후 실제 end-to-end 검증
+## Task 19. 명시적 승인 후 실제 end-to-end 검증
 
 이 Task만 실제 provider 비용과 YouTube 다운로드가 발생한다. 자동 테스트가 모두
 통과해도 바로 실행하지 않는다.
@@ -1493,7 +1669,7 @@ git -C /Users/jina/project/adlight/.codex diff --check
 → 추천 3개 검토/교체
 → 두 번째 비용 승인
 → 실제 영상 3개 정밀 분석
-→ 근거·과정 확인
+→ 소스별 조사 보고서와 근거·과정 확인
 → 최신 조사 주제 확인
 → 주제 선택
 → 영상 후보 10개 이상
@@ -1506,8 +1682,10 @@ git -C /Users/jina/project/adlight/.codex diff --check
 
 각 run의 JSON artifact에서 source call, selection revision, approval, transcript,
 scene boundaries, keyframes manifest, provider call audit, parsed analysis, validation,
-reference patterns, topics를 확인한다. MP4/WAV/JPEG는 JSON 안이 아니라 별도 파일이며
-checksum과 일치해야 한다.
+reference patterns, topics, grounded candidate context와 candidate inference input을
+확인한다. 후보 prompt의 evidence ID마다 실제 title·summary·statement 또는 pattern
+본문이 함께 있어야 한다. MP4/WAV/JPEG는 JSON 안이 아니라 별도 파일이며 checksum과
+일치해야 한다.
 
 - [ ] **Step 5: 실제 품질 acceptance**
 
@@ -1516,6 +1694,10 @@ checksum과 일치해야 한다.
 - 첫 3초 프레임과 빠른 컷이 근거에 포함됐는가
 - 영상 속 주장을 외부 검증 사실로 오인하지 않았는가
 - 최근 시장 신호와 reference 형식이 topic에 함께 연결됐는가
+- Google Trends·네이버 뉴스·데이터랩·YouTube 검색 조건과 결과를 raw JSON 없이
+  이해할 수 있고, 필요할 때만 원본 JSON을 펼칠 수 있는가
+- 제작용 영상 후보가 실제 market evidence·audience signal·reference pattern 본문을
+  입력받았고 각 후보의 ID가 그 context에 존재하는가
 - topic 하나당 제작 영상 후보가 최소 10개인가
 - 최종 영상 장면별 asset/model 계보가 보이는가
 - 최종 MP4가 기존 보관함에서 재생되는가
@@ -1538,12 +1720,16 @@ checksum과 일치해야 한다.
 7. 영상 길이 밖 timestamp와 존재하지 않는 evidence가 게시되지 않는다.
 8. 한 영상 실패 시 부모 조사와 성공 분석이 보존되고 후보 교체가 가능하다.
 9. 세 개의 검증 통과 분석 전에는 공통 패턴과 topic을 만들지 않는다.
-10. provider raw, API key, bearer token, base64 binary가 JSON에 없다.
-11. AI Director 크레딧 차감이 없다.
-12. 분석 결과와 근거·호출 과정이 Angular에서 확인된다.
-13. 기존 topic → 후보 10개 이상 → 제작 → Jobs → 보관함 흐름이 실제 MP4까지 이어진다.
-14. 네 저장소 build와 전체 관련 test가 통과한다.
-15. 실제 provider 검증은 별도 비용표와 사용자 승인 뒤 수행했다.
+10. 후보 생성 LLM에는 선택 Topic과 연결된 market evidence·audience signal·reference
+    pattern의 실제 본문이 전달되고 bare ID 배열만 전달되지 않는다.
+11. 후보 생성 승인 snapshot의 context digest와 실제 inference input이 일치한다.
+12. provider raw, API key, bearer token, base64 binary가 JSON에 없다.
+13. AI Director 크레딧 차감이 없다.
+14. 분석 결과와 근거·호출 과정이 Angular에서 사람이 읽는 보고서로 확인되고, 원본
+    JSON은 기본으로 접혀 있다.
+15. 기존 topic → 후보 10개 이상 → 제작 → Jobs → 보관함 흐름이 실제 MP4까지 이어진다.
+16. 네 저장소 build와 전체 관련 test가 통과한다.
+17. 실제 provider 검증은 별도 비용표와 사용자 승인 뒤 수행했다.
 
 ---
 
