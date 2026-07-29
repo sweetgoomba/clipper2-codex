@@ -1,179 +1,162 @@
 # Next Handoff
 
-최신 갱신: 2026-07-24 KST
-
-이 문서는 다음 세션의 활성 인계만 담는다. 상세 수행 내용은
-`../records/sessions/2026/07/24.md`, 이전 설계 맥락은
-`../records/sessions/2026/07/21.md`, 과거 전체 인계는
-`archive/2026/07/next-handoff-through-2026-07-20.md`에 있다.
+최신 갱신: 2026-07-29 KST
 
 ## 현재 목표
 
-AI 숏폼 디렉터의 품질 입력 아키텍처 중 실제 market signal인 `V` 축을 어떤 대표
-YouTube Shorts corpus로 검증할지 결정한다.
+AI 디렉터를 운영 프로필 생성부터 최신 시장 조사, 선택적 레퍼런스 정밀 분석, 최소 10개
+영상 후보, 장면 설계·소재 준비·렌더·보관함 큐까지 실제 앱에서 끝까지 검증한다.
 
-현재 Vira 서비스와 DB는 개발 중이며 소량의 테스트 데이터만 있어 품질 판단 자료로 쓸 수
-없다. 다음 세션에서는 production 구현이나 기존 DB 조회를 시작하지 않고, 먼저 corpus
-목적·수집 코드 위치·keyword discovery·coverage gate·snapshot 기간을 결정한다.
-
-기존 `shortform_prompt` 플러그인은 수정하지 않는다.
+입력단의 새 Shorts discovery 구현과 자동 회귀 검증, 새 macOS arm64 앱 패키징은
+완료했다. 다음 작업은 fixture나 더미 응답이 아니라 사용자가 화면에서 비용을 승인한 실제
+provider E2E다.
 
 ## 먼저 읽을 문서
 
 1. `.codex/AGENTS.md`
-2. `.codex/records/sessions/2026/07/24.md`
-3. `.codex/design/SHORTFORM_DIRECTOR_VIRA_VALIDATION_CORPUS_OPTIONS_2026-07-24.md`
-4. `.codex/design/SHORTFORM_DIRECTOR_QUALITY_INPUT_VALIDATION_PROTOCOL_2026-07-24.md`
-5. `.codex/design/SHORTFORM_DIRECTOR_QUALITY_INPUT_VALIDATION_EXECUTION_PLAN_2026-07-24.md`
+2. `.codex/handoff/NEXT.md`
+3. `.codex/records/sessions/2026/07/29.md`
+4. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_DESIGN_2026-07-29.md`
+5. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_IMPLEMENTATION_PLAN_2026-07-29.md`
+6. `.codex/design/SHORTFORM_DIRECTOR_DISCOVERY_RELEVANCE_AND_QUERY_ROUTING_DESIGN_2026-07-29.md`
+7. `.codex/design/SHORTFORM_DIRECTOR_REFERENCE_VIDEO_DEEP_ANALYSIS_DESIGN_2026-07-29.md`
 
-제품 배경과 기존 UI가 필요할 때만 다음을 추가로 읽는다.
+이전 품질 입력 아키텍처 맥락이 필요할 때만 2026-07-24 문서들을 추가로 읽는다.
 
-- `.codex/records/sessions/2026/07/21.md`
-- `.codex/design/SHORTFORM_DIRECTOR_QUALITY_INPUT_ARCHITECTURE_AND_DIRECTOR_BRIEF_DESIGN_2026-07-21.md`
-- `.codex/design/SHORTFORM_DIRECTOR_PERSISTENT_CONTENT_OPERATIONS_AND_VIRA_INTEGRATION_DESIGN_2026-07-21.md`
-- `.codex/mockups/shortform-director-content-operations-v2/index.html`
-- `.codex/records/sessions/2026/07/16.md`
-- `.codex/design/VIRA_CURRENT_CODE_AUDIT_AND_CLIPPER_EVIDENCE_HANDOFF_2026-07-16.md`
-- `.codex/design/SHORTFORM_DIRECTOR_ASSET_ACQUISITION_AND_MANUAL_REPLACEMENT_DESIGN_2026-07-16.md`
-- `.codex/design/SHORTFORM_DIRECTOR_FREE_COMMERCIAL_RENDERER_AND_OS_DECISION_2026-07-20.md`
-
-## 현재 제품 결정
+## 확정된 사용자 흐름
 
 ```text
 운영 프로필
-  → 콘텐츠 프로젝트
-  → 콘텐츠 트랙
-  → Episode Research Pack
-  → Content Opportunity
-  → Director Brief
-  → 영상 아이디어 / VideoPlan
-  → 제작 실행
-  → 결과와 피드백
+  → 최신 조사 사전 점검과 사용자 비용 승인
+  → Google Trends RSS + 네이버 뉴스·DataLab + YouTube를 함께 조사
+  → 확인된 Shorts 전체 표시
+  → 사용자가 정밀 분석 영상 0~5개 선택
+      ├─ 0개: 시장 근거만으로 주제 생성
+      └─ 1~5개: 비용 승인 후 실제 영상 정밀 분석
+  → 조사 주제
+  → 주제별 최소 10개 영상 후보
+  → 영상 후보 선택
+  → VideoPlan·장면별 매체 결정·소재 준비
+  → 렌더
+  → 기존 보관함 큐
 ```
 
-- 운영 프로필·프로젝트·트랙·아이디어 보관·제작은 Clipper가 소유한다.
-- 입력은 목적과 Vira에 한정하지 않는다. 공식 source, 시청자 질문, 창작 레퍼런스, 과거
-  성과·편집 피드백과 제작 가능성을 함께 검증한다.
-- 장기적으로 Vira는 시장 수집·snapshot·성장 관측·상세 분석의 source of truth가 된다.
-  현재 서비스와 테스트 DB가 이미 이 역할을 충족한다고 가정하지 않는다.
-- Clipper는 Vira 분석 화면을 복제하지 않고 생성에 사용한 evidence snapshot만 보관한다.
-- 관측 사실, 공식 사실, 시청자 반응, AI 기획 해석과 가설을 구분한다.
-- 입력 단계부터 beat별 visual intent와 asset intent를 기록해 향후 생성형 영상·도식 renderer
-  개선으로 연결한다.
-- 사용자 직접 입력은 최소화하고 저장 기본값, source 추가, 연결, 추천 확인과 행동 학습을
-  우선한다.
+- 정밀 분석은 선택 사항이다. 기본 선택은 0개이며 추천 영상도 자동 선택하지 않는다.
+- 사용자가 분석을 건너뛰어도 source-normalization의 시장 근거 전체가 topic synthesis와
+  후보 생성에 전달된다.
+- 정밀 분석을 하면 실제 영상, 기존 로컬 STT, 댓글과 프레임을 사용한 분석 결과가
+  reference pattern으로 추가된다.
+- 조사·검증·LLM 호출 결과는 기존 로컬 파일시스템 JSON 저장소에 남는다.
+- 화면은 사람이 읽는 요약을 먼저 보여주고 기술 정보와 원본 JSON은 기본 접힘 상태다.
+- AI 디렉터의 기존 크레딧 차감과 새 크레딧 차감은 없다. 비용 사전 점검과 provider 사용량
+  기록은 크레딧 차감과 별개로 유지한다.
 
-2026-07-24 확인한 Vira checkout은
-`main@5267ac0bcc6bde9020bd35f67e27dc375d0a00ef`, clean이다. 기존 상세 감사 기준
-`2f1d1fdc291c3ccc67d60dc18614fcf41e6e69a4` 이후 새 commit은 이번 세션에서 재감사하지
-않았다.
+## YouTube discovery의 현재 계약
 
-현재 코드에는 yt-dlp 기반 `shorts_*`와 YouTube Data API 기반 `intel_market_*` 두 수집
-계열이 있다. 기존 DB는 대표 corpus가 아니므로 조회하지 않는다. 다음 설계가 승인될 때까지
-Vira는 read-only이며 branch/worktree도 만들지 않는다.
+- LLM이 운영 프로필, 집중 키워드, 관련 Google Trends 신호를 바탕으로 YouTube 검색어
+  하나를 만든다. `shorts`, `쇼츠`, `챌린지`를 코드에서 강제로 덧붙이지 않는다.
+- 동일 검색어로 최근 30일 범위의 `viewCount`와 `relevance` lane을 각각 요청한다.
+- 각 lane은 `maxResults=40`, `videoDuration=short`, `regionCode=KR`,
+  `relevanceLanguage=ko`다.
+- 최대 80개 검색 결과를 중복 제거하고, 중복 제거된 모든 video ID를
+  `https://www.youtube.com/shorts/{videoId}`로 확인한다.
+- `200 + redirect 없음`만 Shorts로 포함한다. 해당 ID의 `/watch?v=`로 리다이렉트되면
+  일반 영상으로 제외하며 나머지는 `unverified`로 기록한다.
+- 길이 3분/4분 같은 임의 컷으로 Shorts 여부를 결정하지 않는다.
+- 확인된 Shorts는 임의로 6개만 자르지 않고 모두 JSON과 화면에 남긴다.
+- 분석 선택 상한은 5개다. 추천은 참고 표시일 뿐 자동 선택되지 않는다.
 
-## 2026-07-24 완료 범위
+## 2026-07-29 구현 커밋
 
-- 품질 입력 validation protocol과 implementation plan 작성
-- 네 사례의 32개 JSON pack materialization과 4/4 seal
-- contract, root containment, digest와 atomic sealer
-- Vira read-only wrapper와 normalizer의 offline fixture 검증
-- security, malformed input, nullable metric과 four-case rollback review 수정
-- 전체 offline test `38/38` 통과
-- 독립 Task 1~3 spec/quality review 승인
-- 실제 Vira DB, psql, YouTube API, yt-dlp와 생성 provider 호출 `0`
-- production 코드·목업·DB·API 변경 없음
+`web/clipper_web_api`
 
-실제 네 case의 Vira 상태는 모두 `provider_not_called`, evidence 0개다. 이를
-`insufficient`로 바꾸지 않는다.
+- `0a80e14` `feat: expand shortform YouTube discovery`
+- `c8696c8` `feat: expand shortform video details batch`
+- `0239779` `feat: support market-only topic synthesis`
 
-## 다음 작업
+`desktop/clipper_nestjs`
 
-1. corpus 목적을 고른다.
-   - 광고 제작과 연결되는 업종 중심
-   - 한국 YouTube Shorts 전체 트렌드
-2. 수집 코드 위치를 고른다.
-   - Vira feature branch/worktree + 운영 RDS와 분리된 local experiment Postgres
-   - `.codex` 또는 별도 연구 저장소의 독립 collector
-3. YouTube API data 보관·표시 범위와 현재 정책 적합성을 확인한다.
-4. 분야별 현재 query 후보 생성 방식과 coverage gate를 확정한다.
-5. panel 규모와 수집일·1일·3일·7일 snapshot 일정을 확정한다.
-6. 승인된 설계를 새 문서로 기록한 뒤 implementation plan을 만든다.
-7. 그 뒤에만 Vira branch, local DB, API 수집과 `V` condition matrix를 구현한다.
+- `abf49ec` `feat: verify public YouTube Shorts`
+- `f841266` `feat: collect all verified Shorts references`
+- `8416bb5` `feat: retain all verified Shorts candidates`
+- `817fabc` `feat: support one to five reference analyses`
+- `569576a` `feat: continue research without reference analysis`
 
-현재 네 주제는 `P/S/A/R` pack과 평가 fixture로는 사용할 수 있지만 최신 Vira collection
-seed로 확정된 것이 아니다. `V` 축은 최근 30일 coverage, 채널 다양성과 반복 snapshot이
-있는 주제로 다시 선택한다.
+`desktop/clipper_angular`
 
-## 보류 중인 실제 E2E
+- `29f0a00` `feat: make reference analysis optional`
+- `9341050` `feat: explain YouTube Shorts validation`
 
-- Veo quota 재확인
-- 에셋 자동 준비의 owned 부재 시 search 자동 전환
-- RenderRecipe → immutable staging → Motion Canvas MP4 저장
-- 결과 영상과 자동 선택 에셋 품질 검토
+## 최신 자동 검증
 
-실제 provider 호출 전에 사용자에게 알린다.
+2026-07-29 KST에 Node 22로 다음을 새로 실행했다.
+
+- Web API shortform research/inference: `408/408` 통과, `npm run build` 통과
+- Desktop Nest shortform 전체: `670` 통과, 실패 `0`, 의도적 skip `2`,
+  `npm run build` 통과
+- Angular AI Director 전체: `303/303` 통과, `npm run build` 통과
+- Electron `npm run build:app:mac:arm64:local-api` 통과
+- 새 앱:
+  `desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`
+
+샌드박스 안의 Web/Nest/Karma HTTP 경계 테스트는 로컬 포트 바인딩 `EPERM`이 발생해
+동일 명령을 권한 환경에서 재실행했다. 코드 실패는 없었다.
+
+Angular의 로컬 영속 캐시는 32.39GB이며 LMDB가 종료 시 SIGABRT를 냈다. 파일을 삭제하지
+않고 `CI=1`로 해당 검증·패키징 실행에서만 영속 캐시를 껐고 빌드는 통과했다. 별도 유지보수
+작업에서 캐시 정리 여부를 사용자에게 확인한다.
+
+## 바로 다음 실제 E2E
+
+Web Admin과 Web API 개발 서버는 사용자가 실행 중이다. Clipper 앱 프로세스는 마지막 확인
+시 실행 중이지 않았다. 실행 중인 서버를 임의 종료하거나 재시작하지 않는다.
+
+1. 새로 패키징된 `Clipper2.app`을 연다.
+2. 기존 운영 프로필에서 `아이디어 찾기`로 이동한다.
+3. 집중 키워드를 입력하고 discovery 비용 사전 점검 내용을 사용자에게 보여준다.
+4. 사용자가 화면에서 승인한 뒤 실제 discovery를 실행한다.
+5. 다음을 화면과 로컬 JSON 양쪽에서 확인한다.
+   - YouTube 두 lane이 각각 40개·최근 30일 조건으로 호출됐는지
+   - 중복 제거된 모든 ID의 Shorts URL 검증 결과
+   - 확인된 Shorts 전체 목록
+   - Google Trends·네이버 뉴스·DataLab·YouTube·LLM 근거의 사람이 읽는 요약
+6. 사용자가 다음 둘 중 실제로 검증할 경로를 고른다.
+   - 0개 선택 후 `정밀 분석 없이 계속`
+   - 1~5개 선택 후 정밀 분석 비용 승인
+7. 주제와 최소 10개 영상 후보가 실제 근거 내용을 사용했는지 확인한다.
+8. 영상 후보 하나를 골라 VideoPlan → 소재 준비 → 렌더 → 보관함 큐까지 검증한다.
+
+유료 provider 호출 직전에는 앱의 사전 점검에 표시된 provider·모델·최대 호출 수·예상
+비용을 사용자에게 먼저 보여주고 화면 승인을 받는다.
 
 ## 저장소 기준점
 
-| 저장소 | branch | expected HEAD |
-|---|---|---|
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `c93be51` |
-| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `d27db82` |
-| `desktop/clipper_electron` | `dev` | `ddf70dc` |
-| `web/clipper_web_api` | `feat/shortform-director-foundation` | `480bc30` |
-| `web/clipper_web_admin` | `feat/shortform-director-foundation` | `8a3333f` |
-| `/Users/jina/project/vira` | `main` | `5267ac0bcc6bde9020bd35f67e27dc375d0a00ef` |
-| `.codex` | `main` | 이 NEXT를 포함한 pushed handoff commit |
+| 저장소 | branch | expected HEAD | upstream 상태 |
+|---|---|---|---|
+| `web/clipper_web_api` | `feat/shortform-director-foundation` | `0239779` | origin보다 19 commit ahead |
+| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `569576a` | origin보다 43 commit ahead |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `9341050` | origin보다 24 commit ahead |
+| `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
+| `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
+| `clipper_docs` | `main` | `993d054` | origin과 동기화 |
+| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 7 commit ahead |
 
-시작할 때 branch, `git status`, upstream 동기화와 최근 log를 확인한다. 예상 밖 변경은
-reset/revert하지 말고 먼저 보고한다. `legacy/adlight_python/fastapi_server.spec`의 기존 변경은
-이번 작업과 무관하므로 보존한다.
+코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
+push는 하지 않는다.
+
+`legacy/adlight_python`의 `fastapi_server.spec` 기존 변경은 사용자 변경이다. 절대
+reset/revert하거나 이번 작업에 포함하지 않는다.
 
 ## 안전 경계
 
-- 기존 `shortform_prompt` 플러그인을 수정하지 않는다.
-- 현재 Vira DB를 quality-input evidence source로 조회하지 않는다.
-- `/Users/jina/project/vira`는 새 설계와 사용자 승인 전까지 read-only다.
-- Vira branch/worktree, migration, local DB, YouTube API, yt-dlp와 provider 호출은 각각
-  사용자 승인 전에 실행하지 않는다.
-- 실제 키, JWT, cookie와 env 값을 출력·문서화하지 않는다.
+- 기존 `shortform_prompt` 플러그인은 수정하지 않는다.
+- Vira 서비스·DB는 이번 실제 조사 경로에 연결하지 않는다.
+- Google Trends 공식 API는 사용자가 alpha 선정 사실을 알려주기 전까지 사용하지 않는다.
+- Google Trends는 공식 Trending RSS만 사용하며 관련 신호가 없으면 주제 근거로 억지
+  채택하지 않는다.
+- 실제 키, JWT, cookie, env 값은 출력하거나 JSON artifact에 저장하지 않는다.
+- API 키는 Electron/env에 직접 넣지 않고 기존 관리자 페이지 → Web API credential
+  구조만 사용한다.
 - 새 문서는 `.codex`에만 작성한다.
-- 실제 provider 호출 전에는 사용자에게 알린다.
-- 커밋·push·PR·배포·migration·서버 재시작·앱 실행은 사용자가 명시할 때만 한다.
-
-## 다음 세션용 프롬프트
-
-```text
-Using Superpowers.
-
-작업 위치는 /Users/jina/project/adlight 입니다. 한국어로 답변해줘.
-
-먼저 다음 문서를 읽고 AI 숏폼 디렉터의 품질 입력 아키텍처 작업을 이어받아줘.
-
-- .codex/AGENTS.md
-- .codex/handoff/NEXT.md
-- .codex/records/sessions/2026/07/24.md
-- .codex/design/SHORTFORM_DIRECTOR_VIRA_VALIDATION_CORPUS_OPTIONS_2026-07-24.md
-- .codex/design/SHORTFORM_DIRECTOR_QUALITY_INPUT_VALIDATION_PROTOCOL_2026-07-24.md
-- .codex/design/SHORTFORM_DIRECTOR_QUALITY_INPUT_VALIDATION_EXECUTION_PLAN_2026-07-24.md
-
-먼저 NEXT.md의 기준점에 따라 각 저장소의 branch, git status, upstream 동기화 상태와 최근
-log를 확인해줘. 예상 밖 변경은 reset/revert하지 말고 먼저 보고하고,
-legacy/adlight_python/fastapi_server.spec의 기존 변경은 보존해.
-
-현재 Vira 서비스와 DB는 개발 중이고 소량의 테스트 데이터만 있으므로 기존 DB를 조회해
-품질을 판단하지 마. 기존 네 주제도 Vira collection seed로 확정하지 마.
-
-Superpowers brainstorming으로 먼저 다음 설계를 이어가줘.
-
-1. 광고 제작 업종 중심 corpus와 한국 Shorts 전체 트렌드 corpus의 trade-off
-2. Vira feature branch + 격리 local DB와 독립 collector의 trade-off
-3. 현재 keyword 후보 발굴, coverage gate, panel 규모와 반복 snapshot 기간
-4. YouTube Data API를 기본으로 하고 yt-dlp를 제한적으로 사용할 경계
-5. V 축 준비 전 P/S/A/R/F 실험을 어디까지 진행할지
-
-한 번에 한 질문씩 확인하고 설계를 승인받기 전에는 구현하지 마. Vira branch/worktree,
-DB, API, yt-dlp, provider, migration, 서버·앱 실행도 내가 명시적으로 승인할 때만 해.
-커밋·push·PR·배포도 내가 명시적으로 요청할 때만 해.
-```
+- 예상 밖 변경은 reset/revert하지 않고 먼저 보고한다.
+- 실제 유료 provider 호출은 화면 사전 점검과 사용자 승인 뒤에만 실행한다.
