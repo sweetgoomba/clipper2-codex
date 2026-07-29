@@ -97,7 +97,7 @@ provider E2E다.
 - Angular AI Director 전체: `303/303` 통과, `npm run build` 통과
 - Electron `npm run build:app:mac:arm64:local-api` 통과
 - 새 앱:
-  `desktop/clipper_electron/dist-app/mac-arm64/Clipper2.app`
+  `desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio.app`
 
 샌드박스 안의 Web/Nest/Karma HTTP 경계 테스트는 로컬 포트 바인딩 `EPERM`이 발생해
 동일 명령을 권한 환경에서 재실행했다. 코드 실패는 없었다.
@@ -111,7 +111,7 @@ Angular의 로컬 영속 캐시는 32.39GB이며 LMDB가 종료 시 SIGABRT를 �
 Web Admin과 Web API 개발 서버는 사용자가 실행 중이다. Clipper 앱 프로세스는 마지막 확인
 시 실행 중이지 않았다. 실행 중인 서버를 임의 종료하거나 재시작하지 않는다.
 
-1. 새로 패키징된 `Clipper2.app`을 연다.
+1. 새로 패키징된 `Clipper Studio.app`을 연다.
 2. 기존 운영 프로필에서 `아이디어 찾기`로 이동한다.
 3. 집중 키워드를 입력하고 discovery 비용 사전 점검 내용을 사용자에게 보여준다.
 4. 사용자가 화면에서 승인한 뒤 실제 discovery를 실행한다.
