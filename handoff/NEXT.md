@@ -103,30 +103,39 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 구현 커밋:
 
 - Web API: `0150966`
-- Desktop Nest: `34f0635`, `24d6422`, `bde4edc`, `b99cd59`
+- Desktop Nest: `34f0635`, `24d6422`, `bde4edc`, `b99cd59`, `9a19219`
 - Angular: `a3c50c6`
+
+실제 소재 준비에서 source layer 전체 실패를 추가로 확인해 보완했다.
+
+- 내부 production source ID가 이미지 검색어로 사용된 것이 직접 원인이었다.
+- 여러 ID가 합쳐진 요청은 Web API 100자 제한으로 HTTP 400이 됐다.
+- 짧은 요청도 내부 ID 검색이라 결과가 없었다.
+- 뉴스 이미지 CDN 호스트가 기사 호스트와 달라 정상 후보가 제거되는 문제도 있었다.
+- 이제 실제 출처 제목으로 100자 이내 검색하며, 기사 도메인으로 검색된 CDN 이미지도
+  후보로 허용한다.
+- 기존 실패 프로젝트의 acquisition은 retryable이므로 새 앱에서 그대로 재시도할 수 있다.
 
 ## 최신 자동 검증
 
 2026-07-30 KST에 외부 provider 호출 없이 다음을 새로 실행했다.
 
 - Web API 전체: `120` suite, `1003` test 통과, `npm run build` 통과
-- Desktop Nest AI 디렉터 전체: `687` test 중 `685` 통과, 실패 `0`,
+- Desktop Nest AI 디렉터 전체: `688` test 중 `686` 통과, 실패 `0`,
   환경 의존 로컬 렌더 `2`개 의도적 skip, `npm run build` 통과
 - Motion Canvas production bundle build 통과
 - Angular 전체: `1813/1813` 통과, `npm run build` 통과
 
 ## 바로 다음 실제 E2E
 
-1. Web API를 재시작하고 Electron 앱을 다시 빌드한다.
-2. 기존 조사·주제·후보는 재사용한다.
-3. 기존 영상 후보 하나를 다시 선택해 `영상 기획 만들기`부터 새 프로젝트를 생성한다.
-   기존 완료 프로젝트는 구형 장면 결정이 저장돼 있으므로 단순 재렌더만 하지 않는다.
-4. OpenAI 두 호출 범위와 예상 비용을 화면에서 확인하고 사용자가 승인한다.
-5. 새 기획의 각 장면에 외부 기본 시각 소재 요구사항이 있는지 확인한다.
-6. 소재 준비 preflight에서 실제 장면별 Naver/Gemini 호출 수와 예상 비용을 확인하고
-   사용자가 승인한다.
-7. 렌더 후 다음을 확인한다.
+1. Electron 앱을 다시 빌드하고 실행한다. 이번 source 검색 수정은 Desktop Nest에만 있어
+   Web API 코드 재시작은 필수가 아니다.
+2. 실패했던 프로젝트
+   `shortform_director_project_2e526ca7-b590-4934-901e-273845c1e7de`의 소재 준비를
+   그대로 다시 실행한다. 새 VideoPlan이나 OpenAI 호출은 필요 없다.
+3. 새 사전 점검과 Naver 호출 범위를 확인하고 사용자가 승인한다.
+4. 검색된 source 이미지는 권리 확인 후 렌더 가능 상태가 되는지 확인한다.
+5. 렌더 후 다음을 확인한다.
    - 모든 장면에 실제 이미지 또는 영상 기본 배경이 있다.
    - 내부 매체 선택 이유가 화면 문구로 나오지 않는다.
    - 도식은 일부 장면의 overlay로만 보인다.
@@ -141,12 +150,12 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 | 저장소 | branch | expected HEAD | upstream 상태 |
 |---|---|---|---|
 | `web/clipper_web_api` | `feat/shortform-director-foundation` | `0150966` | origin보다 24 commit ahead |
-| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `b99cd59` | origin보다 54 commit ahead |
+| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `9a19219` | origin보다 55 commit ahead |
 | `desktop/clipper_angular` | `feat/shortform-director-foundation` | `a3c50c6` | origin보다 26 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
-| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 13 commit ahead |
+| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 14 commit ahead |
 
 코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
 push는 하지 않는다.
