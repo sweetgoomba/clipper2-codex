@@ -1,25 +1,24 @@
 # Next Handoff
 
-최신 갱신: 2026-07-29 KST
+최신 갱신: 2026-07-30 KST
 
 ## 현재 목표
 
-AI 디렉터를 운영 프로필 생성부터 최신 시장 조사, 선택적 레퍼런스 정밀 분석, 최소 10개
-영상 후보, 장면 설계·소재 준비·렌더·보관함 큐까지 실제 앱에서 끝까지 검증한다.
-
-입력단의 새 Shorts discovery 구현과 자동 회귀 검증, 새 macOS arm64 앱 패키징은
-완료했다. 다음 작업은 fixture나 더미 응답이 아니라 사용자가 화면에서 비용을 승인한 실제
-provider E2E다.
+AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석·영상 후보·영상 기획·소재
+준비·최종 렌더까지 실제 provider E2E를 완료했다. 다음 목표는 2026-07-30에 구현한
+시각 구성 보완을 새 앱에서 다시 검증해, 모든 장면에 실제 기본 시각 소재가 보이고 내부
+선택 이유가 화면에 노출되지 않는 결과 영상을 확인하는 것이다.
 
 ## 먼저 읽을 문서
 
 1. `.codex/AGENTS.md`
 2. `.codex/handoff/NEXT.md`
-3. `.codex/records/sessions/2026/07/29.md`
-4. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_DESIGN_2026-07-29.md`
-5. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_IMPLEMENTATION_PLAN_2026-07-29.md`
-6. `.codex/design/SHORTFORM_DIRECTOR_DISCOVERY_RELEVANCE_AND_QUERY_ROUTING_DESIGN_2026-07-29.md`
-7. `.codex/design/SHORTFORM_DIRECTOR_REFERENCE_VIDEO_DEEP_ANALYSIS_DESIGN_2026-07-29.md`
+3. `.codex/records/sessions/2026/07/30.md`
+4. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_DESIGN_2026-07-30.md`
+5. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_IMPLEMENTATION_PLAN_2026-07-30.md`
+6. `.codex/records/sessions/2026/07/29.md`
+7. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_DESIGN_2026-07-29.md`
+8. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_IMPLEMENTATION_PLAN_2026-07-29.md`
 
 이전 품질 입력 아키텍처 맥락이 필요할 때만 2026-07-24 문서들을 추가로 읽는다.
 
@@ -87,44 +86,52 @@ provider E2E다.
 - `29f0a00` `feat: make reference analysis optional`
 - `9341050` `feat: explain YouTube Shorts validation`
 
+## 2026-07-30 실제 E2E와 시각 구성 보완
+
+- 사용자가 실제 credential과 화면 비용 승인을 사용해 조사부터 최종 렌더까지 실행했다.
+- 코딩·엔터테인먼트 프로필의 최종 영상에서 다음 문제가 확인됐다.
+  - 코딩 영상: 도식 과다, 내부 매체 선택 이유가 화면 문구로 노출
+  - 엔터테인먼트 영상: 다수 장면에 외부 시각 소재가 없어 빈 배경처럼 표시
+- 원인은 Naver 검색 실패가 아니라 단일 `medium` 계약이 도식·텍스트를 장면의 유일한
+  매체로 선택하게 한 구조였다.
+- 신규 장면 계약은 `baseMedium + overlayMode`로 분리했다.
+- 모든 신규 장면은 외부 기본 시각 소재를 하나 가지며 도식·kinetic typography는
+  overlay로만 사용한다.
+- `decision.rationale`은 감사 기록에만 남고 화면 문구로 컴파일되지 않는다.
+- 도식은 비교·순서·루프·수치별 실제 레이아웃을 사용하며 수량과 연속 배치가 제한된다.
+
+구현 커밋:
+
+- Web API: `0150966`
+- Desktop Nest: `34f0635`, `24d6422`, `bde4edc`, `b99cd59`
+- Angular: `a3c50c6`
+
 ## 최신 자동 검증
 
-2026-07-29 KST에 Node 22로 다음을 새로 실행했다.
+2026-07-30 KST에 외부 provider 호출 없이 다음을 새로 실행했다.
 
-- Web API shortform research/inference: `408/408` 통과, `npm run build` 통과
-- Desktop Nest shortform 전체: `670` 통과, 실패 `0`, 의도적 skip `2`,
-  `npm run build` 통과
-- Angular AI Director 전체: `303/303` 통과, `npm run build` 통과
-- Electron `npm run build:app:mac:arm64:local-api` 통과
-- 새 앱:
-  `desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio.app`
-
-샌드박스 안의 Web/Nest/Karma HTTP 경계 테스트는 로컬 포트 바인딩 `EPERM`이 발생해
-동일 명령을 권한 환경에서 재실행했다. 코드 실패는 없었다.
-
-Angular의 로컬 영속 캐시는 32.39GB이며 LMDB가 종료 시 SIGABRT를 냈다. 파일을 삭제하지
-않고 `CI=1`로 해당 검증·패키징 실행에서만 영속 캐시를 껐고 빌드는 통과했다. 별도 유지보수
-작업에서 캐시 정리 여부를 사용자에게 확인한다.
+- Web API 전체: `120` suite, `1003` test 통과, `npm run build` 통과
+- Desktop Nest AI 디렉터 전체: `687` test 중 `685` 통과, 실패 `0`,
+  환경 의존 로컬 렌더 `2`개 의도적 skip, `npm run build` 통과
+- Motion Canvas production bundle build 통과
+- Angular 전체: `1813/1813` 통과, `npm run build` 통과
 
 ## 바로 다음 실제 E2E
 
-Web Admin과 Web API 개발 서버는 사용자가 실행 중이다. Clipper 앱 프로세스는 마지막 확인
-시 실행 중이지 않았다. 실행 중인 서버를 임의 종료하거나 재시작하지 않는다.
-
-1. 새로 패키징된 `Clipper Studio.app`을 연다.
-2. 기존 운영 프로필에서 `아이디어 찾기`로 이동한다.
-3. 집중 키워드를 입력하고 discovery 비용 사전 점검 내용을 사용자에게 보여준다.
-4. 사용자가 화면에서 승인한 뒤 실제 discovery를 실행한다.
-5. 다음을 화면과 로컬 JSON 양쪽에서 확인한다.
-   - YouTube 두 lane이 각각 40개·최근 30일 조건으로 호출됐는지
-   - 중복 제거된 모든 ID의 Shorts URL 검증 결과
-   - 확인된 Shorts 전체 목록
-   - Google Trends·네이버 뉴스·DataLab·YouTube·LLM 근거의 사람이 읽는 요약
-6. 사용자가 다음 둘 중 실제로 검증할 경로를 고른다.
-   - 0개 선택 후 `정밀 분석 없이 계속`
-   - 1~5개 선택 후 정밀 분석 비용 승인
-7. 주제와 최소 10개 영상 후보가 실제 근거 내용을 사용했는지 확인한다.
-8. 영상 후보 하나를 골라 VideoPlan → 소재 준비 → 렌더 → 보관함 큐까지 검증한다.
+1. Web API를 재시작하고 Electron 앱을 다시 빌드한다.
+2. 기존 조사·주제·후보는 재사용한다.
+3. 기존 영상 후보 하나를 다시 선택해 `영상 기획 만들기`부터 새 프로젝트를 생성한다.
+   기존 완료 프로젝트는 구형 장면 결정이 저장돼 있으므로 단순 재렌더만 하지 않는다.
+4. OpenAI 두 호출 범위와 예상 비용을 화면에서 확인하고 사용자가 승인한다.
+5. 새 기획의 각 장면에 외부 기본 시각 소재 요구사항이 있는지 확인한다.
+6. 소재 준비 preflight에서 실제 장면별 Naver/Gemini 호출 수와 예상 비용을 확인하고
+   사용자가 승인한다.
+7. 렌더 후 다음을 확인한다.
+   - 모든 장면에 실제 이미지 또는 영상 기본 배경이 있다.
+   - 내부 매체 선택 이유가 화면 문구로 나오지 않는다.
+   - 도식은 일부 장면의 overlay로만 보인다.
+   - 비교·순서·루프·수치 도식은 서로 다른 레이아웃이다.
+   - 준비되지 않은 시각 소재가 있으면 렌더를 시작하지 않는다.
 
 유료 provider 호출 직전에는 앱의 사전 점검에 표시된 provider·모델·최대 호출 수·예상
 비용을 사용자에게 먼저 보여주고 화면 승인을 받는다.
@@ -133,13 +140,13 @@ Web Admin과 Web API 개발 서버는 사용자가 실행 중이다. Clipper 앱
 
 | 저장소 | branch | expected HEAD | upstream 상태 |
 |---|---|---|---|
-| `web/clipper_web_api` | `feat/shortform-director-foundation` | `0239779` | origin보다 19 commit ahead |
-| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `569576a` | origin보다 43 commit ahead |
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `9341050` | origin보다 24 commit ahead |
+| `web/clipper_web_api` | `feat/shortform-director-foundation` | `0150966` | origin보다 24 commit ahead |
+| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `b99cd59` | origin보다 54 commit ahead |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `a3c50c6` | origin보다 26 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
-| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 7 commit ahead |
+| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 13 commit ahead |
 
 코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
 push는 하지 않는다.
