@@ -116,11 +116,24 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
   후보로 허용한다.
 - 기존 실패 프로젝트의 acquisition은 retryable이므로 새 앱에서 그대로 재시도할 수 있다.
 
+같은 프로필의 신규 후보 영상 기획에서 장면 미디어 결정 응답 검증 실패도 확인해
+보완했다.
+
+- 실제 실패 실행:
+  `run.director.5e2deb81cf1e40b0b3e5fbcbc4048247`
+- 첫 상세 영상 기획 호출은 성공했고, 두 번째 장면 미디어 결정 호출의
+  `/decisions/2/programmaticBrief/values`만 계약 불일치로 거절됐다.
+- provider schema는 비수치 도식에도 숫자 배열을 허용하지만 로컬 검증은 null만
+  허용하던 불일치가 원인이었다.
+- 이제 비교·순서·루프는 `values: null`, 수치 도식만 숫자 배열을 낼 수 있도록
+  provider schema 자체를 variant별로 분리했다.
+- Web API 커밋: `9c53d8e`
+
 ## 최신 자동 검증
 
 2026-07-30 KST에 외부 provider 호출 없이 다음을 새로 실행했다.
 
-- Web API 전체: `120` suite, `1003` test 통과, `npm run build` 통과
+- Web API 전체: `120` suite, `1004` test 통과, `npm run build` 통과
 - Desktop Nest AI 디렉터 전체: `688` test 중 `686` 통과, 실패 `0`,
   환경 의존 로컬 렌더 `2`개 의도적 skip, `npm run build` 통과
 - Motion Canvas production bundle build 통과
@@ -128,14 +141,18 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 
 ## 바로 다음 실제 E2E
 
-1. Electron 앱을 다시 빌드하고 실행한다. 이번 source 검색 수정은 Desktop Nest에만 있어
-   Web API 코드 재시작은 필수가 아니다.
-2. 실패했던 프로젝트
+1. Web API의 새 장면 미디어 response schema가 반영되도록 개발 서버의 재로딩 상태를
+   확인한다. `start:dev`라면 파일 변경으로 자동 재시작된다.
+2. 후보
+   `candidate.director.5a030ee6707f4980b84cfa8168c1ac8d`의 `영상 기획 만들기`를
+   다시 승인한다. 기존 실패 run은 보존되고 새 run/project가 생성된다.
+3. Electron 앱을 최신 Desktop Nest 코드로 다시 빌드하고 실행한다.
+4. 실패했던 프로젝트
    `shortform_director_project_2e526ca7-b590-4934-901e-273845c1e7de`의 소재 준비를
    그대로 다시 실행한다. 새 VideoPlan이나 OpenAI 호출은 필요 없다.
-3. 새 사전 점검과 Naver 호출 범위를 확인하고 사용자가 승인한다.
-4. 검색된 source 이미지는 권리 확인 후 렌더 가능 상태가 되는지 확인한다.
-5. 렌더 후 다음을 확인한다.
+5. 새 사전 점검과 Naver 호출 범위를 확인하고 사용자가 승인한다.
+6. 검색된 source 이미지는 권리 확인 후 렌더 가능 상태가 되는지 확인한다.
+7. 렌더 후 다음을 확인한다.
    - 모든 장면에 실제 이미지 또는 영상 기본 배경이 있다.
    - 내부 매체 선택 이유가 화면 문구로 나오지 않는다.
    - 도식은 일부 장면의 overlay로만 보인다.
@@ -149,7 +166,7 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 
 | 저장소 | branch | expected HEAD | upstream 상태 |
 |---|---|---|---|
-| `web/clipper_web_api` | `feat/shortform-director-foundation` | `0150966` | origin보다 24 commit ahead |
+| `web/clipper_web_api` | `feat/shortform-director-foundation` | `9c53d8e` | origin보다 25 commit ahead |
 | `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `9a19219` | origin보다 55 commit ahead |
 | `desktop/clipper_angular` | `feat/shortform-director-foundation` | `a3c50c6` | origin보다 26 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
