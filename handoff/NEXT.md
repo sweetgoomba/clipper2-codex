@@ -203,7 +203,7 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
-| `.codex` | `main` | 이 NEXT와 세션 기록을 포함한 로컬 commit | commit 전 origin보다 14 commit ahead |
+| `.codex` | `main` | `2921eaf` | origin보다 19 commit ahead |
 
 코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
 push는 하지 않는다.
