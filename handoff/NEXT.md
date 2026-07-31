@@ -1,24 +1,28 @@
 # Next Handoff
 
-최신 갱신: 2026-07-30 KST
+최신 갱신: 2026-07-31 KST
 
 ## 현재 목표
 
 AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석·영상 후보·영상 기획·소재
-준비·최종 렌더까지 실제 provider E2E를 완료했다. 다음 목표는 2026-07-30에 구현한
-시각 구성 보완을 새 앱에서 다시 검증해, 모든 장면에 실제 기본 시각 소재가 보이고 내부
-선택 이유가 화면에 노출되지 않는 결과 영상을 확인하는 것이다.
+준비·최종 렌더까지 실제 provider E2E를 완료했다. 이번에는 선택한 레퍼런스 중 일부만
+정밀 분석에 성공해도 성공한 분석만으로 조사 주제 생성까지 자동 진행하도록 보완했다.
+다음 목표는 새 앱에서 이 분기와 2026-07-30 시각 구성 보완을 함께 실제로 재검증하는
+것이다.
 
 ## 먼저 읽을 문서
 
 1. `.codex/AGENTS.md`
 2. `.codex/handoff/NEXT.md`
-3. `.codex/records/sessions/2026/07/30.md`
-4. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_DESIGN_2026-07-30.md`
-5. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_IMPLEMENTATION_PLAN_2026-07-30.md`
-6. `.codex/records/sessions/2026/07/29.md`
-7. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_DESIGN_2026-07-29.md`
-8. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_IMPLEMENTATION_PLAN_2026-07-29.md`
+3. `.codex/records/sessions/2026/07/31.md`
+4. `.codex/design/SHORTFORM_DIRECTOR_PARTIAL_REFERENCE_CONTINUATION_DESIGN_2026-07-31.md`
+5. `.codex/design/SHORTFORM_DIRECTOR_PARTIAL_REFERENCE_CONTINUATION_EXECUTION_PLAN_2026-07-31.md`
+6. `.codex/records/sessions/2026/07/30.md`
+7. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_DESIGN_2026-07-30.md`
+8. `.codex/design/SHORTFORM_DIRECTOR_VISUAL_COMPOSITION_QUALITY_REPAIR_IMPLEMENTATION_PLAN_2026-07-30.md`
+9. `.codex/records/sessions/2026/07/29.md`
+10. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_DESIGN_2026-07-29.md`
+11. `.codex/design/SHORTFORM_DIRECTOR_VERIFIED_SHORTS_DISCOVERY_AND_OPTIONAL_REFERENCE_ANALYSIS_IMPLEMENTATION_PLAN_2026-07-29.md`
 
 이전 품질 입력 아키텍처 맥락이 필요할 때만 2026-07-24 문서들을 추가로 읽는다.
 
@@ -64,6 +68,33 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 - 길이 3분/4분 같은 임의 컷으로 Shorts 여부를 결정하지 않는다.
 - 확인된 Shorts는 임의로 6개만 자르지 않고 모두 JSON과 화면에 남긴다.
 - 분석 선택 상한은 5개다. 추천은 참고 표시일 뿐 자동 선택되지 않는다.
+
+## 2026-07-31 부분 레퍼런스 성공 자동 진행
+
+- 선택한 레퍼런스의 정밀 분석 중 하나 이상이 검증을 통과하면, 성공한 분석만
+  `reference-pattern-synthesis` 입력에 포함해 주제 종합을 자동으로 계속한다.
+- 이때 child 분석 attempt는 실제 결과대로 `partial`로 남아도 부모 조사는 자체 discovery
+  실패가 없는 한 `succeeded`로 끝난다.
+- 선택한 모든 분석이 실패하면 부모 조사는 `awaiting_reference_selection`에 남는다. 사용자는
+  실패 영상 재시도, 다른 영상 선택, 또는 정밀 분석 없이 계속(시장 근거만 사용)을 선택할 수
+  있다.
+- 화면은 모든 분석이 끝난 뒤 `레퍼런스 N개 중 M개 분석 성공 · K개 실패` 요약을 보여준다.
+  성공 0개일 때는 위 세 선택지를 설명한다. 부분 성공 뒤 부모 종합 중에는 Angular가 계속
+  폴링하며, 분석 목록 요청이 일시적으로 실패하면 현재 상태를 지우지 않고 재시도한다.
+- 구현·자동 검증은 외부 provider를 호출하지 않았다. 실제 앱 재검증은 새 partial attempt 또는
+  기존 재현 가능한 조사에서 아래 순서대로 한다.
+
+### 바로 다음 실제 앱 재검증
+
+1. 최신 Desktop Nest와 Angular/Electron 빌드로 앱을 실행하고 운영 프로필에서 조사를 시작한다.
+2. Shorts 2~5개를 선택해 정밀 분석을 승인한다.
+3. 일부만 성공한 경우, 성공 분석만으로 자동 종합되어 `조사 결과 주제`가 표시되는지 확인한다.
+   부모 조사는 `완료`, 개별 attempt는 `부분 완료`일 수 있으며 화면에는 성공/실패 요약이 남아야
+   한다.
+4. 전부 실패한 경우, 부모가 `레퍼런스 선택 대기`에 머무르고 `정밀 분석 없이 계속`, 재시도,
+   교체 중 하나를 선택할 수 있는지 확인한다.
+5. 각 재검증 전 실제 외부 provider 호출 범위·모델·예상 비용을 앱 preflight에서 확인하고
+   사용자 승인 뒤에만 실행한다.
 
 ## 2026-07-29 구현 커밋
 
@@ -167,8 +198,8 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 | 저장소 | branch | expected HEAD | upstream 상태 |
 |---|---|---|---|
 | `web/clipper_web_api` | `feat/shortform-director-foundation` | `9c53d8e` | origin보다 25 commit ahead |
-| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `9a19219` | origin보다 55 commit ahead |
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `a3c50c6` | origin보다 26 commit ahead |
+| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `89d280b` | origin보다 56 commit ahead |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `8d2d00d` | origin보다 30 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
