@@ -81,6 +81,11 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 - 화면은 모든 분석이 끝난 뒤 `레퍼런스 N개 중 M개 분석 성공 · K개 실패` 요약을 보여준다.
   성공 0개일 때는 위 세 선택지를 설명한다. 부분 성공 뒤 부모 종합 중에는 Angular가 계속
   폴링하며, 분석 목록 요청이 일시적으로 실패하면 현재 상태를 지우지 않고 재시도한다.
+- 부모 종합·완료 확인이 진행 중인 동안에는 명시적인 reconciliation 잠금이 유지되어, child가
+  이미 `partial`이어도 레퍼런스 선택 변경으로 현재 폴링이 취소되지 않는다. 정상적인
+  `레퍼런스 선택 대기` 상태에서는 그대로 편집할 수 있다.
+- 부모가 완료된 뒤 분석 목록의 로컬 조회만 실패하면 부모·attempt·topic을 다시 조회하지
+  않는다. 목록만 최대 3회 재시도하며, 성공 또는 한도 소진 뒤 잠금과 타이머를 해제한다.
 - 구현·자동 검증은 외부 provider를 호출하지 않았다. 실제 앱 재검증은 새 partial attempt 또는
   기존 재현 가능한 조사에서 아래 순서대로 한다.
 
@@ -199,7 +204,7 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 |---|---|---|---|
 | `web/clipper_web_api` | `feat/shortform-director-foundation` | `9c53d8e` | origin보다 25 commit ahead |
 | `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `89d280b` | origin보다 56 commit ahead |
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `1f88c6f` | origin보다 31 commit ahead |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `7aae602` | origin보다 32 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
