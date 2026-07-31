@@ -199,14 +199,17 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 |---|---|---|---|
 | `web/clipper_web_api` | `feat/shortform-director-foundation` | `9c53d8e` | origin보다 25 commit ahead |
 | `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `89d280b` | origin보다 56 commit ahead |
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `8d2d00d` | origin보다 30 commit ahead |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `1f88c6f` | origin보다 31 commit ahead |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | origin과 동기화 |
-| `.codex` | `main` | `2921eaf` | origin보다 19 commit ahead |
+| `.codex` | `main` | 이 handoff를 포함한 현재 HEAD | push 전 `git rev-list --left-right --count '@{upstream}...HEAD'`로 재확인 |
 
 코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
 push는 하지 않는다.
+
+다음 세션에서 기준점을 확인할 때는 각 저장소에서 `git status --short`,
+`git rev-parse --short HEAD`, `git rev-list --left-right --count '@{upstream}...HEAD'`를 실행한다.
 
 `legacy/adlight_python`의 `fastapi_server.spec` 기존 변경은 사용자 변경이다. 절대
 reset/revert하거나 이번 작업에 포함하지 않는다.
