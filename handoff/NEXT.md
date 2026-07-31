@@ -250,16 +250,16 @@ AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석
 
 | 저장소 | branch | expected HEAD | upstream 상태 |
 |---|---|---|---|
-| `web/clipper_web_api` | `feat/shortform-director-foundation` | `29871e7` | origin보다 26 commit ahead |
-| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `a578dce` | origin보다 61 commit ahead |
-| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `c82489a` | origin보다 34 commit ahead |
+| `web/clipper_web_api` | `feat/shortform-director-foundation` | `29871e7` | origin과 동기화 |
+| `desktop/clipper_nestjs` | `feat/shortform-director-foundation` | `a578dce` | origin과 동기화 |
+| `desktop/clipper_angular` | `feat/shortform-director-foundation` | `c82489a` | origin과 동기화 |
 | `desktop/clipper_electron` | `dev` | `4cd7f98` | origin과 동기화 |
 | `web/clipper_web_admin` | `feat/shortform-director-foundation` | `d8b2580` | origin과 동기화 |
 | `clipper_docs` | `main` | `993d054` | clean, origin보다 1 commit behind |
-| `.codex` | `main` | 이 handoff를 포함한 현재 HEAD | push 전 `git rev-list --left-right --count '@{upstream}...HEAD'`로 재확인 |
+| `.codex` | `main` | 이 handoff를 포함한 현재 HEAD | 이 기록 커밋까지 origin/main에 push |
 
-코드 저장소는 최신 확인 시 clean이다. `.codex`만 이 handoff와 세션 기록 변경을 커밋한다.
-push는 하지 않는다.
+코드 저장소는 최신 확인 시 clean이며 위 기준점까지 원격에 push했다. `.codex`도 이
+handoff와 세션 기록 커밋까지 origin/main에 push한다.
 
 다음 세션에서 기준점을 확인할 때는 각 저장소에서 `git status --short`,
 `git rev-parse --short HEAD`, `git rev-list --left-right --count '@{upstream}...HEAD'`를 실행한다.
