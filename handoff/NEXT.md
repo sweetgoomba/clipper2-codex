@@ -1,23 +1,46 @@
 # Next Handoff
 
-최신 갱신: 2026-07-31 KST
+최신 갱신: 2026-08-04 KST
 
 ## 현재 목표
 
-AI 디렉터는 운영 프로필부터 실제 조사·레퍼런스 정밀 분석·영상 후보·영상 기획·소재
-준비·최종 렌더까지 실제 provider E2E를 완료했다. 운영 프로필의 여러 목적을 최대 2개의
-독립된 YouTube 조사 범위로 나누는 보완까지 2026-07-31에 구현·검증·push했다.
+사용자 결정에 따라 별도 스토리보드 플러그인을 새로 만들지 않고, 기존
+`feat/shortform-director-foundation`을 복제한
+`feat/shortform-director-storyboard-only` 브랜치에서 AI 디렉터의 끝을
+`영상 후보 선택 → VideoPlan → 장면별 미디어 결정 → 읽기 전용 스토리보드`로 잘랐다.
 
-다음 목표는 현재 AI 디렉터에서 `운영 프로필 → 조사 → 조사 주제 → 영상 후보 → 구체적인
-스토리보드`까지를 별도 **숏폼 스토리보드 생성기 플러그인**으로 분리하는 것이다. 실제
-미디어 생성·소재 준비·최종 영상 렌더는 새 플러그인의 경계 밖으로 둔다. 다만 정확히 어느
-artifact까지를 완성된 스토리보드로 볼지는 기존 코드를 먼저 조사한 뒤 설계 단계에서
-확정한다.
+Web API, Desktop Nest, Angular의 세 로컬 브랜치에 구현되어 있으나 아직 커밋·push하지
+않았다. 소재 검색·획득·생성, TTS, 장면 수정·재생성, 렌더, 결과물·보관함 경로는
+런타임과 UI에서 제거했다. 기존 로컬 JSON을 계속 읽기 위해
+`ShortformDirectorProject`의 호환 필드는 유지하되 사용자 화면에는 노출하지 않는다.
 
-새 플러그인 분리와 함께 사용자용 UI/UX 정리, 디버그 JSON 분리, provider 예외 처리,
-호출 후 실제 비용 집계, 장시간 작업을 위한 플러그인 내부 영속 큐와 완료 알림을 차례로
-설계·구현한다. 범위가 큰 작업이므로 한 번에 구현하지 않고 독립된 설계·계획·검증 단위로
-나눈다.
+다음 작업자는 우선 현재 diff를 리뷰하고 실제 앱에서 무과금 스모크 검증을 한 뒤,
+사용자에게 커밋·push·merge 중 무엇을 원하는지 확인한다. 유료 provider를 쓰는 실제
+스토리보드 생성 E2E는 사전 점검 비용을 보여주고 사용자가 명시적으로 승인한 뒤에만
+실행한다.
+
+설계와 실행 계획:
+
+- `clipper_docs/architecture/2026-08-04-shortform-director-storyboard-only-design.md`
+- `clipper_docs/architecture/2026-08-04-shortform-director-storyboard-only-implementation-plan.md`
+
+## 2026-08-04 구현 및 검증
+
+- 공통 브랜치: `feat/shortform-director-storyboard-only`
+- Web API: 생성 미디어와 공개 production-capability 런타임 제거. 전체 116 suite,
+  986 test 및 `npm run build` 통과.
+- Desktop Nest: 후보별 스토리보드 생성·조회만 유지하고 asset/narration/scene
+  mutation/render/output/vault 컨트롤러·서비스·저장소 제거. `dist`를 지운 clean build,
+  Director 505 test, 직접 영향받은 `ProjectsService` 주변 16 test 통과.
+- Angular: `/production`을 `/storyboard`로 바꾸고 `/outputs` 제거. 후보 CTA와
+  사이드바를 스토리보드 용어로 바꾸고, 읽기 전용 장면 목록만 표시. 전체 1,720 test 및
+  `npm run build` 통과.
+- Desktop Nest 전체 legacy suite는 이 작업과 무관한 기존
+  `shortform-project-api` 인증 fixture와 variation/TTS mock 실패로 여전히 red다.
+- 외부 유료 provider 호출은 하지 않았다.
+- `legacy/adlight_python/fastapi_server.spec` 사용자 변경은 건드리지 않았다.
+
+아래 2026-07-31 내용은 foundation의 이전 이력과 계약을 참고하기 위한 기록이다.
 
 ## 먼저 읽을 문서
 
