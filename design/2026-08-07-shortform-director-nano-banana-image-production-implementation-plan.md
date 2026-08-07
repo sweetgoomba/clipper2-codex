@@ -8,9 +8,28 @@
 
 **Tech Stack:** NestJS 10 + `node:test`(Desktop), Angular 19 zoneless + NgRx Signals + Material 19, NestJS 11 + TypeORM/PostgreSQL + Jest(Web API), Gemini Developer API raw REST Interactions API.
 
+## Implementation Status — 2026-08-07
+
+- [x] Task 1: Generated-media config and backward-compatible project persistence
+- [x] Task 2: Multi-image storyboard contract, prompt, compiler, and TTS alignment
+- [x] Task 3: Web API Nano Banana capability and raw Gemini transport
+- [x] Task 4: Persisted Web AI image job, result blob, ACK, migration, and OpenAPI
+- [x] Task 5: Desktop image job domain and exact local image validation
+- [ ] Task 6: Desktop Web client, per-shot approval service, result ACK, recovery, and file endpoint
+- [ ] Task 7: Angular model selection and storyboard image-cut presentation
+- [ ] Task 8: Angular per-image approval, state recovery, errors, and thumbnails
+- [ ] Task 9: Existing Clipper 1:1 template render adapter and image motion
+- [ ] Task 10: Cross-repository regression verification and manual smoke checklist
+
+사용자의 `task5 까지만 진행하고 일단 중지` 지시에 따라 Task 5의 구현·집중 검증·독립
+검토까지 완료한 뒤 멈췄다. Task 6은 시작하지 않았다. 상세 세션 기록은
+`.codex/records/sessions/2026/08/07.md`, 작업별 실행 기록은
+`.codex/.superpowers/sdd/2026-08-07-shortform-director-nano-banana-image-production-implementation-plan/`
+에 있다.
+
 ## Global Constraints
 
-- 설계 정본은 `architecture/2026-08-07-shortform-director-nano-banana-image-production-design.md`다.
+- 설계 정본은 `.codex/design/2026-08-07-shortform-director-nano-banana-image-production-design.md`다.
 - 사용자 표시 이름은 `Nano Banana 2`, 공급자 모델은 `gemini-3.1-flash-image`다.
 - 요청은 `response_format.aspect_ratio: "1:1"`,
   `response_format.image_size: "1K"`로 고정하고 결과는 정확히

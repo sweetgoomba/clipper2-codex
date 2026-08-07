@@ -10,6 +10,7 @@
 프로젝트 보관함은 AI 숏폼 디렉터 결과를 별도 분류하고 해당 스토리보드로 이동한다.
 
 현재 Nano Banana 2 이미지 제작 계획은 사용자의 지시에 따라 Task 5까지 구현한 뒤 멈췄다.
+이번 세션 전체 기록은 `.codex/records/sessions/2026/08/07.md`에 있다.
 
 - Task 1: 기존 영상 설정을 읽는 하위 호환성을 유지하면서 `generatedMediaProduction`
   이미지·영상 공통 설정을 추가했다.
