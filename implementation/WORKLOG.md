@@ -50,3 +50,15 @@
 - 이 배포는 m2-stage의 API와 web client만 recreate하고, m2-proxy는 변경하지 않으며, m2-db의 DB container를 재시작하지 않는다.
 - admin migration은 Compose one-off API container로 `clipper_admin_dev`를 먼저 확인한 뒤 적용하도록 정리했다.
 - 현재 로컬 작업 환경에서 사설망 m2-stage/m2-proxy/m2-db SSH는 timeout이었다. 공개 dev web/API/admin URL은 모두 HTTP 200이고 API health의 user/release/admin DB는 모두 `ok`였다.
+
+## Recurring review retry follow-up
+
+- 최초 정기결제는 `billing_key_created → billing_activated → billing_paid`와 `paid`까지 성공했다.
+- 후속 세 건은 Toss 직접 상태 조회에서 `FAIL`, `CANCEL`, `CANCEL`이었지만 실패 callback이 없어 로컬 `checkout_ready`로 남는 현상을 확인했다.
+- 공용 테스트 상점에서 동일 결제수단을 반복 등록할 수 있도록 각 주문의 `orderNo`를 Toss `displayId`로 생성·상태 조회·callback 검증에 전달한다.
+- receipt-token 재검증에서 빌링키 `CREATE`, `ACTIVE`, `CANCEL`, `FAIL`, `REMOVE`를 조회하고, 주문·빌링키 일치 검증 후 로컬 주문과 deduplicated event에 반영한다.
+- `ACTIVE` 재검증은 기존 advisory lock 기반 최초 청구 경로를 재사용한다. 크레딧·이용권 지급은 추가하지 않았다.
+- API 결제 모듈 테스트: 86/86 PASS.
+- API build: PASS.
+- API 전체 테스트: 590/591 PASS. 유일한 실패는 별도 브랜치로 분리한 기존 운영자 JWT 고정 날짜 fixture다.
+- 후속 배포는 API 이미지 빌드와 API container recreate만 필요하다. migration, web client, web admin, infra, proxy, DB restart는 필요하지 않다.
