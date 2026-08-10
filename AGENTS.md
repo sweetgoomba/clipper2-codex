@@ -18,6 +18,9 @@ Codex는 다음 기준으로 적용한다.
 4. Claude Code 전용 도구명, workflow, 문서 저장 위치 지시는 Codex 환경에 맞게 변환하거나 적용하지 않는다.
 5. `.codex`의 `README.md`, `handoff/`, `records/sessions/`는 Codex 작업 이력과 인계용으로 계속 유지한다.
 6. 충돌이 있으면 문서 문구보다 현재 코드 상태와 사용자의 명시 지시를 우선한다.
+7. Zeplin MCP를 사용하거나 연결을 점검하는 작업에서만
+   `.codex/operations/integrations/README.md`의 `Zeplin via Composio MCP` 섹션을 먼저
+   읽는다. 다른 작업에서는 이 런북을 선행 문맥으로 불러오지 않는다.
 
 ---
 
