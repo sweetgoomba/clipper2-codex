@@ -15,6 +15,74 @@ it from a developer laptop.
 Do not recreate `clipper-web-admin-dev`, restart any PostgreSQL container, or
 change Nginx Proxy Manager for this deployment.
 
+## Follow-up: recurring review retry fix
+
+Use this shorter procedure after `fix/toss-recurring-review-retry` has been
+merged into `clipper_web_api/dev`. The initial Toss deployment and payment
+migration must already be present.
+
+This follow-up changes only the API. It adds a per-order Toss `displayId` and
+reconciles recurring billing-key `CREATE`, `ACTIVE`, `CANCEL`, `FAIL`, and
+`REMOVE` states. It has no migration, client, infra, credit, or license change.
+
+On `m2-stage`:
+
+```sh
+cd /Users/metabuzz/Desktop/project/clipper2
+
+git -C clipper_web_api status --short --branch
+git -C clipper_web_api switch dev
+git -C clipper_web_api pull --ff-only origin dev
+
+docker build -t clipper-web-api:dev clipper_web_api
+
+docker compose \
+  --env-file clipper_infra/env/stack.dev.env \
+  -f clipper_infra/apps/compose.yml \
+  -f clipper_infra/apps/compose.dev.yml \
+  up -d --force-recreate api
+```
+
+Stop before pulling if the API repository has server-local changes. Do not run
+any migration and do not deploy the web client for this follow-up.
+
+Verify the recreated API:
+
+```sh
+docker compose \
+  --env-file clipper_infra/env/stack.dev.env \
+  -f clipper_infra/apps/compose.yml \
+  -f clipper_infra/apps/compose.dev.yml \
+  ps api
+
+docker compose \
+  --env-file clipper_infra/env/stack.dev.env \
+  -f clipper_infra/apps/compose.yml \
+  -f clipper_infra/apps/compose.dev.yml \
+  logs --tail=200 api
+
+curl -sS https://dev-api.clipperstudio.ai/health
+curl -sS https://dev-api.clipperstudio.ai/payments/review/config
+```
+
+Expected review config remains `{"mode":"checkout"}`.
+
+In a logged-out or incognito browser, open the pricing page and repeat a
+recurring checkout with a card that was already used in the shared test store.
+The new registration must no longer be rejected as the same merchant billing
+registration because each order supplies its own `displayId`. Successful rows
+must finish with these events:
+
+```text
+billing_key_created / CREATE
+billing_activated   / ACTIVE
+billing_paid        / PAY_COMPLETE
+```
+
+If the tester cancels or Toss rejects registration, opening the result/cancel
+page must reconcile the local order to `canceled` or `failed` instead of leaving
+it indefinitely at `checkout_ready`.
+
 ## 1. Read-only preflight on m2-stage
 
 ```sh
