@@ -2,7 +2,7 @@
 
 작성일: 2026-08-12
 
-상태: 대화 설계 승인, 문서 검토 대기
+상태: 사용자 승인 완료
 
 관련 문서:
 
@@ -16,6 +16,7 @@
 - `web/clipper_web_admin`
 - `desktop/clipper_angular`
 - `desktop/clipper_electron`
+- `desktop/clipper_nestjs`
 - `.codex`
 
 ## 1. 목표
