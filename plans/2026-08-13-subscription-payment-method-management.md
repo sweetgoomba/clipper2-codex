@@ -81,7 +81,7 @@
 - Consumes: 기존 `Subscription`, `SubscriptionRenewalOrder`, `TossBillingResultCallback` schemas.
 - Produces: `CurrentSubscriptionPaymentMethod`, `StartSubscriptionPaymentMethodChangeRequest`, `SubscriptionPaymentMethodChangeCheckout`, `SubscriptionPaymentMethodChangeResult` schemas와 5개 authenticated endpoints.
 
-- [ ] **Step 1: 현재 OpenAPI 계약에서 사용자 응답에 provider 식별자나 빌링키가 없는지 기준을 기록한다**
+- [x] **Step 1: 현재 OpenAPI 계약에서 사용자 응답에 provider 식별자나 빌링키가 없는지 기준을 기록한다**
 
 Run:
 
@@ -93,7 +93,7 @@ rg -n "billingKey|providerDisplayId|subscriptions/current" docs/api/openapi.yaml
 
 Expected: callback schema에는 `billingKey`가 있지만 `Subscription` 응답에는 없다.
 
-- [ ] **Step 2: 안전한 조회·변경 schemas를 추가한다**
+- [x] **Step 2: 안전한 조회·변경 schemas를 추가한다**
 
 Add these exact semantic shapes under `components.schemas`:
 
@@ -174,7 +174,7 @@ SubscriptionPaymentMethodChangeResult:
     errorMessage: { type: [string, 'null'] }
 ```
 
-- [ ] **Step 3: endpoints를 추가하고 상태 코드를 고정한다**
+- [x] **Step 3: endpoints를 추가하고 상태 코드를 고정한다**
 
 Add:
 
@@ -250,7 +250,7 @@ Add:
 
 For the last two paths, copy the same required `changeId` path parameter and `401`/`404` responses from the GET path instead of using a shared unresolved reference.
 
-- [ ] **Step 4: callback schema에 safe metadata만 추가한다**
+- [x] **Step 4: callback schema에 safe metadata만 추가한다**
 
 Require `displayId` and add optional fields:
 
@@ -271,7 +271,7 @@ TossBillingResultCallback:
     accountBankName: { type: string }
 ```
 
-- [ ] **Step 5: 계약 파일의 구조와 민감정보 노출을 확인한다**
+- [x] **Step 5: 계약 파일의 구조와 민감정보 노출을 확인한다**
 
 Run:
 
@@ -282,7 +282,7 @@ rg -n "CurrentSubscriptionPaymentMethod|payment-method/changes|cardNum4Print" do
 
 Expected: build passes; 사용자 response schema 어디에도 `billingKey`, `providerUserId`, `providerDisplayId` property가 없다.
 
-- [ ] **Step 6: API 계약을 커밋한다**
+- [x] **Step 6: API 계약을 커밋한다**
 
 ```bash
 git add docs/api/openapi.yaml
@@ -308,7 +308,7 @@ git commit -m "docs: define subscription payment method api"
 - Consumes: `BillingKeyRemovalStatus`, TypeORM `EntityManager` binding pattern.
 - Produces: `SubscriptionPaymentMethodSnapshot`, `SubscriptionPaymentMethodChange`, `SubscriptionPaymentMethodChangesRepository` and registered schema.
 
-- [ ] **Step 1: migration test를 먼저 작성한다**
+- [x] **Step 1: migration test를 먼저 작성한다**
 
 The test must capture `up()` and `down()` SQL and assert all of these literals:
 
@@ -324,7 +324,7 @@ expect(downSql).toContain('DROP TABLE IF EXISTS subscription_payment_method_chan
 expect(downSql).toContain('DROP COLUMN IF EXISTS payment_method_provider_status');
 ```
 
-- [ ] **Step 2: migration test를 실행해 실패를 확인한다**
+- [x] **Step 2: migration test를 실행해 실패를 확인한다**
 
 Run:
 
@@ -334,7 +334,7 @@ npm test -- --runInBand src/core/database/migrations/admin/1787200000000-CreateS
 
 Expected: FAIL because the migration module does not exist.
 
-- [ ] **Step 3: migration을 구현한다**
+- [x] **Step 3: migration을 구현한다**
 
 `up()` must add these nullable columns to `subscriptions`:
 
@@ -399,7 +399,7 @@ WHERE status = 'swapped'
 
 `down()` drops indexes, table, then the seven subscription columns in reverse order.
 
-- [ ] **Step 4: domain model을 추가한다**
+- [x] **Step 4: domain model을 추가한다**
 
 Define:
 
@@ -448,7 +448,7 @@ export interface SubscriptionPaymentMethodChange {
 
 Extend `Subscription` with the seven snapshot properties using the same names.
 
-- [ ] **Step 5: repository abstract contract를 정의한다**
+- [x] **Step 5: repository abstract contract를 정의한다**
 
 Define exact methods:
 
@@ -477,7 +477,7 @@ abstract findPendingPreviousKeyRemovalIds(limit: number): Promise<string[]>;
 
 `NewSubscriptionPaymentMethodChange` includes the UUIDs, display ID, expiry, retry flag, and nullable consent snapshot. `PreviousPaymentMethodInput` contains the encrypted old key and old display ID.
 
-- [ ] **Step 6: entities와 datasource registration을 추가한다**
+- [x] **Step 6: entities와 datasource registration을 추가한다**
 
 Map every column explicitly with snake_case names. Add `SubscriptionPaymentMethodChangeEntity` to both `TypeOrmModule.forFeature` later and `admin.datasource.ts` now. Register `CreateSubscriptionPaymentMethodChanges1787200000000` after `CreateSubscriptionRenewalPolicy1787100000000`.
 
@@ -490,7 +490,7 @@ expect(migrationNames.at(-1)).toBe(
 );
 ```
 
-- [ ] **Step 7: focused tests와 build를 실행한다**
+- [x] **Step 7: focused tests와 build를 실행한다**
 
 Run:
 
@@ -501,7 +501,7 @@ npm run build
 
 Expected: PASS; TypeScript build succeeds.
 
-- [ ] **Step 8: schema와 domain을 커밋한다**
+- [x] **Step 8: schema와 domain을 커밋한다**
 
 ```bash
 git add src/core/database src/modules/payments/domain src/modules/payments/infrastructure/subscription.entity.ts src/modules/payments/infrastructure/subscription-payment-method-change.entity.ts
@@ -523,7 +523,7 @@ git commit -m "feat: add payment method change schema"
 - Consumes: Task 2 models and abstract repository.
 - Produces: concurrency-safe change transitions plus `updatePaymentMethodSnapshot()` and `swapPaymentMethod()`.
 
-- [ ] **Step 1: repository failure tests를 작성한다**
+- [x] **Step 1: repository failure tests를 작성한다**
 
 Cover these exact cases with mocked `EntityManager.query` rows:
 
@@ -544,7 +544,7 @@ it('swaps key, display id and safe snapshot with active/past_due status guard');
 it('does not include open method changes in new due charge selection but keeps unresolved order reconciliation selectable');
 ```
 
-- [ ] **Step 2: tests를 실행해 실패를 확인한다**
+- [x] **Step 2: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -554,7 +554,7 @@ npm test -- --runInBand src/modules/payments/infrastructure/typeorm-subscription
 
 Expected: FAIL because implementation and new subscription methods are absent.
 
-- [ ] **Step 3: subscription repository 계약을 추가한다**
+- [x] **Step 3: subscription repository 계약을 추가한다**
 
 Add:
 
@@ -576,7 +576,7 @@ abstract swapPaymentMethod(
 ): Promise<Subscription>;
 ```
 
-- [ ] **Step 4: change repository를 raw SQL로 구현한다**
+- [x] **Step 4: change repository를 raw SQL로 구현한다**
 
 Use the existing `bind(manager)` pattern. Conditional transitions must return booleans where a callback/scheduler race is expected:
 
@@ -591,7 +591,7 @@ RETURNING id
 
 `markCanceled` uses the same open status set without the expiry comparison. `markCanceled`, `markExpired`, and `markFailed` set `candidate_key_removal_status='pending'` so provider creation succeeded just before a process crash even when `candidate_billing_key_enc` is still null. `markSwapped` accepts only `activated`, leaves candidate removal `not_requested` because that key is now current, and stores old encrypted key/display ID with previous removal status `pending` when an old key exists, otherwise `not_requested`.
 
-- [ ] **Step 5: subscription snapshot and swap SQL을 구현한다**
+- [x] **Step 5: subscription snapshot and swap SQL을 구현한다**
 
 `updatePaymentMethodSnapshot` updates only the seven safe columns. `swapPaymentMethod` performs one guarded update:
 
@@ -616,7 +616,7 @@ Do not change period, retry cursor, access, or order fields.
 
 In `findDueRenewalIds`, keep the unresolved-order `EXISTS` branch independent. Add the open-change `NOT EXISTS` guard only to the `active next_billing_at` and `past_due retry_at` branches so an already pending/paid-unfulfilled order remains recoverable.
 
-- [ ] **Step 6: tests와 build를 실행한다**
+- [x] **Step 6: tests와 build를 실행한다**
 
 Run:
 
@@ -627,7 +627,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 7: repositories를 커밋한다**
+- [x] **Step 7: repositories를 커밋한다**
 
 ```bash
 git add src/modules/payments/domain src/modules/payments/infrastructure
@@ -648,7 +648,7 @@ git commit -m "feat: persist subscription payment method changes"
 - Consumes: Toss billing status/callback response.
 - Produces: `TossBillingKeyStatus` with nullable safe metadata and validated callback DTO fields.
 
-- [ ] **Step 1: provider parsing tests를 먼저 추가한다**
+- [x] **Step 1: provider parsing tests를 먼저 추가한다**
 
 ```ts
 expect(await provider.getBillingKeyStatus(input)).toEqual({
@@ -665,7 +665,7 @@ expect(await provider.getBillingKeyStatus(input)).toEqual({
 
 Add separate assertions for `TOSS_MONEY` and missing optional fields. Add DTO validation tests through the callback controller suite so `cardNum4Print: '12345'` is rejected.
 
-- [ ] **Step 2: focused test를 실행해 실패를 확인한다**
+- [x] **Step 2: focused test를 실행해 실패를 확인한다**
 
 Run:
 
@@ -675,7 +675,7 @@ npm test -- --runInBand src/modules/payments/infrastructure/http-toss-pay.provid
 
 Expected: safe fields are missing from returned values.
 
-- [ ] **Step 3: provider type과 parser를 구현한다**
+- [x] **Step 3: provider type과 parser를 구현한다**
 
 Extend the interface:
 
@@ -694,11 +694,11 @@ export interface TossBillingKeyStatus {
 
 Use `optionalString` for every display field, then normalize `cardNum4Print` to `null` unless it matches `/^[0-9]{4}$/`. Never return the complete provider payload.
 
-- [ ] **Step 4: callback DTO에 같은 safe fields를 추가한다**
+- [x] **Step 4: callback DTO에 같은 safe fields를 추가한다**
 
 Use `@IsOptional()`, `@IsString()`, and for the last four digits `@Matches(/^\d{4}$/)`.
 
-- [ ] **Step 5: tests와 build를 실행한다**
+- [x] **Step 5: tests와 build를 실행한다**
 
 Run:
 
@@ -709,7 +709,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 6: provider support를 커밋한다**
+- [x] **Step 6: provider support를 커밋한다**
 
 ```bash
 git add src/modules/payments/domain/toss-pay.provider.ts src/modules/payments/infrastructure/http-toss-pay.provider.ts src/modules/payments/infrastructure/http-toss-pay.provider.spec.ts src/modules/payments/presentation/dto/billing-result-callback.dto.ts
@@ -729,7 +729,7 @@ git commit -m "feat: read safe toss billing metadata"
 - Consumes: subscription, change, order repositories; `TossPayProvider`; `SecretCipher`; `ConfigService`; `AdminTransactionRunner`.
 - Produces: `current(userId)`, `start(userId,dto,now)`, `get(userId,changeId)`, `cancel(userId,changeId,now)`.
 
-- [ ] **Step 1: current 조회 tests를 작성한다**
+- [x] **Step 1: current 조회 tests를 작성한다**
 
 Cover:
 
@@ -746,7 +746,7 @@ it('cancel_at_period_end 등 비허용 상태면 SUBSCRIPTION_STATE로 막는다
 
 Provider key comparison test must decrypt `billingKeyEnc` and assert a mismatch is treated as `fresh=false`; it must not place either key in a thrown message.
 
-- [ ] **Step 2: change 시작 tests를 작성한다**
+- [x] **Step 2: change 시작 tests를 작성한다**
 
 Cover:
 
@@ -762,7 +762,7 @@ it('Toss create 실패 시 request를 failed로 전이하고 현재 subscription
 
 Assert `expiresAt === new Date(now.getTime() + 30 * 60_000)`.
 
-- [ ] **Step 3: tests를 실행해 실패를 확인한다**
+- [x] **Step 3: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -772,7 +772,7 @@ npm test -- --runInBand src/modules/payments/application/subscription-payment-me
 
 Expected: FAIL because the service does not exist.
 
-- [ ] **Step 4: DTO validation을 구현한다**
+- [x] **Step 4: DTO validation을 구현한다**
 
 ```ts
 export class StartSubscriptionPaymentMethodChangeDto {
@@ -790,7 +790,7 @@ export class StartSubscriptionPaymentMethodChangeDto {
 
 The service, not the DTO alone, enforces that both fields are absent for `active` and both are present for `past_due`.
 
-- [ ] **Step 5: current 조회를 구현한다**
+- [x] **Step 5: current 조회를 구현한다**
 
 Use `findLatestByUserId`. Build a safe response with no identifiers. The provider refresh path:
 
@@ -816,7 +816,7 @@ const order = await orders.findByIdempotencyKey(key);
 
 Return it only for `past_due` and only when it is the current failed/retryable renewal order.
 
-- [ ] **Step 6: change 시작을 구현한다**
+- [x] **Step 6: change 시작을 구현한다**
 
 Within one admin transaction and subscription advisory lock:
 
@@ -842,7 +842,7 @@ After commit, call `createBillingKey` with:
 
 Encrypt and persist the candidate key before returning `checkoutUri`.
 
-- [ ] **Step 7: authenticated get/cancel model helpers를 구현한다**
+- [x] **Step 7: authenticated get/cancel model helpers를 구현한다**
 
 `get(userId,changeId)` loads the change and subscription and returns 404 unless ownership matches. Derive `renewalOutcome` from the consented renewal order:
 
@@ -853,7 +853,7 @@ Encrypt and persist the candidate key before returning `checkoutUri`.
 
 `cancel()` conditionally changes only `created|checkout_ready|activated` to `canceled`; it never edits `subscriptions`.
 
-- [ ] **Step 8: focused tests와 build를 실행한다**
+- [x] **Step 8: focused tests와 build를 실행한다**
 
 Run:
 
@@ -864,7 +864,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 9: query/start service를 커밋한다**
+- [x] **Step 9: query/start service를 커밋한다**
 
 ```bash
 git add src/modules/payments/application/subscription-payment-methods.service.ts src/modules/payments/application/subscription-payment-methods.service.spec.ts src/modules/payments/presentation/dto/start-subscription-payment-method-change.dto.ts
@@ -883,7 +883,7 @@ git commit -m "feat: start subscription payment method changes"
 - Consumes: Task 5 service and `SubscriptionRenewalService.retryCurrent()`.
 - Produces: `handleCandidateBillingResult(dto,now)`, `reconcile(userId,changeId,now)`, idempotent activation/swap.
 
-- [ ] **Step 1: verification and race tests를 작성한다**
+- [x] **Step 1: verification and race tests를 작성한다**
 
 Cover:
 
@@ -901,7 +901,7 @@ it('즉시 retry 실패는 새 결제수단을 유지하고 past_due를 유지�
 it('중복 callback은 두 번째 swap과 두 번째 retry를 실행하지 않는다');
 ```
 
-- [ ] **Step 2: tests를 실행해 실패를 확인한다**
+- [x] **Step 2: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -911,7 +911,7 @@ npm test -- --runInBand src/modules/payments/application/subscription-payment-me
 
 Expected: FAIL on absent callback/reconcile behavior.
 
-- [ ] **Step 3: shared candidate verification을 구현한다**
+- [x] **Step 3: shared candidate verification을 구현한다**
 
 Both callback and reconcile call one private method. It must:
 
@@ -924,7 +924,7 @@ Both callback and reconcile call one private method. It must:
 
 Callback additionally requires DTO user/display/billing key equality before the provider call. `reconcile` uses stored candidate identity and never accepts client-provided billing identity.
 
-- [ ] **Step 4: atomic swap을 구현한다**
+- [x] **Step 4: atomic swap을 구현한다**
 
 Inside one transaction:
 
@@ -947,7 +947,7 @@ await subscriptions.withSubscriptionLock(subscriptionId, async () => {
 
 Before `markActivated`, require that the change is open and unexpired, the subscription is still `active|past_due`, and a `past_due` consent order is still the same failed/retryable order with the same amount. If that order became `payment_pending` or `paid` through a concurrent retry, do not swap. Use the transaction-bound repositories for every call. Never decrypt the old key inside this transaction.
 
-- [ ] **Step 5: post-commit actions를 구현한다**
+- [x] **Step 5: post-commit actions를 구현한다**
 
 After swap commit:
 
@@ -955,11 +955,11 @@ After swap commit:
 - After the immediate retry attempt, call `removePreviousKey(changeId)`; removal failure is caught and persisted for scheduler retry, and never changes the payment result.
 - If retry throws provider/payment failure, return a `swapped` result with `renewalOutcome='failed'` as derived from the order, or `pending` when result remains uncertain. Do not revert the new key.
 
-- [ ] **Step 6: reconcile behavior를 구현한다**
+- [x] **Step 6: reconcile behavior를 구현한다**
 
 `reconcile()` performs at most one status lookup per HTTP call when local state is `checkout_ready` or `activated`. It returns immediately for all terminal states. The web page controls the 2-second retry frequency; the server does not start a polling loop.
 
-- [ ] **Step 7: focused tests와 build를 실행한다**
+- [x] **Step 7: focused tests와 build를 실행한다**
 
 Run:
 
@@ -970,7 +970,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 8: swap flow를 커밋한다**
+- [x] **Step 8: swap flow를 커밋한다**
 
 ```bash
 git add src/modules/payments/application/subscription-payment-methods.service.ts src/modules/payments/application/subscription-payment-methods.service.spec.ts
@@ -993,7 +993,7 @@ git commit -m "feat: swap subscription billing method safely"
 - Consumes: `hasOpenBySubscriptionId`, change batch finders, candidate/previous encrypted keys.
 - Produces: no-new-charge gate and bounded recovery methods `expire(changeId,now)`, `removeCandidateKey(changeId)`, `removePreviousKey(changeId)`.
 
-- [ ] **Step 1: renewal gate tests를 작성한다**
+- [x] **Step 1: renewal gate tests를 작성한다**
 
 Cover the distinction explicitly:
 
@@ -1006,7 +1006,7 @@ it('manual retry도 새 claim 직전에 open change를 거부한다');
 
 The gate belongs after existing paid/pending order branches and immediately before creating/reclaiming a new provider charge. For stale `payment_pending` reclaim, do not block provider result verification; only block a not-found row from being billed again while the change is open.
 
-- [ ] **Step 2: expiry and cleanup tests를 작성한다**
+- [x] **Step 2: expiry and cleanup tests를 작성한다**
 
 ```ts
 it('30분 지난 open change 한 worker만 expired 전이한다');
@@ -1017,7 +1017,7 @@ it('late ACTIVE after expired는 candidate 삭제만 하고 swap하지 않는다
 it('expired 처리 후 due retry가 다시 selectable하다');
 ```
 
-- [ ] **Step 3: scheduler tests를 작성한다**
+- [x] **Step 3: scheduler tests를 작성한다**
 
 Assert call order and bounds:
 
@@ -1032,7 +1032,7 @@ expect(paymentMethods.removePreviousKey).toHaveBeenCalledWith(changeId);
 
 Every item failure must be isolated through the existing `independently()` helper.
 
-- [ ] **Step 4: tests를 실행해 실패를 확인한다**
+- [x] **Step 4: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -1042,7 +1042,7 @@ npm test -- --runInBand src/modules/payments/application/subscription-renewal.se
 
 Expected: FAIL on missing gates and cleanup calls.
 
-- [ ] **Step 5: renewal gate를 구현한다**
+- [x] **Step 5: renewal gate를 구현한다**
 
 Inject `SubscriptionPaymentMethodChangesRepository`. In the transaction-bound `renew()` preparation:
 
@@ -1055,18 +1055,18 @@ if (await changes.hasOpenBySubscriptionId(subscription.id)) {
 
 Place this block only after the existing paid and `payment_pending` reuse/reconciliation branches and immediately before a new charge claim. Repeat the guard inside stale claim reclaim immediately before `tryReclaimRenewalCharge`, after fresh subscription/order reload.
 
-- [ ] **Step 6: cleanup methods를 구현한다**
+- [x] **Step 6: cleanup methods를 구현한다**
 
 - `expire(id,now)`: conditionally marks expired; only the winning transition schedules candidate cleanup.
 - `removeCandidateKey(id)`: allowed for `canceled|expired|failed` with pending/failed candidate cleanup. If `candidateBillingKeyEnc` exists, decrypt and remove it. If it is null, query Toss once with the subscription's provider user ID and the stored candidate display ID to recover a provider-created key from the create-call crash gap, then remove the exact returned key. A transient status/removal failure records `candidate_key_removal_status='failed'` for bounded retry. It never changes `subscriptions`.
 - `removePreviousKey(id)`: allowed only for `swapped` with pending/failed cleanup; decrypts previous key, calls Toss remove, conditionally records success/failure.
 - Errors stored in candidate/previous removal error columns are sanitized provider error codes capped at 120 chars, never raw payloads.
 
-- [ ] **Step 7: scheduler에 세 bounded loops를 추가한다**
+- [x] **Step 7: scheduler에 세 bounded loops를 추가한다**
 
 Call expiration before renewal processing so just-expired changes unblock on the same scheduler minute. Then process terminal candidate-key cleanup. Call old-key cleanup after renewal/fulfillment. Use a fresh clock for each item, following the existing deadline-safety pattern.
 
-- [ ] **Step 8: focused tests와 build를 실행한다**
+- [x] **Step 8: focused tests와 build를 실행한다**
 
 Run:
 
@@ -1077,7 +1077,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 9: concurrency and recovery를 커밋한다**
+- [x] **Step 9: concurrency and recovery를 커밋한다**
 
 ```bash
 git add src/modules/payments/application/subscription-renewal.service.ts src/modules/payments/application/subscription-renewal.service.spec.ts src/modules/payments/application/payment-recovery.scheduler.ts src/modules/payments/application/payment-recovery.scheduler.spec.ts src/modules/payments/application/subscription-payment-methods.service.ts src/modules/payments/application/subscription-payment-methods.service.spec.ts
@@ -1099,7 +1099,7 @@ git commit -m "feat: recover payment method changes safely"
 - Consumes: Task 5–7 service methods.
 - Produces: OpenAPI-matching protected endpoints and callback dispatch priority.
 
-- [ ] **Step 1: subscription controller tests를 추가한다**
+- [x] **Step 1: subscription controller tests를 추가한다**
 
 Assert the authenticated user ID is passed to:
 
@@ -1113,7 +1113,7 @@ paymentMethods.cancel(userId, changeId);
 
 Also assert UUID validation rejects invalid `changeId` by applying `ParseUUIDPipe` to each path parameter.
 
-- [ ] **Step 2: callback routing tests를 추가한다**
+- [x] **Step 2: callback routing tests를 추가한다**
 
 The routing order must be:
 
@@ -1133,7 +1133,7 @@ it('late old REMOVED callback marks old-key cleanup and never cancels current su
 it('unknown display id falls through to review checkout callback');
 ```
 
-- [ ] **Step 3: tests를 실행해 실패를 확인한다**
+- [x] **Step 3: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -1143,7 +1143,7 @@ npm test -- --runInBand src/modules/payments/presentation/subscriptions.controll
 
 Expected: FAIL because new routes and dispatch dependencies are missing.
 
-- [ ] **Step 4: controller endpoints를 구현한다**
+- [x] **Step 4: controller endpoints를 구현한다**
 
 Add these decorators exactly:
 
@@ -1157,11 +1157,11 @@ Add these decorators exactly:
 
 Continue using the class-level JWT guard and whitelist validation pipe.
 
-- [ ] **Step 5: callback routing을 구현한다**
+- [x] **Step 5: callback routing을 구현한다**
 
 For current subscription, preserve the existing handler. For candidate change, call `handleCandidateBillingResult`. For previous old key, accept only `REMOVED` and call `handlePreviousBillingKeyRemoved`; that handler decrypts the stored previous key and requires both callback user ID and callback key to match before recording cleanup success. `ACTIVATED` for an old ID is ignored/rejected without mutating current subscription.
 
-- [ ] **Step 6: module wiring을 구현한다**
+- [x] **Step 6: module wiring을 구현한다**
 
 Register:
 
@@ -1176,7 +1176,7 @@ TypeOrmModule.forFeature([
 
 Add `SubscriptionPaymentMethodsService` and bind `SubscriptionPaymentMethodChangesRepository` to `TypeOrmSubscriptionPaymentMethodChangesRepository`.
 
-- [ ] **Step 7: controller tests와 build를 실행한다**
+- [x] **Step 7: controller tests와 build를 실행한다**
 
 Run:
 
@@ -1187,7 +1187,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 8: API surface를 커밋한다**
+- [x] **Step 8: API surface를 커밋한다**
 
 ```bash
 git add src/modules/payments/presentation src/modules/payments/payments.module.ts
@@ -1210,7 +1210,7 @@ git commit -m "feat: expose subscription payment method changes"
 - Consumes: Task 1 OpenAPI schemas.
 - Produces: Angular models and five typed HTTP methods.
 
-- [ ] **Step 1: API service tests를 작성한다**
+- [x] **Step 1: API service tests를 작성한다**
 
 Assert exact URLs, methods, credentials, and bodies:
 
@@ -1224,7 +1224,7 @@ cancelPaymentMethodChange(changeId);
 
 Every authenticated call uses `{ withCredentials: true }`.
 
-- [ ] **Step 2: tests를 실행해 실패를 확인한다**
+- [x] **Step 2: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -1236,7 +1236,7 @@ npm test -- --watch=false --browsers=ChromeHeadless --include=src/app/core/api/p
 
 Expected: FAIL because methods and models are absent.
 
-- [ ] **Step 3: TypeScript models를 OpenAPI와 동일하게 추가한다**
+- [x] **Step 3: TypeScript models를 OpenAPI와 동일하게 추가한다**
 
 ```ts
 export interface SubscriptionPaymentMethod {
@@ -1271,11 +1271,11 @@ export interface SubscriptionPaymentMethodChangeResult {
 }
 ```
 
-- [ ] **Step 4: HTTP methods와 mock paths를 구현한다**
+- [x] **Step 4: HTTP methods와 mock paths를 구현한다**
 
 Use `encodeURIComponent(changeId)` for every path. The mock must return a card ending in `1234` and never include billing/provider identifiers. A mock start request returns `/app/payment-method/result?change=<uuid>`.
 
-- [ ] **Step 5: focused tests와 build를 실행한다**
+- [x] **Step 5: focused tests와 build를 실행한다**
 
 Run:
 
@@ -1286,7 +1286,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 6: client API layer를 커밋한다**
+- [x] **Step 6: client API layer를 커밋한다**
 
 ```bash
 git add src/app/core/api
@@ -1307,7 +1307,7 @@ git commit -m "feat: add payment method client api"
 - Consumes: Task 9 `PaymentsApiService` methods and current `ConfirmDialogComponent`.
 - Produces: safe payment method UI, normal/past-due change consent, Toss redirect.
 
-- [ ] **Step 1: component behavior tests를 작성한다**
+- [x] **Step 1: component behavior tests를 작성한다**
 
 Cover:
 
@@ -1324,7 +1324,7 @@ it('start 성공 후 checkoutUrl로 이동한다');
 it('기존 결제 다시 시도 버튼은 계속 현재 retry endpoint를 호출한다');
 ```
 
-- [ ] **Step 2: tests를 실행해 실패를 확인한다**
+- [x] **Step 2: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -1334,7 +1334,7 @@ npm test -- --watch=false --browsers=ChromeHeadless --include=src/app/features/p
 
 Expected: FAIL because the payment method card is absent.
 
-- [ ] **Step 3: loading state를 분리해 구현한다**
+- [x] **Step 3: loading state를 분리해 구현한다**
 
 Increase `pendingLoads` from 3 to 4, but do not set global `loadError` when payment-method refresh alone fails. Add:
 
@@ -1347,7 +1347,7 @@ readonly paymentMethodChangeError = signal<string | null>(null);
 
 Call `getCurrentPaymentMethod()` only after a non-null current subscription is loaded; when no subscription exists, decrement the fourth pending load without issuing the request.
 
-- [ ] **Step 4: display label helpers를 구현한다**
+- [x] **Step 4: display label helpers를 구현한다**
 
 - CARD: `토스페이 · {cardCompanyName} · **** {cardLast4}`.
 - TOSS_MONEY: `토스페이 · 토스머니 · {accountBankName}`.
@@ -1356,7 +1356,7 @@ Call `getCurrentPaymentMethod()` only after a non-null current subscription is l
 
 Do not render provider status codes verbatim except `ACTIVE` as `정상 등록됨`; other values render `결제수단 확인 필요`.
 
-- [ ] **Step 5: active와 past_due dialog를 구현한다**
+- [x] **Step 5: active와 past_due dialog를 구현한다**
 
 Active message:
 
@@ -1372,15 +1372,15 @@ Past-due message:
 
 Past-due confirm label is `변경하고 {금액}원 결제`; active confirm label is `결제수단 변경`. No checkbox is added.
 
-- [ ] **Step 6: redirect와 errors를 구현한다**
+- [x] **Step 6: redirect와 errors를 구현한다**
 
 After dialog confirmation, call `startPaymentMethodChange` and use the existing `BrowserNavigationService.assign(response.checkoutUrl)`. On 409, show `결제 상태가 변경되었습니다. 화면을 새로고침한 뒤 다시 확인해 주세요.` Other failures use `결제수단 변경을 시작하지 못했습니다.`.
 
-- [ ] **Step 7: template와 SCSS를 구현한다**
+- [x] **Step 7: template와 SCSS를 구현한다**
 
 Place the payment method card inside the existing subscription section, below subscription dates and above action buttons. Reuse `.btn`, `.muted`, card radius, border, and spacing variables. Preserve the separate `결제 다시 시도` action when `past_due`.
 
-- [ ] **Step 8: focused tests와 build를 실행한다**
+- [x] **Step 8: focused tests와 build를 실행한다**
 
 Run:
 
@@ -1391,7 +1391,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 9: dashboard UI를 커밋한다**
+- [x] **Step 9: dashboard UI를 커밋한다**
 
 ```bash
 git add src/app/features/portal/dashboard
@@ -1414,7 +1414,7 @@ git commit -m "feat: manage payment method from dashboard"
 - Consumes: Task 9 get/reconcile/cancel APIs.
 - Produces: `/app/payment-method/result` and `/app/payment-method/cancel` authenticated routes.
 
-- [ ] **Step 1: result component tests를 작성한다**
+- [x] **Step 1: result component tests를 작성한다**
 
 Use `fakeAsync` and `tick` to cover:
 
@@ -1430,7 +1430,7 @@ it('cancel route는 cancel API를 한 번 호출한 뒤 상태를 표시한다')
 it('component destroy 시 timer subscription을 해제한다');
 ```
 
-- [ ] **Step 2: route tests를 추가한다**
+- [x] **Step 2: route tests를 추가한다**
 
 Assert both lazy routes exist under `PORTAL_ROUTES`:
 
@@ -1441,7 +1441,7 @@ Assert both lazy routes exist under `PORTAL_ROUTES`:
 
 Because they are portal routes, the existing parent auth guard remains effective.
 
-- [ ] **Step 3: tests를 실행해 실패를 확인한다**
+- [x] **Step 3: tests를 실행해 실패를 확인한다**
 
 Run:
 
@@ -1451,7 +1451,7 @@ npm test -- --watch=false --browsers=ChromeHeadless --include=src/app/features/p
 
 Expected: FAIL because component/routes do not exist.
 
-- [ ] **Step 4: finite polling state machine을 구현한다**
+- [x] **Step 4: finite polling state machine을 구현한다**
 
 Use RxJS `timer(0, 2000).pipe(take(15), switchMap(...), takeUntilDestroyed())`.
 
@@ -1460,7 +1460,7 @@ Use RxJS `timer(0, 2000).pipe(take(15), switchMap(...), takeUntilDestroyed())`.
 
 Stop early for `swapped|canceled|expired|failed`. The 15-tick cap therefore also caps provider reconciliation calls at 15 and never creates a 30-minute polling loop.
 
-- [ ] **Step 5: terminal copy와 actions를 구현한다**
+- [x] **Step 5: terminal copy와 actions를 구현한다**
 
 - `swapped/not_required`: `결제수단이 변경되었습니다. 다음 결제부터 새 결제수단이 사용됩니다.`
 - `swapped/succeeded`: `결제수단 변경과 미결제 갱신 결제가 완료되었습니다.`
@@ -1470,7 +1470,7 @@ Stop early for `swapped|canceled|expired|failed`. The 15-tick cap therefore also
 
 Provide `마이페이지로 돌아가기` linking to `/app` for every terminal state.
 
-- [ ] **Step 6: focused tests와 build를 실행한다**
+- [x] **Step 6: focused tests와 build를 실행한다**
 
 Run:
 
@@ -1481,7 +1481,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 7: result UI를 커밋한다**
+- [x] **Step 7: result UI를 커밋한다**
 
 ```bash
 git add src/app/features/portal/payment-method-result src/app/features/portal/portal.routes.ts src/app/features/portal/portal.routes.spec.ts
@@ -1500,7 +1500,7 @@ git commit -m "feat: show payment method change results"
 - Consumes: all prior tasks.
 - Produces: verified build/test evidence and a deployable feature branch state.
 
-- [ ] **Step 1: API payment suite를 실행한다**
+- [x] **Step 1: API payment suite를 실행한다**
 
 Run:
 
@@ -1512,7 +1512,7 @@ npm test -- --runInBand src/modules/payments src/core/database/admin.datasource.
 
 Expected: all selected suites PASS, no open handle warning caused by this feature.
 
-- [ ] **Step 2: API full tests와 build를 실행한다**
+- [x] **Step 2: API full tests와 build를 실행한다**
 
 Run:
 
@@ -1523,7 +1523,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 3: web-client tests와 build를 실행한다**
+- [x] **Step 3: web-client tests와 build를 실행한다**
 
 Run:
 
@@ -1536,7 +1536,7 @@ npm run build
 
 Expected: PASS under Angular 19 and Node 22.
 
-- [ ] **Step 4: 민감정보와 범위 drift를 정적 확인한다**
+- [x] **Step 4: 민감정보와 범위 drift를 정적 확인한다**
 
 Run:
 
@@ -1573,7 +1573,7 @@ Verify these six scenarios and record observed order/change/subscription statuse
 5. 30-minute expiry or test-clock equivalent unblocks scheduled renewal.
 6. old-key removal failure leaves new method current and scheduler retries cleanup.
 
-- [ ] **Step 7: code review 전에 두 worktree가 clean/expected인지 확인한다**
+- [x] **Step 7: code review 전에 두 worktree가 clean/expected인지 확인한다**
 
 Run:
 
@@ -1585,7 +1585,7 @@ git -C /Users/jina/project/adlight/.codex status --short --branch
 
 Expected: API/client are on `feat/access-credit-system-replacement`; `.codex` is on `main`; only intended uncommitted checkbox/document updates remain.
 
-- [ ] **Step 8: 구현과 달라진 설계 세부가 있으면 `.codex/main`에만 반영하고 커밋한다**
+- [x] **Step 8: 구현과 달라진 설계 세부가 있으면 `.codex/main`에만 반영하고 커밋한다**
 
 ```bash
 cd /Users/jina/project/adlight/.codex
@@ -1599,17 +1599,17 @@ If no design difference exists, commit only the completed checkbox updates or le
 
 ## Acceptance Checklist
 
-- [ ] 마이페이지는 카드사·끝 4자리·카드 종류 또는 토스머니 은행명만 표시한다.
-- [ ] 토스 조회 장애가 마이페이지 전체를 실패시키지 않는다.
-- [ ] `active` 변경은 즉시 결제하지 않는다.
-- [ ] `past_due` 변경은 상품명·금액·즉시 재결제 고지 후에만 시작된다.
-- [ ] 사용자 표시 금액과 서버 주문이 달라지면 변경 등록을 거부한다.
-- [ ] 후보 키 활성화·identity 검증 전에는 기존 키가 유지된다.
-- [ ] 교체 transaction은 새 키/current metadata와 old-key cleanup record를 원자적으로 기록한다.
-- [ ] 결과 polling은 2초 × 최대 15회이며 30분 polling이 없다.
-- [ ] 30분 만료와 늦은 callback이 현재 키를 덮어쓰지 않는다.
-- [ ] 진행 중 변경은 새 charge claim만 막고 기존 pending/paid 결과 복구는 막지 않는다.
-- [ ] 기존 직접 재시도 버튼이 유지되고 manual failure가 자동 retry cursor를 소모하지 않는다.
-- [ ] 이전 `displayId`의 늦은 `REMOVED` callback이 현재 구독을 취소하지 않는다.
-- [ ] 후보·이전 키 삭제 실패는 bounded scheduler로 복구된다.
-- [ ] API full test/build와 Angular 19 client full test/build가 Node 22에서 통과한다.
+- [x] 마이페이지는 카드사·끝 4자리·카드 종류 또는 토스머니 은행명만 표시한다.
+- [x] 토스 조회 장애가 마이페이지 전체를 실패시키지 않는다.
+- [x] `active` 변경은 즉시 결제하지 않는다.
+- [x] `past_due` 변경은 상품명·금액·즉시 재결제 고지 후에만 시작된다.
+- [x] 사용자 표시 금액과 서버 주문이 달라지면 변경 등록을 거부한다.
+- [x] 후보 키 활성화·identity 검증 전에는 기존 키가 유지된다.
+- [x] 교체 transaction은 새 키/current metadata와 old-key cleanup record를 원자적으로 기록한다.
+- [x] 결과 polling은 2초 × 최대 15회이며 30분 polling이 없다.
+- [x] 30분 만료와 늦은 callback이 현재 키를 덮어쓰지 않는다.
+- [x] 진행 중 변경은 새 charge claim만 막고 기존 pending/paid 결과 복구는 막지 않는다.
+- [x] 기존 직접 재시도 버튼이 유지되고 manual failure가 자동 retry cursor를 소모하지 않는다.
+- [x] 이전 `displayId`의 늦은 `REMOVED` callback이 현재 구독을 취소하지 않는다.
+- [x] 후보·이전 키 삭제 실패는 bounded scheduler로 복구된다.
+- [x] API full test/build와 Angular 19 client full test/build가 Node 22에서 통과한다.
