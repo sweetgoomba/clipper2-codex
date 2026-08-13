@@ -515,8 +515,8 @@ SQL 전이 규칙은 다음과 같다.
 - `advancePastDueRetry`: `past_due`에서 index와 `retry_at`만 변경하고 최초 실패/유예/스냅샷은 보존한다.
 - `markStopped`: `past_due AND grace_ends_at <= at`만 `stopped`로 바꾸고 자동 청구·재시도를 비우며 `billing_key_removal_status = 'pending'`으로 둔다.
 - `activate`, `extendPeriod`, `scheduleCancellation`, `markCanceled`, `markEnded`는 recovery 필드를 모두 비운다.
-- `findOpenByUserId`는 `stopped`를 제외하고, `findLatestByUserId`는 상태 제한 없이 최신 구독을 반환한다.
-- billing key 제거 대상 status에 `stopped`를 추가한다.
+- `findOpenByUserId`는 일반 `stopped`를 제외하되, 유예 종료 전에 시작된 미정산 갱신 주문이 있으면 정산이 끝날 때까지 open으로 취급한다. `findLatestByUserId`는 상태 제한 없이 최신 구독을 반환한다.
+- billing key 제거 대상 status에 `stopped`를 추가하되, 미정산 갱신 주문이 있는 `stopped` 구독은 제거 대상에서 제외한다.
 
 - [ ] **Step 5: repository SQL 테스트에 상태 전이와 필드 보존을 추가한다**
 
@@ -697,14 +697,14 @@ await orders.recordEvent({
 
 - [ ] **Step 3: 자동 실패만 다음 순번을 소비하도록 구현한다**
 
-`renew(subscriptionId, now, retryKind)`의 세 번째 인자를 `'scheduled' | 'manual'`로 명시한다. scheduler 기본값은 `'scheduled'`, 사용자 API는 `'manual'`을 전달한다.
+`renew(subscriptionId, now, retryKind)`의 세 번째 인자를 `'scheduled' | 'manual'`로 명시한다. scheduler 기본값은 `'scheduled'`, 사용자 API는 `'manual'`을 전달한다. 실제 승인 선점 시 주문에는 `renewalAttemptKind`, `renewalAttemptedAt`, `renewalAttemptRetryIndex`를 함께 저장하고, 상태 조회 결과를 정산할 때는 호출자가 전달한 값이 아니라 이 스냅샷을 사용한다.
 
 - active 갱신 실패: 새 cycle 시작.
 - past_due scheduled 실패: `nextRetryIndex + 1`로 이동하고 최초 실패 시각에 snapshot 일수를 더해 다음 `retryAt` 계산.
 - past_due manual 실패: 저장된 `nextRetryIndex`, `retryAt`을 그대로 둠.
 - `now >= graceEndsAt`: Toss를 호출하지 않고 `SUBSCRIPTION_GRACE_EXPIRED` conflict.
 
-`TossPayUncertainResultError`와 `payment_pending`은 실패 횟수를 증가시키지 않고 기존 결제 상태 조회 흐름을 유지한다. 불명확 결과의 즉시 상태 조회까지 실패하면 active 구독에는 동일한 recovery cycle과 access grace를 시작하되 주문을 `failed`로 바꾸거나 자동 재시도 index를 소비하지 않는다. 다음 `retryAt`부터는 새 결제 승인을 호출하지 않고 먼저 같은 주문번호의 상태를 재조회한다. 조회 결과가 `PAY_COMPLETE`이면 즉시 복구하고, `PAY_FAIL`이면 그 시점의 scheduled retry만 소비한다.
+`TossPayUncertainResultError`와 `payment_pending`은 실패 횟수를 증가시키지 않고 기존 결제 상태 조회 흐름을 유지한다. 불명확 결과의 즉시 상태 조회까지 실패하면 active 구독에는 동일한 recovery cycle과 access grace를 시작하되 주문을 `failed`로 바꾸거나 자동 재시도 index를 소비하지 않는다. 다음 조회에서는 새 결제 승인을 호출하지 않고 먼저 같은 주문번호의 상태를 재조회한다. 조회 결과가 `PAY_COMPLETE`이면 즉시 복구하고, `PAY_FAIL`이면 주문에 저장된 시도가 자동 재시도였을 때만 해당 순번을 소비한다. `payment_pending -> failed` 조건부 전이에 성공한 worker만 순번 이동과 실패 이벤트를 같은 트랜잭션에서 기록한다.
 
 - [ ] **Step 4: 성공 복구가 상태를 비우고 한 번만 지급되는지 검증한다**
 
@@ -732,6 +732,8 @@ WHERE (
 
 중지 후 billing-key 제거 scheduler가 `stopped`도 처리하는지 테스트한다.
 
+단, 유예 종료 전에 선점한 주문이 `payment_pending`이거나 `paid`지만 fulfillment가 끝나지 않았다면 구독은 `stopped`로 전환해 이용권을 종료한 뒤에도 해당 주문을 계속 정산한다. 이 동안 billing key 제거와 새 구독 생성은 보류한다. 성공이 확인되면 `stopped`에서도 기간을 원래 기준일에서 연장하고, 최종 실패하면 보류를 해제한다. 월별 크레딧 scheduler가 access를 먼저 `ended`로 만들었더라도 subscription의 `stopped` 전이는 별도로 실행되어야 한다.
+
 - [ ] **Step 6: scheduler 테스트에 D+3 종료 순서를 추가한다**
 
 ```ts
@@ -743,7 +745,7 @@ expect(renewals.endExpiredAccess).toHaveBeenCalledWith(
 );
 ```
 
-동일 scheduler process에서 갱신 실패가 먼저 `past_due`/grace로 바뀌고, 그 뒤 expired 조회가 최신 grace 기한을 사용한다는 repository/service 테스트를 추가한다.
+동일 scheduler process에서 갱신 실패가 먼저 `past_due`/grace로 바뀌고, 그 뒤 expired 조회가 최신 grace 기한을 사용한다는 repository/service 테스트를 추가한다. 배치가 오래 걸려도 각 승인 선점 직전에 현재 시각을 다시 읽어 유예 종료 이후 새 승인을 시작하지 않는 테스트도 포함한다.
 
 - [ ] **Step 7: 갱신과 scheduler 테스트를 실행한다**
 
@@ -1063,6 +1065,10 @@ D+2.5 성공     -> subscription=active, recovery fields=null,
                  원래 결제 기준일에서 기간 연장, 회차 크레딧 한 번 지급
 D+3 미복구     -> subscription=stopped, access=ended,
                  자동 재시도 중단, billing key 제거 예약
+D+3 미정산     -> subscription=stopped, access=ended,
+                 유예 전 claim 상태 조회 지속, billing key 제거·새 구독 보류
+미정산 성공     -> 원래 기준일에서 subscription/access 복구
+미정산 실패     -> stopped 유지, billing key 제거 보류 해제
 정책 7/[1,3,5] 변경 -> 기존 past_due는 3/[1,2] 유지,
                        다음 신규 실패만 7/[1,3,5] snapshot
 ```
