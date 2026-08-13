@@ -1,5 +1,7 @@
 # Subscription Payment Method Management Implementation Plan
 
+> **실행 보류·공급자 전환 기록 (2026-08-13):** 이 계획의 현재 구현은 토스페이 직접 빌링키 API 계약을 사용하며 전체 기능 브랜치에 보존돼 있다. 토스페이먼츠 PG 전환 전에 이 계획의 공급자 단계나 후속 커밋을 `dev`에 병합하지 않는다. 사용자 경험과 동시성 원칙은 보존하되 PG 계약으로 새 계획을 작성한다. 상세 상태는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 참고한다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 로그인 사용자가 Clipper 마이페이지에서 현재 토스페이 자동결제 수단을 안전하게 확인하고, 기존 빌링키를 잃지 않으면서 새 결제수단으로 교체하며, `past_due`이면 고지한 미결제 갱신금액을 교체 직후 한 번 재시도할 수 있게 한다.

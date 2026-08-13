@@ -1,5 +1,7 @@
 # Clipper 결제·구독·요금제·크레딧 정책 설계
 
+> **공급자 전환 기록 (2026-08-13):** 이 문서의 상품·구독·이용 권한·크레딧 정책과 도메인 구조는 유지한다. 다만 `docs-pay.toss.im`/`pay.toss.im` 토스페이 직접 API를 전제로 한 결제 공급자 세부 구현은 토스페이먼츠 PG 기준으로 교체해야 하며, 전체 기능 브랜치의 공급자 전환은 보류 중이다. 현재 경계는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 따른다.
+
 작성일: 2026-08-12
 
 상태: 사용자 승인 완료

@@ -1,5 +1,7 @@
 # Authenticated Toss Subscription and Top-up Implementation Plan
 
+> **공급자 전환 기록 (2026-08-13):** 이 계획의 주문·fulfillment·구독·추가 크레딧 구조는 보존한다. 그러나 `docs-pay.toss.im`의 토스페이 직접 API를 기준으로 작성된 provider, 빌링키, callback 단계는 토스페이먼츠 PG 기준으로 다시 계획해야 한다. 현재 기능 브랜치는 보존하고 PG 전환 전 `dev`에 병합하지 않는다. 상세 상태는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 따른다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 로그인 사용자가 Toss로 자동 갱신 구독을 시작하고 선불 추가 크레딧을 단건 구매하며, 결제 성공 저장과 이용 자격·크레딧 fulfillment를 멱등으로 분리한다.

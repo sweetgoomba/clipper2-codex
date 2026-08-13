@@ -1,5 +1,7 @@
 # 구독 결제수단 조회·변경 설계
 
+> **공급자 전환 기록 (2026-08-13):** 이 문서의 사용자 고지, 기존 결제수단 보존, 후보 수단 검증 후 교체 같은 제품·안전 원칙은 참고할 수 있다. 그러나 빌링키 생성·조회·삭제, callback, `displayId` 등은 토스페이 직접 API 계약이므로 토스페이먼츠 PG 기준으로 다시 설계해야 한다. 현재 구현은 전체 기능 브랜치에 보존하고 PG 전환 전까지 `dev`에 병합하지 않는다. 상세 경계는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 참고한다.
+
 작성일: 2026-08-13  
 대상: `clipper_web_api`, `clipper_web_client`  
 관련 설계: `2026-08-12-billing-subscription-credit-policy-design.md`, `2026-08-13-subscription-renewal-grace-retry-implementation-plan.md`

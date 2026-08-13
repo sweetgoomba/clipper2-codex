@@ -1,5 +1,7 @@
 # Access and Credit System Replacement Roadmap Implementation Plan
 
+> **공급자 전환 기록 (2026-08-13):** access·플러그인 권한·출처별 크레딧·결제 fulfillment 로드맵은 유지한다. 토스페이 직접 API에 연결된 익명 심사·구독·추가 크레딧 공급자 단계는 토스페이먼츠 PG 기준으로 교체하기 전까지 `dev`에 병합하지 않는다. 심사용 PG 교체와 전체 기능 전환을 분리한 현재 계획은 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 참고한다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 기존 무통장·단일 `license` 기반 구조를 상품 등급, 기본 이용 자격, 출처별 크레딧, Toss 구독·추가 크레딧 결제 구조로 완전 교체한다.

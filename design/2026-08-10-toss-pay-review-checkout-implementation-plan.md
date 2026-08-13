@@ -1,5 +1,7 @@
 # Toss Pay Review Checkout Implementation Plan
 
+> **실행 중단·공급자 전환 기록 (2026-08-13):** 이 계획은 `docs-pay.toss.im`과 `pay.toss.im`의 토스페이 직접 API로 이미 구현·배포된 작업 기록이다. 새 토스페이먼츠 PG 심사용 구현에 이 계획을 그대로 실행하지 않는다. PG 전환은 최신 `dev`에서 별도 브랜치와 새 계획으로 진행한다. 범위와 인수인계는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 참고한다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 비로그인 심사자가 dev 요금 페이지에서 Toss Pay 공용 테스트 키로 단건결제와 빌링키 기반 최초 결제를 완료하고, 검증된 결제 결과를 Clipper DB와 공개 결과 페이지에서 확인할 수 있게 한다.

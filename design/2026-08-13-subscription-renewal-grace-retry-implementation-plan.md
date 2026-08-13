@@ -1,5 +1,7 @@
 # Subscription Renewal Grace And Retry Implementation Plan
 
+> **공급자 전환 기록 (2026-08-13):** 유예기간, 자동·수동 재시도 순번, 미정산 결제 복구, fulfillment 정책은 유지한다. 실제 결제 승인·상태 조회·빌링키 처리는 현재 토스페이 직접 adapter에 연결돼 있으므로 토스페이먼츠 PG 전환 시 재검증·교체한다. 구현은 전체 기능 브랜치에 보존하며 현재 경계는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 따른다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 갱신 결제 최초 실패 후 3일 동안 기존 등급 이용을 유지하고 `D+1`, `D+2`에 자동 재시도하며, 이 일 단위 정책을 관리자 페이지에서 안전하게 변경할 수 있게 한다.

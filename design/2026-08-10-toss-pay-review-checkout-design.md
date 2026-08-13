@@ -1,5 +1,7 @@
 # Toss Pay Review Checkout Design
 
+> **공급자 전환 기록 (2026-08-13):** 이 문서는 `docs-pay.toss.im`과 `pay.toss.im`을 사용하는 토스페이 직접 연동 기준으로 작성됐고, 해당 구현은 현재 개발서버의 심사용 결제로 배포돼 있다. 실제 연동 대상은 토스페이먼츠 PG로 전환하기로 결정했다. 이 문서는 배포된 기존 구현의 역사적 기록으로만 유지하며 PG 구현 설계로 사용하지 않는다. 전환 범위와 현재 상태는 [`2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md`](../records/sessions/2026-08-13-toss-pay-direct-to-toss-payments-pg-handoff.md)를 따른다.
+
 작성일: 2026-08-10
 
 상태: 사용자 승인 완료 (2026-08-10)
