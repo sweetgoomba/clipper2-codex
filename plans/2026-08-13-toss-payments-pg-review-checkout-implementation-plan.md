@@ -8,7 +8,7 @@
 
 **Tech Stack:** Node.js 22.22.x, NestJS 11, TypeORM/PostgreSQL 16, Jest 30, Angular 19, Jasmine/Karma, `@tosspayments/tosspayments-sdk` V2, Docker Compose.
 
-**Execution status (2026-08-14):** Tasks 1–9 were implemented test-first in the three isolated feature worktrees, reviewed, merged, and pushed to each repository's `dev`. Final merge commits are API `880c053`, customer web `4b361ef`, and infra `2f77545`. The API passes 93 suites/590 tests and builds, the customer web passes 93 tests and builds without test-key strings in `dist`, PostgreSQL 16 migration up/no-op/down/up passed, and the infra preflight 8/8 plus dev/stage/prod Compose overlays validate. Deployment is still pending because this workstation cannot reach the dev Mac mini and the real billing Secret Key must be entered directly in its ignored `env/stack.dev.env`.
+**Execution status (2026-08-14):** Tasks 1–9 were implemented test-first in the three isolated feature worktrees, reviewed, merged, and pushed to each repository's `dev`. Final merge commits are API `880c053`, customer web `4b361ef`, and infra `4d32022`. The API passes 93 suites/590 tests and builds, the customer web passes 93 tests and builds without test-key strings in `dist`, PostgreSQL 16 migration up/no-op/down/up passed, and the infra preflight 8/8 plus dev/stage/prod Compose overlays validate. Deployment is still pending because this workstation cannot reach the dev Mac mini and the real billing Secret Key must be entered directly in its ignored `env/stack.dev.env`.
 
 ## Global Constraints
 
