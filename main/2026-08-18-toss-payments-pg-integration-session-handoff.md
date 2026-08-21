@@ -1,5 +1,8 @@
 # 토스페이먼츠 PG 전체 연동 다음 세션 인계
 
+> 이 문서는 2026-08-18 구현 전 기록이다. 현재 상태와 다음 재개 지점은
+> `/Users/jina/project/adlight/.codex/main/2026-08-19-toss-payments-pg-integration-session-handoff.md`를 따른다.
+
 - 기록일: 2026-08-18 (Asia/Seoul)
 - 구현 상태: 아직 시작하지 않음
 - 설계 상태: `2026-08-18-toss-payments-pg-integration-design.md` 작성, 사용자 최종 검토 대기
