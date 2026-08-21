@@ -228,6 +228,7 @@ Expected: all PASS, build exit 0.
 
 Assertions:
 
+- 모든 프레임의 알파 바운딩 박스를 합집합으로 계산하고 안전 패딩을 더한 하나의 정적 crop을 card와 overlay 양쪽에 동일하게 적용
 - overlay command uses chromakey, format=yuva420p, libvpx-vp9, auto-alt-ref=0, Opus audio
 - card command uses no audio and scales the short edge to at most 240px
 - catalog entry contains actual byte size, lowercase SHA-256, ffprobe duration/width/height/hasAudio
@@ -255,6 +256,8 @@ uv run python scripts/prepare_meme_asset.py \
 
 초기 chroma key 기본값은 0x00FF00, similarity 0.18, blend 0.08로 두고 CLI에서 조정 가능하게 한다. 실제 샘플 가장자리 확인 후 값만 조정할 수 있으며 런타임 계약은 변하지 않는다.
 
+crop은 프레임마다 바뀌면 피사체가 흔들리므로 `alphaextract+bbox` 결과를 전체 프레임에 걸쳐 합집합으로 계산한다. 프레임 경계를 넘지 않는 안전 패딩을 더하고 짝수 좌표·크기로 정렬한 뒤, 동일한 crop을 `card-preview.webm`과 `overlay.webm`에 적용한다.
+
 - [ ] **Step 4: unit test를 통과시킨다.**
 - [ ] **Step 5: 제공 샘플로 수동 생성하고 ffprobe로 alpha/audio를 확인한다.**
 
@@ -262,6 +265,7 @@ Expected:
 
 - card-preview.webm: VP9 alpha, no audio
 - overlay.webm: VP9 alpha, Opus audio가 원본에 있을 때 유지
+- 두 출력의 캔버스는 원본 전체 프레임이 아니라 공통 알파 영역 crop이며 catalog width/height도 이 crop 크기와 일치
 - 두 파일 모두 git untracked 목록에 나타나지 않음
 
 - [ ] **Checkpoint:** authoring tool review. 생성된 미디어는 운영 권리 승인 및 CDN 업로드 전까지 로컬에만 둔다.
