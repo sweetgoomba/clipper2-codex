@@ -1,12 +1,13 @@
 # 밈 오버레이 플러그인 — 교차 레포 설계 (MVP)
 
 > 작성일: 2026-08-20
-> 상태: 사용자 승인 완료 — 구현 계획 확정
+> 상태: Plan 1·2·3 구현 및 검증 완료 (2026-08-24)
 > 대상 레포: `clipper_angular`, `clipper_nestjs`, `clipper_python`, `clipper_web_api`, `.codex`
 > 패키징 확인: `clipper_electron`(코드 변경은 원칙적으로 없음)
 > 기준 목업: `.superpowers/brainstorm/76135-1787177041/content/meme-overlay-editor-layout.html`
 > 관련 구현: 댓글 오버레이, 영상 랭킹, 공용 소스 인제스트·Range 스트리밍, 공용 영상 렌더 잡
 > 구현 계획: [1. 카탈로그·캐시](./2026-08-20-meme-overlay-plan-1-catalog-cache.md) · [2. 편집기·프리뷰](./2026-08-20-meme-overlay-plan-2-editor-preview.md) · [3. 렌더·재편집](./2026-08-20-meme-overlay-plan-3-render-integration.md)
+> 구현 기록: [밈 오버레이 구현 기록](../features/clipper-studio/records/2026/08/2026-08-20-meme-overlay-implementation-record.md)
 
 ## 1. 개요 · 목표
 
@@ -913,3 +914,15 @@ MVP 기능 경계와 아키텍처 선택은 이 문서에서 닫는다. 다음 �
 - 기본 밈 크기·위치·효과음 볼륨
 
 동시 오버레이 최대 2개, 2파일 전략, WebGL/FFmpeg 프리뷰 제외, 미디어를 Electron에 번들하지 않는 원칙은 수치 조정 대상이 아니다.
+
+## 19. 구현 완료 시점의 실제 계약
+
+2026-08-24 구현 완료 시점에는 다음 계약으로 동작한다. 설계 결정을 바꾸지 않고 실제 코드에서 확정된 이름과 기본값만 기록한다.
+
+- 로컬 렌더 진입점은 `POST /v1/meme-overlay/render`, 출력 ID는 `output.meme_overlay.render.main`, 결과 경로는 `renders/meme_overlay.mp4`다.
+- manifest → recipe → Python payload에는 선택된 밈만 `meme_overlays`로 전달한다. 밈이 없는 기존 워크플로 payload에는 이 키를 만들지 않는다.
+- 최종 출력은 1080×1920 H.264/AAC MP4다. 투명 VP9 밈 합성 뒤 배경 원본 오디오와 음소거되지 않은 밈 오디오를 합친다.
+- 프로젝트 편집 상태 스키마는 `meme-overlay-project.v1`이며 source snapshot과 ID/version 기반 instance snapshot만 저장한다. 캐시 절대 경로나 런타임 stream URL은 저장하지 않는다.
+- 카탈로그 카드 다운로드 동시성 기본값은 3이다. 카드/오버레이 최대 크기는 각각 2 MiB/32 MiB, 다운로드 제한 시간은 60초다.
+- `MEME_ASSET_CDN_HOSTS`는 기본 허용 호스트가 없는 HTTPS 전용 명시 allowlist다. 운영 배포 전에 카탈로그 CDN의 정확한 `host[:port]`를 쉼표로 구분해 설정해야 한다.
+- Electron 패키지에는 밈 WebM을 포함하지 않는다. Angular renderer, Nest bundle, 기존 `clipper_video_render` Python worker만 포함하고 밈 파일은 실행 중 로컬 캐시에 준비한다.
