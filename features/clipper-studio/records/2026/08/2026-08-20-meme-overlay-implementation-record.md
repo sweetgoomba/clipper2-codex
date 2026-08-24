@@ -17,7 +17,7 @@
 - `clipper_nestjs`: `2c60b6d` — Plan 1 캐시·로컬 API, `4e09f9f4e7bccf6c85cca35e6740f0ea8f6353ff` — Plan 3 렌더·매니페스트·공용 제출 경계
 - `clipper_python`: `4a58972` — Plan 1 투명 밈 제작 도구, `01f9d961cb235146ed147e515311905ab8113078` — Plan 3 FFmpeg 영상·오디오 합성
 - `clipper_angular`: `e5528e9` — Plan 2 편집기·프리뷰, `f330d588c75a56d16b83b9e2a57665a5d3cdc627` — Plan 3 제출·영속화·재편집
-- `clipper_electron`: 소스 변경 없음. 기존 패키징 경로로 smoke 검증했다.
+- `clipper_electron`: `d686393` — worktree `.git` metadata가 Python 패키지 리소스에 포함되지 않도록 보강
 
 모든 커밋은 `feat/meme-overlay` 작업트리에만 있고 push·merge하지 않았다.
 
@@ -65,7 +65,7 @@
 - Angular 전체: 2776/2776 통과
 - Angular SCSS class 검증: 6/6 통과
 - Angular production/packaged build 통과
-- Electron 테스트: 210/210 통과, TypeScript 검사 통과
+- Electron 테스트: 211/211 통과, TypeScript 검사 통과
 - 전 레포 `git diff --check` 통과
 
 Python 전체 mypy에는 밈 변경과 무관한 기존 12개 파일의 오류 31건이 남아 있다. 신규 밈 모듈의 targeted mypy는 오류가 없다.
@@ -83,7 +83,7 @@ Python 전체 mypy에는 밈 변경과 무관한 기존 12개 파일의 오류 3
 ## 7. 패키지 smoke
 
 - macOS arm64 unpacked 앱을 빌드하고 패키지 리소스에 Angular renderer, Nest bundle, Python worker가 포함된 것을 확인했다.
-- 패키지 안에는 `card-preview.webm` 또는 `overlay.webm`이 없었다.
+- 패키지 안에는 `card-preview.webm`, `overlay.webm`, Python worktree `.git` metadata가 없었다.
 - 격리한 packaged userData에서 앱을 실행해 bundled Nest → Electron plugin host → packaged Python worker 렌더를 완료했다.
 - 패키지 결과물 Range 206/512 bytes와 packaged font/resource 경로를 확인했다.
 - 격리 userData에는 사용자 설치 도구인 FFmpeg가 없어서 첫 시도가 실패했고, 시스템 FFmpeg를 격리 경로에 연결한 뒤 정상 완료했다. 제품의 기존 사용자 도구 준비 정책은 변경하지 않았다.
@@ -93,5 +93,5 @@ Python 전체 mypy에는 밈 변경과 무관한 기존 12개 파일의 오류 3
 - `/Users/jina/Library/Application Support/Clipper Studio/meme-assets/`의 로컬 카탈로그와 테스트 밈 3개는 삭제·수정하지 않았다.
 - 운영 카탈로그에 로컬 테스트 밈을 추가하지 않았다.
 - Angular의 기존 `package-lock.json` 변경은 스테이징·커밋하지 않고 그대로 남겼다.
-- Web API와 Electron에는 Plan 3 추가 변경이 없다.
+- Web API에는 Plan 3 추가 변경이 없고, Electron에는 Python worktree metadata 제외 보강만 있다.
 - `clipper_docs`는 수정하지 않았다.
