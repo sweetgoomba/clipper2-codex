@@ -1,5 +1,83 @@
 # Next Handoff
 
+최신 갱신: 2026-08-25 KST
+
+## 현재 기준
+
+`스토리보드` 플러그인은 다음 사용자 흐름까지 구현되어 있다.
+
+```text
+운영 프로필 선택
+  → 시장·최신 이슈 조사
+  → 서로 다른 조사 주제 생성
+  → 주제별 영상 후보 생성
+  → 후보 선택
+  → 상세 스토리보드 생성
+  → 컷 내용·영문 AI 프롬프트 복사
+```
+
+플러그인 자체에서 영상·이미지를 생성하거나 최종 영상을 렌더하지 않는다. 컷별 이미지
+검색어와 활용 가이드는 제공하지만 자동 검색·다운로드는 하지 않는다.
+
+Web API와 관리자 웹의 Storyboard 변경은 `dev`에 병합·푸시했고 2026-08-25 개발 서버에
+배포했다. API health와 관리자 웹 HTTP 200 확인까지 완료했다.
+
+### 다음 세션에서 먼저 읽을 문서
+
+1. `.codex/records/sessions/2026/08/25.md`
+2. `.codex/todos/2026-08-25-storyboard-followups.md`
+3. `.codex/operations/env-runtime/records/2026/08/25-storyboard-dev-deployment.md`
+
+### 가장 먼저 처리할 일
+
+1. 영상 후보 화면에서 임시로 숨긴 세 기능의 최종 정보 구조를 결정한다.
+   - `생성 기록 상세`
+   - `근거와 과정`
+   - `근거 ID와 기술 정보 보기`
+2. 로컬 복구 스토리보드도 정상 생성과 동일하게 검색어·활용 가이드 등 필수 필드를
+   제공하도록 계약과 회귀 테스트를 보강한다.
+3. 비차단 품질 경고를 모아 필요한 컷만 개선하는 기능은 별도 설계 승인을 받은 뒤
+   구현한다.
+4. Storyboard 전용 영상 생성·렌더 잔여 코드를 저장소별 호출 그래프로 확인한 뒤 안전하게
+   제거한다.
+5. 프로필 복제·보관 코드와 상태 계약이 남지 않았는지 최종 감사한다.
+
+상세 범위와 완료 기준은 TODO 문서를 기준으로 한다.
+
+### 현재 품질·복구 원칙
+
+- 내레이션 밀도, 컷 시간 합계, 영문 고유명사 문자열 비교 등은 생성을 실패시키지 않는다.
+- 이런 항목은 비차단 품질 경고로 탐지하고 장면·필드별로 사용자에게 보여준다.
+- 구조적으로 읽을 수 없는 모델 응답처럼 결과를 만들 수 없는 경우 로컬 스토리보드로
+  복구한다.
+- 로컬 복구는 임시 오류 메시지 대신 사용할 수 있는 결과를 주기 위한 안전망이다. 정상
+  모델 결과를 대신하는 기본 경로로 사용하지 않는다.
+- 사용자 화면의 제품명은 `스토리보드`지만 기존 저장 데이터·API 식별자는 별도 호환
+  경계를 가질 수 있다.
+
+### 배포 기준점
+
+- `web/clipper_web_api` `dev`: `727876c`, `origin/dev` 푸시 완료
+- `web/clipper_web_admin` `dev`: `dab2a76`, `origin/dev` 푸시 완료
+- Web API 검증: 134 suites, 1,180 tests 및 build 통과
+- Web Admin 검증: 221 tests 및 build 통과
+- 개발 서버 DB migration과 배포 명령은 배포 기록 문서를 그대로 따른다.
+
+### 주의
+
+- 배포 스크립트는 application migration을 자동 실행하지 않는다.
+- 이미 배포된 migration 파일은 수정하지 않는다.
+- 비용 계산 시 모델 가격 기준일, provider usage, 재시도 여부를 함께 확인한다.
+- 숨겨 둔 버튼을 그대로 다시 노출하지 말고 사용자 정보와 개발자 진단 정보를 먼저
+  분리한다.
+
+---
+
+## 2026-08-07 이전 기록
+
+아래 내용은 당시 구현과 판단을 보존하기 위한 과거 기록이다. 현재 제품 방향이나 다음 작업은
+위의 2026-08-25 기준과 연결 문서를 우선한다.
+
 최신 갱신: 2026-08-07 KST
 
 ## 현재 상태
@@ -73,7 +151,7 @@ AI 숏폼 디렉터 내부 설계·계획·작업 기록은 `clipper_docs`가 �
 - Web API: `npm run build` 통과, 직접 영향 273개 통과·환경 조건 통합 5개 skip
 - Python 렌더: 영향 테스트 66개 통과
 - 전체 Web API suite의 남은 2건은 현재 날짜에 만료된 기존 auth fixture다.
-- Desktop Nest 전체 legacy suite의 기존 variation/TTS mock, 인증 fixture 등은 여전히
+- Desktop Nest 전체 기존 suite의 variation/TTS mock, 인증 fixture 등은 여전히
   red지만 AI 숏폼 디렉터 직접 영향 테스트 실패는 없다.
 - 외부 유료 provider E2E와 사용자가 직접 수행하기로 한
   `npm run build:app:mac:arm64:local-api`는 실행하지 않았다.
@@ -376,9 +454,6 @@ handoff와 세션 기록 커밋까지 origin/main에 push한다.
 
 다음 세션에서 기준점을 확인할 때는 각 저장소에서 `git status --short`,
 `git rev-parse --short HEAD`, `git rev-list --left-right --count '@{upstream}...HEAD'`를 실행한다.
-
-`legacy/adlight_python`의 `fastapi_server.spec` 기존 변경은 사용자 변경이다. 절대
-reset/revert하거나 이번 작업에 포함하지 않는다.
 
 ## 안전 경계
 

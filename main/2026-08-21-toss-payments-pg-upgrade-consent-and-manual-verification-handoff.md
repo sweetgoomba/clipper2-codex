@@ -689,3 +689,110 @@ admin DB에는 backup과 내 명시적 승인 없이 접속하거나 pending adm
   고객 웹 worktree는 `fd714624a80813b53fae2fdc4a155f6bf1250bbb`였고 둘 다 clean이었다.
   `lsof`로 3000·4201·55420 listener를 확인했지만 sandbox 내부 `curl`은 연결할 수 없었으므로
   프로세스의 실제 건강 상태는 다음 세션에서 새로 확인한다.
+
+## 15. 2026-08-24 가격·무료체험·권한 정책 구현
+
+환불 설계에 들어가기 전에 전략팀 가격표와 사용자가 확정한 무료체험·크레딧·플러그인
+정책을 PG feature branch의 API, 고객 웹, 관리자 웹에 반영했다. 설계와 실행 계획은 다음에
+남아 있다.
+
+- `docs/superpowers/specs/2026-08-24-pricing-trial-and-entitlements-design.md`
+- `docs/superpowers/plans/2026-08-24-pricing-catalog-and-discounts.md`
+- `docs/superpowers/plans/2026-08-24-free-trial-credit-and-plan-lifecycle.md`
+- `docs/superpowers/plans/2026-08-24-pricing-and-catalog-clients.md`
+
+### 15.1 확정 가격과 표시 할인율
+
+| 요금제 | 월간 결제 | 월 크레딧 | 연간 일시 결제 | 연간 월 환산 | 전략팀 표시 할인율 | 실제 할인율(반올림) |
+|---|---:|---:|---:|---:|---:|---:|
+| Basic | 5,900원 | 400 | 58,800원 | 4,900원 | 15% | 17% |
+| Pro | 10,900원 | 1,000 | 82,800원 | 6,900원 | 30% | 37% |
+| Business | 29,900원 | 4,000 | 234,000원 | 19,500원 | 35% | 35% |
+
+- 연간 상품은 12개월분을 한 번에 승인하며 크레딧은 월별로 지급한다.
+- 할인율 표시 모드는 전역 설정 `actual | configured`다. `actual`은 월간 가격과 연간 총액으로
+  계산하며 고객 화면에는 정수 반올림 값을, 관리자 화면에는 실제·설정·최종 적용 값을 함께
+  보여준다. 초기 모드는 `actual`이다.
+- 고객 가격 페이지는 카드별 토글 대신 상단의 전역 월간/연간 selector 하나로 세 요금제를
+  함께 전환한다. 연간 카드에는 월 환산액과 연간 일시 결제 총액을 모두 표시한다.
+- recurring product와 top-up pack의 가격·크레딧·활성 상태, 요금제 entitlement mode와
+  allowlist, 무료체험 정책, 할인율 모드를 관리자 화면에서 편집한다. Trial은 내부 무료체험
+  tier이므로 유료 recurring product 생성·활성화·checkout 대상이 될 수 없다.
+
+### 15.2 무료체험·크레딧·플러그인 정책
+
+- Trial은 계정당 한 번 400 크레딧을 지급하며 만료하지 않는다. 무료체험 잔액은 유료 전환
+  때 삭제하지 않고, 유료 크레딧을 먼저 사용한 뒤 Trial 잔액을 fallback으로 사용한다.
+- 유료 월 크레딧은 다음 월 benefit window로 이월하지 않는다. 연간 결제도 월별 benefit
+  window마다 해당 요금제의 월 크레딧을 새로 지급한다.
+- Trial과 Basic은 서로 독립된 allowlist이며 초기 허용 키는 각각 정확히
+  `shortform_url`, `shortform_paste`, `shortform_prompt`, `dialog_highlight`,
+  `dance_highlight`다. 새 플러그인은 자동 허용하지 않는다.
+- Pro와 Business는 `all` 모드다. 현재와 미래의 **등록된** 플러그인은 자동 허용하지만 알 수
+  없는 임의 키는 fail closed한다. 두 tier의 권한 정책은 나중에 독립적으로 바꿀 수 있다.
+- 활성 유료 access가 있으면 그 tier의 플러그인 정책이 우선한다. 유료 access가 끝난 뒤
+  Trial 잔액이 남아 있으면 Trial 권한으로 돌아가며, Trial을 renewable subscription처럼
+  취급하지 않는다.
+- 같은 결제 주기에서 rank가 높은 요금제로 바꾸는 것은 즉시 변경이고, 하향 또는 월간↔연간
+  변경은 예약 변경이다. 유료 top-up은 half-open 유료 이용기간
+  `start <= now < end` 안의 현재 유료 구독에만 허용한다.
+
+### 15.3 구현·검증 결과
+
+- API: `feature/toss-payments-pg-integration` at
+  `a85e2fa665a8497ff66c4939e417fb10fc48df8d`, tracked clean.
+  Node 22에서 161 suites, 1,486 tests와 build가 통과했다.
+- 고객 웹: 같은 branch at `2fbd5e9c6c43b1efefd334cf57dc6bc80254cb43`.
+  207 tests와 production build가 통과했다. 세션 시작 전부터 있던 untracked `build/`는
+  삭제·수정·stage하지 않고 보존했다.
+- 관리자 웹: 같은 branch at `cbf7c52a20555ff736e0be7711dd3645fdfe59c4`, clean.
+  258 tests와 production build가 통과했다. build는 성공했지만 기존 initial bundle budget을
+  39.58 kB 초과한다는 warning은 남아 있다.
+- 최종 교차 리뷰에서 Critical/Important/fix-caused Minor는 없었다. 별도 reviewer가 Trial 유료
+  상품 차단, 현재 유료 구독 기반 top-up gating, 고객/관리자 계약을 다시 검증했다.
+- 실제 브라우저 evidence는 고객 1280px/390px, 관리자 actual/manual/failure/reload/Trial을
+  포함한 9장이다. customer CDP 기록 53개 URL에서 Toss 요청은 0건이었고, 관리자 실패/지연
+  evidence도 server-authoritative reload를 확인했다. 경로는 API worktree의
+  `.superpowers/sdd/2026-08-24-pricing-and-catalog-clients/task-5-visual-evidence/`다.
+- disposable PostgreSQL 16의 55462에서 admin migration 45개(최신 178810), user migration
+  4개를 적용하고 admin down/up, 실제 partial unique constraint, 두 연결을 이용한 무료체험 및
+  크레딧 동시성 경쟁을 확인했다. 검증 컨테이너는 종료 후 삭제했으며 live Toss 요청은 하지
+  않았다.
+
+### 15.4 설계상 판단과 남은 hardening
+
+- 관리자 UI는 기존 API의 plugin PUT과 tier PATCH를 사용한다. `all → allowlist` 전환 때 비어
+  있지 않은 검증된 목록을 먼저 dormant row로 저장하고 mode를 바꾸므로 실패해도 실제 권한은
+  `all`로 유지되고 authority를 reload한다. 보안상 안전하지만 두 HTTP 요청을 하나의 DB
+  transaction으로 묶은 것은 아니다. dormant 설정 변경 자체도 all-or-nothing이어야 한다면
+  추후 결합 endpoint가 필요하다.
+- review에서 남긴 deferred minor는 controller/summary snapshot/lifecycle/legacy quote의 더 좁은
+  회귀 테스트와 기존 관리자 bundle warning이다. transactional debit authorization,
+  paid-period eligibility, annual grant scheduling, legacy quote 안전성의 필수 동작은 구현 및
+  전체 회귀 테스트로 확인했다.
+- SDD ledger와 task report는 최종 판단·명령·리뷰 근거이므로 환불 설계 인수인계가 끝날 때까지
+  삭제하지 않는다.
+
+## 16. 2026-08-24 worktree·프로세스·DB 정리 상태
+
+- 모든 `access-credit` worktree를 제거했다. `feat/access-credit-system-replacement` 브랜치는
+  API/client/admin/infra repository에 안전하게 남겼으며 삭제하지 않았다. 그 worktree에서
+  필요했던 credit/access 설계는 현재 PG branch의 더 최신 catalog, ledger, grant,
+  entitlement, lifecycle 구현에 포함돼 있다.
+- 다음 임시 review/foundation worktree도 사용자 승인 후 제거했다. 브랜치는 삭제하지 않았다.
+  - `clipper_infra-toss-payments-pg-review-checkout`
+  - `clipper_web_api-toss-payments-pg-review-checkout`
+  - `clipper_web_client-toss-payments-pg-review-checkout`
+  - `clipper_web_api-billing-product-catalog-foundation`
+- 남은 `.worktrees`는 PG integration 7개, 별도 `meme-overlay` 작업 5개,
+  `clipper_web_api-operator-jwt-expiry-test` 1개뿐이다.
+- read-only 재확인 시 API 3000은 PID 23631, 고객 웹 4201은 PID 65249이며 둘 다 HTTP 200이다.
+  두 프로세스의 cwd는 feature worktree가 아니라 각각 `web/clipper_web_api`와
+  `web/clipper_web_client`다. 따라서 현재 listener가 이번 feature HEAD를 서비스한다고
+  간주하면 안 된다. admin dev listener는 없다.
+- Docker에는 기존 PostgreSQL 16 개발 DB 세 개만 있다: admin 5433, release 5434, user 5435.
+  read-only transaction으로 확인한 migration 상태는 admin 28/최신 1786600000000,
+  user 7/최신 1786100000000, release 2/최신 1782790000000이다. 이번 세션에는 기존 개발 DB에
+  migration이나 쓰기를 실행하지 않았다. 이전 55420 및 이번 55462 disposable DB는 없다.
+- 다음 본 작업은 14절의 경계를 유지한 돈 환불/provider payment cancellation 설계다.
+  구현, provider 취소 호출, merge, push, deploy는 아직 하지 않았다.
