@@ -1,7 +1,8 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: Web API·Web Admin·Web Customer 통합 checkpoint 완료, Desktop 선별 이식 분석 중
+- 상태: 7개 저장소 integration 후보 통합·선별 이식·로컬 자동 검증 완료, 기존 데이터 보존 전략이
+  정해질 때까지 DB migration은 배포 차단
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 복제본 루트: `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
 - 계획: `2026-09-03-toss-payments-pg-release-candidate-integration-plan.md`
@@ -77,7 +78,10 @@
 
 - 직접적인 새 파일명/timestamp 충돌은 없음.
 - 최신 API `origin/dev`에는 Admin DB timestamp `1785100000000`을 공유하는 migration 두 개가 이미
-  존재한다. 실제 runner 동작을 폐기 가능한 DB에서 확인해야 한다.
+  존재한다. 폐기 가능한 빈 PostgreSQL 16 DB에서 TypeORM runner를 실행한 결과 두 migration이
+  datasource 등록 순서대로 모두 적용됐다.
+- 빈 DB 전체 적용 결과: User 9개, Admin 54개, Release 2개가 성공했고, 같은 DB에 두 번째로
+  실행했을 때 세 연결 모두 `No pending migrations`였다.
 - 기존 데이터 삭제 위험:
   - `1786560000000-MigrateReviewPaymentsToTossPaymentsPg`: 기존 `payment_events`,
     `payment_orders`를 조건 없이 삭제한다.
@@ -88,6 +92,38 @@
   - 마지막 migration의 `down`은 표만 빈 상태로 다시 만들며 기존 행을 복원하지 못한다.
 - 결론: 운영 또는 현재 개발 DB에서 실행 금지. 별도 데이터 보존·변환 절차가 확인되기 전까지
   release 위험으로 유지한다.
+
+### 6-1. 폐기 가능한 DB 검증 checkpoint
+
+- 사용 환경:
+  - 로컬 `postgres:16-alpine` 임시 container
+  - host에는 `127.0.0.1:55439`로만 노출
+  - 현재 개발 DB port인 5433/5434/5435는 사용하지 않음
+  - 빈 검증 DB 3개와 구형 데이터 fixture DB 1개만 사용
+  - 검증 종료 후 `--rm` container를 중지해 위 폐기용 DB 4개를 모두 제거함
+- 빈 DB 검증:
+  - User migration 9개 전체 적용 성공
+  - Admin migration 54개 전체 적용 성공
+  - Release migration 2개 전체 적용 성공
+  - 세 DB 모두 재실행 시 pending migration 0개
+  - Admin의 동일 timestamp `1785100000000` 두 migration은
+    `EnforceSingleYoutubeCredential` 다음 `SeedShortformDirectorStrategyOperationPolicy` 순으로 둘 다 기록
+  - migration 직후 필수 유료 operation policy는 `variation.render` 1개만 존재했다. 실제 앱 시작 때
+    실행되는 `OperationPolicySeeder`를 같은 DB에 적용하자 숏폼 3종, 하이라이트 2종, 베리에이션 1종
+    총 6개가 모두 생성됐다. 따라서 향후 준비 검증은 migration뿐 아니라 앱 시작 seed 결과도 확인해야 함
+- 구형 데이터 fixture 검증:
+  - 구형 무통장 주문 1건과 event 1건을 넣은 뒤 `1786560000000`을 적용하자 둘 다 0건이 됨
+  - 구형 `shortform.create` 실행 1건과 차감 장부 1건을 넣은 뒤 `1786650000000`을 적용하자 둘 다
+    0건이 되고 새 입력 방식별 policy 3개가 생성됨
+  - 구형 purchase request, license, token usage, credit ledger를 넣은 뒤 `1786800000000`까지 적용하자
+    `plans`, `purchase_requests`, `licenses`, `token_usage`, `credit_ledger` 표 자체가 모두 없어짐
+  - `1786800000000`의 `down`을 실행하자 위 표는 다시 생겼지만 모든 행 수가 0이어서 데이터 복원은
+    되지 않음
+- 판정:
+  - 새 빈 DB 설치 순서, 반복 실행, 앱 시작 operation seed는 검증됨
+  - 기존 데이터가 있는 DB로 바로 올리는 것은 안전하지 않음
+  - 기존 무통장 주문, 이용권, 토큰 사용량, 크레딧 장부를 새 구조로 옮기거나 보관하는 migration과
+    검증 기준이 별도로 승인되기 전에는 stage/prod 배포 후보로 승격할 수 없음
 
 ### 7. 인수인계 문서와 현재 상태의 차이
 
@@ -194,11 +230,13 @@
   - Git 검사: unmerged 0, unstaged 0, `git diff --cached --check` 통과, commit 후 working tree clean
   - staged credential 형태 검사: 발견 0
 - 남은 위험:
-  - 현재 DB와 5433/5434/5435에는 migration을 실행하지 않았다.
-  - `1785100000000` timestamp가 두 Admin migration에 이미 중복되어 있다. 폐기 가능한 DB에서 실제
-    TypeORM 실행 결과를 확인해야 한다.
-  - `1786560000000`, `1786650000000`, `1786800000000`의 기존 데이터 삭제와 변환 전략은 아직
-    폐기 가능한 DB fixture로 검증하지 않았다.
+  - 현재 DB와 5433/5434/5435에는 migration을 실행하지 않았고 앞으로도 데이터 보존 절차 승인 전에는
+    실행하면 안 된다.
+  - 동일 timestamp 두 migration은 빈 DB에서 정상 적용됐지만, 장기적으로 migration 이름·적용 순서를
+    운영 점검표에서 함께 확인해야 한다.
+  - `1786560000000`, `1786650000000`, `1786800000000`의 데이터 삭제는 fixture에서 실제로 재현됐다.
+    기존 무통장 주문·이용권·토큰 사용·구형 크레딧 기록을 새 구조로 옮기는 별도 설계와 테스트가
+    release blocker다.
   - Toss test key와 실제 webhook/결제/취소/환불은 이번 세션 범위상 실행하지 않았다.
   - `npm ci` audit 결과 10건(낮음 1, 보통 2, 높음 7)이 보고됐다. 통합 범위를 벗어나는 자동
     `npm audit fix`는 실행하지 않았다.
@@ -285,36 +323,247 @@
 
 ### Angular
 
-- 상태: 시작 전
-- 충돌 원인: PG branch 이후 최신 `dev` 구조가 크게 변경됨
-- 보존 기능: 최신 UI/메모리/settings/plugin 구조 + 필요한 PG 연결
-- 해결 방식: 오래된 branch 전체 merge 금지, 동작 단위 선별 이식
-- 실행한 테스트: 미실행
-- 남은 위험: 선별할 정확한 변경 범위
+- 상태: 필요한 PG 동작 선별 이식 및 로컬 자동 검증 완료
+- integration commits:
+  - `f7c7897f feat: forward-port desktop credit integration`
+  - `7b56e2a3 fix: label account-level credit history accurately`
+- 출발점인 최신 `origin/dev`: `fc9ae5e86b8b48af60ef91c4251adfc6b8964756`
+- 충돌 원인:
+  - 오래된 PG branch 뒤로 최신 `dev`가 694 commit 전진해 화면, 플러그인, 렌더링, 메모리 관리
+    구조가 크게 달라졌다. 따라서 branch 전체를 merge하면 최신 데스크톱 기능을 과거 구조로 되돌릴
+    위험이 있다.
+  - 최신 Angular는 폐기된 로컬 `/licenses/current`, `/operations/ledger` 응답 모양을 화면에 쓰고
+    있었지만, 현재 Web API는 `/access/current`, `/credits/summary`, `/credits/ledger`로 나뉘어 있다.
+  - 과거 PG 구현은 플랜별 플러그인 사용 제한을 전제로 했지만 최종 정책은 모든 플랜의 플러그인
+    구성이 같고, 크레딧이 들지 않는 기능은 결제 상태와 무관하게 사용할 수 있어야 한다.
+  - 과거에는 숏폼 생성 전체가 `shortform.create` 하나였지만 현재 API는 URL·본문 붙여넣기·프롬프트
+    생성을 서로 다른 과금 작업으로 구분한다.
+- 보존 기능:
+  - 최신 `dev`의 UI foundation, settings/home 화면 구조, 메모리 최적화, 플러그인 수명주기와
+    설치 상태 확인 구조
+  - 무료 기능과 플러그인이 구독 여부 때문에 막히지 않는 최종 정책
+  - 현재 Web API가 반환하는 이용 권한, 사용 가능/보류/출처별 크레딧, 크레딧 변동 내역
+  - Customer의 현재 요금제, 결제 내역, 크레딧 화면으로 가는 링크
+  - URL·붙여넣기·프롬프트별 정확한 숏폼 과금 키
+- 해결 방식:
+  - 오래된 PG branch는 merge/cherry-pick하지 않고 현재 파일에 필요한 동작만 TDD로 옮겼다.
+  - 화면이 사용하는 `CurrentLicenseSummary` 이름은 대규모 UI 재작성과 회귀를 피하기 위한 내부
+    adapter로 유지하되, 실제 호출은 `/access/current`와 `/credits/summary`를 동시에 읽도록 바꿨다.
+  - 화면에는 사용 가능 크레딧, 보류 크레딧, 전체 보유량과 원천별 잔액을 정확한 이름으로 표시한다.
+  - 최근 내역은 현재 `/credits/ledger` 응답을 기존 최신 UI의 표시 model로 변환한다.
+  - 새 장부 응답에는 기기 세션이 없으므로 모든 행을 `알 수 없는 기기`로 오해하게 표시하지 않고
+    `계정 크레딧`으로 표시한다. 기존 세션 정보가 실제로 있는 행은 원래 기기 이름을 유지한다.
+  - 요금제 버튼은 `/pricing`, 결제 내역은 `/app/payment-history`, 전체 크레딧 내역은
+    `/app/credits`로 연결했다.
+  - 숏폼 project의 저장된 입력 방식에 따라 `shortform_url.create`, `shortform_paste.create`,
+    `shortform_prompt.create` 중 하나를 선택한다.
+  - 플러그인 entitlement guard는 추가하지 않았고 기존 route의 설치 여부 guard만 유지했다.
+- 실행한 테스트:
+  - 최신 `dev` 기준선: 전체 Karma 4,254/4,254 통과
+  - 최신 `dev` 기준선: style 6/6 통과, `npm run build` 성공
+  - TDD RED: 현재 API 응답·원천별 잔액·새 포털 경로·대문자 `INSUFFICIENT_CREDITS`·숏폼별
+    operation key를 기대하도록 바꾸자 구현 전 TypeScript/expectation 실패 확인
+  - 첫 GREEN: 구현 후 관련 테스트 328개 통과, 새 버튼 이름을 반영하지 않은 기존 expectation 2개 실패
+  - expectation 수정 후 집중 검사: 357/357 통과
+  - 직접 코드 리뷰 RED: 세션 없는 새 장부 행과 홈 빈 상태의 잘못된 문구 2건 실패 확인
+  - 표시 수정 집중 검사: 16/16 통과
+  - 수정 후 최종 전체: 4,256/4,256 통과
+  - 최종 style: 6/6 통과
+  - 최종 build: `npm run build` 성공, 초기 bundle 253.14 kB
+  - 샌드박스 안에서 esbuild deadlock으로 두 차례 종료됐지만 같은 Node 22 명령을 샌드박스 밖에서
+    실행하자 집중/전체 테스트와 build가 모두 통과했다.
+  - Git 검사: unmerged 0, 충돌 표식 0, `git diff --check` 통과, commit 후 working tree clean
+- 남은 위험:
+  - Web API integration 후보 및 NestJS integration 후보를 실제로 함께 띄운 데스크톱 E2E는 아직
+    실행하지 않았다.
+  - 원천별 잔액이 화면 폭이 좁은 실제 패키지 창에서 어떻게 줄바꿈되는지는 수동 확인이 필요하다.
+  - `npm ci` audit 결과 17건(보통 8, 높음 9)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### NestJS
 
-- 상태: 시작 전
-- 충돌 원인: PG branch 이후 module/plugin/render 구조가 크게 변경됨
-- 보존 기능: 최신 구조/메모리 최적화 + 최종 정책과 맞는 PG 연결
-- 해결 방식: 동작 단위 선별 이식, 구독 기반 무료 기능 차단 제외
-- 실행한 테스트: 미실행
-- 남은 위험: API와 desktop 계약 차이
+- 상태: 필요한 PG 동작 선별 이식 및 로컬 자동 검증 완료
+- integration commits:
+  - `9f5b411 feat: forward-port desktop access and credit proxies`
+  - `78270ec test: retire legacy desktop license proxy contract`
+  - `f306519 feat: forward-port durable desktop operation billing`
+  - `5b50588 fix: retire stale desktop operation ledger proxy`
+- 출발점인 최신 `origin/dev`: `b817034513d19adf1dfecba4a0b480518d9271f4`
+- 충돌 원인:
+  - 오래된 PG branch 전체를 합치면 최신 플러그인 수명주기, 렌더 재시도, 미디어 가져오기와 메모리
+    최적화를 과거 구현으로 덮을 위험이 있다.
+  - 데스크톱 로컬 서버에는 폐기된 license proxy가 남아 있었고 현재 Web API의 access/credit API와
+    주소 및 응답 형식이 달랐다.
+  - 과거 PG 플러그인 접근 차단은 모든 플랜에서 같은 플러그인을 제공한다는 최종 정책과 맞지 않는다.
+  - 실제 크레딧 차감 뒤 성공·실패를 판단할 근거가 일부 렌더 경로에 영구 저장되지 않았고,
+    숏폼의 작업 키도 입력 방식별 현재 API 계약과 달랐다.
+- 보존 기능:
+  - 최신 `dev`의 plugin/render/job 구조, 렌더 재시도와 메모리 최적화
+  - 사용자의 bearer token을 저장하지 않고 요청마다 Web API로 전달하는 인증 경계
+  - 현재 Web API의 access, credit summary/grants/ledger 계약
+  - 대사 하이라이트, 댄스 하이라이트, 숏폼 렌더, 베리에이션 렌더의 차감·성공·실패 기록
+  - 무료 기능을 결제 상태로 차단하지 않는 최종 정책
+- 해결 방식:
+  - 오래된 PG branch를 merge하지 않고 현재 구조에 새 `AccessModule`, `CreditsModule`과 proxy를
+    추가하고 폐기된 `LicensesModule`을 제거했다.
+  - operation 시작 요청에는 실제 공급자/렌더 작업을 확인할 수 있는 evidence를 필수로 보내고,
+    완료·실패 때 같은 run을 갱신하도록 각 workflow에 연결했다.
+  - 숏폼은 저장된 source mode에 따라 URL·붙여넣기·프롬프트별 operation key를 선택한다.
+  - quote 거절 사유와 ledger 주소를 현재 API의 `INSUFFICIENT_CREDITS`, `/credits/ledger`로 맞췄다.
+  - 새 `/credits/ledger` proxy와 동시에 남아 있던 구형 `/operations/ledger` route 및 구형 반환 타입은
+    제거해 장부 계약을 한 경로로 통일했다.
+  - 과거 플러그인 entitlement/라이선스 차단 코드는 의도적으로 이식하지 않았다.
+- 실행한 테스트:
+  - 최신 `dev` 기준선 build: 성공
+  - 최신 `dev` 원본 전체 test에서 `template-builder-no-s3-storage.test.js`는 untracked
+    `.env.packaged` 부재로 실패하고, `web-api-client.test.js`는 다섯 번째 테스트의 Promise가
+    끝나지 않아 뒤 10개가 취소되는 기존 문제를 확인
+  - access/credit proxy TDD: 3/3 통과
+  - operation/evidence/shortform 집중 검사: 최종 52/52 통과
+  - 구형 operation ledger 제거 TDD RED: route/service 2건 실패 확인, 구현 제거 후 관련 6/6 통과
+  - 위 두 기준선 문제 파일만 제외한 수정 후 최종 전체: 2,239/2,239 통과
+  - 최종 build: `npm run build` 성공
+  - 샌드박스 안 전체 실행은 local loopback listen 권한(`EPERM`)으로 실패했으나, 같은 명령을
+    샌드박스 밖에서 실행해 2,239개 전부 통과했다.
+  - source 검사: 폐기된 `no_active_license`, `shortform.create` 상수, `/operations/ledger`,
+    `/licenses/current` 참조 없음
+  - Git 검사: 세 checkpoint commit 후 working tree clean
+- 남은 위험:
+  - 기준선의 `.env.packaged` 의존 테스트와 pending Promise 테스트는 이번 PG 범위에서 임의로 고치지
+    않았다. 따라서 두 파일을 포함한 원문 그대로의 전체 test 명령은 아직 green이 아니다.
+  - Web API integration 후보를 실제로 연결한 HTTP E2E와 실패 후 실제 크레딧 반환 확인은 하지 않았다.
+  - `npm ci` audit 결과 5건(보통 1, 높음 4)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### Electron
 
-- 상태: 시작 전
-- 충돌 원인: Git 수준 충돌은 없지만 PG access gate가 최종 정책과 충돌 가능
-- 보존 기능: 최신 Electron 구조 + 필요한 일반 결제 포털 연결
-- 해결 방식: 정책에 맞는 변경만 선별 이식
-- 실행한 테스트: 미실행
-- 남은 위험: 과거 access gate를 제외했을 때 남는 유효 변경 확인
+- 상태: 유효한 PG test 계약 선별 이식 및 로컬 자동 검증 완료
+- integration commit: `578a12a test: use current portal handoff path`
+- 출발점인 최신 `origin/dev`: `53cdb7d21996a758b260fb266f7a5e10d1f9bc69`
+- 충돌 원인:
+  - PG branch의 주 구현은 Electron IPC에서 플러그인 실행과 모델 다운로드 전에 Web API access를
+    검사하고 차단한다. 이는 모든 플랜의 플러그인 구성이 같고 무료 기능은 결제 상태와 무관하게
+    쓸 수 있어야 한다는 최종 정책과 충돌한다.
+  - PG branch의 나머지 변경은 포털 URL 테스트가 삭제된 `/app/purchase`를 예시로 쓰지 않고 현재
+    `/app/credits`를 사용하도록 고친 test-only commit이다.
+- 보존 기능:
+  - 최신 `dev`의 Electron 보안, 프로세스/플러그인 수명주기, 메모리·로그 최적화
+  - renderer가 요청한 상대 경로만 허용하고 일회용 handoff code로 Customer 포털을 여는 기존 bridge
+  - 결제 상태와 무관한 플러그인 실행 및 명시적 모델 설치 동작
+  - 현재 Customer `/app/credits` 경로를 사용하는 포털 handoff 계약
+- 해결 방식:
+  - `50610d9 feat: enforce plugin access in electron ipc`와 그 access authorizer/tests는 이식하지 않았다.
+  - `7f5d4d3 test: use current portal handoff path`만 cherry-pick했다. bridge 구현은 원래 임의의 안전한
+    상대 경로를 지원하므로 source 변경은 필요하지 않았다.
+  - 최종 검사에서 `src/main/access/web-access-authorizer.ts`와 access authorizer 참조가 없음을 확인했다.
+- 실행한 테스트:
+  - 최신 `dev` 기준 build: `npm run build` 성공
+  - 최초 test/build 병렬 실행은 테스트가 `dist-electron` 생성 전에 시작해 module-not-found로 실패;
+    이 저장소는 build 뒤 test 순서가 필요함을 확인
+  - Electron binary 최초 lazy install 때 병렬 test worker가 같은 압축 해제 경로를 사용해 6건 실패;
+    단일 설치가 끝난 뒤 재실행해 해소
+  - 포털 bridge 단독: 변경 전 5/5, 변경 후 포함한 핵심 검사 22/22 통과
+  - 최종 build: `npm run build` 성공
+  - 패키징 fixture 파일 하나를 제외한 전체: 341/341 통과
+  - 원문 `npm test`: 347/348 통과, 아래 환경 의존 패키징 fixture 1건 실패
+  - Git 검사: 최종 정책과 충돌하는 access authorizer 없음, commit 후 working tree clean
+- 남은 위험:
+  - `storyboard-document-only-packaging.test.mjs`의 fresh staged resources 검사는 이 복제본 옆의 Nest
+    `dist/bundled`와 커밋하지 않는 `.env.packaged`를 요구해 실행 환경에서 1건 실패했다. secret 파일을
+    임의 생성하거나 출력하지 않았다.
+  - 실제 Angular → Electron → Customer desktop handoff 브라우저 E2E는 아직 실행하지 않았다.
+  - 앱 패키징, 서명, notarization, 실행은 이번 세션 범위에서 하지 않았다.
 
 ### Infra
 
-- 상태: 시작 전
-- 충돌 원인: Git 수준 충돌은 없지만 과거 3대 서버 가정과 현재 장비 구성이 다름
-- 보존 기능: PG 배포에 필요한 로컬 설정 후보
-- 해결 방식: 로컬 branch에만 merge, 서버에는 미적용
-- 실행한 테스트: 미실행
-- 남은 위험: `m2-db`, `m2-proxy`, `m2-stage`, `m4-prod`, `storage`별 실제 상태 미확인
+- 상태: 로컬 integration branch merge 및 정적 검증 완료, 실제 적용은 보류
+- integration commit: `fa92eda merge: integrate Toss Payments PG infrastructure candidate`
+- merge 부모:
+  - 최신 `origin/dev`: `4d3202263d84de9d046a1abc6eb51826a47009ae`
+  - PG 전체 이력: `e6ae78f` (`feature/toss-payments-pg-integration`)
+- 충돌 원인:
+  - Git 파일 충돌은 없었다. PG branch가 최신 `dev`의 직계 후손이기 때문이다.
+  - 운영 의미의 충돌은 남아 있다. PG runbook 일부는 과거 개발 배포 배치를 전제로 하지만 현재 실제
+    장비는 `m2-db`, `m2-proxy`, `m2-stage`, `m4-prod`, `storage` 다섯 역할로 나뉜다.
+  - 어느 장비에서 어떤 compose project, 경로, secret mount, DB, NPM proxy host를 관리하는지 아직
+    사용자 장비에서 확인하지 않았다.
+- 보존 기능:
+  - 최신 release runner와 Windows runner 구성
+  - API 컨테이너에만 전달되는 Toss widget/billing credential 두 쌍과 독립 HMAC secret 후보
+  - 삭제된 review-mode/direct 변수 거부, placeholder·중복 credential·위험한 URL 거부
+  - 검증 실패 시 실제 배포 전에 멈추고 값 자체는 출력하지 않는 preflight
+- 해결 방식:
+  - PG branch 전체를 no-ff merge해 로컬 후보 설정과 이력을 보존했다.
+  - `TOSS_PAYMENTS_REVIEW_MODE` 기반 옛 validator를 최종 7개 runtime 변수 validator로 교체했다.
+  - 이 commit은 어떤 현재 PC에도 적용하지 않았고, deploy script도 실행하지 않았다.
+  - 5대 장비에 대한 자동 매핑은 하지 않았다. 사용자가 각 PC에서 직접 명령을 실행하면 Codex가
+    결과를 받아 다음 한 단계만 안내하는 방식으로 고정했다.
+  - 장비별 첫 read-only 확인표는
+    `2026-09-03-toss-payments-pg-infra-five-pc-readonly-checklist.md`에 별도로 기록했다.
+- 실행한 테스트:
+  - 최신 `dev` 기준 root: 41 passed, Windows 전용 1 skipped
+  - 최신 `dev` 기준 monitor: 6/6 통과
+  - merge 후 root: 104 passed, Windows 전용 1 skipped
+  - merge 후 monitor: 6/6 통과
+  - `sh -n scripts/validate-toss-payments-env.sh`, `sh -n scripts/deploy-dev.sh` 통과
+  - Infra runbook이 참조하는 API test-key checklist 파일 존재 확인
+  - `git diff --cached --check` 통과, unmerged 0, commit 후 working tree clean
+  - monitor `npm ci`: 21 packages audit, vulnerability 0
+- 남은 위험:
+  - 다섯 장비의 OS, 실제 역할, 저장소/compose 경로, container 이름, network, volume, secret mount,
+    방화벽과 reverse proxy 설정을 아직 확인하지 않았다.
+  - 예시의 DB host/IP와 runbook 명령을 실제 구성으로 검증하기 전에는 실행하면 안 된다.
+  - Nginx Proxy Manager의 query-string access log 차단 여부와 정확한 webhook event 설정을 확인하지
+    않았다.
+  - 서버 env의 7개 변수는 값이 있는지조차 확인하지 않았다. 값 자체를 채팅이나 로그에 출력해서는
+    안 된다.
+  - 어떤 서버 접속, 설정 변경, 컨테이너 재생성, migration, 배포도 실행하지 않았다.
+
+## 직접 코드 리뷰 checkpoint
+
+Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에서는 하위 리뷰 agent를 사용할 수
+없으므로, integration diff와 API 계약을 저장소별로 다시 읽고 교차 검사했다.
+
+### 리뷰에서 찾아 고친 항목
+
+1. NestJS에 새 `/credits/ledger` proxy와 함께 구형 `/operations/ledger` route 및 구형 반환 타입이
+   남아 있었다. 실제로는 새 JSON을 구형 타입이라고 잘못 주장하는 계약이었다.
+   - RED: 구형 controller/service method가 없어야 한다는 테스트 2건 실패
+   - 해결: 구형 route, service method, 반환 타입 제거; 새 CreditsModule route만 유지
+   - commit: `5b50588 fix: retire stale desktop operation ledger proxy`
+2. Angular는 새 계정 단위 크레딧 내역에 세션 정보가 없는데도 `알 수 없는 기기`로 표시했다.
+   - RED: 세션 없는 행과 홈 빈 상태 문구 테스트 2건 실패
+   - 해결: `계정 크레딧`으로 표시하고 홈도 `변동 내역` 용어로 통일; 실제 세션이 있으면 기존 라벨 유지
+   - commit: `7b56e2a3 fix: label account-level credit history accurately`
+3. 빈 Admin DB는 migration 직후 필수 operation policy 6개 중 1개만 있었다.
+   - 조사 결과 나머지는 migration이 아니라 실제 앱 시작의 `OperationPolicySeeder`가 생성하는 구조였다.
+   - 같은 폐기용 DB에서 seeder를 실행해 6개 모두 생성되는 것을 확인했다.
+   - 후속 서버 준비 점검에는 migration 완료와 앱 시작 seed 결과를 둘 다 포함해야 한다.
+
+### 최종 Git 교차 검사
+
+| 저장소 | 최종 integration HEAD | PG 이력 방식 | working tree / unmerged / diff check |
+|---|---|---|---|
+| Web API | `f1517f35f83da69ead02c10dac9ff079ac2aaa00` | 전체 merge | clean / 0 / 통과 |
+| Web Admin | `ed1b5a4a7ffc2c541d37116ecf4cf21bc61255ef` | 전체 merge | clean / 0 / 통과 |
+| Web Customer | `bedafa38e02b4c800fc50efb086827eff4579e90` | 전체 merge | clean / 0 / 통과 |
+| Angular | `7b56e2a38a8991a0a67c5af46eacda0eb6c020da` | 필요한 동작 선별 이식 | clean / 0 / 통과 |
+| NestJS | `5b50588442adf995e9c76958af7919886ecebda8` | 필요한 동작 선별 이식 | clean / 0 / 통과 |
+| Electron | `578a12a8883c8268f28db7edae269752869159c4` | 유효한 test 계약만 선별 이식 | clean / 0 / 통과 |
+| Infra | `fa92eda300f87be37187df703802c6bf2e447d0c` | 전체 merge, 실제 적용 보류 | clean / 0 / 통과 |
+
+- API/Admin/Customer/Infra는 PG branch HEAD가 integration HEAD의 ancestor임을 확인했다.
+- Angular/NestJS/Electron은 의도대로 PG branch 전체가 ancestor가 아니며 선별 commit만 존재한다.
+- Customer source의 삭제된 `/app/purchase`, `/app/history`는 부정 회귀 테스트에서만 발견됐다.
+- Angular/NestJS/Electron source에는 구형 license/ledger 경로, 구형 소문자 잔액 부족 코드,
+  `shortform.create`, 구독 기반 plugin 차단 구현이 남지 않았다.
+- 원본 7개 저장소는 모두 `dev == origin/dev`, working tree clean이다.
+- 기존 PG worktree 7개의 branch/HEAD는 불변이며 API `docs/api/openapi.yaml.orig`와 Customer
+  `build/d2x_logo.icns`, `build/d2x_logo.ico`도 untracked 상태로 보존돼 있다.
+
+### 리뷰 판정
+
+- 로컬 코드 release candidate: 준비됨. 7개 저장소가 독립 integration branch에 있고 자동 검증과
+  재검증 가능한 commit이 남아 있다.
+- 실제 stage/prod 배포: 준비되지 않음. 기존 DB 데이터 보존 전략, 실제 5대 PC 구성, test-key 수동
+  결제 흐름 및 브라우저/데스크톱 E2E가 남아 있다.
+- 가장 큰 차단 항목: destructive migration 3개의 기존 데이터 삭제. 이 항목을 해결하거나
+  “기존 개발 데이터는 이관하지 않고 새 운영 DB를 사용한다”는 명시적 결정을 내리기 전에는 배포 금지.
