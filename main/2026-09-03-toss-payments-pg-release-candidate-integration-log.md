@@ -1,7 +1,7 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: 준비 중
+- 상태: 독립 복제본 준비 완료, Web API 기준선 검증 대기
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 복제본 루트: `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
 - 계획: `2026-09-03-toss-payments-pg-release-candidate-integration-plan.md`
@@ -36,9 +36,9 @@
 | Web API | `727876c701c7d85302a46d48ea88e3734dd25471` |
 | Web Customer | `4b361efc742db797e85848c5aea90eb1736194c5` |
 | Web Admin | `eae522f4908c65a55680be09353dd95df2a71190` |
-| Angular | `09ce2a3620e92e30e59f0091e9d0c4d3364cec8a` |
-| NestJS | `2c7612b845ea31370ba792246f3e21b63db51640` |
-| Electron | `301ca3403340a73010b24acab34e06418e8bb5a3` |
+| Angular | `fc9ae5e86b8b48af60ef91c4251adfc6b8964756` |
+| NestJS | `b817034513d19adf1dfecba4a0b480518d9271f4` |
+| Electron | `53cdb7d21996a758b260fb266f7a5e10d1f9bc69` |
 | Infra | `4d3202263d84de9d046a1abc6eb51826a47009ae` |
 
 ### 3. 최신 dev와 PG branch 차이
@@ -50,9 +50,9 @@
 | Web API | 57 / 139 | 9 | 전체 이력을 합치고 의미별로 해결 |
 | Web Customer | 0 / 31 | 0 | 전체 merge |
 | Web Admin | 10 / 21 | 3 | 전체 merge 후 양쪽 화면 보존 |
-| Angular | 694 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
-| NestJS | 357 / 7 | 3 | 필요한 PG 동작만 선별 이식 |
-| Electron | 50 / 3 | 0 | 필요한 PG 동작만 선별 이식 |
+| Angular | 702 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
+| NestJS | 370 / 7 | 3 | 필요한 PG 동작만 선별 이식 |
+| Electron | 51 / 3 | 0 | 필요한 PG 동작만 선별 이식 |
 | Infra | 0 / 6 | 0 | 로컬 후보 설정으로 merge |
 
 ### 4. API에서 확인된 충돌
@@ -91,7 +91,10 @@
 
 ### 7. 인수인계 문서와 현재 상태의 차이
 
-- 인수인계 이후 최신 `origin/dev`를 다시 fetch해 위 HEAD로 재확인했다.
+- 인수인계 이후 최신 `origin/dev`를 다시 fetch해 위 HEAD로 재확인했다. 세션 도중 Angular는
+  `09ce2a36`에서 `fc9ae5e8`로, NestJS는 `2c7612b`에서 `b817034`로, Electron은
+  `301ca340`에서 `53cdb7d`로 더 전진했다. 새 commit은 렌더 재시도, 플러그인 수명주기,
+  미디어 가져오기 안정화 관련이며 제외 대상으로 정한 meme/AI video merge는 아니다.
 - 원본 저장소 중 API/Angular/NestJS/Electron은 처음 확인 당시 `dev`가 아닌 meme 통합용
   브랜치가 checkout돼 있었다. Admin 원본은 `origin/dev`보다 2 commit 뒤였다.
 - 사용자 결정에 따라 기존의 “새 worktree 생성” 방식은 폐기하고 “원본 `dev` 최신화 후 독립
@@ -108,6 +111,24 @@
 - 포함: 이 세션 시작 전 존재한 PG 관련 문서 19개 변경
 - 검증: `git diff --cached --check` 통과, credential 형태 정규식 검사에서 발견 없음
 - 상태: commit 직후 `.codex` working tree clean, `origin/main`보다 1 commit 앞섬
+
+## 원본 최신화와 독립 복제본 checkpoint
+
+- 원본 7개 저장소를 모두 `dev`로 전환했다.
+- 각 로컬 `dev`에는 `origin/dev`에 없는 고유 commit이 0개임을 확인한 뒤 `--ff-only`로만
+  최신화했다.
+- 최신화 후 7개 원본은 모두 `HEAD == origin/dev`, working tree clean이다.
+- 기존 PG worktree 7개는 branch와 HEAD가 처음 확인한 값 그대로다.
+- API worktree의 `docs/api/openapi.yaml.orig`와 Customer worktree의 `build/`도 그대로 남아 있다.
+- 복제본 7개를
+  `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/` 아래에
+  `--no-hardlinks`로 만들었다.
+- 각 복제본에는 로컬 원본을 가리키는 `source`와 Git 서버를 가리키는 `origin` 두 remote가 있다.
+- 각 복제본에서 실제 Git 서버의 `origin/dev`를 다시 fetch한 후
+  `integration/toss-payments-pg-20260903` 브랜치를 만들었다.
+- 7개 복제본 모두 integration HEAD와 `origin/dev`가 같고 working tree가 깨끗하다.
+- 7개 복제본 모두 `source/feature/toss-payments-pg-integration`이 위 PG HEAD와 정확히 같다.
+- 서버 접속, DB 접속, migration, 배포는 실행하지 않았다.
 
 ## 저장소별 진행 기록
 
