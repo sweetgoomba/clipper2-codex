@@ -1,5 +1,9 @@
 # 토스페이먼츠 PG 요금제 상향 동의 보강 및 수동 검증 인계
 
+> **최신 상태 안내 (2026-08-26):** 이 문서는 기존 PG·수동 검증·환불 사전조사의 정본이다.
+> 가격·무료체험·권한 구현 이후의 최신 HEAD, 테스트, worktree, 프로세스, DB 상태는
+> `2026-08-26-toss-payments-pg-pricing-trial-entitlements-session-handoff.md`를 우선한다.
+
 - 기록일: 2026-08-21 (Asia/Seoul)
 - 상태: 승인된 무환불 PG Task 1~25와 후속 상향 동의·webhook 보강은 구현돼 있으나 전체
   PG 제품은 완료되지 않았다. 일부 핵심 test-key 시나리오, `BILLING_DELETED` transport,
