@@ -1,7 +1,7 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: Web API 통합 checkpoint 완료, Web Admin 시작 대기
+- 상태: Web API·Web Admin 통합 checkpoint 완료, Web Customer 시작 대기
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 복제본 루트: `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
 - 계획: `2026-09-03-toss-payments-pg-release-candidate-integration-plan.md`
@@ -205,12 +205,43 @@
 
 ### Web Admin
 
-- 상태: 시작 전
-- 충돌 원인: 최신 credential/화면 변경과 PG 운영 메뉴가 같은 mock/model/header를 수정
-- 보존 기능: 최신 운영 화면 + PG 상품/결제/크레딧/환불 화면
-- 해결 방식: 미정
-- 실행한 테스트: 미실행
-- 남은 위험: 미정
+- 상태: 통합 및 로컬 자동 검증 완료
+- integration commit: `ed1b5a4a7ffc2c541d37116ecf4cf21bc61255ef`
+- merge 부모:
+  - 최신 `origin/dev`: `eae522f4908c65a55680be09353dd95df2a71190`
+  - PG 전체 이력: `dab857c45fdb76600a128f8008862b2b35b9afae`
+- 충돌 원인:
+  - API mock interceptor: 최신 `dev` 쪽 충돌 구간은 비어 있었고, PG는 상품·접근권한·크레딧·
+    결제·환불·복구용 mock API를 추가했다.
+  - 공용 model: PG는 중단된 operation 복구 model을 추가했고, 최신 `dev`는 Gemini API key
+    provider를 지원했다.
+  - 공용 header test: 최신 `dev`는 API key·버전·운영자 메뉴를 검사했고, PG는 상품·결제·환불·
+    복구 운영 메뉴를 검사했다.
+- 보존 기능:
+  - 최신 API key 화면과 Naver/OpenAI/Gemini/YouTube provider 계약
+  - 최신 버전·운영자 메뉴
+  - PG 상품·회원 접근권한·크레딧·결제 이행·결제 운영·환불·operation 복구·구독 갱신 정책 화면
+  - PG가 새 catalog/access 흐름으로 교체한 구형 승인·license request 화면은 되살리지 않음
+- 해결 방식:
+  - PG mock endpoint 전체를 유지했다.
+  - `ApiKeyProvider`에 최신 `gemini`를 포함하고 PG의 operation 복구 model도 유지했다.
+  - header 테스트는 어느 한쪽을 버리지 않고 최신 메뉴 검사와 PG 운영 메뉴 검사를 합쳤다.
+  - 나머지 비충돌 파일은 PG 전체 merge 결과를 유지하고 route·화면 테스트로 연결 여부를 검증했다.
+- 실행한 테스트:
+  - 최신 `dev` 기준선: 전체 Karma 227/227 통과
+  - 최신 `dev` 기준선: `npm run build` 성공
+  - 충돌 관련 집중 검사: mock interceptor, header, portal routes, API key view-model 54/54 통과
+  - 최종 전체: `npm test -- --watch=false` → 366/366 통과
+  - 최종 build: `npm run build` → 성공
+  - Git 검사: unmerged 0, unstaged 0, 충돌 표식 0, `git diff --cached --check` 통과,
+    commit 후 working tree clean
+  - 저장소 내 Toss key 형태 검사: 발견 0
+- 남은 위험:
+  - build 초기 bundle이 557.06 kB로 500 kB 예산을 57.06 kB 초과한다. build는 성공했지만
+    런칭 성능 검토 항목으로 남긴다.
+  - 실제 API와 연결한 관리자 브라우저 시나리오 및 권한별 수동 검증은 아직 하지 않았다.
+  - `npm ci` audit 결과 48건(낮음 3, 보통 10, 높음 34, 치명적 1)이 보고됐다. 통합 범위를
+    벗어나는 자동 `npm audit fix`는 실행하지 않았다.
 
 ### Web Customer
 
