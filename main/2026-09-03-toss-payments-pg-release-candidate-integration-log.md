@@ -1,7 +1,7 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: Web API·Web Admin 통합 checkpoint 완료, Web Customer 시작 대기
+- 상태: Web API·Web Admin·Web Customer 통합 checkpoint 완료, Desktop 선별 이식 분석 중
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 복제본 루트: `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
 - 계획: `2026-09-03-toss-payments-pg-release-candidate-integration-plan.md`
@@ -245,12 +245,43 @@
 
 ### Web Customer
 
-- 상태: 시작 전
-- 충돌 원인: Git 수준 충돌은 현재 없음
-- 보존 기능: 최신 고객 화면 + PG 구매/구독/크레딧/환불 흐름
-- 해결 방식: 미정
-- 실행한 테스트: 미실행
-- 남은 위험: API 계약과 브라우저 수동 검증
+- 상태: 통합 및 로컬 자동 검증 완료
+- integration commit: `bedafa38e02b4c800fc50efb086827eff4579e90`
+- merge 부모:
+  - 최신 `origin/dev`: `4b361efc742db797e85848c5aea90eb1736194c5`
+  - PG 전체 이력: `7f4d04a886c7529d5f430a3608cdcc78423d27dd`
+- 충돌 원인:
+  - PG branch가 최신 `dev`의 직계 후손이라 Git 수준 충돌은 없었다.
+  - 기능 수준에서는 공개 결제 화면을 인증된 portal 안으로 옮기고, 구형 수동 구매·license·plan API를
+    새 catalog/access/credits/payments API로 교체하는 큰 변경이다.
+- 보존 기능:
+  - 최신 `dev`의 로그인·다운로드·법률 고지·계정 등 고객 화면
+  - 상품 catalog와 월/연간 가격 선택
+  - 인증 후 Toss 결제창, 성공·취소 결과 복구, 결제 수단 변경 결과
+  - 구독 upgrade 견적, 갱신·복구 상태, 결제 이력
+  - 유료 구독자용 선불 크레딧 충전과 source별 크레딧 잔액
+- 해결 방식:
+  - PG 31개 commit 전체 이력을 no-ff merge했다.
+  - 구형 수동 purchase, license request, plan API와 중복 공개 checkout/result 화면은 PG 최종 정책대로
+    제거된 상태를 유지했다.
+  - 실제 API 호출 대신 서비스·route·가격·checkout 계약 테스트를 먼저 집중 검증한 뒤 전체 회귀를
+    실행했다.
+- 실행한 테스트:
+  - 최신 `dev` 기준선: 전체 Karma 93/93 통과
+  - 최신 `dev` 기준선: `npm run build` 성공
+  - PG API·route·가격·checkout 집중 검사: 64/64 통과
+  - 최종 전체: `npm test -- --watch=false` → 226/226 통과
+  - 최종 build: `npm run build` → 성공, 초기 bundle 493.00 kB
+  - Git 검사: unmerged 0, unstaged 0, 충돌 표식 0, `git diff --cached --check` 통과,
+    commit 후 working tree clean
+  - Toss key 형태 7건은 모두 spec/mock에 있는 최대 15자의 짧은 placeholder이며 실제 key 형태로
+    의심되는 긴 값은 0건
+  - 기존 PG worktree의 untracked `build/`가 그대로 남아 있고 branch/HEAD도 변하지 않았음을 재확인
+- 남은 위험:
+  - Web API integration 후보를 실제로 연결한 브라우저 E2E는 아직 하지 않았다.
+  - Toss SDK는 mock/test 계약만 검증했으며 라이브 결제·환불은 실행하지 않았다.
+  - `npm ci` audit 결과 49건(낮음 3, 보통 10, 높음 34, 치명적 2)이 보고됐다. 통합 범위를
+    벗어나는 자동 `npm audit fix`는 실행하지 않았다.
 
 ### Angular
 
