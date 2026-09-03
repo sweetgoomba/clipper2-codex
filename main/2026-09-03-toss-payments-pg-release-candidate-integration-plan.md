@@ -2,7 +2,8 @@
 
 > 실행 규칙: 이 계획은 `superpowers:executing-plans`, `superpowers:test-driven-development`,
 > `superpowers:systematic-debugging`, `superpowers:verification-before-completion` 순서로 따른다.
-> 사용자의 명시적 지시에 따라 Git worktree 대신 독립된 로컬 복제본을 사용한다.
+> 사용자의 명시적 지시에 따라 새 worktree나 별도 복제본을 작업 정본으로 쓰지 않고,
+> 각 원본 저장소에서 integration 브랜치를 만들어 사용한다.
 
 - 작성일: 2026-09-03 (Asia/Seoul)
 - 목표: 7개 PG 기능 브랜치의 필요한 변경을 각 저장소의 최신 `origin/dev`에 통합하고,
@@ -17,11 +18,11 @@
 ## 반드시 지킬 경계
 
 - 기존 7개 PG worktree와 그 브랜치는 조회만 한다. 수정, rebase, merge, commit하지 않는다.
-- 원본 저장소의 `dev`에는 새 기능을 합치지 않는다. 원본 저장소에서는 `dev`로 전환한 뒤
-  `origin/dev`까지 fast-forward하는 작업만 한다.
-- 실제 통합은 `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
-  아래의 독립 복제본에서만 한다.
-- 모든 복제본의 작업 브랜치 이름은 `integration/toss-payments-pg-20260903`으로 통일한다.
+- 원본 저장소의 로컬 `dev` ref는 최신 `origin/dev`와 같은 상태로 유지하며 새 기능을 합치지 않는다.
+- 실제 통합은 각 원본 저장소에서 `dev`가 아니라
+  `integration/toss-payments-pg-20260903` 브랜치를 checkout한 상태로 진행한다.
+- 기존 7개 PG worktree는 그대로 두며, 새 worktree나 별도 repository 복제본을 통합 작업 장소로
+  만들지 않는다.
 - `meme-overlay-timeline-seek`와 `origin/feat/ai-video-generation-merge`는 통합하지 않는다.
 - Customer의 기존 untracked `build/`와 API의 `docs/api/openapi.yaml.orig`는 건드리거나
   stage하지 않는다.
@@ -37,15 +38,16 @@
 
 1. 원본 7개 저장소가 깨끗한지 다시 확인한다.
 2. 원본 저장소를 `dev`로 바꾸고 최신 `origin/dev`까지 fast-forward한다.
-3. 원본 저장소를 새 디렉터리에 각각 복제한다. 기존 PG worktree는 그대로 둔다.
-4. 각 복제본에서 최신 `origin/dev`를 시작점으로 통합 브랜치를 만든다.
-5. API를 가장 먼저 통합한다. API 계약과 DB 등록 목록이 다른 화면들의 기준이기 때문이다.
-6. Admin과 Customer를 API 계약에 맞춰 통합한다.
-7. Angular, NestJS, Electron은 오래된 브랜치를 통째로 합치지 않고 현재 구조에도 필요한 PG
+3. 같은 원본 저장소에서 최신 `origin/dev`를 시작점으로 integration 브랜치를 만들고 checkout한다.
+   기존 PG worktree는 그대로 둔다.
+4. API를 가장 먼저 통합한다. API 계약과 DB 등록 목록이 다른 화면들의 기준이기 때문이다.
+5. Admin과 Customer를 API 계약에 맞춰 통합한다.
+6. Angular, NestJS, Electron은 오래된 브랜치를 통째로 합치지 않고 현재 구조에도 필요한 PG
    변경만 골라 옮긴다.
-8. Infra 파일은 로컬 후보 설정으로만 합치고, 실제 PC에는 적용하지 않는다.
-9. 저장소마다 작은 단위로 테스트하고 checkpoint commit을 만든다.
-10. 마지막에 7개 저장소가 같은 API 계약과 정책을 쓰는지 함께 검증한다.
+7. Infra 파일은 원본 저장소의 integration 브랜치에 후보 설정으로만 합치고, 실제 PC에는 적용하지
+   않는다. 서버 확인이나 설정은 사용자가 각 PC에서 직접 명령을 실행할 때만 안내한다.
+8. 저장소마다 작은 단위로 테스트하고 checkpoint commit을 만든다.
+9. 마지막에 7개 저장소가 같은 API 계약과 정책을 쓰는지 함께 검증한다.
 
 ## API 충돌을 쉬운 말로 설명
 
@@ -86,7 +88,7 @@ PG 브랜치의 상품·크레딧·결제·환불 기능을 모두 등록한다.
 
 ## 저장소별 실행 계획
 
-### Task 1: 원본 저장소 최신화와 독립 복제본 준비
+### Task 1: 원본 저장소 최신화와 integration 브랜치 준비
 
 대상 저장소:
 
@@ -104,20 +106,19 @@ PG 브랜치의 상품·크레딧·결제·환불 기능을 모두 등록한다.
 2. 각 원본에서 `git fetch origin dev`, `git switch dev`,
    `git merge --ff-only origin/dev`를 실행한다.
 3. 원본 `dev` HEAD가 `origin/dev`와 같은지 확인한다.
-4. 대상 디렉터리가 없는지 확인한 뒤 `git clone --no-hardlinks --origin source`로 복제한다.
-5. 복제본의 `origin`은 기존 Git 서버 URL로 다시 추가하고 최신 `origin/dev`를 fetch한다.
-6. `origin/dev`에서 `integration/toss-payments-pg-20260903`을 만든다.
-7. 복제본의 `source/feature/toss-payments-pg-integration`이 인수인계 문서의 PG HEAD와 같은지
-   확인한다.
-8. 결과를 통합 로그에 기록하고 `.codex` checkpoint commit을 만든다.
+4. 같은 원본 저장소에서 `origin/dev`를 출발점으로
+   `integration/toss-payments-pg-20260903` 브랜치를 만들고 checkout한다.
+5. 원본 저장소의 integration 브랜치가 맞는지, 로컬 `dev` ref는 계속 `origin/dev`와 같은지 확인한다.
+6. 기존 PG worktree의 `feature/toss-payments-pg-integration` HEAD가 인수인계 문서의 값과 같은지
+   다시 확인한다.
+7. 결과를 통합 로그에 기록하고 `.codex` checkpoint commit을 만든다.
 
-복제 명령은 저장소마다 아래 형태로 실행한다. `<원본>`과 `<복제본>`은 먼저 실제 절대 경로로
-확인하고, `<Git 서버 URL>`은 터미널에 다시 출력하지 않고 원본의 기존 `origin` 값을 사용한다.
+브랜치 준비 명령은 원본 저장소마다 아래 순서로 실행한다. 기존 PG worktree에서는 실행하지 않는다.
 
 ```bash
-git clone --no-hardlinks --origin source --branch dev <원본> <복제본>
-git remote add origin <Git 서버 URL>
 git fetch origin dev
+git switch dev
+git merge --ff-only origin/dev
 git switch -c integration/toss-payments-pg-20260903 origin/dev
 ```
 
@@ -203,7 +204,8 @@ TDD 순서:
 
 방법:
 
-1. 기존 원본의 untracked `build/`와 무관한 복제본에서 PG 브랜치 전체를 merge한다.
+1. 원본 저장소의 integration 브랜치에서 PG 브랜치 전체를 merge한다. 기존 PG worktree의
+   untracked `build/`는 건드리지 않는다.
 2. API OpenAPI 계약과 화면 요청 형식이 맞는지 테스트를 먼저 실행한다.
 3. 정책별 상태와 오류 표시 테스트를 보강한 뒤 구현을 맞춘다.
 4. 단위 테스트, 전체 테스트, build를 실행한다.

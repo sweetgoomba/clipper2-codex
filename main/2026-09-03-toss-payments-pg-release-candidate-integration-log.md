@@ -4,7 +4,10 @@
 - 상태: 7개 저장소 integration 후보 통합·선별 이식·로컬 자동 검증 완료, 기존 데이터 보존 전략이
   정해질 때까지 DB migration은 배포 차단
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
-- 복제본 루트: `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`
+- 작업 위치: 각 원본 저장소의 위 integration 브랜치 checkout
+- 임시 복제본: 초기 작업 위치를 잘못 해석해 만든
+  `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/`은 백업으로만 보존하며
+  작업 정본이 아니다. 사용자 승인 없이 삭제하거나 사용하지 않는다.
 - 계획: `2026-09-03-toss-payments-pg-release-candidate-integration-plan.md`
 
 ## 범위 결정
@@ -37,7 +40,7 @@
 | Web API | `727876c701c7d85302a46d48ea88e3734dd25471` |
 | Web Customer | `4b361efc742db797e85848c5aea90eb1736194c5` |
 | Web Admin | `eae522f4908c65a55680be09353dd95df2a71190` |
-| Angular | `fc9ae5e86b8b48af60ef91c4251adfc6b8964756` |
+| Angular | `da0a2029d19fe3781b2a4d9e467f9c4001d00682` |
 | NestJS | `b817034513d19adf1dfecba4a0b480518d9271f4` |
 | Electron | `53cdb7d21996a758b260fb266f7a5e10d1f9bc69` |
 | Infra | `4d3202263d84de9d046a1abc6eb51826a47009ae` |
@@ -51,7 +54,7 @@
 | Web API | 57 / 139 | 9 | 전체 이력을 합치고 의미별로 해결 |
 | Web Customer | 0 / 31 | 0 | 전체 merge |
 | Web Admin | 10 / 21 | 3 | 전체 merge 후 양쪽 화면 보존 |
-| Angular | 702 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
+| Angular | 704 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
 | NestJS | 370 / 7 | 3 | 필요한 PG 동작만 선별 이식 |
 | Electron | 51 / 3 | 0 | 필요한 PG 동작만 선별 이식 |
 | Infra | 0 / 6 | 0 | 로컬 후보 설정으로 merge |
@@ -128,13 +131,14 @@
 ### 7. 인수인계 문서와 현재 상태의 차이
 
 - 인수인계 이후 최신 `origin/dev`를 다시 fetch해 위 HEAD로 재확인했다. 세션 도중 Angular는
-  `09ce2a36`에서 `fc9ae5e8`로, NestJS는 `2c7612b`에서 `b817034`로, Electron은
-  `301ca340`에서 `53cdb7d`로 더 전진했다. 새 commit은 렌더 재시도, 플러그인 수명주기,
-  미디어 가져오기 안정화 관련이며 제외 대상으로 정한 meme/AI video merge는 아니다.
+  `09ce2a36`에서 `fc9ae5e8`로 전진한 뒤 다시 `da0a2029`로 전진했다. NestJS는 `2c7612b`에서
+  `b817034`로, Electron은 `301ca340`에서 `53cdb7d`로 더 전진했다. Angular의 마지막 변경은
+  Variation 상세 패널의 긴 파일명 칩 표시 수정이다. 이 변경들은 제외 대상으로 정한 meme/AI video
+  merge가 아니다.
 - 원본 저장소 중 API/Angular/NestJS/Electron은 처음 확인 당시 `dev`가 아닌 meme 통합용
   브랜치가 checkout돼 있었다. Admin 원본은 `origin/dev`보다 2 commit 뒤였다.
-- 사용자 결정에 따라 기존의 “새 worktree 생성” 방식은 폐기하고 “원본 `dev` 최신화 후 독립
-  복제본 생성” 방식으로 변경했다.
+- 사용자 결정에 따라 새 worktree와 별도 복제본을 작업 장소로 쓰지 않고, 원본 저장소의
+  `dev`를 최신화한 뒤 같은 원본 저장소에 integration 브랜치를 만들어 작업한다.
 - meme overlay와 AI video merge는 더 이상 후보가 아니라 명시적 제외 항목이다.
 - 인수인계에서 강조한 `1786800000000` 외에도 `1786560000000`, `1786650000000`에서 기존 데이터
   삭제가 확인되어 위험 목록을 넓혔다.
@@ -148,22 +152,26 @@
 - 검증: `git diff --cached --check` 통과, credential 형태 정규식 검사에서 발견 없음
 - 상태: commit 직후 `.codex` working tree clean, `origin/main`보다 1 commit 앞섬
 
-## 원본 최신화와 독립 복제본 checkpoint
+## 원본 최신화와 작업 위치 수정 checkpoint
 
 - 원본 7개 저장소를 모두 `dev`로 전환했다.
 - 각 로컬 `dev`에는 `origin/dev`에 없는 고유 commit이 0개임을 확인한 뒤 `--ff-only`로만
   최신화했다.
-- 최신화 후 7개 원본은 모두 `HEAD == origin/dev`, working tree clean이다.
+- 최신화 직후 7개 원본은 모두 `HEAD == origin/dev`, working tree clean이었다.
 - 기존 PG worktree 7개는 branch와 HEAD가 처음 확인한 값 그대로다.
 - API worktree의 `docs/api/openapi.yaml.orig`와 Customer worktree의 `build/`도 그대로 남아 있다.
-- 복제본 7개를
-  `/Users/jina/project/adlight/.integration-clones/toss-payments-pg-20260903/` 아래에
-  `--no-hardlinks`로 만들었다.
-- 각 복제본에는 로컬 원본을 가리키는 `source`와 Git 서버를 가리키는 `origin` 두 remote가 있다.
-- 각 복제본에서 실제 Git 서버의 `origin/dev`를 다시 fetch한 후
-  `integration/toss-payments-pg-20260903` 브랜치를 만들었다.
-- 7개 복제본 모두 integration HEAD와 `origin/dev`가 같고 working tree가 깨끗하다.
-- 7개 복제본 모두 `source/feature/toss-payments-pg-integration`이 위 PG HEAD와 정확히 같다.
+- 처음에는 지시를 잘못 해석해 별도 임시 복제본 7개에서 통합과 검증을 수행했다.
+- 잘못을 확인한 뒤 각 임시 복제본의 최종 integration commit SHA를 검사하고, 로컬 fetch로 그
+  동일 commit을 각 원본 저장소에 가져왔다. 각 원본 저장소에서
+  `integration/toss-payments-pg-20260903` 브랜치를 그 commit에 만들고 checkout했다.
+- 현재 작업 정본은 원본 저장소 7개다. 각 원본의 integration HEAD는 아래 저장소별 최종 HEAD와
+  같고 working tree가 깨끗하다.
+- 원본 저장소의 로컬 `dev` ref는 checkout 상태와 별개로 계속 `origin/dev`와 정확히 같다.
+- 임시 복제본은 삭제하지 않고 백업으로만 남겼으며, 이후 작업에는 사용하지 않는다.
+- 작업 위치 수정 후 다시 fetch하자 Angular `origin/dev`가 `fc9ae5e8`에서 `da0a2029`로 전진한 것이
+  확인됐다. 결제·meme·AI video와 무관한 Variation 파일명 칩 표시 수정이었고 PG 이식 파일과
+  겹치지 않았다. 이를 원본 Angular integration 브랜치에 충돌 없이 merge하고 로컬 `dev` ref도
+  `da0a2029`로 fast-forward했다.
 - 서버 접속, DB 접속, migration, 배포는 실행하지 않았다.
 
 ## 저장소별 진행 기록
@@ -327,7 +335,9 @@
 - integration commits:
   - `f7c7897f feat: forward-port desktop credit integration`
   - `7b56e2a3 fix: label account-level credit history accurately`
-- 출발점인 최신 `origin/dev`: `fc9ae5e86b8b48af60ef91c4251adfc6b8964756`
+  - `9504e098 merge: refresh Angular integration from latest dev`
+- 처음 출발한 `origin/dev`: `fc9ae5e86b8b48af60ef91c4251adfc6b8964756`
+- 현재 포함한 최신 `origin/dev`: `da0a2029d19fe3781b2a4d9e467f9c4001d00682`
 - 충돌 원인:
   - 오래된 PG branch 뒤로 최신 `dev`가 694 commit 전진해 화면, 플러그인, 렌더링, 메모리 관리
     구조가 크게 달라졌다. 따라서 branch 전체를 merge하면 최신 데스크톱 기능을 과거 구조로 되돌릴
@@ -370,6 +380,10 @@
   - 수정 후 최종 전체: 4,256/4,256 통과
   - 최종 style: 6/6 통과
   - 최종 build: `npm run build` 성공, 초기 bundle 253.14 kB
+  - 최신 `origin/dev` 갱신 후 Variation 상세 패널 집중 검사: 20/20 통과
+  - 최신 `origin/dev` 갱신 후 전체: 4,262/4,262 통과
+  - 최신 `origin/dev` 갱신 후 style: 6/6 통과
+  - 최신 `origin/dev` 갱신 후 build: 성공, 초기 bundle 253.14 kB
   - 샌드박스 안에서 esbuild deadlock으로 두 차례 종료됐지만 같은 Node 22 명령을 샌드박스 밖에서
     실행하자 집중/전체 테스트와 build가 모두 통과했다.
   - Git 검사: unmerged 0, 충돌 표식 0, `git diff --check` 통과, commit 후 working tree clean
@@ -466,9 +480,9 @@
   - 원문 `npm test`: 347/348 통과, 아래 환경 의존 패키징 fixture 1건 실패
   - Git 검사: 최종 정책과 충돌하는 access authorizer 없음, commit 후 working tree clean
 - 남은 위험:
-  - `storyboard-document-only-packaging.test.mjs`의 fresh staged resources 검사는 이 복제본 옆의 Nest
-    `dist/bundled`와 커밋하지 않는 `.env.packaged`를 요구해 실행 환경에서 1건 실패했다. secret 파일을
-    임의 생성하거나 출력하지 않았다.
+  - `storyboard-document-only-packaging.test.mjs`의 fresh staged resources 검사는 검증 당시 임시
+    복제본 옆의 Nest `dist/bundled`와 커밋하지 않는 `.env.packaged`를 요구해 실행 환경에서 1건
+    실패했다. secret 파일을 임의 생성하거나 출력하지 않았다.
   - 실제 Angular → Electron → Customer desktop handoff 브라우저 E2E는 아직 실행하지 않았다.
   - 앱 패키징, 서명, notarization, 실행은 이번 세션 범위에서 하지 않았다.
 
@@ -545,7 +559,7 @@ Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에
 | Web API | `f1517f35f83da69ead02c10dac9ff079ac2aaa00` | 전체 merge | clean / 0 / 통과 |
 | Web Admin | `ed1b5a4a7ffc2c541d37116ecf4cf21bc61255ef` | 전체 merge | clean / 0 / 통과 |
 | Web Customer | `bedafa38e02b4c800fc50efb086827eff4579e90` | 전체 merge | clean / 0 / 통과 |
-| Angular | `7b56e2a38a8991a0a67c5af46eacda0eb6c020da` | 필요한 동작 선별 이식 | clean / 0 / 통과 |
+| Angular | `9504e09806f23a1d8aad1aa3c2dfddf84aa1c564` | 필요한 동작 선별 이식 + 최신 dev 갱신 | clean / 0 / 통과 |
 | NestJS | `5b50588442adf995e9c76958af7919886ecebda8` | 필요한 동작 선별 이식 | clean / 0 / 통과 |
 | Electron | `578a12a8883c8268f28db7edae269752869159c4` | 유효한 test 계약만 선별 이식 | clean / 0 / 통과 |
 | Infra | `fa92eda300f87be37187df703802c6bf2e447d0c` | 전체 merge, 실제 적용 보류 | clean / 0 / 통과 |
@@ -555,14 +569,15 @@ Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에
 - Customer source의 삭제된 `/app/purchase`, `/app/history`는 부정 회귀 테스트에서만 발견됐다.
 - Angular/NestJS/Electron source에는 구형 license/ledger 경로, 구형 소문자 잔액 부족 코드,
   `shortform.create`, 구독 기반 plugin 차단 구현이 남지 않았다.
-- 원본 7개 저장소는 모두 `dev == origin/dev`, working tree clean이다.
+- 원본 7개 저장소는 모두 integration 브랜치를 checkout하고 있으며 working tree가 깨끗하다.
+  각 저장소의 로컬 `dev` ref도 `origin/dev`와 정확히 같다.
 - 기존 PG worktree 7개의 branch/HEAD는 불변이며 API `docs/api/openapi.yaml.orig`와 Customer
   `build/d2x_logo.icns`, `build/d2x_logo.ico`도 untracked 상태로 보존돼 있다.
 
 ### 리뷰 판정
 
-- 로컬 코드 release candidate: 준비됨. 7개 저장소가 독립 integration branch에 있고 자동 검증과
-  재검증 가능한 commit이 남아 있다.
+- 로컬 코드 release candidate: 준비됨. 원본 7개 저장소가 각각의 integration 브랜치를 checkout하고
+  있고 자동 검증과 재검증 가능한 commit이 남아 있다.
 - 실제 stage/prod 배포: 준비되지 않음. 기존 DB 데이터 보존 전략, 실제 5대 PC 구성, test-key 수동
   결제 흐름 및 브라우저/데스크톱 E2E가 남아 있다.
 - 가장 큰 차단 항목: destructive migration 3개의 기존 데이터 삭제. 이 항목을 해결하거나
