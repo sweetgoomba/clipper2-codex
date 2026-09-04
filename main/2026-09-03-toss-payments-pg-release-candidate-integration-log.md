@@ -223,44 +223,54 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
 
 ### Web API
 
-- 상태: 통합 및 로컬 자동 검증 완료
-- integration commit: `f1517f35f83da69ead02c10dac9ff079ac2aaa00`
+- 상태: 통합, 런타임 정리, 폐기 DB migration 검증 완료
+- 현재 integration commit: `c6b1e18 refactor: remove storyboard image search plan contract`
+- 최초 통합 commit: `f1517f35f83da69ead02c10dac9ff079ac2aaa00`
 - merge 부모:
   - 최신 `origin/dev`: `727876c701c7d85302a46d48ea88e3734dd25471`
   - PG 전체 이력: `4ef22684115947df3aee124da18d94a0f896c97f`
 - 충돌 원인:
-  - OpenAPI: 최신 `dev`는 스토리보드·AI 디렉터·YouTube credential API를, PG는 상품·접근권한·
-    크레딧·결제·환불 API를 추가했다.
-  - AppModule: 최신 `dev`는 AI 디렉터 모듈을, PG는 스케줄러와 상품·접근권한·크레딧·결제·
-    회원·대시보드 모듈을 등록했다.
-  - datasource: 최신 `dev`는 AI 디렉터 migration과 참조분석 replay 표를, PG는 새 결제·구독·
+  - OpenAPI: 최신 `dev`는 스토리보드와 YouTube credential API를, PG는 상품·접근권한·크레딧·
+    결제·환불 API를 추가했다. 최신 `dev`에는 현재 사용하지 않는 참고 영상 분석 설명도 남아 있었다.
+  - AppModule: 최신 `dev`는 스토리보드 관련 모듈을, PG는 스케줄러와 상품·접근권한·크레딧·결제·
+    회원·대시보드 모듈을 등록했다. 이때 현재 스토리보드가 쓰지 않는 참고 영상 분석까지 서버 시작
+    목록에 포함돼 있었다.
+  - datasource: 최신 `dev`는 스토리보드 migration과 참고 분석 replay 표를, PG는 새 결제·구독·
     크레딧·환불 표와 migration을 등록했다.
-  - 이미지 검색: 최신 `dev`는 승인 당시의 정확한 Naver credential ID/revision을 고정했고,
-    PG는 유료 operation의 공급자 요청 시작·성공·실패 근거를 기록했다.
-  - operation: 최신 `dev`는 폐기된 AI 디렉터 과금 정책을 숨겼고, PG는 구형 장부를 새
+  - 공용 이미지 검색: 최신 `dev`는 승인 당시의 정확한 Naver credential ID/revision을 고정했고,
+    PG는 유료 작업에서 공급자 요청 시작·성공·실패 근거를 기록했다. 이것은 스토리보드 이미지 검색이
+    아니라 Dance Highlight와 일반 Shortform 편집기가 쓰는 `/media/search`에 관한 충돌이었다.
+  - 작업·크레딧: 최신 `dev`는 폐기된 옛 스토리보드 과금 정책을 숨겼고, PG는 구형 장부를 새
     CreditGrantsService 기반 차감·환급·근거 기록으로 바꿨다.
   - controller test 2개는 실제 사용하지 않는 삭제된 `BillingModule`을 “참조하지 않음” 검사만
     위해 import하고 있어 전체 테스트 시작을 막았다.
 - 보존 기능:
-  - 최신 스토리보드/AI 디렉터 전략·리서치·추론·참조분석 모듈과 API 계약
+  - 현재 사용하는 스토리보드 전략·리서치·추론 모듈과 API 계약
+  - 참고 영상 분석 소스와 replay migration은 미래의 별도 플러그인 후보로 보존하되 현재 서버에는
+    등록하거나 OpenAPI로 노출하지 않음
   - 사용자가 승인한 정확한 provider credential 고정
   - YouTube credential runtime-status 관리자 API
   - PG 상품·무료 체험·접근권한·크레딧·결제·구독·환불·관리자 대시보드
   - 입력 방식별 숏폼 3종과 하이라이트/베리에이션 유료 operation
-  - AI 디렉터 준비 동작은 유료 operation에서 제외하고, 폐기된 DB 정책도 조회·수정·실행에서 제외
+  - 현재 사용하는 여섯 작업 정책만 유지하고, 폐기된 DB 정책은 조회·수정·실행에서 제외
   - 삭제된 구형 Billing module·controller·entity는 되살리지 않음
 - 해결 방식:
   - OpenAPI의 양쪽 최신 경로와 schema를 합쳤다. PG에서 삭제한 구형 관리자 plan API 설명은
     실제 controller/schema가 없어 제거하고, 최신 YouTube runtime-status API는 보존했다.
-  - AppModule에 PG 모듈과 최신 AI 디렉터 모듈을 함께 등록하고 `BillingModule`은 제외했다.
+  - AppModule에 PG 모듈과 현재 사용하는 스토리보드 모듈을 함께 등록하고 `BillingModule`은 제외했다.
+    참고 영상 분석 모듈은 현재 쓰지 않으므로 다시 제거했다.
   - Admin datasource는 양쪽 migration을 timestamp 순으로 등록했다. User datasource에는
     ReferenceAnalysisReplay와 UserOnboardingJob을 함께 등록했다.
-  - 이미지 검색은 한 `executeSearch` 경로에서 credential 고정을 적용하고, operation run이 있으면
-    같은 검색의 시작·성공·실패 근거를 기록하도록 합쳤다.
+  - 공용 `/media/search`는 credential 고정과 유료 작업 근거 기록을 함께 수행하도록 합쳤다. 이 검색은
+    Dance Highlight와 일반 Shortform 편집기를 위해 유지했다.
+  - 스토리보드가 더 이상 사용하지 않는 `imageSearchPlan`은 Web API 타입, AI 응답 schema, validator,
+    canonicalizer에서 제거했다.
+  - `1786850000000-ResetLegacyOperationHistory` migration을 추가해 PG 전환 때 연결된 복구 기록을 먼저
+    지운 뒤 `operation_runs` 전체를 비우고 현재 여섯 작업 외의 정책을 제거하게 했다.
   - OperationsService는 PG의 새 credit 장부·transaction·evidence 흐름을 사용하면서 최신
     `ACTIVE_OPERATION_KEYS` 필터를 유지했다.
   - 구형 장부 구현이 삭제됐으므로 구형 장부 전용 테스트는 되살리지 않았다. 대신 새 장부 테스트와
-    폐기된 AI 디렉터 과금 정책 차단 테스트를 함께 유지했다.
+    폐기된 옛 스토리보드 과금 정책 차단 테스트를 함께 유지했다.
   - 삭제된 BillingModule을 부정 검사만 위해 import하던 controller 테스트는 module metadata의
     실제 import 이름을 검사하도록 바꿨다.
 - 실행한 테스트:
@@ -276,18 +286,29 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - OpenAPI 첫 검사: 끊긴 구형 plan schema 참조 4건을 검출
   - OpenAPI 수정 후: 10 suites, 103/103 통과
   - 삭제된 BillingModule test import 수정 후: 2 suites, 27/27 통과
-  - 최종 전체: `npm test -- --runInBand --silent` → 226 suites, 2,384 tests 통과
+  - 2026-09-04 과거 작업 초기화 TDD: 구현 전 migration 없음으로 RED, 구현 후 2 suites 7/7 통과
+  - 2026-09-04 참고 영상 분석 비활성화 TDD: 등록·OpenAPI 때문에 4건 RED, 수정 후 경계 테스트 통과
+  - 참고 분석 보존 소스: controller 단독 7/7, 나머지 6 suites 58/58 통과
+  - 참고 분석 OpenAPI 정리: 해당 path 1개와 전용 schema 38개만 제거, 나머지 schema `$ref` 540개 유효
+  - 스토리보드 `imageSearchPlan` 제거 TDD: 새 계약 1건 RED, 수정 후 inference 10 suites 342/342 통과
+  - 공용 `/media/search` 회귀: 7/7 통과
+  - 최종 전체: `npm test -- --runInBand --silent` → 227 suites, 2,384 tests 통과
   - 최종 build: `npm run build` → 성공
+  - 폐기용 PostgreSQL 16 `127.0.0.1:55449` 빈 DB: Admin migration 전체 성공, 재실행 pending 0
+  - 폐기용 fixture DB: `178680`까지 적용 후 과거 실행·복구·폐기 정책을 1건씩 넣고 나머지를 적용;
+    세 종류 모두 0건, 옛 Billing 표 5개 없음, 새 PG 표 존재 확인
+  - 실제 `OperationPolicySeeder` 적용 후 현재 작업 정책 여섯 개가 정확히 존재함을 확인
+  - 검증용 컨테이너와 두 DB는 검증 직후 제거함
   - Git 검사: unmerged 0, unstaged 0, `git diff --cached --check` 통과, commit 후 working tree clean
   - staged credential 형태 검사: 발견 0
 - 남은 위험:
-  - 현재 DB와 5433/5434/5435에는 migration을 실행하지 않았고 앞으로도 데이터 보존 절차 승인 전에는
-    실행하면 안 된다.
+  - 현재 DB와 5433/5434/5435에는 migration을 실행하지 않았다. 실제 개발 DB 적용은 사용자가 서버
+    DB 백업과 폐기 가능한 복제본 결과를 직접 확인한 뒤 별도로 결정해야 한다.
   - 동일 timestamp 두 migration은 빈 DB에서 정상 적용됐지만, 장기적으로 migration 이름·적용 순서를
     운영 점검표에서 함께 확인해야 한다.
-  - `1786560000000`, `1786650000000`, `1786800000000`의 데이터 삭제는 fixture에서 실제로 재현됐다.
-    기존 무통장 주문·이용권·토큰 사용·구형 크레딧 기록을 새 구조로 옮기는 별도 설계와 테스트가
-    release blocker다.
+  - `1786560000000`, `1786650000000`, `1786800000000`, `1786850000000`은 승인된 정책대로 기존
+    무통장 결제·이용권·크레딧·과거 작업 기록을 삭제한다. 이것은 보존 실패가 아니라 의도된 초기화다.
+    실제 개발 DB 적용 전에는 백업과 정확한 대상 DB 확인이 필수다.
   - Toss test key와 실제 webhook/결제/취소/환불은 이번 세션 범위상 실행하지 않았다.
   - `npm ci` audit 결과 10건(낮음 1, 보통 2, 높음 7)이 보고됐다. 통합 범위를 벗어나는 자동
     `npm audit fix`는 실행하지 않았다.
