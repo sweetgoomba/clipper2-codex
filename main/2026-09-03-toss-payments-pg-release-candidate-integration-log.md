@@ -465,6 +465,7 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - `78270ec test: retire legacy desktop license proxy contract`
   - `f306519 feat: forward-port durable desktop operation billing`
   - `5b50588 fix: retire stale desktop operation ledger proxy`
+  - `50fa495 refactor: remove storyboard image search plan handling`
 - 출발점인 최신 `origin/dev`: `b817034513d19adf1dfecba4a0b480518d9271f4`
 - 충돌 원인:
   - 오래된 PG branch 전체를 합치면 최신 플러그인 수명주기, 렌더 재시도, 미디어 가져오기와 메모리
@@ -474,12 +475,16 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 과거 PG 플러그인 접근 차단은 모든 플랜에서 같은 플러그인을 제공한다는 최종 정책과 맞지 않는다.
   - 실제 크레딧 차감 뒤 성공·실패를 판단할 근거가 일부 렌더 경로에 영구 저장되지 않았고,
     숏폼의 작업 키도 입력 방식별 현재 API 계약과 달랐다.
+  - 스토리보드에서 이미지 검색을 없앴지만, 데스크톱 내부 타입·검사·복구 코드에는 검색 계획을
+    만들고 검사하는 옛 구현이 남아 있었다.
 - 보존 기능:
   - 최신 `dev`의 plugin/render/job 구조, 렌더 재시도와 메모리 최적화
   - 사용자의 bearer token을 저장하지 않고 요청마다 Web API로 전달하는 인증 경계
   - 현재 Web API의 access, credit summary/grants/ledger 계약
   - 대사 하이라이트, 댄스 하이라이트, 숏폼 렌더, 베리에이션 렌더의 차감·성공·실패 기록
   - 무료 기능을 결제 상태로 차단하지 않는 최종 정책
+  - 예전에 로컬에 저장한 스토리보드에 옛 검색 계획 항목이 들어 있어도 나머지 장면을 계속 읽는
+    프로젝트 호환성
 - 해결 방식:
   - 오래된 PG branch를 merge하지 않고 현재 구조에 새 `AccessModule`, `CreditsModule`과 proxy를
     추가하고 폐기된 `LicensesModule`을 제거했다.
@@ -490,6 +495,9 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 새 `/credits/ledger` proxy와 동시에 남아 있던 구형 `/operations/ledger` route 및 구형 반환 타입은
     제거해 장부 계약을 한 경로로 통일했다.
   - 과거 플러그인 entitlement/라이선스 차단 코드는 의도적으로 이식하지 않았다.
+  - 새 스토리보드 응답 타입, 조립, 품질 검사, 실패 복구, 화면용 변환에서는 이미지 검색 계획을
+    완전히 제거했다. 다만 과거 로컬 파일을 읽는 한 지점에서는 그 옛 항목을 값으로 사용하지 않고
+    버린 뒤 현재 장면 정보만 읽는다.
 - 실행한 테스트:
   - 최신 `dev` 기준선 build: 성공
   - 최신 `dev` 원본 전체 test에서 `template-builder-no-s3-storage.test.js`는 untracked
@@ -504,11 +512,18 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     샌드박스 밖에서 실행해 2,239개 전부 통과했다.
   - source 검사: 폐기된 `no_active_license`, `shortform.create` 상수, `/operations/ledger`,
     `/licenses/current` 참조 없음
-  - Git 검사: 세 checkpoint commit 후 working tree clean
+  - 스토리보드 이미지 검색 계획 제거 TDD: 옛 로컬 문서 호환 테스트가 먼저 실패하는 것을 확인했고,
+    수정 후 관련 6개 파일의 Node 테스트 166/166 통과
+  - 스토리보드 정리 후 `npm run build` 성공, `git diff --check` 통과
+  - source에는 새 생성·검사·복구용 이미지 검색 구현이 없고, 과거 저장 파일의 필드를 버리는 호환
+    경계 한 곳만 남아 있음
+  - Git 검사: 네 checkpoint commit 후 working tree clean
 - 남은 위험:
   - 기준선의 `.env.packaged` 의존 테스트와 pending Promise 테스트는 이번 PG 범위에서 임의로 고치지
     않았다. 따라서 두 파일을 포함한 원문 그대로의 전체 test 명령은 아직 green이 아니다.
   - Web API integration 후보를 실제로 연결한 HTTP E2E와 실패 후 실제 크레딧 반환 확인은 하지 않았다.
+  - 과거 로컬 파일 호환 경계는 옛 검색 계획의 내용을 복원하거나 화면에 노출하지 않는다. 해당 항목
+    이외에 계약에 없는 다른 필드가 들어오면 지금처럼 파일을 거부한다.
   - `npm ci` audit 결과 5건(보통 1, 높음 4)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### Electron
