@@ -1,8 +1,8 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: 7개 저장소 integration 후보 통합·선별 이식·로컬 자동 검증 완료, 기존 데이터 보존 전략이
-  정해질 때까지 DB migration은 배포 차단
+- 상태: 7개 저장소 integration 후보 통합·선별 이식 완료. 2026-09-04에 승인된 개발 데이터 초기화
+  정책과 현재 사용하지 않는 스토리보드 기능 정리를 반영 중이며, 완료 전까지 DB migration·배포 차단
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 작업 위치: 각 원본 저장소의 위 integration 브랜치 checkout
 - 임시 복제본: 초기 작업 위치를 잘못 해석해 만든
@@ -18,6 +18,49 @@
 - 서버 작업: Codex가 직접 접속하거나 실행하지 않음
 - DB 작업: 현재 개발 DB와 5433/5434/5435에는 migration/write 금지
 - 문서 위치: 새 계획·로그·체크리스트는 `.codex` 아래에만 작성
+
+## 2026-09-04 확정된 개발 데이터 초기화 정책
+
+사용자가 기존 개발 데이터를 새 PG 구조로 변환해 보존하지 않기로 확정했다.
+
+- 남김: 기존 사용자 계정과 로그인 관련 데이터
+- 초기화: 옛 요금제, 구매 신청, 이용권, 남은 크레딧, 유효기간, 옛 차감·환급 기록
+- 추가 초기화: 과거 `operation_runs` 전체와 그 실행에 연결된 복구 기록
+- 정책 설정: 현재 실제로 쓰는 작업 종류 여섯 개만 남기고 폐기된 작업 종류의 정책은 제거
+- 기존 사용자: 무료체험·이용권·크레딧을 자동 또는 관리자 방식으로 소급 지급하지 않음
+- 기존 사용자의 새 이용권: Customer 사이트에서 Toss 테스트 결제를 직접 완료하면 PG 정상 로직이
+  이용권을 활성화하고 첫 크레딧을 지급
+- 새 사용자: 정상 신규가입 흐름에서만 무료체험 지급
+- 하지 않는 일: 옛 요금제 대응표 작성, 옛 이용권 상태 변환, 남은 크레딧 계산, 유효기간 승계,
+  옛 장부를 새 `credit_ledger_entries`로 이관
+
+`operation_runs`를 비울 때는 외래키로 연결된 `operation_resolution_events`를 먼저 비워야 한다.
+현재 유지할 작업 정책은 `shortform_url.create`, `shortform_paste.create`,
+`shortform_prompt.create`, `dialog_highlight.extract`, `dance_highlight.extract`,
+`variation.render` 여섯 개다.
+
+이 결정은 “기존 데이터를 보존하는 변환 migration이 없어서 배포할 수 없음”이라는 이전 차단 사유를
+없앤다. 다만 실제 개발 DB에 적용하기 전에는 폐기 가능한 복제 DB에서 전체 초기화 결과를 검증하고,
+사용자가 그 결과를 확인해야 한다.
+
+## 2026-09-04 스토리보드 런타임 정리 결정
+
+- 참고 영상 분석: 추후 별도 플러그인으로 분리할 수 있도록 소스와 migration은 보존하되, 지금은
+  AppModule과 OpenAPI에서 빼서 실행·노출하지 않는다.
+- 스토리보드 이미지 검색: 현재 기능에서 완전히 제외됐으므로 Web API 계약, Desktop NestJS 처리,
+  Angular 화면·복사 기능에서 `imageSearchPlan`을 제거한다.
+- 공용 미디어 검색: Dance Highlight와 일반 Shortform 편집기가 실제로 쓰므로 `/media/search`, Naver
+  credential, 공용 검색 구현은 유지한다.
+- 옛 `BillingModule`: 소스는 이미 완전히 삭제된 상태다. 현재 Toss 결제에 쓰는 `BillingAuth*`는 이름만
+  비슷한 별개 기능이므로 유지한다.
+
+## 로컬 DB 조사 결과의 범위 정정
+
+이전 조사에서 나온 사용자 5명, 옛 이용권 4건, 구매 신청 5건, 옛 장부 74건,
+`operation_runs` 58건은 API 로컬 `.env`가 가리킨 `localhost:5433` Admin DB와 `localhost:5435`
+User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고 보면 안 된다. 실제 서버 DB는 사용자가
+서버 PC에서 read-only 명령을 직접 실행해 별도로 확인한다. Codex는 해당 서버에 접속하거나 명령을
+임의 실행하지 않는다.
 
 ## Current State checkpoint
 
