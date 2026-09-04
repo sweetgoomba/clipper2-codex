@@ -400,6 +400,7 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - `f7c7897f feat: forward-port desktop credit integration`
   - `7b56e2a3 fix: label account-level credit history accurately`
   - `9504e098 merge: refresh Angular integration from latest dev`
+  - `f8555d5f refactor: remove storyboard image search UI`
 - 처음 출발한 `origin/dev`: `fc9ae5e86b8b48af60ef91c4251adfc6b8964756`
 - 현재 포함한 최신 `origin/dev`: `da0a2029d19fe3781b2a4d9e467f9c4001d00682`
 - 충돌 원인:
@@ -412,6 +413,8 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     구성이 같고, 크레딧이 들지 않는 기능은 결제 상태와 무관하게 사용할 수 있어야 한다.
   - 과거에는 숏폼 생성 전체가 `shortform.create` 하나였지만 현재 API는 URL·본문 붙여넣기·프롬프트
     생성을 서로 다른 과금 작업으로 구분한다.
+  - 스토리보드가 이미지 검색을 하지 않게 바뀌었는데도 화면 모델, “이미지 검색 가이드”, 검색어 복사,
+    전체 문서 복사 내용과 안내 문구가 옛 기능을 계속 보여 주고 있었다.
 - 보존 기능:
   - 최신 `dev`의 UI foundation, settings/home 화면 구조, 메모리 최적화, 플러그인 수명주기와
     설치 상태 확인 구조
@@ -419,6 +422,7 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 현재 Web API가 반환하는 이용 권한, 사용 가능/보류/출처별 크레딧, 크레딧 변동 내역
   - Customer의 현재 요금제, 결제 내역, 크레딧 화면으로 가는 링크
   - URL·붙여넣기·프롬프트별 정확한 숏폼 과금 키
+  - 이미지 검색과 무관한 장면 설명, AI 영상 프롬프트 보기·복사, 전체 스토리보드 복사 기능
 - 해결 방식:
   - 오래된 PG branch는 merge/cherry-pick하지 않고 현재 파일에 필요한 동작만 TDD로 옮겼다.
   - 화면이 사용하는 `CurrentLicenseSummary` 이름은 대규모 UI 재작성과 회귀를 피하기 위한 내부
@@ -432,6 +436,9 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 숏폼 project의 저장된 입력 방식에 따라 `shortform_url.create`, `shortform_paste.create`,
     `shortform_prompt.create` 중 하나를 선택한다.
   - 플러그인 entitlement guard는 추가하지 않았고 기존 route의 설치 여부 guard만 유지했다.
+  - 스토리보드 타입과 품질 경고 타입에서 이미지 검색 항목을 제거하고, 화면 카드·검색어 복사·전체
+    문서의 이미지 검색 안내·관련 SCSS를 함께 삭제했다. 공용 미디어 검색과 조사 단계의 일반 검색어
+    표시는 건드리지 않았다.
 - 실행한 테스트:
   - 최신 `dev` 기준선: 전체 Karma 4,254/4,254 통과
   - 최신 `dev` 기준선: style 6/6 통과, `npm run build` 성공
@@ -448,6 +455,14 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 최신 `origin/dev` 갱신 후 전체: 4,262/4,262 통과
   - 최신 `origin/dev` 갱신 후 style: 6/6 통과
   - 최신 `origin/dev` 갱신 후 build: 성공, 초기 bundle 253.14 kB
+  - 스토리보드 이미지 검색 UI 제거 TDD RED: 새 fixture에서 옛 필드를 빼자 기존 필수 타입 때문에
+    TypeScript 오류 3건이 나는 것을 확인
+  - 수정 후 집중 검사: 16/16 통과
+  - 스토리보드 기능 전체 검사: 첫 실행 244/245 통과, 삭제한 안내 문구를 기대한 production page
+    회귀 테스트 1건을 새 정책에 맞춘 뒤 245/245 통과
+  - 정리 후 style 6/6 통과, `npm run build` 성공, 초기 bundle 253.14 kB
+  - source 검사: 이미지 검색 계획 타입·화면·복사·스타일 참조 없음. “없어야 한다”는 회귀 테스트
+    두 곳만 옛 이름을 사용
   - 샌드박스 안에서 esbuild deadlock으로 두 차례 종료됐지만 같은 Node 22 명령을 샌드박스 밖에서
     실행하자 집중/전체 테스트와 build가 모두 통과했다.
   - Git 검사: unmerged 0, 충돌 표식 0, `git diff --check` 통과, commit 후 working tree clean
@@ -455,6 +470,7 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - Web API integration 후보 및 NestJS integration 후보를 실제로 함께 띄운 데스크톱 E2E는 아직
     실행하지 않았다.
   - 원천별 잔액이 화면 폭이 좁은 실제 패키지 창에서 어떻게 줄바꿈되는지는 수동 확인이 필요하다.
+  - 이미지 검색 가이드가 사라진 실제 패키지 화면의 최종 육안 확인은 아직 하지 않았다.
   - `npm ci` audit 결과 17건(보통 8, 높음 9)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### NestJS
