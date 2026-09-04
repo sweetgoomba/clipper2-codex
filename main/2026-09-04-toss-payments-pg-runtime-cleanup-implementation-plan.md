@@ -4,6 +4,9 @@
 > DB·서버에는 적용하지 않는다. 각 단계는 실패하는 테스트를 먼저 만들고, 최소 수정으로 통과시킨 뒤
 > 작은 checkpoint commit으로 남긴다.
 
+**실행 결과:** 아래 1~8단계를 모두 원본 저장소의 integration 브랜치에서 완료했다. 실제 개발 DB,
+5433/5434/5435 DB, 서버에는 아무 변경도 하지 않았다.
+
 **목표:** 현재 쓰지 않는 참고 영상 분석 등록과 스토리보드 이미지 검색 계획을 실제 실행 경로에서
 제거하고, PG 전환 시 옛 개발용 이용권·크레딧·작업 기록을 의도대로 초기화하는 release candidate를
 만든다.
@@ -185,13 +188,61 @@ Web API가 더 이상 보내지 않는 `imageSearchPlan`을 데스크톱 서버�
 - `npm test -- --watch=false --browsers=ChromeHeadless --include='src/features/shortform-director/models/shortform-director-storyboard.spec.ts' --include='src/features/shortform-director/services/storyboard-clipboard.service.spec.ts'`
 - `npm run build`
 
-**Checkpoint commit:** `refactor: remove storyboard image search guidance`
+**Checkpoint commit:** `refactor: remove storyboard image search UI`
 
-## 6. 최종 교차 검증과 문서화
+## 6. Desktop NestJS: 최신 베리에이션 v2에 PG 과금 옮기기
+
+**쉽게 설명하면**
+
+최신 `dev`가 베리에이션 v1을 완전히 삭제했는데, 예전 PG 과금 코드는 그 v1에만 붙어 있었다. v1을
+되살리지 않고 현재 v2의 영상 만들기에 과금을 연결한다. v2는 여러 영상 중 일부만 실패할 수 있으므로
+영상마다 과금 기록을 하나씩 만들어 실패한 영상만 환급한다.
+
+**TDD 순서**
+
+1. 선택한 영상 수만큼 과금 기록이 생기는 테스트를 먼저 추가한다.
+2. 일부 영상만 실패할 때 그 영상만 환급되는 테스트를 추가한다.
+3. 과금 시작, 프로젝트 잠금, 잡 예약 중 실패하면 앞서 시작한 과금이 모두 환급되는지 검사한다.
+4. 취소된 영상 환급, 재시작용 과금 ID 저장, bearer token 미저장을 검사한다.
+5. 현재 v2 렌더 서비스에만 구현하고 삭제된 v1 파일은 그대로 삭제한다.
+
+**검증 결과**
+
+- 관련 과금·베리에이션 검사 331/331 통과
+- 전체 NestJS 검사 2,116/2,116 통과
+- `npm run build` 성공
+
+**Checkpoint commit:** `19c667e merge: refresh NestJS integration from latest dev`
+
+## 7. Desktop Angular: 베리에이션 v2 크레딧 확인과 결과 안내
+
+**쉽게 설명하면**
+
+사용자가 영상 만들기를 누르면 현재 체크된 영상 수로 예상 차감액을 먼저 보여 준다. 취소하면 아무
+작업도 시작하지 않는다. 진행하면 NestJS가 돌려준 실제 총 차감액과 차감 직후 잔액을 안내한다.
+
+**TDD 순서**
+
+1. 선택 영상 수가 견적 요청에 들어가는 테스트를 먼저 추가한다.
+2. 확인창 취소 시 렌더 요청·프로젝트 잠금·화면 이동이 없어야 한다는 테스트를 추가한다.
+3. 방금 체크 해제한 저장이 끝난 뒤의 정확한 개수로 견적을 내는지 검사한다.
+4. 성공 안내에 실제 차감액과 잔액이 표시되는지 검사한다.
+5. 현재 베리에이션 v2 화면과 store에만 최소 구현한다.
+
+**검증 결과**
+
+- 베리에이션 v2와 공용 과금 확인 검사 550/550 통과
+- 전체 Angular 검사 3,913/3,913 통과
+- `npm run build` 성공
+- 테스트 중에만 끈 Angular CLI cache 설정은 원복했고 commit에 포함하지 않음
+
+**Checkpoint commit:** `7f34704b feat: forward-port variation v2 PG billing`
+
+## 8. 최종 교차 검증과 문서화
 
 1. 세 저장소에서 `imageSearchPlan`과 참고 분석의 활성 등록이 사라졌는지 검색한다.
 2. 공용 `/media/search`와 실제 사용처가 남아 있는지 확인한다.
-3. Web API 전체 test/build, NestJS의 가능한 전체 test/build, Angular 관련 test/build를 새로 실행한다.
+3. Web API 전체 test/build, NestJS 전체 test/build, Angular 전체 test/build를 새로 실행한다.
 4. 빈 폐기 DB와 구형 fixture DB에서 migration 결과를 확인한다.
 5. `.codex/main/2026-09-03-toss-payments-pg-release-candidate-integration-log.md`에 저장소별로
    충돌 원인, 보존 기능, 해결 방식, 테스트, 남은 위험을 갱신한다.

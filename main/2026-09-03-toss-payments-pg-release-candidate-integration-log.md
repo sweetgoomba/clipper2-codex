@@ -1,8 +1,9 @@
 # TossPayments PG release candidate 통합 로그
 
 - 시작일: 2026-09-03 (Asia/Seoul)
-- 상태: 7개 저장소 integration 후보 통합·선별 이식 완료. 2026-09-04에 승인된 개발 데이터 초기화
-  정책과 현재 사용하지 않는 스토리보드 기능 정리를 반영 중이며, 완료 전까지 DB migration·배포 차단
+- 상태: 7개 저장소 integration 후보 통합·선별 이식과 로컬 자동 검증 완료. 2026-09-04에 승인된
+  개발 데이터 초기화 정책과 현재 사용하지 않는 스토리보드 기능 정리까지 반영했으며, 실제 DB
+  migration·서버 배포는 계속 차단
 - 통합 브랜치: `integration/toss-payments-pg-20260903`
 - 작업 위치: 각 원본 저장소의 위 integration 브랜치 checkout
 - 임시 복제본: 초기 작업 위치를 잘못 해석해 만든
@@ -80,12 +81,12 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
 
 | 저장소 | `origin/dev` HEAD |
 |---|---|
-| Web API | `727876c701c7d85302a46d48ea88e3734dd25471` |
+| Web API | `557da3fd22c47009d222d18a231a2b4848d9e5e9` |
 | Web Customer | `4b361efc742db797e85848c5aea90eb1736194c5` |
 | Web Admin | `eae522f4908c65a55680be09353dd95df2a71190` |
-| Angular | `da0a2029d19fe3781b2a4d9e467f9c4001d00682` |
-| NestJS | `b817034513d19adf1dfecba4a0b480518d9271f4` |
-| Electron | `53cdb7d21996a758b260fb266f7a5e10d1f9bc69` |
+| Angular | `566b1d398e54930b3edc59faa41b7927a69ee9fe` |
+| NestJS | `cffa4ee2ee4137a91e139c6934a9ddce24d4d54f` |
+| Electron | `768b8767ba4d6ab3d6dc11242a9e80e91382ddc2` |
 | Infra | `4d3202263d84de9d046a1abc6eb51826a47009ae` |
 
 ### 3. 최신 dev와 PG branch 차이
@@ -94,12 +95,12 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
 
 | 저장소 | 차이 | 단순 merge 예상 충돌 파일 수 | 통합 방식 |
 |---|---:|---:|---|
-| Web API | 57 / 139 | 9 | 전체 이력을 합치고 의미별로 해결 |
+| Web API | 61 / 139 | 9 | 전체 이력을 합치고 의미별로 해결 |
 | Web Customer | 0 / 31 | 0 | 전체 merge |
 | Web Admin | 10 / 21 | 3 | 전체 merge 후 양쪽 화면 보존 |
-| Angular | 704 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
-| NestJS | 370 / 7 | 3 | 필요한 PG 동작만 선별 이식 |
-| Electron | 51 / 3 | 0 | 필요한 PG 동작만 선별 이식 |
+| Angular | 733 / 6 | 6 | 필요한 PG 동작만 선별 이식 |
+| NestJS | 386 / 7 | 3 | 필요한 PG 동작만 선별 이식 |
+| Electron | 57 / 3 | 0 | 필요한 PG 동작만 선별 이식 |
 | Infra | 0 / 6 | 0 | 로컬 후보 설정으로 merge |
 
 ### 4. API에서 확인된 충돌
@@ -107,10 +108,10 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
 | 쉬운 분류 | 파일 | 원인과 보존 목표 |
 |---|---|---|
 | API 메뉴판 | `docs/api/openapi.yaml` | 스토리보드 API와 결제 API를 모두 보존 |
-| 서버 시작 목록 | `src/app.module.ts` | 최신 AI 디렉터/스토리보드와 PG 모듈을 모두 등록 |
+| 서버 시작 목록 | `src/app.module.ts` | 현재 사용하는 스토리보드와 PG 모듈은 등록하고, 쓰지 않는 참고 영상 분석 모듈은 등록하지 않음 |
 | DB 등록 목록 | `admin.datasource.ts`, `user.datasource.ts`, spec | 스토리보드 표/migration과 PG 표/migration을 모두 등록 |
 | 이미지 검색 | `media-search.controller.ts` | 정확한 credential 고정과 과금 근거 기록을 함께 수행 |
-| 작업·크레딧 | `operations.service.ts`, `operation-definitions` 및 spec | 무료 디렉터 동작과 새 유료 렌더링 장부를 함께 보존 |
+| 작업·크레딧 | `operations.service.ts`, `operation-definitions` 및 spec | 스토리보드 작성 단계는 과금하지 않고, 현재 실제 유료 작업 여섯 종류만 새 장부에 기록 |
 
 ### 5. 런칭에 포함할 다른 작업
 
@@ -136,8 +137,9 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - `1786800000000-DropLegacyBilling`: 검증 후 legacy review 주문/이벤트를 삭제하고
     `credit_ledger`, `token_usage`, `licenses`, `purchase_requests`, `plans`를 drop한다.
   - 마지막 migration의 `down`은 표만 빈 상태로 다시 만들며 기존 행을 복원하지 못한다.
-- 결론: 운영 또는 현재 개발 DB에서 실행 금지. 별도 데이터 보존·변환 절차가 확인되기 전까지
-  release 위험으로 유지한다.
+- 결론: 위 삭제는 사용자가 승인한 초기화 정책과 일치한다. 그래도 운영 또는 현재 개발 DB에서는
+  바로 실행하지 않는다. 실제 개발 DB 백업과 폐기 가능한 복제본에서의 전체 예행연습을 사용자가
+  확인한 뒤에만 별도 작업으로 진행한다.
 
 ### 6-1. 폐기 가능한 DB 검증 checkpoint
 
@@ -167,9 +169,9 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     되지 않음
 - 판정:
   - 새 빈 DB 설치 순서, 반복 실행, 앱 시작 operation seed는 검증됨
-  - 기존 데이터가 있는 DB로 바로 올리는 것은 안전하지 않음
-  - 기존 무통장 주문, 이용권, 토큰 사용량, 크레딧 장부를 새 구조로 옮기거나 보관하는 migration과
-    검증 기준이 별도로 승인되기 전에는 stage/prod 배포 후보로 승격할 수 없음
+  - 기존 데이터가 있는 DB에 바로 적용하지 않고 백업·복제본 예행연습을 먼저 해야 함
+  - 옛 무통장 주문, 이용권, 남은 크레딧, 사용 기록과 전체 `operation_runs`는 새 구조로 옮기지 않고
+    지우는 것이 확정 정책임. 더 이상 데이터 변환 정책이 미정인 상태는 아님
 
 ### 7. 인수인계 문서와 현재 상태의 차이
 
@@ -223,11 +225,15 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
 
 ### Web API
 
-- 상태: 통합, 런타임 정리, 폐기 DB migration 검증 완료
-- 현재 integration commit: `c6b1e18 refactor: remove storyboard image search plan contract`
+- 상태: 통합, 런타임 정리, 폐기 DB migration 검증, 최신 `dev` 재통합 완료
+- 현재 integration commit: `25520c6 merge: refresh Web API integration from latest dev`
+- 정리 checkpoint:
+  - `68c2099 feat: reset legacy operation history for PG launch`
+  - `1d22155 refactor: disable unused reference analysis route`
+  - `c6b1e18 refactor: remove storyboard image search plan contract`
 - 최초 통합 commit: `f1517f35f83da69ead02c10dac9ff079ac2aaa00`
 - merge 부모:
-  - 최신 `origin/dev`: `727876c701c7d85302a46d48ea88e3734dd25471`
+  - 최신 `origin/dev`: `557da3fd22c47009d222d18a231a2b4848d9e5e9`
   - PG 전체 이력: `4ef22684115947df3aee124da18d94a0f896c97f`
 - 충돌 원인:
   - OpenAPI: 최신 `dev`는 스토리보드와 YouTube credential API를, PG는 상품·접근권한·크레딧·
@@ -294,6 +300,9 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 공용 `/media/search` 회귀: 7/7 통과
   - 최종 전체: `npm test -- --runInBand --silent` → 227 suites, 2,384 tests 통과
   - 최종 build: `npm run build` → 성공
+  - 최신 `origin/dev`의 데스크톱 Google 로그인 loopback과 대사 하이라이트 HIGH timeout 변경을
+    `25520c6`에서 재통합한 뒤 전체 228 suites, 2,404 tests 통과
+  - 위 최신화 후 `npm run build` 성공
   - 폐기용 PostgreSQL 16 `127.0.0.1:55449` 빈 DB: Admin migration 전체 성공, 재실행 pending 0
   - 폐기용 fixture DB: `178680`까지 적용 후 과거 실행·복구·폐기 정책을 1건씩 넣고 나머지를 적용;
     세 종류 모두 0건, 옛 Billing 표 5개 없음, 새 PG 표 존재 확인
@@ -401,8 +410,10 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - `7b56e2a3 fix: label account-level credit history accurately`
   - `9504e098 merge: refresh Angular integration from latest dev`
   - `f8555d5f refactor: remove storyboard image search UI`
+  - `09b416f1 merge: refresh Angular integration from latest dev`
+  - `7f34704b feat: forward-port variation v2 PG billing`
 - 처음 출발한 `origin/dev`: `fc9ae5e86b8b48af60ef91c4251adfc6b8964756`
-- 현재 포함한 최신 `origin/dev`: `da0a2029d19fe3781b2a4d9e467f9c4001d00682`
+- 현재 포함한 최신 `origin/dev`: `566b1d398e54930b3edc59faa41b7927a69ee9fe`
 - 충돌 원인:
   - 오래된 PG branch 뒤로 최신 `dev`가 694 commit 전진해 화면, 플러그인, 렌더링, 메모리 관리
     구조가 크게 달라졌다. 따라서 branch 전체를 merge하면 최신 데스크톱 기능을 과거 구조로 되돌릴
@@ -415,6 +426,8 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     생성을 서로 다른 과금 작업으로 구분한다.
   - 스토리보드가 이미지 검색을 하지 않게 바뀌었는데도 화면 모델, “이미지 검색 가이드”, 검색어 복사,
     전체 문서 복사 내용과 안내 문구가 옛 기능을 계속 보여 주고 있었다.
+  - 최신 `dev`가 옛 베리에이션 v1 화면을 없애고 v2 화면만 남겼기 때문에, 과거 v1에 있던 PG 크레딧
+    확인창과 차감 결과 안내도 함께 사라졌다. 오래된 v1 화면을 되살리지 않고 현재 v2 흐름에 옮겨야 했다.
 - 보존 기능:
   - 최신 `dev`의 UI foundation, settings/home 화면 구조, 메모리 최적화, 플러그인 수명주기와
     설치 상태 확인 구조
@@ -423,6 +436,8 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - Customer의 현재 요금제, 결제 내역, 크레딧 화면으로 가는 링크
   - URL·붙여넣기·프롬프트별 정확한 숏폼 과금 키
   - 이미지 검색과 무관한 장면 설명, AI 영상 프롬프트 보기·복사, 전체 스토리보드 복사 기능
+  - 최신 베리에이션 v2의 선택 저장, 프로젝트 잠금, 렌더 예약과 보관함 이동 흐름
+  - 베리에이션 영상 수에 맞춘 사전 크레딧 확인과 실제 차감액·잔액 안내
 - 해결 방식:
   - 오래된 PG branch는 merge/cherry-pick하지 않고 현재 파일에 필요한 동작만 TDD로 옮겼다.
   - 화면이 사용하는 `CurrentLicenseSummary` 이름은 대규모 UI 재작성과 회귀를 피하기 위한 내부
@@ -439,6 +454,12 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 스토리보드 타입과 품질 경고 타입에서 이미지 검색 항목을 제거하고, 화면 카드·검색어 복사·전체
     문서의 이미지 검색 안내·관련 SCSS를 함께 삭제했다. 공용 미디어 검색과 조사 단계의 일반 검색어
     표시는 건드리지 않았다.
+  - 현재 베리에이션 v2 화면의 영상 만들기 버튼에서 `variation.render` 견적을 먼저 조회한다. 방금
+    체크를 해제한 저장이 끝날 때까지 기다린 다음 실제 선택 개수를 보내므로 잘못된 개수의 금액을
+    보여 주지 않는다.
+  - 사용자가 확인창을 취소하면 렌더 API, 프로젝트 잠금, 보관함 이동을 모두 시작하지 않는다.
+    확인하면 기존 v2 렌더 흐름을 그대로 실행하고, 서버가 돌려준 전체 차감액과 차감 직후 잔액을
+    완료 안내에 덧붙인다.
 - 실행한 테스트:
   - 최신 `dev` 기준선: 전체 Karma 4,254/4,254 통과
   - 최신 `dev` 기준선: style 6/6 통과, `npm run build` 성공
@@ -465,12 +486,24 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     두 곳만 옛 이름을 사용
   - 샌드박스 안에서 esbuild deadlock으로 두 차례 종료됐지만 같은 Node 22 명령을 샌드박스 밖에서
     실행하자 집중/전체 테스트와 build가 모두 통과했다.
+  - 최신 `origin/dev`의 베리에이션 v2 텍스트 입력 소유권 수정까지 `09b416f1`에서 재통합
+  - 베리에이션 v2 과금 TDD RED: 확인창·취소·실제 차감 안내·선택 저장 대기 테스트를 먼저 추가해
+    구현 전 실패를 확인
+  - 베리에이션 v2 전체와 공용 과금 확인 검사: 550/550 통과
+  - 2026-09-04 최종 Angular 전체: 3,913/3,913 통과
+  - 2026-09-04 최종 `npm run build`: 성공, 초기 bundle 303.10 kB
+  - Angular native cache가 LMDB 해제 오류로 Node를 중단해 테스트 중에만 CLI cache를 껐다. 검증 후
+    `angular.json`을 원래대로 되돌려 cache 설정 변경은 commit에 포함하지 않았다.
   - Git 검사: unmerged 0, 충돌 표식 0, `git diff --check` 통과, commit 후 working tree clean
 - 남은 위험:
   - Web API integration 후보 및 NestJS integration 후보를 실제로 함께 띄운 데스크톱 E2E는 아직
     실행하지 않았다.
   - 원천별 잔액이 화면 폭이 좁은 실제 패키지 창에서 어떻게 줄바꿈되는지는 수동 확인이 필요하다.
   - 이미지 검색 가이드가 사라진 실제 패키지 화면의 최종 육안 확인은 아직 하지 않았다.
+  - 여러 영상을 한 번에 요청하면 서버는 영상 수만큼 과금 시작 요청을 순서대로 보낸다. 최대 100개
+    선택 시 요청 수와 응답 시간을 실제 통합 환경에서 확인해야 한다.
+  - 시작 안내는 요청 직후의 총 차감액을 보여 준다. 그 뒤 특정 영상 준비가 실패해 자동 환급되면 이
+    첫 안내 문구는 갱신되지 않으므로, 최종 잔액·장부 화면까지 포함한 수동 확인이 필요하다.
   - `npm ci` audit 결과 17건(보통 8, 높음 9)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### NestJS
@@ -482,7 +515,8 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - `f306519 feat: forward-port durable desktop operation billing`
   - `5b50588 fix: retire stale desktop operation ledger proxy`
   - `50fa495 refactor: remove storyboard image search plan handling`
-- 출발점인 최신 `origin/dev`: `b817034513d19adf1dfecba4a0b480518d9271f4`
+  - `19c667e merge: refresh NestJS integration from latest dev`
+- 현재 포함한 최신 `origin/dev`: `cffa4ee2ee4137a91e139c6934a9ddce24d4d54f`
 - 충돌 원인:
   - 오래된 PG branch 전체를 합치면 최신 플러그인 수명주기, 렌더 재시도, 미디어 가져오기와 메모리
     최적화를 과거 구현으로 덮을 위험이 있다.
@@ -493,6 +527,11 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
     숏폼의 작업 키도 입력 방식별 현재 API 계약과 달랐다.
   - 스토리보드에서 이미지 검색을 없앴지만, 데스크톱 내부 타입·검사·복구 코드에는 검색 계획을
     만들고 검사하는 옛 구현이 남아 있었다.
+  - 최신 `dev`는 베리에이션 v1 모듈과 테스트를 전부 삭제했다. PG branch의 베리에이션 과금은 그
+    삭제된 v1 서비스에만 붙어 있었기 때문에, 최신 구조를 그대로 합치기만 하면 베리에이션 v2 영상은
+    크레딧을 전혀 차감하지 않는 상태가 됐다.
+  - 베리에이션 v2는 선택한 영상 중 일부가 준비에 실패해도 나머지 영상은 계속 만든다. 여러 영상을
+    과금 기록 하나로 묶으면 일부 실패 때 실패분만 정확히 환급할 수 없었다.
 - 보존 기능:
   - 최신 `dev`의 plugin/render/job 구조, 렌더 재시도와 메모리 최적화
   - 사용자의 bearer token을 저장하지 않고 요청마다 Web API로 전달하는 인증 경계
@@ -514,11 +553,18 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 새 스토리보드 응답 타입, 조립, 품질 검사, 실패 복구, 화면용 변환에서는 이미지 검색 계획을
     완전히 제거했다. 다만 과거 로컬 파일을 읽는 한 지점에서는 그 옛 항목을 값으로 사용하지 않고
     버린 뒤 현재 장면 정보만 읽는다.
+  - 최신 `dev`가 삭제한 베리에이션 v1 파일은 다시 살리지 않고 삭제 상태를 선택했다. 대신 현재 v2
+    렌더 서비스에 `variation.render` 과금을 옮겼다.
+  - 선택한 영상마다 `generatedVideoCount: 1`인 과금 기록을 하나씩 만든다. 준비·예약에 실패하거나
+    취소된 영상의 기록만 실패 처리해 그 영상의 크레딧만 환급하고, 정상 제출된 영상은 차감을 확정한다.
+  - 여러 과금 시작 중 하나라도 실패하거나 프로젝트 잠금·잡 예약이 실패하면 이미 시작한 과금을
+    전부 실패 처리하고 잡과 새 잠금을 남기지 않는다.
+  - 재시작 복구에는 과금 기록 ID만 잡 정보에 저장하고 bearer token은 저장하지 않는다. 토큰이 없는
+    로컬 인증 모드에서는 기존 로컬 렌더 동작만 수행한다.
 - 실행한 테스트:
   - 최신 `dev` 기준선 build: 성공
-  - 최신 `dev` 원본 전체 test에서 `template-builder-no-s3-storage.test.js`는 untracked
-    `.env.packaged` 부재로 실패하고, `web-api-client.test.js`는 다섯 번째 테스트의 Promise가
-    끝나지 않아 뒤 10개가 취소되는 기존 문제를 확인
+  - 초기 임시 복제본의 최신 `dev` 기준선에서는 `template-builder-no-s3-storage.test.js`가 untracked
+    `.env.packaged` 부재로 실패했다. 원본 저장소에는 기존 로컬 파일이 있어 최종 검사에서는 통과했다.
   - access/credit proxy TDD: 3/3 통과
   - operation/evidence/shortform 집중 검사: 최종 52/52 통과
   - 구형 operation ledger 제거 TDD RED: route/service 2건 실패 확인, 구현 제거 후 관련 6/6 통과
@@ -533,20 +579,35 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 스토리보드 정리 후 `npm run build` 성공, `git diff --check` 통과
   - source에는 새 생성·검사·복구용 이미지 검색 구현이 없고, 과거 저장 파일의 필드를 버리는 호환
     경계 한 곳만 남아 있음
-  - Git 검사: 네 checkpoint commit 후 working tree clean
+  - 베리에이션 v2 과금 TDD RED: 영상별 시작·부분 환급·예약 실패·시작 실패·취소·토큰 미저장 테스트를
+    먼저 추가해 구현 전 실패 확인
+  - 베리에이션 v2 및 operation 집중 검사: 331/331 통과
+  - 최신 `dev`의 v1 베리에이션 삭제, 액세스 토큰 갱신, 오류 세분화를 `19c667e`에서 재통합
+  - 최신 `dev`의 Web API timeout mock은 Node 22의 참조되지 않는 timeout 때문에 테스트가 끝나기
+    전에 프로세스가 종료됐다. 제품 코드는 바꾸지 않고 테스트 mock에 100ms 실패 안전장치만 추가했다.
+  - 개발자 셸의 JWT 설정이 인증과 무관한 숏폼 테스트에 섞이지 않도록 최종 전체 테스트만
+    `CLIPPER_AUTH_MODE=local`로 명시해 실행
+  - 2026-09-04 최종 전체: 2,116/2,116 통과
+  - 2026-09-04 최종 `npm run build`: 성공
+  - Git 검사: 모든 checkpoint commit 후 working tree clean
 - 남은 위험:
-  - 기준선의 `.env.packaged` 의존 테스트와 pending Promise 테스트는 이번 PG 범위에서 임의로 고치지
-    않았다. 따라서 두 파일을 포함한 원문 그대로의 전체 test 명령은 아직 green이 아니다.
   - Web API integration 후보를 실제로 연결한 HTTP E2E와 실패 후 실제 크레딧 반환 확인은 하지 않았다.
+  - 선택 영상 수만큼 Web API 과금 시작 요청을 순서대로 보내므로 최대 100개 선택 시 성능과 중간
+    네트워크 실패 복구 시간을 실제 통합 환경에서 확인해야 한다.
+  - 현재 차감 성공 확정 시점은 영상 파일 생성 완료가 아니라 로컬 렌더 잡 제출 완료 시점이다. 이는
+    과거 v1과 같은 기준이지만, 제출 후 실제 렌더 작업이 실패했을 때 자동 환급할지는 별도 정책과
+    구현 확인이 필요하다.
   - 과거 로컬 파일 호환 경계는 옛 검색 계획의 내용을 복원하거나 화면에 노출하지 않는다. 해당 항목
     이외에 계약에 없는 다른 필드가 들어오면 지금처럼 파일을 거부한다.
   - `npm ci` audit 결과 5건(보통 1, 높음 4)이 보고됐다. 자동 fix는 실행하지 않았다.
 
 ### Electron
 
-- 상태: 유효한 PG test 계약 선별 이식 및 로컬 자동 검증 완료
-- integration commit: `578a12a test: use current portal handoff path`
-- 출발점인 최신 `origin/dev`: `53cdb7d21996a758b260fb266f7a5e10d1f9bc69`
+- 상태: 유효한 PG test 계약 선별 이식, 최신 `dev` 재통합 및 로컬 자동 검증 완료
+- integration commits:
+  - `578a12a test: use current portal handoff path`
+  - `dbf55c8 merge: refresh Electron integration from latest dev`
+- 현재 포함한 최신 `origin/dev`: `768b8767ba4d6ab3d6dc11242a9e80e91382ddc2`
 - 충돌 원인:
   - PG branch의 주 구현은 Electron IPC에서 플러그인 실행과 모델 다운로드 전에 Web API access를
     검사하고 차단한다. 이는 모든 플랜의 플러그인 구성이 같고 무료 기능은 결제 상태와 무관하게
@@ -573,6 +634,8 @@ User DB의 값이다. 이것을 실제 배포된 개발서버 DB의 건수라고
   - 최종 build: `npm run build` 성공
   - 패키징 fixture 파일 하나를 제외한 전체: 341/341 통과
   - 원문 `npm test`: 347/348 통과, 아래 환경 의존 패키징 fixture 1건 실패
+  - 최신 `origin/dev`의 만료 토큰 갱신 창구와 개발 앱 Google loopback 로그인을 `dbf55c8`에서 재통합
+  - 위 최신화 후 전체 371/371 통과, `npm run build` 성공
   - Git 검사: 최종 정책과 충돌하는 access authorizer 없음, commit 후 working tree clean
 - 남은 위험:
   - `storyboard-document-only-packaging.test.mjs`의 fresh staged resources 검사는 검증 당시 임시
@@ -651,12 +714,12 @@ Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에
 
 | 저장소 | 최종 integration HEAD | PG 이력 방식 | working tree / unmerged / diff check |
 |---|---|---|---|
-| Web API | `f1517f35f83da69ead02c10dac9ff079ac2aaa00` | 전체 merge | clean / 0 / 통과 |
+| Web API | `25520c6063e4702bd6138de8db2de70466c7c6ca` | 전체 merge + 최신 dev 갱신 | clean / 0 / 통과 |
 | Web Admin | `ed1b5a4a7ffc2c541d37116ecf4cf21bc61255ef` | 전체 merge | clean / 0 / 통과 |
 | Web Customer | `bedafa38e02b4c800fc50efb086827eff4579e90` | 전체 merge | clean / 0 / 통과 |
-| Angular | `9504e09806f23a1d8aad1aa3c2dfddf84aa1c564` | 필요한 동작 선별 이식 + 최신 dev 갱신 | clean / 0 / 통과 |
-| NestJS | `5b50588442adf995e9c76958af7919886ecebda8` | 필요한 동작 선별 이식 | clean / 0 / 통과 |
-| Electron | `578a12a8883c8268f28db7edae269752869159c4` | 유효한 test 계약만 선별 이식 | clean / 0 / 통과 |
+| Angular | `7f34704b614c29b3e4f4b4271f75a15739367c43` | 필요한 동작 선별 이식 + 최신 dev 갱신 | clean / 0 / 통과 |
+| NestJS | `19c667e23bbcecc7761195bf582c31a402c8e762` | 필요한 동작 선별 이식 + 최신 dev 갱신 | clean / 0 / 통과 |
+| Electron | `dbf55c821fbe71f1812ccf93cab3ca7bca21c649` | 유효한 test 계약 선별 이식 + 최신 dev 갱신 | clean / 0 / 통과 |
 | Infra | `fa92eda300f87be37187df703802c6bf2e447d0c` | 전체 merge, 실제 적용 보류 | clean / 0 / 통과 |
 
 - API/Admin/Customer/Infra는 PG branch HEAD가 integration HEAD의 ancestor임을 확인했다.
@@ -665,15 +728,16 @@ Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에
 - Angular/NestJS/Electron source에는 구형 license/ledger 경로, 구형 소문자 잔액 부족 코드,
   `shortform.create`, 구독 기반 plugin 차단 구현이 남지 않았다.
 - 원본 7개 저장소는 모두 integration 브랜치를 checkout하고 있으며 working tree가 깨끗하다.
-  각 저장소의 로컬 `dev` ref도 `origin/dev`와 정확히 같다.
+  2026-09-04 마지막 fetch 기준 각 integration HEAD가 최신 `origin/dev`를 모두 포함한다.
 - 기존 PG worktree 7개의 branch/HEAD는 불변이며 API `docs/api/openapi.yaml.orig`와 Customer
   `build/d2x_logo.icns`, `build/d2x_logo.ico`도 untracked 상태로 보존돼 있다.
 
 ### 리뷰 판정
 
 - 로컬 코드 release candidate: 준비됨. 원본 7개 저장소가 각각의 integration 브랜치를 checkout하고
-  있고 자동 검증과 재검증 가능한 commit이 남아 있다.
-- 실제 stage/prod 배포: 준비되지 않음. 기존 DB 데이터 보존 전략, 실제 5대 PC 구성, test-key 수동
-  결제 흐름 및 브라우저/데스크톱 E2E가 남아 있다.
-- 가장 큰 차단 항목: destructive migration 3개의 기존 데이터 삭제. 이 항목을 해결하거나
-  “기존 개발 데이터는 이관하지 않고 새 운영 DB를 사용한다”는 명시적 결정을 내리기 전에는 배포 금지.
+  있고 최신 `origin/dev`, 확정된 데이터 초기화 정책, 재검증 가능한 commit을 포함한다.
+- 실제 stage/prod 배포: 준비되지 않음. 실제 5대 PC 구성 확인, 개발 DB 백업과 폐기 가능한 복제본
+  예행연습, Toss test-key 수동 결제 흐름, 브라우저/데스크톱 E2E가 남아 있다.
+- 기존 결제 데이터 보존 여부는 더 이상 미정이 아니다. 기존 사용자 계정만 남기고 옛 결제·이용권·
+  크레딧·전체 작업 기록을 초기화하기로 확정했다. 다만 실제 개발 DB에 적용하는 것은 별도 승인과
+  사용자 직접 실행 절차가 필요하며, 이번 세션에서는 실행하지 않는다.
