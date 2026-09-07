@@ -117,4 +117,96 @@
 
 - `storage`라고 부른 장비는 DB/NAS storage가 아니라 Windows 설치형 파일을 build하는 runner PC다.
   DB 인프라 조사 대상에서 제외하고, 추후 Windows release runner 검증 때 별도로 확인한다.
-- 다음은 `m2-proxy`, 이후 `m2-stage`, `m4-prod` 순으로 실제 구성을 확인한다.
+- 다음은 `m2-stage`, `m4-prod` 순으로 실제 구성을 확인한다.
+
+## `m2-proxy` read-only checkpoint
+
+### 장비와 네트워크
+
+- 실제 hostname: `metabuzz-staging.local`
+- 운영체제/CPU: Darwin 23.5.0, Apple Silicon `arm64`
+- Docker client/server: 28.0.4
+- Docker Compose: v2.34.0-desktop.1
+- 내부 주소: `en0=192.168.0.2`, `en1=192.168.10.113`
+- 기본 게이트웨이: `192.168.0.1`, 기본 interface: `en0`
+- 판정: `192.168.0.2`가 Clipper 서버망과 인터넷 기본 경로에 연결된 proxy 주소다.
+- 시스템 디스크: 228 GiB 중 106 GiB 사용, 88 GiB 여유, 사용률 55%
+- Docker 사용량: image 18.96 GB, build cache 19.58 GB. 약 35 GB가 reclaimable이지만 현재 정리하지 않았다.
+
+### 실행 중 서비스
+
+- `nginx-proxy-manager`
+  - image 설정: `jc21/nginx-proxy-manager:latest`
+  - 실제 앱 버전: 2.14.0
+  - restart: `always`
+  - host port: `81`, `18080`, `18443`
+  - Compose project: `proxy-server`
+  - Compose file: `/Users/metabeojeu/Desktop/infra/proxy-server/docker-compose.yml`
+  - `/data`와 `/etc/letsencrypt`는 host directory bind mount다.
+- `clipper-web-monitor`
+  - restart: `unless-stopped`
+  - Compose project: `monitor`
+  - Compose file: `/Users/metabeojeu/Desktop/project/clipper2/clipper_infra/ops/monitor/compose.yml`
+  - 실제 `targets.json`, `state.json`을 host에서 bind mount한다.
+- 같은 장비의 `angular-prod`, `nestjs-prod`는 Clipper가 아닌 다른 회사 프로젝트이므로 조사·변경 대상에서 제외한다.
+- Nginx 전체 설정에 대해 `nginx -t`가 성공했다.
+
+### 현재 Clipper proxy와 DNS
+
+| 공개 주소 | 현재 proxy target | HTTPS 상태 |
+|---|---|---|
+| `dev.clipperstudio.ai` | `192.168.0.23:42203` | 200 |
+| `dev-admin.clipperstudio.ai` | `192.168.0.23:42303` | 200 |
+| `dev-api.clipperstudio.ai` | `192.168.0.23:43203` | `/health` 200 |
+
+- 위 세 개발 주소만 Nginx Proxy Manager에 등록돼 있다.
+- `dev-api` server level에는 기본 access log 선언 뒤 `access_log off`가 있고, Nginx 규칙상 뒤 설정이
+  같은 level의 access log를 취소한다. 실제 access log 파일도 크기 0이고 2026-08-16 이후 변경되지 않았다.
+- 실제 DNS:
+  - `clipperstudio.ai` -> `112.169.113.138`
+  - `www.clipperstudio.ai` -> `clipperstudio.ai` -> `112.169.113.138`
+  - 개발 주소 세 개 -> `metabuzz.iptime.org` -> `112.169.113.138`
+  - `admin.clipperstudio.ai`, `api.clipperstudio.ai`, stage 주소 세 개는 현재 record가 없다.
+- 루트와 `www`는 DNS만 public IP에 연결돼 있고 Nginx host/certificate가 없어 TLS SNI 단계에서 거절된다.
+- 기존 Infra 문서의 `api.clipperstudio.ai -> 3.34.33.3 legacy API` 설명은 현재 실제 DNS와 다르다.
+
+### 현재 감시 상태
+
+- monitor 대상은 dev web/admin/API 세 개와 dev User/Admin/Release DB 세 개뿐이다.
+- 검사 주기 30초, 연속 실패 2회에 장애 판정, recovery cooldown 5분이다.
+- 확인 시점에 여섯 대상은 모두 `up`, `consecutiveFailures=0`이었다.
+- stage/prod 대상은 아직 없다. 해당 환경 구축·검증 후 별도로 추가해야 한다.
+
+### 저장소와 로컬 설정 보존 위험
+
+- `clipper_infra` server checkout은 `dev`, tracked working tree clean이다.
+- server HEAD와 fetch 전 cached `origin/dev`: `da0af4db2f32cb32dbc9f6c3e4b682eea3f9d7bf`
+- `git ls-remote`로 확인한 실제 `origin/dev`: `4d3202263d84de9d046a1abc6eb51826a47009ae`
+- 판정: server checkout은 실제 원격 `dev`보다 오래됐다. read-only 단계에서는 fetch/pull하지 않았다.
+- `/Users/metabeojeu/Desktop/infra/proxy-server`는 Git 저장소가 아니다.
+- 핵심 로컬 상태 파일:
+  - `data/database.sqlite`: mode `0644`, 163,840 bytes
+  - `data/keys.json`: mode `0644`, 2,190 bytes
+  - `docker-compose.yml`과 기존 `docker-compose.yml.bak`도 mode `0644`
+- `database.sqlite`와 `keys.json`은 같은 Mac의 다른 local account가 읽을 수 있으므로 변경 전에 mode `0600`으로
+  줄이는 것이 안전하다. 현재는 변경하지 않았다.
+- 기존 `.bak`는 Compose 파일만 보존하며 실제 proxy host·account·certificate 상태 백업이 아니다.
+- 운영 proxy 변경 직전에는 `database.sqlite`, `keys.json`, `letsencrypt`를 함께 보존하고 복구 방법을 확인해야 한다.
+
+### 현재 구조와 기존 Infra 문서의 중요한 차이
+
+- 통합 Infra 문서는 proxy와 prod 앱이 같은 `192.168.0.2` 장비에서 실행된다는 이전 가정이 남아 있다.
+- 실제 목표 구조에서는 `m2-proxy`와 `m4-prod`가 별도 장비다.
+- 따라서 문서의 prod upstream `192.168.0.2:42202/42302/43202`를 그대로 등록하면 안 된다.
+- `m4-prod`의 실제 내부 IP와 앱 port를 먼저 확인한 후 prod upstream과 runbook을 고쳐야 한다.
+- `api.clipperstudio.ai` 등 DNS/Nginx 변경은 운영 앱과 DB가 준비되고 내부 health 검증까지 끝난 뒤에만 한다.
+
+### 아직 하지 않은 일
+
+- proxy/monitor repository fetch 또는 pull
+- Nginx Proxy Manager Compose·DB·key·certificate 변경 또는 백업
+- file permission 변경
+- Nginx host 추가·수정·삭제 또는 reload/restart
+- DNS, router port-forwarding, firewall 변경
+- stage/prod monitor target 추가
+- Docker image/cache 정리
