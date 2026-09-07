@@ -210,3 +210,71 @@
 - DNS, router port-forwarding, firewall 변경
 - stage/prod monitor target 추가
 - Docker image/cache 정리
+
+## `m2-stage` read-only checkpoint
+
+### 실제 역할 정정
+
+- Chrome 원격 데스크톱 이름은 `m2-stage`지만, 이 장비는 현재 Clipper 개발 웹 서버다.
+- 이번 운영 배포 대상은 `m4-prod`이며 이 장비에 별도 stage 또는 prod 앱을 배포하지 않는다.
+- Infra 저장소에 `compose.stage.yml`이 존재한다는 이유만으로 이 장비에 stage 환경을 만들면 안 된다.
+- 앞으로 이 장비는 기존 dev 상태와 prod 구성에 필요한 네트워크 참고 정보만 확인하고 변경하지 않는다.
+
+### 장비와 네트워크
+
+- 실제 hostname: `metabuzzs-Mac-mini-2.local`
+- 운영체제/CPU: Darwin 23.6.0, Apple Silicon `arm64`
+- Docker client/server: 28.0.4
+- Docker Compose: v2.34.0-desktop.1
+- 내부 주소: `en0=192.168.0.23`, `en1=192.168.10.111`
+- 기본 게이트웨이: `192.168.0.1`, 기본 interface: `en0`
+- 판정: Nginx Proxy Manager의 현재 dev upstream `192.168.0.23`과 일치한다.
+- 시스템 디스크: 228 GiB 중 133 GiB 사용, 69 GiB 여유, 사용률 66%
+- Docker 사용량: images 55.44 GB, build cache 21.14 GB, inactive volumes 1.786 GB.
+- 이 장비에는 다른 회사 프로젝트 container/image도 있으므로 `prune` 또는 임의 정리를 하지 않는다.
+
+### 현재 Clipper 개발 서비스
+
+| 역할 | container | image | host bind | 상태 |
+|---|---|---|---|---|
+| Customer web | `clipper-web-client-dev` | `clipper-web-client:dev` | `192.168.0.23:42203` | Up |
+| Admin web | `clipper-web-admin-dev` | `clipper-web-admin:dev` | `192.168.0.23:42303` | Up |
+| Web API | `clipper-web-api-dev` | `clipper-web-api:dev` | `192.168.0.23:43203` | Up |
+
+- 중지된 Clipper container는 없고 stage/prod Clipper container도 없다.
+- 세 container 모두 Compose project `clipper-dev`, restart policy `unless-stopped`다.
+- Compose files:
+  - `/Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.yml`
+  - `/Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.dev.yml`
+- API만 `/Users/metabuzz/Desktop/project/clipper2/.secrets/web-api-dev`를
+  `/run/clipper-web-api-secrets`로 bind mount한다.
+
+### source repository 상태
+
+| repository | branch | server HEAD | 실제 `origin/dev` | 판정 |
+|---|---|---|---|---|
+| Infra | `dev` | `4d3202263d84de9d046a1abc6eb51826a47009ae` | 동일 | clean, 최신 |
+| Customer | `dev` | `4b361efc742db797e85848c5aea90eb1736194c5` | 동일 | clean, 최신 |
+| Web API | `dev` | `468466e63811076092229ca09223bc01f6671a2b` | `557da3fd22c47009d222d18a231a2b4848d9e5e9` | clean, 원격보다 2개 뒤 |
+| Web Admin | `dev` | `eae522f4908c65a55680be09353dd95df2a71190` | 동일 | clean, 최신 |
+
+- Web API 서버 checkout에만 있는 commit은 없다. `rev-list --left-right --count HEAD...origin/dev`는 `0 2`다.
+- 서버에 아직 없는 두 commit은 데스크톱 Google 로그인 후 loopback callback으로 돌아오는 기능 commit과 merge commit이다.
+- 현재 dev container는 그대로 두고, 이 장비에서 fetch/pull/rebuild/redeploy하지 않았다.
+
+### env와 secret 준비 상태
+
+- 실제 app env는 `env/stack.dev.env`만 있다. `stack.stage.env`, `stack.prod.env`는 없다.
+- `.secrets` 아래 실제 secret directory도 `web-api-dev`만 있다.
+- `stack.dev.env` mode는 `0644`다. 민감값이 있으므로 향후 승인된 dev 변경 시 `0600`으로 줄여야 한다.
+- `user-jwt-private.pem`과 `operator-jwt-secret`은 `0600`, `user-jwt-public.pem`은 `0644`로 적절하다.
+- 이번 운영 배포를 위해 이 장비에 stage/prod env나 secret을 만들지 않는다.
+
+### 아직 하지 않은 일
+
+- repository fetch/pull/checkout
+- dev image rebuild 또는 container 재시작
+- stage/prod env·secret 생성
+- stage/prod image build 또는 container 생성
+- file permission 변경
+- Docker image/cache/volume 정리
