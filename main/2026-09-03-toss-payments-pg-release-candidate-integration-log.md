@@ -741,3 +741,61 @@ Superpowers 코드 리뷰 기준을 직접 적용했다. 현재 실행 환경에
 - 기존 결제 데이터 보존 여부는 더 이상 미정이 아니다. 기존 사용자 계정만 남기고 옛 결제·이용권·
   크레딧·전체 작업 기록을 초기화하기로 확정했다. 다만 실제 개발 DB에 적용하는 것은 별도 승인과
   사용자 직접 실행 절차가 필요하며, 이번 세션에서는 실행하지 않는다.
+
+## 2026-09-07 운영 인프라 작업 전 최종 `dev` 확인
+
+### 원격과 브랜치 상태
+
+- 원본 7개 저장소에서 `git fetch origin dev`를 다시 실행했다.
+- 2026-09-04 마지막 통합 검증 뒤 `origin/dev`에 추가된 commit은 7개 저장소 모두 0개였다.
+- 따라서 integration 브랜치에 새로 merge할 코드와 새 충돌은 없었고 integration HEAD도 바뀌지 않았다.
+- 각 integration HEAD가 현재 `origin/dev`의 descendant임을 다시 확인했다. 즉 최신 `dev` 내용은 이미
+  integration 후보 안에 전부 들어 있다.
+- 로컬 `dev` ref는 API·Angular·NestJS·Electron에서 이전 `origin/dev` 위치에 남아 있었다. 네 로컬
+  `dev`에만 있는 commit이 모두 0개임을 확인한 뒤 checkout을 바꾸지 않고 현재 `origin/dev`로
+  fast-forward했다. Admin·Customer·Infra의 로컬 `dev`는 이미 최신이었다.
+- 결과적으로 원본 7개 저장소의 로컬 `dev`와 `origin/dev`가 모두 일치하며, 작업 checkout은 계속
+  `integration/toss-payments-pg-20260903`이다. PG 코드를 `dev`에 merge하지 않았다.
+
+| 저장소 | 2026-09-07 `origin/dev` | integration HEAD | `origin/dev` 미포함 commit |
+|---|---|---|---:|
+| Web API | `557da3fd22c47009d222d18a231a2b4848d9e5e9` | `25520c6063e4702bd6138de8db2de70466c7c6ca` | 0 |
+| Web Admin | `eae522f4908c65a55680be09353dd95df2a71190` | `ed1b5a4a7ffc2c541d37116ecf4cf21bc61255ef` | 0 |
+| Web Customer | `4b361efc742db797e85848c5aea90eb1736194c5` | `bedafa38e02b4c800fc50efb086827eff4579e90` | 0 |
+| Angular | `566b1d398e54930b3edc59faa41b7927a69ee9fe` | `7f34704b614c29b3e4f4b4271f75a15739367c43` | 0 |
+| NestJS | `cffa4ee2ee4137a91e139c6934a9ddce24d4d54f` | `19c667e23bbcecc7761195bf582c31a402c8e762` | 0 |
+| Electron | `768b8767ba4d6ab3d6dc11242a9e80e91382ddc2` | `dbf55c821fbe71f1812ccf93cab3ca7bca21c649` | 0 |
+| Infra | `4d3202263d84de9d046a1abc6eb51826a47009ae` | `fa92eda300f87be37187df703802c6bf2e447d0c` | 0 |
+
+### 제외 브랜치 재확인
+
+- `origin/feat/ai-video-generation-merge`는 해당 remote ref가 있는 API·Angular·NestJS 어디에서도
+  `origin/dev` 또는 integration HEAD의 ancestor가 아니다.
+- meme overlay 관련 remote ref도 API·Angular·NestJS·Electron 어디에서도 `origin/dev` 또는
+  integration HEAD의 ancestor가 아니다.
+- 따라서 이번 최신화로 AI video generation 또는 meme overlay가 새로 들어오지 않았다.
+
+### 2026-09-07 새로 실행한 검증
+
+- Web API: 228 suites, 2,404 tests 통과; build 통과
+- Web Admin: 366 tests 통과; build 통과. 초기 bundle 557.06 kB이며 기존 500 kB 예산 경고는 유지
+- Web Customer: 226 tests 통과; build 통과. 초기 bundle 493.00 kB
+- Angular: 3,913 tests와 style 6개 통과; build 통과. 초기 bundle 303.10 kB
+- NestJS: 2,116 tests 통과; build 통과
+- Electron: 371 tests 통과; build 통과
+- Infra: root 104 passed, Windows 전용 1 skipped; monitor 6/6 통과;
+  `validate-toss-payments-env.sh`와 `deploy-dev.sh` 셸 문법 검사 통과
+- API·Angular 계열·Electron의 첫 샌드박스 실행은 임시 local port를 열 수 없어 `listen EPERM`으로
+  실패했다. 동일 명령을 local port 사용이 허용된 환경에서 다시 실행해 위 결과로 모두 통과했다.
+- Angular 계열 build도 샌드박스 안에서는 오류 메시지 없이 exit 134로 중단됐지만, 같은 Node 22
+  명령을 샌드박스 밖에서 재실행해 세 저장소 모두 통과했다. 제품 코드는 수정하지 않았다.
+- Infra monitor는 최초에 설치된 의존성이 없어 시작되지 않았다. `ops/monitor/package-lock.json` 기준
+  `npm ci` 후 6/6 통과했고 tracked 파일 변경은 생기지 않았다.
+
+### 최종 안전 상태
+
+- 원본 7개 저장소는 모두 integration 브랜치 checkout, working tree clean이다.
+- 기존 PG worktree 7개의 branch와 HEAD는 바꾸지 않았다. API의 미추적
+  `docs/api/openapi.yaml.orig`와 Customer의 미추적 `build/`도 그대로 보존했다.
+- `.codex`에 이미 있던 PG와 무관한 미추적 문서는 stage하거나 수정하지 않았다.
+- DB 접속·write·migration, 서버 접속·설정 변경, 배포, DNS/NPM 변경, 실제 결제·환불은 하지 않았다.
