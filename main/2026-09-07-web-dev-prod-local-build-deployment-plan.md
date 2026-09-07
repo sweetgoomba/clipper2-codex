@@ -1,5 +1,7 @@
 # 개발·운영 웹 서버 직접 빌드와 DB migration 분리
 
+> 후속 변경: 이 문서의 production/deployment-prod 명명은 최초 구현 당시 기록이다. 이후 사용자 승인으로 local/dev/prod로 통일했다. 현재 설정은 [명명 정리 기록](./2026-09-07-web-environment-naming-cleanup.md)과 [사용법](./2026-09-07-web-dev-prod-local-build-deployment-guide.md)을 따른다.
+
 > 승인 범위: 원본 저장소의 integration 브랜치에서 로컬 구현·검증만 한다. 서버 명령은 사용자가 실행한다. dev/main merge, push, 배포, 실제 DB 접근은 하지 않는다.
 
 ## 목표와 결정

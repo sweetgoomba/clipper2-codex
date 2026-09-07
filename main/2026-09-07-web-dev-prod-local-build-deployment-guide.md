@@ -8,6 +8,8 @@
 
 로컬 체크포인트: Customer `53de1d5`, Admin `0315e9d`, API `2f19cc0`, Infra `26faf08`. 모두 기존 integration 브랜치의 커밋이며 운영 main 반영/원격 push는 하지 않았다.
 
+이름 통일 후속 체크포인트: Customer `70ac16b`, Admin `472e35e`, Infra `ea57a1a`(API 변경 없음). 아래 사용법은 이 후속 변경을 반영한 현재 기준이다.
+
 ## 매번 같은 명령을 사용한다
 
 서버에서 해당 `clipper_infra` 폴더로 이동한 상태의 명령이다. 아래는 사용법 설명이며 지금 서버에서 실행하라는 지시가 아니다.
@@ -53,12 +55,17 @@
 
 ## 웹 API 주소는 빌드 때 결정한다
 
-| 빌드 설정 | 결과물에 들어가는 API |
-|---|---|
-| 기존 `production` | `https://dev-api.clipperstudio.ai` |
-| `production,deployment-prod` | `https://api.clipperstudio.ai` |
+| 빌드 설정 | 사용하는 환경 파일 | 결과물에 들어가는 API |
+|---|---|---|
+| `local` | `environment.local.ts` | `http://localhost:3000` |
+| `dev` | `environment.dev.ts` | `https://dev-api.clipperstudio.ai` |
+| `prod` | `environment.prod.ts` | `https://api.clipperstudio.ai` |
 
-기존 설정의 `production`은 최적화 빌드라는 Angular 이름이며, 이 프로젝트에서는 이미 개발 서버용 주소로 사용 중이었다. 이름만 보고 운영 서버용이라고 판단하면 안 된다. 기존 동작을 바꾸지 않고, 운영 주소 교체 설정을 추가했다. 배포 스크립트가 위 설정을 선택하므로 사용자가 외울 필요는 없다.
+사용자 지적 후 Customer/Admin 모두 위 세 이름으로 통일했다. 이전 `production`(개발 서버용), `development`(로컬용), `deployment-prod`(운영용) 설정과 옛 환경 파일 이름은 제거했다. `production,deployment-prod`처럼 조합할 필요 없이 `prod` 하나를 선택한다.
+
+`npm start`와 `npm run watch`는 local, 옵션 없는 `npm run build`는 dev다. `npm run build -- --configuration=prod`는 운영용이다. Docker ARG 기본값은 dev이며 배포 스크립트가 dev/prod를 명시한다. 개발/운영 서버용은 같은 최적화 옵션을 공유하고 local은 디버깅용 설정을 사용한다.
+
+`environment.ts`는 소스에서 import하는 진입점과 기존 테스트 기본값을 유지한다. 실제 local/dev/prod 빌드에서는 각각 해당 파일로 교체된다. 환경 객체의 `production: true/false`는 기존 코드가 사용할 수 있는 런타임 값이며 빌드 설정 이름과는 별개라 그대로 유지했다.
 
 Customer/Admin Dockerfile의 `ANGULAR_CONFIGURATION` 인자로 전달한다. 웹 컨테이너 시작 후 환경변수로 SPA의 API 주소를 바꾸는 방식이 아니다. 개발·운영의 로그인/결제 요청이 상대 환경으로 섞이지 않도록 실제 빌드 결과물에서 확인했다.
 
@@ -75,8 +82,8 @@ Customer/Admin Dockerfile의 `ANGULAR_CONFIGURATION` 인자로 전달한다. 웹
 ### Customer / Admin
 
 - 문제: 동일한 기본 빌드가 개발 API를 가리켰다.
-- 보존: 기존 production/development 설정과 화면/API 계약. 데스크톱 앱은 수정하지 않았다.
-- 해결: 운영 전용 environment 파일, Angular 설정, Docker 빌드 인자만 추가했다.
+- 보존: 로컬/개발/운영 각각의 API 주소, 기본 빌드 대상, 화면/API 계약. 데스크톱 앱은 수정하지 않았다.
+- 해결: local/dev/prod 환경 파일, Angular build/serve 설정, package watch, Docker 빌드 인자, 배포 실행부를 같은 이름으로 통일했다. local에서는 source map을 사용하며 dev/prod에서는 최적화·파일명 해시·기존 용량 제한을 적용한다.
 
 ### API
 
@@ -86,7 +93,7 @@ Customer/Admin Dockerfile의 `ANGULAR_CONFIGURATION` 인자로 전달한다. 웹
 
 ## 검증과 남은 일
 
-- 최종 종합 실행: 배포/PG/Compose/웹 빌드 테스트 97개 통과(2026-09-07). 실행 명령은 `node --test scripts/deployment.test.mjs scripts/validate-toss-payments-env.test.mjs scripts/web-build.integration.test.mjs`(infra 폴더)다. 로컬 Node 24에서 검증했고 Dockerfile의 Node 22 runtime 빌드는 별도 확인이 남아 있다.
+- 이름 통일 후 최종 종합 실행: 배포/PG/Compose/웹 빌드 테스트 101개 통과(2026-09-07). 실제 웹 빌드는 Customer/Admin 각각 local/dev/prod/기본값의 8종이다. 실행 명령은 `node --test scripts/deployment.test.mjs scripts/validate-toss-payments-env.test.mjs scripts/web-build.integration.test.mjs`(infra 폴더)다. 로컬 Node 24에서 검증했고 Dockerfile의 Node 22 runtime 빌드는 별도 확인이 남아 있다.
 - 별도 read-only 코드 리뷰: Critical/Important 지적 없음. Minor 제안인 infra 갱신 후 1회 재실행·반복 갱신 차단 테스트 2개를 추가해 통과했다.
 - TDD: 배포 동작 테스트 실패를 먼저 확인하고 구현했다. start-only 테스트도 추가 후 실패→통과 순서로 검증했다.
 - 기존 쉘 소스의 특정 문구를 찾던 테스트 1개는, 실제 공통 실행부가 PG 검증 실패 시 빌드를 중단하는 동작 테스트로 교체했다.

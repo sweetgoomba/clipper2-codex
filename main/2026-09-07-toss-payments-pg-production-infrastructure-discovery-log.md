@@ -429,3 +429,12 @@
 - 운영 env 예제의 이미지와 앱 bind IP만 현재 결정에 맞췄다. 실제 비밀/환경 파일, DB, DNS/NPM, 서버 컨테이너는 변경하지 않았다. 데스크톱 이름·아이콘·runner 분리도 이번 구현에서 제외했다.
 - [구체적 계획](./2026-09-07-web-dev-prod-local-build-deployment-plan.md), [사용법·검증·남은 위험](./2026-09-07-web-dev-prod-local-build-deployment-guide.md).
 - 저장소별 로컬 checkpoint commit: Customer `53de1d5`, Admin `0315e9d`, API `2f19cc0`, Infra `26faf08`. 원격 push와 dev/main 반영 없음.
+
+## 2026-09-07 웹 환경 이름 정리 후속 작업
+
+- 사용자가 기존 production(개발 서버)/deployment-prod(운영 서버) 명명의 혼동을 지적했고 local/dev/prod 통일을 승인했다.
+- Customer/Admin 모두 Angular build/serve 설정과 환경 파일을 local/dev/prod로 통일. package watch=local, 기본 build/Docker ARG=dev, 운영 배포 인자=prod로 변경했다. 화면·API 계약과 실제 연결 대상은 유지했다.
+- 기존 production/development/deployment-prod 설정 별칭을 제거했다. 수동 명령을 사용하는 경우 새 local/dev/prod를 사용해야 한다. npm start/build와 deploy-dev/deploy-prod 사용자 명령 형태는 유지된다.
+- 테스트101개 통과. 실제 웹 빌드8종 포함. 기존 서버, API, DB, 데스크톱, runner에는 변경 없음.
+- [구체적 변경 및 검증 기록](./2026-09-07-web-environment-naming-cleanup.md). 기존 배포 사용법 문서도 현재 명칭으로 갱신했다.
+- 후속 checkpoint: Customer `70ac16b`, Admin `472e35e`, Infra `ea57a1a`. 원격 push/서버 반영 없음.
