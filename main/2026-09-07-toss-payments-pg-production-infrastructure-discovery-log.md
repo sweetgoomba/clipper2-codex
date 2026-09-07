@@ -438,3 +438,12 @@
 - 테스트101개 통과. 실제 웹 빌드8종 포함. 기존 서버, API, DB, 데스크톱, runner에는 변경 없음.
 - [구체적 변경 및 검증 기록](./2026-09-07-web-environment-naming-cleanup.md). 기존 배포 사용법 문서도 현재 명칭으로 갱신했다.
 - 후속 checkpoint: Customer `70ac16b`, Admin `472e35e`, Infra `ea57a1a`. 원격 push/서버 반영 없음.
+
+## 2026-09-08 배포 소스 브랜치 강제 제거
+
+- 사용자 요청으로 개발=dev/운영=main 브랜치명 검사와 `git pull --ff-only origin dev/main` 지정을 제거했다. 앞선 9월 7일 기록의 브랜치 검사 설명은 현재 동작이 아니다.
+- infra와 선택한 각 웹 저장소에서 현재 체크아웃한 브랜치의 연결된 원격을 대상으로 `git pull --ff-only`를 실행한다. 자동 checkout, 원격/브랜치 fallback은 없다. 갱신 실패 시 중단한다.
+- 배포 환경은 여전히 deploy-dev/deploy-prod 명령으로 선택한다. 소스 브랜치명과 독립적으로 Angular 설정, API 주소, 이미지 태그, Compose/DB 대상이 dev/prod로 구분된다.
+- 미커밋 변경 보호, 선택 서비스만 빌드·재시작, 별도 migration, build-only/start-only 동작은 유지했다. migration에도 main/dev 브랜치 검사를 강제하지 않으며 pull/build는 하지 않는다.
+- TDD: 변경 전 임의 브랜치의 dev/prod 배포 및 migration 테스트 3개가 기존 브랜치 제한 때문에 실패함을 확인했다. 최소 수정 후 배포 테스트 24개 + PG/Compose 71개, 총 95개 통과. Git/Docker 실행은 배포 테스트의 대역으로 검증했고 실제 서버 배포/DB migration은 하지 않았다. Angular 코드는 변경하지 않아 실제 웹 빌드는 이번에 재실행하지 않았다.
+- 현재 사용법은 [배포 가이드](./2026-09-07-web-dev-prod-local-build-deployment-guide.md)에 반영했다.
