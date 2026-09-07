@@ -291,3 +291,119 @@
 - stage/prod image build 또는 container 생성
 - file permission 변경
 - Docker image/cache/volume 정리
+
+## `m4-prod` read-only checkpoint
+
+### 장비와 네트워크
+
+- 실제 hostname: `m4-produi-Macmini.local`
+- 운영체제/CPU: Darwin 25.5.0, Apple Silicon `arm64`
+- 내부 주소: `en0=192.168.0.47`, `en1=192.168.10.102`
+- 기본 게이트웨이: `192.168.0.1`, 기본 interface: `en0`
+- 판정: 운영 앱의 내부 주소는 `192.168.0.47`이다. 기존 Infra 문서의 운영 upstream
+  `192.168.0.2`는 실제로는 `m2-proxy` 주소이므로 그대로 사용하면 안 된다.
+- 시스템 디스크: 460 GiB 중 104 GiB 사용, 320 GiB 여유, 사용률 25%
+
+### Docker와 현재 서비스
+
+- Docker client/server: 29.4.3
+- Docker Compose: v5.1.3
+- Docker VM: CPU 10개, memory 약 7.75 GiB, `aarch64`, `overlayfs`
+- 현재 container 전체 memory 사용량은 약 0.6 GiB로 운영 Clipper 앱을 추가할 여유가 있다.
+- Docker 사용량: image 23.25 GB, build cache 22.65 GB이며 build cache 약 20.75 GB가 reclaimable이다.
+  다른 회사 서비스가 함께 실행 중이므로 현재 정리하지 않았다.
+- BuildingOn과 Coldmail 운영 container가 이미 실행 중이다. 조사·변경 대상에서 제외한다.
+- Clipper 앱 container는 실행 중이거나 중지된 것이 모두 없고, `clipper-web-monitor`만 실행 중이다.
+- 사용자가 확정한 초기 운영 배포 방식은 `m2-stage`의 개발 배포와 같은 **서버 직접 build 방식**이다.
+  즉 `m4-prod`에 정확한 source commit을 준비하고 이 장비에서 image를 build한다. 현재 Infra에 남은
+  GHCR pull 가정은 바로 사용하지 않고 실제 topology와 이 방식에 맞게 정리해야 한다.
+- memory가 8 GiB이므로 Customer, Admin, API image를 동시에 build하지 않고 순서대로 build한다.
+
+### 예정 포트와 현재 충돌 여부
+
+| 역할 | 기존 Infra가 정한 prod host port | 확인 결과 |
+|---|---:|---|
+| Customer web | `42202` | 비어 있음 |
+| Admin web | `42302` | 비어 있음 |
+| Web API | `43202` | 비어 있음 |
+
+- 이 포트들은 이번 조사에서 새로 만든 번호가 아니다. 기존 `compose.prod.yml`의
+  stage=`01`, prod=`02`, dev=`03` 환경 번호 규칙에서 온 값이다.
+- 현재 다른 service와 충돌하지 않으므로 유지할 수 있지만, 최종 Compose 수정 전 사용자가 다시 승인한다.
+
+### 현재 Clipper monitor
+
+- container: `clipper-web-monitor`, restart policy `unless-stopped`
+- Infra 경로: `/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra`
+- 현재 monitor 대상은 dev web/admin/API와 dev User/Admin/Release DB 여섯 개뿐이다.
+- 여섯 실제 대상은 모두 `up`, `consecutiveFailures=0`이었다.
+- Slack webhook은 설정돼 있다. `m2-proxy`에도 같은 dev monitor가 있으므로 알림 중복 가능성을 나중에
+  확인하고 prod monitor 소유 장비를 하나로 정해야 한다.
+- `state.json`에는 더 이상 target에 없는 `clipper-backup-local`의 과거 down 상태가 남아 있지만,
+  현재 검사 대상은 아니다. 임의로 삭제하지 않았다.
+- `ops/monitor/targets.json`과 `ops/monitor/state.json`은 둘 다 tracked file이 아니고 Git에서 무시된다.
+  브랜치 checkout이나 commit에 자동으로 섞이지 않는다. 실제 브랜치 전환 직전에는 같은 경로의 tracked
+  file 충돌 여부를 다시 확인하고 두 파일을 별도로 보존한다.
+
+### source repository와 원격 branch 준비 상태
+
+- 이 장비에 있는 Clipper Git repository는 `clipper_infra` 하나뿐이다.
+- 현재 Infra branch: `feature/web-monitor`, tracked working tree clean
+- server HEAD와 실제 원격 `feature/web-monitor`: `da0af4db2f32cb32dbc9f6c3e4b682eea3f9d7bf`
+- fetch 전 cached `origin/dev`: `ed505b7b8a816db5d9c8c9e5f7cc3e5020569bc9`
+- `git ls-remote`로 확인한 실제 `origin/dev`: `4d3202263d84de9d046a1abc6eb51826a47009ae`
+- read-only 단계에서는 fetch, checkout, pull을 하지 않았다.
+- GitHub HTTPS 접근은 가능하며 Web Customer/Admin/API의 실제 `dev` ref도 조회됐다.
+- 네 repository 모두 원격 `integration/toss-payments-pg-20260903` branch가 아직 없다. 로컬 integration
+  후보를 다시 검증하고 명시적으로 push하기 전에는 `m4-prod`에서 clone 또는 checkout할 수 없다.
+- 운영 배포를 시작할 때는 `git pull`로 임의 최신 상태를 받지 않고, 승인된 integration branch의 정확한
+  commit을 확인한 뒤 checkout한다.
+
+### 운영 env와 secret 준비 상태
+
+- Infra `env` directory에는 example 파일만 있다. 실제 `stack.prod.env`는 없다.
+- `/Users/m4-prod/Documents/projects/clipperstudio/.secrets`와 `/opt/clipper/secrets` 모두 아직 없다.
+- 따라서 기존 운영 secret을 덮어쓸 위험은 없지만, 배포 전에 운영 전용 JWT key와 operator secret 등
+  필요한 파일을 새로 만들고 mode `0600`으로 제한해야 한다.
+- secret 값, token, 결제 자격증명은 조사 과정에서 출력하지 않았다.
+
+### 전원 복구와 보안 상태
+
+- `sleep=0`: AC 전원에서 본체 자동 잠자기는 꺼져 있다.
+- `womp=1`: network wake가 켜져 있다.
+- `autorestart=0`: 정전 후 전원이 돌아와도 Mac이 자동으로 다시 켜지지 않는다.
+- FileVault는 꺼져 있어 부팅 시 disk unlock은 필요 없다.
+- Docker 앱과 DockerHelper가 로그인 실행 항목에 enabled로 등록된 기록을 확인했다.
+- macOS 자동 로그인은 설정돼 있지 않다.
+- 현재 조합에서는 정전 후 사람이 Mac을 켜고 사용자 로그인까지 해야 Docker Desktop과
+  `restart=unless-stopped` container가 복구된다.
+- 무인 복구를 원하면 운영 전에 `autorestart`와 로그인/Docker 시작 방식을 함께 결정해야 한다.
+  자동 로그인은 FileVault도 꺼진 장비에 물리적으로 접근한 사람이 계정에 바로 들어갈 수 있다는
+  보안 단점이 있으므로 사용자의 명시적 승인 없이 켜지 않는다.
+- macOS application firewall과 stealth mode는 모두 꺼져 있다. 이는 공유기 port forwarding과는
+  별개지만 같은 내부망에서는 열린 host port에 접근할 수 있다는 뜻이다.
+- 방화벽을 바로 켜면 함께 운영 중인 BuildingOn·Coldmail에 영향을 줄 수 있으므로 변경하지 않았다.
+  Clipper는 지정된 `192.168.0.47` port에만 bind하고, 인터넷 공개는 `m2-proxy`를 거치며, 공유기가
+  Clipper port를 `m4-prod`로 직접 forwarding하지 않는지 go-live 전에 확인해야 한다.
+- 시스템 시각은 `2026-09-07 13:22 KST`, UTC offset `+0900`이었고 macOS `timed` service가 실행 중이었다.
+
+### 현재 운영 준비 판정
+
+- 장비 자원, 내부 IP, 예정 port에는 운영 앱을 올릴 수 있는 여유가 있다.
+- 그러나 아직 운영 DB, 실제 prod env, prod secret, 앱 source checkout, 앱 image/container, proxy host,
+  DNS가 모두 없다.
+- 정전 후 자동 복구도 구성되지 않았다.
+- 다음 변경 단계로 넘어가기 전에 로컬 integration 후보 네 개를 재검증하고 원격 branch를 준비하며,
+  실제 `m2-proxy` + `m4-prod` 분리 구조와 서버 직접 build 방식에 맞춘 구체적 실행 설계를 사용자에게
+  쉬운 말로 제시하고 승인받아야 한다.
+
+### 아직 하지 않은 일
+
+- repository fetch/pull/checkout/clone 또는 integration branch push
+- monitor target/state 삭제 또는 수정
+- Docker image build, container 생성·재시작, cache 정리
+- prod env·secret 생성 또는 permission 변경
+- 전원, 자동 로그인, 방화벽 설정 변경
+- 운영 DB 생성 또는 migration
+- Nginx Proxy Manager, router, DNS 변경
+- 서버 배포와 결제·환불 실행
