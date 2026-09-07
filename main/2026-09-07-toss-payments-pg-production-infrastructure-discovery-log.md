@@ -407,3 +407,25 @@
 - 운영 DB 생성 또는 migration
 - Nginx Proxy Manager, router, DNS 변경
 - 서버 배포와 결제·환불 실행
+
+## 2026-09-07 데스크톱 이름 논의 보류 후 재개 지점
+
+- 운영판 앱 이름·아이콘은 결정권자 답변 대기다. [별도 결정 대기 기록](./2026-09-07-desktop-dev-prod-app-identity-decision-pending.md)에 현재 개발판 보존 원칙과 검토 후보를 정리했다.
+- 이름 결정을 기다리는 동안 운영 인프라 준비를 계속한다. 기존 직원들의 개발판 데이터 이전이나 앱 설정 변경을 진행하지 않는다.
+- 장기 운영 브랜치는 대화에서 `main`으로 결정했다. 앞선 조사 기록의 integration branch는 당시 원격에 없던 통합 테스트 후보를 뜻하며, 운영 브랜치명으로 사용하라는 뜻이 아니다. 실제 `main` 생성·반영·push 상태는 배포 준비 단계에서 다시 확인한다.
+- 사용자는 개발·운영 모두 서버에서 직접 이미지를 빌드하고, `web`, `admin`, `api`, `all`을 같은 방식으로 선택하기를 원한다. DB migration은 앱 배포와 별도 명령으로 실행하는 방향이다.
+- 이번 로컬 파일 확인에서 `scripts/deploy-dev.sh`의 위 서비스 선택 기능은 존재한다. `scripts/deploy-prod.sh`와 `scripts/migrate-db.sh`는 아직 없으며, 앞선 대화의 해당 명령은 구현할 사용법이었다.
+- 로컬 `runbooks/deploy-prod.md`도 여전히 이미지 `pull`과 예전 장비 배치를 설명한다. 서버에서 바로 실행할 최신 절차로 간주하지 않는다.
+- 다음 작업은 로컬 배포 후보 상태 확인 후 서버 직접 빌드·웹 API 주소 분리·migration 별도 실행을 위한 변경과 검증 범위를 구체화하는 것이다. 이미 확인한 장비 기본 정보는 반복 조사하지 않고 실제 변경 직전에 변동 가능한 항목만 재확인한다.
+- 서버 변경 명령은 사용자가 직접 실행한다. 개발 DB 백업·migration은 지금 수행하지 않는 기존 방침을 유지한다.
+
+## 2026-09-07 웹 배포 실행부 로컬 구현
+
+- 사용자 “응 진행해줘” 승인으로 원본 웹 저장소의 integration 브랜치에서 구현했다. 새로운 worktree/복제본은 만들지 않았다.
+- 작업 시작 HEAD: infra `fa92eda`, Customer `bedafa3`, Admin `ed1b5a4`, API `25520c6`. 네 저장소는 시작 시 clean이었다. `.codex`의 기존 변경과 무관한 dialog-highlight 문서는 보존했다.
+- 개발/운영 `web/admin/api/all` 공통 실행부, 운영 서버 직접 빌드, API 주소 분리, 별도 migration 명령을 추가했다. 실행 시 dev/main 브랜치를 검사하지만 이번에 dev/main을 checkout·merge·push하지 않았다.
+- `--build-only`로 이미지를 준비하고 별도 migration 후 `--start-only`로 그 이미지를 실행할 수 있다. 일반 배포에는 migration이 포함되지 않는다.
+- 배포/PG/Compose/실제 웹 빌드 최종 97 tests, API datasource 6 tests 및 API build 통과. 실제 DB 접속 없이 검증했다. 별도 read-only 리뷰의 Critical/Important 지적은 없었고 infra 재실행 테스트 제안도 반영했다.
+- 운영 env 예제의 이미지와 앱 bind IP만 현재 결정에 맞췄다. 실제 비밀/환경 파일, DB, DNS/NPM, 서버 컨테이너는 변경하지 않았다. 데스크톱 이름·아이콘·runner 분리도 이번 구현에서 제외했다.
+- [구체적 계획](./2026-09-07-web-dev-prod-local-build-deployment-plan.md), [사용법·검증·남은 위험](./2026-09-07-web-dev-prod-local-build-deployment-guide.md).
+- 저장소별 로컬 checkpoint commit: Customer `53de1d5`, Admin `0315e9d`, API `2f19cc0`, Infra `26faf08`. 원격 push와 dev/main 반영 없음.
