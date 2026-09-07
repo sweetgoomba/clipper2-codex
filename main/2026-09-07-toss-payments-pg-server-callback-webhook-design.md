@@ -203,7 +203,80 @@ callback: dev-api.clipperstudio.ai
 - 운영용 키 쌍과 MID 연결을 토스 개발자센터에서 확인한다.
 - 라이브 결제·환불은 이번 세션에서 실행하지 않으며, 별도로 승인된 최종 점검 단계에서만 실행한다.
 
-## 10. 현재 확인된 배포 차단 요소
+## 10. 관리자 릴리스 빌드에서 소스 브랜치와 환경을 구분하는 기준
+
+### 10.1 `sourceBranch`가 정하는 것
+
+관리자페이지에서 입력하는 `dev`, `main`, `release/<version>`은 설치형 앱을 만들 때 어느 소스코드를 가져올지만 정한다.
+
+현재 runner는 입력받은 브랜치 이름으로 다음 다섯 저장소의 `origin/<sourceBranch>`를 조회하고, 각 저장소의 정확한 commit SHA를 하나의 소스 스냅샷으로 고정한다.
+
+- `clipper_angular`
+- `clipper_nestjs`
+- `clipper_python`
+- `clipper_electron`
+- `clipper_web_api`
+
+`sourceBranch`는 개발용·운영용 API 주소, DB, S3 경로 또는 runner를 선택하지 않는다. 현재 API도 브랜치 이름이 Git 브랜치 문법에 맞는지만 검사하므로 `dev`를 운영 Admin에서 입력하는 행위 자체는 허용한다.
+
+### 10.2 개발용인지 운영용인지 정하는 것
+
+빌드 환경은 브랜치 이름이 아니라 빌드 요청이 통과하는 서버 사슬로 정한다.
+
+```text
+개발 Admin
+-> 개발 Web API
+-> 개발 Windows runner
+-> 개발 API 주소·개발 JWT 공개키·개발 S3 경로·개발 Release DB
+
+운영 Admin
+-> 운영 Web API
+-> 운영 Windows runner
+-> 운영 API 주소·운영 JWT 공개키·운영 S3 경로·운영 Release DB
+```
+
+따라서 환경 분리가 완성된 뒤의 결과는 다음과 같다.
+
+| 빌드를 요청한 곳 | 선택한 소스 브랜치 | 설치형 앱이 연결할 API |
+| --- | --- | --- |
+| 개발 Admin | `dev` | 개발 API |
+| 개발 Admin | `main` | 개발 API |
+| 운영 Admin | `main` | 운영 API |
+| 운영 Admin | `dev` | 운영 API |
+
+운영 Admin에서 `dev`를 선택하는 마지막 경우는 기술적으로 지원할 수 있다. 이 결과물은 `dev`의 코드를 사용하지만 운영 API와 운영 데이터에 연결된다. 검증되지 않은 개발 코드가 운영 데이터에 접근할 수 있으므로 화면에 명확한 경고를 표시하고, 빌드와 정식 배포 승인을 분리해야 한다. 기본 운영 빌드는 `main` 또는 승인된 `release/<version>`을 사용한다.
+
+환경 값은 브라우저가 임의로 보내는 입력을 신뢰해서 선택하지 않는다. 개발 Web API와 운영 Web API가 자신에게 고정된 runner 주소·토큰과 환경 이름을 서버 설정에서 선택해야 한다.
+
+### 10.3 현재 구현에서 실제로 분리되는 부분
+
+- Web API는 `CLIPPER_RELEASE_WINDOWS_RUNNER_START_URL`, `CLIPPER_RELEASE_WINDOWS_RUNNER_SNAPSHOT_URL`, `CLIPPER_RELEASE_WINDOWS_RUNNER_TOKEN`으로 호출할 runner를 선택한다.
+- runner의 `release-runner.dev.env`와 `release-runner.prod.env`는 작업 결과를 보고할 API, S3 prefix, runner 이름과 실행 정보를 나누기 위한 파일이다.
+- Windows 환경 준비 스크립트는 runner의 API 주소를 데스크톱 NestJS용 `.env.packaged`의 `CLIPPER_WEB_API_BASE_URL`과 원격 기능 endpoint에 기록한다.
+- runner는 빌드 직전에 고정된 각 저장소의 commit을 checkout하므로, 같은 브랜치 이름이 빌드 도중 움직여도 이미 만든 스냅샷의 commit을 사용한다.
+
+### 10.4 현재 구현에서 아직 분리되지 않은 부분
+
+- 현재 Admin과 Customer의 Angular `environment.production.ts`는 개발 API 주소를 고정해서 사용한다. Docker 컨테이너 실행 시 넣는 `CLIPPER_ENV=prod`만으로는 이미 만들어진 정적 JavaScript 안의 주소가 바뀌지 않는다.
+- 설치형 앱 내부 NestJS는 `.env.packaged`의 API 주소를 사용하지만, Electron 로그인과 자동 업데이트는 설정이 없으면 개발 API 주소로 돌아간다.
+- runner가 빌드하는 `packaged-runtime-config.json`에는 일반 빌드의 환경별 API 주소가 들어가지 않는다. 그래서 설치형 앱 전체가 하나의 동일한 환경을 바라본다는 보장이 없다.
+- 개발 runner와 운영 runner가 같은 작업 폴더를 사용하면 공용 `.env.packaged`, JWT 공개키, 출력 폴더를 서로 덮어쓸 수 있다.
+- runner 컨테이너의 기본 이름과 기본 포트가 같고, 현재 Docker 포트 연결도 `19029:19029`로 고정되어 있어 두 환경을 그대로 동시에 실행할 수 없다.
+- 실제 `storage`에는 현재 개발용 runner 하나만 있다. 운영용 runner는 아직 구축하지 않았다.
+
+따라서 현재 상태에서는 운영 Admin에서 `dev`를 선택해 빌드가 성공하더라도, 그 설치파일의 모든 기능이 운영 API만 바라본다고 보장할 수 없다. 아래 환경 분리를 먼저 구현하고 검사해야 한다.
+
+### 10.5 구현해야 할 최종 분리 구조
+
+- Admin과 Customer 웹은 개발용·운영용 API 주소를 각각 빌드할 수 있어야 한다.
+- 개발 Web API는 개발 runner만 호출하고 운영 Web API는 운영 runner만 호출해야 한다.
+- 개발·운영 runner는 서로 다른 컨테이너 이름, host port, 작업 폴더, 환경 파일, 출력 폴더와 JWT 공개키를 사용해야 한다.
+- runner가 빌드마다 환경별 API 주소와 자동 업데이트 주소를 Electron runtime config에 명시적으로 넣어야 한다.
+- 설치형 앱의 로그인, 포함된 NestJS, 원격 기능 호출과 자동 업데이트가 모두 같은 환경의 API를 바라보는지 빌드 결과물을 검사해야 한다.
+- 개발·운영 S3 prefix와 Release DB를 분리하고, runner가 자신의 환경이 아닌 곳에 결과를 보고하거나 업로드하지 못하게 해야 한다.
+- 운영 Admin에서 `dev`처럼 기본 정책 밖의 브랜치를 선택하면 경고와 별도 확인을 요구하되, 사용자가 명시적으로 승인하면 빌드는 가능하게 한다.
+
+## 11. 현재 확인된 배포 차단 요소
 
 다음 항목은 콜백·웹훅 주소만 설정한다고 해결되지 않는다. 개발 PG 검증과 운영 배포 계획에서 함께 해결해야 한다.
 
@@ -213,7 +286,7 @@ callback: dev-api.clipperstudio.ai
 - `m2-proxy`에는 개발 Customer, Admin, API의 Proxy Host만 확인되었다. 운영용 세 Proxy Host와 인증서가 마련되기 전에는 외부 운영 트래픽을 열면 안 된다.
 - 운영 Infra 환경 예시에는 예전 서버 구조의 주소가 남아 있다. 현재 `m2-proxy`, `m2-db`, `m4-prod` 구조에 맞춰 값을 하나씩 확인해서 새 실제 환경 파일을 만들어야 한다.
 
-## 11. 이번 설계에서 하지 않는 것
+## 12. 이번 설계에서 하지 않는 것
 
 - 서버 배포
 - DNS 또는 Nginx Proxy Manager 변경
@@ -223,19 +296,22 @@ callback: dev-api.clipperstudio.ai
 - secret key, token, 빌링키 또는 민감 결제 데이터 출력
 - PG 전용 서브도메인 추가
 
-## 12. 구현 계획으로 넘길 작업
+## 13. 구현 계획으로 넘길 작업
 
 이 설계가 최종 승인되면 별도 구현 계획에서 다음을 구체적인 테스트와 작은 checkpoint 단위로 나눈다.
 
 - 개발·운영 웹 빌드의 API 주소 분리
 - 설치형 앱의 개발·운영 API 및 자동 업데이트 주소 분리
+- `sourceBranch`와 빌드 환경을 독립된 값으로 유지하고 운영의 비기본 브랜치 선택에 경고·승인 절차 추가
 - 개발·운영 Windows runner의 이름, 포트, 작업 폴더, 환경 파일과 자격증명 분리
+- 개발·운영 runner를 동시에 실행해도 `.env.packaged`, JWT 공개키와 산출물을 공유하지 않는 구조
+- 빌드 결과물 안의 로그인·NestJS·업데이트 주소가 한 환경으로 일치하는지 검사하는 preflight
 - 운영 API Proxy Host 수동 설정 체크리스트
 - 개발 PG 배포 전 환경변수·MID·웹훅 preflight
 - 개발서버 콜백·웹훅·중복 처리 검증 절차
 - 개발 검증 통과 후 운영 적용과 되돌리기 절차
 
-## 13. 확인 근거
+## 14. 확인 근거
 
 현재 구현을 확인한 파일:
 
@@ -246,6 +322,16 @@ callback: dev-api.clipperstudio.ai
 - `/Users/jina/project/adlight/web/clipper_infra/runbooks/deploy-dev.md`
 - `/Users/jina/project/adlight/web/clipper_infra/env/stack.dev.env.example`
 - `/Users/jina/project/adlight/web/clipper_infra/env/stack.prod.env.example`
+- `/Users/jina/project/adlight/web/clipper_web_admin/src/environments/environment.production.ts`
+- `/Users/jina/project/adlight/web/clipper_web_admin/angular.json`
+- `/Users/jina/project/adlight/web/clipper_web_api/src/modules/releases/infrastructure/http-release-source-snapshot.provider.ts`
+- `/Users/jina/project/adlight/web/clipper_web_api/src/modules/releases/infrastructure/http-release-runner-start.client.ts`
+- `/Users/jina/project/adlight/web/clipper_infra/runner/release-runner.mjs`
+- `/Users/jina/project/adlight/web/clipper_infra/runner/windows/prepare-windows-env.ps1`
+- `/Users/jina/project/adlight/web/clipper_infra/runner/windows/run-windows-runner-container.ps1`
+- `/Users/jina/project/adlight/desktop/clipper_electron/scripts/build-runtime-config.mjs`
+- `/Users/jina/project/adlight/desktop/clipper_electron/src/main/auth/api-base.ts`
+- `/Users/jina/project/adlight/desktop/clipper_electron/src/main/update/update-feed.ts`
 
 공식 확인 자료:
 
