@@ -269,6 +269,19 @@
 - `stack.dev.env` mode는 `0644`다. 민감값이 있으므로 향후 승인된 dev 변경 시 `0600`으로 줄여야 한다.
 - `user-jwt-private.pem`과 `operator-jwt-secret`은 `0600`, `user-jwt-public.pem`은 `0644`로 적절하다.
 - 이번 운영 배포를 위해 이 장비에 stage/prod env나 secret을 만들지 않는다.
+- `stack.dev.env.example`과 실제 `stack.dev.env`의 변수 이름만 비교했고 값은 출력하지 않았다.
+- example에만 있는 `SHORTFORM_PROJECT_REPOSITORY`, `SHORTFORM_DATABASE_SYNCHRONIZE`는 현재 Web API 코드에서
+  읽지 않는다. DB 설정은 `synchronize: false`로 고정하고 migration을 사용하므로 실제 env에 없는 것이 장애가 아니다.
+- 특히 example의 `SHORTFORM_DATABASE_SYNCHRONIZE=true`는 현재 구조와 맞지 않는 오래된 Infra 설정이라
+  integration Infra 정리 대상이다.
+- 실제 env에만 남은 기존 변수 이름들도 확인했지만 이 장비에서는 삭제하거나 값을 변경하지 않았다.
+
+### 시스템 시각
+
+- 확인 시각: `2026-09-07 12:50:03 KST`, UTC offset `+0900`
+- macOS `/usr/libexec/timed` service는 `state=running`이었다.
+- 자동 시간 동기화 설정 자체는 관리자 비밀번호를 확인할 수 없어 조회하지 못했다.
+- 현재 시각·시간대와 시간 관리 service는 정상이며, 이 미확인 항목은 `m4-prod` 구축을 막지 않는다.
 
 ### 아직 하지 않은 일
 
