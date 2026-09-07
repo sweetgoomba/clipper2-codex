@@ -88,9 +88,13 @@
 
 - `clipper_infra/db` 아래에서 `.dump`, `.backup`, `.sql.gz` 백업 파일을 찾지 못했다.
 - 현재 Infra의 `db/backup/README.md`도 backup worker가 아직 구현되지 않았다고 명시한다.
-- 외부 수동 백업 또는 NAS 백업 존재 여부는 아직 확인하지 않았다.
-- 기존 개발 DB migration 전 필수 순서:
-  1. User/Admin/Release DB 각각 PostgreSQL custom-format dump 생성
+- 운영 DB 백업 방식은 팀 회의 뒤에 결정하기로 했고, 현재 운영 인프라 구축을 막지 않는다.
+- 개발 DB 백업은 지금 만들지 않는다. 새 운영 DB 구축과 운영 환경 테스트가 끝난 뒤, 실제 개발 DB에
+  파괴적 migration을 적용하기 직전에 `m2-db`의 로컬 디스크에 User/Admin/Release DB dump를 만든다.
+- 같은 장비의 로컬 백업은 migration 또는 작업 실수에서 되돌리는 용도다. `m2-db` 자체의 디스크·장비
+  고장에는 대비하지 못하므로 장기 운영 백업 정책과는 별개다.
+- 기존 개발 DB migration 전 확정 순서:
+  1. `m2-db` 로컬에 User/Admin/Release DB 각각 PostgreSQL custom-format dump 생성
   2. 파일 존재·크기·checksum 확인
   3. 폐기 가능한 별도 DB에 복원
   4. 복원본에서 integration migration과 앱 시작 seed 예행연습
@@ -111,5 +115,6 @@
 
 ## 다음 조사
 
-- `storage`: DB local/NAS 백업 목적지, protocol, mount, 용량, 복구 가능성 확인을 우선한다.
-- 이후 `m2-proxy`, `m2-stage`, `m4-prod` 순으로 실제 구성을 확인한다.
+- `storage`라고 부른 장비는 DB/NAS storage가 아니라 Windows 설치형 파일을 build하는 runner PC다.
+  DB 인프라 조사 대상에서 제외하고, 추후 Windows release runner 검증 때 별도로 확인한다.
+- 다음은 `m2-proxy`, 이후 `m2-stage`, `m4-prod` 순으로 실제 구성을 확인한다.
