@@ -1,0 +1,94 @@
+{
+  "status": "uncommitted, unpushed, undeployed",
+  "format": "combined full diff against base HEAD; includes existing CPU patch; apply only to clean base, do not apply CPU patch twice",
+  "repositories": [
+    {
+      "repository": "clipper_electron",
+      "baseCommit": "a34a39d510bca51bf8b3e527d433ff9112c686fc",
+      "patchFile": "clipper_electron.patch",
+      "patchSha256": "0b30542a59279183ae2d3de33faac9152003f3c67441705d47f250bc7edae941",
+      "files": [
+        "src/main/resources/host-resource-monitor.ts",
+        "test/host-cpu-resources.test.js"
+      ],
+      "fileCount": 2,
+      "cleanBaseRestoreVerified": true
+    },
+    {
+      "repository": "clipper_angular",
+      "baseCommit": "c8b186770ae6f77294a2a1689226834f05a8944a",
+      "patchFile": "clipper_angular.patch",
+      "patchSha256": "c2a14a8e639c753a7353d1f44b53d235a677c336c503f0383b15f6bd19931ac9",
+      "files": [
+        "src/core/bridge/clipper-bridge.ts",
+        "src/core/plugins/plugin-status.service.spec.ts",
+        "src/core/plugins/plugin-status.service.ts",
+        "src/core/resources/resource-status.service.ts",
+        "src/shell/dashboard/dashboard.component.html",
+        "src/shell/dashboard/dashboard.component.spec.ts",
+        "src/shell/dashboard/dashboard.component.ts"
+      ],
+      "fileCount": 7,
+      "cleanBaseRestoreVerified": true
+    },
+    {
+      "repository": "clipper_nestjs",
+      "baseCommit": "780128a069c38a9df6438cc64d79f7a2e42bc1ea",
+      "patchFile": "clipper_nestjs.patch",
+      "patchSha256": "5386453db843e762fafb0172b64a87b1915e3be8046c07369f2ff124fc11038c",
+      "files": [
+        "src/modules/dialog-highlight/application/dialog-highlight-python-stage.runner.ts",
+        "src/modules/dialog-highlight/application/dialog-highlight-workflow.executor.ts",
+        "src/modules/jobs/application/jobs.service.ts",
+        "src/modules/plugins/application/local-plugin-job.runner.ts",
+        "src/modules/plugins/application/plugins.service.ts",
+        "src/modules/plugins/domain/plugin.model.ts",
+        "src/modules/plugins/plugin-host.module.ts",
+        "src/modules/plugins/presentation/plugins.controller.ts",
+        "src/modules/project-manifest/infrastructure/clipper-python-worker-render-provider.ts",
+        "src/modules/resources/application/plugin-resource-policy.service.ts",
+        "src/modules/resources/domain/resource.model.ts",
+        "src/modules/shortform-director/application/shortform-director-reference-local-stt.client.ts",
+        "src/modules/template-builder/application/template-builder-text-artifact.service.ts",
+        "src/modules/tts/infrastructure/tts-plugin.client.ts",
+        "src/modules/workflows/application/python-runtime-lifecycle-policy.service.ts",
+        "src/modules/workflows/infrastructure/python-plugin-workflow-executor.ts",
+        "test/plugin-runtime-lifecycle-participation.test.js",
+        "test/python-runtime-lifecycle-policy.test.js",
+        "test/tts-plugin-client.test.js",
+        "src/modules/plugins/domain/plugin-start-admission.errors.ts",
+        "src/modules/workflows/application/runtime-pressure-watchdog.service.ts",
+        "test/runtime-admission-safety.test.js",
+        "test/runtime-ownership-safety.test.js",
+        "test/runtime-pressure-watchdog.test.js",
+        "test/runtime-safety-wiring.test.js"
+      ],
+      "fileCount": 25,
+      "cleanBaseRestoreVerified": true
+    },
+    {
+      "repository": "clipper_python",
+      "baseCommit": "260751d2fa5be8a5a9cd8e346c60ba22d1512ed9",
+      "patchFile": "clipper_python.patch",
+      "patchSha256": "7d05b65ce95e1d0bdda7f02077f7ee1a9647885cc664f120bd8d4fa7944cbd3b",
+      "files": [
+        "clipper_plugin_sdk/clipper_plugin_sdk/base.py",
+        "plugins/tts_supertonic/tts_supertonic/app.py",
+        "tests/test_tts_active_request_health.py"
+      ],
+      "fileCount": 3,
+      "cleanBaseRestoreVerified": true
+    }
+  ],
+  "verification": {
+    "nestjsTests": 131,
+    "angularTests": 48,
+    "pythonTests": 14,
+    "nestjsBuild": "passed",
+    "angularPackagedBuild": "passed",
+    "pythonCompile": "passed",
+    "realMlPlugins": "NOT RUN",
+    "Build5QA": "HOLD",
+    "productionDeploy": "NOT RUN"
+  }
+}

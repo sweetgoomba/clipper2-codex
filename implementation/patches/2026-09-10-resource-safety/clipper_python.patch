@@ -1,0 +1,163 @@
+diff --git a/clipper_plugin_sdk/clipper_plugin_sdk/base.py b/clipper_plugin_sdk/clipper_plugin_sdk/base.py
+index ea6277c..96d3ac0 100644
+--- a/clipper_plugin_sdk/clipper_plugin_sdk/base.py
++++ b/clipper_plugin_sdk/clipper_plugin_sdk/base.py
+@@ -15,8 +15,9 @@ import logging
+ import os
+ import sys
+ import time
++import threading
+ from abc import ABC, abstractmethod
+-from contextlib import asynccontextmanager
++from contextlib import asynccontextmanager, contextmanager
+ from typing import Any, Protocol
+ 
+ import uvicorn
+@@ -88,6 +89,26 @@ class PluginBase(ABC):
+ 
+     def __init__(self) -> None:
+         self._runtime: PluginRuntime | None = None
++        self._request_lock = threading.Lock()
++        self._active_requests = 0
++
++    @property
++    def active_requests(self) -> int:
++        with self._request_lock:
++            return self._active_requests
++
++    @contextmanager
++    def active_request(self):
++        """Protect synchronous extra routes, including work in worker threads."""
++        with self._request_lock:
++            self._active_requests += 1
++        try:
++            yield
++        finally:
++            with self._request_lock:
++                if self._runtime is not None:
++                    self._runtime._last_activity = time.monotonic()
++                self._active_requests -= 1
+ 
+     # ── 플러그인 개발자가 구현 ──
+ 
+@@ -312,7 +333,7 @@ class PluginRuntime:
+         return HealthResponse(
+             plugin_name=self._plugin.name,
+             version=self._plugin.version,
+-            active_jobs=len(self._active_jobs),
++            active_jobs=len(self._active_jobs) + self._plugin.active_requests,
+             vram_used_mb=self._measure_vram(),
+         )
+ 
+@@ -335,7 +356,7 @@ class PluginRuntime:
+         if self._shutdown_event:
+             self._shutdown_event.set()
+         for _ in range(60):
+-            if not self._active_jobs:
++            if not self._active_jobs and not self._plugin.active_requests:
+                 break
+             await asyncio.sleep(0.5)
+ 
+@@ -439,7 +460,7 @@ class PluginRuntime:
+             if self._idle_timeout <= 0:
+                 continue
+             elapsed = time.monotonic() - self._last_activity
+-            if elapsed >= self._idle_timeout and not self._active_jobs:
++            if elapsed >= self._idle_timeout and not self._active_jobs and not self._plugin.active_requests:
+                 logger.info(
+                     "Idle for %.0fs (limit: %.0fs), shutting down",
+                     elapsed,
+diff --git a/plugins/tts_supertonic/tts_supertonic/app.py b/plugins/tts_supertonic/tts_supertonic/app.py
+index 2ad5adf..60cde9e 100644
+--- a/plugins/tts_supertonic/tts_supertonic/app.py
++++ b/plugins/tts_supertonic/tts_supertonic/app.py
+@@ -67,16 +67,17 @@ class SupertonicTtsPlugin(PluginBase):
+                     status_code=503,
+                     content={"error": "models_not_loaded"},
+                 )
+-            return synthesize_to_file(
+-                self._engine,
+-                text=req.text,
+-                voice_style=req.voice_style,
+-                speed=req.speed,
+-                output_root=req.output_root,
+-                relative_path=req.relative_path,
+-                lang=self.lang,
+-                total_steps=self.total_steps,
+-            )
++            with self.active_request():
++                return synthesize_to_file(
++                    self._engine,
++                    text=req.text,
++                    voice_style=req.voice_style,
++                    speed=req.speed,
++                    output_root=req.output_root,
++                    relative_path=req.relative_path,
++                    lang=self.lang,
++                    total_steps=self.total_steps,
++                )
+ 
+     def get_runtime_accelerators(self) -> dict[str, Any]:
+         return {"primary_device": "cpu", "pipeline": "supertonic_onnx"}
+diff --git a/tests/test_tts_active_request_health.py b/tests/test_tts_active_request_health.py
+new file mode 100644
+index 0000000..2173429
+--- /dev/null
++++ b/tests/test_tts_active_request_health.py
+@@ -0,0 +1,56 @@
++"""No model loading: invoke the real sync route with a stub synthesis function."""
++import threading
++from concurrent.futures import ThreadPoolExecutor
++from fastapi import FastAPI
++from clipper_plugin_sdk.base import PluginRuntime
++from tts_supertonic.app import SupertonicTtsPlugin, TtsRequest
++
++
++def test_health_protects_concurrent_sync_requests_until_each_finishes(monkeypatch):
++    plugin = SupertonicTtsPlugin(engine=object())
++    runtime = PluginRuntime(plugin)
++    monkeypatch.setattr(runtime, '_measure_vram', lambda: None)
++    entered = threading.Barrier(3)
++    release = [threading.Event(), threading.Event()]
++    def synthesize(*args, **kwargs):
++        entered.wait(timeout=5)
++        release[int(kwargs['text'])].wait(timeout=5)
++        if kwargs['text'] == '1':
++            raise ValueError('mock synthesis failure')
++        return {'path': 'fake.wav'}
++    monkeypatch.setattr('tts_supertonic.app.synthesize_to_file', synthesize)
++    app = FastAPI()
++    plugin.register_extra_routes(app)
++    route = next(r.endpoint for r in app.routes if r.path == '/tts')
++    with ThreadPoolExecutor(2) as pool:
++        futures = [pool.submit(route, TtsRequest(text=str(i), voice_style='M1', output_root='/unused', relative_path='fake.wav')) for i in range(2)]
++        try:
++            entered.wait(timeout=5)
++            assert runtime.get_health().active_jobs == 2
++            release[0].set()
++            futures[0].result(timeout=5)
++            assert runtime.get_health().active_jobs == 1
++        finally:
++            for event in release:
++                event.set()
++            for future in futures:
++                try:
++                    future.result(timeout=5)
++                except ValueError:
++                    pass
++    assert runtime.get_health().active_jobs == 0
++
++
++def test_sync_request_refreshes_idle_clock_even_on_failure():
++    import time
++    import pytest
++    plugin = SupertonicTtsPlugin(engine=object())
++    runtime = PluginRuntime(plugin)
++    plugin._runtime = runtime
++    runtime._last_activity = time.monotonic() - 1000
++    before = time.monotonic()
++    with pytest.raises(ValueError):
++        with plugin.active_request():
++            raise ValueError('failed request')
++    assert plugin.active_requests == 0
++    assert runtime._last_activity >= before

@@ -1,0 +1,58 @@
+✖ proofless close retains process and port and blocks replacement (10.445875ms)
+✖ startup cleanup failure retains ownership and blocks replacement (0.274208ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.928916
+
+✖ failing tests:
+
+test at test/plugin-manager-start-stop-serialization.test.js:185:1
+✖ proofless close retains process and port and blocks replacement (10.445875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - {
+  -   isRunning: [Getter: false],
+  -   markHealthy: [Function: markHealthy],
+  -   markIntentional: [Function: markIntentional],
+  -   onceExited: [Function: onceExited],
+  -   pid: 4242,
+  -   running: false,
+  -   start: [AsyncFunction: start],
+  -   startCalls: 1,
+  -   stop: [AsyncFunction (anonymous)]
+  - }
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_electron/test/plugin-manager-start-stop-serialization.test.js:192:10)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [Object],
+    operator: 'strictEqual'
+  }
+
+test at test/plugin-manager-start-stop-serialization.test.js:198:1
+✖ startup cleanup failure retains ownership and blocks replacement (0.274208ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /termination not confirmed/. Input:
+  
+  'Error: startup failed'
+  
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_electron/test/plugin-manager-start-stop-serialization.test.js:201:3)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: startup failed
+        at h.host.waitForHealthOrDeath (/private/tmp/clipper-resource-dashboard-review/clipper_electron/test/plugin-manager-start-stop-serialization.test.js:200:53)
+        at LocalPluginManager.doStart (/private/tmp/clipper-resource-dashboard-review/clipper_electron/dist-electron/main/plugin/plugin-manager.js:181:24),
+    expected: /termination not confirmed/,
+    operator: 'rejects'
+  }

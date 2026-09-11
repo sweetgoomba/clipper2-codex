@@ -1,0 +1,18 @@
+✖ terminal publication failure settles the watcher and releases runtime ownership (206.444ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 366.480208
+
+✖ failing tests:
+
+test at test/runtime-ownership-safety.test.js:79:1
+✖ terminal publication failure settles the watcher and releases runtime ownership (206.444ms)
+  Error: watcher did not settle
+      at Timeout.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:86:84)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)

@@ -1,0 +1,73 @@
+❯ Building...
+✔ Building...
+Initial chunk files                              | Names                                         |  Raw size
+chunk-T5JOHNFF.js                                | -                                             |   2.57 MB | 
+spec-shell-dashboard-dashboard.component.spec.js | spec-shell-dashboard-dashboard.component.spec |   2.11 MB | 
+polyfills.js                                     | polyfills                                     | 964.88 kB | 
+styles.css                                       | styles                                        | 112.72 kB | 
+test_main.js                                     | test_main                                     |  22.16 kB | 
+jasmine-cleanup-0.js                             | jasmine-cleanup-0                             | 509 bytes | 
+
+                                                 | Initial total                                 |   5.77 MB
+
+Application bundle generation complete. [4.912 seconds] - 2026-09-10T12:29:39.986Z
+
+Ignoring framework "@angular-devkit/build-angular" from karma config file because it's not compatible with the application builder.
+10 09 2026 21:29:40.332:INFO [karma-server]: Karma v6.4.4 server started at http://127.0.0.1:63145/
+10 09 2026 21:29:40.332:INFO [launcher]: Launching browsers ChromeHeadless with concurrency unlimited
+10 09 2026 21:29:40.335:INFO [launcher]: Starting browser ChromeHeadless
+10 09 2026 21:29:45.127:INFO [Chrome Headless 153.0.0.0 (Mac OS 10.15.7)]: Connected on socket Sw5UxIS7P0YdSEwAAAAB with id 65711189
+Chrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 0 of 27[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 1 of 27[32m SUCCESS[39m (0 secs / 0.054 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 2 of 27[32m SUCCESS[39m (0 secs / 0.057 secs)
+[1A[2K[31mChrome Headless 153.0.0.0 (Mac OS 10.15.7) DashboardComponent uses conditional cleanup and reports a runtime protected by the server FAILED[39m
+	Expected $.length = 1 to equal 0.
+	Unexpected $[0] = 'tts_supertonic' in array.
+	    at <Jasmine>
+	    at src/shell/dashboard/dashboard.component.spec.ts:150:36
+	    at Generator.next (<anonymous>)
+	    at fulfilled (chunk-T5JOHNFF.js:101:24)
+	Expected $.length = 0 to equal 1.
+	Expected $[0] = undefined to equal 'tts_supertonic'.
+	    at <Jasmine>
+	    at src/shell/dashboard/dashboard.component.spec.ts:151:40
+	    at Generator.next (<anonymous>)
+	    at fulfilled (chunk-T5JOHNFF.js:101:24)
+Chrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 3 of 27[31m (1 FAILED)[39m (0 secs / 0.059 secs)
+[1A[2K[31mChrome Headless 153.0.0.0 (Mac OS 10.15.7) DashboardComponent excludes unknown, stale and locally owned work from cleanup FAILED[39m
+	Expected true to be false.
+	    at <Jasmine>
+	    at UserContext.<anonymous> (src/shell/dashboard/dashboard.component.spec.ts:139:54)
+	    at <Jasmine>
+	Expected true to be false.
+	    at <Jasmine>
+	    at UserContext.<anonymous> (src/shell/dashboard/dashboard.component.spec.ts:143:54)
+	    at <Jasmine>
+Chrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 4 of 27[31m (2 FAILED)[39m (0 secs / 0.06 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 5 of 27[31m (2 FAILED)[39m (0 secs / 0.062 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 6 of 27[31m (2 FAILED)[39m (0 secs / 0.063 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 7 of 27[31m (2 FAILED)[39m (0 secs / 0.064 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 8 of 27[31m (2 FAILED)[39m (0 secs / 0.064 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 9 of 27[31m (2 FAILED)[39m (0 secs / 0.065 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 10 of 27[31m (2 FAILED)[39m (0 secs / 0.069 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 11 of 27[31m (2 FAILED)[39m (0 secs / 0.071 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 12 of 27[31m (2 FAILED)[39m (0 secs / 0.072 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 13 of 27[31m (2 FAILED)[39m (0 secs / 0.072 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 14 of 27[31m (2 FAILED)[39m (0 secs / 0.075 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 15 of 27[31m (2 FAILED)[39m (0 secs / 0.086 secs)
+10 09 2026 21:29:45.666:WARN [web-server]: 404: /base/media/material-symbols-outlined.woff2
+10 09 2026 21:29:45.666:WARN [web-server]: 404: /base/media/PretendardVariable.woff2
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 16 of 27[31m (2 FAILED)[39m (0 secs / 0.089 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 17 of 27[31m (2 FAILED)[39m (0 secs / 0.092 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 18 of 27[31m (2 FAILED)[39m (0 secs / 0.095 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 19 of 27[31m (2 FAILED)[39m (0 secs / 0.097 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 20 of 27[31m (2 FAILED)[39m (0 secs / 0.1 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 21 of 27[31m (2 FAILED)[39m (0 secs / 0.105 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 22 of 27[31m (2 FAILED)[39m (0 secs / 0.109 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 23 of 27[31m (2 FAILED)[39m (0 secs / 0.11 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 24 of 27[31m (2 FAILED)[39m (0 secs / 0.112 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 25 of 27[31m (2 FAILED)[39m (0 secs / 0.113 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 26 of 27[31m (2 FAILED)[39m (0 secs / 0.114 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 27 of 27[31m (2 FAILED)[39m (0 secs / 0.115 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 27 of 27[31m (2 FAILED)[39m (0.123 secs / 0.115 secs)
+[31mTOTAL: 2 FAILED, 25 SUCCESS[39m

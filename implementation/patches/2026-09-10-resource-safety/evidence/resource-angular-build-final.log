@@ -1,0 +1,30 @@
+❯ Building...
+✔ Building...
+Initial chunk files | Names                             |  Raw size | Estimated transfer size
+main-ZG5QY3WN.js    | main                              | 138.73 kB |                33.81 kB
+styles-6GF4VDEO.css | styles                            | 104.72 kB |                 9.19 kB
+
+                    | Initial total                     | 243.45 kB |                43.00 kB
+
+Lazy chunk files    | Names                             |  Raw size | Estimated transfer size
+chunk-MBch5KWt.js   | -                                 | 255.35 kB |                53.47 kB
+chunk-DOZvx8SN.js   | shortform-workflow-page-component | 211.67 kB |                44.74 kB
+chunk-6B6SiN3F.js   | -                                 | 183.74 kB |                53.57 kB
+chunk-DlXU5-Wj.js   | template-builder-page-component   | 154.28 kB |                30.63 kB
+chunk-Cb4qV-Ri2.js  | asset-manager-page-component      | 122.25 kB |                23.80 kB
+chunk-bhaZMNNL.js   | -                                 | 120.65 kB |                21.76 kB
+chunk-Be3S2W5x.js   | v2-base-edit-component            | 101.57 kB |                20.85 kB
+chunk-C7BspVBo.js   | comment-overlay-setup-component   |  83.66 kB |                18.25 kB
+chunk-Dq1okadw2.js  | projects-component                |  75.63 kB |                17.94 kB
+chunk-5K_lF8Me.js   | -                                 |  74.54 kB |                16.96 kB
+chunk-DEZxRltl.js   | v2-variation-list-component       |  73.56 kB |                17.01 kB
+chunk-BQEm6Gn_.js   | -                                 |  68.46 kB |                 7.96 kB
+chunk-DWpH5aJM.js   | browser                           |  67.80 kB |                17.80 kB
+chunk-DSo3O6_i2.js  | ranking-setup-component           |  66.71 kB |                16.89 kB
+chunk-xQFtS0ju.js   | -                                 |  66.45 kB |                17.68 kB
+...and 64 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [6.061 seconds] - 2026-09-10T12:32:44.510Z
+
+Output location: /private/tmp/clipper-resource-dashboard-review/clipper_angular/dist/clipper_angular
+

@@ -1,0 +1,13 @@
+diff --git a/src/modules/resources/domain/resource.model.ts b/src/modules/resources/domain/resource.model.ts
+index 1b8fa19..b3ff437 100644
+--- a/src/modules/resources/domain/resource.model.ts
++++ b/src/modules/resources/domain/resource.model.ts
+@@ -30,6 +30,8 @@ export interface HostResourceSnapshot {
+   osName: string;
+   cpu: {
+     logicalCores: number;
++    physicalCores?: number;
++    utilizationPercent?: number;
+     loadAverage1m?: number;
+     loadAverage5m?: number;
+     loadAverage15m?: number;

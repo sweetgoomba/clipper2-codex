@@ -1,0 +1,35 @@
+✔ pending TTS request remains protected even when health reports zero jobs (1.516542ms)
+✔ new work invalidates cleanup waiting for a health response (0.191417ms)
+✔ cancelling one job never force-stops the shared runtime (0.136917ms)
+✔ new lease waits for an already committed stop before starting (0.271083ms)
+✔ releasing one lease does not release a different owner (0.307458ms)
+✔ cancel during submit deletes the job again after it becomes registered (0.813708ms)
+✖ an already aborted watcher settles without reporting a spurious job failure (4.815416ms)
+✔ a fired timer cannot stop or rearm after a newer owner arrives (0.982708ms)
+✔ unknown runtime health is never an idle cleanup candidate (0.15175ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.723084
+
+✖ failing tests:
+
+test at test/runtime-ownership-safety.test.js:57:1
+✖ an already aborted watcher settles without reporting a spurious job failure (4.815416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:60:47)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual'
+  }

@@ -1,0 +1,39 @@
+node:internal/modules/cjs/loader:1372
+  throw err;
+  ^
+
+Error: Cannot find module '../dist-electron/main/plugin/windows-owned-tree'
+Require stack:
+- /private/tmp/clipper-resource-dashboard-review/clipper_electron/test/windows-owned-tree.test.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Module._load (node:internal/modules/cjs/loader:1179:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1449:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_electron/test/windows-owned-tree.test.js:5:48)
+    at Module._compile (node:internal/modules/cjs/loader:1692:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/private/tmp/clipper-resource-dashboard-review/clipper_electron/test/windows-owned-tree.test.js'
+  ]
+}
+
+Node.js v24.3.0
+✖ test/windows-owned-tree.test.js (28.174417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36.042375
+
+✖ failing tests:
+
+test at test/windows-owned-tree.test.js:1:1
+✖ test/windows-owned-tree.test.js (28.174417ms)
+  'test failed'

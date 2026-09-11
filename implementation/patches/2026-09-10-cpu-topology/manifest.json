@@ -1,0 +1,23 @@
+{
+  "status": "implemented and verified; not committed, pushed, or deployed",
+  "repositories": [
+    {
+      "repository": "clipper_electron",
+      "baseCommit": "a34a39d510bca51bf8b3e527d433ff9112c686fc",
+      "patchFile": "clipper_electron.patch",
+      "patchSha256": "0b30542a59279183ae2d3de33faac9152003f3c67441705d47f250bc7edae941"
+    },
+    {
+      "repository": "clipper_angular",
+      "baseCommit": "c8b186770ae6f77294a2a1689226834f05a8944a",
+      "patchFile": "clipper_angular.patch",
+      "patchSha256": "b49fcaf62c34a4ac5b999d61c3fd45fd8fd131b626ecce76cc286d460822d4cc"
+    },
+    {
+      "repository": "clipper_nestjs",
+      "baseCommit": "780128a069c38a9df6438cc64d79f7a2e42bc1ea",
+      "patchFile": "clipper_nestjs.patch",
+      "patchSha256": "d09bb46bd2b9f93ad7868c244815aa6ecb4ecbc627b81bd4ebe2be09facb54f4"
+    }
+  ]
+}

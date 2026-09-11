@@ -1,0 +1,28 @@
+✔ stopChildProcess waits for graceful shutdown before sending signals (7.324042ms)
+✔ stopChildProcess sends SIGKILL and waits for exit when SIGTERM times out (11.882666ms)
+✔ plugin health wait removes the process exit listener after health succeeds (2.515584ms)
+✔ packaged plugin start uses plugin-specific venv instead of base venv (12.498291ms)
+✔ 중단 중인 플러그인에 시작 요청이 겹치면, 죽어가는 프로세스를 기다리지 않고 새로 띄운다 (18.720042ms)
+✔ 시작 중인 플러그인에 중단 요청이 겹치면, 기동이 끝난 뒤에 중단한다 (260.637583ms)
+✔ I2: 새로 뜬 플러그인은 health 성공 시 정확히 그 순간 markHealthy를 호출한다 (252.663625ms)
+✔ proofless close retains process and port and blocks replacement (1.535958ms)
+✔ startup cleanup failure retains ownership and blocks replacement (0.444416ms)
+✔ packaged plugin launch uses userData cwd and bin path for nested plugin venvs (0.4895ms)
+✔ dev plugin launch uses Electron userData cwd for model assets (0.7075ms)
+✔ Windows dev and packaged launch both route the plugin through the owned job supervisor (0.216625ms)
+✔ Windows wraps only plugin module, POSIX remains direct (0.575958ms)
+[fake] {"v":1,"src":"python.windows_supervisor","ctx":{"ownedTree":"owned_tree_empty"}}
+✔ exit alone is not a tree completion; fragmented proof plus close is required (2.627167ms)
+✔ close without empty-job proof fails closed even for code zero (0.132917ms)
+✔ graceful completion avoids forced stop; control EOF otherwise asks owned supervisor (0.268834ms)
+✔ unrelated/oversized log fragments cannot count as a completion proof (0.409542ms)
+✔ actual process close propagates ownership confirmation=false (10.57975ms)
+✔ actual process close propagates ownership confirmation=true (0.292916ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 594.12525

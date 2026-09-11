@@ -1,0 +1,389 @@
+diff --git a/src/core/bridge/clipper-bridge.ts b/src/core/bridge/clipper-bridge.ts
+index 0d8a2606..528a2a8b 100644
+--- a/src/core/bridge/clipper-bridge.ts
++++ b/src/core/bridge/clipper-bridge.ts
+@@ -242,6 +242,7 @@ export interface PluginRuntimeHealth {
+ }
+ 
+ export interface PluginLifecycleStatus {
++  activeOwners?: number;
+   safeToEvictWhenIdle: boolean;
+   participatesInExclusiveGroup: boolean;
+   exclusiveGroup?: string[];
+diff --git a/src/core/plugins/plugin-status.service.spec.ts b/src/core/plugins/plugin-status.service.spec.ts
+index cfaa4f7b..2658d030 100644
+--- a/src/core/plugins/plugin-status.service.spec.ts
++++ b/src/core/plugins/plugin-status.service.spec.ts
+@@ -309,3 +309,19 @@ describe('PluginStatusService install/uninstall', () => {
+     await expectAsync(promise).toBeResolved();
+   });
+ });
++
++
++describe('PluginStatusService conditional cleanup', () => {
++  it('uses stop-idle and preserves the server protected result without a force-stop request', async () => {
++    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection(), provideHttpClient(withXhr()), provideHttpClientTesting(), { provide: BackendLocator, useClass: FakeBackendLocator }, { provide: ErrorNotificationService, useClass: FakeErrorNotificationService }] });
++    const service = TestBed.inject(PluginStatusService);
++    const http = TestBed.inject(HttpTestingController);
++    const result = service.stopIdle('tts_supertonic');
++    await flushPromises();
++    const request = http.expectOne('http://127.0.0.1:19019/v1/plugins/tts_supertonic/stop-idle');
++    expect(request.request.method).toBe('POST');
++    request.flush({ stopped: false });
++    expect(await result).toBeFalse();
++    http.verify();
++  });
++});
+diff --git a/src/core/plugins/plugin-status.service.ts b/src/core/plugins/plugin-status.service.ts
+index 403f2037..cd786499 100644
+--- a/src/core/plugins/plugin-status.service.ts
++++ b/src/core/plugins/plugin-status.service.ts
+@@ -183,6 +183,14 @@ export class PluginStatusService {
+     }
+   }
+ 
++  async stopIdle(name: string): Promise<boolean> {
++    const base = await this.backend.getBaseUrl();
++    const result = await firstValueFrom(this.http.post<{ stopped: boolean }>(
++      `${base}/plugins/${encodeURIComponent(name)}/stop-idle`, {},
++    ));
++    return result.stopped;
++  }
++
+   async stop(name: string): Promise<void> {
+     this.setOptimisticRuntimeState(name, 'stopping');
+     try {
+diff --git a/src/core/resources/resource-status.service.ts b/src/core/resources/resource-status.service.ts
+index 4e8e357c..2d5b9fef 100644
+--- a/src/core/resources/resource-status.service.ts
++++ b/src/core/resources/resource-status.service.ts
+@@ -36,6 +36,7 @@ export interface HostResourceSnapshot {
+   osName: string;
+   cpu: {
+     logicalCores: number;
++    physicalCores?: number;
+     utilizationPercent?: number;
+     loadAverage1m?: number;
+     loadAverage5m?: number;
+diff --git a/src/shell/dashboard/dashboard.component.html b/src/shell/dashboard/dashboard.component.html
+index 808e8c98..eff60758 100644
+--- a/src/shell/dashboard/dashboard.component.html
++++ b/src/shell/dashboard/dashboard.component.html
+@@ -39,11 +39,12 @@
+               <span class="resource-label">Memory</span>
+               <strong>{{ memoryUsedPct() }}</strong>
+               <small>{{ memorySummary() }}</small>
++              <small>사용 가능 {{ formatBytes(resources.snapshot()?.memory?.availableBytes) }}</small>
+             </div>
+             <div class="resource-card">
+               <span class="resource-label">{{ snapshot.platform === 'win32' ? 'CPU 사용률' : 'CPU 부하 · 1분 평균' }}</span>
+               <strong>{{ loadSummary() }}</strong>
+-              <small>{{ snapshot.osName }} · {{ snapshot.arch }}</small>
++              <small>{{ cpuTopologySummary() }}</small>
+             </div>
+             <div class="resource-card">
+               <span class="resource-label">Processes</span>
+@@ -87,13 +88,25 @@
+           <p class="section-kicker">현재 실행 중인 플러그인 런타임 상태입니다.</p>
+         </div>
+         @if (evictableRunningItems().length > 0) {
+-          <button matButton="tonal" type="button" (click)="stopEvictablePlugins()">
++          <button matButton="tonal" type="button" (click)="stopEvictablePlugins()" [disabled]="cleanupRunning()">
+             <mat-icon class="material-symbols-outlined">cleaning_services</mat-icon>
+-            정리 가능 런타임 중지
++            {{ cleanupRunning() ? '정리 중…' : '유휴 런타임 정리' }}
+           </button>
+         }
+       </div>
+ 
++      @if (refreshError()) {
++        <p class="section-kicker" role="status">{{ refreshError() }}</p>
++      }
++      @if (cleanupResult()) {
++        <p class="section-kicker" role="status">{{ cleanupResult() }}</p>
++      }
++      <button matButton type="button" (click)="refreshDashboard()" [disabled]="refreshing()">
++        {{ refreshing() ? '갱신 중…' : '상태 새로고침' }}
++      </button>
++      @if (pluginStatus.runtimeItems().length === 0 && !pluginStatus.loading()) {
++        <p class="section-kicker">표시할 플러그인 런타임이 없습니다.</p>
++      }
+       <div class="plugin-list">
+         @for (item of pluginStatus.runtimeItems(); track item.name) {
+           <div class="plugin-row">
+diff --git a/src/shell/dashboard/dashboard.component.spec.ts b/src/shell/dashboard/dashboard.component.spec.ts
+index b7ed769e..85f215c3 100644
+--- a/src/shell/dashboard/dashboard.component.spec.ts
++++ b/src/shell/dashboard/dashboard.component.spec.ts
+@@ -16,9 +16,12 @@ class FakePluginStatusService {
+   readonly items = signal<PluginStoreItem[]>([]);
+   readonly runtimeItems = signal<PluginStoreItem[]>([]);
+   readonly loading = signal(false);
++  readonly error = signal<string | null>(null);
+ 
+   readonly startCalls: Array<{ name: string; options?: { confirmResourceWarning?: boolean } }> = [];
+   readonly stopCalls: string[] = [];
++  readonly idleStopCalls: string[] = [];
++  async stopIdle(name: string): Promise<boolean> { this.idleStopCalls.push(name); return false; }
+   /** 다음 start() 호출에서 한 번 던질 에러(던진 뒤 자동 해제). */
+   startError: Error | null = null;
+ 
+@@ -131,16 +134,66 @@ describe('DashboardComponent', () => {
+   // 스펙의 결과에 영향을 주지 않도록 매번 되돌린다.
+   afterEach(() => applyViewportAttributes('large', 'expanded'));
+ 
+-  it('shows Windows CPU utilization and identifies logical processors correctly', async () => {
++  it('excludes unknown, stale and locally owned work from cleanup', () => {
++    const item = { name: 'tts_supertonic', manifest: { resourceProfile: { idlePolicy: { safeToEvictWhenIdle: true } } }, status: { runtimeState: 'running' } } as PluginStoreItem;
++    expect(fixture.componentInstance.canEvict(item)).toBeFalse();
++    item.status.runtimeHealth = { checkedAt: new Date().toISOString(), activeJobs: 0 };
++    expect(fixture.componentInstance.canEvict(item)).toBeTrue();
++    item.status.runtimeHealth.checkedAt = new Date(Date.now() - 60000).toISOString();
++    expect(fixture.componentInstance.canEvict(item)).toBeFalse();
++  });
++
++  it('uses conditional cleanup and reports a runtime protected by the server', async () => {
++    const item = { name: 'tts_supertonic', manifest: { resourceProfile: { idlePolicy: { safeToEvictWhenIdle: true } } }, status: { runtimeState: 'running', runtimeHealth: { checkedAt: new Date().toISOString(), activeJobs: 0 } } } as PluginStoreItem;
++    pluginStatus.runtimeItems.set([item]);
++    await fixture.componentInstance.stopEvictablePlugins();
++    expect(pluginStatus.stopCalls).toEqual([]);
++    expect(pluginStatus.idleStopCalls).toEqual(['tts_supertonic']);
++  });
++
++  it('keeps batch cleanup single-flight and exposes failures and protected results', async () => {
++    const item = (name: string) => ({ name, manifest: { resourceProfile: { idlePolicy: { safeToEvictWhenIdle: true } } }, status: { runtimeState: 'running', runtimeHealth: { checkedAt: new Date().toISOString(), activeJobs: 0 } } } as PluginStoreItem);
++    pluginStatus.runtimeItems.set([item('one'), item('two'), item('three')]);
++    let finish!: (value: boolean) => void;
++    const pending = new Promise<boolean>((resolve) => finish = resolve);
++    const stop = spyOn(pluginStatus, 'stopIdle').and.callFake((name) => name === 'one' ? pending : name === 'two' ? Promise.resolve(false) : Promise.reject(new Error('offline')));
++    const cleanup = fixture.componentInstance.stopEvictablePlugins();
++    await fixture.componentInstance.stopEvictablePlugins();
++    expect(stop).toHaveBeenCalledTimes(3);
++    finish(true); await cleanup;
++    expect(fixture.componentInstance.cleanupResult()).toBe('정리 1개 · 보호 또는 상태 변경 1개 · 실패 1개');
++    expect(fixture.componentInstance.cleanupRunning()).toBeFalse();
++  });
++
++  it('does not overlap dashboard refresh and exposes a failed refresh', async () => {
++    let finish!: () => void;
++    const pending = new Promise<void>((resolve) => finish = resolve);
++    const refresh = spyOn(pluginStatus, 'refreshAll').and.returnValue(pending);
++    const first = fixture.componentInstance.refreshDashboard();
++    const second = fixture.componentInstance.refreshDashboard();
++    expect(refresh).toHaveBeenCalledTimes(1);
++    pluginStatus.error.set('offline'); finish(); await Promise.all([first, second]);
++    expect(fixture.componentInstance.refreshError()).toContain('이전 정보');
++  });
++
++  it('excludes preparing local owners despite remote health reporting idle', () => {
++    const item = { name: 'tts_supertonic', manifest: { resourceProfile: { idlePolicy: { safeToEvictWhenIdle: true } } }, status: { runtimeState: 'running', lifecycle: { activeOwners: 1, safeToEvictWhenIdle: true, participatesInExclusiveGroup: true }, runtimeHealth: { checkedAt: new Date().toISOString(), activeJobs: 0 } } } as PluginStoreItem;
++    expect(fixture.componentInstance.canEvict(item)).toBeFalse();
++    expect(fixture.componentInstance.idleCleanupLabel(item)).toContain('작업 보호 중');
++  });
++
++  it('separates CPU utilization from physical cores and threads without OS details', async () => {
+     const snapshot = resourceSnapshot();
+     snapshot.platform = 'win32'; snapshot.osName = 'Windows_NT'; snapshot.arch = 'x64';
+-    Object.assign(snapshot.cpu, { logicalCores: 20, utilizationPercent: 10.4, loadAverage1m: 0 });
++    Object.assign(snapshot.cpu, { physicalCores: 12, logicalCores: 20, utilizationPercent: 10.4, loadAverage1m: 0 });
+     TestBed.inject(ResourceStatusService).snapshot.set(snapshot);
+     fixture.detectChanges(); await fixture.whenStable();
+-    const cards = fixture.nativeElement.querySelector('.resource-grid').textContent;
+-    expect(cards).toContain('CPU 사용률');
+-    expect(cards).toContain('10.4% / 20 논리 프로세서');
+-    expect(cards).not.toContain('0.00 / 20');
++    const card = fixture.nativeElement.querySelectorAll('.resource-card')[1] as HTMLElement;
++    expect(card.querySelector('.resource-label')?.textContent?.trim()).toBe('CPU 사용률');
++    expect(card.querySelector('strong')?.textContent?.trim()).toBe('10.4%');
++    expect(card.querySelector('small')?.textContent?.trim()).toBe('12코어 · 20스레드');
++    expect(card.textContent).not.toContain('Windows_NT');
++    expect(card.textContent).not.toContain('x64');
+   });
+ 
+   it('does not interpret unavailable Windows sampling as zero load', async () => {
+@@ -155,7 +208,18 @@ describe('DashboardComponent', () => {
+     TestBed.inject(ResourceStatusService).snapshot.set(resourceSnapshot());
+     fixture.detectChanges(); await fixture.whenStable();
+     expect(fixture.nativeElement.querySelector('.resource-grid').textContent).toContain('CPU 부하 · 1분 평균');
+-    expect(fixture.componentInstance.loadSummary()).toBe('1.20 / 8 논리 프로세서');
++    expect(fixture.componentInstance.loadSummary()).toBe('1.20');
++  });
++
++  it('shows only measured threads when physical core information is unavailable', async () => {
++    const snapshot = resourceSnapshot();
++    snapshot.platform = 'win32';
++    snapshot.cpu.logicalCores = 20;
++    TestBed.inject(ResourceStatusService).snapshot.set(snapshot);
++    fixture.detectChanges(); await fixture.whenStable();
++    const card = fixture.nativeElement.querySelectorAll('.resource-card')[1] as HTMLElement;
++    expect(card.querySelector('strong')?.textContent?.trim()).toBe('측정 중');
++    expect(card.querySelector('small')?.textContent?.trim()).toBe('코어 수 확인 불가 · 20스레드');
+   });
+ 
+   it('shows runtime plugins in the status list and hides workflow-only entries', async () => {
+diff --git a/src/shell/dashboard/dashboard.component.ts b/src/shell/dashboard/dashboard.component.ts
+index 85c90de0..49c4c58a 100644
+--- a/src/shell/dashboard/dashboard.component.ts
++++ b/src/shell/dashboard/dashboard.component.ts
+@@ -4,6 +4,7 @@ import {
+   DestroyRef,
+   inject,
+   OnInit,
++  signal,
+ } from '@angular/core';
+ import { NgClass } from '@angular/common';
+ import { Router } from '@angular/router';
+@@ -61,6 +62,12 @@ export class DashboardComponent implements OnInit {
+   private readonly destroyRef = inject(DestroyRef);
+   private readonly confirmDialog = inject(ConfirmDialogService);
+ 
++  readonly cleanupRunning = signal(false);
++  readonly cleanupResult = signal('');
++  readonly refreshing = signal(false);
++  readonly refreshError = signal('');
++  private refreshPending: Promise<void> | null = null;
++
+   private pollingHandle: ReturnType<typeof setInterval> | null = null;
+ 
+   async ngOnInit(): Promise<void> {
+@@ -74,11 +81,7 @@ export class DashboardComponent implements OnInit {
+       }
+     });
+ 
+-    await Promise.all([
+-      this.pluginStatus.refreshAll(),
+-      this.resources.refresh(),
+-      this.jobs.refresh(),
+-    ]);
++    await this.refreshDashboard();
+ 
+     // 기다리는 동안 화면을 떠났다면 폴링을 새로 걸지 않는다(이미 지나간 onDestroy는 못 끊는다).
+     if (this.destroyRef.destroyed) {
+@@ -86,12 +89,26 @@ export class DashboardComponent implements OnInit {
+     }
+ 
+     this.pollingHandle = setInterval(() => {
+-      void this.pluginStatus.refreshAll();
+-      void this.resources.refresh();
+-      void this.jobs.refresh();
++      void this.refreshDashboard();
+     }, 3000);
+   }
+ 
++  refreshDashboard(): Promise<void> {
++    if (this.refreshPending) return this.refreshPending;
++    this.refreshing.set(true);
++    this.refreshPending = Promise.allSettled([
++      this.pluginStatus.refreshAll(), this.resources.refresh(), this.jobs.refresh(),
++    ]).then((results) => {
++      const failed = results.some((result) => result.status === 'rejected') ||
++        this.pluginStatus.error?.() || this.resources.error();
++      this.refreshError.set(failed ? '일부 상태를 갱신하지 못했습니다. 이전 정보를 표시합니다.' : '');
++    }).finally(() => {
++      this.refreshing.set(false);
++      this.refreshPending = null;
++    });
++    return this.refreshPending;
++  }
++
+   async start(item: PluginStoreItem): Promise<void> {
+     try {
+       await this.pluginStatus.start(item.name);
+@@ -149,13 +166,21 @@ export class DashboardComponent implements OnInit {
+   }
+ 
+   async stopEvictablePlugins(): Promise<void> {
+-    const items = this.evictableRunningItems();
+-    await Promise.allSettled(items.map((item) => this.pluginStatus.stop(item.name)));
+-    await Promise.all([
+-      this.pluginStatus.refreshAll(),
+-      this.resources.refresh(),
+-      this.jobs.refresh(),
+-    ]);
++    if (this.cleanupRunning()) return;
++    this.cleanupRunning.set(true);
++    this.cleanupResult.set('');
++    try {
++      const results = await Promise.allSettled(
++        this.evictableRunningItems().map((item) => this.pluginStatus.stopIdle(item.name)),
++      );
++      const stopped = results.filter((result) => result.status === 'fulfilled' && result.value).length;
++      const protectedCount = results.filter((result) => result.status === 'fulfilled' && !result.value).length;
++      const failed = results.filter((result) => result.status === 'rejected').length;
++      this.cleanupResult.set(`정리 ${stopped}개 · 보호 또는 상태 변경 ${protectedCount}개 · 실패 ${failed}개`);
++      await this.refreshDashboard();
++    } finally {
++      this.cleanupRunning.set(false);
++    }
+   }
+ 
+   goToStore(pluginName: string): void {
+@@ -205,9 +230,12 @@ export class DashboardComponent implements OnInit {
+     const runtimeActiveJobs = this.runtimeActiveJobCount(item);
+     const safeToEvict = item.status.lifecycle?.safeToEvictWhenIdle ??
+       item.manifest.resourceProfile?.idlePolicy?.safeToEvictWhenIdle;
+-    return item.status.runtimeState === 'running' &&
+-      safeToEvict === true &&
+-      (runtimeActiveJobs === undefined || runtimeActiveJobs === 0) &&
++    const age = Date.now() - Date.parse(item.status.runtimeHealth?.checkedAt ?? '');
++    return !this.refreshError() && !this.pluginStatus.error?.() &&
++      item.status.runtimeState === 'running' &&
++      Number.isFinite(age) && age >= 0 && age < 15_000 &&
++      (item.status.lifecycle?.activeOwners ?? 0) === 0 &&
++      safeToEvict === true && runtimeActiveJobs === 0 &&
+       this.activeJobCountForPlugin(item.name) === 0;
+   }
+ 
+@@ -232,7 +260,12 @@ export class DashboardComponent implements OnInit {
+     if (idlePolicy.safeToEvictWhenIdle === false) return '정리 불가 · 정책상 유지';
+     if (idlePolicy.safeToEvictWhenIdle !== true) return '정리 불가 · 안전 여부 미지정';
+ 
++    const owners = item.status.lifecycle?.activeOwners ?? 0;
++    if (owners > 0) return `작업 보호 중 · 준비 또는 실행 요청 ${owners}개`;
+     const runtimeActiveJobs = this.runtimeActiveJobCount(item);
++    if (runtimeActiveJobs === undefined) return '상태 확인 불가 · 정리 제외';
++    const age = Date.now() - Date.parse(item.status.runtimeHealth?.checkedAt ?? '');
++    if (!Number.isFinite(age) || age < 0 || age >= 15_000) return '상태 갱신 필요 · 정리 제외';
+     const nextCheck = this.idleStopDueLabel(item);
+     if (typeof runtimeActiveJobs === 'number' && runtimeActiveJobs > 0) {
+       return `정리 대기 · 런타임 작업 ${runtimeActiveJobs}개${nextCheck ? ` · 다음 확인 ${nextCheck}` : ''}`;
+@@ -244,7 +277,7 @@ export class DashboardComponent implements OnInit {
+     }
+     if (nextCheck) return `자동 정리 예정 · ${nextCheck}`;
+     if (item.status.lifecycle?.participatesInExclusiveGroup) {
+-      return '정리 가능 · 다른 heavy plugin 시작 시 자동 종료';
++      return '정리 가능 · 다른 플러그인 준비 시 유휴 여부 확인';
+     }
+     return '정리 가능';
+   }
+@@ -278,16 +311,25 @@ export class DashboardComponent implements OnInit {
+   loadSummary(): string {
+     const snapshot = this.resources.snapshot();
+     if (!snapshot) return '-';
+-    const processors = `${snapshot.cpu.logicalCores} 논리 프로세서`;
+     if (snapshot.platform === 'win32') {
+       const usage = snapshot.cpu.utilizationPercent;
+       return typeof usage === 'number' && Number.isFinite(usage)
+-        ? `${usage.toFixed(1)}% / ${processors}`
+-        : `측정 중 / ${processors}`;
++        ? `${usage.toFixed(1)}%`
++        : '측정 중';
+     }
+     const load = snapshot.cpu.loadAverage1m;
+-    if (typeof load !== 'number') return processors;
+-    return `${load.toFixed(2)} / ${processors}`;
++    return typeof load === 'number' && Number.isFinite(load) ? load.toFixed(2) : '측정 중';
++  }
++
++  cpuTopologySummary(): string {
++    const cpu = this.resources.snapshot()?.cpu;
++    if (!cpu || !Number.isInteger(cpu.logicalCores) || cpu.logicalCores <= 0) {
++      return 'CPU 구성 확인 불가';
++    }
++    const physical = cpu.physicalCores;
++    const cores = typeof physical === 'number' && Number.isInteger(physical) &&
++      physical > 0 && physical <= cpu.logicalCores ? `${physical}코어` : '코어 수 확인 불가';
++    return `${cores} · ${cpu.logicalCores}스레드`;
+   }
+ 
+   capturedAtLabel(): string {

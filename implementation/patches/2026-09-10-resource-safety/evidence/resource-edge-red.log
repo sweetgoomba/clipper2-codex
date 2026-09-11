@@ -1,0 +1,75 @@
+✔ queued work is blocked before ensureStarted or job submission (1.512792ms)
+✔ direct local runner uses the same admission before submission (0.257958ms)
+✔ cleanup does not pretend RSS became available memory (0.44ms)
+✔ start succeeds when a fresh measurement confirms reclaimed memory (0.238708ms)
+✔ concurrent starts serialize assessment through actual startup (0.241083ms)
+✖ unavailable fresh memory never authorizes a cold start (0.385833ms)
+✔ manual warning acknowledgement cannot bypass critical memory (0.109292ms)
+✔ dialog admission runs before billing or stage submission (55.75625ms)
+✖ queue admission blocks before billable source preparation (94.427791ms)
+✔ pending TTS request remains protected even when health reports zero jobs (1.698333ms)
+✔ new work invalidates cleanup waiting for a health response (0.180417ms)
+✔ cancelling one job never force-stops the shared runtime (0.138542ms)
+✔ new lease waits for an already committed stop before starting (0.246333ms)
+✔ releasing one lease does not release a different owner (0.303ms)
+✖ cancel during submit deletes the job again after it becomes registered (0.700625ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 12
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 300.376375
+
+✖ failing tests:
+
+test at test/runtime-admission-safety.test.js:40:1
+✖ unavailable fresh memory never authorizes a cold start (0.385833ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:42:2)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /blocked by resource policy/,
+    operator: 'rejects'
+  }
+
+test at test/runtime-admission-safety.test.js:53:1
+✖ queue admission blocks before billable source preparation (94.427791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:58:45)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at test/runtime-ownership-safety.test.js:49:1
+✖ cancel during submit deletes the job again after it becomes registered (0.700625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'POST',
+      'DELETE',
+  -   'DELETE'
+    ]
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:55:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'POST', 'DELETE' ],
+    expected: [ 'POST', 'DELETE', 'DELETE' ],
+    operator: 'deepStrictEqual'
+  }

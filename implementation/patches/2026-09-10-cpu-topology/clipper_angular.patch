@@ -1,0 +1,109 @@
+diff --git a/src/core/resources/resource-status.service.ts b/src/core/resources/resource-status.service.ts
+index 4e8e357c..2d5b9fef 100644
+--- a/src/core/resources/resource-status.service.ts
++++ b/src/core/resources/resource-status.service.ts
+@@ -36,6 +36,7 @@ export interface HostResourceSnapshot {
+   osName: string;
+   cpu: {
+     logicalCores: number;
++    physicalCores?: number;
+     utilizationPercent?: number;
+     loadAverage1m?: number;
+     loadAverage5m?: number;
+diff --git a/src/shell/dashboard/dashboard.component.html b/src/shell/dashboard/dashboard.component.html
+index 808e8c98..d89fc44a 100644
+--- a/src/shell/dashboard/dashboard.component.html
++++ b/src/shell/dashboard/dashboard.component.html
+@@ -43,7 +43,7 @@
+             <div class="resource-card">
+               <span class="resource-label">{{ snapshot.platform === 'win32' ? 'CPU 사용률' : 'CPU 부하 · 1분 평균' }}</span>
+               <strong>{{ loadSummary() }}</strong>
+-              <small>{{ snapshot.osName }} · {{ snapshot.arch }}</small>
++              <small>{{ cpuTopologySummary() }}</small>
+             </div>
+             <div class="resource-card">
+               <span class="resource-label">Processes</span>
+diff --git a/src/shell/dashboard/dashboard.component.spec.ts b/src/shell/dashboard/dashboard.component.spec.ts
+index b7ed769e..16d57bc9 100644
+--- a/src/shell/dashboard/dashboard.component.spec.ts
++++ b/src/shell/dashboard/dashboard.component.spec.ts
+@@ -131,16 +131,18 @@ describe('DashboardComponent', () => {
+   // 스펙의 결과에 영향을 주지 않도록 매번 되돌린다.
+   afterEach(() => applyViewportAttributes('large', 'expanded'));
+ 
+-  it('shows Windows CPU utilization and identifies logical processors correctly', async () => {
++  it('separates CPU utilization from physical cores and threads without OS details', async () => {
+     const snapshot = resourceSnapshot();
+     snapshot.platform = 'win32'; snapshot.osName = 'Windows_NT'; snapshot.arch = 'x64';
+-    Object.assign(snapshot.cpu, { logicalCores: 20, utilizationPercent: 10.4, loadAverage1m: 0 });
++    Object.assign(snapshot.cpu, { physicalCores: 12, logicalCores: 20, utilizationPercent: 10.4, loadAverage1m: 0 });
+     TestBed.inject(ResourceStatusService).snapshot.set(snapshot);
+     fixture.detectChanges(); await fixture.whenStable();
+-    const cards = fixture.nativeElement.querySelector('.resource-grid').textContent;
+-    expect(cards).toContain('CPU 사용률');
+-    expect(cards).toContain('10.4% / 20 논리 프로세서');
+-    expect(cards).not.toContain('0.00 / 20');
++    const card = fixture.nativeElement.querySelectorAll('.resource-card')[1] as HTMLElement;
++    expect(card.querySelector('.resource-label')?.textContent?.trim()).toBe('CPU 사용률');
++    expect(card.querySelector('strong')?.textContent?.trim()).toBe('10.4%');
++    expect(card.querySelector('small')?.textContent?.trim()).toBe('12코어 · 20스레드');
++    expect(card.textContent).not.toContain('Windows_NT');
++    expect(card.textContent).not.toContain('x64');
+   });
+ 
+   it('does not interpret unavailable Windows sampling as zero load', async () => {
+@@ -155,7 +157,18 @@ describe('DashboardComponent', () => {
+     TestBed.inject(ResourceStatusService).snapshot.set(resourceSnapshot());
+     fixture.detectChanges(); await fixture.whenStable();
+     expect(fixture.nativeElement.querySelector('.resource-grid').textContent).toContain('CPU 부하 · 1분 평균');
+-    expect(fixture.componentInstance.loadSummary()).toBe('1.20 / 8 논리 프로세서');
++    expect(fixture.componentInstance.loadSummary()).toBe('1.20');
++  });
++
++  it('shows only measured threads when physical core information is unavailable', async () => {
++    const snapshot = resourceSnapshot();
++    snapshot.platform = 'win32';
++    snapshot.cpu.logicalCores = 20;
++    TestBed.inject(ResourceStatusService).snapshot.set(snapshot);
++    fixture.detectChanges(); await fixture.whenStable();
++    const card = fixture.nativeElement.querySelectorAll('.resource-card')[1] as HTMLElement;
++    expect(card.querySelector('strong')?.textContent?.trim()).toBe('측정 중');
++    expect(card.querySelector('small')?.textContent?.trim()).toBe('코어 수 확인 불가 · 20스레드');
+   });
+ 
+   it('shows runtime plugins in the status list and hides workflow-only entries', async () => {
+diff --git a/src/shell/dashboard/dashboard.component.ts b/src/shell/dashboard/dashboard.component.ts
+index 85c90de0..dd5f9c86 100644
+--- a/src/shell/dashboard/dashboard.component.ts
++++ b/src/shell/dashboard/dashboard.component.ts
+@@ -278,16 +278,25 @@ export class DashboardComponent implements OnInit {
+   loadSummary(): string {
+     const snapshot = this.resources.snapshot();
+     if (!snapshot) return '-';
+-    const processors = `${snapshot.cpu.logicalCores} 논리 프로세서`;
+     if (snapshot.platform === 'win32') {
+       const usage = snapshot.cpu.utilizationPercent;
+       return typeof usage === 'number' && Number.isFinite(usage)
+-        ? `${usage.toFixed(1)}% / ${processors}`
+-        : `측정 중 / ${processors}`;
++        ? `${usage.toFixed(1)}%`
++        : '측정 중';
+     }
+     const load = snapshot.cpu.loadAverage1m;
+-    if (typeof load !== 'number') return processors;
+-    return `${load.toFixed(2)} / ${processors}`;
++    return typeof load === 'number' && Number.isFinite(load) ? load.toFixed(2) : '측정 중';
++  }
++
++  cpuTopologySummary(): string {
++    const cpu = this.resources.snapshot()?.cpu;
++    if (!cpu || !Number.isInteger(cpu.logicalCores) || cpu.logicalCores <= 0) {
++      return 'CPU 구성 확인 불가';
++    }
++    const physical = cpu.physicalCores;
++    const cores = typeof physical === 'number' && Number.isInteger(physical) &&
++      physical > 0 && physical <= cpu.logicalCores ? `${physical}코어` : '코어 수 확인 불가';
++    return `${cores} · ${cpu.logicalCores}스레드`;
+   }
+ 
+   capturedAtLabel(): string {

@@ -1,0 +1,555 @@
+diff --git a/clipper_plugin_sdk/clipper_plugin_sdk/base.py b/clipper_plugin_sdk/clipper_plugin_sdk/base.py
+index ea6277c..96d3ac0 100644
+--- a/clipper_plugin_sdk/clipper_plugin_sdk/base.py
++++ b/clipper_plugin_sdk/clipper_plugin_sdk/base.py
+@@ -15,8 +15,9 @@ import logging
+ import os
+ import sys
+ import time
++import threading
+ from abc import ABC, abstractmethod
+-from contextlib import asynccontextmanager
++from contextlib import asynccontextmanager, contextmanager
+ from typing import Any, Protocol
+ 
+ import uvicorn
+@@ -88,6 +89,26 @@ class PluginBase(ABC):
+ 
+     def __init__(self) -> None:
+         self._runtime: PluginRuntime | None = None
++        self._request_lock = threading.Lock()
++        self._active_requests = 0
++
++    @property
++    def active_requests(self) -> int:
++        with self._request_lock:
++            return self._active_requests
++
++    @contextmanager
++    def active_request(self):
++        """Protect synchronous extra routes, including work in worker threads."""
++        with self._request_lock:
++            self._active_requests += 1
++        try:
++            yield
++        finally:
++            with self._request_lock:
++                if self._runtime is not None:
++                    self._runtime._last_activity = time.monotonic()
++                self._active_requests -= 1
+ 
+     # ── 플러그인 개발자가 구현 ──
+ 
+@@ -312,7 +333,7 @@ class PluginRuntime:
+         return HealthResponse(
+             plugin_name=self._plugin.name,
+             version=self._plugin.version,
+-            active_jobs=len(self._active_jobs),
++            active_jobs=len(self._active_jobs) + self._plugin.active_requests,
+             vram_used_mb=self._measure_vram(),
+         )
+ 
+@@ -335,7 +356,7 @@ class PluginRuntime:
+         if self._shutdown_event:
+             self._shutdown_event.set()
+         for _ in range(60):
+-            if not self._active_jobs:
++            if not self._active_jobs and not self._plugin.active_requests:
+                 break
+             await asyncio.sleep(0.5)
+ 
+@@ -439,7 +460,7 @@ class PluginRuntime:
+             if self._idle_timeout <= 0:
+                 continue
+             elapsed = time.monotonic() - self._last_activity
+-            if elapsed >= self._idle_timeout and not self._active_jobs:
++            if elapsed >= self._idle_timeout and not self._active_jobs and not self._plugin.active_requests:
+                 logger.info(
+                     "Idle for %.0fs (limit: %.0fs), shutting down",
+                     elapsed,
+diff --git a/plugins/tts_supertonic/tts_supertonic/app.py b/plugins/tts_supertonic/tts_supertonic/app.py
+index 2ad5adf..60cde9e 100644
+--- a/plugins/tts_supertonic/tts_supertonic/app.py
++++ b/plugins/tts_supertonic/tts_supertonic/app.py
+@@ -67,16 +67,17 @@ class SupertonicTtsPlugin(PluginBase):
+                     status_code=503,
+                     content={"error": "models_not_loaded"},
+                 )
+-            return synthesize_to_file(
+-                self._engine,
+-                text=req.text,
+-                voice_style=req.voice_style,
+-                speed=req.speed,
+-                output_root=req.output_root,
+-                relative_path=req.relative_path,
+-                lang=self.lang,
+-                total_steps=self.total_steps,
+-            )
++            with self.active_request():
++                return synthesize_to_file(
++                    self._engine,
++                    text=req.text,
++                    voice_style=req.voice_style,
++                    speed=req.speed,
++                    output_root=req.output_root,
++                    relative_path=req.relative_path,
++                    lang=self.lang,
++                    total_steps=self.total_steps,
++                )
+ 
+     def get_runtime_accelerators(self) -> dict[str, Any]:
+         return {"primary_device": "cpu", "pipeline": "supertonic_onnx"}
+diff --git a/clipper_plugin_sdk/clipper_plugin_sdk/windows_supervisor.py b/clipper_plugin_sdk/clipper_plugin_sdk/windows_supervisor.py
+new file mode 100644
+index 0000000..699abf6
+--- /dev/null
++++ b/clipper_plugin_sdk/clipper_plugin_sdk/windows_supervisor.py
+@@ -0,0 +1,223 @@
++"""Windows 10+ per-launch containment. Never launches a plugin outside its job.
++
++JOB_LIST assigns the process atomically at CreateProcessW, unlike spawn/assign.
++Only this supervisor owns the non-inheritable kill-on-close job handle.
++The host closes stdin to cancel; the plugin receives NUL as stdin.
++"""
++from __future__ import annotations
++
++import ctypes as C
++import json
++import os
++import subprocess
++import sys
++import threading
++import time
++from datetime import datetime, timezone
++
++DWORD = C.c_uint32
++WORD = C.c_uint16
++BOOL = C.c_int32
++HANDLE = C.c_void_p
++SIZE_T = C.c_size_t
++
++
++class BasicLimits(C.Structure):
++    _fields_ = [('process_time', C.c_int64), ('job_time', C.c_int64),
++                ('flags', DWORD), ('min_ws', SIZE_T), ('max_ws', SIZE_T),
++                ('active_limit', DWORD), ('affinity', SIZE_T),
++                ('priority', DWORD), ('scheduling', DWORD)]
++
++
++class IoCounters(C.Structure):
++    _fields_ = [(name, C.c_uint64) for name in
++                ('read_ops', 'write_ops', 'other_ops', 'read_bytes', 'write_bytes', 'other_bytes')]
++
++
++class ExtendedLimits(C.Structure):
++    _fields_ = [('basic', BasicLimits), ('io', IoCounters),
++                ('process_memory', SIZE_T), ('job_memory', SIZE_T),
++                ('peak_process_memory', SIZE_T), ('peak_job_memory', SIZE_T)]
++
++
++class Accounting(C.Structure):
++    _fields_ = [(name, C.c_int64) for name in ('user', 'kernel', 'period_user', 'period_kernel')] + [
++        (name, DWORD) for name in ('faults', 'total', 'active', 'terminated')]
++
++
++class StartupInfo(C.Structure):
++    _fields_ = [('cb', DWORD), ('reserved', C.c_wchar_p), ('desktop', C.c_wchar_p),
++                ('title', C.c_wchar_p)] + [(name, DWORD) for name in
++                ('x', 'y', 'width', 'height', 'chars_x', 'chars_y', 'fill', 'flags')] + [
++                ('show', WORD), ('reserved_size', WORD), ('reserved_bytes', C.c_void_p),
++                ('stdin', HANDLE), ('stdout', HANDLE), ('stderr', HANDLE)]
++
++
++class StartupInfoEx(C.Structure):
++    _fields_ = [('startup', StartupInfo), ('attributes', C.c_void_p)]
++
++
++class ProcessInfo(C.Structure):
++    _fields_ = [('process', HANDLE), ('thread', HANDLE), ('pid', DWORD), ('tid', DWORD)]
++
++
++class WindowsJob:
++    """Native handles stay private; no PID lookup or process-name termination."""
++    def __init__(self):
++        if sys.platform != 'win32':
++            raise OSError('Windows Job Object supervisor requires Windows 10+')
++        self.api = C.WinDLL('kernel32', use_last_error=True)
++        self.job = None
++        self.process = None
++        signatures = {
++            'CreateJobObjectW': (HANDLE, [C.c_void_p, C.c_wchar_p]),
++            'SetInformationJobObject': (BOOL, [HANDLE, C.c_int, C.c_void_p, DWORD]),
++            'QueryInformationJobObject': (BOOL, [HANDLE, C.c_int, C.c_void_p, DWORD, C.c_void_p]),
++            'TerminateJobObject': (BOOL, [HANDLE, C.c_uint]),
++            'CloseHandle': (BOOL, [HANDLE]),
++            'GetCurrentProcess': (HANDLE, []),
++            'DuplicateHandle': (BOOL, [HANDLE, HANDLE, HANDLE, C.POINTER(HANDLE), DWORD, BOOL, DWORD]),
++            'InitializeProcThreadAttributeList': (BOOL, [C.c_void_p, DWORD, DWORD, C.POINTER(SIZE_T)]),
++            'UpdateProcThreadAttribute': (BOOL, [C.c_void_p, DWORD, SIZE_T, C.c_void_p, SIZE_T, C.c_void_p, C.c_void_p]),
++            'DeleteProcThreadAttributeList': (None, [C.c_void_p]),
++            'CreateProcessW': (BOOL, [C.c_wchar_p, C.c_wchar_p, C.c_void_p, C.c_void_p, BOOL,
++                                     DWORD, C.c_void_p, C.c_wchar_p, C.c_void_p, C.POINTER(ProcessInfo)]),
++            'WaitForSingleObject': (DWORD, [HANDLE, DWORD]),
++            'GetExitCodeProcess': (BOOL, [HANDLE, C.POINTER(DWORD)]),
++        }
++        for name, (result, args) in signatures.items():
++            fn = getattr(self.api, name)
++            fn.restype, fn.argtypes = result, args
++        self.job = self.api.CreateJobObjectW(None, None)
++        if not self.job:
++            raise C.WinError(C.get_last_error())
++        limits = ExtendedLimits()
++        limits.basic.flags = 0x2000  # JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE; no breakaway
++        try:
++            self._check(self.api.SetInformationJobObject(self.job, 9, C.byref(limits), C.sizeof(limits)))
++        except BaseException:
++            self.close()
++            raise
++
++    @staticmethod
++    def _check(ok):
++        if not ok:
++            raise C.WinError(C.get_last_error())
++
++    def spawn(self, argv):
++        import msvcrt
++        if self.process:
++            raise RuntimeError('owned job already launched')
++        size = SIZE_T()
++        # First call obtains the size and returns ERROR_INSUFFICIENT_BUFFER.
++        self.api.InitializeProcThreadAttributeList(None, 2, 0, C.byref(size))
++        if not size.value:
++            raise C.WinError(C.get_last_error())
++        storage = C.create_string_buffer(size.value)
++        attributes = C.cast(storage, C.c_void_p)
++        self._check(self.api.InitializeProcThreadAttributeList(attributes, 2, 0, C.byref(size)))
++        inherited = []
++        try:
++            with open(os.devnull, 'rb') as null_input:
++                current = self.api.GetCurrentProcess()
++                for stream in (null_input, sys.stdout, sys.stderr):
++                    duplicate = HANDLE()
++                    self._check(self.api.DuplicateHandle(current, msvcrt.get_osfhandle(stream.fileno()),
++                                                         current, C.byref(duplicate), 0, True, 2))
++                    inherited.append(duplicate.value)
++                handles = (HANDLE * 3)(*inherited)
++                jobs = (HANDLE * 1)(self.job)
++                self._check(self.api.UpdateProcThreadAttribute(attributes, 0, 0x20002,
++                                                               handles, C.sizeof(handles), None, None))
++                self._check(self.api.UpdateProcThreadAttribute(attributes, 0, 0x2000D,
++                                                               jobs, C.sizeof(jobs), None, None))
++                startup = StartupInfoEx()
++                startup.startup.cb = C.sizeof(startup)
++                startup.startup.flags = 0x100  # STARTF_USESTDHANDLES
++                startup.startup.stdin, startup.startup.stdout, startup.startup.stderr = inherited
++                startup.attributes = attributes
++                info = ProcessInfo()
++                command = C.create_unicode_buffer(subprocess.list2cmdline(argv))
++                self._check(self.api.CreateProcessW(argv[0], command, None, None, True,
++                                                    0x00080000 | 0x08000000,  # EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW
++                                                    None, None, C.byref(startup), C.byref(info)))
++                self.process = info.process
++                self.api.CloseHandle(info.thread)
++        finally:
++            for handle in inherited:
++                self.api.CloseHandle(handle)
++            self.api.DeleteProcThreadAttributeList(attributes)
++
++    def poll(self):
++        result = self.api.WaitForSingleObject(self.process, 0)
++        if result == 258:  # WAIT_TIMEOUT
++            return None
++        if result != 0:
++            raise C.WinError(C.get_last_error())
++        code = DWORD()
++        self._check(self.api.GetExitCodeProcess(self.process, C.byref(code)))
++        return code.value
++
++    def terminate_and_wait(self, timeout):
++        self._check(self.api.TerminateJobObject(self.job, 1))
++        deadline = time.monotonic() + timeout
++        while True:
++            counts = Accounting()
++            self._check(self.api.QueryInformationJobObject(self.job, 1, C.byref(counts), C.sizeof(counts), None))
++            if counts.active == 0:
++                return
++            if time.monotonic() >= deadline:
++                raise TimeoutError('owned Windows job still has active processes')
++            time.sleep(0.02)
++
++    def close(self):
++        if self.job:
++            self.api.CloseHandle(self.job)  # kernel fallback also covers supervisor crashes
++            self.job = None
++        if self.process:
++            self.api.CloseHandle(self.process)
++            self.process = None
++
++
++def supervise(job, argv, stop, emit):
++    try:
++        if stop.is_set():
++            emit('owned_tree_empty')
++            return 0
++        job.spawn(argv)
++        code = None
++        while not stop.is_set():
++            code = job.poll()
++            if code is not None:
++                break
++            stop.wait(0.05)
++        job.terminate_and_wait(5.0)
++        emit('owned_tree_empty')
++        return code if code is not None else 0
++    finally:
++        job.close()
++
++
++def main():
++    if len(sys.argv) < 2:
++        raise SystemExit('usage: windows_supervisor MODULE [ARGS...]')
++    stop = threading.Event()
++
++    def watch_host():
++        try:
++            sys.stdin.buffer.read(1)
++        finally:
++            stop.set()
++
++    threading.Thread(target=watch_host, daemon=True).start()
++
++    def emit(event):
++        print('\n' + json.dumps({'v': 1, 'ts': datetime.now(timezone.utc).isoformat(),
++                                 'level': 'info', 'src': 'python.windows_supervisor',
++                                 'msg': event, 'ctx': {'ownedTree': event}}), flush=True)
++
++    return supervise(WindowsJob(), [sys.executable, '-m', *sys.argv[1:]], stop, emit)
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/tests/test_tts_active_request_health.py b/tests/test_tts_active_request_health.py
+new file mode 100644
+index 0000000..2173429
+--- /dev/null
++++ b/tests/test_tts_active_request_health.py
+@@ -0,0 +1,56 @@
++"""No model loading: invoke the real sync route with a stub synthesis function."""
++import threading
++from concurrent.futures import ThreadPoolExecutor
++from fastapi import FastAPI
++from clipper_plugin_sdk.base import PluginRuntime
++from tts_supertonic.app import SupertonicTtsPlugin, TtsRequest
++
++
++def test_health_protects_concurrent_sync_requests_until_each_finishes(monkeypatch):
++    plugin = SupertonicTtsPlugin(engine=object())
++    runtime = PluginRuntime(plugin)
++    monkeypatch.setattr(runtime, '_measure_vram', lambda: None)
++    entered = threading.Barrier(3)
++    release = [threading.Event(), threading.Event()]
++    def synthesize(*args, **kwargs):
++        entered.wait(timeout=5)
++        release[int(kwargs['text'])].wait(timeout=5)
++        if kwargs['text'] == '1':
++            raise ValueError('mock synthesis failure')
++        return {'path': 'fake.wav'}
++    monkeypatch.setattr('tts_supertonic.app.synthesize_to_file', synthesize)
++    app = FastAPI()
++    plugin.register_extra_routes(app)
++    route = next(r.endpoint for r in app.routes if r.path == '/tts')
++    with ThreadPoolExecutor(2) as pool:
++        futures = [pool.submit(route, TtsRequest(text=str(i), voice_style='M1', output_root='/unused', relative_path='fake.wav')) for i in range(2)]
++        try:
++            entered.wait(timeout=5)
++            assert runtime.get_health().active_jobs == 2
++            release[0].set()
++            futures[0].result(timeout=5)
++            assert runtime.get_health().active_jobs == 1
++        finally:
++            for event in release:
++                event.set()
++            for future in futures:
++                try:
++                    future.result(timeout=5)
++                except ValueError:
++                    pass
++    assert runtime.get_health().active_jobs == 0
++
++
++def test_sync_request_refreshes_idle_clock_even_on_failure():
++    import time
++    import pytest
++    plugin = SupertonicTtsPlugin(engine=object())
++    runtime = PluginRuntime(plugin)
++    plugin._runtime = runtime
++    runtime._last_activity = time.monotonic() - 1000
++    before = time.monotonic()
++    with pytest.raises(ValueError):
++        with plugin.active_request():
++            raise ValueError('failed request')
++    assert plugin.active_requests == 0
++    assert runtime._last_activity >= before
+diff --git a/tests/test_windows_supervisor.py b/tests/test_windows_supervisor.py
+new file mode 100644
+index 0000000..8daf484
+--- /dev/null
++++ b/tests/test_windows_supervisor.py
+@@ -0,0 +1,157 @@
++"""No Windows API or plugin execution: fake owned job only."""
++import threading
++import pytest
++from clipper_plugin_sdk.windows_supervisor import supervise
++
++
++class Job:
++    def __init__(self, *, code=0, empty=True):
++        self.code, self.empty = code, empty
++        self.calls = []
++    def spawn(self, argv): self.calls.append(('spawn', argv))
++    def poll(self): return self.code
++    def terminate_and_wait(self, timeout):
++        self.calls.append(('terminate', timeout))
++        if not self.empty: raise TimeoutError('owned job still active')
++    def close(self): self.calls.append(('close',))
++
++
++def test_natural_exit_still_terminates_descendants_before_ack():
++    job, events = Job(code=3), []
++    assert supervise(job, ['python', '-m', 'fake'], threading.Event(), events.append) == 3
++    assert job.calls == [('spawn', ['python', '-m', 'fake']), ('terminate', 5.0), ('close',)]
++    assert events == ['owned_tree_empty']
++
++
++def test_control_eof_terminates_only_owned_job():
++    stop = threading.Event()
++    job, events = Job(code=None), []
++    original_spawn = job.spawn
++    def spawn(argv):
++        original_spawn(argv)
++        stop.set()
++    job.spawn = spawn
++    assert supervise(job, ['fake'], stop, events.append) == 0
++    assert job.calls[-2:] == [('terminate', 5.0), ('close',)]
++    assert events == ['owned_tree_empty']
++
++
++def test_failed_drain_never_acknowledges_cleanup():
++    job, events = Job(empty=False), []
++    with pytest.raises(TimeoutError): supervise(job, ['fake'], threading.Event(), events.append)
++    assert events == []
++    assert job.calls[-1] == ('close',)
++
++
++def test_failed_spawn_closes_job_without_running_uncontained_fallback():
++    job, events = Job(), []
++    def fail(argv): raise OSError('job assignment failed')
++    job.spawn = fail
++    with pytest.raises(OSError): supervise(job, ['fake'], threading.Event(), events.append)
++    assert job.calls == [('close',)]
++    assert events == []
++
++
++def test_host_already_gone_does_not_launch_plugin():
++    stop = threading.Event()
++    stop.set()
++    job, events = Job(), []
++    assert supervise(job, ['fake'], stop, events.append) == 0
++    assert job.calls == [('close',)]
++    assert events == ['owned_tree_empty']
++
++
++def test_native_x64_structure_layouts_match_windows_abi():
++    import ctypes as c
++    from clipper_plugin_sdk import windows_supervisor as w
++    assert c.sizeof(w.DWORD) == 4
++    assert [c.sizeof(t) for t in (w.BasicLimits, w.ExtendedLimits, w.Accounting,
++                                 w.StartupInfo, w.StartupInfoEx, w.ProcessInfo)] == [64, 144, 48, 104, 112, 24]
++    assert w.Accounting.active.offset == 40
++
++
++class FakeKernel:
++    def __init__(self, fail_attribute=False):
++        self.calls = []
++        self.fail_attribute = fail_attribute
++    def InitializeProcThreadAttributeList(self, ptr, count, flags, size):
++        size._obj.value = 128
++        return bool(ptr)
++    def GetCurrentProcess(self): return -1
++    def DuplicateHandle(self, parent, source, target, output, access, inherit, options):
++        assert inherit and options == 2
++        output._obj.value = 100 + len(self.calls)
++        self.calls.append(('duplicate', output._obj.value))
++        return True
++    def UpdateProcThreadAttribute(self, ptr, flags, attribute, values, size, previous, returned):
++        self.calls.append(('attribute', attribute, list(values)))
++        return not self.fail_attribute
++    def CreateProcessW(self, application, command, pa, ta, inherit, flags, env, cwd, startup, info):
++        import ctypes as c
++        from clipper_plugin_sdk import windows_supervisor as w
++        assert inherit
++        assert flags == 0x00080000 | 0x08000000
++        assert startup._obj.startup.cb == c.sizeof(w.StartupInfoEx)
++        assert startup._obj.startup.stdin == 100
++        assert application == 'C:\\Python Dir\\python.exe'
++        assert command.value.startswith('"C:\\Python Dir\\python.exe" -m fake')
++        self.calls.append(('create',))
++        info._obj.process, info._obj.thread = 200, 201
++        return True
++    def CloseHandle(self, handle): self.calls.append(('close', handle)); return True
++    def DeleteProcThreadAttributeList(self, ptr): self.calls.append(('delete_attributes',))
++
++
++@pytest.mark.parametrize('fail', [False, True])
++def test_native_spawn_requires_atomic_job_assignment_and_restricts_inherited_handles(monkeypatch, fail):
++    import sys
++    from types import SimpleNamespace
++    from clipper_plugin_sdk.windows_supervisor import WindowsJob
++    monkeypatch.setitem(sys.modules, 'msvcrt', SimpleNamespace(get_osfhandle=lambda fd: fd))
++    monkeypatch.setattr(sys, 'stdout', SimpleNamespace(fileno=lambda: 1))
++    monkeypatch.setattr(sys, 'stderr', SimpleNamespace(fileno=lambda: 2))
++    job = WindowsJob.__new__(WindowsJob)
++    job.api, job.job, job.process = FakeKernel(fail), 99, None
++    def check(ok):
++        if not ok: raise OSError('injected attribute failure')
++    job._check = check
++    if fail:
++        with pytest.raises(OSError): job.spawn(['C:\\Python Dir\\python.exe', '-m', 'fake'])
++        assert ('create',) not in job.api.calls
++    else:
++        job.spawn(['C:\\Python Dir\\python.exe', '-m', 'fake'])
++        attributes = [v for v in job.api.calls if v[0] == 'attribute']
++        assert attributes == [('attribute', 0x20002, [100, 101, 102]), ('attribute', 0x2000D, [99])]
++        assert job.process == 200
++        assert job.api.calls.index(attributes[-1]) < job.api.calls.index(('create',))
++        assert ('close', 201) in job.api.calls
++    assert all(('close', handle) in job.api.calls for handle in (100, 101, 102))
++    assert job.api.calls[-1] == ('delete_attributes',)
++
++
++def test_native_drain_queries_owned_handle_until_no_active_descendants(monkeypatch):
++    from clipper_plugin_sdk import windows_supervisor as w
++    job = w.WindowsJob.__new__(w.WindowsJob)
++    calls, counts = [], iter([2, 1, 0])
++    class Kernel:
++        def TerminateJobObject(self, handle, code): calls.append(('terminate', handle)); return True
++        def QueryInformationJobObject(self, handle, kind, data, size, returned):
++            calls.append(('query', handle))
++            data._obj.active = next(counts)
++            return True
++    job.api, job.job = Kernel(), 99
++    monkeypatch.setattr(w.time, 'sleep', lambda duration: None)
++    job.terminate_and_wait(1)
++    assert calls == [('terminate', 99), ('query', 99), ('query', 99), ('query', 99)]
++
++
++def test_native_drain_timeout_never_treats_parent_exit_as_empty(monkeypatch):
++    from clipper_plugin_sdk import windows_supervisor as w
++    job = w.WindowsJob.__new__(w.WindowsJob)
++    class Kernel:
++        def TerminateJobObject(self, handle, code): return True
++        def QueryInformationJobObject(self, handle, kind, data, size, returned):
++            data._obj.active = 1
++            return True
++    job.api, job.job = Kernel(), 99
++    with pytest.raises(TimeoutError): job.terminate_and_wait(0)

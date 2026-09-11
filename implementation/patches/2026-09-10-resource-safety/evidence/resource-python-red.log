@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_health_protects_concurrent_sync_requests_until_each_finishes _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109dbeb50>
+
+    def test_health_protects_concurrent_sync_requests_until_each_finishes(monkeypatch):
+        plugin = SupertonicTtsPlugin(engine=object())
+        runtime = PluginRuntime(plugin)
+        monkeypatch.setattr(runtime, '_measure_vram', lambda: None)
+        entered = threading.Barrier(3)
+        release = [threading.Event(), threading.Event()]
+        def synthesize(*args, **kwargs):
+            entered.wait(timeout=5)
+            release[int(kwargs['text'])].wait(timeout=5)
+            if kwargs['text'] == '1':
+                raise ValueError('mock synthesis failure')
+            return {'path': 'fake.wav'}
+        monkeypatch.setattr('tts_supertonic.app.synthesize_to_file', synthesize)
+        app = FastAPI()
+        plugin.register_extra_routes(app)
+        route = next(r.endpoint for r in app.routes if r.path == '/tts')
+        with ThreadPoolExecutor(2) as pool:
+            futures = [pool.submit(route, TtsRequest(text=str(i), voice_style='M1', output_root='/unused', relative_path='fake.wav')) for i in range(2)]
+            try:
+                entered.wait(timeout=5)
+>               assert runtime.get_health().active_jobs == 2
+E               AssertionError: assert 0 == 2
+E                +  where 0 = HealthResponse(status='ok', plugin_name='tts_supertonic', version='0.1.0', active_jobs=0, vram_used_mb=None).active_jobs
+E                +    where HealthResponse(status='ok', plugin_name='tts_supertonic', version='0.1.0', active_jobs=0, vram_used_mb=None) = get_health()
+E                +      where get_health = <clipper_plugin_sdk.base.PluginRuntime object at 0x109b42c10>.get_health
+
+tests/test_tts_active_request_health.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_tts_active_request_health.py::test_health_protects_concurrent_sync_requests_until_each_finishes
+1 failed in 0.12s

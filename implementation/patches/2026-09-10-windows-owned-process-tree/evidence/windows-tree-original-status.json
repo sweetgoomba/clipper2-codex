@@ -1,0 +1,66 @@
+[
+  {
+    "path": "/Users/jina/project/adlight/desktop/clipper_angular",
+    "branch": "integration/toss-payments-pg-20260909",
+    "head": "7ae7366d51a997ee009f73a825467db061daca2b",
+    "status": "",
+    "diffHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_angular.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/desktop/clipper_electron",
+    "branch": "integration/toss-payments-pg-20260909",
+    "head": "dd4e9d67d85f3da18b6a3a107c06987c67da46d0",
+    "status": "",
+    "diffHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_electron.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/desktop/clipper_nestjs",
+    "branch": "integration/toss-payments-pg-20260909",
+    "head": "780128a069c38a9df6438cc64d79f7a2e42bc1ea",
+    "status": "",
+    "diffHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_nestjs.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/desktop/clipper_python",
+    "branch": "dev",
+    "head": "260751d2fa5be8a5a9cd8e346c60ba22d1512ed9",
+    "status": "",
+    "diffHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_python.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/web/clipper_infra",
+    "branch": "integration/toss-payments-pg-20260903",
+    "head": "f948922c812ab583a84e4a64c5d8faa423afe294",
+    "status": "M runbooks/deploy-prod.md\n M runbooks/recreate-prod-databases.md\n?? runbooks/production-console-settings.md\n?? runbooks/production-deployment-team-guide.md\n?? runbooks/production-setup-history-20260908.md",
+    "diffHash": "1e3d43a32c02a9cf14c3ad1c188702add1064c41f2d5f04e7c6930389b9e7ff0",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_infra.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/web/clipper_web_admin",
+    "branch": "integration/toss-payments-pg-20260903",
+    "head": "cafebe3778e86a9e4537d1aae8a4b8497e24f6f1",
+    "status": "M src/app/core/api/models.ts\n M src/app/features/portal/members/detail/member-detail.component.html\n M src/app/features/portal/members/detail/member-detail.component.spec.ts\n M src/app/features/portal/members/detail/member-detail.component.ts\n M src/app/features/portal/refunds/refund-workbench/refund-workbench.component.html\n M src/app/features/portal/refunds/refund-workbench/refund-workbench.component.spec.ts\n M src/app/features/portal/refunds/refund-workbench/refund-workbench.component.ts",
+    "diffHash": "07346cb16a4b240443a569a3bdea046bbc0c100534e105e96d58dc08212c7a3b",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_web_admin.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/web/clipper_web_api",
+    "branch": "integration/toss-payments-pg-20260903",
+    "head": "06316a41828af5508b0ebe679aae3bf661119908",
+    "status": "M docs/api/openapi.yaml\n M src/modules/access/application/access-grants.service.spec.ts\n M src/modules/access/application/access-grants.service.ts\n M src/modules/access/application/monthly-credit-grant.service.spec.ts\n M src/modules/access/application/monthly-credit-grant.service.ts\n M src/modules/payments/application/payment-refund-eligibility.service.spec.ts\n M src/modules/payments/application/payment-refund-eligibility.service.ts\n M src/modules/payments/presentation/payments-openapi-contract.spec.ts\n?? docker-compose.pg-local.yml",
+    "diffHash": "e59d969590516e72ae4d5b16980fbca7ab2987c1fc1f114659d1ff6f0f4f6228",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_web_api.git"
+  },
+  {
+    "path": "/Users/jina/project/adlight/web/clipper_web_client",
+    "branch": "integration/toss-payments-pg-20260903",
+    "head": "ae75f51a79c103e0063cc383a2184218c164764a",
+    "status": "M src/app/core/api/auth-api.service.spec.ts\n M src/app/core/api/auth-api.service.ts\n M src/app/core/api/models.ts\n M src/app/features/portal/credits/credits.component.html\n M src/app/features/portal/credits/credits.component.scss\n M src/app/features/portal/credits/credits.component.spec.ts\n M src/app/features/portal/credits/credits.component.ts\n M src/app/features/portal/dashboard/dashboard.component.html\n M src/app/features/portal/dashboard/dashboard.component.spec.ts\n M src/app/features/portal/dashboard/dashboard.component.ts",
+    "diffHash": "99490dca3f1001e355e6196b2c181201121bdf1824a2b067703f940291920a06",
+    "origin": "https://github.com/OhMyMetabuzz/clipper_web_client.git"
+  }
+]

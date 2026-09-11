@@ -1,0 +1,90 @@
+✖ watchdog requires three consecutive low samples and observes cooldown (0.485208ms)
+✖ recovered or unavailable samples reset the pressure sequence (0.136167ms)
+✖ watchdog never overlaps sampling (0.0845ms)
+✖ watchdog timer is independent of any dashboard and stops on destruction (0.202375ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32.823042
+
+✖ failing tests:
+
+test at test/runtime-pressure-watchdog.test.js:9:1
+✖ watchdog requires three consecutive low samples and observes cooldown (0.485208ms)
+  Error: Cannot find module '../dist/modules/workflows/application/runtime-pressure-watchdog.service'
+  Require stack:
+  - /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.require (node:internal/modules/cjs/loader:1449:12)
+      at require (node:internal/modules/helpers:135:16)
+      at setup (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:3:34)
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:10:24) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js' ]
+  }
+
+test at test/runtime-pressure-watchdog.test.js:12:1
+✖ recovered or unavailable samples reset the pressure sequence (0.136167ms)
+  Error: Cannot find module '../dist/modules/workflows/application/runtime-pressure-watchdog.service'
+  Require stack:
+  - /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.require (node:internal/modules/cjs/loader:1449:12)
+      at require (node:internal/modules/helpers:135:16)
+      at setup (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:3:34)
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:13:42) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js' ]
+  }
+
+test at test/runtime-pressure-watchdog.test.js:16:1
+✖ watchdog never overlaps sampling (0.0845ms)
+  Error: Cannot find module '../dist/modules/workflows/application/runtime-pressure-watchdog.service'
+  Require stack:
+  - /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.require (node:internal/modules/cjs/loader:1449:12)
+      at require (node:internal/modules/helpers:135:16)
+      at setup (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:3:34)
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:17:28) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js' ]
+  }
+
+test at test/runtime-pressure-watchdog.test.js:20:1
+✖ watchdog timer is independent of any dashboard and stops on destruction (0.202375ms)
+  Error: Cannot find module '../dist/modules/workflows/application/runtime-pressure-watchdog.service'
+  Require stack:
+  - /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.require (node:internal/modules/cjs/loader:1449:12)
+      at require (node:internal/modules/helpers:135:16)
+      at setup (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:3:34)
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js:21:72) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-pressure-watchdog.test.js' ]
+  }

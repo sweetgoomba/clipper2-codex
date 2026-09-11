@@ -1,0 +1,67 @@
+✖ queued work is blocked before ensureStarted or job submission (1.065208ms)
+✖ direct local runner uses the same admission before submission (0.216666ms)
+✖ cleanup does not pretend RSS became available memory (0.334875ms)
+✔ start succeeds when a fresh measurement confirms reclaimed memory (0.375625ms)
+✖ concurrent starts serialize assessment through actual startup (0.260083ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.894625
+
+✖ failing tests:
+
+test at test/runtime-admission-safety.test.js:16:1
+✖ queued work is blocked before ensureStarted or job submission (1.065208ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:19:2)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /blocked by resource policy/,
+    operator: 'rejects'
+  }
+
+test at test/runtime-admission-safety.test.js:22:1
+✖ direct local runner uses the same admission before submission (0.216666ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:24:2)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /blocked by resource policy/,
+    operator: 'rejects'
+  }
+
+test at test/runtime-admission-safety.test.js:26:1
+✖ cleanup does not pretend RSS became available memory (0.334875ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:28:2)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /blocked by resource policy/,
+    operator: 'rejects'
+  }
+
+test at test/runtime-admission-safety.test.js:35:1
+✖ concurrent starts serialize assessment through actual startup (0.260083ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-admission-safety.test.js:38:234)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /blocked by resource policy/,
+    operator: 'rejects'
+  }

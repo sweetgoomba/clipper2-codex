@@ -1,0 +1,631 @@
+diff --git a/src/main/plugin/plugin-manager.ts b/src/main/plugin/plugin-manager.ts
+index 3c285b7..9e3225a 100644
+--- a/src/main/plugin/plugin-manager.ts
++++ b/src/main/plugin/plugin-manager.ts
+@@ -215,6 +215,10 @@ export class LocalPluginManager extends PluginManager {
+     const plugin = this.plugins.get(name);
+     if (!plugin) throw new Error(`PluginManager: unknown plugin '${name}'`);
+ 
++    if (plugin.process && (!plugin.process.isRunning || plugin.runtimeState === 'error' || plugin.runtimeState === 'stopping')) {
++      throw new Error(plugin.lastError ?? 'Previous process termination not confirmed');
++    }
++
+     if (plugin.process?.isRunning && plugin.port != null) {
+       await this.waitForHealthOrDeath(plugin.process, plugin.port);
+       return this.toUrl(plugin.port);
+@@ -244,7 +248,15 @@ export class LocalPluginManager extends PluginManager {
+       configProvider: this.configProvider,
+       onModelLoading,
+       onDownloadProgress,
+-      onExit: (code) => {
++      onExit: (code, terminationError) => {
++        if (plugin.process !== proc) return; // A stale launch cannot release a replacement.
++        if (terminationError) {
++          plugin.runtimeState = 'error';
++          plugin.lastError = terminationError.message;
++          plugin.lastExitCode = code;
++          plugin.stoppingByRequest = false;
++          return;
++        }
+         this.releaseProcess(plugin);
+         plugin.lastExitCode = code;
+ 
+@@ -271,7 +283,13 @@ export class LocalPluginManager extends PluginManager {
+       await proc.start();
+       await this.waitForHealthOrDeath(proc, port);
+     } catch (err) {
+-      await proc.stop().catch(() => undefined);
++      try {
++        await proc.stop();
++      } catch (cleanupError) {
++        plugin.runtimeState = 'error';
++        plugin.lastError = `Startup failed; termination not confirmed: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`;
++        throw new Error(plugin.lastError, { cause: err });
++      }
+       this.releaseProcess(plugin);
+       plugin.runtimeState = 'error';
+       plugin.lastError = err instanceof Error ? err.message : String(err);
+@@ -306,7 +324,14 @@ export class LocalPluginManager extends PluginManager {
+     } catch {
+       // 계측 실패가 정지 흐름을 막으면 안 된다.
+     }
+-    await plugin.process.stop();
++    try {
++      await plugin.process.stop();
++    } catch (err) {
++      plugin.runtimeState = 'error';
++      plugin.lastError = err instanceof Error ? err.message : String(err);
++      plugin.stoppingByRequest = false;
++      throw err;
++    }
+     this.releaseProcess(plugin);
+     plugin.runtimeState = 'stopped';
+     plugin.stoppingByRequest = false;
+diff --git a/src/main/plugin/plugin-process.ts b/src/main/plugin/plugin-process.ts
+index 5333d5f..1c911eb 100644
+--- a/src/main/plugin/plugin-process.ts
++++ b/src/main/plugin/plugin-process.ts
+@@ -1,5 +1,6 @@
+ import { delimiter, dirname, join } from 'node:path';
+ import { ChildProcess, spawn } from 'node:child_process';
++import { OwnedProcessTree, pluginModuleArgs } from './windows-owned-tree';
+ import { mkdirSync } from 'node:fs';
+ import log from 'electron-log/main';
+ import { createPluginLogger } from '../logger';
+@@ -52,7 +53,7 @@ export interface PluginProcessConfig {
+    * Called when the child process exits for any reason (normal stop or crash).
+    * Receives the exit code (null if killed by signal or proc was null).
+    */
+-  readonly onExit?: (code: number | null) => void;
++  readonly onExit?: (code: number | null, terminationError?: Error) => void;
+ }
+ 
+ export interface PackagedPluginLaunchContextOptions {
+@@ -75,6 +76,7 @@ export interface PackagedPluginLaunchContext {
+ }
+ 
+ export interface DevPluginLaunchContextOptions {
++  readonly platform?: NodeJS.Platform;
+   readonly moduleName: string;
+   readonly port: number;
+   readonly pythonRoot: string;
+@@ -106,7 +108,7 @@ export function buildDevPluginLaunchContext(
+       'run',
+       '--project', options.pythonRoot,
+       'python',
+-      '-m', options.moduleName,
++      ...pluginModuleArgs(options.moduleName, options.platform),
+       String(options.port),
+       '--idle-timeout', '0',
+     ],
+@@ -159,7 +161,7 @@ export function buildPackagedPluginLaunchContext(
+ 
+   return {
+     pythonBin,
+-    args: ['-m', options.moduleName, String(options.port), '--idle-timeout', '0'],
++    args: [...pluginModuleArgs(options.moduleName, options.platform), String(options.port), '--idle-timeout', '0'],
+     cwd: userDataDir,
+     env: {
+       ...process.env,
+@@ -198,6 +200,7 @@ export function buildPackagedPluginLaunchContext(
+  */
+ export class PluginProcess {
+   private proc: ChildProcess | null = null;
++  private ownedTree: OwnedProcessTree | undefined;
+   /** spawn() 호출 시점(ms). exit 때 생존 시간을 계산하는 데만 쓴다. */
+   private spawnedAtMs = 0;
+   /** 이 프로세스가 살아 있는 동안 한 번이라도 /health 200에 도달했는가 — plugin-manager.ts가 markHealthy()로 올린다. */
+@@ -252,7 +255,7 @@ export class PluginProcess {
+ 
+     this.proc = spawn(launch.command, launch.args, {
+       cwd: launch.cwd,
+-      stdio: ['ignore', 'pipe', 'pipe'],
++      stdio: [process.platform === 'win32' ? 'pipe' : 'ignore', 'pipe', 'pipe'],
+       env: launch.env,
+     });
+ 
+@@ -282,7 +285,7 @@ export class PluginProcess {
+       launch.args,
+       {
+         cwd: launch.cwd,
+-        stdio: ['ignore', 'pipe', 'pipe'],
++        stdio: [process.platform === 'win32' ? 'pipe' : 'ignore', 'pipe', 'pipe'],
+         env: launch.env,
+       },
+     );
+@@ -292,6 +295,7 @@ export class PluginProcess {
+ 
+   private bindLogging(): void {
+     const proc = this.proc!;
++    this.ownedTree = process.platform === 'win32' ? new OwnedProcessTree(proc) : undefined;
+     // 두 시작 경로(startDev/startPackaged) 모두 spawn() 바로 다음에 bindLogging()을 호출한다 —
+     // 여기가 "spawn 직후"다.
+     this.spawnedAtMs = Date.now();
+@@ -349,7 +353,7 @@ export class PluginProcess {
+       writeLog(text);
+       writeChildLog(jsonlSrc, text, true);
+     });
+-    proc.on('exit', (code, signal) => {
++    proc.on(process.platform === 'win32' ? 'close' : 'exit', (code, signal) => {
+       const msg = `${tag} exited (code=${code}, signal=${signal})`;
+       writeLog(msg);
+       try {
+@@ -366,6 +370,10 @@ export class PluginProcess {
+       } catch {
+         // 계측 실패가 정리 흐름(this.proc=null, onExit 콜백)을 막으면 안 된다.
+       }
++      if (this.ownedTree && !this.ownedTree.terminationConfirmed) {
++        this.config.onExit?.(code, new Error('owned Windows process tree termination not confirmed'));
++        return; // Keep ownership and port quarantined until termination can be verified.
++      }
+       this.proc = null;
+       this.config.onExit?.(code);
+     });
+@@ -377,6 +385,14 @@ export class PluginProcess {
+   }
+ 
+   async stop(timeoutMs = 5000): Promise<void> {
++    if (this.ownedTree) {
++      await this.ownedTree.stop({
++        processName: this.config.moduleName,
++        gracefulShutdown: () => requestPluginShutdown(this.config.port),
++        terminateTimeoutMs: timeoutMs + 1_000,
++      });
++      return;
++    }
+     const proc = this.proc;
+     if (!proc) return;
+     await stopChildProcess(proc, {
+@@ -387,7 +403,7 @@ export class PluginProcess {
+   }
+ 
+   get isRunning(): boolean {
+-    return this.proc !== null && !this.proc.killed;
++    return this.proc !== null && !this.proc.killed && !this.ownedTree?.isClosed;
+   }
+ 
+   get pid(): number | undefined {
+@@ -399,14 +415,15 @@ export class PluginProcess {
+    * the callback fires immediately with code=null so the caller never hangs.
+    */
+   onceExited(cb: (code: number | null) => void): () => void {
+-    if (!this.proc) {
+-      cb(null);
++    if (!this.proc || this.ownedTree?.isClosed) {
++      cb(this.proc?.exitCode ?? null);
+       return () => undefined;
+     }
+     const proc = this.proc;
+     const onExit = (code: number | null): void => cb(code);
+-    proc.once('exit', onExit);
+-    return () => proc.removeListener('exit', onExit);
++    const event = process.platform === 'win32' ? 'close' : 'exit';
++    proc.once(event, onExit);
++    return () => proc.removeListener(event, onExit);
+   }
+ 
+ }
+diff --git a/src/main/resources/host-resource-monitor.ts b/src/main/resources/host-resource-monitor.ts
+index b957277..d82bdbd 100644
+--- a/src/main/resources/host-resource-monitor.ts
++++ b/src/main/resources/host-resource-monitor.ts
+@@ -43,6 +43,7 @@ export interface HostResourceSnapshot {
+   osName: string;
+   cpu: {
+     logicalCores: number;
++    physicalCores?: number;
+     utilizationPercent?: number;
+     loadAverage1m?: number;
+     loadAverage5m?: number;
+@@ -72,6 +73,55 @@ let gpuCache: GpuCache | null = null;
+ let previousCpuTimes: ReturnType<typeof cpus> | undefined;
+ let lastCpuPercent: number | undefined;
+ 
++let cpuTopologyCache: {
++  key: string;
++  expiresAt: number;
++  value: Promise<number | undefined>;
++} | undefined;
++
++function collectPhysicalCpuCores(logicalCores: number): Promise<number | undefined> {
++  const osPlatform = platform();
++  const key = `${osPlatform}:${logicalCores}`;
++  if (cpuTopologyCache?.key === key && cpuTopologyCache.expiresAt > Date.now()) {
++    return cpuTopologyCache.value;
++  }
++  const value = readPhysicalCpuCores(osPlatform, logicalCores);
++  cpuTopologyCache = { key, value, expiresAt: Date.now() + 60_000 };
++  return value;
++}
++
++async function readPhysicalCpuCores(
++  osPlatform: NodeJS.Platform,
++  logicalCores: number,
++): Promise<number | undefined> {
++  try {
++    let physicalCores: number;
++    if (osPlatform === 'win32') {
++      const { stdout } = await execFileAsync('powershell.exe', [
++        '-NoProfile', '-NonInteractive', '-Command',
++        'Get-CimInstance Win32_Processor | Select-Object NumberOfCores | ConvertTo-Json -Compress',
++      ], { timeout: 2_500, windowsHide: true });
++      const result: unknown = JSON.parse(stdout);
++      const sockets: unknown[] = Array.isArray(result) ? result : [result];
++      if (!sockets.length || !sockets.every((socket) =>
++        isRecord(socket) && Number.isInteger(socket.NumberOfCores) && Number(socket.NumberOfCores) > 0,
++      )) return undefined;
++      physicalCores = sockets.reduce<number>((sum, socket) =>
++        sum + Number((socket as Record<string, unknown>).NumberOfCores), 0);
++    } else if (osPlatform === 'darwin') {
++      const { stdout } = await execFileAsync('sysctl', ['-n', 'hw.physicalcpu'], { timeout: 1_500 });
++      physicalCores = Number(stdout.trim());
++    } else {
++      return undefined;
++    }
++    return Number.isInteger(physicalCores) && physicalCores > 0 && physicalCores <= logicalCores
++      ? physicalCores : undefined;
++  } catch {
++    // Topology is supplemental: do not invent cores or lose live CPU/memory data.
++    return undefined;
++  }
++}
++
+ function collectCpuResources(): HostResourceSnapshot['cpu'] {
+   const current = cpus();
+   const logicalCores = current.length;
+@@ -109,9 +159,10 @@ export async function collectHostResources(
+   processQueries: HostProcessQuery[],
+ ): Promise<HostResourceSnapshot> {
+   const cpu = collectCpuResources();
+-  const [memory, gpus] = await Promise.all([
++  const [memory, gpus, physicalCores] = await Promise.all([
+     collectMemoryUsage(),
+     collectGpuResources(),
++    collectPhysicalCpuCores(cpu.logicalCores),
+   ]);
+   const processes = await Promise.all(
+     processQueries.map((query) => collectProcessResource(query)),
+@@ -122,7 +173,7 @@ export async function collectHostResources(
+     platform: platform(),
+     arch: process.arch,
+     osName: type(),
+-    cpu,
++    cpu: { ...cpu, physicalCores },
+     memory,
+     processes,
+     accelerators: { gpus },
+diff --git a/test/host-cpu-resources.test.js b/test/host-cpu-resources.test.js
+index f21186a..fb70cfd 100644
+--- a/test/host-cpu-resources.test.js
++++ b/test/host-cpu-resources.test.js
+@@ -7,7 +7,7 @@ function cpuTimes(user, idle, count = 20) {
+   return Array.from({ length: count }, () => ({ times: { user, idle, sys: 0, nice: 0, irq: 0 } }));
+ }
+ 
+-function monitor(samples, osPlatform = 'win32') {
++function monitor(samples, osPlatform = 'win32', topology = {}) {
+   let index = 0;
+   const exports = {};
+   const os = {
+@@ -19,8 +19,20 @@ function monitor(samples, osPlatform = 'win32') {
+   runInNewContext(readFileSync('dist-electron/main/resources/host-resource-monitor.js', 'utf8'), {
+     exports, process: { ...process, platform: osPlatform },
+     require: name => name === 'node:os' ? os : name === 'node:child_process'
+-      ? { execFile: (...args) => args.at(-1)(new Error('GPU/memory tool unavailable in CPU test')) }
+-      : require(name),
++      ? { execFile: (file, ...args) => {
++          const commandArgs = args[0];
++          if (file === 'sysctl' || commandArgs?.join(' ').includes('Win32_Processor')) {
++            topology.calls?.push({ file, args: commandArgs, options: args[1] });
++            return args.at(-1)(topology.error ?? null, topology.output ?? '', '');
++          }
++          args.at(-1)(new Error('GPU/memory tool unavailable in CPU test'));
++        } }
++      : name === 'node:util' ? {
++          // execFile's real custom promisifier returns both output streams.
++          promisify: fn => (...args) => new Promise((resolve, reject) => {
++            fn(...args, (error, stdout, stderr) => error ? reject(error) : resolve({ stdout, stderr }));
++          }),
++        } : require(name),
+   });
+   return () => exports.collectHostResources([]);
+ }
+@@ -55,3 +67,50 @@ test('macOS retains its one-minute load average', async () => {
+   assert.equal(result.cpu.loadAverage1m, 1.2);
+   assert.equal(result.cpu.loadAverage5m, 1.1);
+ });
++
++test('Windows reports 12 physical cores separately from 20 logical threads and caches topology', async () => {
++  const calls = [];
++  const snapshot = monitor([cpuTimes(100, 900), cpuTimes(204, 1796)], 'win32', {
++    output: '{"NumberOfCores":12}', calls,
++  });
++  assert.equal((await snapshot()).cpu.physicalCores, 12);
++  const second = await snapshot();
++  assert.equal(second.cpu.physicalCores, 12);
++  assert.equal(second.cpu.logicalCores, 20);
++  assert.equal(calls.length, 1);
++  assert.equal(calls[0].file, 'powershell.exe');
++  assert.ok(calls[0].options.timeout > 0 && calls[0].options.timeout <= 3000);
++  assert.equal(calls[0].options.windowsHide, true);
++});
++
++test('Windows adds physical cores across processor sockets', async () => {
++  const snapshot = monitor([cpuTimes(100, 900)], 'win32', {
++    output: '[{"NumberOfCores":6},{"NumberOfCores":6}]',
++  });
++  assert.equal((await snapshot()).cpu.physicalCores, 12);
++});
++
++test('macOS reads physical cores while preserving its load-average metric', async () => {
++  const calls = [];
++  const snapshot = monitor([cpuTimes(100, 900, 8)], 'darwin', { output: '8\n', calls });
++  const result = await snapshot();
++  assert.equal(result.cpu.physicalCores, 8);
++  assert.equal(result.cpu.logicalCores, 8);
++  assert.equal(result.cpu.loadAverage1m, 1.2);
++  assert.equal(calls[0].file, 'sysctl');
++  assert.equal(calls[0].args.join(' '), '-n hw.physicalcpu');
++});
++
++test('unavailable or invalid topology never fabricates a physical core count', async () => {
++  for (const topology of [
++    { error: new Error('timeout') },
++    { output: 'invalid json' },
++    { output: '{"NumberOfCores":0}' },
++    { output: '{"NumberOfCores":40}' },
++    { output: '[{"NumberOfCores":6},{}]' },
++  ]) {
++    const result = await monitor([cpuTimes(100, 900)], 'win32', topology)();
++    assert.equal(result.cpu.physicalCores, undefined);
++    assert.equal(result.cpu.logicalCores, 20);
++  }
++});
+diff --git a/test/plugin-manager-start-stop-serialization.test.js b/test/plugin-manager-start-stop-serialization.test.js
+index 9ebe36d..f7a8735 100644
+--- a/test/plugin-manager-start-stop-serialization.test.js
++++ b/test/plugin-manager-start-stop-serialization.test.js
+@@ -164,3 +164,43 @@ test('I2: 새로 뜬 플러그인은 health 성공 시 정확히 그 순간 mark
+ 
+   assert.deepEqual(events, ['markHealthy'], 'health 성공은 정확히 한 번만 markHealthy로 이어져야 한다');
+ });
++
++// No real child process or socket: simulate the supervisor closing without proof.
++function unconfirmedHost() {
++  const host = managerWith({process:null, port:null, runtimeState:'stopped'}, [], []);
++  host.portAllocator.allocate = async () => 45555;
++  let launches = 0;
++  let created;
++  const create = (config) => {
++    launches++;
++    const proc = fakeProcess();
++    proc.stop = async () => { throw Error('tree termination not confirmed'); };
++    created = {config, proc};
++    return proc;
++  };
++  host.runtimeOptions.createPluginProcess = create;
++  return {host, get created() { return created; }, get launches() { return launches; }};
++}
++
++test('proofless close retains process and port and blocks replacement', async (t) => {
++  const saved = global.fetch; global.fetch = async () => ({ok:true});
++  t.after(() => { global.fetch = saved; });
++  const h = unconfirmedHost();
++  await h.host.ensureStarted(PLUGIN);
++  h.created.proc.running = false;
++  h.created.config.onExit(0, new Error('tree termination not confirmed'));
++  assert.equal(h.host.plugins.get(PLUGIN).process, h.created.proc);
++  assert.equal(h.host.plugins.get(PLUGIN).port, 45555);
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.launches, 1);
++});
++
++test('startup cleanup failure retains ownership and blocks replacement', async (t) => {
++  const h = unconfirmedHost();
++  h.host.waitForHealthOrDeath = async () => { throw Error('startup failed'); };
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.host.plugins.get(PLUGIN).process, h.created.proc);
++  assert.equal(h.host.plugins.get(PLUGIN).port, 45555);
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.launches, 1);
++});
+diff --git a/test/plugin-process-packaged-paths.test.js b/test/plugin-process-packaged-paths.test.js
+index 13a4349..c6e71e4 100644
+--- a/test/plugin-process-packaged-paths.test.js
++++ b/test/plugin-process-packaged-paths.test.js
+@@ -72,3 +72,11 @@ test('dev plugin launch uses Electron userData cwd for model assets', () => {
+     '/repo/desktop/clipper_nestjs/src/modules/projects/assets/clipper-studio-seed',
+   );
+ });
++
++test('Windows dev and packaged launch both route the plugin through the owned job supervisor', () => {
++  const common = {moduleName:'tts_supertonic', port:19191, pythonRoot:'/resources/python', platform:'win32'};
++  const dev = buildDevPluginLaunchContext({...common, env:{}});
++  assert.deepEqual(dev.args.slice(4), ['-m','clipper_plugin_sdk.windows_supervisor','tts_supertonic','19191','--idle-timeout','0']);
++  const packaged = buildPackagedPluginLaunchContext({...common, venvPath:'/data/venv', pluginEnv:{}, ffmpegExe:'/bin/ffmpeg', ffprobeExe:'/bin/ffprobe'});
++  assert.deepEqual(packaged.args, ['-m','clipper_plugin_sdk.windows_supervisor','tts_supertonic','19191','--idle-timeout','0']);
++});
+diff --git a/src/main/plugin/windows-owned-tree.ts b/src/main/plugin/windows-owned-tree.ts
+new file mode 100644
+index 0000000..ab0a833
+--- /dev/null
++++ b/src/main/plugin/windows-owned-tree.ts
+@@ -0,0 +1,92 @@
++import type { ChildProcess } from 'node:child_process';
++import type { ChildProcessStopOptions } from './child-process-stop';
++
++export function pluginModuleArgs(name: string, platform: NodeJS.Platform = process.platform): string[] {
++  return platform === 'win32'
++    ? ['-m', 'clipper_plugin_sdk.windows_supervisor', name]
++    : ['-m', name];
++}
++
++/** One launch, one private Job Object. Root exit alone proves nothing about descendants. */
++export class OwnedProcessTree {
++  private closed = false;
++  private empty = false;
++  private pending = '';
++  private droppingLine = false;
++  private readonly completion: Promise<void>;
++
++  constructor(readonly proc: ChildProcess) {
++    this.completion = new Promise((resolve) => {
++      proc.once('close', () => {
++        this.closed = true;
++        proc.stdout?.removeListener('data', onData);
++        resolve();
++      });
++    });
++    const onData = (data: Buffer): void => this.consume(data.toString());
++    proc.stdout?.on('data', onData);
++    // uv can exit before its Python supervisor. EOF asks that supervisor to drain its job.
++    proc.once('exit', () => { if (!this.closed) this.requestStop(); });
++    // A closed control pipe is expected if the supervisor exits first.
++    proc.stdin?.on('error', () => undefined);
++  }
++
++  get isClosed(): boolean { return this.closed; }
++  get terminationConfirmed(): boolean { return this.closed && this.empty; }
++
++  async stop(options: ChildProcessStopOptions): Promise<void> {
++    if (!this.closed && options.gracefulShutdown) {
++      let requested = false;
++      try { requested = await options.gracefulShutdown(); } catch { /* continue via owned control pipe */ }
++      if (requested) await this.wait(options.gracefulTimeoutMs ?? 2_000);
++    }
++    if (!this.closed) {
++      this.requestStop();
++      await this.wait(options.terminateTimeoutMs ?? 6_000);
++    }
++    if (!this.closed || !this.empty) {
++      throw new Error(`${options.processName}: owned Windows process tree termination not confirmed`);
++    }
++  }
++
++  private requestStop(): void {
++    if (this.proc.stdin && !this.proc.stdin.destroyed && !this.proc.stdin.writableEnded) {
++      this.proc.stdin.end();
++    }
++  }
++
++  private async wait(timeoutMs: number): Promise<void> {
++    if (this.closed) return;
++    let timer: ReturnType<typeof setTimeout> | undefined;
++    try {
++      await Promise.race([this.completion, new Promise<void>((resolve) => {
++        timer = setTimeout(resolve, timeoutMs);
++      })]);
++    } finally {
++      if (timer) clearTimeout(timer);
++    }
++  }
++
++  private consume(text: string): void {
++    for (const part of text.match(/[^\n]*\n|[^\n]+$/g) ?? []) {
++      const complete = part.endsWith('\n');
++      if (!this.droppingLine) {
++        this.pending += part;
++        if (this.pending.length > 16_384) {
++          this.pending = '';
++          this.droppingLine = true;
++        }
++      }
++      if (!complete) continue;
++      if (!this.droppingLine) {
++        try {
++          const event = JSON.parse(this.pending);
++          if (event.v === 1 && event.src === 'python.windows_supervisor' &&
++              event.ctx?.ownedTree === 'owned_tree_empty') this.empty = true;
++        } catch { /* ordinary plugin stdout */ }
++      }
++      this.pending = '';
++      this.droppingLine = false;
++    }
++  }
++}
+diff --git a/test/windows-owned-tree.test.js b/test/windows-owned-tree.test.js
+new file mode 100644
+index 0000000..b470c97
+--- /dev/null
++++ b/test/windows-owned-tree.test.js
+@@ -0,0 +1,80 @@
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const { EventEmitter } = require('node:events');
++const { PassThrough } = require('node:stream');
++const { OwnedProcessTree, pluginModuleArgs } = require('../dist-electron/main/plugin/windows-owned-tree');
++const proof = JSON.stringify({v:1, src:'python.windows_supervisor', ctx:{ownedTree:'owned_tree_empty'}}) + '\n';
++function child() {
++  const proc = new EventEmitter();
++  proc.stdout = new PassThrough(); proc.stdin = new PassThrough();
++  proc.exitCode = null; proc.signalCode = null;
++  proc.kill = () => { throw Error('must not kill a root PID'); };
++  return proc;
++}
++test('Windows wraps only plugin module, POSIX remains direct', () => {
++  assert.deepEqual(pluginModuleArgs('tts', 'win32'), ['-m', 'clipper_plugin_sdk.windows_supervisor', 'tts']);
++  assert.deepEqual(pluginModuleArgs('tts', 'darwin'), ['-m', 'tts']);
++});
++test('exit alone is not a tree completion; fragmented proof plus close is required', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.exitCode = 0; proc.emit('exit', 0, null);
++  await assert.rejects(tree.stop({processName:'tts', terminateTimeoutMs:2}), /not confirmed/);
++  proc.stdout.write(proof.slice(0, 17)); proc.stdout.write(proof.slice(17));
++  proc.emit('close', 0, null);
++  await tree.stop({processName:'tts', terminateTimeoutMs:2});
++});
++test('close without empty-job proof fails closed even for code zero', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.emit('close', 0, null);
++  await assert.rejects(tree.stop({processName:'tts'}), /not confirmed/);
++});
++test('graceful completion avoids forced stop; control EOF otherwise asks owned supervisor', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.stdin.on('finish', () => { proc.stdout.write(proof); proc.emit('close', 0, null); });
++  await tree.stop({processName:'tts', gracefulShutdown:async () => false, terminateTimeoutMs:20});
++  assert.equal(proc.stdin.writableEnded, true);
++  const proc2 = child(); const tree2 = new OwnedProcessTree(proc2);
++  await tree2.stop({processName:'tts', gracefulShutdown:async () => {
++    proc2.stdout.write(proof); proc2.emit('close', 0, null); return true;
++  }});
++  assert.equal(proc2.stdin.writableEnded, false);
++});
++test('unrelated/oversized log fragments cannot count as a completion proof', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.stdout.write('x'.repeat(100000)); proc.stdout.write(proof); proc.emit('close', 0, null);
++  await assert.rejects(tree.stop({processName:'tts'}), /not confirmed/);
++});
++
++for (const confirmed of [false, true]) test(`actual process close propagates ownership confirmation=${confirmed}`, async (t) => {
++  t.mock.method(require('../dist-electron/main/logger'), 'createPluginLogger', () => () => {});
++  t.mock.method(require('../dist-electron/main/logging/child-log'), 'writeChildLog', () => {});
++  const log = require('electron-log/main');
++  for (const method of ['info','warn','error']) t.mock.method(log, method, () => {});
++  t.mock.method(console, 'log', () => {});
++  const descriptor = Object.getOwnPropertyDescriptor(process, 'platform');
++  Object.defineProperty(process, 'platform', { value:'win32' });
++  t.after(() => Object.defineProperty(process, 'platform', descriptor));
++  const { PluginProcess } = require('../dist-electron/main/plugin/plugin-process');
++  const exits = [];
++  const plugin = new PluginProcess({ moduleName:'fake', pythonRoot:'/fake', port:45555, onExit:(...args) => exits.push(args) });
++  const proc = child();
++  plugin.proc = proc;
++  plugin.bindLogging(); // Bind the real integration, without spawning anything.
++  proc.exitCode = 0; proc.emit('exit', 0, null);
++  assert.equal(exits.length, 0);
++  if (confirmed) proc.stdout.write(proof);
++  proc.emit('close', 0, null);
++  assert.equal(exits.length, 1);
++  if (confirmed) {
++    assert.equal(plugin.proc, null);
++    assert.equal(exits[0][1], undefined);
++    await plugin.stop();
++  } else {
++    assert.equal(plugin.proc, proc);
++    assert.match(exits[0][1].message, /termination not confirmed/);
++    await assert.rejects(plugin.stop(), /termination not confirmed/);
++  }
++  let notified = false;
++  plugin.onceExited(() => { notified = true; });
++  assert.equal(notified, true, 'late health waiter must not hang after close');
++});

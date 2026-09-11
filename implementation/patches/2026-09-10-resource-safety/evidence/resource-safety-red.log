@@ -1,0 +1,89 @@
+✖ pending TTS request remains protected even when health reports zero jobs (1.560209ms)
+✖ new work invalidates cleanup waiting for a health response (0.221625ms)
+✖ cancelling one job never force-stops the shared runtime (0.218209ms)
+✖ new lease waits for an already committed stop before starting (0.165542ms)
+✖ releasing one lease does not release a different owner (0.127625ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.805417
+
+✖ failing tests:
+
+test at test/runtime-ownership-safety.test.js:16:1
+✖ pending TTS request remains protected even when health reports zero jobs (1.560209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'tts_supertonic'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:22:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'tts_supertonic' ],
+    expected: [],
+    operator: 'deepStrictEqual'
+  }
+
+test at test/runtime-ownership-safety.test.js:24:1
+✖ new work invalidates cleanup waiting for a health response (0.221625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:29:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual'
+  }
+
+test at test/runtime-ownership-safety.test.js:31:1
+✖ cancelling one job never force-stops the shared runtime (0.218209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'tts_supertonic'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:34:9)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'tts_supertonic' ],
+    expected: [],
+    operator: 'deepStrictEqual'
+  }
+
+test at test/runtime-ownership-safety.test.js:36:1
+✖ new lease waits for an already committed stop before starting (0.165542ms)
+  TypeError [Error]: policy.beginRun is not a function
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:40:22)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
+
+test at test/runtime-ownership-safety.test.js:43:1
+✖ releasing one lease does not release a different owner (0.127625ms)
+  TypeError [Error]: policy.beginRun is not a function
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:45:25)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)

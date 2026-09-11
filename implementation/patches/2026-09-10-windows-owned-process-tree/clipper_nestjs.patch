@@ -1,0 +1,1751 @@
+diff --git a/src/modules/dialog-highlight/application/dialog-highlight-python-stage.runner.ts b/src/modules/dialog-highlight/application/dialog-highlight-python-stage.runner.ts
+index 454ace1..c90986b 100644
+--- a/src/modules/dialog-highlight/application/dialog-highlight-python-stage.runner.ts
++++ b/src/modules/dialog-highlight/application/dialog-highlight-python-stage.runner.ts
+@@ -1,3 +1,4 @@
++import { PythonRuntimeLifecyclePolicy } from '../../workflows/application/python-runtime-lifecycle-policy.service';
+ import { Injectable } from '@nestjs/common';
+ import { WorkflowRunContext } from '../../workflows/domain/workflow-executor';
+ import { PluginHost } from '../../plugins/domain/plugin-host';
+@@ -23,8 +24,8 @@ export class DialogHighlightPythonStageRunner {
+   private readonly pluginName = 'dialog_highlight';
+   private readonly jobs: LocalPluginJobRunner;
+ 
+-  constructor(host: PluginHost) {
+-    this.jobs = new LocalPluginJobRunner(host);
++  constructor(host: PluginHost, lifecycle?: PythonRuntimeLifecyclePolicy) {
++    this.jobs = new LocalPluginJobRunner(host, lifecycle);
+   }
+ 
+   async runStage(
+diff --git a/src/modules/dialog-highlight/application/dialog-highlight-workflow.executor.ts b/src/modules/dialog-highlight/application/dialog-highlight-workflow.executor.ts
+index 1be9640..21143b5 100644
+--- a/src/modules/dialog-highlight/application/dialog-highlight-workflow.executor.ts
++++ b/src/modules/dialog-highlight/application/dialog-highlight-workflow.executor.ts
+@@ -101,10 +101,13 @@ export class DialogHighlightWorkflowExecutor implements WorkflowExecutor {
+     return this.host.getStatus(this.pluginName);
+   }
+ 
+-  async start(_request: PluginStartRequest = {}): Promise<PluginStartResponse> {
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    return { baseUrl: await this.host.ensureStarted(this.pluginName) };
++  async start(request: PluginStartRequest = {}): Promise<PluginStartResponse> {
++    const lease = await this.lifecycle?.beginRun(this.pluginName, request);
++    try {
++      return { baseUrl: lease?.baseUrl ?? await this.host.ensureStarted(this.pluginName) };
++    } finally {
++      lease?.release();
++    }
+   }
+ 
+   stop(): Promise<void> {
+@@ -120,7 +123,7 @@ export class DialogHighlightWorkflowExecutor implements WorkflowExecutor {
+         `${jobId}:${stage}`,
+       )),
+     );
+-    await this.stopCancelledRuntimeIfManaged();
++    // Cancel only this workflow's stage jobs; other runtime owners remain active.
+   }
+ 
+   async run(context: WorkflowRunContext): Promise<void> {
+@@ -130,8 +133,7 @@ export class DialogHighlightWorkflowExecutor implements WorkflowExecutor {
+       return;
+     }
+ 
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
++    const lease = await this.lifecycle?.beginRun(this.pluginName);
+     let operation: DialogHighlightBillableOperation | null = null;
+     let operationSucceeded = false;
+     let failureReason = 'workflow did not complete';
+@@ -270,10 +272,13 @@ export class DialogHighlightWorkflowExecutor implements WorkflowExecutor {
+       failureReason = this.errorMessage(err);
+       throw err;
+     } finally {
+-      if (operation && !operationSucceeded) {
+-        await this.failBillableOperation(operation, failureReason);
++      try {
++        if (operation && !operationSucceeded) {
++          await this.failBillableOperation(operation, failureReason);
++        }
++      } finally {
++        lease?.release();
+       }
+-      this.lifecycle?.scheduleIdleStop(this.pluginName);
+     }
+   }
+ 
+@@ -496,14 +501,4 @@ export class DialogHighlightWorkflowExecutor implements WorkflowExecutor {
+     }
+   }
+ 
+-  private async stopCancelledRuntimeIfManaged(): Promise<void> {
+-    if (!this.host.canStartProcesses()) return;
+-    try {
+-      const manifest = await this.host.getManifest(this.pluginName);
+-      if (manifest?.resourceProfile?.idlePolicy?.safeToEvictWhenIdle !== true) return;
+-      await this.host.stop(this.pluginName);
+-    } catch {
+-      // Cancellation should not fail if the runtime already exited.
+-    }
+-  }
+ }
+diff --git a/src/modules/jobs/application/jobs.service.ts b/src/modules/jobs/application/jobs.service.ts
+index b420a0a..c9802b6 100644
+--- a/src/modules/jobs/application/jobs.service.ts
++++ b/src/modules/jobs/application/jobs.service.ts
+@@ -1,3 +1,4 @@
++import { PythonRuntimeLifecyclePolicy } from '../../workflows/application/python-runtime-lifecycle-policy.service';
+ import { ConflictException, Inject, Injectable, Logger, NotFoundException, OnModuleInit, Optional } from '@nestjs/common';
+ import {
+   AuthContext,
+@@ -147,6 +148,7 @@ export class JobsService implements OnModuleInit {
+     private readonly retryParamsRefresher?: RetryParamsRefresher,
+     @Optional()
+     private readonly renderJobPreparers?: RenderJobPreparerRegistry,
++    private readonly runtimeLifecycle?: PythonRuntimeLifecyclePolicy,
+   ) {}
+ 
+   async onModuleInit(): Promise<void> {
+@@ -622,6 +624,7 @@ export class JobsService implements OnModuleInit {
+       const abortController = new AbortController();
+       let operation: BillableWorkflowOperation | null = null;
+       let operationFinished = false;
++      let runtimeLease: { release(): void } | undefined;
+       this.activeAbortControllers.set(jobId, abortController);
+ 
+       const flowStartedAtMs = Date.now();
+@@ -654,6 +657,11 @@ export class JobsService implements OnModuleInit {
+           throw new JobPluginUninstalledError(snapshot.pluginName);
+         }
+         if (await this.isCancelled(jobId)) return;
++        const executor = await this.workflowExecutors.getJobExecutor(snapshot.pluginName);
++        if (executor.runtimeKind === 'python_plugin' || snapshot.pluginName === 'dialog_highlight') {
++          runtimeLease = await this.runtimeLifecycle?.beginRun(snapshot.pluginName);
++        }
++        if (await this.isCancelled(jobId)) return;
+         // Source preparation is part of the paid job: charge before downloads so
+         // preparation failures also produce a charge/refund audit trail.
+         operation = await this.startBillableWorkflowOperation(snapshot, entry);
+@@ -662,7 +670,6 @@ export class JobsService implements OnModuleInit {
+           operationFinished = await this.finishBillableWorkflowOperation(jobId, operation);
+           return;
+         }
+-        const executor = await this.workflowExecutors.getJobExecutor(snapshot.pluginName);
+         if (await this.isCancelled(jobId)) {
+           operationFinished = await this.finishBillableWorkflowOperation(jobId, operation);
+           return;
+@@ -693,6 +700,7 @@ export class JobsService implements OnModuleInit {
+         this.jsonLogger.structured(f.level, f.message, f.ctx);
+         await this.publish(jobId, jobFailureEvent(err, { jobId, timestamp: Date.now() / 1000 }), 'failed');
+       } finally {
++        runtimeLease?.release();
+         // 종료 단계는 executor가 어떻게 반환했는지가 아니라 잡의 **최종 상태**에서 읽는다 —
+         // 이 코드베이스의 executor 다수(PythonPluginWorkflowExecutor·NestjsFfmpegTransformExecutor
+         // 등)가 실패·취소도 정상 반환(던지지 않음)으로 보고하기 때문에, catch에 안 걸렸다고
+diff --git a/src/modules/plugins/application/local-plugin-job.runner.ts b/src/modules/plugins/application/local-plugin-job.runner.ts
+index 2f89efc..2955886 100644
+--- a/src/modules/plugins/application/local-plugin-job.runner.ts
++++ b/src/modules/plugins/application/local-plugin-job.runner.ts
+@@ -1,6 +1,7 @@
+ import { Injectable } from '@nestjs/common';
+ import WebSocket, { RawData } from 'ws';
+ import { withTraceHeader } from '../../../core/logging/with-trace-header';
++import { PythonRuntimeLifecyclePolicy } from '../../workflows/application/python-runtime-lifecycle-policy.service';
+ import { PluginHost } from '../domain/plugin-host';
+ 
+ const CANCEL_TIMEOUT_MS = 1_000;
+@@ -43,7 +44,10 @@ export interface LocalPluginJobHandle {
+ 
+ @Injectable()
+ export class LocalPluginJobRunner {
+-  constructor(private readonly host: PluginHost) {}
++  constructor(
++    private readonly host: PluginHost,
++    private readonly lifecycle?: PythonRuntimeLifecyclePolicy,
++  ) {}
+ 
+   async run(
+     request: LocalPluginJobRunRequest,
+@@ -58,11 +62,17 @@ export class LocalPluginJobRunner {
+   async start(
+     request: LocalPluginJobRunRequest,
+   ): Promise<LocalPluginJobHandle> {
+-    const baseUrl = await this.host.ensureStarted(request.pluginName);
+-    return {
+-      baseUrl,
+-      completion: this.runStarted(baseUrl, request),
+-    };
++    const lease = await this.lifecycle?.beginRun(request.pluginName);
++    try {
++      const baseUrl = lease?.baseUrl ?? await this.host.ensureStarted(request.pluginName);
++      return {
++        baseUrl,
++        completion: this.runStarted(baseUrl, request).finally(() => lease?.release()),
++      };
++    } catch (error) {
++      lease?.release();
++      throw error;
++    }
+   }
+ 
+   private async runStarted(
+diff --git a/src/modules/plugins/application/plugins.service.ts b/src/modules/plugins/application/plugins.service.ts
+index 048e047..f23c191 100644
+--- a/src/modules/plugins/application/plugins.service.ts
++++ b/src/modules/plugins/application/plugins.service.ts
+@@ -30,19 +30,8 @@ import {
+   PluginStatus,
+ } from '../domain/plugin.model';
+ 
+-export class PluginStartAdmissionRequiredError extends Error {
+-  constructor(readonly resourceAssessment: PluginResourceAssessment) {
+-    super('Plugin start requires resource warning confirmation');
+-    this.name = 'PluginStartAdmissionRequiredError';
+-  }
+-}
+-
+-export class PluginStartAdmissionBlockedError extends Error {
+-  constructor(readonly resourceAssessment: PluginResourceAssessment) {
+-    super('Plugin start blocked by resource policy');
+-    this.name = 'PluginStartAdmissionBlockedError';
+-  }
+-}
++import { PluginStartAdmissionBlockedError, PluginStartAdmissionRequiredError } from '../domain/plugin-start-admission.errors';
++export { PluginStartAdmissionBlockedError, PluginStartAdmissionRequiredError } from '../domain/plugin-start-admission.errors';
+ 
+ /** 자산 실측 캐시 수명. 다운로드가 끝나면 그 다음 폴링에서 반영된다. */
+ const ASSETS_PROBE_TTL_MS = 3_000;
+@@ -196,6 +185,17 @@ export class PluginsService {
+       throw new BadRequestException(`Plugin '${name}' is not installed`);
+     }
+ 
++    // Python-backed executors share cleanup, fresh admission and startup with jobs.
++    // Other executor kinds retain their existing assessment contract.
++    if (this.lifecycle && (manifest.runtimeKind === 'python_plugin' || name === 'dialog_highlight')) {
++      const lease = await this.lifecycle.beginRun(name, request);
++      try {
++        return { baseUrl: lease.baseUrl };
++      } finally {
++        lease.release();
++      }
++    }
++
+     const status = await workflow.getStatus();
+     const assessment = this.resourcePolicy.assessStart(
+       manifest,
+@@ -215,6 +215,11 @@ export class PluginsService {
+     return workflow.start(request);
+   }
+ 
++  async stopIdle(name: string): Promise<{ stopped: boolean }> {
++    await this.getWorkflowOrThrow(name);
++    return { stopped: await this.lifecycle?.stopIfIdle(name) ?? false };
++  }
++
+   async stop(name: string): Promise<void> {
+     await (await this.getWorkflowOrThrow(name)).stop();
+   }
+@@ -335,7 +340,7 @@ export class PluginsService {
+     manifest: PluginManifestView,
+     status: PluginStatus,
+   ): Promise<PluginStatus> {
+-    if (!this.lifecycle || manifest.runtimeKind !== 'python_plugin') return status;
++    if (!this.lifecycle || (manifest.runtimeKind !== 'python_plugin' && manifest.name !== 'dialog_highlight')) return status;
+ 
+     const [runtimeHealth] = await Promise.all([
+       this.lifecycle.getRuntimeHealth(status),
+diff --git a/src/modules/plugins/domain/plugin.model.ts b/src/modules/plugins/domain/plugin.model.ts
+index 5c11a7f..aa6151c 100644
+--- a/src/modules/plugins/domain/plugin.model.ts
++++ b/src/modules/plugins/domain/plugin.model.ts
+@@ -64,6 +64,7 @@ export interface PluginRuntimeHealth {
+ }
+ 
+ export interface PluginLifecycleStatus {
++  activeOwners?: number;
+   safeToEvictWhenIdle: boolean;
+   participatesInExclusiveGroup: boolean;
+   exclusiveGroup?: string[];
+diff --git a/src/modules/plugins/infrastructure/local-plugin-host.service.ts b/src/modules/plugins/infrastructure/local-plugin-host.service.ts
+index aa5d61c..4711bb5 100644
+--- a/src/modules/plugins/infrastructure/local-plugin-host.service.ts
++++ b/src/modules/plugins/infrastructure/local-plugin-host.service.ts
+@@ -77,6 +77,10 @@ export class LocalPluginHost extends PluginHost implements OnModuleDestroy {
+       };
+     }
+ 
++    if (plugin.process && (!plugin.process.isRunning || plugin.runtimeState === 'error' || plugin.runtimeState === 'stopping')) {
++      return this.toStatus(plugin);
++    }
++
+     if (plugin.process?.isRunning && plugin.port !== null) {
+       const healthy = await this.isHealthy(this.toUrl(plugin.port));
+       plugin.runtimeState = healthy ? 'running' : plugin.runtimeState;
+@@ -130,7 +134,14 @@ export class LocalPluginHost extends PluginHost implements OnModuleDestroy {
+ 
+     plugin.runtimeState = 'stopping';
+     plugin.stoppingByRequest = true;
+-    await plugin.process.stop();
++    try {
++      await plugin.process.stop();
++    } catch (err) {
++      plugin.runtimeState = 'error';
++      plugin.lastError = err instanceof Error ? err.message : String(err);
++      plugin.stoppingByRequest = false;
++      throw err;
++    }
+     this.releaseProcess(plugin);
+     plugin.runtimeState = 'stopped';
+     plugin.stoppingByRequest = false;
+@@ -187,6 +198,10 @@ export class LocalPluginHost extends PluginHost implements OnModuleDestroy {
+       throw new PluginHostUnavailableError(name, 'Plugin manifest is not installed');
+     }
+ 
++    if (plugin.process && (!plugin.process.isRunning || plugin.runtimeState === 'error' || plugin.runtimeState === 'stopping')) {
++      throw new Error(plugin.lastError ?? 'Previous process termination not confirmed');
++    }
++
+     if (plugin.process?.isRunning && plugin.port !== null) {
+       await this.waitForHealthOrDeath(plugin.process, plugin.port);
+       return this.toUrl(plugin.port);
+@@ -217,7 +232,15 @@ export class LocalPluginHost extends PluginHost implements OnModuleDestroy {
+       pluginName: plugin.manifest.name,
+       pythonRoot,
+       port,
+-      onExit: (code) => {
++      onExit: (code, terminationError) => {
++        if (plugin.process !== proc) return; // A stale launch cannot release a replacement.
++        if (terminationError) {
++          plugin.runtimeState = 'error';
++          plugin.lastError = terminationError.message;
++          plugin.lastExitCode = code;
++          plugin.stoppingByRequest = false;
++          return;
++        }
+         plugin.lastExitCode = code;
+         this.releaseProcess(plugin);
+ 
+@@ -237,12 +260,17 @@ export class LocalPluginHost extends PluginHost implements OnModuleDestroy {
+ 
+     plugin.process = proc;
+     plugin.port = port;
+-    proc.start();
+-
+     try {
++      proc.start();
+       await this.waitForHealthOrDeath(proc, port);
+     } catch (err) {
+-      await proc.stop().catch(() => undefined);
++      try {
++        await proc.stop();
++      } catch (cleanupError) {
++        plugin.runtimeState = 'error';
++        plugin.lastError = `Startup failed; termination not confirmed: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`;
++        throw new Error(plugin.lastError, { cause: err });
++      }
+       this.releaseProcess(plugin);
+       plugin.runtimeState = 'error';
+       plugin.lastError = err instanceof Error ? err.message : String(err);
+diff --git a/src/modules/plugins/infrastructure/local-plugin-process.ts b/src/modules/plugins/infrastructure/local-plugin-process.ts
+index be04b2d..470dc8b 100644
+--- a/src/modules/plugins/infrastructure/local-plugin-process.ts
++++ b/src/modules/plugins/infrastructure/local-plugin-process.ts
+@@ -1,4 +1,5 @@
+ import { ChildProcess, spawn } from 'node:child_process';
++import { OwnedProcessTree, pluginModuleArgs } from './windows-owned-tree';
+ import { existsSync, readFileSync } from 'node:fs';
+ import { dirname, join } from 'node:path';
+ import { getExecutionMode } from '../../../core/config/execution-env';
+@@ -8,11 +9,12 @@ export interface LocalPluginProcessConfig {
+   readonly pluginName: string;
+   readonly pythonRoot: string;
+   readonly port: number;
+-  readonly onExit?: (code: number | null) => void;
++  readonly onExit?: (code: number | null, terminationError?: Error) => void;
+ }
+ 
+ export class LocalPluginProcess {
+   private proc: ChildProcess | null = null;
++  private ownedTree: OwnedProcessTree | undefined;
+ 
+   constructor(private readonly config: LocalPluginProcessConfig) {}
+ 
+@@ -28,13 +30,13 @@ export class LocalPluginProcess {
+       'run',
+       '--directory', this.config.pythonRoot,
+       'python',
+-      '-m', this.config.pluginName,
++      ...pluginModuleArgs(this.config.pluginName),
+       String(this.config.port),
+       '--idle-timeout', '0',
+     ];
+ 
+     this.proc = spawn('uv', args, {
+-      stdio: ['ignore', 'pipe', 'pipe'],
++      stdio: [process.platform === 'win32' ? 'pipe' : 'ignore', 'pipe', 'pipe'],
+       env: buildPluginEnv({
+         processEnv: process.env,
+         pluginEnv,
+@@ -47,6 +49,14 @@ export class LocalPluginProcess {
+   }
+ 
+   async stop(timeoutMs = 5000): Promise<void> {
++    if (this.ownedTree) {
++      await this.ownedTree.stop({
++        processName: this.config.pluginName,
++        gracefulShutdown: () => requestPluginShutdown(this.config.port),
++        terminateTimeoutMs: timeoutMs + 1_000,
++      });
++      return;
++    }
+     const proc = this.proc;
+     if (!proc) return;
+     await stopChildProcess(proc, {
+@@ -58,17 +68,18 @@ export class LocalPluginProcess {
+ 
+   onceExited(callback: (code: number | null) => void): () => void {
+     const proc = this.proc;
+-    if (!proc) {
+-      callback(null);
++    if (!proc || this.ownedTree?.isClosed) {
++      callback(proc?.exitCode ?? null);
+       return () => undefined;
+     }
+     const onExit = (code: number | null): void => callback(code);
+-    proc.once('exit', onExit);
+-    return () => proc.removeListener('exit', onExit);
++    const event = process.platform === 'win32' ? 'close' : 'exit';
++    proc.once(event, onExit);
++    return () => proc.removeListener(event, onExit);
+   }
+ 
+   get isRunning(): boolean {
+-    return this.proc !== null && !this.proc.killed;
++    return this.proc !== null && !this.proc.killed && !this.ownedTree?.isClosed;
+   }
+ 
+   get pid(): number | undefined {
+@@ -77,6 +88,7 @@ export class LocalPluginProcess {
+ 
+   private bindLogging(): void {
+     const proc = this.proc!;
++    this.ownedTree = process.platform === 'win32' ? new OwnedProcessTree(proc) : undefined;
+     const tag = `[${this.config.pluginName}]`;
+     proc.stdout?.on('data', (buf: Buffer) => {
+       process.stdout.write(`${tag} ${buf.toString()}`);
+@@ -84,8 +96,12 @@ export class LocalPluginProcess {
+     proc.stderr?.on('data', (buf: Buffer) => {
+       process.stderr.write(`${tag} ${buf.toString()}`);
+     });
+-    proc.on('exit', (code, signal) => {
++    proc.on(process.platform === 'win32' ? 'close' : 'exit', (code, signal) => {
+       console.log(`${tag} exited (code=${code}, signal=${signal})`);
++      if (this.ownedTree && !this.ownedTree.terminationConfirmed) {
++        this.config.onExit?.(code, new Error('owned Windows process tree termination not confirmed'));
++        return; // Keep ownership and port quarantined until termination can be verified.
++      }
+       this.proc = null;
+       this.config.onExit?.(code);
+     });
+diff --git a/src/modules/plugins/plugin-host.module.ts b/src/modules/plugins/plugin-host.module.ts
+index f2ffe36..f117232 100644
+--- a/src/modules/plugins/plugin-host.module.ts
++++ b/src/modules/plugins/plugin-host.module.ts
+@@ -1,3 +1,4 @@
++import { RuntimePressureWatchdog } from '../workflows/application/runtime-pressure-watchdog.service';
+ import { Module } from '@nestjs/common';
+ import { ConfigService } from '@nestjs/config';
+ import {
+@@ -21,6 +22,7 @@ import { LocalPluginJobRunner } from './application/local-plugin-job.runner';
+       inject: [ConfigService],
+     },
+     PythonRuntimeLifecyclePolicy,
++    RuntimePressureWatchdog,
+     StaticPluginHost,
+     ElectronPluginHost,
+     LocalPluginHost,
+diff --git a/src/modules/plugins/presentation/plugins.controller.ts b/src/modules/plugins/presentation/plugins.controller.ts
+index f78dc2f..f5c75f9 100644
+--- a/src/modules/plugins/presentation/plugins.controller.ts
++++ b/src/modules/plugins/presentation/plugins.controller.ts
+@@ -98,6 +98,12 @@ export class PluginsController {
+     }
+   }
+ 
++  @Post(':name/stop-idle')
++  @HttpCode(200)
++  stopIdle(@Param('name') name: string): Promise<{ stopped: boolean }> {
++    return this.plugins.stopIdle(name);
++  }
++
+   @Post(':name/stop')
+   @HttpCode(204)
+   async stop(@Param('name') name: string): Promise<void> {
+diff --git a/src/modules/project-manifest/infrastructure/clipper-python-worker-render-provider.ts b/src/modules/project-manifest/infrastructure/clipper-python-worker-render-provider.ts
+index 08db082..8b1978a 100644
+--- a/src/modules/project-manifest/infrastructure/clipper-python-worker-render-provider.ts
++++ b/src/modules/project-manifest/infrastructure/clipper-python-worker-render-provider.ts
+@@ -115,9 +115,8 @@ export class ClipperPythonWorkerRenderProvider implements VideoRenderProvider {
+   ): Promise<VideoRenderResult> {
+     const fontContext = await this.fontResolver.prepare();
+     const payload = this.payloadMapper.map(recipe, context.artifacts, fontContext);
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    const baseUrl = await this.pluginHost.ensureStarted(this.pluginName);
++    const lease = await this.lifecycle?.beginRun(this.pluginName);
++    const baseUrl = lease?.baseUrl ?? await this.pluginHost.ensureStarted(this.pluginName);
+ 
+     try {
+       const pluginJobId = this.pluginJobIdFor(recipe, context);
+@@ -212,7 +211,7 @@ export class ClipperPythonWorkerRenderProvider implements VideoRenderProvider {
+         },
+       };
+     } finally {
+-      this.lifecycle?.scheduleIdleStop(this.pluginName);
++      lease?.release();
+     }
+   }
+ 
+diff --git a/src/modules/resources/application/plugin-resource-policy.service.ts b/src/modules/resources/application/plugin-resource-policy.service.ts
+index 7be8b22..96b9688 100644
+--- a/src/modules/resources/application/plugin-resource-policy.service.ts
++++ b/src/modules/resources/application/plugin-resource-policy.service.ts
+@@ -57,7 +57,7 @@ export class PluginResourcePolicyService {
+     }
+ 
+     if (!snapshot) {
+-      reasons.push({ code: 'resource_snapshot_unavailable', severity: 'warning' });
++      reasons.push({ code: 'resource_snapshot_unavailable', severity: 'critical' });
+       const accelerator = this.assessVram(estimatedVramMb, snapshot, reasons, requiresGpu);
+       return {
+         scope: 'start',
+diff --git a/src/modules/resources/domain/resource.model.ts b/src/modules/resources/domain/resource.model.ts
+index 1b8fa19..b3ff437 100644
+--- a/src/modules/resources/domain/resource.model.ts
++++ b/src/modules/resources/domain/resource.model.ts
+@@ -30,6 +30,8 @@ export interface HostResourceSnapshot {
+   osName: string;
+   cpu: {
+     logicalCores: number;
++    physicalCores?: number;
++    utilizationPercent?: number;
+     loadAverage1m?: number;
+     loadAverage5m?: number;
+     loadAverage15m?: number;
+diff --git a/src/modules/shortform-director/application/shortform-director-reference-local-stt.client.ts b/src/modules/shortform-director/application/shortform-director-reference-local-stt.client.ts
+index 43decd9..258e244 100644
+--- a/src/modules/shortform-director/application/shortform-director-reference-local-stt.client.ts
++++ b/src/modules/shortform-director/application/shortform-director-reference-local-stt.client.ts
+@@ -53,8 +53,7 @@ export class ShortformDirectorReferenceLocalSttClient {
+   async transcribe(
+     request: TranscribeShortformDirectorReferenceRequest,
+   ): Promise<ReferenceMediaTranscriptV1 | null> {
+-    this.lifecycle?.cancelScheduledStop(PLUGIN_NAME);
+-    await this.lifecycle?.prepareForRun(PLUGIN_NAME);
++    const lease = await this.lifecycle?.beginRun(PLUGIN_NAME);
+     let outcome: LocalPluginJobOutcome;
+     try {
+       outcome = await this.jobs.run({
+@@ -69,7 +68,7 @@ export class ShortformDirectorReferenceLocalSttClient {
+         onProgress: request.onProgress ?? (() => undefined),
+       });
+     } finally {
+-      this.lifecycle?.scheduleIdleStop(PLUGIN_NAME);
++      lease?.release();
+     }
+     if (outcome.result === null || request.signal.aborted) return null;
+     this.assertPluginResult(outcome, request.outputRoot);
+diff --git a/src/modules/template-builder/application/template-builder-text-artifact.service.ts b/src/modules/template-builder/application/template-builder-text-artifact.service.ts
+index a5c751d..af115f2 100644
+--- a/src/modules/template-builder/application/template-builder-text-artifact.service.ts
++++ b/src/modules/template-builder/application/template-builder-text-artifact.service.ts
+@@ -68,10 +68,9 @@ export class TemplateBuilderTextArtifactWorkerClient {
+   ) {}
+ 
+   async ensureWarm(): Promise<TemplateBuilderTextArtifactWarmResult> {
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    const baseUrl = await this.pluginHost.ensureStarted(this.pluginName);
+-    this.lifecycle?.scheduleIdleStop(this.pluginName);
++    const lease = await this.lifecycle?.beginRun(this.pluginName);
++    const baseUrl = lease?.baseUrl ?? await this.pluginHost.ensureStarted(this.pluginName);
++    lease?.release();
+     return {
+       status: 'ready',
+       pluginName: this.pluginName,
+@@ -82,9 +81,8 @@ export class TemplateBuilderTextArtifactWorkerClient {
+   async renderTextArtifact(
+     request: TemplateBuilderTextArtifactWorkerRequest,
+   ): Promise<TemplateBuilderTextArtifactWorkerResult> {
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    const baseUrl = await this.pluginHost.ensureStarted(this.pluginName);
++    const lease = await this.lifecycle?.beginRun(this.pluginName);
++    const baseUrl = lease?.baseUrl ?? await this.pluginHost.ensureStarted(this.pluginName);
+     try {
+       const pluginJobId = `template_text_${safeManifestId(request.contract.familyId)}_${safeManifestId(request.contract.ratio)}_${safeManifestId(request.layerId)}_${randomUUID()}`;
+       const completedPromise = this.waitForCompletion(baseUrl, pluginJobId);
+@@ -121,7 +119,7 @@ export class TemplateBuilderTextArtifactWorkerClient {
+         renderMs: this.numberOf(result.renderMs),
+       };
+     } finally {
+-      this.lifecycle?.scheduleIdleStop(this.pluginName);
++      lease?.release();
+     }
+   }
+ 
+diff --git a/src/modules/tts/infrastructure/tts-plugin.client.ts b/src/modules/tts/infrastructure/tts-plugin.client.ts
+index 2087931..a236f22 100644
+--- a/src/modules/tts/infrastructure/tts-plugin.client.ts
++++ b/src/modules/tts/infrastructure/tts-plugin.client.ts
+@@ -18,9 +18,8 @@ export class TtsPluginClient {
+   ) {}
+ 
+   async synthesize(input: TtsSynthesizeInput): Promise<{ path: string }> {
+-    this.lifecycle?.cancelScheduledStop(TtsPluginClient.PLUGIN);
+-    await this.lifecycle?.prepareForRun(TtsPluginClient.PLUGIN);
+-    const baseUrl = await this.pluginHost.ensureStarted(TtsPluginClient.PLUGIN);
++    const lease = await this.lifecycle?.beginRun(TtsPluginClient.PLUGIN);
++    const baseUrl = lease?.baseUrl ?? await this.pluginHost.ensureStarted(TtsPluginClient.PLUGIN);
+     try {
+       const res = await fetch(`${baseUrl}/tts`, {
+         method: 'POST',
+@@ -39,7 +38,7 @@ export class TtsPluginClient {
+       if (!json?.path) throw new Error('tts_supertonic returned no path');
+       return { path: json.path };
+     } finally {
+-      this.lifecycle?.scheduleIdleStop(TtsPluginClient.PLUGIN);
++      lease?.release();
+     }
+   }
+ }
+diff --git a/src/modules/workflows/application/python-runtime-lifecycle-policy.service.ts b/src/modules/workflows/application/python-runtime-lifecycle-policy.service.ts
+index df8c535..f2a995b 100644
+--- a/src/modules/workflows/application/python-runtime-lifecycle-policy.service.ts
++++ b/src/modules/workflows/application/python-runtime-lifecycle-policy.service.ts
+@@ -1,3 +1,6 @@
++import { PluginResourcePolicyService } from '../../resources/application/plugin-resource-policy.service';
++import { PluginStartAdmissionBlockedError, PluginStartAdmissionRequiredError } from '../../plugins/domain/plugin-start-admission.errors';
++import type { PluginStartRequest } from '../../plugins/domain/plugin.model';
+ import { Inject, Injectable, Logger, OnModuleDestroy, Optional } from '@nestjs/common';
+ import { PluginHost } from '../../plugins/domain/plugin-host';
+ import { ResourcesService } from '../../resources/application/resources.service';
+@@ -59,6 +62,12 @@ export function createPythonRuntimeLifecyclePolicyOptions(
+ @Injectable()
+ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+   private readonly logger = new Logger(PythonRuntimeLifecyclePolicy.name);
++  private readonly owners = new Map<string, Set<symbol>>();
++  private readonly generations = new Map<string, number>();
++  private readonly stopping = new Map<string, Promise<void>>();
++  private destroyed = false;
++  private admissionTail: Promise<void> = Promise.resolve();
++  private readonly resourcePolicy = new PluginResourcePolicyService();
+   private readonly pendingStops = new Map<string, PendingIdleStop>();
+ 
+   constructor(
+@@ -72,12 +81,73 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+   ) {}
+ 
+   cancelScheduledStop(pluginName: string): void {
++    this.generations.set(pluginName, this.generation(pluginName) + 1);
+     const pending = this.pendingStops.get(pluginName);
+     if (!pending) return;
+     clearTimeout(pending.timer);
+     this.pendingStops.delete(pluginName);
+   }
+ 
++  // Register before the first await: cleanup probes must see work that is preparing.
++  async beginRun(pluginName: string, request?: PluginStartRequest): Promise<{ baseUrl: string; release(): void }> {
++    if (this.destroyed) throw new Error('Runtime lifecycle is shutting down');
++    this.cancelScheduledStop(pluginName);
++    const token = Symbol(pluginName);
++    const owners = this.owners.get(pluginName) ?? new Set<symbol>();
++    owners.add(token);
++    this.owners.set(pluginName, owners);
++    const release = (): void => {
++      if (!owners.delete(token)) return;
++      if (!owners.size) {
++        this.owners.delete(pluginName);
++        if (!this.destroyed) this.scheduleIdleStop(pluginName);
++      }
++    };
++    try {
++      await this.stopping.get(pluginName);
++      const baseUrl = await this.serializeStart(async () => {
++        if (this.destroyed) throw new Error('Runtime lifecycle is shutting down');
++        await this.prepareForRun(pluginName);
++        const manifest = await this.host.getManifest(pluginName);
++        if (!manifest) throw new Error(`Plugin '${pluginName}' not found`);
++        const status = await this.host.getStatus(pluginName);
++        const assessment = this.resourcePolicy.assessStart(
++          manifest, status, await this.tryGetResourceSnapshot(),
++        );
++        if (this.resourcePolicy.blocksStart(assessment)) {
++          throw new PluginStartAdmissionBlockedError(assessment);
++        }
++        // Automated work retains warning-level continuation; manual starts require
++        // the existing explicit warning acknowledgement. Critical always blocks.
++        if (request && !request.confirmResourceWarning &&
++            this.resourcePolicy.requiresStartConfirmation(assessment)) {
++          throw new PluginStartAdmissionRequiredError(assessment);
++        }
++        return this.host.ensureStarted(pluginName);
++      });
++      return { baseUrl, release };
++    } catch (error) {
++      release();
++      throw error;
++    }
++  }
++
++  private async serializeStart<T>(start: () => Promise<T>): Promise<T> {
++    const previous = this.admissionTail;
++    let release!: () => void;
++    this.admissionTail = new Promise<void>((resolve) => { release = resolve; });
++    await previous;
++    try {
++      return await start();
++    } finally {
++      release();
++    }
++  }
++
++  private generation(pluginName: string): number {
++    return this.generations.get(pluginName) ?? 0;
++  }
++
+   async prepareForRun(pluginName: string): Promise<string[]> {
+     const evicted = await this.evictIdleExclusivePeers(pluginName);
+     const evictedForPressure = await this.evictIdleRuntimesForMemoryPressure(
+@@ -111,6 +181,7 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+   }
+ 
+   scheduleIdleStop(pluginName: string): void {
++    if (this.destroyed || this.owners.get(pluginName)?.size) return;
+     const group = this.exclusiveGroup();
+     if (!group.includes(pluginName)) return;
+ 
+@@ -121,6 +192,7 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+     const pending = this.pendingStops.get(manifest.name);
+     const group = [...this.exclusiveGroup()];
+     return {
++      activeOwners: this.owners.get(manifest.name)?.size ?? 0,
+       safeToEvictWhenIdle: this.safeToEvict(manifest),
+       participatesInExclusiveGroup: group.includes(manifest.name),
+       exclusiveGroup: group,
+@@ -136,11 +208,12 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+ 
+   private scheduleIdleStopAttempt(pluginName: string): void {
+     this.cancelScheduledStop(pluginName);
++    const generation = this.generation(pluginName);
+     const scheduledAtMs = Date.now();
+     const dueAtMs = scheduledAtMs + this.options.idleShutdownDelayMs;
+     const timer = setTimeout(() => {
+       this.pendingStops.delete(pluginName);
+-      void this.runScheduledIdleStop(pluginName).catch((err) => {
++      void this.runScheduledIdleStop(pluginName, generation).catch((err) => {
+         this.logger.warn(
+           `[PythonRuntimeLifecyclePolicy] idle stop failed for ${pluginName}: ${
+             err instanceof Error ? err.message : String(err)
+@@ -152,28 +225,42 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+   }
+ 
+   onModuleDestroy(): void {
++    this.destroyed = true;
+     for (const pending of this.pendingStops.values()) {
+       clearTimeout(pending.timer);
+     }
+     this.pendingStops.clear();
+   }
+ 
+-  private async stopIfIdle(pluginName: string): Promise<boolean> {
++  async stopIfIdle(pluginName: string, generation = this.generation(pluginName)): Promise<boolean> {
++    const protectedNow = (): boolean => this.destroyed ||
++      this.generation(pluginName) !== generation ||
++      Boolean(this.owners.get(pluginName)?.size) || this.stopping.has(pluginName);
++    if (protectedNow() || !this.host.canStartProcesses()) return false;
+     const manifest = await this.host.getManifest(pluginName);
+     if (!manifest || !this.safeToEvict(manifest)) return false;
+-
+     const status = await this.host.getStatus(pluginName);
+-    if (!(await this.isIdle(status))) return false;
++    if (!(await this.isIdle(status)) || protectedNow()) return false;
+ 
+-    await this.host.stop(pluginName);
+-    return true;
++    // No await between the final guard and committing the stop. A new owner sees
++    // stopping and waits for it; an owner registered during the probe invalidates it.
++    const stop = Promise.resolve().then(() => this.host.stop(pluginName));
++    this.stopping.set(pluginName, stop);
++    try {
++      await stop;
++      this.cancelScheduledStop(pluginName);
++      return true;
++    } finally {
++      this.stopping.delete(pluginName);
++    }
+   }
+ 
+-  private async runScheduledIdleStop(pluginName: string): Promise<void> {
+-    const stopped = await this.stopIfIdle(pluginName);
+-    if (stopped) return;
+-    if (await this.shouldRetryIdleStop(pluginName)) {
+-      this.scheduleIdleStopAttempt(pluginName);
++  private async runScheduledIdleStop(pluginName: string, generation: number): Promise<void> {
++    const stopped = await this.stopIfIdle(pluginName, generation);
++    if (stopped || this.destroyed || generation !== this.generation(pluginName)) return;
++    const retry = await this.shouldRetryIdleStop(pluginName);
++    if (retry && !this.destroyed && generation === this.generation(pluginName)) {
++      this.scheduleIdleStop(pluginName);
+     }
+   }
+ 
+@@ -202,32 +289,43 @@ export class PythonRuntimeLifecyclePolicy implements OnModuleDestroy {
+     if (!snapshot) return [];
+ 
+     const estimatedBytes = estimatedRamMb * BYTES_PER_MIB;
+-    let projectedAvailableBytes = snapshot.memory.availableBytes;
++    const projectedAvailableBytes = snapshot.memory.availableBytes;
+     if (!this.hasLowProjectedMemoryHeadroom(estimatedBytes, projectedAvailableBytes)) {
+       return [];
+     }
+ 
++    return this.reclaimIdleMemory(estimatedBytes / LOW_MEMORY_HEADROOM_RATIO, pluginName, alreadyEvicted);
++  }
++
++  async reclaimIdleMemory(
++    targetAvailableBytes: number,
++    pluginName?: string,
++    alreadyEvicted = new Set<string>(),
++  ): Promise<string[]> {
++    const snapshot = await this.tryGetResourceSnapshot();
++    if (!snapshot || !Number.isFinite(snapshot.memory.availableBytes) ||
++        snapshot.memory.availableBytes >= targetAvailableBytes) return [];
+     const manifests = await this.host.listManifests();
+-    const manifestByName = new Map(manifests.map((entry) => [entry.name, entry]));
+-    const candidates = snapshot.processes
+-      .filter((process) => process.role === 'plugin' && !!process.pluginName)
+-      .filter((process) => process.pluginName !== pluginName)
+-      .filter((process) => !alreadyEvicted.has(process.pluginName!))
+-      .filter((process) => {
+-        const candidateManifest = manifestByName.get(process.pluginName!);
+-        return candidateManifest ? this.safeToEvict(candidateManifest) : false;
+-      })
+-      .sort((a, b) => (b.memoryRssBytes ?? 0) - (a.memoryRssBytes ?? 0));
++    const rss = new Map(snapshot.processes.filter((process) => process.pluginName)
++      .map((process) => [process.pluginName!, process.memoryRssBytes ?? 0]));
++    // Local resource snapshots omit child RSS. Manifest enumeration still finds
++    // owned runtimes; unknown RSS sorts last and never implies idle.
++    const candidates = manifests.filter((manifest) => manifest.name !== pluginName &&
++      !alreadyEvicted.has(manifest.name) && this.safeToEvict(manifest))
++      .sort((a, b) => (rss.get(b.name) ?? 0) - (rss.get(a.name) ?? 0));
+ 
+     const evicted: string[] = [];
+-    for (const process of candidates) {
+-      const candidateName = process.pluginName!;
++    for (const candidate of candidates) {
++      const candidateName = candidate.name;
+       const stopped = await this.stopIfIdle(candidateName);
+       if (!stopped) continue;
+ 
+       evicted.push(candidateName);
+-      projectedAvailableBytes += process.memoryRssBytes ?? 0;
+-      if (!this.hasLowProjectedMemoryHeadroom(estimatedBytes, projectedAvailableBytes)) {
++      // RSS is not reclaimed-memory evidence (shared pages, delayed process exit).
++      const refreshed = await this.tryGetResourceSnapshot();
++      if (!refreshed) break;
++      if (!Number.isFinite(refreshed.memory.availableBytes) ||
++          refreshed.memory.availableBytes >= targetAvailableBytes) {
+         break;
+       }
+     }
+diff --git a/src/modules/workflows/infrastructure/python-plugin-workflow-executor.ts b/src/modules/workflows/infrastructure/python-plugin-workflow-executor.ts
+index 3bfde41..69928d2 100644
+--- a/src/modules/workflows/infrastructure/python-plugin-workflow-executor.ts
++++ b/src/modules/workflows/infrastructure/python-plugin-workflow-executor.ts
+@@ -59,10 +59,13 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+     return this.host.getStatus(this.pluginName);
+   }
+ 
+-  async start(_request: PluginStartRequest = {}): Promise<PluginStartResponse> {
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    return { baseUrl: await this.host.ensureStarted(this.pluginName) };
++  async start(request: PluginStartRequest = {}): Promise<PluginStartResponse> {
++    const lease = await this.lifecycle?.beginRun(this.pluginName, request);
++    try {
++      return { baseUrl: lease?.baseUrl ?? await this.host.ensureStarted(this.pluginName) };
++    } finally {
++      lease?.release();
++    }
+   }
+ 
+   stop(): Promise<void> {
+@@ -70,18 +73,21 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+   }
+ 
+   async run(context: WorkflowRunContext): Promise<void> {
+-    this.lifecycle?.cancelScheduledStop(this.pluginName);
+-    await this.lifecycle?.prepareForRun(this.pluginName);
+-    const baseUrl = await this.host.ensureStarted(this.pluginName);
++    const lease = await this.lifecycle?.beginRun(this.pluginName);
++    const baseUrl = lease?.baseUrl ?? await this.host.ensureStarted(this.pluginName);
+     try {
+       await context.setRuntimeBaseUrl(baseUrl);
+-      if (await context.isCancelled()) return;
++      if (context.signal.aborted || await context.isCancelled()) return;
+ 
+       await this.submitToPlugin(baseUrl, context.jobId, context.params);
+-      if (await context.isCancelled()) return;
++      if (context.signal.aborted || await context.isCancelled()) {
++        // The earlier DELETE may have raced ahead of POST registration.
++        await this.cancel(context.jobId, { jobId: context.jobId, baseUrl } as PipelineJobSnapshot);
++        return;
++      }
+       await this.watchPluginEvents(baseUrl, context);
+     } finally {
+-      this.lifecycle?.scheduleIdleStop(this.pluginName);
++      lease?.release();
+     }
+   }
+ 
+@@ -90,21 +96,13 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+     try {
+       await fetch(`${snapshot.baseUrl}/jobs/${encodeURIComponent(snapshot.jobId)}`, {
+         method: 'DELETE',
++        signal: AbortSignal.timeout(1_000),
+       });
+     } catch {
+       // Local job state is still cancelled even if the plugin process is gone.
+     }
+-    await this.stopCancelledRuntimeIfManaged();
+-  }
+-
+-  private async stopCancelledRuntimeIfManaged(): Promise<void> {
+-    if (!this.host.canStartProcesses()) return;
+-    if (this.manifest.resourceProfile?.idlePolicy?.safeToEvictWhenIdle !== true) return;
+-    try {
+-      await this.host.stop(this.pluginName);
+-    } catch {
+-      // Cancellation should not fail if the runtime already exited.
+-    }
++    // Job cancellation never force-stops a shared runtime. The run's finally
++    // releases only its lease; idle cleanup also checks the remote job count.
+   }
+ 
+   private async submitToPlugin(
+@@ -127,7 +125,7 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+   }
+ 
+   private watchPluginEvents(baseUrl: string, context: WorkflowRunContext): Promise<void> {
+-    return new Promise<void>((resolve) => {
++    return new Promise<void>((resolve, reject) => {
+       let settled = false;
+       const finish = (): void => {
+         if (settled) return;
+@@ -147,6 +145,7 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+       context.signal.addEventListener('abort', closeForCancel, { once: true });
+ 
+       ws.on('message', (data: RawData) => {
++        if (settled) return;
+         void (async () => {
+           try {
+             const event = this.normalizeEvent(
+@@ -162,23 +161,35 @@ export class PythonPluginWorkflowExecutor implements WorkflowExecutor {
+               resolve();
+             }
+           } catch (err) {
+-            await context.fail(err instanceof Error ? err.message : String(err));
+-            context.signal.removeEventListener('abort', closeForCancel);
+-            ws.close();
+-            finish();
++            // A terminal event may already be claimed (settled=true), but its
++            // publication can still fail. Always settle the outer promise too.
++            settled = true;
++            try {
++              await context.fail(err instanceof Error ? err.message : String(err));
++              resolve();
++            } catch (failure) {
++              reject(failure);
++            } finally {
++              context.signal.removeEventListener('abort', closeForCancel);
++              ws.close();
++            }
+           }
+         })();
+       });
+ 
++      // Listener registration alone does not observe an already aborted signal.
++      closeForCancel();
++
+       ws.once('error', () => {
+         context.signal.removeEventListener('abort', closeForCancel);
+-        void context.fail('Plugin job WebSocket error').finally(finish);
++        if (settled || context.signal.aborted) { finish(); return; }
++        void context.fail('Plugin job WebSocket error').then(finish, reject);
+       });
+ 
+       ws.once('close', () => {
+         context.signal.removeEventListener('abort', closeForCancel);
+         if (settled || context.signal.aborted) return;
+-        void context.fail('Plugin job WebSocket closed before a terminal event').finally(finish);
++        void context.fail('Plugin job WebSocket closed before a terminal event').then(finish, reject);
+       });
+     });
+   }
+diff --git a/test/local-plugin-host-start-stop-serialization.test.js b/test/local-plugin-host-start-stop-serialization.test.js
+index c6fdcbf..bae486b 100644
+--- a/test/local-plugin-host-start-stop-serialization.test.js
++++ b/test/local-plugin-host-start-stop-serialization.test.js
+@@ -118,3 +118,43 @@ test('시작 중인 플러그인에 중단 요청이 겹치면, 기동이 끝난
+   assert.equal(spawned[0].proc.running, false);
+   assert.equal(host.plugins.get(PLUGIN).runtimeState, 'stopped');
+ });
++
++// No real child process or socket: simulate the supervisor closing without proof.
++function unconfirmedHost() {
++  const host = hostWith({process:null, port:null, runtimeState:'stopped'});
++  host.portAllocator.allocate = async () => 45555;
++  let launches = 0;
++  let created;
++  const create = (config) => {
++    launches++;
++    const proc = fakeProcess();
++    proc.stop = async () => { throw Error('tree termination not confirmed'); };
++    created = {config, proc};
++    return proc;
++  };
++  host.createProcess = create;
++  return {host, get created() { return created; }, get launches() { return launches; }};
++}
++
++test('proofless close retains process and port and blocks replacement', async (t) => {
++  const saved = global.fetch; global.fetch = async () => ({ok:true});
++  t.after(() => { global.fetch = saved; });
++  const h = unconfirmedHost();
++  await h.host.ensureStarted(PLUGIN);
++  h.created.proc.running = false;
++  h.created.config.onExit(0, new Error('tree termination not confirmed'));
++  assert.equal(h.host.plugins.get(PLUGIN).process, h.created.proc);
++  assert.equal(h.host.plugins.get(PLUGIN).port, 45555);
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.launches, 1);
++});
++
++test('startup cleanup failure retains ownership and blocks replacement', async (t) => {
++  const h = unconfirmedHost();
++  h.host.waitForHealthOrDeath = async () => { throw Error('startup failed'); };
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.host.plugins.get(PLUGIN).process, h.created.proc);
++  assert.equal(h.host.plugins.get(PLUGIN).port, 45555);
++  await assert.rejects(h.host.ensureStarted(PLUGIN), /termination not confirmed/);
++  assert.equal(h.launches, 1);
++});
+diff --git a/test/plugin-runtime-lifecycle-participation.test.js b/test/plugin-runtime-lifecycle-participation.test.js
+index a19823d..bcb3b93 100644
+--- a/test/plugin-runtime-lifecycle-participation.test.js
++++ b/test/plugin-runtime-lifecycle-participation.test.js
+@@ -1,18 +1,13 @@
+ const test = require('node:test');
+ const assert = require('node:assert/strict');
+ 
+-// Task 1 (render-worker-lifecycle): verifies that the three former non-participants
+-// (ClipperPythonWorkerRenderProvider, TemplateBuilderTextArtifactWorkerClient,
+-// ShortformDirectorReferenceLocalSttClient) now run the PythonRuntimeLifecyclePolicy
+-// protocol — cancelScheduledStop -> prepareForRun -> ensureStarted -> (work) ->
+-// scheduleIdleStop — and that scheduleIdleStop still fires when the work rejects
+-// (the finally-scope regression this task exists to prevent).
+-
++// Clients retain their common runtime lease until success or failure.
+ function createLifecycle(events) {
+   return {
+-    cancelScheduledStop(name) { events.push(`cancel:${name}`); },
+-    async prepareForRun(name) { events.push(`prepare:${name}`); },
+-    scheduleIdleStop(name) { events.push(`schedule:${name}`); },
++    async beginRun(name) {
++      events.push(`begin:${name}`);
++      return { baseUrl: UNREACHABLE_BASE_URL, release() { events.push(`release:${name}`); } };
++    },
+   };
+ }
+ 
+@@ -31,7 +26,7 @@ function createFontResolver() {
+ // never has to be exercised — only the lifecycle scaffolding around it.
+ const UNREACHABLE_BASE_URL = 'http://127.0.0.1:1';
+ 
+-test('ClipperPythonWorkerRenderProvider runs cancel -> prepare -> ensureStarted -> schedule, and schedules idle-stop even when the render job rejects', async () => {
++test('ClipperPythonWorkerRenderProvider runs begin -> release, and schedules idle-stop even when the render job rejects', async () => {
+   const {
+     ClipperPythonWorkerRenderProvider,
+   } = require('../dist/modules/project-manifest/infrastructure/clipper-python-worker-render-provider');
+@@ -64,10 +59,8 @@ test('ClipperPythonWorkerRenderProvider runs cancel -> prepare -> ensureStarted
+   await assert.rejects(() => provider.render(recipe, context));
+ 
+   assert.deepEqual(events, [
+-    'cancel:clipper_video_render',
+-    'prepare:clipper_video_render',
+-    'ensure:clipper_video_render',
+-    'schedule:clipper_video_render',
++    'begin:clipper_video_render',
++    'release:clipper_video_render',
+   ]);
+ });
+ 
+@@ -132,14 +125,12 @@ test('ClipperPythonWorkerRenderProvider still schedules idle-stop when pluginJob
+   await assert.rejects(() => provider.render(recipe, context));
+ 
+   assert.deepEqual(events, [
+-    'cancel:clipper_video_render',
+-    'prepare:clipper_video_render',
+-    'ensure:clipper_video_render',
+-    'schedule:clipper_video_render',
++    'begin:clipper_video_render',
++    'release:clipper_video_render',
+   ]);
+ });
+ 
+-test('TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs cancel -> prepare -> ensureStarted -> schedule, and schedules idle-stop even when the job rejects', async () => {
++test('TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs begin -> release, and schedules idle-stop even when the job rejects', async () => {
+   const {
+     TemplateBuilderTextArtifactWorkerClient,
+   } = require('../dist/modules/template-builder/application/template-builder-text-artifact.service');
+@@ -163,10 +154,8 @@ test('TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs cancel ->
+   }));
+ 
+   assert.deepEqual(events, [
+-    'cancel:clipper_video_render',
+-    'prepare:clipper_video_render',
+-    'ensure:clipper_video_render',
+-    'schedule:clipper_video_render',
++    'begin:clipper_video_render',
++    'release:clipper_video_render',
+   ]);
+ });
+ 
+@@ -187,7 +176,7 @@ test('TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs without a
+   }));
+ });
+ 
+-test('TemplateBuilderTextArtifactWorkerClient.ensureWarm runs cancel -> prepare -> ensureStarted -> schedule', async () => {
++test('TemplateBuilderTextArtifactWorkerClient.ensureWarm runs begin -> release', async () => {
+   const {
+     TemplateBuilderTextArtifactWorkerClient,
+   } = require('../dist/modules/template-builder/application/template-builder-text-artifact.service');
+@@ -206,14 +195,12 @@ test('TemplateBuilderTextArtifactWorkerClient.ensureWarm runs cancel -> prepare
+ 
+   assert.equal(result.status, 'ready');
+   assert.deepEqual(events, [
+-    'cancel:clipper_video_render',
+-    'prepare:clipper_video_render',
+-    'ensure:clipper_video_render',
+-    'schedule:clipper_video_render',
++    'begin:clipper_video_render',
++    'release:clipper_video_render',
+   ]);
+ });
+ 
+-test('ShortformDirectorReferenceLocalSttClient.transcribe runs cancel -> prepare -> run -> schedule, and schedules idle-stop even when the local STT job rejects', async () => {
++test('ShortformDirectorReferenceLocalSttClient.transcribe runs begin -> run -> release, and schedules idle-stop even when the local STT job rejects', async () => {
+   const {
+     ShortformDirectorReferenceLocalSttClient,
+   } = require(
+@@ -245,10 +232,9 @@ test('ShortformDirectorReferenceLocalSttClient.transcribe runs cancel -> prepare
+   await assert.rejects(() => client.transcribe(request), jobError);
+ 
+   assert.deepEqual(events, [
+-    'cancel:dialog_highlight',
+-    'prepare:dialog_highlight',
++    'begin:dialog_highlight',
+     'run:dialog_highlight',
+-    'schedule:dialog_highlight',
++    'release:dialog_highlight',
+   ]);
+ });
+ 
+diff --git a/test/python-runtime-lifecycle-policy.test.js b/test/python-runtime-lifecycle-policy.test.js
+index 0c47a2e..e0326ae 100644
+--- a/test/python-runtime-lifecycle-policy.test.js
++++ b/test/python-runtime-lifecycle-policy.test.js
+@@ -498,14 +498,9 @@ test('PythonPluginWorkflowExecutor runs lifecycle hooks around plugin jobs', asy
+   });
+   const events = [];
+   const lifecycle = {
+-    async prepareForRun(pluginName) {
+-      events.push(`prepare:${pluginName}`);
+-    },
+-    scheduleIdleStop(pluginName) {
+-      events.push(`schedule:${pluginName}`);
+-    },
+-    cancelScheduledStop(pluginName) {
+-      events.push(`cancel:${pluginName}`);
++    async beginRun(pluginName) {
++      events.push(`begin:${pluginName}`);
++      return { baseUrl, release() { events.push(`release:${pluginName}`); } };
+     },
+   };
+   const executor = new PythonPluginWorkflowExecutor(
+@@ -529,9 +524,8 @@ test('PythonPluginWorkflowExecutor runs lifecycle hooks around plugin jobs', asy
+   });
+ 
+   assert.deepEqual(events, [
+-    'cancel:dance_highlight',
+-    'prepare:dance_highlight',
+-    'schedule:dance_highlight',
++    'begin:dance_highlight',
++    'release:dance_highlight',
+   ]);
+   assert.deepEqual(published, [
+     ['baseUrl', baseUrl],
+@@ -539,7 +533,7 @@ test('PythonPluginWorkflowExecutor runs lifecycle hooks around plugin jobs', asy
+   ]);
+ });
+ 
+-test('PythonPluginWorkflowExecutor stops managed safe-to-evict runtime after cancelling plugin job', async () => {
++test('PythonPluginWorkflowExecutor keeps managed shared runtime after cancelling one plugin job', async () => {
+   const { PythonPluginWorkflowExecutor } = require('../dist/modules/workflows/infrastructure/python-plugin-workflow-executor');
+ 
+   const requests = [];
+@@ -578,7 +572,7 @@ test('PythonPluginWorkflowExecutor stops managed safe-to-evict runtime after can
+       url: `${baseUrl}/jobs/job-1`,
+       method: 'DELETE',
+     }]);
+-    assert.deepEqual(host.stopped, ['dance_highlight']);
++    assert.deepEqual(host.stopped, []);
+   } finally {
+     global.fetch = originalFetch;
+   }
+diff --git a/test/tts-plugin-client.test.js b/test/tts-plugin-client.test.js
+index 9970294..0183532 100644
+--- a/test/tts-plugin-client.test.js
++++ b/test/tts-plugin-client.test.js
+@@ -28,9 +28,10 @@ test('TtsPluginClient runs Python runtime lifecycle around synthesis', async ()
+   };
+   const events = [];
+   const lifecycle = {
+-    cancelScheduledStop(name) { events.push(`cancel:${name}`); },
+-    async prepareForRun(name) { events.push(`prepare:${name}`); },
+-    scheduleIdleStop(name) { events.push(`schedule:${name}`); },
++    async beginRun(name) {
++      events.push(`begin:${name}`);
++      return { baseUrl: await pluginHost.ensureStarted(name), release() { events.push(`release:${name}`); } };
++    },
+   };
+   const orig = globalThis.fetch;
+   globalThis.fetch = async () => ({
+@@ -48,10 +49,9 @@ test('TtsPluginClient runs Python runtime lifecycle around synthesis', async ()
+       relativePath: 'generated/x.wav',
+     });
+     assert.deepEqual(events, [
+-      'cancel:tts_supertonic',
+-      'prepare:tts_supertonic',
++      'begin:tts_supertonic',
+       'ensure:tts_supertonic',
+-      'schedule:tts_supertonic',
++      'release:tts_supertonic',
+     ]);
+   } finally { globalThis.fetch = orig; }
+ });
+diff --git a/src/modules/plugins/domain/plugin-start-admission.errors.ts b/src/modules/plugins/domain/plugin-start-admission.errors.ts
+new file mode 100644
+index 0000000..7127e92
+--- /dev/null
++++ b/src/modules/plugins/domain/plugin-start-admission.errors.ts
+@@ -0,0 +1,15 @@
++import type { PluginResourceAssessment } from '../../resources/domain/resource.model';
++
++export class PluginStartAdmissionRequiredError extends Error {
++  constructor(readonly resourceAssessment: PluginResourceAssessment) {
++    super('Plugin start requires resource warning confirmation');
++    this.name = 'PluginStartAdmissionRequiredError';
++  }
++}
++
++export class PluginStartAdmissionBlockedError extends Error {
++  constructor(readonly resourceAssessment: PluginResourceAssessment) {
++    super('Plugin start blocked by resource policy');
++    this.name = 'PluginStartAdmissionBlockedError';
++  }
++}
+diff --git a/src/modules/plugins/infrastructure/windows-owned-tree.ts b/src/modules/plugins/infrastructure/windows-owned-tree.ts
+new file mode 100644
+index 0000000..ab0a833
+--- /dev/null
++++ b/src/modules/plugins/infrastructure/windows-owned-tree.ts
+@@ -0,0 +1,92 @@
++import type { ChildProcess } from 'node:child_process';
++import type { ChildProcessStopOptions } from './child-process-stop';
++
++export function pluginModuleArgs(name: string, platform: NodeJS.Platform = process.platform): string[] {
++  return platform === 'win32'
++    ? ['-m', 'clipper_plugin_sdk.windows_supervisor', name]
++    : ['-m', name];
++}
++
++/** One launch, one private Job Object. Root exit alone proves nothing about descendants. */
++export class OwnedProcessTree {
++  private closed = false;
++  private empty = false;
++  private pending = '';
++  private droppingLine = false;
++  private readonly completion: Promise<void>;
++
++  constructor(readonly proc: ChildProcess) {
++    this.completion = new Promise((resolve) => {
++      proc.once('close', () => {
++        this.closed = true;
++        proc.stdout?.removeListener('data', onData);
++        resolve();
++      });
++    });
++    const onData = (data: Buffer): void => this.consume(data.toString());
++    proc.stdout?.on('data', onData);
++    // uv can exit before its Python supervisor. EOF asks that supervisor to drain its job.
++    proc.once('exit', () => { if (!this.closed) this.requestStop(); });
++    // A closed control pipe is expected if the supervisor exits first.
++    proc.stdin?.on('error', () => undefined);
++  }
++
++  get isClosed(): boolean { return this.closed; }
++  get terminationConfirmed(): boolean { return this.closed && this.empty; }
++
++  async stop(options: ChildProcessStopOptions): Promise<void> {
++    if (!this.closed && options.gracefulShutdown) {
++      let requested = false;
++      try { requested = await options.gracefulShutdown(); } catch { /* continue via owned control pipe */ }
++      if (requested) await this.wait(options.gracefulTimeoutMs ?? 2_000);
++    }
++    if (!this.closed) {
++      this.requestStop();
++      await this.wait(options.terminateTimeoutMs ?? 6_000);
++    }
++    if (!this.closed || !this.empty) {
++      throw new Error(`${options.processName}: owned Windows process tree termination not confirmed`);
++    }
++  }
++
++  private requestStop(): void {
++    if (this.proc.stdin && !this.proc.stdin.destroyed && !this.proc.stdin.writableEnded) {
++      this.proc.stdin.end();
++    }
++  }
++
++  private async wait(timeoutMs: number): Promise<void> {
++    if (this.closed) return;
++    let timer: ReturnType<typeof setTimeout> | undefined;
++    try {
++      await Promise.race([this.completion, new Promise<void>((resolve) => {
++        timer = setTimeout(resolve, timeoutMs);
++      })]);
++    } finally {
++      if (timer) clearTimeout(timer);
++    }
++  }
++
++  private consume(text: string): void {
++    for (const part of text.match(/[^\n]*\n|[^\n]+$/g) ?? []) {
++      const complete = part.endsWith('\n');
++      if (!this.droppingLine) {
++        this.pending += part;
++        if (this.pending.length > 16_384) {
++          this.pending = '';
++          this.droppingLine = true;
++        }
++      }
++      if (!complete) continue;
++      if (!this.droppingLine) {
++        try {
++          const event = JSON.parse(this.pending);
++          if (event.v === 1 && event.src === 'python.windows_supervisor' &&
++              event.ctx?.ownedTree === 'owned_tree_empty') this.empty = true;
++        } catch { /* ordinary plugin stdout */ }
++      }
++      this.pending = '';
++      this.droppingLine = false;
++    }
++  }
++}
+diff --git a/src/modules/workflows/application/runtime-pressure-watchdog.service.ts b/src/modules/workflows/application/runtime-pressure-watchdog.service.ts
+new file mode 100644
+index 0000000..cd79245
+--- /dev/null
++++ b/src/modules/workflows/application/runtime-pressure-watchdog.service.ts
+@@ -0,0 +1,72 @@
++import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
++import { ConfigService } from '@nestjs/config';
++import { PluginHost } from '../../plugins/domain/plugin-host';
++import { ResourcesService } from '../../resources/application/resources.service';
++import { PythonRuntimeLifecyclePolicy } from './python-runtime-lifecycle-policy.service';
++
++/** Backend-owned RAM observation; never uses CPU load as an eviction signal. */
++@Injectable()
++export class RuntimePressureWatchdog implements OnModuleInit, OnModuleDestroy {
++  private readonly logger = new Logger(RuntimePressureWatchdog.name);
++  private timer?: ReturnType<typeof setTimeout>;
++  private checking = false;
++  private destroyed = false;
++  private lowSamples = 0;
++  private nextCleanupAt = 0;
++
++  constructor(
++    private readonly config: ConfigService,
++    private readonly resources: ResourcesService,
++    private readonly lifecycle: PythonRuntimeLifecyclePolicy,
++    private readonly host: PluginHost,
++  ) {}
++
++  onModuleInit(): void {
++    if (this.config.get<string>('CLIPPER_PLUGIN_PRESSURE_WATCHDOG_ENABLED') === 'false' ||
++        !this.host.canStartProcesses()) return;
++    this.schedule();
++  }
++
++  private schedule(): void {
++    if (this.destroyed) return;
++    this.timer = setTimeout(() => {
++      void this.check().finally(() => this.schedule());
++    }, 10_000);
++    this.timer.unref?.();
++  }
++
++  async check(): Promise<void> {
++    if (this.destroyed || this.checking) return;
++    this.checking = true;
++    try {
++      const snapshot = await this.resources.getSnapshot();
++      if (this.destroyed) return;
++      const { availableBytes, totalBytes } = snapshot.memory;
++      if (!Number.isFinite(totalBytes) || totalBytes <= 0 ||
++          !Number.isFinite(availableBytes) || availableBytes < 0) {
++        this.lowSamples = 0;
++        return;
++      }
++      if (availableBytes / totalBytes >= 0.1) {
++        this.lowSamples = 0;
++        return;
++      }
++      this.lowSamples++;
++      if (this.lowSamples < 3 || Date.now() < this.nextCleanupAt) return;
++      this.lowSamples = 0;
++      this.nextCleanupAt = Date.now() + 60_000;
++      const evicted = await this.lifecycle.reclaimIdleMemory(totalBytes * 0.15);
++      if (evicted.length) this.logger.log(`Memory pressure cleanup: ${evicted.join(', ')}`);
++    } catch (error) {
++      this.lowSamples = 0;
++      this.logger.debug(`Memory pressure sample unavailable: ${error instanceof Error ? error.message : String(error)}`);
++    } finally {
++      this.checking = false;
++    }
++  }
++
++  onModuleDestroy(): void {
++    this.destroyed = true;
++    if (this.timer) clearTimeout(this.timer);
++  }
++}
+diff --git a/test/runtime-admission-safety.test.js b/test/runtime-admission-safety.test.js
+new file mode 100644
+index 0000000..88e8e94
+--- /dev/null
++++ b/test/runtime-admission-safety.test.js
+@@ -0,0 +1,71 @@
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const { PythonRuntimeLifecyclePolicy: Policy } = require('../dist/modules/workflows/application/python-runtime-lifecycle-policy.service');
++const { PythonPluginWorkflowExecutor: Executor } = require('../dist/modules/workflows/infrastructure/python-plugin-workflow-executor');
++const { LocalPluginJobRunner } = require('../dist/modules/plugins/application/local-plugin-job.runner');
++const GiB = 1024 ** 3;
++function setup(t, memory = () => GiB) {
++ const starts = [], stops = [], states = new Map();
++ const manifest = name => ({name, runtimeKind:'python_plugin', resourceProfile:{estimatedRamMb:4096,idlePolicy:{safeToEvictWhenIdle:true}}});
++ const host = {canStartProcesses:()=>true, getManifest:async n=>manifest(n), listManifests:async()=>['heavy','idle'].map(manifest), getStatus:async n=>({name:n,installState:'installed',runtimeState:states.get(n)||'stopped',baseUrl:`http://fake/${n}`}), ensureStarted:async n=>{starts.push(n); states.set(n,'running');return `http://fake/${n}`},stop:async n=>{stops.push(n);states.set(n,'stopped')}};
++ let reads=0; const resources={getSnapshot:async()=>{reads++;return {memory:{availableBytes:memory(),freeBytes:memory()},processes:[{role:'plugin',pluginName:'idle',memoryRssBytes:9*GiB}],accelerators:{gpus:[]}}}};
++ const policy=new Policy(host,{exclusiveGroup:[],idleShutdownDelayMs:60000,healthTimeoutMs:800},resources);
++ const old=global.fetch;global.fetch=async()=>({ok:true,json:async()=>({active_jobs:0})});t.after(()=>{policy.onModuleDestroy();global.fetch=old});
++ return {policy,host,starts,stops,states,manifest,reads:()=>reads};
++}
++test('queued work is blocked before ensureStarted or job submission',async t=>{
++ const {host,policy,manifest,starts}=setup(t);let submitted=0;global.fetch=async()=>{submitted++;return {ok:true,json:async()=>({})}};
++ const executor=new Executor(host,manifest('heavy'),policy);executor.watchPluginEvents=async()=>{};
++ await assert.rejects(executor.run({jobId:'one',params:{},signal:new AbortController().signal,setRuntimeBaseUrl:async()=>{},isCancelled:async()=>false}),/blocked by resource policy/);
++ assert.deepEqual(starts,[]);assert.equal(submitted,0);
++});
++test('direct local runner uses the same admission before submission',async t=>{
++ const {host,policy,starts}=setup(t);const runner=new LocalPluginJobRunner(host,policy);runner.runStarted=async()=>null;
++ await assert.rejects(runner.run({pluginName:'heavy',jobId:'one',signal:new AbortController().signal}),/blocked by resource policy/);assert.deepEqual(starts,[]);
++});
++test('cleanup does not pretend RSS became available memory',async t=>{
++ const {policy,states,starts,stops,reads}=setup(t);states.set('idle','running');
++ await assert.rejects(policy.beginRun('heavy'),/blocked by resource policy/);
++ assert.deepEqual(stops,['idle']);assert.deepEqual(starts,[]);assert.ok(reads()>=3);
++});
++test('start succeeds when a fresh measurement confirms reclaimed memory',async t=>{
++ let free=GiB;const {policy,host,states,starts}=setup(t,()=>free);states.set('idle','running');host.stop=async n=>{states.set(n,'stopped');free=8*GiB};
++ const lease=await policy.beginRun('heavy');lease.release();assert.deepEqual(starts,['heavy']);
++});
++test('concurrent starts serialize assessment through actual startup',async t=>{
++ let free=6*GiB;const {policy,host,starts,states}=setup(t,()=>free);let enter,finish;const entered=new Promise(r=>enter=r),done=new Promise(r=>finish=r);
++ host.ensureStarted=async n=>{starts.push(n);enter();await done;free=2*GiB;states.set(n,'running');return `http://fake/${n}`};
++ const a=policy.beginRun('heavy');await entered;const b=policy.beginRun('second');const rejection=assert.rejects(b,/blocked by resource policy/);await Promise.resolve();assert.deepEqual(starts,['heavy']);finish();const lease=await a;await rejection;lease.release();
++});
++test('unavailable fresh memory never authorizes a cold start',async t=>{
++ const {policy,starts}=setup(t);policy.resources.getSnapshot=async()=>{throw Error('telemetry offline')};
++ await assert.rejects(policy.beginRun('heavy'),/blocked by resource policy/);assert.deepEqual(starts,[]);
++});
++test('manual warning acknowledgement cannot bypass critical memory',async t=>{
++ const {policy,starts}=setup(t);await assert.rejects(policy.beginRun('heavy',{confirmResourceWarning:true}),/blocked by resource policy/);assert.deepEqual(starts,[]);
++});
++test('dialog admission runs before billing or stage submission',async t=>{
++ const {DialogHighlightWorkflowExecutor}=require('../dist/modules/dialog-highlight/application/dialog-highlight-workflow.executor');
++ const {policy,host}=setup(t);let bills=0,stages=0;
++ const executor=new DialogHighlightWorkflowExecutor(host,{runStage:async()=>{stages++}}, {}, {}, policy, {start:async()=>{bills++}});
++ await assert.rejects(executor.run({params:{output_root:'/unused'},signal:new AbortController().signal}),/blocked by resource policy/);assert.equal(bills,0);assert.equal(stages,0);
++});
++test('queue admission blocks before billable source preparation',async t=>{
++ const {JobsService}=require('../dist/modules/jobs/application/jobs.service');const {policy}=setup(t);
++ const snapshot={jobId:'one',pluginName:'heavy',status:'waiting',params:{}};let bills=0,prepares=0,failed;
++ const service=new JobsService({getJobExecutor:async()=>({runtimeKind:'python_plugin'})},{update:async()=>snapshot,get:async()=>snapshot}, {}, {}, {}, {}, {}, {}, {}, {}, {isDisabled:async()=>false},undefined,undefined,undefined,policy);
++ service.getSnapshot=async()=>snapshot;service.emitSnapshot=async()=>{};service.isCancelled=async()=>false;service.isCommitReserved=async()=>false;service.publish=async(_id,event)=>{failed=event};service.startBillableWorkflowOperation=async()=>{bills++};service.prepareSourceForJob=async()=>{prepares++;return snapshot};service.jsonLogger.structured=()=>{};
++ await service.runJob({jobId:'one'});assert.equal(bills,0);assert.equal(prepares,0);assert.ok(failed);
++});
++test('manual service start cleans idle memory before the common final assessment',async t=>{
++ const {PluginsService}=require('../dist/modules/plugins/application/plugins.service');let free=GiB;const {policy,host,states,manifest,starts}=setup(t,()=>free);states.set('idle','running');host.stop=async n=>{states.set(n,'stopped');free=8*GiB};
++ const service=new PluginsService({get:async()=>({getManifest:async()=>manifest('heavy'),start:async()=>{throw Error('legacy start bypass')}})},{},{},{},{isDisabled:async()=>false},{},policy);
++ assert.deepEqual(await service.start('heavy'),{baseUrl:'http://fake/heavy'});assert.deepEqual(starts,['heavy']);
++});
++test('watchdog cleanup remeasures memory and protects owners even without child RSS',async t=>{
++ let free=GiB;const {policy,host,states,stops}=setup(t,()=>free);
++ states.set('heavy','running');states.set('idle','running');
++ policy.resources.getSnapshot=async()=>({memory:{availableBytes:free},processes:[],accelerators:{gpus:[]}});
++ const lease=await policy.beginRun('heavy');const stop=host.stop;host.stop=async n=>{await stop(n);free=8*GiB};
++ assert.deepEqual(await policy.reclaimIdleMemory(6*GiB),['idle']);assert.equal(stops.includes('heavy'),false);lease.release();
++});
+diff --git a/test/runtime-ownership-safety.test.js b/test/runtime-ownership-safety.test.js
+new file mode 100644
+index 0000000..652d2b8
+--- /dev/null
++++ b/test/runtime-ownership-safety.test.js
+@@ -0,0 +1,88 @@
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const { PythonRuntimeLifecyclePolicy: Policy } = require('../dist/modules/workflows/application/python-runtime-lifecycle-policy.service');
++const { TtsPluginClient } = require('../dist/modules/tts/infrastructure/tts-plugin.client');
++const { PythonPluginWorkflowExecutor: Executor } = require('../dist/modules/workflows/infrastructure/python-plugin-workflow-executor');
++const defer = () => { let resolve; const promise = new Promise(r => resolve = r); return { promise, resolve }; };
++const manifest = name => ({ name, runtimeKind: 'python_plugin', resourceProfile: { idlePolicy: { safeToEvictWhenIdle: true } } });
++function setup(t) {
++ const stops = [], starts = [];
++ const host = { canStartProcesses: () => true, listManifests: async () => ['tts_supertonic', 'dance_highlight'].map(manifest), getManifest: async n => manifest(n), getStatus: async n => ({ name: n, installState: 'installed', runtimeState: 'running', baseUrl: `http://fake/${n}` }), ensureStarted: async n => { starts.push(n); return `http://fake/${n}`; }, stop: async n => { stops.push(n); } };
++ const policy = new Policy(host); const original = global.fetch;
++ global.fetch = async () => ({ ok: true, json: async () => ({ active_jobs: 0 }) });
++ t.after(() => { policy.onModuleDestroy(); global.fetch = original; });
++ return { host, policy, stops, starts };
++}
++test('pending TTS request remains protected even when health reports zero jobs', async t => {
++ const { host, policy, stops } = setup(t); const entered = defer(), response = defer();
++ global.fetch = async url => String(url).endsWith('/tts') ? (entered.resolve(), response.promise) : ({ ok: true, json: async () => ({ active_jobs: 0 }) });
++ const run = new TtsPluginClient(host, policy).synthesize({ text: 'test' });
++ await entered.promise; stops.length = 0; await policy.prepareForRun('dance_highlight');
++ const observed = [...stops]; response.resolve({ ok: true, json: async () => ({ path: 'fake.wav' }) }); await run;
++ assert.deepEqual(observed, []);
++});
++test('new work invalidates cleanup waiting for a health response', async t => {
++ const { policy, stops } = setup(t); const entered = defer(), response = defer();
++ global.fetch = async () => { entered.resolve(); return { ok: true, json: () => response.promise }; };
++ const cleanup = policy.stopIfIdle('tts_supertonic'); await entered.promise;
++ policy.cancelScheduledStop('tts_supertonic'); response.resolve({ active_jobs: 0 });
++ assert.equal(await cleanup, false); assert.deepEqual(stops, []);
++});
++test('cancelling one job never force-stops the shared runtime', async t => {
++ const { host, policy, stops } = setup(t);
++ await new Executor(host, manifest('tts_supertonic'), policy).cancel('one', { jobId: 'one', baseUrl: 'http://fake/tts_supertonic' });
++ assert.deepEqual(stops, []);
++});
++test('new lease waits for an already committed stop before starting', async t => {
++ const { host, policy, starts } = setup(t); const entered = defer(), stopped = defer();
++ host.stop = async () => { entered.resolve(); await stopped.promise; };
++ const cleanup = policy.stopIfIdle('tts_supertonic'); await entered.promise;
++ const work = policy.beginRun('tts_supertonic'); await Promise.resolve(); assert.deepEqual(starts, []);
++ stopped.resolve(); await cleanup; const lease = await work; assert.deepEqual(starts, ['tts_supertonic']); lease.release();
++});
++test('releasing one lease does not release a different owner', async t => {
++ const { policy, stops } = setup(t);
++ const a = await policy.beginRun('tts_supertonic'), b = await policy.beginRun('tts_supertonic');
++ stops.length = 0; a.release(); a.release(); assert.equal(await policy.stopIfIdle('tts_supertonic'), false); assert.deepEqual(stops, []);
++ b.release(); assert.equal(await policy.stopIfIdle('tts_supertonic'), true);
++});
++test('cancel during submit deletes the job again after it becomes registered', async t => {
++ const {host,policy}=setup(t);const entered=defer(), submitted=defer();let cancelled=false;const requests=[];
++ global.fetch=async(url,init)=>{requests.push(init?.method);if(init?.method==='POST'){entered.resolve();await submitted.promise;}return {ok:true,json:async()=>({})};};
++ const executor=new Executor(host,manifest('tts_supertonic'),policy);
++ const run=executor.run({jobId:'one',params:{},signal:new AbortController().signal,setRuntimeBaseUrl:async()=>{},isCancelled:async()=>cancelled});await entered.promise;
++ cancelled=true;await executor.cancel('one',{jobId:'one',baseUrl:'http://fake/tts_supertonic'});submitted.resolve();await run;
++ assert.deepEqual(requests.filter(Boolean),['POST','DELETE','DELETE']);
++});
++test('an already aborted watcher settles without reporting a spurious job failure', async t => {
++ const {host,policy}=setup(t);const executor=new Executor(host,manifest('tts_supertonic'),policy);const controller=new AbortController();controller.abort();let failures=0;
++ await executor.watchPluginEvents('http://127.0.0.1:1',{jobId:'one',signal:controller.signal,fail:async()=>{failures++}});
++ await new Promise(r=>setImmediate(r));assert.equal(failures,0);
++});
++test('a fired timer cannot stop or rearm after a newer owner arrives', async t => {
++ const {policy,stops}=setup(t);t.mock.timers.enable({apis:['setTimeout']});const entered=defer(),reply=defer();
++ global.fetch=async()=>{entered.resolve();return {ok:true,json:()=>reply.promise}};
++ policy.scheduleIdleStop('tts_supertonic');t.mock.timers.tick(60000);await entered.promise;
++ // Register synchronously while the timer callback is awaiting the health body.
++ const pending=policy.beginRun('tts_supertonic');reply.resolve({active_jobs:0});const lease=await pending;
++ assert.equal(stops.includes('tts_supertonic'),false);assert.equal(policy.getLifecycleStatus(manifest('tts_supertonic')).idleStopDueAt,undefined);lease.release();
++});
++test('unknown runtime health is never an idle cleanup candidate',async t=>{
++ const {policy,stops}=setup(t);global.fetch=async()=>({ok:true,json:async()=>({})});
++ assert.equal(await policy.stopIfIdle('tts_supertonic'),false);assert.deepEqual(stops,[]);
++});
++test('conditional UI cleanup respects a live owner and reports the protected result',async t=>{
++ const {PluginsService}=require('../dist/modules/plugins/application/plugins.service');const {policy,host}=setup(t);const lease=await policy.beginRun('tts_supertonic');
++ const service=new PluginsService({get:async()=>({getManifest:async()=>manifest('tts_supertonic')})},{},{},{},{},{},policy);
++ assert.deepEqual(await service.stopIdle('tts_supertonic'),{stopped:false});lease.release();
++});
++test('terminal publication failure settles the watcher and releases runtime ownership', async t => {
++ const http=require('node:http');const {WebSocketServer}=require('ws');const {host,policy}=setup(t);
++ const server=http.createServer();const wss=new WebSocketServer({server});wss.on('connection',socket=>socket.send(JSON.stringify({type:'completed',status:'completed'})));
++ await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>{for(const socket of wss.clients)socket.terminate();wss.close();server.close()});
++ const url=`http://127.0.0.1:${server.address().port}`;host.ensureStarted=async()=>url;
++ const executor=new Executor(host,manifest('tts_supertonic'),policy);let failures=0,timer;
++ const work=executor.run({jobId:'one',params:{},signal:new AbortController().signal,setRuntimeBaseUrl:async()=>{},isCancelled:async()=>false,publishEvent:async()=>{throw Error('publication failed')},fail:async()=>{failures++}});
++ try {await Promise.race([work,new Promise((_,reject)=>timer=setTimeout(()=>reject(Error('watcher did not settle')),200))]);}finally{clearTimeout(timer)}
++ assert.equal(failures,1);assert.equal(policy.getLifecycleStatus(manifest('tts_supertonic')).activeOwners,0);
++});
+diff --git a/test/runtime-pressure-watchdog.test.js b/test/runtime-pressure-watchdog.test.js
+new file mode 100644
+index 0000000..23447ca
+--- /dev/null
++++ b/test/runtime-pressure-watchdog.test.js
+@@ -0,0 +1,22 @@
++const test=require('node:test');const assert=require('node:assert/strict');
++function setup(t){
++ const {RuntimePressureWatchdog}=require('../dist/modules/workflows/application/runtime-pressure-watchdog.service');
++ let available=5, calls=0;const config={get:()=>undefined};const resources={getSnapshot:async()=>({memory:{availableBytes:available,totalBytes:100}})};
++ const lifecycle={reclaimIdleMemory:async target=>{assert.equal(target,15);calls++;return []}};
++ const watcher=new RuntimePressureWatchdog(config,resources,lifecycle,{canStartProcesses:()=>true});t.after(()=>watcher.onModuleDestroy());
++ return {watcher,resources,setFree:n=>available=n,calls:()=>calls};
++}
++test('watchdog requires three consecutive low samples and observes cooldown',async t=>{
++ const {watcher,calls}=setup(t);await watcher.check();await watcher.check();assert.equal(calls(),0);await watcher.check();assert.equal(calls(),1);await watcher.check();assert.equal(calls(),1);
++});
++test('recovered or unavailable samples reset the pressure sequence',async t=>{
++ const {watcher,resources,setFree,calls}=setup(t);await watcher.check();setFree(20);await watcher.check();setFree(5);await watcher.check();assert.equal(calls(),0);
++ resources.getSnapshot=async()=>{throw Error('offline')};await watcher.check();assert.equal(calls(),0);
++});
++test('watchdog never overlaps sampling',async t=>{
++ const {watcher,resources}=setup(t);let release,reads=0;resources.getSnapshot=async()=>{reads++;await new Promise(r=>release=r);return {memory:{availableBytes:20,totalBytes:100}}};
++ const first=watcher.check();await watcher.check();assert.equal(reads,1);release();await first;
++});
++test('watchdog timer is independent of any dashboard and stops on destruction',async t=>{
++ t.mock.timers.enable({apis:['setTimeout']});const {watcher,resources}=setup(t);let reads=0;resources.getSnapshot=async()=>{reads++;return {memory:{availableBytes:20,totalBytes:100}}};watcher.onModuleInit();t.mock.timers.tick(10000);await new Promise(r=>setImmediate(r));assert.equal(reads,1);watcher.onModuleDestroy();t.mock.timers.tick(10000);assert.equal(reads,1);
++});
+diff --git a/test/runtime-safety-wiring.test.js b/test/runtime-safety-wiring.test.js
+new file mode 100644
+index 0000000..439c5e9
+--- /dev/null
++++ b/test/runtime-safety-wiring.test.js
+@@ -0,0 +1,17 @@
++const test=require('node:test');const assert=require('node:assert/strict');
++require('reflect-metadata');
++const {Module}=require('@nestjs/common');const {ConfigModule}=require('@nestjs/config');const {NestFactory}=require('@nestjs/core');
++const {PluginHostModule}=require('../dist/modules/plugins/plugin-host.module');
++const {PythonRuntimeLifecyclePolicy}=require('../dist/modules/workflows/application/python-runtime-lifecycle-policy.service');
++const {LocalPluginJobRunner}=require('../dist/modules/plugins/application/local-plugin-job.runner');
++const {RuntimePressureWatchdog}=require('../dist/modules/workflows/application/runtime-pressure-watchdog.service');
++const {JobsService}=require('../dist/modules/jobs/application/jobs.service');
++const {DialogHighlightPythonStageRunner}=require('../dist/modules/dialog-highlight/application/dialog-highlight-python-stage.runner');
++test('Nest resolves one lifecycle for direct runner and backend watchdog without starting plugins',async()=>{
++ class SmokeModule {};
++ Module({imports:[ConfigModule.forRoot({isGlobal:true,ignoreEnvFile:true,load:[()=>({CLIPPER_PLUGIN_HOST_MODE:'static',CLIPPER_PLUGIN_PRESSURE_WATCHDOG_ENABLED:'false'})]}),PluginHostModule]})(SmokeModule);
++ const app=await NestFactory.createApplicationContext(SmokeModule,{logger:false});
++ try{const policy=app.get(PythonRuntimeLifecyclePolicy);assert.equal(app.get(LocalPluginJobRunner).lifecycle,policy);assert.equal(app.get(RuntimePressureWatchdog).lifecycle,policy);assert.ok(policy.resources);
++ assert.ok(Reflect.getMetadata('design:paramtypes',JobsService).includes(PythonRuntimeLifecyclePolicy));assert.ok(Reflect.getMetadata('design:paramtypes',DialogHighlightPythonStageRunner).includes(PythonRuntimeLifecyclePolicy));
++ }finally{await app.close()}
++});
+diff --git a/test/windows-owned-tree.test.js b/test/windows-owned-tree.test.js
+new file mode 100644
+index 0000000..14f2581
+--- /dev/null
++++ b/test/windows-owned-tree.test.js
+@@ -0,0 +1,77 @@
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const { EventEmitter } = require('node:events');
++const { PassThrough } = require('node:stream');
++const { OwnedProcessTree, pluginModuleArgs } = require('../dist/modules/plugins/infrastructure/windows-owned-tree');
++const proof = JSON.stringify({v:1, src:'python.windows_supervisor', ctx:{ownedTree:'owned_tree_empty'}}) + '\n';
++function child() {
++  const proc = new EventEmitter();
++  proc.stdout = new PassThrough(); proc.stdin = new PassThrough();
++  proc.exitCode = null; proc.signalCode = null;
++  proc.kill = () => { throw Error('must not kill a root PID'); };
++  return proc;
++}
++test('Windows wraps only plugin module, POSIX remains direct', () => {
++  assert.deepEqual(pluginModuleArgs('tts', 'win32'), ['-m', 'clipper_plugin_sdk.windows_supervisor', 'tts']);
++  assert.deepEqual(pluginModuleArgs('tts', 'darwin'), ['-m', 'tts']);
++});
++test('exit alone is not a tree completion; fragmented proof plus close is required', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.exitCode = 0; proc.emit('exit', 0, null);
++  await assert.rejects(tree.stop({processName:'tts', terminateTimeoutMs:2}), /not confirmed/);
++  proc.stdout.write(proof.slice(0, 17)); proc.stdout.write(proof.slice(17));
++  proc.emit('close', 0, null);
++  await tree.stop({processName:'tts', terminateTimeoutMs:2});
++});
++test('close without empty-job proof fails closed even for code zero', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.emit('close', 0, null);
++  await assert.rejects(tree.stop({processName:'tts'}), /not confirmed/);
++});
++test('graceful completion avoids forced stop; control EOF otherwise asks owned supervisor', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.stdin.on('finish', () => { proc.stdout.write(proof); proc.emit('close', 0, null); });
++  await tree.stop({processName:'tts', gracefulShutdown:async () => false, terminateTimeoutMs:20});
++  assert.equal(proc.stdin.writableEnded, true);
++  const proc2 = child(); const tree2 = new OwnedProcessTree(proc2);
++  await tree2.stop({processName:'tts', gracefulShutdown:async () => {
++    proc2.stdout.write(proof); proc2.emit('close', 0, null); return true;
++  }});
++  assert.equal(proc2.stdin.writableEnded, false);
++});
++test('unrelated/oversized log fragments cannot count as a completion proof', async () => {
++  const proc = child(); const tree = new OwnedProcessTree(proc);
++  proc.stdout.write('x'.repeat(100000)); proc.stdout.write(proof); proc.emit('close', 0, null);
++  await assert.rejects(tree.stop({processName:'tts'}), /not confirmed/);
++});
++
++for (const confirmed of [false, true]) test(`actual process close propagates ownership confirmation=${confirmed}`, async (t) => {
++
++  t.mock.method(console, 'log', () => {});
++  const descriptor = Object.getOwnPropertyDescriptor(process, 'platform');
++  Object.defineProperty(process, 'platform', { value:'win32' });
++  t.after(() => Object.defineProperty(process, 'platform', descriptor));
++  const { LocalPluginProcess } = require('../dist/modules/plugins/infrastructure/local-plugin-process');
++  const exits = [];
++  const plugin = new LocalPluginProcess({ pluginName:'fake', pythonRoot:'/fake', port:45555, onExit:(...args) => exits.push(args) });
++  const proc = child();
++  plugin.proc = proc;
++  plugin.bindLogging(); // Bind the real integration, without spawning anything.
++  proc.exitCode = 0; proc.emit('exit', 0, null);
++  assert.equal(exits.length, 0);
++  if (confirmed) proc.stdout.write(proof);
++  proc.emit('close', 0, null);
++  assert.equal(exits.length, 1);
++  if (confirmed) {
++    assert.equal(plugin.proc, null);
++    assert.equal(exits[0][1], undefined);
++    await plugin.stop();
++  } else {
++    assert.equal(plugin.proc, proc);
++    assert.match(exits[0][1].message, /termination not confirmed/);
++    await assert.rejects(plugin.stop(), /termination not confirmed/);
++  }
++  let notified = false;
++  plugin.onceExited(() => { notified = true; });
++  assert.equal(notified, true, 'late health waiter must not hang after close');
++});

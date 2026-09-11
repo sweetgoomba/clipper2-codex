@@ -1,0 +1,187 @@
+✔ LocalPluginJobRunner resolves without submitting when signal is already aborted after runtime start (0.697417ms)
+✔ LocalPluginJobRunner cancels when abort happens between submit and WebSocket setup (0.191167ms)
+✔ LocalPluginJobRunner lets cancellation win over a completed event while DELETE is delayed (79.574292ms)
+✔ LocalPluginJobRunner keeps a received completed event when the server closes during progress drain (35.335042ms)
+✔ LocalPluginJobRunner rejects a completed terminal event whose status is failed (5.411625ms)
+✔ DialogHighlightPythonStageRunner maps stage progress into the workflow range (3.542792ms)
+✔ DialogHighlightPythonStageRunner skips submit when the abort signal is set after runtime start (1.703208ms)
+✔ DialogHighlightPythonStageRunner deletes the submitted stage job when the abort signal is set after submit (5.823959ms)
+✔ DialogHighlightPythonStageRunner deletes the submitted stage job when aborted while watching events (5.0175ms)
+✔ DialogHighlightPythonStageRunner cancelStageJob resolves when the plugin DELETE hangs (6.840125ms)
+[Nest] 1087  - 09/10/2026, 9:33:04 PM    WARN [DialogHighlightWorkflowExecutor] font index lookup failed, no title font path sent: Cannot read properties of undefined (reading 'list')
+[Nest] 1087  - 09/10/2026, 9:33:04 PM    WARN [DialogHighlightWorkflowExecutor] font index lookup failed, no title font path sent: Cannot read properties of undefined (reading 'list')
+[Nest] 1087  - 09/10/2026, 9:33:04 PM    WARN [DialogHighlightWorkflowExecutor] font index lookup failed, no title font path sent: Cannot read properties of undefined (reading 'list')
+[Nest] 1087  - 09/10/2026, 9:33:04 PM    WARN [DialogHighlightWorkflowExecutor] font index lookup failed, no title font path sent: Cannot read properties of undefined (reading 'list')
+✔ DialogHighlightWorkflowExecutor overlays the legacy manifest runtime kind (1.484ms)
+✔ DialogHighlightWorkflowExecutor throws a typed not-found error when the legacy manifest is missing (0.266583ms)
+✔ DialogHighlightWorkflowExecutor orchestrates Python stages, web_api calls, artifacts, and completion (12.700833ms)
+✔ DialogHighlightWorkflowExecutor reports a billable dialog operation around web_api LLM calls (2.700792ms)
+✔ DialogHighlightWorkflowExecutor refunds the billable dialog operation when a web_api LLM call fails (0.501083ms)
+✔ DialogHighlightWorkflowExecutor batches sentence split requests and merges shot results (4.598875ms)
+✔ DialogHighlightWorkflowExecutor publishes workflow-level progress for web_api stages (4.019208ms)
+✔ DialogHighlightWorkflowExecutor cancellation deletes possible active stage jobs (0.4235ms)
+✔ DialogHighlightWorkflowExecutor skips web_api calls when cancelled before the chain starts (0.653291ms)
+✔ DialogHighlightWorkflowExecutor aborts an in-flight web_api call with the job signal (3.043708ms)
+[Nest] 1087  - 09/10/2026, 9:33:04 PM    WARN [DialogHighlightWorkflowExecutor] font index lookup failed, no title font path sent: Cannot read properties of undefined (reading 'list')
+✔ DialogHighlightWorkflowExecutor rejects when a Python stage terminal completed event reports failed status (42.728583ms)
+✔ DialogHighlightWorkflowExecutor stops when prepare_media returns null (0.513917ms)
+✔ DialogHighlightWorkflowExecutor stops when analyze_media returns null (0.280833ms)
+✔ DialogHighlightWorkflowExecutor skips web_api calls when the abort signal is set before the chain starts (0.798792ms)
+✔ DialogHighlightWorkflowExecutor avoids writing a web_api artifact when cancelled after the call returns (0.395875ms)
+✔ DialogHighlightWorkflowExecutor avoids writing a web_api artifact when the abort signal is set after the call returns (0.319584ms)
+✔ DialogHighlightWorkflowExecutor checks cancellation after render_highlights before completing (1.021042ms)
+✔ DialogHighlightWorkflowExecutor fails the artifact contract when highlight candidates are missing after build_candidates (0.641375ms)
+✔ DialogHighlightWorkflowExecutor fails the artifact contract when analysis is missing after analyze_media (0.154667ms)
+✔ DialogHighlightWorkflowExecutor validates output_root before preparing runtime lifecycle (0.04925ms)
+{"v":1,"ts":"2026-09-10T12:33:04.928Z","level":"info","src":"nest","msg":"dialog_highlight.job.started","trace":"627c115b","ctx":{"jobId":"job-auth"}}
+{"v":1,"ts":"2026-09-10T12:33:04.929Z","level":"info","src":"nest","msg":"dialog_highlight.job.succeeded","trace":"627c115b","ctx":{"jobId":"job-auth","elapsedMs":1}}
+{"v":1,"ts":"2026-09-10T12:33:04.929Z","level":"info","src":"nest","msg":"dance_highlight.job.started","trace":"8c33cd63","ctx":{"jobId":"job-dance-ok"}}
+{"v":1,"ts":"2026-09-10T12:33:04.930Z","level":"info","src":"nest","msg":"dance_highlight.job.succeeded","trace":"8c33cd63","ctx":{"jobId":"job-dance-ok","elapsedMs":1}}
+✔ JobsService passes caller auth to workflow context without persisting the access token (2.307542ms)
+{"v":1,"ts":"2026-09-10T12:33:04.932Z","level":"info","src":"nest","msg":"dance_highlight.job.started","trace":"d16a6a3a","ctx":{"jobId":"job-dance-fail"}}
+{"v":1,"ts":"2026-09-10T12:33:04.933Z","level":"info","src":"nest","msg":"dance_highlight.job.failed","trace":"d16a6a3a","ctx":{"jobId":"job-dance-fail","elapsedMs":1}}
+✔ JobsService reports a dance_highlight billable operation when the workflow completes (2.863667ms)
+{"v":1,"ts":"2026-09-10T12:33:04.934Z","level":"info","src":"nest","msg":"dance_highlight.job.started","trace":"e9587f91","ctx":{"jobId":"source-job"}}
+{"v":1,"ts":"2026-09-10T12:33:04.935Z","level":"error","src":"nest","msg":"job failed: YouTube login required","trace":"e9587f91","ctx":{"category":"internal","jobId":"source-job","pluginName":"dance_highlight","subject":"user.test","operation":"job.run","stack":"Error: YouTube login required\n    at Object.prepareSource [as prepareJobParams] ([local-path]:319:41)\n    at JobsService.prepareSourceForJob ([local-path]:841:47)\n    at async [local-path]:576:28\n    at async JobsService.runJob ([local-path]:532:9)\n    at async TestContext.<anonymous> ([local-path]:329:5)\n    at async Test.run (node:internal/test_runner/test:1069:7)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)"}}
+{"v":1,"ts":"2026-09-10T12:33:04.935Z","level":"info","src":"nest","msg":"dance_highlight.job.failed","trace":"e9587f91","ctx":{"jobId":"source-job","elapsedMs":1}}
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"info","src":"nest","msg":"dance_highlight.job.started","trace":"a4ef2cac","ctx":{"jobId":"source-job"}}
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"info","src":"nest","msg":"dance_highlight.job.cancelled","trace":"a4ef2cac","ctx":{"jobId":"source-job","elapsedMs":0}}
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"info","src":"nest","msg":"dance_highlight.job.started","trace":"78b5ed5f","ctx":{"jobId":"source-job"}}
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"error","src":"nest","msg":"job failed: INSUFFICIENT_CREDITS","trace":"78b5ed5f","ctx":{"category":"internal","jobId":"source-job","pluginName":"dance_highlight","subject":"user.test","operation":"job.run","stack":"Error: INSUFFICIENT_CREDITS\n    at Object.start ([local-path]:310:49)\n    at JobsService.startBillableWorkflowOperation ([local-path]:711:46)\n    at [local-path]:575:40\n    at async JobsService.runJob ([local-path]:532:9)\n    at async TestContext.<anonymous> ([local-path]:329:5)\n    at async Test.run (node:internal/test_runner/test:1069:7)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)"}}
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"info","src":"nest","msg":"dance_highlight.job.failed","trace":"78b5ed5f","ctx":{"jobId":"source-job","elapsedMs":0}}
+✔ JobsService refunds a dance_highlight billable operation when the workflow fails (1.276125ms)
+✔ dance source preparation billing settles correctly: failed (1.91125ms)
+✔ dance source preparation billing settles correctly: cancelled (0.497792ms)
+✔ dance source preparation billing settles correctly: insufficient (0.484333ms)
+{"v":1,"ts":"2026-09-10T12:33:04.926Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"31de7301","ctx":{"jobId":"director-job-cancel-before-commit"}}
+{"v":1,"ts":"2026-09-10T12:33:04.927Z","level":"info","src":"nest","msg":"shortform_director.job.cancelled","trace":"31de7301","ctx":{"jobId":"director-job-cancel-before-commit","elapsedMs":1}}
+{"v":1,"ts":"2026-09-10T12:33:04.927Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"e90b3139","ctx":{"jobId":"director-job-commit-wins"}}
+✔ cancel after renderer success but before commit reservation publishes no commit (276.926542ms)
+{"v":1,"ts":"2026-09-10T12:33:04.932Z","level":"info","src":"nest","msg":"shortform_director.job.succeeded","trace":"e90b3139","ctx":{"jobId":"director-job-commit-wins","elapsedMs":5}}
+{"v":1,"ts":"2026-09-10T12:33:04.934Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"00f8d8a6","ctx":{"jobId":"director-job-projection-failure"}}
+[Nest] 1089  - 09/10/2026, 9:33:04 PM    WARN [JobsService] Committed job project projection deferred: project projection unavailable
+{"v":1,"ts":"2026-09-10T12:33:04.935Z","level":"info","src":"nest","msg":"shortform_director.job.succeeded","trace":"00f8d8a6","ctx":{"jobId":"director-job-projection-failure","elapsedMs":2}}
+✔ commit reservation wins a cancel race and converges on completed (5.748084ms)
+{"v":1,"ts":"2026-09-10T12:33:04.936Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"6585a4e4","ctx":{"jobId":"director-job-repository-recovery"}}
+{"v":1,"ts":"2026-09-10T12:33:04.937Z","level":"info","src":"nest","msg":"shortform_director.job.succeeded","trace":"6585a4e4","ctx":{"jobId":"director-job-repository-recovery","elapsedMs":1}}
+✔ post-commit project projection failure cannot overwrite completed terminal (2.313833ms)
+[Nest] 1089  - 09/10/2026, 9:33:04 PM    WARN [JobsService] Completed job project backfill deferred: project repository unavailable
+{"v":1,"ts":"2026-09-10T12:33:04.940Z","level":"info","src":"nest","msg":"clipper_video_render.job.started","trace":"1963f5f3","ctx":{"jobId":"director-render-terminal-wait"}}
+✔ completion repository failure recovers a canonical committed job (2.417417ms)
+✔ restart recovers committing job instead of marking it failed (0.709166ms)
+✔ restart keeps a committed terminal when project backfill is unavailable (0.381208ms)
+{"v":1,"ts":"2026-09-10T12:33:04.942Z","level":"info","src":"nest","msg":"clipper_video_render.job.succeeded","trace":"1963f5f3","ctx":{"jobId":"director-render-terminal-wait","elapsedMs":3}}
+{"v":1,"ts":"2026-09-10T12:33:04.943Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"0ad0113b","ctx":{"jobId":"director-job-flow-recovery-success"}}
+{"v":1,"ts":"2026-09-10T12:33:04.944Z","level":"info","src":"nest","msg":"shortform_director.job.succeeded","trace":"0ad0113b","ctx":{"jobId":"director-job-flow-recovery-success","elapsedMs":0}}
+✔ waitForTerminal resolves only after completion and project projection finish (2.762042ms)
+✔ waitForTerminal returns an already failed job without subscribing forever (0.37175ms)
+{"v":1,"ts":"2026-09-10T12:33:04.946Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"68f1bf85","ctx":{"jobId":"director-job-flow-recovery-failed"}}
+{"v":1,"ts":"2026-09-10T12:33:04.946Z","level":"info","src":"nest","msg":"shortform_director.job.failed","trace":"68f1bf85","ctx":{"jobId":"director-job-flow-recovery-failed","elapsedMs":0}}
+✔ crash after commit reservation recovers to a canonical success and emits a succeeded flow event (2.791875ms)
+{"v":1,"ts":"2026-09-10T12:33:04.948Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"269a6e26","ctx":{"jobId":"director-job-flow-recovery-deferred"}}
+[Nest] 1089  - 09/10/2026, 9:33:04 PM    WARN [JobsService] Committed job recovery deferred: recovery attempt unavailable — still committing
+✔ crash after commit reservation with no recoverable result emits a failed flow event (1.948292ms)
+{"v":1,"ts":"2026-09-10T12:33:04.951Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"cea31abf","ctx":{"jobId":"director-job-flow-plugin-error-return"}}
+{"v":1,"ts":"2026-09-10T12:33:04.951Z","level":"info","src":"nest","msg":"shortform_director.job.failed","trace":"cea31abf","ctx":{"jobId":"director-job-flow-plugin-error-return","elapsedMs":0}}
+✔ crash after commit reservation with a deferred recovery attempt emits no terminal flow event (2.123875ms)
+{"v":1,"ts":"2026-09-10T12:33:04.953Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"2f2d0f19","ctx":{"jobId":"director-job-flow-cancel-checked-return"}}
+✔ executor가 플러그인 error 이벤트를 publish한 뒤 정상 반환하면 failed 플로우를 낸다 (2.952833ms)
+{"v":1,"ts":"2026-09-10T12:33:04.954Z","level":"info","src":"nest","msg":"shortform_director.job.cancelled","trace":"2f2d0f19","ctx":{"jobId":"director-job-flow-cancel-checked-return","elapsedMs":1}}
+{"v":1,"ts":"2026-09-10T12:33:04.955Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"1997c456","ctx":{"jobId":"director-job-flow-cancel-abort-return"}}
+{"v":1,"ts":"2026-09-10T12:33:04.956Z","level":"info","src":"nest","msg":"shortform_director.job.cancelled","trace":"1997c456","ctx":{"jobId":"director-job-flow-cancel-abort-return","elapsedMs":1}}
+✔ 실행 중 취소를 확인한 executor가 정상 반환하면 cancelled 플로우를 낸다 (2.29975ms)
+{"v":1,"ts":"2026-09-10T12:33:04.957Z","level":"info","src":"nest","msg":"shortform_director.job.started","trace":"43362124","ctx":{"jobId":"director-job-flow-plugin-completed-return"}}
+{"v":1,"ts":"2026-09-10T12:33:04.957Z","level":"info","src":"nest","msg":"shortform_director.job.succeeded","trace":"43362124","ctx":{"jobId":"director-job-flow-plugin-completed-return","elapsedMs":0}}
+✔ abort 신호만 보고 반환하는 executor(실제 플러그인 경로)도 cancelled 플로우를 낸다 (1.5805ms)
+✔ executor가 completed를 publish하고 정상 반환하면 succeeded 플로우를 낸다 (1.260166ms)
+✔ 저장소 읽기가 escape해도 백그라운드 잡 실행은 프로세스를 죽이지 않고 로깅한다 (3.71825ms)
+✔ ClipperPythonWorkerRenderProvider runs begin -> release, and schedules idle-stop even when the render job rejects (222.456292ms)
+✔ ClipperPythonWorkerRenderProvider renders without a lifecycle collaborator (0.740958ms)
+✔ ClipperPythonWorkerRenderProvider still schedules idle-stop when pluginJobIdFor throws before the job is submitted (0.146542ms)
+✔ TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs begin -> release, and schedules idle-stop even when the job rejects (2.597917ms)
+✔ TemplateBuilderTextArtifactWorkerClient.renderTextArtifact runs without a lifecycle collaborator (1.602209ms)
+✔ TemplateBuilderTextArtifactWorkerClient.ensureWarm runs begin -> release (0.128584ms)
+✔ ShortformDirectorReferenceLocalSttClient.transcribe runs begin -> run -> release, and schedules idle-stop even when the local STT job rejects (2.244792ms)
+✔ ShortformDirectorReferenceLocalSttClient.transcribe runs without a lifecycle collaborator (0.320375ms)
+✔ install("variation") → subsequent getStatus shows installState installed (149.30175ms)
+✔ uninstall("variation") after install → getStatus shows not_installed (0.810958ms)
+✔ install("comment_overlay") → subsequent getStatus shows installState installed (0.159125ms)
+✔ uninstall("comment_overlay") after install → getStatus shows not_installed (0.119709ms)
+✔ install("shortform_url") → subsequent getStatus shows installState installed (0.175958ms)
+✔ uninstall("shortform_url") after install → getStatus shows not_installed (0.218084ms)
+✔ install(non-gated virtual workflow fixture) → BadRequestException (0.826625ms)
+✔ install(non-gated python plugin fixture) → BadRequestException (0.134792ms)
+✔ uninstall("dance_highlight") → getStatus shows not_installed (0.602625ms)
+✔ install("dance_highlight") after uninstall → getStatus shows installed (0.436708ms)
+✔ uninstall does not touch the virtual-workflow ledger for a python plugin (0.179916ms)
+✔ uninstall stops a running python plugin (memory is the point of removing it) (0.216ms)
+✔ start() on a disabled plugin → BadRequestException (0.241042ms)
+✔ install unknown plugin → NotFoundException (0.220667ms)
+✔ PluginsService attaches runtime health and lifecycle diagnostics to plugin status (157.1675ms)
+✔ runtime lifecycle policy evicts idle exclusive peers before starting a heavy Python plugin (86.617417ms)
+✔ runtime lifecycle policy reads env options and uses the configured exclusive group (0.462666ms)
+✔ runtime lifecycle default exclusive group includes tts_supertonic (0.169666ms)
+✔ runtime lifecycle policy retries scheduled idle stop while a plugin job is still active (54.16375ms)
+✔ runtime lifecycle policy evicts idle safe-to-evict runtimes by RSS when projected memory headroom is low (1.131292ms)
+✔ runtime lifecycle policy does not evict an exclusive peer that has a pending idle stop scheduled (0.270333ms)
+✔ runtime lifecycle policy still evicts an idle exclusive peer with no pending idle stop (0.209792ms)
+✔ runtime lifecycle memory-pressure eviction ignores a pending idle stop and evicts anyway (0.384958ms)
+✔ PythonPluginWorkflowExecutor runs lifecycle hooks around plugin jobs (56.153959ms)
+✔ PythonPluginWorkflowExecutor keeps managed shared runtime after cancelling one plugin job (0.2225ms)
+✔ PythonPluginWorkflowExecutor keeps external plugin runtime running after cancelling plugin job (0.4265ms)
+[Nest] 1095  - 09/10/2026, 9:33:04 PM    WARN [ClipperRenderPayloadMapper] map() called without a fontResolver — using a synthetic single-entry fallback index. Every text layer will resolve to the fallback font, ignoring the actual template. Real render paths must inject FontResolverAdapter and call prepare().
+✔ 레이어도 컨텐츠 영역도 없는 박제 스냅샷은 캔버스 크기로 구제된다 (3.616666ms)
+✔ 재시도 params 갱신이 옛 잡의 clipper_payload를 다시 만든다 (47.863209ms)
+✔ 렌더 잡이 아닌 params는 손대지 않고 그대로 돌려준다 (0.47075ms)
+✔ 갱신이 실패해도 재시도는 옛 params로 계속된다 (0.551292ms)
+✔ 재시도는 갱신된 params로 큐에 들어간다 (83.519125ms)
+[Nest] 1096  - 09/10/2026, 9:33:05 PM   ERROR [JobsService] Retry prepare failed for job clipper_video_render_retry_1789043585076: 변형을 찾을 수 없습니다 (v-3)
+✔ 소유 기능이 없으면 준비 미완 잡의 재시도를 거절한다 — 잡을 만들지 않는다 (1.240834ms)
+✔ payload가 있는 잡의 재시도는 기존 경로 그대로 큐에 올라간다 (0.527833ms)
+✔ 소유 기능이 있으면 예약만 하고 준비를 다시 시킨다 — 큐에는 아직 안 올라간다 (0.244792ms)
+✔ 준비가 던지면 그 잡이 실패로 접히고 프로세스는 살아있다 (7.372792ms)
+✔ queued work is blocked before ensureStarted or job submission (2.488667ms)
+✔ direct local runner uses the same admission before submission (0.587292ms)
+✔ cleanup does not pretend RSS became available memory (0.981125ms)
+✔ start succeeds when a fresh measurement confirms reclaimed memory (0.749666ms)
+✔ concurrent starts serialize assessment through actual startup (0.66575ms)
+✔ unavailable fresh memory never authorizes a cold start (0.401459ms)
+✔ manual warning acknowledgement cannot bypass critical memory (1.781625ms)
+✔ dialog admission runs before billing or stage submission (62.65475ms)
+✔ queue admission blocks before billable source preparation (44.242458ms)
+✔ manual service start cleans idle memory before the common final assessment (0.391083ms)
+✔ watchdog cleanup remeasures memory and protects owners even without child RSS (0.156916ms)
+✔ pending TTS request remains protected even when health reports zero jobs (1.64325ms)
+✔ new work invalidates cleanup waiting for a health response (0.179584ms)
+✔ cancelling one job never force-stops the shared runtime (0.140292ms)
+✔ new lease waits for an already committed stop before starting (0.269542ms)
+✔ releasing one lease does not release a different owner (0.307875ms)
+✔ cancel during submit deletes the job again after it becomes registered (1.866792ms)
+✔ an already aborted watcher settles without reporting a spurious job failure (14.23475ms)
+✔ a fired timer cannot stop or rearm after a newer owner arrives (0.684458ms)
+✔ unknown runtime health is never an idle cleanup candidate (0.195959ms)
+✔ conditional UI cleanup respects a live owner and reports the protected result (1.099917ms)
+✔ terminal publication failure settles the watcher and releases runtime ownership (14.8975ms)
+[Nest] 1099  - 09/10/2026, 9:33:05 PM   DEBUG [RuntimePressureWatchdog] Memory pressure sample unavailable: offline
+✔ watchdog requires three consecutive low samples and observes cooldown (114.850958ms)
+✔ recovered or unavailable samples reset the pressure sequence (0.656792ms)
+✔ watchdog never overlaps sampling (0.147416ms)
+✔ watchdog timer is independent of any dashboard and stops on destruction (1.996ms)
+✔ Nest resolves one lifecycle for direct runner and backend watchdog without starting plugins (6.777042ms)
+✔ local STT client calls only dialog_highlight/transcribe_media and normalizes real timestamps (9.086375ms)
+✔ local STT client returns null on plugin cancellation instead of a successful transcript (0.900791ms)
+✔ local STT client rejects an ambiguous empty completion without an explicit no-speech marker (1.1195ms)
+✔ local STT client does not publish a transcript when cancellation wins after plugin completion (0.612375ms)
+✔ local STT client propagates plugin errors and does not read a transcript (0.722375ms)
+✔ local STT client rejects malformed or failed STT JSON (3.3335ms)
+✔ local STT client rejects a plugin result that points outside the fixed STT contract (0.59775ms)
+✔ TtsPluginClient posts contract-① body and returns {path} (101.352292ms)
+✔ TtsPluginClient runs Python runtime lifecycle around synthesis (0.235833ms)
+ℹ tests 131
+ℹ suites 0
+ℹ pass 131
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 606.143667

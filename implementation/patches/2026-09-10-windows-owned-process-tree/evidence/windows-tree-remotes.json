@@ -1,0 +1,58 @@
+[
+  {
+    "repo": "clipper_angular",
+    "branch": "integration/toss-payments-pg-20260909",
+    "code": 0,
+    "output": "aee3580c5995cb93410e6ce49a01f05711c1a00a\trefs/heads/dev\nc8b186770ae6f77294a2a1689226834f05a8944a\trefs/heads/integration/toss-payments-pg-20260909\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_electron",
+    "branch": "integration/toss-payments-pg-20260909",
+    "code": 0,
+    "output": "747ad7e5f3a2284994ff9815fec4b04258473f18\trefs/heads/dev\na34a39d510bca51bf8b3e527d433ff9112c686fc\trefs/heads/integration/toss-payments-pg-20260909\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_nestjs",
+    "branch": "integration/toss-payments-pg-20260909",
+    "code": 0,
+    "output": "8ae0952a27685acd5ccf7ce952d2f264ce273e6e\trefs/heads/dev\n780128a069c38a9df6438cc64d79f7a2e42bc1ea\trefs/heads/integration/toss-payments-pg-20260909\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_python",
+    "branch": "integration/toss-payments-pg-20260909",
+    "code": 0,
+    "output": "88b1da277922cc5734a3e72e32425aa4054fa158\trefs/heads/dev\n260751d2fa5be8a5a9cd8e346c60ba22d1512ed9\trefs/heads/integration/toss-payments-pg-20260909\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_infra",
+    "branch": "integration/toss-payments-pg-20260903",
+    "code": 0,
+    "output": "4d3202263d84de9d046a1abc6eb51826a47009ae\trefs/heads/dev\nf948922c812ab583a84e4a64c5d8faa423afe294\trefs/heads/integration/toss-payments-pg-20260903\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_web_admin",
+    "branch": "release/pg-expiry-20260910",
+    "code": 0,
+    "output": "eae522f4908c65a55680be09353dd95df2a71190\trefs/heads/dev\ncd3a3069310bdae13f123615e1a1a2a8972187cd\trefs/heads/release/pg-expiry-20260910\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_web_api",
+    "branch": "release/pg-expiry-20260910",
+    "code": 0,
+    "output": "557da3fd22c47009d222d18a231a2b4848d9e5e9\trefs/heads/dev\ne0e5b356017cc55ea2d4f3e19ecd549bb802b5f5\trefs/heads/release/pg-expiry-20260910\n",
+    "error": ""
+  },
+  {
+    "repo": "clipper_web_client",
+    "branch": "integration/toss-payments-pg-20260903",
+    "code": 0,
+    "output": "4b361efc742db797e85848c5aea90eb1736194c5\trefs/heads/dev\n4d95a963cde6f4e4067244c6cc8c148bb66709ce\trefs/heads/integration/toss-payments-pg-20260903\n",
+    "error": ""
+  }
+]

@@ -1,0 +1,79 @@
+❯ Building...
+✔ Building...
+Initial chunk files                                 | Names                                            |  Raw size
+chunk-UTY7H22G.js                                   | -                                                |   2.34 MB | 
+chunk-5BG5XV7D.js                                   | -                                                |   1.14 MB | 
+polyfills.js                                        | polyfills                                        | 964.88 kB | 
+spec-shell-dashboard-dashboard.component.spec.js    | spec-shell-dashboard-dashboard.component.spec    | 854.63 kB | 
+chunk-BXN2OH2L.js                                   | -                                                | 229.46 kB | 
+chunk-RI6SYJY2.js                                   | -                                                | 123.48 kB | 
+styles.css                                          | styles                                           | 112.72 kB | 
+test_main.js                                        | test_main                                        |  22.20 kB | 
+spec-core-plugins-plugin-status.service.spec.js     | spec-core-plugins-plugin-status.service.spec     |  13.75 kB | 
+chunk-ZFNGBZOJ.js                                   | -                                                |  11.08 kB | 
+spec-core-resources-resource-status.service.spec.js | spec-core-resources-resource-status.service.spec |   3.63 kB | 
+chunk-J5APULHV.js                                   | -                                                |   1.65 kB | 
+jasmine-cleanup-0.js                                | jasmine-cleanup-0                                | 509 bytes | 
+
+                                                    | Initial total                                    |   5.82 MB
+
+Application bundle generation complete. [4.797 seconds] - 2026-09-10T12:31:59.171Z
+
+Ignoring framework "@angular-devkit/build-angular" from karma config file because it's not compatible with the application builder.
+10 09 2026 21:31:59.501:INFO [karma-server]: Karma v6.4.4 server started at http://127.0.0.1:63823/
+10 09 2026 21:31:59.501:INFO [launcher]: Launching browsers ChromeHeadless with concurrency unlimited
+10 09 2026 21:31:59.504:INFO [launcher]: Starting browser ChromeHeadless
+10 09 2026 21:32:00.620:INFO [Chrome Headless 153.0.0.0 (Mac OS 10.15.7)]: Connected on socket ZyFXOBOS4jWzEh4IAAAB with id 23922436
+Chrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 0 of 48[32m SUCCESS[39m (0 secs / 0 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 1 of 48[32m SUCCESS[39m (0 secs / 0.033 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 2 of 48[32m SUCCESS[39m (0 secs / 0.035 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 3 of 48[32m SUCCESS[39m (0 secs / 0.036 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 4 of 48[32m SUCCESS[39m (0 secs / 0.059 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 5 of 48[32m SUCCESS[39m (0 secs / 0.071 secs)
+10 09 2026 21:32:01.122:WARN [web-server]: 404: /base/media/material-symbols-outlined.woff2
+10 09 2026 21:32:01.122:WARN [web-server]: 404: /base/media/PretendardVariable.woff2
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 6 of 48[32m SUCCESS[39m (0 secs / 0.075 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 7 of 48[32m SUCCESS[39m (0 secs / 0.077 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 8 of 48[32m SUCCESS[39m (0 secs / 0.078 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 9 of 48[32m SUCCESS[39m (0 secs / 0.08 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 10 of 48[32m SUCCESS[39m (0 secs / 0.081 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 11 of 48[32m SUCCESS[39m (0 secs / 0.082 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 12 of 48[32m SUCCESS[39m (0 secs / 0.083 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 13 of 48[32m SUCCESS[39m (0 secs / 0.084 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 14 of 48[32m SUCCESS[39m (0 secs / 0.085 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 15 of 48[32m SUCCESS[39m (0 secs / 0.086 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 16 of 48[32m SUCCESS[39m (0 secs / 0.092 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 17 of 48[32m SUCCESS[39m (0 secs / 0.096 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 18 of 48[32m SUCCESS[39m (0 secs / 0.097 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 19 of 48[32m SUCCESS[39m (0 secs / 0.097 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 20 of 48[32m SUCCESS[39m (0 secs / 0.099 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 21 of 48[32m SUCCESS[39m (0 secs / 0.101 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 22 of 48[32m SUCCESS[39m (0 secs / 0.102 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 23 of 48[32m SUCCESS[39m (0 secs / 0.104 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 24 of 48[32m SUCCESS[39m (0 secs / 0.108 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 25 of 48[32m SUCCESS[39m (0 secs / 0.109 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 26 of 48[32m SUCCESS[39m (0 secs / 0.11 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 27 of 48[32m SUCCESS[39m (0 secs / 0.111 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 28 of 48[32m SUCCESS[39m (0 secs / 0.112 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 29 of 48[32m SUCCESS[39m (0 secs / 0.113 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 30 of 48[32m SUCCESS[39m (0 secs / 0.114 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 31 of 48[32m SUCCESS[39m (0 secs / 0.115 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 32 of 48[32m SUCCESS[39m (0 secs / 0.116 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 33 of 48[32m SUCCESS[39m (0 secs / 0.116 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 34 of 48[32m SUCCESS[39m (0 secs / 0.117 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 35 of 48[32m SUCCESS[39m (0 secs / 0.117 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 36 of 48[32m SUCCESS[39m (0 secs / 0.117 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 37 of 48[32m SUCCESS[39m (0 secs / 0.117 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 38 of 48[32m SUCCESS[39m (0 secs / 0.118 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 39 of 48[32m SUCCESS[39m (0 secs / 0.118 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 40 of 48[32m SUCCESS[39m (0 secs / 0.118 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 41 of 48[32m SUCCESS[39m (0 secs / 0.119 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 42 of 48[32m SUCCESS[39m (0 secs / 0.119 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 43 of 48[32m SUCCESS[39m (0 secs / 0.119 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 44 of 48[32m SUCCESS[39m (0 secs / 0.12 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 45 of 48[32m SUCCESS[39m (0 secs / 0.12 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 46 of 48[32m SUCCESS[39m (0 secs / 0.121 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 47 of 48[32m SUCCESS[39m (0 secs / 0.121 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 48 of 48[32m SUCCESS[39m (0 secs / 0.121 secs)
+[1A[2KChrome Headless 153.0.0.0 (Mac OS 10.15.7): Executed 48 of 48[32m SUCCESS[39m (0.129 secs / 0.121 secs)
+[32mTOTAL: 48 SUCCESS[39m

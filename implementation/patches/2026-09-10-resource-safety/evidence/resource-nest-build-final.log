@@ -1,0 +1,12 @@
+
+> clipper-nestjs@0.0.1 build
+> tsc -p tsconfig.json && npm run copy-assets
+
+
+> clipper-nestjs@0.0.1 copy-assets
+> node scripts/copy-assets.mjs dist
+
+copied /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/src/modules/dance/data -> /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/dist/modules/dance/data
+copied /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/src/modules/projects/assets -> /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/dist/modules/projects/assets
+copied /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/src/modules/template-builder/assets/backgrounds -> /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/dist/modules/template-builder/assets/backgrounds
+copied 6 bundled font(s) /private/tmp/clipper-resource-dashboard-review/clipper_python/fonts -> /private/tmp/clipper-resource-dashboard-review/clipper_nestjs/dist/modules/template-builder/assets/fonts

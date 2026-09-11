@@ -1,0 +1,27 @@
+✔ pending TTS request remains protected even when health reports zero jobs (1.401208ms)
+✔ new work invalidates cleanup waiting for a health response (0.197333ms)
+✔ cancelling one job never force-stops the shared runtime (0.138542ms)
+✔ new lease waits for an already committed stop before starting (0.275042ms)
+✔ releasing one lease does not release a different owner (0.300833ms)
+✔ cancel during submit deletes the job again after it becomes registered (0.229583ms)
+✔ an already aborted watcher settles without reporting a spurious job failure (4.070791ms)
+✔ a fired timer cannot stop or rearm after a newer owner arrives (0.475667ms)
+✔ unknown runtime health is never an idle cleanup candidate (0.136042ms)
+✖ conditional UI cleanup respects a live owner and reports the protected result (1.025833ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.088458
+
+✖ failing tests:
+
+test at test/runtime-ownership-safety.test.js:74:1
+✖ conditional UI cleanup respects a live owner and reports the protected result (1.025833ms)
+  TypeError [Error]: service.stopIdle is not a function
+      at TestContext.<anonymous> (/private/tmp/clipper-resource-dashboard-review/clipper_nestjs/test/runtime-ownership-safety.test.js:77:33)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7)
