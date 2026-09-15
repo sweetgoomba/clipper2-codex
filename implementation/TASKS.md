@@ -1,5 +1,7 @@
 # Clipper 운영 구축·PG 전환 Tasks
 
+최신 integration 진행(2026-09-15): [8개 저장소 반영 결과](./2026-09-15-main-integration-result.md). 별도 공통 integration에 운영+dev+보관 개선을 조합하고 충돌 해결/stage 완료. 후속 사용자 승인으로 7repo merge commit 및 8repo 원격 SHA 확인 완료, Client 추가 변경0. 원본 보존. 테스트·빌드·배포 미실행, Build5/실제 ML HOLD 유지.
+
 **현재 정본(2026-09-10 문서 정리 후속):** [문서·Build7 증거·SDK/venv 조건 정리](./2026-09-10-documentation-source-reconciliation.md), [R5 후속](./2026-09-10-windows-owned-process-tree-followup.md), [R1~R4 안전성 후속](./2026-09-10-plugin-resource-safety-followup.md)을 우선한다. CPU·R1~R4·기본 RAM watchdog·조건부 정리 UI·R5는 구현과 각 후속에 명시한 격리검증까지 완료했으며, **네 저장소50파일 누적 변경이 미커밋·미푸시·미배포**다. 실제 Windows·ML 실행 검증 및 Build5 전체 QA는 보류다. PG·웹 배포/운영 확인은 [전체 감사](./2026-09-10-current-state-and-resource-dashboard-audit.md)를 유지한다. 기존 공유 원본 M은 배포 누락을 의미하지 않으며 Infra 문서5개/로컬 compose는 별도 보존한다. 아래 날짜별 기록과 ‘최신’ 표현은 당시 이력이다.
 
 ## CPU·플러그인 리소스 후속 — 현재 단계
