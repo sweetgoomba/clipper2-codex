@@ -9,7 +9,7 @@
 - clipper_nestjs: `0aad9ed6dcd06aa2996697a389309327b8f2e1e9`
 - clipper_python: `a867a2dbd8f9d43029ac5edd04e5c0fcfe1bcd9b`
 
-상태: 복구 완료, 앱 저장소의 수정은 미커밋·미푸시·미배포. 새 integration 병합은 미실행.
+복구 직후의 과거 상태: 당시 미커밋·미푸시였으나 위 후속에서 커밋·푸시 및 worktree 제거를 완료했다. 현재 상태는 [리소스 작업카드](../handoff/tasks/resource-safety.md)를 따른다.
 
 보관 정본: `patches/2026-09-10-windows-owned-process-tree/manifest.json`의 CPU + R1~R4/watchdog/UI + R5 누적 패치. 이전 CPU/안전성 패치를 중복 적용하지 않았다.
 
@@ -26,4 +26,4 @@
 
 이번에는 의존성 설치·테스트·빌드·ML 실행을 하지 않았다. 기존 모의검증 기록을 재실행한 것으로 취급하지 않는다. Windows 실기·Build5 전체QA HOLD 유지.
 
-기존 `/private/tmp/clipper-resource-dashboard-review/`의 손상된 Git 메타데이터는 수정/삭제하지 않았다. 앞으로의 통합 기준 작업본은 위 새 경로다. 다음 단계는 최신 dev에 맞춘 병합안 갱신이며 이 복구 자체가 병합 승인이나 배포가 아니다.
+기존 `/private/tmp/clipper-resource-dashboard-review/`의 손상된 Git 메타데이터는 수정/삭제하지 않았다. 당시 통합 기준 작업본은 위 경로였으나 이후 integration 반영과 원격보존을 완료하고 해당 worktree는 제거했다. 이 복구 기록 자체는 실제ML/운영배포 검증을 의미하지 않는다.

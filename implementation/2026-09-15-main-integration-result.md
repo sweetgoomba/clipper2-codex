@@ -1,4 +1,5 @@
 # 8개 저장소 integration 반영 결과 — 2026-09-15
+후속 현재 상태(2026-09-15 세션 종료): 사용자 요청으로 원본8repo는 다시 최신dev로 전환했다. integration 커밋·원격은 유지한다. 아래 원본integration 전환은 그 이전 이력이다. 현재 재개 위치는 [통합 작업카드](../handoff/tasks/integration.md).
 
 ## 후속: 원본 작업 공간으로 통합 브랜치 이동
 

@@ -1,8 +1,11 @@
 # Clipper 운영 구축·PG 전환 Tasks
+전체 작업의 현재 상태와 재개 위치는 [작업 현황판](../handoff/WORKBOARD.md)을 따른다. 이 파일은 PG·리소스의 상세 증거/체크리스트이며 전체 프로젝트 우선순위표가 아니다.
+
+최신 운영 상태(2026-09-15): [카드사 심사용 운영 전환·복원 런북](./2026-09-15-pg-review-production-cutover-and-rollback.md), [실행 명령 부록](./2026-09-15-pg-review-production-cutover-commands.md). 운영 도메인은 개발 기준 심사 Client/Admin/API와 m4-prod의 별도 복사 DB로 전환됨. 사용자 단건·정기결제 및 주소 유지·로고 수정 확인. 기존 운영 컨테이너/DB/이미지 태그 보존. 웹훅 수신은 심사 버전에 없음. 복원은 미실행. 사용자 PC 원본8repo는 후속 요청으로 최신 dev로 전환했고 로컬 API·설치형 앱 정상 실행 보고. 이 상태가 아래 과거 상태보다 우선함.
 
 최신 integration 진행(2026-09-15): [8개 저장소 반영 결과](./2026-09-15-main-integration-result.md). 별도 공통 integration에 운영+dev+보관 개선을 조합하고 충돌 해결/stage 완료. 후속 사용자 승인으로 7repo merge commit 및 8repo 원격 SHA 확인 완료, Client 추가 변경0. 원본 보존. 테스트·빌드·배포 미실행, Build5/실제 ML HOLD 유지.
 
-**현재 정본(2026-09-10 문서 정리 후속):** [문서·Build7 증거·SDK/venv 조건 정리](./2026-09-10-documentation-source-reconciliation.md), [R5 후속](./2026-09-10-windows-owned-process-tree-followup.md), [R1~R4 안전성 후속](./2026-09-10-plugin-resource-safety-followup.md)을 우선한다. CPU·R1~R4·기본 RAM watchdog·조건부 정리 UI·R5는 구현과 각 후속에 명시한 격리검증까지 완료했으며, **네 저장소50파일 누적 변경이 미커밋·미푸시·미배포**다. 실제 Windows·ML 실행 검증 및 Build5 전체 QA는 보류다. PG·웹 배포/운영 확인은 [전체 감사](./2026-09-10-current-state-and-resource-dashboard-audit.md)를 유지한다. 기존 공유 원본 M은 배포 누락을 의미하지 않으며 Infra 문서5개/로컬 compose는 별도 보존한다. 아래 날짜별 기록과 ‘최신’ 표현은 당시 이력이다.
+**현재 정본(2026-09-10 문서 정리 후속):** [문서·Build7 증거·SDK/venv 조건 정리](./2026-09-10-documentation-source-reconciliation.md), [R5 후속](./2026-09-10-windows-owned-process-tree-followup.md), [R1~R4 안전성 후속](./2026-09-10-plugin-resource-safety-followup.md)을 우선한다. CPU·R1~R4·기본 RAM watchdog·조건부 정리 UI·R5는 구현과 각 후속에 명시한 격리검증까지 완료했으며, **당시 미커밋이던 네 저장소50파일은 이후 recovery/integration 브랜치에 커밋·푸시해 보존했다. 실제ML/Windows 검증은 별도 보류**다. 실제 Windows·ML 실행 검증 및 Build5 전체 QA는 보류다. PG·웹 배포/운영 확인은 [전체 감사](./2026-09-10-current-state-and-resource-dashboard-audit.md)를 유지한다. 기존 공유 원본 M은 배포 누락을 의미하지 않으며 Infra 문서5개/로컬 compose는 별도 보존한다. 아래 날짜별 기록과 ‘최신’ 표현은 당시 이력이다.
 
 ## CPU·플러그인 리소스 후속 — 현재 단계
 
@@ -18,8 +21,8 @@
 - [ ] Build7 source snapshot·저장소별 SHA·설치 파일 해시/서명·정식 지정 대조. 로컬 기록에는 설치0.0.3.7·CPU 표시 증거만 있고 직접 연결 자료는 미확보. Build5 증거 재사용 금지.
 - [ ] 새 CPU의 실제 Windows CIM 및 R5 Job Object·uv 제어 stdin·자손 종료·설치본 확인. 실제 ML 플러그인 실행 HOLD 유지.
 - [ ] 작업별 증분 RAM/VRAM 예산·GPU telemetry 신선도·무응답 작업 정책·종료 실패 상세 UI 및 넓은 실기 검증.
-- [ ] 향후 반영: 누적 변경 선택 커밋·push → 새 source snapshot·appVersion/venv 갱신 조건 확인 → Windows 빌드/설치. **이번 문서 작업 범위에서는 실행하지 않음.**
-- [ ] Infra 미커밋 문서5개와 로컬 compose의 별도 출처·범위 정리. Build5 전체 QA HOLD 유지.
+- [ ] 후속 검증: 누적 변경 커밋·push는 완료. 새 source snapshot·appVersion/venv 조건 확인 및 Windows 빌드/설치는 별도 검증/HOLD 범위를 따른다.
+- [x] Infra 문서5개와 로컬 compose의 출처·보존 정리 및 integration 커밋·push 완료. Build5 전체 QA HOLD는 별도 유지.
 
 <details>
 <summary>날짜별 진행 이력 — 이후 배포로 해소된 과거 대기 상태 포함</summary>

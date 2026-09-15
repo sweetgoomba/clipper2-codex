@@ -37,6 +37,17 @@ legacy/
 
 ## Current Focus
 
+2026-09-15부터 세션순서 대신 **작업별 상태**로 관리한다.
+
+- 시작: [작업 현황판](handoff/WORKBOARD.md)
+- 재개 규칙: [NEXT](handoff/NEXT.md)
+- 최근 종료 기록: [2026-09-15](records/sessions/2026/09/15.md)
+
+현재 원본8repo는 dev, integration/복구branch는 원격보존이다. 운영 도메인은 카드사심사용 임시버전이며 [복원 런북](implementation/2026-09-15-pg-review-production-cutover-and-rollback.md)을 따른다. 아래 날짜별 기록은 당시 이력이며 현재 우선순위가 아니다.
+
+## Historical Focus — 2026-06 기록
+
+
 2026-06-30 기준 `web/clipper_infra`, `web/clipper_web_api`,
 `web/clipper_web_admin`의 `feat/release-management-runtime` 작업은 `dev`에 병합됐다.
 Admin `Windows 빌드 시작` -> `clipper_web_api` -> Windows runner container `/jobs/start`
