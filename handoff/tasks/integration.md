@@ -2,6 +2,8 @@
 
 ## 최신 Git 후속 상태
 
+후속 [옛 fix worktree 대조](../../implementation/2026-09-17-old-pg-worktree-disposition.md): Nest7파일/Web API1파일의 초기 수정 목적은 현 통합 구현에 반영·대체됐다. 고유 미통합 커밋은 없으나 미커밋 파일을 그대로 병합했던 것은 아니다. 현재 통합 관련148 tests PASS. 보존용 커밋·push·worktree 제거는 승인 전이며 아직 실행하지 않았다.
+
 2026-09-17 원본 Angular/Nest dev fast-forward 뒤 사용자에게 나머지5repo의 정확한 목적지 승인을 받았고 통합8repo push를 모두 완료했다. 대상은 각 기존 `https://github.com/OhMyMetabuzz/<repo>.git`의 `integration/dev-pg-local-validation-20260917` 브랜치다. 원격 SHA와 로컬 HEAD 일치를 8repo 모두 확인했다: Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Python `60417ce`, Infra `f975f34`, Web Admin `3d47536`, Web API `8b074a5`, Web Client `a4bc54b`. 통합8repo clean이며 제품 코드·HEAD는 추가 변경하지 않았다. 원격 main/dev push·추가 병합·배포·DB 변경·서버 접속 없음. 이번 검증은 Git SHA/clean/원격 일치이며 빌드·테스트를 재실행한 것은 아니다. 다음은 수정본 설치형 로컬 실기이며 ML/Build5 HOLD를 유지한다.
 
 출시 후 API compatibility TODO는 `clipper_docs`가 아니라 [`.codex/todos`](../../todos/2026-09-16-post-launch-desktop-api-compatibility.md)에 보존한다. 아래 커밋 단계의 push 없음·원본 미변경 표현보다 이 절이 우선한다.

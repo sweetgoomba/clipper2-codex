@@ -18,6 +18,8 @@
 
 ## 공통 작업 공간과 보존
 
+옛 PG 보완 worktree의 미커밋8파일은 [반영 대조](../implementation/2026-09-17-old-pg-worktree-disposition.md)에서 현재 통합 구현으로 대체됐음을 확인했다(관련148 tests PASS). 보존용 커밋·push·worktree 제거는 승인 전이다. 앱 이름 feature push는 자동 권한 검토 거절로 정확한 원격 목적지 승인 대기다.
+
 최신 push 상태는 위 W04와 최신 Git 결과를 따른다. 아래 커밋 시점의 “원본 유지/코드 push 없음”은 후속 사용자 승인 이전 기록이다. 문서 작성 위치는 사용자 지시에 따라 `.codex`로 한정하며 잘못 추가한 `clipper_docs` TODO는 이동 완료했다.
 
 - 사용자 PC 원본8repo(`desktop/*`4, `web/*`4)는 dev와 clean. 사용자 명시 요청 후 Angular를 `98d449584055b324f223678f058e255c7d464c80`, Nest를 `4c32e03c327003e85ec5da248e362d4e85b49fb7`로 fast-forward pull했다. 원본8repo 모두 origin/dev와 0/0이다.
