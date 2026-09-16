@@ -1,5 +1,15 @@
 # 옛 PG 보완 워크트리 반영 대조
 
+## 후속 실행 — 로컬 보존 완료, push 차단으로 제거 보류
+
+사용자 “응” 승인 후 Nest `000414f3a0ce47b3461e007311d3d3296cd8dc22`(7파일), Web API `3c33268d2b512dc33bf8b94fc122afec1cba0315`(OpenAPI1파일)로 보존 커밋했다. 메시지에 과거 draft이며 현재 통합본으로 대체돼 재병합하지 말 것을 명시했다. 두 worktree 모두 tracked/untracked clean이다.
+
+fresh 검증: 옛 Nest build + access-credit-proxy/jobs-commit-phase/variation-v2-render-service **108 PASS, 0 FAIL/SKIP** (`/private/tmp/pg-archive-old-nest.log`). OpenAPI는 설치된 js-yaml로 parse PASS(yaml 모듈은 없어 최초 검증 명령 실패 후 js-yaml 사용). ignored는 Nest dist/node_modules 및 빈 .clipper_data 인덱스3개, API dist/node_modules. lsof cwd 검색에서 대상 worktree 사용 프로세스 없음. 이를 모든 파일 핸들/세션 사용 부재의 증명으로 확대하지 않는다.
+
+Electron feature `7aed9f6` push는 정확한 목적지 승인 부족으로 자동 권한 검토가 거절했다. 원격 integration `6766c06`과 feature의 조상 관계 및 고유 커밋0개를 확인해 새 코드 전송이 없음을 추가 설명했으나 재차 거절됐다. Nest/API 두 fix push도 각각 동일한 목적지/payload 승인 부족으로 거절됐다. 우회나 추가 재시도 없음. 원격 보존 조건이 충족되지 않아 **두 worktree 제거는 하지 않았다**. 통합/main/dev·앱 이름 worktree는 변경하지 않았다.
+
+남은 전송 대상은 기존 GitHub OhMyMetabuzz/clipper_electron → feature/app-window-name-20260915 (`7aed9f6`), OhMyMetabuzz/clipper_nestjs → fix/pg-contract-and-render-refund-20260916 (`000414f`), OhMyMetabuzz/clipper_web_api → fix/credit-operation-contract-20260916 (`3c33268`). 정확한 코드/문서 전송 승인 또는 사용자 직접 push 후 SHA 확인 → 두 fix worktree만 제거 순서로 재개한다. 아래는 승인 전 조사 기록이다.
+
 2026-09-17. 사용자 요청: 앱 이름 feature push, 두 fix 브랜치의 목적·통합 반영 여부·보존 후 worktree 제거 가능 여부 확인.
 
 ## 판정
