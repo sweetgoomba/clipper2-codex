@@ -1,5 +1,11 @@
 # 옛 PG 보완 워크트리 반영 대조
 
+## 최종 실행 — 3브랜치 원격 보존·2 fix worktree 제거 완료
+
+2026-09-17 사용자가 정확한 저장소·payload·브랜치 전송 및 원격 확인 후 제거를 명시 승인했다. 기존 OhMyMetabuzz origin에 Electron feature/app-window-name-20260915 `7aed9f666d26b55c22307c7a77df82751cb0e8b5`, Nest fix/pg-contract-and-render-refund-20260916 `000414f3a0ce47b3461e007311d3d3296cd8dc22`, Web API fix/credit-operation-contract-20260916 `3c33268d2b512dc33bf8b94fc122afec1cba0315` push 성공. 각각 ls-remote SHA 일치 확인.
+
+clean·ignored 목록·빈 테스트 인덱스와 cwd 사용 프로세스 부재를 재확인한 뒤 `git worktree remove`로 `.worktrees/pg-contract-render-refund-20260916/desktop/clipper_nestjs`와 같은 루트의 `web/clipper_web_api`만 제거했다. force 없음. 실제 경로 부재 및 worktree 등록 제거 확인. 로컬/원격 fix 브랜치와 커밋은 보존해 소스 복원 가능하다. ignored 의존성·빌드 산출물·빈 테스트 인덱스는 함께 제거됐으며 재생성 가능하다. 앱 이름 worktree·통합본·원본 dev·다른 worktree는 유지했다. 추가 merge/제품 수정/배포/DB 작업 없음. 이번 검증은 Git 상태·원격 SHA·제거 결과이며 테스트를 재실행한 것은 아니다. 아래 차단/보류는 이전 실행 이력이다.
+
 ## 후속 실행 — 로컬 보존 완료, push 차단으로 제거 보류
 
 사용자 “응” 승인 후 Nest `000414f3a0ce47b3461e007311d3d3296cd8dc22`(7파일), Web API `3c33268d2b512dc33bf8b94fc122afec1cba0315`(OpenAPI1파일)로 보존 커밋했다. 메시지에 과거 draft이며 현재 통합본으로 대체돼 재병합하지 말 것을 명시했다. 두 worktree 모두 tracked/untracked clean이다.

@@ -2,7 +2,7 @@
 
 ## 최신 Git 후속 상태
 
-옛 fix 정리 승인 후 Nest `000414f`, Web API `3c33268`로 로컬 보존 커밋 완료. 앱 이름 feature 및 두 fix push는 자동 권한 검토 거절로 미완료, 원격 보존 전 두 fix worktree 제거 보류. [상세](../../implementation/2026-09-17-old-pg-worktree-disposition.md). 아래 “미커밋/승인 전”은 조사 당시 기록이다.
+옛 fix 정리 완료: Nest `000414f`, Web API `3c33268` 및 앱 이름 feature `7aed9f6` push·원격 SHA 확인 완료. 두 fix worktree만 제거했으며 로컬/원격 브랜치·커밋과 앱 이름 worktree는 유지했다. [상세](../../implementation/2026-09-17-old-pg-worktree-disposition.md). 아래 “미커밋/승인 전/보류”는 조사 당시 기록이다.
 
 후속 [옛 fix worktree 대조](../../implementation/2026-09-17-old-pg-worktree-disposition.md): Nest7파일/Web API1파일의 초기 수정 목적은 현 통합 구현에 반영·대체됐다. 고유 미통합 커밋은 없으나 미커밋 파일을 그대로 병합했던 것은 아니다. 현재 통합 관련148 tests PASS. 보존용 커밋·push·worktree 제거는 승인 전이며 아직 실행하지 않았다.
 

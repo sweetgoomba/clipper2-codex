@@ -18,7 +18,7 @@
 
 ## 공통 작업 공간과 보존
 
-옛 PG 보완 worktree는 사용자 승인 후 Nest `000414f`·Web API `3c33268`로 로컬 보존 커밋 완료(옛 Nest build/108 tests·YAML parse PASS). 앱 이름 feature와 두 fix의 push는 자동 권한 검토 거절로 미완료이며, 원격 보존 전에는 worktree를 제거하지 않는다. [최신 보존·차단 결과](../implementation/2026-09-17-old-pg-worktree-disposition.md)를 따른다.
+옛 PG 보완은 Nest `000414f`·Web API `3c33268`로 커밋·push·원격 SHA 확인 후 두 fix worktree 제거 완료. 앱 이름 feature `7aed9f6`도 push 완료했고 해당 worktree는 유지했다. 로컬/원격 브랜치와 커밋은 보존, 재병합 없음. [최종 정리 결과](../implementation/2026-09-17-old-pg-worktree-disposition.md)를 따른다.
 
 최신 push 상태는 위 W04와 최신 Git 결과를 따른다. 아래 커밋 시점의 “원본 유지/코드 push 없음”은 후속 사용자 승인 이전 기록이다. 문서 작성 위치는 사용자 지시에 따라 `.codex`로 한정하며 잘못 추가한 `clipper_docs` TODO는 이동 완료했다.
 
