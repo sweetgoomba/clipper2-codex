@@ -1,6 +1,6 @@
 # 운영·개발 앱 표시 이름
 
-최종 확인: 2026-09-17 KST. 상태: **이름·환경별 identity 보존 / R06·R07 수정·회귀 통과, 미커밋 / 실제 Google OAuth·Windows NSIS 실기 대기**.
+최종 확인: 2026-09-17 KST. 상태: **이름·환경별 identity 보존 / R06·R07 수정·회귀 통과·로컬 커밋 / 실제 Google OAuth·Windows NSIS 실기 대기**.
 
 [전체 현황](../WORKBOARD.md)
 
@@ -13,6 +13,10 @@
 사용자는 운영·개발 macOS 앱 동시 설치를 전제로 개발 설치 앱을 `Clipper Studio (dev).app`으로 분리하는 안에 동의했다. Windows도 같은 운영/개발 이름 규칙을 적용하는 것이 요구사항이다.
 
 ## 현재 상태·중단 지점
+
+사용자 승인 후 Electron `6766c0645d8151eac1ea075e08f89871cb4ad4df`, Nest `fda1eda586fe2b80a444691303fb1e52fef57a34`에 보완을 로컬 커밋했다. fresh build와 Electron955/Nest2,678 테스트 PASS, 두 worktree clean이다. [커밋 결과](../../implementation/2026-09-17-integration-commit-proposal.md)가 아래 커밋 전 기록의 미커밋/옛 HEAD 표현보다 우선한다. 코드 push·추가 병합·원본 dev 변경·배포는 없다.
+
+### 커밋 전 조사·검증 기록
 
 최신 [Astra 수정 결과](../../implementation/2026-09-17-astra-fix-result.md)에서 R06 spawn 이후 PID/identity 확보와 R07 Nest/Electron 자식 identity 계약을 수정했다. Electron 전체 955/955 및 build, 실제 일회용 Nest writer→Electron cleanup 프로세스 회귀가 통과했다. 실제 설치형 앱 crash/Windows 전체 실기를 대신하는 것은 아니다. 이번 변경은 Electron/Nest 미커밋 상태이며 이름·환경별 appId/protocol/data path는 변경하지 않았다.
 
@@ -30,7 +34,7 @@
 
 - 현재 branch: `integration/dev-pg-local-validation-20260917`.
 - 현재 worktree: `/Users/jina/project/adlight/.worktrees/dev-pg-local-validation-20260917/desktop/clipper_electron`.
-- 현재 HEAD: `827fcda8b12a34232c2574983afff6284b69d949`, R06/R07 수정 미커밋.
+- 현재 HEAD: `6766c0645d8151eac1ea075e08f89871cb4ad4df`, R06/R07 수정 로컬 커밋 완료, clean.
 - 옛 feature worktree는 이력 보존용이며 현재 정본이 아니다. 원본 checkout과 다른 작업 worktree는 변경하지 않았다.
 
 ## 이전 패키징·실행 검증 기록

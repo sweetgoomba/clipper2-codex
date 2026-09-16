@@ -8,7 +8,24 @@
 
 코드 작업 공간: `.worktrees/dev-pg-local-validation-20260917/`, 공통 branch `integration/dev-pg-local-validation-20260917`.
 
-## 제안: 저장소별 1개 커밋, 총 4개 (승인 전)
+## 실행 결과: 사용자 승인 후 4개 로컬 커밋 완료
+
+사용자는 코드4repo 로컬 커밋안에 “응”으로 승인했다. 아래 범위 그대로 fresh 빌드·테스트 후 커밋했으며 코드 push·원본 dev 갱신·추가 병합은 하지 않았다.
+
+| 저장소 | 새 HEAD | fresh 검증 |
+|---|---|---|
+| Angular | `dba50096dd86fb591f2d26af1132f6de2cca52e4` | devapp build, 관련 8 spec 226/226 PASS |
+| Electron | `6766c0645d8151eac1ea075e08f89871cb4ad4df` | build, 전체 955/955 PASS |
+| Nest | `fda1eda586fe2b80a444691303fb1e52fef57a34` | build, 전체 2,678/2,678 PASS |
+| Web API | `8b074a59a454b47323f9e490d9bfd8d6c2a51ec5` | build, 259 suites / 2,802 tests PASS; 기존 5 suites / 21 tests SKIP |
+
+로그: `/private/tmp/pg-commit-angular-node24.log`, `/private/tmp/pg-commit-electron.log`, `/private/tmp/pg-commit-nest.log`, `/private/tmp/pg-commit-api.log`. Angular 첫 시도는 셸의 Node 24.3.0이 CLI 최소 버전 미달로 종료했다(`/private/tmp/pg-commit-angular.log`). 설치된 Node 24.19.0을 명령 PATH에만 지정해 통과했으며 소스·의존성 변경은 없다. Angular는 `CI=true`로 캐시를 사용하지 않았고 `ChromeHeadlessNoSandbox`에서 app.config/app.component/operation-recovery/operation-billing/job-history/local-api-auth/account-summary/projects spec과 test-setup을 실행했다.
+
+명시한 57파일만 stage했고 unstaged/staged `diff --check` 통과. 커밋 후 통합8repo 모두 clean, 원본8repo는 기존 dev HEAD 그대로 clean임을 재확인했다. 옛 PG 보완 worktree의 미커밋 변경은 건드리지 않았다. 설치형 새 수정본의 UI·Google OAuth·Windows 실기는 미완료다.
+
+`.codex`의 직전 문서21파일은 `3f4ac3c7553bc71d70ce0a5d166567cd1899d07e`로 커밋·push 완료했다. 이번 커밋 결과·인계 갱신은 별도 문서 커밋으로 기존 origin/main에 일반 push하고 원격 SHA를 확인한다. 원격 전진 시 임의 병합/force push하지 않는다.
+
+## 승인된 제안 원문: 저장소별 1개 커밋, 총 4개
 
 서로 의존하는 과금 coordinator·job 상태·outbox·UI 회귀를 잘게 나눠 불완전한 중간 상태를 만들지 않고, 저장소마다 수정과 대응 테스트를 같이 보존한다. 커밋 직전 파일 목록·diff·검증을 다시 확인한다.
 
@@ -39,4 +56,4 @@
 - 나머지4개 clean 통합repo에는 불필요한 커밋을 만들지 않는다.
 - `.codex` 외 다른 문서 저장소를 자동 커밋·푸시하지 않는다.
 
-다음 행동: 코드 4개 로컬 커밋안 승인 → fresh 검증·커밋 → 수정본 설치형 로컬 실기. 원본 dev 동기화는 별도 승인 항목으로 두고, 실제 ML/Build5 HOLD·서버 직접 접속 금지·DB 전환 별도 승인을 유지한다.
+다음 행동: 수정본 설치형 로컬 실기. 원본 dev 동기화와 코드 push는 별도 승인 항목으로 두고, 실제 ML/Build5 HOLD·서버 직접 접속 금지·DB 전환 별도 승인을 유지한다.

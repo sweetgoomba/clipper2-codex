@@ -1,8 +1,8 @@
 # 운영·dev 통합 및 main 반영
 
-최종 확인: 2026-09-17 KST. 상태: **8repo 통합 유지 / R01–R13+A14 및 추가 환급 누락·Dialog 수정 검증 / 4repo 미커밋, 설치형 로컬 실기 필요**.
+최종 확인: 2026-09-17 KST. 상태: **8repo 통합 유지 / R01–R13+A14 및 추가 환급 누락·Dialog 수정 검증 / 4repo 로컬 커밋 완료, 설치형 로컬 실기 필요**.
 
-실기 전 Git 정리 요청: [커밋 제안](../../implementation/2026-09-17-integration-commit-proposal.md)에 코드4repo 범위를 고정했다. 사용자 명시 요청으로 `.codex`는 별도 커밋·푸시한다. 코드4repo의 로컬 커밋안은 확인받으며 코드 push·원본 dev fast-forward·추가 병합은 이번에 수행하지 않는다.
+실기 전 Git 정리 완료: [커밋 결과](../../implementation/2026-09-17-integration-commit-proposal.md)에 승인된 코드4repo의 SHA와 fresh 검증을 기록했다. Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Web API `8b074a5`로 로컬 커밋했고 통합8repo clean, 원본8repo dev/HEAD는 unchanged clean이다. 사용자 명시 요청으로 `.codex`만 별도 커밋·푸시한다. 코드 push·원본 dev fast-forward·추가 병합은 수행하지 않았다. 아래 미커밋/이전 HEAD 표현은 커밋 전 역사 기록이다.
 
 최신 추가 확인: 두 잔여 항목 진단 뒤 사용자 “응 진행해줘” 승인으로 수정했다. [최신 수정 결과](../../implementation/2026-09-17-archive-refund-fix-result.md)가 아래 미재현·승인 대기 기록보다 우선한다. 취소 직전 상태를 영속 저장하고 실행 전 취소의 fail outbox를 삭제 전에 보존한다. stale job/project attempt ID fallback을 제거했다. Dialog 제품 로직은 유지하고 테스트만 분리했다. 최종 Nest 전체 2,678/2,678, 대상 70, Dialog 20회×11건, 격리 부팅 PASS. 다음은 수정본 설치형 로컬 실기이며 커밋·push·DB 리허설·배포는 자동 진행하지 않는다. 실제 Google/Windows는 사용자 실행, ML/Build5 HOLD 유지.
 
@@ -10,7 +10,7 @@
 
 ## 현재 상태
 
-### 2026-09-17 Astra 수정·재검증 — 현재 상태와 다음 행동
+### 2026-09-17 Astra 수정·재검증 — 커밋 전 기록
 
 사용자 “진행해줘” 승인 후 R01–R13을 수정했다. 최신 [수정·검증 결과](../../implementation/2026-09-17-astra-fix-result.md)가 아래 모든 과거 checkpoint보다 우선한다. Angular/Electron/Nest/Web API 4repo의 미커밋 수정이며 8repo branch/HEAD·원본 checkout은 그대로다. 새 병합·커밋·push·배포·실제 DB 변경은 없다.
 

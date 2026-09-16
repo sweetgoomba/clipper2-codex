@@ -9,18 +9,18 @@
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 수정 검증 후 Git 정리: 코드4repo 커밋안 확인, `.codex` 커밋·푸시 요청. 설치형 실기 남음 | [커밋 정리안](../implementation/2026-09-17-integration-commit-proposal.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 사용자 승인 후 코드4repo 로컬 커밋·fresh 검증 완료, 통합8repo clean. 설치형 실기 남음 | [커밋 결과](../implementation/2026-09-17-integration-commit-proposal.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
-| W09 | 운영·개발 앱 표시 이름 | 이름·환경별 identity 보존. R06/R07 수정·회귀 통과, 미커밋. 실제 Google OAuth·Windows NSIS 실기 필요 | [상세 결과](tasks/app-window-name.md) |
+| W09 | 운영·개발 앱 표시 이름 | 이름·환경별 identity 보존. R06/R07 수정·회귀 통과·로컬 커밋. 실제 Google OAuth·Windows NSIS 실기 필요 | [상세 결과](tasks/app-window-name.md) |
 
 ## 공통 작업 공간과 보존
 
 - 사용자 PC 원본8repo(`desktop/*`4, `web/*`4)는 dev와 clean. 2026-09-17 fetch 뒤 Angular 원본은 `origin/dev=98d449584055b324f223678f058e255c7d464c80`보다 44커밋, NestJS 원본은 `origin/dev=4c32e03c327003e85ec5da248e362d4e85b49fb7`보다 17커밋 뒤이며 나머지6개는 일치한다. 승인 없이 fast-forward하지 않았다.
 - integration/main-unification-20260911은 8repo 원격보존. recovery/resource-safety-20260915는4repo 원격보존. 두 작업의 중복worktree 제거 완료.
-- 정식 PG 통합 결과는 `.worktrees/dev-pg-local-validation-20260917/`의 8개 저장소별 `integration/dev-pg-local-validation-20260917` branch에 있다. 승인된 병합·후속 구현 커밋 위에 Astra R01–R13+A14 수정이 Angular/Electron/Nest/Web API 4repo 미커밋으로 남아 있다. 나머지4repo와 원본8repo는 clean, 8repo HEAD는 재감사 기준 그대로다. 설치형 실기·잔여 위험 검증 전 전체 로컬 완료로 판정하지 않는다. 앱 이름의 옛 feature worktree와 다른 작업 worktree는 보존하되 현재 통합 정본으로 사용하지 않는다. 이번 새 병합·커밋·push·배포는 없다.
+- 정식 PG 통합 결과는 `.worktrees/dev-pg-local-validation-20260917/`의 8개 저장소별 `integration/dev-pg-local-validation-20260917` branch에 있다. Astra R01–R13+A14 및 추가 환급 보완은 사용자 승인 후 Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Web API `8b074a5`로 로컬 커밋했다. fresh 빌드·테스트 통과, 통합8repo clean이며 원본8repo는 기존 dev HEAD 그대로 clean이다. 설치형 실기·잔여 위험 검증 전 전체 로컬 완료로 판정하지 않는다. 옛 feature/PG 보완 및 다른 작업 worktree의 변경은 보존한다. 이번 추가 병합·코드 push·원본 dev 갱신·배포는 없다. `.codex`는 별도 사용자 요청으로 커밋·푸시한다.
 - 옛feature/toss-payments-pg-integration, fix/operator-jwt-expiry-test 등 보존branch는 현재할일로 자동승격하지 않는다.
 - 원격 상태는 2026-09-17 Astra 감사에서 8repo `git ls-remote`로 dev/integration 참조를 재확인했고 로컬 origin 참조와 같았다. fetch/branch 이동 없이 통합 HEAD가 모두 포함함을 확인했다. 배포 서버 상태는 재조회하지 않았다.
 - 앱정리와 별개로 `.codex` 문서변경은 아직 미커밋일 수 있다. 세션 마무리에서 git status 확인.
