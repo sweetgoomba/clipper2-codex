@@ -9,7 +9,7 @@
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 원본8repo dev 최신·clean. 통합3repo push 완료, 나머지5repo는 권한 확인 대기. 설치형 실기 남음 | [최신 Git 결과](../implementation/2026-09-17-integration-commit-proposal.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 원본8repo dev 최신·clean. 통합8repo push 완료·원격 SHA 일치·clean. 설치형 실기 남음 | [최신 Git 결과](../implementation/2026-09-17-integration-commit-proposal.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |

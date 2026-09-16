@@ -2,7 +2,7 @@
 
 ## 최신 Git 후속 상태
 
-2026-09-17 후속 사용자 승인으로 원본 Angular dev를 `98d44958`(44커밋), Nest dev를 `4c32e03c`(17커밋)로 `pull --ff-only` 완료했다. 나머지6repo는 최신이며 원본8repo 모두 origin/dev와 0/0·clean이다. 통합8repo HEAD는 그대로다. 통합 브랜치 `integration/dev-pg-local-validation-20260917`는 기존 `https://github.com/OhMyMetabuzz/<repo>.git` origin 중 Angular `dba50096`, Electron `6766c06`, Web API `8b074a5`의 push·원격 SHA 일치를 확인했다. 나머지 Nest/Python/Infra/Web Admin/Web Client 5repo는 자동 권한 검토의 목적지 승인 부족 거절 후 원격 브랜치가 없음을 확인했고, 재시도 없이 정확한 목적지 승인 대기다. 원격 main/dev push·제품 수정·배포·DB 변경·서버 접속 없음. 이번에는 Git SHA/clean/원격 일치 검증만 수행했으며 이전 빌드·테스트 결과를 새 실행으로 표현하지 않는다.
+2026-09-17 원본 Angular/Nest dev fast-forward 뒤 사용자에게 나머지5repo의 정확한 목적지 승인을 받았고 통합8repo push를 모두 완료했다. 대상은 각 기존 `https://github.com/OhMyMetabuzz/<repo>.git`의 `integration/dev-pg-local-validation-20260917` 브랜치다. 원격 SHA와 로컬 HEAD 일치를 8repo 모두 확인했다: Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Python `60417ce`, Infra `f975f34`, Web Admin `3d47536`, Web API `8b074a5`, Web Client `a4bc54b`. 통합8repo clean이며 제품 코드·HEAD는 추가 변경하지 않았다. 원격 main/dev push·추가 병합·배포·DB 변경·서버 접속 없음. 이번 검증은 Git SHA/clean/원격 일치이며 빌드·테스트를 재실행한 것은 아니다. 다음은 수정본 설치형 로컬 실기이며 ML/Build5 HOLD를 유지한다.
 
 출시 후 API compatibility TODO는 `clipper_docs`가 아니라 [`.codex/todos`](../../todos/2026-09-16-post-launch-desktop-api-compatibility.md)에 보존한다. 아래 커밋 단계의 push 없음·원본 미변경 표현보다 이 절이 우선한다.
 
