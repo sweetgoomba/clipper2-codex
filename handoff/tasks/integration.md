@@ -1,5 +1,11 @@
 # 운영·dev 통합 및 main 반영
 
+## 최신 Git 후속 상태
+
+2026-09-17 후속 사용자 승인으로 원본 Angular dev를 `98d44958`(44커밋), Nest dev를 `4c32e03c`(17커밋)로 `pull --ff-only` 완료했다. 나머지6repo는 최신이며 원본8repo 모두 origin/dev와 0/0·clean이다. 통합8repo HEAD는 그대로다. 통합 브랜치 `integration/dev-pg-local-validation-20260917`는 기존 `https://github.com/OhMyMetabuzz/<repo>.git` origin 중 Angular `dba50096`, Electron `6766c06`, Web API `8b074a5`의 push·원격 SHA 일치를 확인했다. 나머지 Nest/Python/Infra/Web Admin/Web Client 5repo는 자동 권한 검토의 목적지 승인 부족 거절 후 원격 브랜치가 없음을 확인했고, 재시도 없이 정확한 목적지 승인 대기다. 원격 main/dev push·제품 수정·배포·DB 변경·서버 접속 없음. 이번에는 Git SHA/clean/원격 일치 검증만 수행했으며 이전 빌드·테스트 결과를 새 실행으로 표현하지 않는다.
+
+출시 후 API compatibility TODO는 `clipper_docs`가 아니라 [`.codex/todos`](../../todos/2026-09-16-post-launch-desktop-api-compatibility.md)에 보존한다. 아래 커밋 단계의 push 없음·원본 미변경 표현보다 이 절이 우선한다.
+
 최종 확인: 2026-09-17 KST. 상태: **8repo 통합 유지 / R01–R13+A14 및 추가 환급 누락·Dialog 수정 검증 / 4repo 로컬 커밋 완료, 설치형 로컬 실기 필요**.
 
 실기 전 Git 정리 완료: [커밋 결과](../../implementation/2026-09-17-integration-commit-proposal.md)에 승인된 코드4repo의 SHA와 fresh 검증을 기록했다. Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Web API `8b074a5`로 로컬 커밋했고 통합8repo clean, 원본8repo dev/HEAD는 unchanged clean이다. 사용자 명시 요청으로 `.codex`만 별도 커밋·푸시한다. 코드 push·원본 dev fast-forward·추가 병합은 수행하지 않았다. 아래 미커밋/이전 HEAD 표현은 커밋 전 역사 기록이다.
@@ -170,7 +176,7 @@ formal-PG와 최신 dev 모두 operation start 요청 DTO/DB에는 한 logical a
 - Electron/Nest/Python/ffmpeg의 실제 parent-child tree와 종료 신호를 플랫폼별로 검증한다. 현재 정적 감사상 최상위 Python plugin과 Windows owned tree는 종료 관리가 있으나, Nest utility process와 Nest/Python 내부 ffmpeg는 모든 경로에서 공통 shutdown 소유권이 증명되지 않았다.
 - Angular의 옛 license adapter는 사용자의 기존 결정대로 명시적으로 제거한다. `CurrentLicenseSummary/currentLicense/_license`와 도달 불가능한 queued/expired 이용권 필드를 남기지 않고 access·credit 원형 모델로 정리한다. 이 정리는 PG 병합만으로 자동 발생하지 않는다.
 
-이번 개발서버 정식 PG 전환은 출시 전 통합이므로 과거 개발판 데스크톱의 API 계약까지 지원하지 않는다. 새 통합 데스크톱·웹을 같은 계약으로 검증하고, 옛 개발판 사용자는 새 빌드 설치와 1회 재로그인을 전제로 한다. 출시 후 `1.2.1 → 1.2.2` 같은 호환 정책·API versioning은 별도 후속 설계다. 이는 기존 개발 DB의 사용자 계정·프로젝트·작업 이력을 보존하는 요구와 별개다. 후속 정본은 `clipper_docs/todos/2026-09-16-post-launch-desktop-api-compatibility.md`로도 기록했다.
+이번 개발서버 정식 PG 전환은 출시 전 통합이므로 과거 개발판 데스크톱의 API 계약까지 지원하지 않는다. 새 통합 데스크톱·웹을 같은 계약으로 검증하고, 옛 개발판 사용자는 새 빌드 설치와 1회 재로그인을 전제로 한다. 출시 후 `1.2.1 → 1.2.2` 같은 호환 정책·API versioning은 별도 후속 설계다. 후속 정본은 [출시 후 호환 정책 TODO](../../todos/2026-09-16-post-launch-desktop-api-compatibility.md)다. 사용자 지시에 따라 `.codex`로 이동했으며 `clipper_docs`에는 남기지 않는다. 사용자·로그인 보존 및 로컬 프로젝트 보존은 별개의 요구이며, 서버의 개발 금융·작업 이력 정리 범위는 최신 전환 승인 정책을 따른다.
 
 ## 격리 수정 검증
 

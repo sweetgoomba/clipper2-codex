@@ -2,6 +2,8 @@
 
 최신 갱신: 2026-09-17 KST.
 
+Git 후속 상태: 사용자 승인으로 원본 Angular/Nest dev fast-forward 완료, 원본8repo 최신·clean. 통합 push는 Angular/Electron/Web API 완료, 나머지5repo는 자동 권한 검토 거절로 정확한 목적지 승인 대기. [상세 최신 결과](../implementation/2026-09-17-integration-commit-proposal.md)를 아래 이전 단계 표현보다 우선한다. 출시 후 API 호환 TODO는 사용자 지시대로 [`.codex/todos`](../todos/2026-09-16-post-launch-desktop-api-compatibility.md)로 이동했다.
+
 **먼저 [작업 현황판](WORKBOARD.md)을 읽고, 사용자가 선택한 작업카드로 이동한다.** 여러 작업이 병행 중이며 이 파일은 특정 작업을 자동으로 최우선 지정하지 않는다.
 
 1. 사용자 요청과 현황판을 대조한다. 애매하면 후보를 짧게 확인한다.
