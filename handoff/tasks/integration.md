@@ -1,5 +1,13 @@
 # 운영·dev 통합 및 main 반영
 
+## 2026-09-18 개발 DB 복제본 리허설 최신 상태
+
+[개발 DB 복제본 PG 전환 리허설 결과](../../implementation/2026-09-18-development-db-clone-rehearsal-result.md)를 현재 정본으로 사용한다. 사용자가 m2-db에서 만든 User/Admin/Release read-only dump를 별도 59433–59435 PostgreSQL 16 clone에 복원해 migration, 반복 no-op, 핵심 ID 해시 보존, API health, 기존 사용자 무료체험 소급 방지, 별도 rollback-check DB의 원본 dump 복원을 확인했다. 실제 개발 DB·서비스·배포는 변경하지 않았다.
+
+기존 사용자·로그인·프로젝트·운영자/provider/release 데이터는 보존되고, 옛 이용권·credit ledger·operation history·review payment만 승인된 출시 전 정책대로 제거되어 새 PG 금융 테이블은 0행이다. migration down은 삭제 행을 복구하지 않으므로 실제 rollback은 전환 직전 세 DB dump 복원이다.
+
+새 게이트: 공개 `/catalog`가 네 tier 모두 `entitlement_mode=all`인데도 과거 allowlist row를 Basic5/Pro6/Business0 `pluginKeys`로 노출한다. operation 시작은 access/allowlist를 보지 않아 실제 기능 제한은 없지만, “모든 요금제 동일 기능” 계약과 API 표현이 어긋난다. 장래 차등 사용 여부는 미정이라는 기존 결정을 유지하면서 현 네 tier의 노출을 동일하게 만드는 최소 보완안을 사용자에게 설명하고 승인받기 전에는 코드를 수정하거나 실제 개발서버 전환 계획으로 넘어가지 않는다.
+
 ## 최신 Git 후속 상태
 
 원본 checkout 전환 완료: 사용자 “응” 승인 후 원본8repo를 `integration/dev-pg-local-validation-20260917`로 전환했다. 기존 통합 worktree8개는 같은 HEAD에서 detach해 보존했다. 원본은 clean 및 origin 통합 참조와 일치, dev 참조는 origin/dev와 계속 일치한다. `checkout --no-overwrite-ignore` 사용, 기존 ignored 환경파일11개(앱 산출물 내부2개 포함) 전후 SHA256 비교 불변. 비밀값 출력/복사/수정 없음. 원본 환경의 Nest `.env.local` DB 호스트가 비-loopback이며 실제 사용 여부는 미확인이다. 앱 실행 전 환경 로딩·연결 목적지·로컬 포트·의존성/산출물을 점검한다. 기존 통합 Nest cwd Node4개는 종료하지 않았다. 앱/DB/ML 실행·코드커밋·코드push·병합 없음. 앞으로 검증은 원본 폴더에서 하며 아래 옛 작업위치 설명보다 이 절이 우선한다.

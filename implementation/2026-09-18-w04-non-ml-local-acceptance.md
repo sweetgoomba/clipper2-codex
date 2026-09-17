@@ -4,7 +4,7 @@
 
 ## 결론
 
-정식 PG 통합 브랜치의 비-ML 자동 검증과 별도 폐기 가능 PostgreSQL 검증을 통과했다. 실제 ML 플러그인 실행, Build 5 전체 QA, 개발 DB 복제본 rehearsal, 개발서버 배포·DB 변경은 수행하지 않았다. 따라서 이 결과는 **로컬 비-ML 코드/DB 경계 통과**이며 개발서버 전환 승인이나 전체 W04 완료 판정이 아니다.
+정식 PG 통합 브랜치의 비-ML 자동 검증과 별도 폐기 가능 PostgreSQL 검증을 통과했다. 이후 실제 개발 DB read-only dump를 사용한 clone migration·rollback rehearsal도 완료했으며 [별도 결과 문서](2026-09-18-development-db-clone-rehearsal-result.md)에 기록했다. 실제 ML 플러그인 실행, Build 5 전체 QA, 개발서버 배포·DB 변경은 수행하지 않았다. 따라서 이 결과는 **로컬 비-ML 코드/DB 경계 통과**이며 개발서버 전환 승인이나 전체 W04 완료 판정이 아니다.
 
 ## 검증 작업 공간
 
@@ -68,15 +68,37 @@
 
 ## 남은 항목
 
-1. 설치형 앱에서 실제 렌더를 쓰지 않는 방식의 네트워크 offline→online terminal outbox/잔액 UI 실기는 자동화 증거로 대체 가능한 범위를 더 판단해야 한다. 실제 렌더 실패·성공은 ML HOLD 때문에 이번에 실행하지 않았다.
-2. 개발 DB 복제본에서 데이터 분류·전환 rehearsal 및 dump 복원 rollback 검증.
-3. 결과를 사용자와 확인한 뒤에만 개발서버 전환 계획 작성. 서버 명령은 사용자가 실행한다.
+1. 설치형 앱의 pending terminal outbox는 먼저 유료 operation을 만든 뒤 종결 보고가 실패해야 생성된다. 실제 렌더 실패·성공은 ML HOLD이므로 제품 플로우를 통한 offline→online 실기는 함께 HOLD한다. 로컬 outbox 파일이나 크레딧 원장을 임의로 조작하는 합성 실기는 하지 않는다.
+2. 개발 DB 복제본의 데이터 분류·전환 rehearsal 및 dump 복원 rollback은 완료했다. `/catalog`의 stale `pluginKeys` 의미 불일치를 정리한 뒤 새 clone으로 재검증해야 한다.
+3. 보완 결과를 사용자와 확인한 뒤에만 개발서버 전환 계획 작성. 서버 명령은 사용자가 실행한다.
 4. Windows 설치파일/동시 설치·로그인·업데이트 cache 실기는 사용자 Windows 서버에서 수행한다.
 5. 운영판과 새 개발판 macOS 동시 설치·실행 및 각 protocol 딥링크 실기는 W09에 남아 있다.
 
 ## 변경·배포 상태
 
-- 새 병합 0, push 0, dev/main 변경 0, 배포 0, 원격 DB 변경 0.
+- 추가 병합 0, dev/main 변경 0, 배포 0, 원격 DB 변경 0.
 - 코드 커밋: Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`. 모두 원격 통합 브랜치 push·로컬/원격 SHA 일치·clean.
 - `.codex` 결과/인계 문서도 승인된 `main` push로 보존한다.
 - 실제 ML/Build 5 전체 QA, Mac 공개·자동빌드·자동업데이트 HOLD 유지.
+
+## 2026-09-18 offline/online 경계 집중 재검증
+
+- Nest terminal outbox·재시작·confirmation·start recovery·crash 경계 27/27 PASS.
+- Angular operation recovery와 account summary 갱신 24/24 PASS.
+- 최초 Angular 실행은 현재 셸의 지원되지 않는 Node 24.3.0 때문에 중단됐다. Node 22.22.3으로 바꾼 뒤 두 실행 중 Angular disk cache LMDB 충돌(SIGABRT)과 sandbox loopback bind `EPERM`을 각각 확인했다. 이미 실행 중인 개발 서버를 건드리지 않고 `CI=1`로 disk cache를 끄고 loopback 허용 환경에서 재실행한 최종 결과만 검증 증거로 사용한다.
+- 설치형 실기를 억지로 만들기 위한 금융 원장·outbox 수동 조작은 하지 않는다. 다음 단계는 개발 DB 원본을 변경하지 않는 read-only 대상 확인과 dump 복제본 rehearsal이다.
+
+## 2026-09-18 개발 DB read-only dump
+
+- 실행 장비: 개발 DB 컨테이너가 실행 중인 `metabuzz@metabuzzui-Macmini` (`m2-db`). 에이전트가 서버에 접속하지 않고 사용자가 명령을 실행했다.
+- 대상 확인: `clipper-db-{user,admin,release}-dev`, PostgreSQL 16.14, DB `clipper_{user,admin,release}_dev`, 세 DB 모두 연결 정상.
+- 원본 경로: `/Users/metabuzz/clipper-backups/dev-pg-rehearsal-20260918-023009`.
+- `pg_dump -Fc --no-owner --no-acl` 뒤 각 파일을 `pg_restore --list`로 검사했다. 원본 DB·컨테이너·서비스 변경은 없고 세 DB는 순차 snapshot이다.
+
+| DB | bytes | SHA256 |
+|---|---:|---|
+| user | 483458 | `a5a30118b1fc4b304a28fa0a390cc5e5c885f88ff786f17b22cbb205ed009946` |
+| admin | 129824 | `2f9dbdbc58fbe9bb3e2d72298d446aeb171001ff95552076205bfe837c040b28` |
+| release | 76420 | `1f7fb82638240ce3f777086e93148a9e0c09d1c594bdb244c3e943e45a890202` |
+
+- 로컬 수신 경로는 Git 작업공간 밖의 `/Users/jina/clipper-backups/dev-pg-rehearsal-20260918-023009`이다. 세 파일의 크기·SHA를 재확인한 뒤 59433–59435 전용 clone에 복원해 migration·API·rollback rehearsal을 완료했다. 상세 수치와 새 catalog 게이트는 [개발 DB 복제본 결과](2026-09-18-development-db-clone-rehearsal-result.md)를 따른다.

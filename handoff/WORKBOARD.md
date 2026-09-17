@@ -2,7 +2,7 @@
 
 ## 최신 W04: 비-ML 로컬 PG acceptance
 
-2026-09-18 Desktop Nest build 및 대상 115+41+37, Angular 202, Web API build와 대상 61/107/63, Electron build·전체 975 PASS. 새 격리 DB `clipper-pg-w04-20260918-*`에서 Admin64/Release3/User10 migration, access/credit 정책 e2e 1 PASS, 모든 현행 tier `entitlement_mode=all`을 확인하고 컨테이너를 중지했으며 전용 volume은 보존했다. 기존 개발/로그인/원격 DB는 변경하지 않았다. 후속 리뷰의 installer 종류 교차검증과 Windows 최종 package/feed/cache 검증도 보완했다. 운영 package/cache는 승인된 `clipper-studio` / `clipper-studio-updater`, 개발은 `clipper-studio-dev` / `clipper-studio-dev-updater`다. 후속 Electron build·전체975, Web API build·전체2,884 PASS(21 SKIP), Web Admin build·전체571 PASS, Infra 전체36 PASS. Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`를 각 원격 통합 브랜치에 push했고 로컬/원격 SHA 일치·clean이다. [상세 결과](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 설치형 offline/online 비-ML 경계의 추가 실기 범위 확인 후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5와 서버 변경 HOLD.
+2026-09-18 비-ML 자동 acceptance 뒤 실제 dev DB 복제본 rehearsal까지 완료했다. m2-db의 read-only custom dump 3개를 크기·SHA로 재확인하고 새 59433–59435 clone에 복원해 User/Release/Admin migration, no-op 재실행, 핵심 ID 해시 보존, dump 복원 rollback, clone API health를 통과했다. 기존 사용자·로그인·프로젝트·운영자/provider/release는 보존되고 옛 이용권·credit ledger·operation history·review payment만 승인 정책대로 제거되어 신규 PG 금융 테이블은 0행이다. 기존 사용자20명에게 무료체험 소급 지급 없음도 API 기동 전후 확인했다. 실제 개발 DB·서비스·배포는 변경하지 않았다. 단 `/catalog`가 모든 tier `entitlement_mode=all`임에도 과거 allowlist를 Basic5/Pro6/Business0으로 노출한다. 런타임 과금은 유효 credit 기준이라 기능 제한은 없지만 의미상 계약 정리가 새 게이트다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 이 보완 범위를 승인받는 것이며 실제 ML/Build5와 서버 변경 HOLD.
 
 ## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
 
@@ -33,7 +33,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB acceptance PASS. 설치형 offline/online 추가 실기 범위 확인 및 개발 DB 복제본 rehearsal 남음 | [2026-09-18 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB와 실제 dev DB 복제본 migration·rollback PASS. catalog의 stale pluginKeys 계약 보완 승인 대기 | [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
