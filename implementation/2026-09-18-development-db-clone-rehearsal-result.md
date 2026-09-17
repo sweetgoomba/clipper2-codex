@@ -8,7 +8,7 @@
 
 Migration 자체와 사용자·로그인·프로젝트·운영자·provider credential·release 데이터 보존은 통과했다. 기존 개발 금융·이용권·operation 이력은 승인된 출시 전 정책대로 제거되고 새 PG 금융 원장은 빈 상태로 시작한다. 기존 20명에게 무료체험이 소급 지급되지 않는 것도 API 기동 전후 수치로 확인했다.
 
-단, 공개 `/catalog` 응답에는 `entitlement_mode=all`과 함께 과거 allowlist row가 그대로 노출되어 Basic에서 `variation`이 빠지고 Business는 빈 `pluginKeys`로 보이는 의미상 불일치가 발견됐다. 실제 operation 시작은 access/allowlist가 아니라 유효 크레딧을 기준으로 하므로 현재 코드에서 기능을 막지는 않지만, API 소비자와 미래 작업자를 오도할 수 있다. 새 코드 수정 범위를 사용자에게 설명하고 승인받기 전까지 실제 개발 DB 전환 계획 확정으로 넘어가지 않는다.
+첫 리허설에서 공개 `/catalog`가 `entitlement_mode=all`인데도 과거 allowlist row를 Basic5/Pro6/Business0으로 노출하는 의미상 불일치를 발견했다. 사용자 승인 후 Web API가 `all` tier를 현재 등록된 전체 6개 plugin key로 파생해 반환하도록 고치고, `all` tier의 저장된 allowlist row를 제거하는 migration을 추가했다. 같은 원본 dump를 새 59533–59535 clone에 다시 복원한 2차 리허설에서 migration·반복 no-op·보존 해시·API health·catalog 계약·기존 사용자 무료체험 비소급을 모두 통과했다.
 
 ## 원본 dump
 
@@ -136,7 +136,29 @@ DB의 네 tier는 모두 `entitlement_mode=all`이고 operation 시작 경로는
 - Pro: 여섯 plugin key 노출
 - Business: 빈 `pluginKeys`
 
-웹 가격 화면은 이미 “모든 요금제에서 같은 기능”만 표시해 현재 이 배열을 고객 기능표로 쓰지 않는다. Admin UI도 plugin 편집을 노출하지 않는다. 그럼에도 API 모델과 DB에는 차등처럼 보이는 값이 남아 있어 계약이 모호하다. 현재 사용자 결정은 장래 차등 사용 여부가 미정이므로 allowlist 스키마를 즉시 삭제하지 않되, 현 정책의 네 tier가 동일하게 보이도록 seed/API 계약을 정리하는 최소 수정안을 우선 제안한다. 승인 전 코드는 변경하지 않는다.
+웹 가격 화면은 이미 “모든 요금제에서 같은 기능”만 표시해 현재 이 배열을 고객 기능표로 쓰지 않는다. Admin UI도 plugin 편집을 노출하지 않는다. 그럼에도 API 모델과 DB에는 차등처럼 보이는 값이 남아 있어 계약이 모호했다.
+
+### catalog 계약 보완 및 2차 clone 재검증
+
+사용자 승인 뒤 다음 최소 보완을 적용했다.
+
+- `entitlement_mode=all`이면 공개 catalog, Admin catalog, 현재 access 응답이 DB allowlist row가 아니라 현재 등록된 6개 plugin key를 정렬해 반환한다.
+- allowlist tier는 저장된 목록을 계속 사용한다. 장래 요금제 차등 여부가 미정이므로 allowlist 스키마 자체는 삭제하지 않았다.
+- 관리 API가 tier row를 pessimistic lock으로 잠근 같은 transaction에서 모드 변경·plugin row 정리를 수행한다. 따라서 동시 요청도 `all` tier에 plugin row를 다시 남길 수 없고, allowlist에서 all로 바꿀 때 기존 row가 원자적으로 비워진다.
+- `NormalizeAllTierPluginEntitlements1789300000000` migration이 현재 `all` tier의 `plan_plugin_entitlements` row만 삭제한다. 삭제된 과거 파생 목록은 정본이 아니므로 down에서 임의 복원하지 않는다.
+
+코드 검증은 build PASS, 관련 72 PASS, 전체 Web API 2,892 PASS / 21 SKIP이다. 샌드박스 전체 실행의 80개 `listen EPERM`은 로컬 HTTP bind 허용 환경에서 재실행해 전부 통과했다. 독립 코드 리뷰에서 발견한 관리 요청 경쟁 조건은 repository transaction·tier row lock·bound manager 재사용으로 수정한 뒤 전체 검증을 다시 통과했다.
+
+2차 리허설은 기존 첫 clone을 수정하지 않고 새 `clipper-pg-dev-clone-v2-20260918-{user,admin,release}`와 59535/59533/59534를 사용했다. 같은 dump SHA를 확인하고 빈 DB에 다시 복원한 뒤 전체 migration을 적용했으며 두 번째 실행은 세 DB 모두 `No pending migrations`였다. 결과는 다음과 같다.
+
+- trial/basic/pro/business: 모두 `all`, 저장된 plugin entitlement row 0.
+- `/catalog`: Basic/Pro/Business 모두 `dance_highlight`, `dialog_highlight`, `shortform_paste`, `shortform_prompt`, `shortform_url`, `variation` 여섯 key 반환.
+- `/health`: user/release/admin 모두 `ok`.
+- users 20, sessions 162, auth codes 161, projects 1,481 및 문서의 기존 ID 해시가 모두 동일.
+- operators 3, provider credentials 7, release versions/builds/artifacts/events 및 ID 해시가 모두 동일.
+- onboarding jobs, access grants, credit grants, free trials, subscriptions, payment orders, operation runs는 API 호출 뒤에도 0.
+
+임시 3012 API와 2차 clone 컨테이너는 검증 후 종료했다. 2차 clone volume과 dump는 다음 확인을 위해 보존했다. 실제 개발 DB·서버에는 접속하거나 변경하지 않았다.
 
 ## rollback 리허설
 
@@ -149,17 +171,14 @@ DB의 네 tier는 모두 `entitlement_mode=all`이고 operation 시작 경로는
 
 ## 남은 게이트
 
-1. catalog의 stale `pluginKeys`를 네 tier 동일 계약으로 정리할지 사용자 승인 후 코드·migration·테스트 보완.
-2. 보완 후 dump에서 새 clone을 다시 만들어 migration/API smoke를 처음부터 재실행.
-3. 실제 개발서버 전환 명령과 정지 시간, 최종 dump, 순서, post-check, restore rollback 명령을 문서화하고 사용자 확인.
-4. 확인 뒤에만 사용자가 개발 DB migration·Web API/웹/새 개발판 배포를 실행.
-5. Windows 설치형 실기는 사용자 Windows 서버에서 수행.
-6. 실제 ML 플러그인과 Build 5 전체 QA HOLD 유지.
+1. 실제 개발서버 전환 명령과 정지 시간, 최종 dump, 순서, post-check, restore rollback 명령을 문서화하고 사용자 확인.
+2. 확인 뒤에만 사용자가 개발 DB migration·Web API/웹/새 개발판 배포를 실행.
+3. Windows 설치형 실기는 사용자 Windows 서버에서 수행.
+4. 실제 ML 플러그인과 Build 5 전체 QA HOLD 유지.
 
 ## 변경 상태
 
-- 이번 단계의 제품 코드 변경 0, 새 병합 0, 코드 commit/push 0.
+- Web API 제품 코드·테스트·Admin migration 9파일이 현재 통합 브랜치에 미커밋 상태다. 새 병합·코드 push는 없다.
 - 실제 개발 DB 변경 0, 개발서버 배포 0.
-- 로컬 clone DB와 rollback-check DB만 사용했고 rollback-check DB는 검증 후 제거했다.
-- clone 컨테이너 3개는 검증 후 중지했고, 재검증을 위해 컨테이너·전용 volume·dump는 보존했다.
-- `.codex` 결과/인계 문서만 갱신한다.
+- 1차·2차 clone 컨테이너는 검증 후 중지했고 전용 volume·dump는 보존했다. 1차 rollback-check DB는 검증 후 제거했다.
+- `.codex`의 이전 결과 commit `3a7a814`는 사용자 승인으로 `origin/main`에 push됐다. 이번 보완 결과 문서는 아직 미커밋이다.

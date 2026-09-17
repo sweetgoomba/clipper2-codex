@@ -2,7 +2,7 @@
 
 ## 최신 W04: 비-ML 로컬 PG acceptance
 
-2026-09-18 비-ML 자동 acceptance 뒤 실제 dev DB 복제본 rehearsal까지 완료했다. m2-db의 read-only custom dump 3개를 크기·SHA로 재확인하고 새 59433–59435 clone에 복원해 User/Release/Admin migration, no-op 재실행, 핵심 ID 해시 보존, dump 복원 rollback, clone API health를 통과했다. 기존 사용자·로그인·프로젝트·운영자/provider/release는 보존되고 옛 이용권·credit ledger·operation history·review payment만 승인 정책대로 제거되어 신규 PG 금융 테이블은 0행이다. 기존 사용자20명에게 무료체험 소급 지급 없음도 API 기동 전후 확인했다. 실제 개발 DB·서비스·배포는 변경하지 않았다. 단 `/catalog`가 모든 tier `entitlement_mode=all`임에도 과거 allowlist를 Basic5/Pro6/Business0으로 노출한다. 런타임 과금은 유효 credit 기준이라 기능 제한은 없지만 의미상 계약 정리가 새 게이트다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 이 보완 범위를 승인받는 것이며 실제 ML/Build5와 서버 변경 HOLD.
+2026-09-18 비-ML 자동 acceptance와 실제 dev DB 복제본 rehearsal을 완료했다. 첫 clone에서 발견한 `all` tier의 stale `pluginKeys`는 사용자 승인 뒤 Web API 응답 파생·관리 API 원자적 정리·Admin cleanup migration으로 보완했다. 독립 리뷰의 race 지적까지 tier row lock transaction으로 수정했고 build, 관련72, 전체2,892 PASS/21 SKIP. 같은 dump를 새 59533–59535 clone에 다시 복원한 2차 rehearsal에서 전체 migration/no-op, 핵심 ID 해시 보존, `/health`, 모든 유료 tier 동일 6 plugin key, 기존 사용자 무료체험 비소급을 통과했다. 실제 개발 DB·서비스·배포는 변경하지 않았다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 Web API 미커밋 9파일의 커밋 승인 및 개발서버 전환 런북 확인이며 실제 ML/Build5와 서버 변경 HOLD.
 
 ## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
 
@@ -33,7 +33,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB와 실제 dev DB 복제본 migration·rollback PASS. catalog의 stale pluginKeys 계약 보완 승인 대기 | [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB, 실제 dev dump 2회 clone migration·rollback PASS. stale pluginKeys 보완·동시성 리뷰 수정·2차 clone 검증 PASS, Web API 9파일 미커밋 | [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |

@@ -203,7 +203,7 @@ formal-PG와 최신 dev 모두 operation start 요청 DTO/DB에는 한 logical a
 
 ### 2026-09-18 비-ML 실행 결과
 
-자동/격리 DB 범위는 [W04 비-ML 로컬 PG acceptance 결과](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md)를 정본으로 한다. stable attempt/outbox/restart/cancel·delete/owner isolation/retry 새 attempt/잔액 refresh/runtime JSON validation/Shortform preflight/process 종료와 access·credit 정책 DB e2e가 통과했다. 모든 현행 tier의 실제 migration 결과는 `entitlement_mode=all`이다. 실제 ML 렌더 성공·실패를 발생시키는 설치형 실기와 개발 DB 복제본 rehearsal은 아직 남았으므로 아래 전체 체크리스트를 완료로 바꾸지 않는다.
+자동/격리 DB 범위는 [W04 비-ML 로컬 PG acceptance 결과](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md)를 정본으로 한다. stable attempt/outbox/restart/cancel·delete/owner isolation/retry 새 attempt/잔액 refresh/runtime JSON validation/Shortform preflight/process 종료와 access·credit 정책 DB e2e가 통과했다. 모든 현행 tier의 실제 migration 결과는 `entitlement_mode=all`이다. 실제 dev dump clone rehearsal도 2회 통과했고, 첫 clone에서 발견한 stale `pluginKeys`는 보완 뒤 새 clone에서 네 tier 저장 row 0과 유료 tier 동일 6-key API 계약을 확인했다. 실제 ML 렌더 성공·실패를 발생시키는 설치형 실기는 HOLD이므로 아래 전체 체크리스트를 완료로 바꾸지 않는다.
 
 다음 항목은 구현·병합 승인 뒤 별도 로컬 DB에서 모두 검증하며, 일부만 통과한 상태를 전체 검증 완료로 기록하지 않는다.
 
