@@ -77,6 +77,8 @@ Migration 자체와 사용자·로그인·프로젝트·운영자·provider cred
 
 ### 보존 결과
 
+아래는 리허설 당시 실제로 계산한 ID 집합 hash다. 이후 실행 런북 최종 검토에서 이 목록이 문서의 전체 보존 약속보다 좁다는 점을 발견했다. 특히 `shortform_workspaces`, `shortform_clips`, 오류·telemetry 하위 테이블과 Release 하위 테이블 일부가 빠져 있었다. 리허설의 migration 성공과 아래 결과가 무효가 된 것은 아니지만, 이 표만으로 전체 보존을 증명했다고 보지 않는다. 실제 개발 DB 전환 런북에는 dump에 존재하는 전체 보존 테이블의 count+ID hash를 전후 비교하도록 보강했다.
+
 | 데이터 | 전/후 결과 |
 |---|---|
 | users | 20, ID 집합 해시 `c65c1d1eab23af5f43d51c9fc7b9b0bc` 동일 |

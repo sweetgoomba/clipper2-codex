@@ -17,9 +17,9 @@
 
 ### 보존하는 것
 
-- User DB의 사용자, 로그인 세션, 데스크톱 auth code, 프로젝트와 클립.
-- Admin DB의 운영자, 운영자 세션, provider credential, 오류·telemetry 데이터.
-- Release DB의 release version/build/artifact/event.
+- User DB의 사용자, 로그인 세션, 데스크톱 auth code, 프로젝트·작업공간·클립, reference-analysis replay.
+- Admin DB의 운영자, 운영자 세션, provider credential, 구 Naver/OpenAI key source row, 오류·telemetry 데이터.
+- Release DB의 release version/source revision/build/runner job/artifact/artifact attempt/target/event 전체.
 - 기존 `API_KEY_ENC_SECRET`, Google OAuth 설정, JWT 키 파일. 특히 `API_KEY_ENC_SECRET`을 바꾸면 보존한 provider credential을 복호화하지 못하므로 전환 과정에서 회전하지 않는다.
 - m2-proxy의 기존 `dev.*` 도메인과 upstream. 이번 전환에서는 DNS/Nginx Proxy Manager를 바꾸지 않는다.
 
@@ -62,30 +62,30 @@
 
 ## 3. 고정할 source와 선행 게이트
 
-공통 브랜치: `integration/dev-pg-local-validation-20260917`
+공통 브랜치: `dev`
 
 | 저장소 | 검증한 HEAD | 원격 상태 |
 |---|---|---|
-| `desktop/clipper_angular` | `19b407a7a6de56d7a43428f688e3e4e7258fdc8d` | origin과 일치 |
-| `desktop/clipper_electron` | `d95c05058439a8be5c08d34ee3cb9890b2005b35` | origin과 일치 |
-| `desktop/clipper_nestjs` | `884fa8bc7abf5d802a142c918568d8e606041900` | origin과 일치 |
-| `desktop/clipper_python` | `60417ce865499df519971650a43a7ca1a82d9867` | origin과 일치 |
-| `web/clipper_infra` | `f0af3f52be99ed19b6594f25ac81ba2375ec3a05` | origin과 일치 |
-| `web/clipper_web_admin` | `01d0b93ad3c4b6803060c919ebd80d9ae656c142` | origin과 일치 |
-| `web/clipper_web_api` | `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f` | origin과 일치 |
-| `web/clipper_web_client` | `a4bc54b5852e82d0699f63e6198d409746dd0ee0` | origin과 일치 |
+| `desktop/clipper_angular` | `9dc31ec15da498fcd231132395491b0ffff9f500` | `origin/dev`와 일치 |
+| `desktop/clipper_electron` | `d95c05058439a8be5c08d34ee3cb9890b2005b35` | `origin/dev`와 일치 |
+| `desktop/clipper_nestjs` | `884fa8bc7abf5d802a142c918568d8e606041900` | `origin/dev`와 일치 |
+| `desktop/clipper_python` | `60417ce865499df519971650a43a7ca1a82d9867` | `origin/dev`와 일치 |
+| `web/clipper_infra` | `f0af3f52be99ed19b6594f25ac81ba2375ec3a05` | `origin/dev`와 일치 |
+| `web/clipper_web_admin` | `01d0b93ad3c4b6803060c919ebd80d9ae656c142` | `origin/dev`와 일치 |
+| `web/clipper_web_api` | `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f` | `origin/dev`와 일치 |
+| `web/clipper_web_client` | `a4bc54b5852e82d0699f63e6198d409746dd0ee0` | `origin/dev`와 일치 |
 
 전환 전 필수 게이트:
 
-1. Angular `19b407a7`와 Nest `884fa8bc`는 사용자 승인 후 원격 통합 브랜치에 push하고 원격 SHA 일치까지 확인했다. 이 두 커밋은 필수 템플릿 이관에서 기본 템플릿 중복을 막는다.
-2. 8개 원격 branch의 HEAD가 위 표와 일치한다. 하나라도 다르면 새 변경 범위를 다시 리뷰한다.
+1. Angular는 최신 `origin/dev`의 page guide 변경을 integration에 결합하고 clipboard spec 격리 결함까지 수정한 `9dc31ec1`로 전체 4,540 테스트를 통과했다. Nest `884fa8bc`와 함께 필수 템플릿 이관에서 기본 템플릿 중복을 막는다.
+2. 사용자 승인 후 8개 integration 결과를 모두 원격 `dev`에 fast-forward했고 `git ls-remote`로 위 SHA 일치를 확인했다. 하나라도 달라지면 새 변경 범위를 다시 리뷰한다.
 3. m2-stage의 네 web repo가 clean이다. dirty이면 자동 stash/reset/삭제하지 않고 중단한다.
 4. 현재 실행 image ID, Git branch/HEAD, env·secret 파일 hash를 기록한다.
 5. 실제 개발 DB dump 리허설과 로컬 acceptance 결과를 다시 읽는다.
    - [개발 DB 복제본 리허설 결과](2026-09-18-development-db-clone-rehearsal-result.md)
    - [비-ML 로컬 acceptance](2026-09-18-w04-non-ml-local-acceptance.md)
 
-push 직전 fresh 검증: Angular 전체 **4,494 PASS**, 스타일 계약 **6 PASS**, `build:devapp` PASS. Nest 전체 **2,685 PASS**, `npm run build` PASS. Nest 전체 테스트는 실제 개발 앱용 `.env.local`의 `CLIPPER_AUTH_MODE=jwt`를 테스트 자식 서버가 읽지 않도록 `CLIPPER_AUTH_MODE=local`을 명령에 명시했다. 인증 제품 코드는 완화하지 않았다. 이 테스트 파일이 개발자 환경파일에 의존하지 않도록 고정하는 보완은 후속 테스트 품질 항목이며, 이번 전환 source SHA에는 추가하지 않았다.
+push 직전 fresh 검증: Angular 전체 **4,540 PASS**, 스타일 계약 **6 PASS**, `build:devapp` PASS. Angular의 일반 로컬 build는 persistent cache LMDB native addon crash가 있어 Node24 `CI=1`로 cache를 끈 동일 source build를 확인했다. Nest 전체 **2,685 PASS**, `npm run build` PASS. Nest 전체 테스트는 실제 개발 앱용 `.env.local`의 `CLIPPER_AUTH_MODE=jwt`를 테스트 자식 서버가 읽지 않도록 `CLIPPER_AUTH_MODE=local`을 명령에 명시했다. 인증 제품 코드는 완화하지 않았다. 이 테스트 파일이 개발자 환경파일에 의존하지 않도록 고정하는 보완은 후속 테스트 품질 항목이며, 이번 전환 source SHA에는 추가하지 않았다.
 
 ## 4. Gate A — m2-stage 사전 조사와 기존 실행물 보존
 
@@ -175,7 +175,7 @@ Gate A 통과 조건:
 - 이전 image 세 개의 rollback tag와 tar 생성 완료.
 - 이 단계까지 서비스 중단·DB 변경 0건.
 
-## 5. Gate B — m2-stage 통합 source 고정과 새 image 사전 빌드
+## 5. Gate B — m2-stage 승인된 dev source 고정과 새 image 사전 빌드
 
 목적: 중단 전에 새 image 세 개를 만들고 정확한 source revision을 검증한다.
 
@@ -186,7 +186,7 @@ Gate A 통과 조건:
 ```sh
 set -eu
 root=/Users/metabuzz/Desktop/project/clipper2
-branch=integration/dev-pg-local-validation-20260917
+branch=dev
 
 prepare_repo() {
   repo="$1"
@@ -217,6 +217,8 @@ if ! sh scripts/validate-toss-payments-env.sh env/stack.dev.env; then
 fi
 sh scripts/deploy-dev.sh all --build-only
 ```
+
+`deploy-dev.sh --build-only`도 내부에서 대상 repo를 한 번 더 `pull --ff-only`한다. 따라서 아래의 build 직후 HEAD·image revision 검사는 생략할 수 없다. 준비 도중 원격 branch가 움직여 예상 SHA와 달라지면 현재 실행 컨테이너는 아직 옛 image를 사용하므로 Gate C로 가지 않고 중단한다. 새 `:dev` image tag만 바뀐 상태이며, 변경 범위를 다시 리뷰·승인한 뒤에만 재개한다.
 
 `stack.dev.env`은 기존 파일을 유지하면서 최소한 다음 계약을 만족해야 한다. 값은 채팅이나 로그에 출력하지 않는다.
 
@@ -347,6 +349,9 @@ SELECT 'users|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id
 SELECT 'user_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM user_sessions;
 SELECT 'desktop_auth_codes|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_auth_codes;
 SELECT 'shortform_projects|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_projects;
+SELECT 'shortform_workspaces|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_workspaces;
+SELECT 'shortform_clips|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_clips;
+SELECT 'shortform_director_reference_analysis_replays|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_director_reference_analysis_replays;
 SQL
 
 docker exec -i clipper-db-admin-dev sh -eu -c \
@@ -355,47 +360,96 @@ docker exec -i clipper-db-admin-dev sh -eu -c \
 SELECT 'operators|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM operators;
 SELECT 'operator_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM operator_sessions;
 SELECT 'provider_credentials|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM provider_credentials;
+SELECT 'naver_search_keys|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM naver_search_keys;
+SELECT 'openai_keys|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM openai_keys;
+SELECT 'error_reports|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM error_reports;
+SELECT 'desktop_error_reports|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_error_reports;
+SELECT 'desktop_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_sessions;
+SELECT 'desktop_signature_groups|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_signature_groups;
 SQL
 
 docker exec -i clipper-db-release-dev sh -eu -c \
   'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At' \
   > "$dump_dir/preserve-release-before.txt" <<'SQL'
 SELECT 'release_versions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_versions;
+SELECT 'release_source_revisions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_source_revisions;
 SELECT 'release_builds|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_builds;
+SELECT 'release_runner_jobs|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_runner_jobs;
 SELECT 'release_artifacts|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_artifacts;
+SELECT 'release_artifact_attempts|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_artifact_attempts;
+SELECT 'release_targets|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_targets;
 SELECT 'release_events|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_events;
 SQL
 ```
 
-### 7-3. 삭제 대상 재확인
+이 검사는 각 보존 테이블의 **행 수와 ID 집합**이 유지되는지를 확인한다. 신규 nullable column 추가처럼 승인된 schema 변화는 허용하되, 행의 유실·추가를 잡는 목적이다. secret 평문이나 개인정보는 출력하지 않는다. 위 테이블 중 하나라도 실제 전환 직전에 존재하지 않으면 쿼리를 지워서 통과시키지 말고, rehearsal dump와 실제 DB schema가 달라진 원인을 먼저 확인한다.
 
-Admin DB에서 count만 확인한다.
+### 7-3. migration 기준선과 삭제 대상 재확인
+
+먼저 세 DB의 현재 migration 기준선이 rehearsal dump와 같은 계열인지 확인한다. 사용자·프로젝트처럼 정상적으로 늘 수 있는 행 수와 달리, 이 단계에서 migration history가 달라졌다면 schema 가정 자체가 달라진 것이므로 중단한다.
+
+```sh
+for c in clipper-db-user-dev clipper-db-admin-dev clipper-db-release-dev; do
+  printf '\n%s\n' "$c"
+  docker exec "$c" sh -lc '
+    psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "
+      SELECT count(*) FROM migrations;
+      SELECT name FROM migrations ORDER BY timestamp DESC, id DESC LIMIT 5;
+    "
+  '
+done
+```
+
+rehearsal dump의 마지막 적용점은 User `DropShortformDirectorGeneratedMediaJobs1787800000000`, Admin `CreateDesktopSignatureGroups1789000100000`, Release `AddReleaseArtifactSha5121782790000000`이다. 이름·개수가 달라졌다면 실제 DB에 일부 migration이 이미 적용됐거나 새 배포가 있었을 수 있으므로 아래 삭제 판단을 그대로 사용하지 않는다.
+
+그다음 Admin DB에서 기존 정리 대상과 새 PG 테이블의 존재 여부·count를 확인한다. 새 PG 테이블은 rehearsal 원본에는 아직 없으므로, 존재하지 않는 테이블을 직접 `SELECT`해서 정상 흐름이 실패하지 않도록 `to_regclass`와 `\gexec`를 사용한다.
 
 ```sh
 docker exec -i clipper-db-admin-dev sh -eu -c \
   'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -P pager=off' <<'SQL'
-SELECT 'licenses' AS table_name, count(*) FROM licenses
-UNION ALL SELECT 'purchase_requests', count(*) FROM purchase_requests
-UNION ALL SELECT 'credit_ledger', count(*) FROM credit_ledger
-UNION ALL SELECT 'operation_runs', count(*) FROM operation_runs
-UNION ALL SELECT 'payment_orders', count(*) FROM payment_orders
-UNION ALL SELECT 'payment_events', count(*) FROM payment_events
-UNION ALL SELECT 'user_access_grants', count(*) FROM user_access_grants
-UNION ALL SELECT 'credit_grants', count(*) FROM credit_grants
-UNION ALL SELECT 'credit_ledger_entries', count(*) FROM credit_ledger_entries
-UNION ALL SELECT 'user_free_trials', count(*) FROM user_free_trials
-UNION ALL SELECT 'subscriptions', count(*) FROM subscriptions;
+SELECT CASE
+  WHEN to_regclass(format('public.%I', table_name)) IS NULL
+    THEN format('SELECT %L AS result;', table_name || '|absent')
+  ELSE format('SELECT %L || count(*)::text AS result FROM public.%I;', table_name || '|present|', table_name)
+END
+FROM (VALUES
+  ('licenses'),
+  ('purchase_requests'),
+  ('plans'),
+  ('credit_ledger'),
+  ('token_usage'),
+  ('operation_runs'),
+  ('payment_orders'),
+  ('payment_events'),
+  ('user_access_grants'),
+  ('credit_grants'),
+  ('credit_ledger_entries'),
+  ('user_free_trials'),
+  ('subscriptions')
+) AS tables(table_name)
+\gexec
 SELECT status, toss_mode, count(*)
 FROM payment_orders
 GROUP BY status, toss_mode
 ORDER BY status, toss_mode;
 SQL
+
+docker exec -i clipper-db-user-dev sh -eu -c \
+  'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -P pager=off' <<'SQL'
+SELECT CASE
+  WHEN to_regclass('public.user_onboarding_jobs') IS NULL
+    THEN format('SELECT %L AS result;', 'user_onboarding_jobs|absent')
+  ELSE format('SELECT %L || count(*)::text AS result FROM public.user_onboarding_jobs;', 'user_onboarding_jobs|present|')
+END
+\gexec
+SQL
 ```
 
 다음이면 중단하고 다시 승인받는다.
 
+- migration 기준선이 위 rehearsal 적용점과 다름.
 - `toss_mode`가 `LIVE`인 paid row가 하나라도 있음.
-- rehearsal과 달리 `user_access_grants`, `credit_grants`, `credit_ledger_entries`, `user_free_trials`, `subscriptions` 중 하나라도 0이 아니거나, 새 PG로 보존해야 할 실제 구독·결제·grant/ledger 데이터가 발견됨.
+- rehearsal과 달리 `user_access_grants`, `credit_grants`, `credit_ledger_entries`, `user_free_trials`, `subscriptions`, `user_onboarding_jobs` 중 하나라도 이미 존재하거나, 새 PG로 보존해야 할 실제 구독·결제·grant/ledger 데이터가 발견됨.
 - dump 생성, `pg_restore --list`, hash 기록 중 하나라도 실패.
 - API 중지 뒤에도 예상하지 못한 DB 쓰기가 계속됨.
 
@@ -479,6 +533,9 @@ SELECT 'users|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id
 SELECT 'user_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM user_sessions;
 SELECT 'desktop_auth_codes|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_auth_codes;
 SELECT 'shortform_projects|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_projects;
+SELECT 'shortform_workspaces|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_workspaces;
+SELECT 'shortform_clips|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_clips;
+SELECT 'shortform_director_reference_analysis_replays|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM shortform_director_reference_analysis_replays;
 SQL
 
 docker exec -i clipper-db-admin-dev sh -eu -c \
@@ -487,14 +544,24 @@ docker exec -i clipper-db-admin-dev sh -eu -c \
 SELECT 'operators|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM operators;
 SELECT 'operator_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM operator_sessions;
 SELECT 'provider_credentials|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM provider_credentials;
+SELECT 'naver_search_keys|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM naver_search_keys;
+SELECT 'openai_keys|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM openai_keys;
+SELECT 'error_reports|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM error_reports;
+SELECT 'desktop_error_reports|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_error_reports;
+SELECT 'desktop_sessions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_sessions;
+SELECT 'desktop_signature_groups|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM desktop_signature_groups;
 SQL
 
 docker exec -i clipper-db-release-dev sh -eu -c \
   'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At' \
   > "$dump_dir/preserve-release-after.txt" <<'SQL'
 SELECT 'release_versions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_versions;
+SELECT 'release_source_revisions|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_source_revisions;
 SELECT 'release_builds|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_builds;
+SELECT 'release_runner_jobs|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_runner_jobs;
 SELECT 'release_artifacts|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_artifacts;
+SELECT 'release_artifact_attempts|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_artifact_attempts;
+SELECT 'release_targets|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_targets;
 SELECT 'release_events|'||count(*)||'|'||coalesce(md5(string_agg(id::text,',' ORDER BY id::text)),md5('')) FROM release_events;
 SQL
 
@@ -694,7 +761,7 @@ rollback tag가 없으면 tar hash를 확인한 뒤 `docker load -i "$backup_dir
 
 마지막으로 이전 `/health`, 로그인, 사용자·프로젝트 수를 확인한다. rollback 완료 후에도 새 PG 전환을 자동 재시도하지 않는다. 실패 원인과 어느 Gate에서 중단됐는지를 먼저 기록하고 새 승인을 받는다.
 
-서비스 복구 후 source checkout도 4-1의 `source-before.txt`에 기록한 각 branch/HEAD로 돌려놓는다. 이때도 repo가 clean인지 확인하고 `git switch`만 사용하며 reset/merge/rebase는 하지 않는다. 기록한 branch가 원격과 달라졌다면 임의로 맞추지 말고 다시 확인한다.
+서비스 복구 후 source checkout도 4-1의 `source-before.txt`에 기록한 각 branch/HEAD를 기준으로 복구한다. 단순히 이전 branch로 `git switch`하는 것만으로 기록한 HEAD까지 복원되는 경우에만 실행한다. Gate B의 fast-forward로 이전 branch pointer 자체가 이동했거나 기록한 HEAD와 달라졌다면 reset/rebase로 임의 복구하지 않는다. 저장된 branch/HEAD와 현재 상태를 보여주고 별도 복구 명령을 다시 승인받는다. source checkout이 늦어져도 rollback image로 실행 중인 서비스에는 영향을 주지 않는다.
 
 ## 13. 즉시 중단 조건
 
@@ -726,6 +793,8 @@ rollback tag가 없으면 tar hash를 확인한 뒤 `docker load -i "$backup_dir
 - 실제 ML/Build 5, Windows 실기, macOS 자동 업데이트 HOLD 상태.
 
 ## 15. 현재 다음 행동
+
+사용자는 2026-09-18 로컬 `.env`의 Google OAuth client secret을 교체하지 않고 현재 설정을 유지하기로 결정했다. 이 결정 자체는 Gate A blocker로 두지 않는다. 다만 secret 값은 채팅·문서·명령 출력에 다시 노출하지 않고 Git에도 포함하지 않는다.
 
 1. 이 런북을 사용자와 검토해 명령·중단 범위·복구 방식을 확정한다.
 2. 실제 전환 날짜와 60분 점검 창을 정한다.

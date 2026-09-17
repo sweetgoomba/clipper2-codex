@@ -1,8 +1,16 @@
 # 작업 현황판
 
-## 최신 W04: 개발서버 전환 런북 검토 대기
+## 최신 W04 Git 게이트: 8repo 원격 dev 반영 완료·Gate B 재개 승인 전
 
-2026-09-18 실제 개발서버/DB는 변경하지 않은 채 [정식 PG 전환 실행 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md)을 검토용으로 작성했다. m2-stage의 기존 image/env/secret 보존과 새 image 사전 build, 전체 쓰기 정지 뒤 m2-db 세 DB 최종 dump·두 번째 복사본·보존 hash, User→Admin→Release migration, no-op/정책 검증, 서비스·새 개발판 smoke, 실패 시 세 DB와 세 image 동시 rollback을 명시했다. Infra 배포·PG env 자동검증 95 PASS. Web API `fe58b65`, Angular `19b407a7`, Nest `884fa8bc`와 Web/Admin/Infra/Client가 원격 통합 branch와 일치한다. Angular 전체4,494+스타일6/build, Nest 전체2,685/build를 push 직전 fresh 검증했다. 현재 런북·handoff 변경은 이번 `.codex` 문서 커밋 대상이며 실제 server/DB/deploy 0건, ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지.
+사용자에게 정확한 8repo 출발/목표 SHA와 기능·영향·검증을 제시하고 승인받아, 모두 force 없이 원격 `dev`에 fast-forward했다. `git ls-remote`로 Angular `9dc31ec1`, Electron `d95c050`, Nest `884fa8bc`, Python `60417ce`, Infra `f0af3f5`, Web Admin `01d0b93`, Web API `fe58b65`, Web Client `a4bc54b`의 일치를 확인했다. repo-defined GitHub Actions는 없고 m2-stage source/image/container/DB 변경은 0건이다. 런북 Gate B는 integration 직접 checkout이 아니라 `dev`와 고정 SHA를 사용하도록 수정했다. 다음은 `.codex` 문서 commit/push와 별도 사용자 승인 후 Gate B source pull/build-only다. ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지. [실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+
+## 직전 W04 Git 게이트 기록: Angular 최신 dev 통합·전체 검증·integration push
+
+사용자 승인 범위에서 Angular integration `19b407a7`에 최신 `origin/dev` `7c04e14e`를 로컬 merge해 `4c7993cd`를 만들었다. 자동 충돌 없음, dev의 페이지 가이드 시트 22파일과 기존 PG 통합 변경의 파일 교집합 0개. 최초 전체 테스트에서 드러난 기존 clipboard 실패 spec의 격리 결함은 사용자 승인 후 제품 코드 변경 없이 실패 결과 stub 한 줄로 보완했다. 수정 후 대상4/4, 전체4,540/4,540, 스타일6/6, Node24 `CI=1 build:devapp` PASS. 보완은 `9dc31ec1`로 commit해 integration branch에 push했고 fetch 후 원격 SHA 일치까지 확인했다. 8repo dev 반영·Gate B는 중단 상태다. 다음은 최신 원격 상태를 다시 확인해 정확한 8repo `dev` 반영 범위와 SHA를 제시하고 승인받는 것이다. 최종 통합 결과를 승인 후 `dev`에 반영하며 개발서버가 integration branch를 직접 쓰지 않도록 한다. [실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+
+## 최신 W04: 개발서버 전환 런북 교차검토 완료·전환 시점 결정 대기
+
+2026-09-18 실제 개발서버/DB는 변경하지 않은 채 [정식 PG 전환 실행 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md)을 실제 Infra 스크립트·세 dump schema와 교차검토했다. 컨테이너명·포트·배포 옵션·migration 순서는 일치했다. 대신 기존 런북의 보존 hash가 프로젝트 clip, workspace, 오류/telemetry 및 Release 하위 테이블 일부를 빠뜨렸고, migration 전에는 존재하지 않는 새 PG 테이블을 직접 count해 정상 DB에서도 실패하는 문제를 발견했다. dump에 실제 존재하는 전체 보존 테이블의 count+ID hash, 안전한 `absent/present/count` 조회, migration 기준선, build-only 재-pull 중단 조건, source rollback 제한으로 보강했다. 22개 shell block은 `sh -n` PASS, 존재/부재 동적 SQL은 중지된 로컬 2차 clone을 잠깐 기동해 양쪽 분기 출력을 확인한 뒤 다시 중지했다. 실제 server/DB/deploy 0건이다. 사용자는 로컬 `.env`의 Google OAuth client secret을 교체하지 않고 현재 설정을 유지하기로 결정했으며 이 항목은 Gate A blocker가 아니다. 값은 다시 출력·문서화하거나 Git에 포함하지 않는다. 현재 문서 변경은 미커밋이며 ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지.
 
 ## 최신 W04: 비-ML 로컬 PG acceptance
 
@@ -37,7 +45,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 비-ML/실제 dev dump clone 2회 PASS. Web API·Angular·Nest 보완 commit/push 완료. 개발서버 전환 런북 검토·전환 시점·실제 Gate A 별도 승인 대기 | [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 비-ML/실제 dev dump clone 2회 PASS. 코드 push 완료. 런북 교차검토 보강 완료; OAuth secret 현행 유지 결정. 전환 시점·실제 Gate A 별도 승인 대기 | [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
@@ -46,7 +54,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 
 ## 공통 작업 공간과 보존
 
-최신 checkout 결정: 사용자 승인으로 원본8repo가 모두 `integration/dev-pg-local-validation-20260917`이며 clean, origin 통합 참조와 0/0이다. 원본 폴더에서 다음 검증을 수행한다. 기존 통합8worktree는 동일 SHA detached로 유지, dev 브랜치 참조는 변경하지 않았다. 기존 ignored 환경파일11개 해시 불변. Nest `.env.local` 비-loopback DB 설정·실행 환경 로딩과 의존성/산출물 확인이 다음 단계다. 기존 통합 Nest cwd의 Node4프로세스는 건드리지 않았으며 새 기동 전 포트/소유권 확인 필요. 아래 원본dev 표현은 전환 전 기록이다.
+과거 checkout 결정 기록: 사용자 승인으로 원본8repo를 `integration/dev-pg-local-validation-20260917`로 checkout해 검증했다. 당시 모두 clean, origin 통합 참조와 0/0이었고 기존 통합8worktree는 동일 SHA detached로 유지했다. dev 브랜치 참조와 ignored 환경파일11개도 당시 불변이었다. 현재 원격 dev 상태는 맨 위 최신 Git 게이트 기록을 따른다. Nest `.env.local` 비-loopback DB 설정은 실행 환경 확인 없이 사용하지 않는 원칙을 유지한다.
 
 옛 PG 보완은 Nest `000414f`·Web API `3c33268`로 커밋·push·원격 SHA 확인 후 두 fix worktree 제거 완료. 앱 이름 feature `7aed9f6`도 push 완료했고 해당 worktree는 유지했다. 로컬/원격 브랜치와 커밋은 보존, 재병합 없음. [최종 정리 결과](../implementation/2026-09-17-old-pg-worktree-disposition.md)를 따른다.
 
