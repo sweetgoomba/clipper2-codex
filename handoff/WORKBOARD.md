@@ -1,5 +1,21 @@
 # 작업 현황판
 
+## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
+
+새 macOS 개발판의 실제 Google 로그인·무료 체험/access/credit 표시를 사용자 확인했고, 필수 `.cliptpl` 이관 중 기본 제공 16개가 중복 복제되는 결함을 발견·수정했다. 옛 17개 번들 재가져오기 후 기본16+사용자1=총17, 잘못된 복제본0, 내보내기 사용자 템플릿만 표시를 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc` 로컬 커밋, 두 repo clean/ahead1. Nest build·대상69·전체 suite exit0, Angular 대상31·전체4,494 PASS. [상세 결과](../implementation/2026-09-17-template-transfer-dedup-validation.md). push·추가 병합·배포·원격 DB 변경 없음. W09의 Mac 필수 템플릿 이관은 완료했고 Windows 실기와 선택 데이터 이관은 남는다. 다음 주 작업축은 W04 남은 비-ML 로컬 PG acceptance이며 이후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5 HOLD 유지.
+
+## 최신 사용자 조건: 개발판 독립 분리 설계
+
+DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipper-identity-check-20260917-*` 3개 생성, migration 및 실제 DB **9 PASS**. 새 컨테이너는 정상 중지·전용 볼륨 보존. 기존 dev/오늘 로그인 DB와 실 env/원격 서버는 변경 없음. [결과·미완료 실기](../implementation/2026-09-17-independent-dev-real-db-validation.md). 다음은 실제 앱용 환경 범위 확인 후 재패키징/Google/동시 실행/템플릿 이관. 아래 DB 승인 대기 표현은 이전 체크포인트.
+
+2026-09-17 후속: 앱 identity·로그인 결속 후 release API/runner/Admin Task 1–3 코드·자동 검증 완료. **Web API build/2,882 PASS·21 SKIP, Infra 51 PASS·1 SKIP, Admin build/50 PASS.** [최신 결과·리뷰·남은 작업](../implementation/2026-09-17-independent-dev-release-validation.md). Electron은 이번에 수정하지 않았으며 이전 build/975 PASS 기록 유지. 다음은 **새 격리 DB 대상과 영향 제시→별도 승인→nullable migration/실제 트랜잭션 검증**, 이어 새 설치본 Google 로그인·동시 실행·필수 템플릿 export/import 실기. 실제 환경파일·DB·앱 재패키징/기동·커밋/푸시/병합/배포 변경 없음. Electron/API/Infra/Admin/문서 미커밋이며 아래 clean/구현 전 표현은 과거 단계다. Mac 공개·자동빌드·업데이트 HOLD, ZIP 제외, ML/Build5 HOLD 유지. 주간 잔여 96% 기록, reset credit 사용 없음.
+
+새 개발판 빈 데이터 허용, 템플릿 이관 필수(.cliptpl 기존 기능 우선), 소재/프로젝트 보존은 선택. 기존 개발 앱 대치/데이터 경로 유지 필수 아님. 운영/새 개발판 Mac·Windows 동시 실행과 데이터 격리 필수, 옛 개발판이 남거나 재실행돼도 새 로그인 연결 영향 금지. 자동 옛 앱 탐색/삭제를 안전성 전제로 삼지 않는다. `ai.clipperstudio.dev` / `clipperstudio-dev` / `Clipper Studio Dev` / 채널 `dev` 및 연결 변경 범위 승인 후 조사·세부 계획 작성 완료. [정확한 값·변경 경계·검증 설계](../implementation/2026-09-17-independent-dev-identity-design.md), [작업카드](tasks/app-window-name.md) 참조. 아래 identity 유지 방침은 과거 구현 기록이다.
+
+## 2026-09-17 macOS 개발 앱 로그인 실기 후속
+
+사용자가 새 개발 앱 이름·실제 Google 로그인·무료 체험 400 표시를 확인했다. 옛 개발 앱으로 향하던 OS 기본 핸들러를 등록 정리 후 새 빌드로 변경했고 브라우저 앱 열기 이름도 사용자 재확인 완료. 파일/DB 삭제 없음. 단, 구·신 개발 앱의 파일명 차이로 /Applications에서도 공존하므로 일반 배포의 교체·중복 설치·인스턴스별 로그인 복귀 설계와 실기는 미완료다. [진단 명령과 후속 검증 목록](../implementation/2026-09-17-macos-dev-oauth-handler-validation.md), [앱 이름 카드](tasks/app-window-name.md)를 따른다. 이 상태는 아래 실제 Google 로그인 대기 표현보다 우선하며 제품 코드 변경·배포는 없다.
+
 최종 확인: **2026-09-17 KST**. 이 문서는 여러 세션에 걸친 작업의 **현재 상태와 재개 위치**를 찾는 시작점이다. 행 순서는 우선순위가 아니다. 사용자 선택 없이 마지막 작업을 전체 프로젝트의 다음 작업으로 지정하지 않는다.
 
 ## 작업 목록
@@ -14,7 +30,7 @@
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
-| W09 | 운영·개발 앱 표시 이름 | 이름·환경별 identity 보존. R06/R07 수정·회귀 통과·로컬 커밋. 실제 Google OAuth·Windows NSIS 실기 필요 | [상세 결과](tasks/app-window-name.md) |
+| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 실제 로그인·무료체험/access/credit 및 필수 템플릿 이관 PASS. 중복 방지 Angular/Nest 로컬 커밋 완료·미push. Windows/선택 데이터 실기 남음 | [템플릿 실기](../implementation/2026-09-17-template-transfer-dedup-validation.md) · [다음 단계](tasks/app-window-name.md) |
 
 ## 공통 작업 공간과 보존
 

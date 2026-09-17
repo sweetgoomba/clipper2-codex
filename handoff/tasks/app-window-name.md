@@ -1,5 +1,34 @@
 # 운영·개발 앱 표시 이름
 
+## 최신 결과: 새 macOS 개발판·필수 템플릿 이관 PASS
+
+새 개발판 `Clipper Studio (dev).app`의 `ai.clipperstudio.dev` / `clipperstudio-dev` identity와 실제 Google 로그인, 무료 체험 400, 계정/access/credit 표시를 사용자 확인했다. 필수 템플릿 이관에서는 옛 번들에 함께 들어간 기본 제공 16개가 사용자 복사본으로 중복되는 결함을 발견했다. 내보내기 UI/backend는 사용자 생성 항목만 허용하고 importer는 옛 format v1을 포함해 canonical 기본 제공 템플릿과 그 전용 font를 건너뛰도록 수정했다.
+
+잘못 생긴 로컬 복제본 16개만 백업 후 정상 API로 삭제했고 사용자 템플릿은 보존했다. 같은 17개 번들을 재가져온 뒤 기본16+사용자1=총17, 복제본0, 내보내기 사용자 항목1만 표시를 사용자 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc`에 로컬 커밋했으며 각 원격 통합 브랜치보다 1커밋 앞선 clean 상태다. [상세 구현·실기·검증](../../implementation/2026-09-17-template-transfer-dedup-validation.md). 코드 push·추가 병합·dev/main 변경·배포·원격 DB 변경은 없다.
+
+Mac 필수 템플릿 이관은 완료했다. 남은 W09 항목은 Windows 실제 installer/identity/template 실기와 선택사항인 소재·프로젝트 데이터 이관 검토다. Mac 공개·자동 업데이트, 실제 ML, Build5 전체 QA HOLD를 유지한다. 아래의 “템플릿 실기 남음”, 옛 identity 보존, 코드 미커밋 표현은 과거 체크포인트다.
+
+## 최신 사용자 요구: 독립 개발판 전환 (아래 identity 보존 방침보다 우선)
+
+최신 재개 지점: 사용자 로컬 Mac 실행 승인 후 새 DB `clipper-identity-check-20260917-*` (58433–58435) 생성·migration·실제 DB **9 PASS**. 새 컨테이너 정상 중지/볼륨 보존, 기존 5433–5435/57433–57435 및 실 env/원격 서버 변경 없음. [실제 DB 검증 결과·남은 실기](../../implementation/2026-09-17-independent-dev-real-db-validation.md). 다음은 실제 앱용 로컬 환경 설정 범위 확인 후 재패키징/Google/공존/필수 템플릿 이관. 아래 DB 미실행 표현은 이전 단계.
+
+- 새 개발판은 백지 상태로 시작해도 된다. 기존 개발판을 덮어쓰거나 같은 데이터 경로를 유지하는 것은 필수가 아니다. 옛 앱이 남아 있어도 새 앱의 로그인 연결을 방해해서는 안 된다. 옛 앱 탐색/삭제나 lsregister 수동 실행을 정상 로그인 전제로 삼지 않는다.
+- 운영판과 새 개발판은 macOS/Windows 한 PC에서 동시 설치·실행 필수. 데이터 경로 등 가변 상태는 분리. 운영 표시명은 Clipper Studio, 개발 표시는 Clipper Studio (dev).
+- 템플릿 이관은 필수: 기존 .cliptpl export/import 우선 활용, 실제 옛 배포본→새 앱의 자산/폰트/레이아웃 보존을 검증해야 하며 구현 존재만으로 통과 처리하지 않는다. 소재·프로젝트 등은 최대한 보존하고 싶지만 선택 사항이다.
+- 직원에게 필요한 자료를 보관한 뒤 옛 개발판 사용 중단/삭제를 공지할 수 있다. 하지만 공지 이행이나 모든 옛 사본 발견 여부에 안전성을 의존하지 않는다.
+- 사용자 설정안 동의: 새 개발판 appId `ai.clipperstudio.dev`, protocol `clipperstudio-dev`, 데이터 루트 `Clipper Studio Dev`, 업데이트 채널 `dev`. 표시명 `Clipper Studio (dev)`. 운영은 `ai.clipperstudio.app` / `clipperstudio` / `Clipper` / `stable` / 표시명 `Clipper Studio`.
+- [선택된 값·실제 코드 차이·연결 변경안](../../implementation/2026-09-17-independent-dev-identity-design.md)에 Mac/Windows 업데이트 URL과 검증 게이트를 기록했다. 로그인 target 구분, 관리자 stable 고정 해소, 서버 오게시 차단, runner 환경 전달이 추가로 필요하다. 설정값 동의와 이 상세 구현 범위의 승인을 구분한다.
+- 사용자는 연결 변경 범위에도 동의했다. [앱·로그인 실행 계획](../../implementation/2026-09-17-independent-dev-app-plan.md), [채널·runner·관리자 실행 계획](../../implementation/2026-09-17-independent-dev-release-plan.md) 작성 완료. auth 요청 결속 및 artifact profile 기록용 nullable 컬럼 migration은 계획만 있으며 실행하지 않았다.
+- M1 정정: Mac 공개·자동빌드·자동 업데이트는 기존 사용자 결정대로 HOLD. ZIP 요구는 이미 9/9 기록에 있던 사실이며 신규 필수 확장으로 제시한 것이 잘못이었다. 현재 원본 Mac 앱의 autoUpdateDisabled=true 확인. Mac 전역 차단 분기는 없으므로 모든 배포본 비활성까지 확인한 것은 아님. ZIP 지원은 이번 범위 제외, 앱 분리의 차단 게이트 아님.
+- 2026-09-17 실행 체크포인트: 원본 Electron 통합 브랜치(HEAD `6766c06`) 위 Task 1–2 코드 기반 구현, 새 dev identity/데이터·캐시·로그/update profile 반영, build 및 **963/963 PASS**. **미커밋**. [상세 결과](../../implementation/2026-09-17-independent-dev-app-validation.md). 새 Mac 코드에는 전역 Darwin auto-update 차단과 빌드 disabled flag를 반영했지만 설치본을 재빌드/기동하지 않았다. 과거 설치본 상태와 구분한다.
+- 2026-09-17 다음 체크포인트: Task 3–4 서버 target/서명 state/S256/원자적 code 소비 + Electron pending 요청 결속 코드 연결. Web API build/2,845 PASS/21 SKIP, Electron build/975 PASS. 독립 리뷰에서 cold-start 안내 누락을 찾아 native retry dialog로 보완. 상세 검증/한계는 위 실행 결과 문서 참조. Electron/Web API/.codex 미커밋.
+- 2026-09-17 최신 체크포인트: release Task 1–3 코드·자동 검증 완료. API build/2,882 PASS·21 SKIP, Infra 51 PASS·1 SKIP, Admin build/50 PASS. 독립 리뷰의 job/build 잠금 순서 및 runner CLI 플랫폼 검증 지적 수정 후 추가 중요 지적 없음. [릴리스 검증 결과](../../implementation/2026-09-17-independent-dev-release-validation.md). API/Infra/Admin/Electron 선행 변경과 문서는 모두 미커밋이다.
+- 다음은 새 격리 DB의 정확한 대상·영향을 제시하고 별도 승인받아 User 로그인 binding/Release artifact profile migration 및 실제 트랜잭션을 검증하는 것이다. 그 뒤 새 설치본 Google 로그인/동시 실행/필수 템플릿 이관을 검증한다. 실제 `.env`에는 아직 DESKTOP_AUTH_TARGET/RELEASE_TARGET을 적용하지 않았다. 실 환경파일·DB·앱 패키징/실행·커밋·푸시·병합·배포 변경 없음. Windows 실기는 사용자 장비. 주간 잔여 96% 기록, reset credit 사용 없음. 아래 identity 보존/clean/옛 worktree 경로는 역사 기록이다.
+
+## 2026-09-17 사용자 실제 Google 로그인 후속 (아래 과거 상태보다 우선)
+
+원본 checkout의 새 개발 빌드에서 실제 Google 로그인·무료 체험 400 표시를 사용자 확인. macOS 기본 `clipper://` 핸들러가 /Applications의 옛 개발 앱이었음을 조회하고 옛 앱/이전 worktree 등록만 해제, 원본 새 개발 앱 재등록 후 사용자 재로그인 확인창 이름까지 정상 확인했다. 앱 파일·데이터 삭제 없음. 이 로컬 조치는 배포 업그레이드 해결책이 아니며, 파일명 변경으로 인한 구·신 개발 앱 공존과 콜백 대상 문제는 배포 전 설계/실기 잔여 항목이다. [조회 명령·실행 이력·배포 잔여 과제](../../implementation/2026-09-17-macos-dev-oauth-handler-validation.md) 참조. Windows NSIS·서명/공증·DMG 업그레이드 실기는 여전히 대기.
+
 최종 확인: 2026-09-17 KST. 상태: **이름·환경별 identity 보존 / R06·R07 수정·회귀 통과·로컬 커밋 / 실제 Google OAuth·Windows NSIS 실기 대기**.
 
 [전체 현황](../WORKBOARD.md)
