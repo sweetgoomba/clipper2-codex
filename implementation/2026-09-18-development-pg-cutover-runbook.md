@@ -2,9 +2,11 @@
 
 작성일: **2026-09-18 KST**
 
-상태: **검토용 초안 / 실행 승인 아님**
+상태: **2026-09-18 실행 완료 / 재실행·복구 참고 절차 / 새 실행 승인 아님**
 
 이 문서는 개발서버를 정식 PG 통합 소스로 전환할 때 사용자가 각 장비에서 실행할 절차다. 에이전트는 서버에 직접 접속하지 않는다. 이 문서를 작성하거나 검토하는 행위는 DB migration, 배포, push의 승인이 아니다. 실제 실행 전 사용자가 이 런북과 실행 시점을 다시 확인해야 한다.
+
+> **실행 완료 기록:** 2026-09-18 `dev-pg-20260918-035446`으로 Gate A–G와 사용자 smoke를 완료했고 rollback은 사용하지 않았다. 실제 결과, 후속 Web cache 보완, 남은 HOLD는 [개발서버 정식 PG 전환 실행 기록](2026-09-18-development-pg-cutover-execution-log.md)을 정본으로 본다. 아래 내용은 재실행·복구용 절차이며 이미 끝난 Gate를 자동으로 다시 수행하지 않는다.
 
 ## 1. 이번 전환의 범위
 
@@ -191,16 +193,16 @@ branch=dev
 prepare_repo() {
   repo="$1"
   expected="$2"
-  path="$root/$repo"
-  test -z "$(git -C "$path" status --porcelain)"
-  git -C "$path" fetch origin "$branch"
-  if git -C "$path" show-ref --verify --quiet "refs/heads/$branch"; then
-    git -C "$path" switch "$branch"
+  repo_dir="$root/$repo"
+  test -z "$(git -C "$repo_dir" status --porcelain)"
+  git -C "$repo_dir" fetch origin "$branch"
+  if git -C "$repo_dir" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$repo_dir" switch "$branch"
   else
-    git -C "$path" switch --track "origin/$branch"
+    git -C "$repo_dir" switch --track "origin/$branch"
   fi
-  git -C "$path" pull --ff-only
-  actual=$(git -C "$path" rev-parse HEAD)
+  git -C "$repo_dir" pull --ff-only
+  actual=$(git -C "$repo_dir" rev-parse HEAD)
   test "$actual" = "$expected"
   printf '%s | %s\n' "$repo" "$actual"
 }

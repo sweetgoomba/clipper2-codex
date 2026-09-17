@@ -2,7 +2,7 @@
 
 실행일: 2026-09-18 KST
 cutover ID: `dev-pg-20260918-035446`
-상태: **Gate A 전체 PASS / 8repo dev fast-forward·원격 SHA 확인 완료 / Gate B 재개 승인 전 / 실제 서비스 중단·DB 변경·배포 없음**
+상태: **Gate A–G 및 사용자 smoke PASS / 개발 DB·서비스 정식 PG 전환 완료 / rollback 미사용 / 후속 Web cache 보완 배포·사용자 재확인 완료**
 
 에이전트는 서버에 접속하지 않았다. 아래 명령과 결과 확인은 사용자가 `m2-stage`에서 수행했다.
 
@@ -118,3 +118,116 @@ Gate A 종료 시점에도 기존 세 컨테이너는 계속 실행 중이다. D
 - 새 image build·배포: 0건.
 - 로컬 commit: Angular merge `4c7993cd`, 테스트 보완 `9dc31ec1`.
 - push: Angular integration branch 1건, 8repo 원격 `dev` fast-forward 8건.
+
+위 변경 상태는 Gate B 재개 전 체크포인트다. 이후 실제 전환 결과는 아래가 최신 정본이다.
+
+## Gate B — 환경 계약 확인과 image 사전 빌드
+
+결과: **PASS**
+
+- `TOSS_PAYMENTS_REVIEW_MODE`를 제거했다.
+- Widget/Billing test key 4개와 `TOSS_PAYMENTS_RETURN_BASE_URL`, `WEB_BASE_URL`, `API_KEY_ENC_SECRET`의 존재를 값 노출 없이 확인했다.
+- 새 서버 전용 `TOSS_PAYMENTS_BILLING_KEY_HMAC_SECRET`, `DESKTOP_AUTH_TARGET`, `DESKTOP_RELEASE_TARGET`을 추가했다.
+- 설정 변경 전 `stack.dev.env.before-formal-pg`를 남겼고 Toss 환경 preflight가 통과했다.
+- 고정 source revision은 Infra `f0af3f52`, Web Client `a4bc54b5`, Web Admin `01d0b93a`, Web API `fe58b650`이었다.
+- 새 image를 build-only로 만들었고 이 시점에는 기존 실행 컨테이너 image가 바뀌지 않았음을 확인했다.
+
+| image | 사전 빌드 image ID | revision |
+|---|---|---|
+| Web Client | `sha256:77aeb1b415c974cac115a228bb37ee38fdaf90c3906dd5f16da80f5928ead865` | `a4bc54b5852e82d0699f63e6198d409746dd0ee0` |
+| Web Admin | `sha256:f57763f95c86e777a371674cd43227c377c7a44b9d1029f35131f156913aeb85` | `01d0b93ad3c4b6803060c919ebd80d9ae656c142` |
+| Web API | `sha256:6b0354dc7a4b13a718ca0a6717cb46e118871967a232e88aa52836b65e331254` | `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f` |
+
+## Gate C — 개발 서비스 쓰기 정지
+
+결과: **PASS**
+
+- 기존 Web Client/Admin/API 세 컨테이너가 모두 `running`임을 확인한 뒤 중지했다.
+- 세 컨테이너는 각각 Gate A에서 기록한 옛 image ID로 `exited` 상태가 됐다.
+- 같은 서버의 ViewX, Coldmail, Dohit 컨테이너는 중지하지 않았다.
+
+## Gate D — 최종 DB dump·보존 기준·정책 조사
+
+결과: **PASS**
+
+- User/Admin/Release DB의 외부 연결이 각각 0개임을 재확인했다.
+- 최종 dump를 `/Users/metabuzz/clipper-backups/dev-pg-20260918-035446`에 생성했다.
+- dump archive 자체 검사는 세 파일 모두 `OK`였고, 사용자가 m2-stage 백업 위치로도 전달했다.
+
+| dump | SHA256 |
+|---|---|
+| `user.dump` | `aacbeccd07ff623f81d32f816f840a33d199a4ce0f99eb8064f11fcbc5d1e401` |
+| `admin.dump` | `47bd9428f5c730ab59e8a2e090ef7c5be40768e5faf8e4a2d71cf3cceb8fc92d` |
+| `release.dump` | `291f57e80eaab80f7082051d6da82011af3558b13be3ab4368aa09392495e98d` |
+
+보존 대상의 migration 전 count와 ID 집합 hash를 기록했다. 핵심 결과는 User `users=20`, `user_sessions=162`, `desktop_auth_codes=161`, `shortform_projects=1481`; Admin `operators=3`, `operator_sessions=26`, `provider_credentials=7`, `desktop_error_reports=22`, `desktop_sessions=7`; Release `release_versions=33`, `release_builds=51`, `release_artifacts=33`, `release_events=134`였다. Gate F에서 같은 파일과 `diff -u`로 비교했다.
+
+정책 조사 결과:
+
+- 옛 finance 테이블은 `licenses=24`, `purchase_requests=35`, `plans=4`, `credit_ledger=253`, `operation_runs=210`, `payment_orders=37`, `payment_events=49`였다.
+- 옛 payment order 37건 중 `checkout_ready=27`, `failed=1`, `paid/TEST=9`였으며 보존할 LIVE 결제는 발견되지 않았다.
+- 새 `user_access_grants`, `credit_grants`, `credit_ledger_entries`, `user_free_trials`, `subscriptions`, `user_onboarding_jobs`는 migration 전 존재하지 않았다.
+
+## Gate E — 실제 migration
+
+결과: **PASS**
+
+- 사용자 승인 후 Infra의 `scripts/migrate-db.sh dev`로 User → Admin → Release 순서 migration을 실행했다.
+- 같은 명령을 한 번 더 실행해 pending migration이 없는 no-op 재실행을 확인했다.
+- 최신 migration은 User `AddDesktopLoginBinding1789600000000`, Admin `NormalizeAllTierPluginEntitlements1789300000000`, Release `AddArtifactDesktopProfile1789600000000`이었다.
+
+## Gate F — migration 직후 DB 검증
+
+결과: **PASS**
+
+- Gate D의 User/Admin/Release 보존 snapshot과 migration 후 snapshot 세 쌍의 `diff -u`가 모두 비어 있었다.
+- 옛 finance 테이블은 제거됐고 새 finance 테이블 8개는 서비스 시작 전 모두 0건이었다.
+- `trial`, `basic`, `pro`, `business`는 모두 `entitlement_mode=all`; 저장된 개별 entitlement row는 0건이었다.
+- operation catalog는 Shortform URL/Paste/Prompt 각 50, Dance 50, Dialog 50, Variation 20 크레딧이며 모두 `charge_then_refund`였다.
+- `user_onboarding_jobs`는 서비스 시작 전 0건이었다.
+
+## Gate G — 새 서비스 시작·외부 smoke
+
+결과: **PASS**
+
+- Web Client/Admin/API가 Gate B image로 시작했고 revision label을 확인했다.
+- 첫 `/health` 요청은 API가 막 올라오는 순간의 `Empty reply from server`였으나, 컨테이너 상태·로그를 확인하고 재시도한 뒤 정상 응답을 확인했다.
+- 외부 HTTPS `dev.clipperstudio.ai`, `dev-admin.clipperstudio.ai`, `dev-api.clipperstudio.ai`는 모두 HTTP 200/TLS 성공이었다.
+- Catalog의 Basic/Pro/Business가 모두 여섯 plugin(`dance_highlight`, `dialog_highlight`, `shortform_paste`, `shortform_prompt`, `shortform_url`, `variation`)을 반환했다.
+- 기존 사용자는 이메일이 보존됐고 활성 이용권 없음, 사용 가능 크레딧 0, 무료 체험 비소급을 확인했다.
+- 신규 테스트 사용자는 Trial/400크레딧/30일을 한 번만 받았고 재로그인 뒤 중복 지급되지 않았다. DB에는 onboarding job 1건 `completed`, trial 1건, grant 1건, ledger grant `+400` 1건만 존재했다.
+- Customer Web/Admin 주요 화면, 요금제 3종, 개발판의 이용 관리·크레딧 내역 링크, Google 로그인, 계정/access/credit 표시를 사용자 확인했다.
+- 개발판 build와 실행, `clipperstudio-dev` 로그인 복귀, 운영 protocol 비점유, 필수 템플릿 import 및 중복 건너뜀을 확인했다.
+- Toss checkout 사전 화면과 test key mode를 확인했지만 카드 등록/실제 결제·webhook은 실행하지 않았다.
+
+## Smoke 중 발견한 Web SPA cache 결함과 최소 보완
+
+첫 Customer Web 접속에서 이전 `index.html`이 이미 제거된 `chunk-6N5722P4.js`를 요청했다. 서버의 SPA fallback이 누락 JS 요청에도 HTML을 200으로 반환해 브라우저가 MIME 오류로 중단됐다. 강력 새로고침 뒤 로그인은 정상 동작했고, `/auth/refresh`의 401 `missing refresh token`은 로그인 전 기대 응답으로 원인이 아니었다.
+
+사용자가 선택한 최소 범위로 Customer/Admin 컨테이너 내부 Nginx만 보완했다.
+
+- `index.html`: `Cache-Control: no-store, no-cache, must-revalidate`
+- 실제 JS/CSS: `Cache-Control: public, max-age=31536000, immutable`
+- 없는 JS/CSS: SPA HTML fallback 대신 HTTP 404
+- API, DB, 외부 m2-proxy/DNS/Nginx Proxy Manager: 변경 없음
+
+TDD와 실제 Nginx HTTP 검증 후 다음 커밋을 `dev`와 integration branch 양쪽에 push하고 Web Client/Admin만 다시 배포했다.
+
+| 서비스 | commit/revision | 최종 실행 image ID |
+|---|---|---|
+| Web Client | `72829210ecbe2d56b61bfc132f2b6e7e886b933a` | `sha256:2d31f80faef29e1be451f168d86cbf9bdfbd361aed5a243402bd20ee89f63815` |
+| Web Admin | `583c6f2373cddf51ae24cefe528f4a9d4eb4b671` | `sha256:33117d9f093c2fe78ad50291948b2deb2c28fd127b6cd448209b84d45955a0c3` |
+| Web API | `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f` | `sha256:6b0354dc7a4b13a718ca0a6717cb46e118871967a232e88aa52836b65e331254` |
+
+자동 검증은 Customer 285/285, Admin 571/571, 두 build, Nginx 계약 테스트 각 3/3 및 격리 Nginx HTTP 검사를 통과했다. 배포 뒤 외부 HTTPS에서도 index/SPA route의 no-store, 실제 JS의 immutable, 누락 JS의 404를 확인했다. 사용자는 일반 새로고침, 로그인, 메뉴 이동을 다시 확인했다.
+
+## 최종 판정과 남은 범위
+
+- 개발서버 정식 PG schema/source/service 전환은 완료됐고 rollback은 사용하지 않았다.
+- 보존 대상 데이터의 행 수와 ID 집합은 migration 전후 동일했다.
+- 실제 카드 등록·결제·구독·webhook과 유료 plugin의 실차감/환급 end-to-end는 별도 승인 전까지 수행하지 않는다.
+- 실제 ML plugin 실행과 Build 5 전체 QA는 HOLD다.
+- Windows 설치형 실기는 Windows 장비에서 별도로 수행한다.
+- macOS 자동 업데이트는 현재 비활성 상태를 유지한다.
+- 배포 시 이미 열린 옛 탭은 한 번의 일반 새로고침이 필요할 수 있다. 미저장 입력을 임의로 날리지 않기 위해 자동 강제 reload는 이번 최소 수정에 포함하지 않았다.
+- 전용 30–60분 로그 관찰 결과는 아직 별도 기록하지 않았다. 다음 재개 시 API 오류·onboarding 재시도·결제/operation 이상 징후를 값 노출 없이 확인한다.

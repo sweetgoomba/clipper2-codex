@@ -1,18 +1,20 @@
 # 작업 현황판
 
-## 최신 W04 Git 게이트: 8repo 원격 dev 반영 완료·Gate B 재개 승인 전
+## 최신 W04: 개발서버 정식 PG 전환·Web cache 보완 완료
 
-사용자에게 정확한 8repo 출발/목표 SHA와 기능·영향·검증을 제시하고 승인받아, 모두 force 없이 원격 `dev`에 fast-forward했다. `git ls-remote`로 Angular `9dc31ec1`, Electron `d95c050`, Nest `884fa8bc`, Python `60417ce`, Infra `f0af3f5`, Web Admin `01d0b93`, Web API `fe58b65`, Web Client `a4bc54b`의 일치를 확인했다. repo-defined GitHub Actions는 없고 m2-stage source/image/container/DB 변경은 0건이다. 런북 Gate B는 integration 직접 checkout이 아니라 `dev`와 고정 SHA를 사용하도록 수정했다. 다음은 `.codex` 문서 commit/push와 별도 사용자 승인 후 Gate B source pull/build-only다. ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지. [실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+2026-09-18 `dev-pg-20260918-035446`으로 Gate A–G를 실행했다. 설정·secret·기존 image와 User/Admin/Release 최종 dump를 보존하고, 서비스를 중지한 뒤 User→Admin→Release migration 및 no-op 재실행을 완료했다. 보존 table의 count+ID hash는 전후 동일했고, 옛 finance table 정리·새 finance schema/plan/operation seed를 확인했다. 새 서비스의 health/catalog/HTTPS와 기존·신규 사용자 정책을 검증했으며 rollback은 사용하지 않았다. 신규 사용자는 Trial/400/30일을 한 번만 받았고 기존 사용자20명은 무료체험·크레딧이 소급되지 않았다. 실제 카드 등록·결제·webhook은 실행하지 않았다.
+
+Smoke에서 stale `index.html`이 삭제된 JS를 가리킬 때 SPA fallback이 HTML 200을 반환하는 결함을 발견했다. 사용자 승인 최소 범위로 Customer/Admin 내부 Nginx만 수정해 index no-store, 실제 JS/CSS immutable, 누락 JS/CSS 404를 적용했다. Customer `72829210`, Admin `583c6f23`을 `dev`와 integration에 push하고 Web 두 서비스만 재배포했으며 API `fe58b650`은 그대로다. 자동 테스트/build/격리 Nginx와 외부 HTTPS 검증 뒤 사용자가 일반 새로고침·로그인·메뉴 이동을 재확인했다. 다음은 전용 30–60분 로그 관찰 및 별도 승인 시 실제 결제/operation E2E다. 실제 ML/Build5·Windows 실기·Mac 자동 업데이트는 HOLD다. [최종 실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md).
 
 ## 직전 W04 Git 게이트 기록: Angular 최신 dev 통합·전체 검증·integration push
 
 사용자 승인 범위에서 Angular integration `19b407a7`에 최신 `origin/dev` `7c04e14e`를 로컬 merge해 `4c7993cd`를 만들었다. 자동 충돌 없음, dev의 페이지 가이드 시트 22파일과 기존 PG 통합 변경의 파일 교집합 0개. 최초 전체 테스트에서 드러난 기존 clipboard 실패 spec의 격리 결함은 사용자 승인 후 제품 코드 변경 없이 실패 결과 stub 한 줄로 보완했다. 수정 후 대상4/4, 전체4,540/4,540, 스타일6/6, Node24 `CI=1 build:devapp` PASS. 보완은 `9dc31ec1`로 commit해 integration branch에 push했고 fetch 후 원격 SHA 일치까지 확인했다. 8repo dev 반영·Gate B는 중단 상태다. 다음은 최신 원격 상태를 다시 확인해 정확한 8repo `dev` 반영 범위와 SHA를 제시하고 승인받는 것이다. 최종 통합 결과를 승인 후 `dev`에 반영하며 개발서버가 integration branch를 직접 쓰지 않도록 한다. [실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md).
 
-## 최신 W04: 개발서버 전환 런북 교차검토 완료·전환 시점 결정 대기
+## 이전 W04 체크포인트: 개발서버 전환 런북 교차검토 완료
 
 2026-09-18 실제 개발서버/DB는 변경하지 않은 채 [정식 PG 전환 실행 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md)을 실제 Infra 스크립트·세 dump schema와 교차검토했다. 컨테이너명·포트·배포 옵션·migration 순서는 일치했다. 대신 기존 런북의 보존 hash가 프로젝트 clip, workspace, 오류/telemetry 및 Release 하위 테이블 일부를 빠뜨렸고, migration 전에는 존재하지 않는 새 PG 테이블을 직접 count해 정상 DB에서도 실패하는 문제를 발견했다. dump에 실제 존재하는 전체 보존 테이블의 count+ID hash, 안전한 `absent/present/count` 조회, migration 기준선, build-only 재-pull 중단 조건, source rollback 제한으로 보강했다. 22개 shell block은 `sh -n` PASS, 존재/부재 동적 SQL은 중지된 로컬 2차 clone을 잠깐 기동해 양쪽 분기 출력을 확인한 뒤 다시 중지했다. 실제 server/DB/deploy 0건이다. 사용자는 로컬 `.env`의 Google OAuth client secret을 교체하지 않고 현재 설정을 유지하기로 결정했으며 이 항목은 Gate A blocker가 아니다. 값은 다시 출력·문서화하거나 Git에 포함하지 않는다. 현재 문서 변경은 미커밋이며 ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지.
 
-## 최신 W04: 비-ML 로컬 PG acceptance
+## 이전 W04 체크포인트: 비-ML 로컬 PG acceptance
 
 2026-09-18 비-ML 자동 acceptance와 실제 dev DB 복제본 rehearsal을 완료했다. 첫 clone에서 발견한 `all` tier의 stale `pluginKeys`는 사용자 승인 뒤 Web API 응답 파생·관리 API 원자적 정리·Admin cleanup migration으로 보완했다. 독립 리뷰의 race 지적까지 tier row lock transaction으로 수정했고 build, 관련72, 전체2,892 PASS/21 SKIP. 같은 dump를 새 59533–59535 clone에 다시 복원한 2차 rehearsal에서 전체 migration/no-op, 핵심 ID 해시 보존, `/health`, 모든 유료 tier 동일 6 plugin key, 기존 사용자 무료체험 비소급을 통과했다. Web API 보완은 후속 `fe58b65` commit·push가 완료됐다. 실제 개발 DB·서비스·배포는 변경하지 않았다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 위 전환 런북 확인이며 실제 ML/Build5와 서버 변경 HOLD.
 
@@ -45,7 +47,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 비-ML/실제 dev dump clone 2회 PASS. 코드 push 완료. 런북 교차검토 보강 완료; OAuth secret 현행 유지 결정. 전환 시점·실제 Gate A 별도 승인 대기 | [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 개발서버 Gate A–G·사용자 smoke PASS, rollback 미사용. Web cache 최소 보완 배포·재확인 완료. 실제 결제/operation E2E·ML/Build5·Windows HOLD | [최종 실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md) · [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |

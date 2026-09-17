@@ -1,6 +1,14 @@
 # 운영·dev 통합 및 main 반영
 
-## 2026-09-18 개발서버 전환 런북 최신 상태
+## 2026-09-18 개발서버 정식 PG 전환 완료
+
+최신 정본은 [개발서버 정식 PG 전환 실행 기록](../../implementation/2026-09-18-development-pg-cutover-execution-log.md)이다. `dev-pg-20260918-035446`으로 Gate A–G와 사용자 smoke를 완료했고 rollback은 사용하지 않았다. User/Admin/Release migration과 no-op 재실행, 보존 table count+ID hash 일치, 옛 finance table 정리, 새 plan/operation seed, health/catalog/HTTPS, 기존 사용자 비소급과 신규 사용자 Trial/400/30일 1회 지급을 확인했다.
+
+Smoke 중 발견한 stale SPA asset fallback은 Customer/Admin 내부 Nginx의 최소 수정으로 보완했다. Customer `72829210`, Admin `583c6f23`을 `dev`와 integration branch에 push하고 Web 두 서비스만 재배포했다. index no-store, 실제 JS/CSS immutable, 누락 JS/CSS 404를 자동·외부 검증했고 사용자가 일반 새로고침·로그인·메뉴 이동을 다시 확인했다. API `fe58b650`과 DB는 이 후속 배포에서 바꾸지 않았다.
+
+남은 항목은 전용 30–60분 로그 관찰, 별도 승인 후 실제 카드 등록·결제·webhook 및 유료 operation 차감/환급 E2E다. 실제 ML/Build5, Windows 설치 실기, macOS 자동 업데이트는 HOLD다. 아래의 “전환 전”, “Gate A 대기”, “서버 변경 0건” 표현은 해당 시점의 역사 기록이다.
+
+## 2026-09-18 전환 전 런북 작성 체크포인트
 
 [개발서버 정식 PG 전환 실행 런북](../../implementation/2026-09-18-development-pg-cutover-runbook.md)을 검토용으로 작성했다. 실제 server/DB에는 접속하거나 변경하지 않았다. 런북은 m2-stage의 기존 image/env/secret 보존, 정확한 네 web repo SHA의 새 image 사전 build, Web/Admin/API 쓰기 정지, m2-db User/Admin/Release 최종 dump·off-host hash 검증, 보존 대상 ID hash, User→Admin→Release migration, no-op·정책 확인, health/catalog/로그인 smoke, 실패 시 세 DB와 세 image를 함께 복원하는 순서다. migration down은 사용하지 않는다. Infra 배포·PG env 자동검증 95 PASS.
 
