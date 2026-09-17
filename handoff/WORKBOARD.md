@@ -2,7 +2,7 @@
 
 ## 최신 W04: 비-ML 로컬 PG acceptance
 
-2026-09-18 Desktop Nest build 및 대상 115+41+37, Angular 202, Web API build와 대상 61/107/63, Electron build·전체 975 PASS. 새 격리 DB `clipper-pg-w04-20260918-*`에서 Admin64/Release3/User10 migration, access/credit 정책 e2e 1 PASS, 모든 현행 tier `entitlement_mode=all`을 확인하고 컨테이너를 중지했으며 전용 volume은 보존했다. 기존 개발/로그인/원격 DB는 변경하지 않았다. 후속 리뷰의 installer 종류 교차검증과 Windows 최종 package/feed/cache 검증도 보완했다. 운영 package/cache는 승인된 `clipper-studio` / `clipper-studio-updater`, 개발은 `clipper-studio-dev` / `clipper-studio-dev-updater`다. 후속 Electron build·전체975, Web API build·전체2,884 PASS(21 SKIP), Web Admin build·전체571 PASS, Infra 전체36 PASS. Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5` 로컬 커밋 완료, clean/ahead1이며 미푸시다. [상세 결과](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 설치형 offline/online 비-ML 경계의 추가 실기 범위 확인 후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5와 서버 변경 HOLD.
+2026-09-18 Desktop Nest build 및 대상 115+41+37, Angular 202, Web API build와 대상 61/107/63, Electron build·전체 975 PASS. 새 격리 DB `clipper-pg-w04-20260918-*`에서 Admin64/Release3/User10 migration, access/credit 정책 e2e 1 PASS, 모든 현행 tier `entitlement_mode=all`을 확인하고 컨테이너를 중지했으며 전용 volume은 보존했다. 기존 개발/로그인/원격 DB는 변경하지 않았다. 후속 리뷰의 installer 종류 교차검증과 Windows 최종 package/feed/cache 검증도 보완했다. 운영 package/cache는 승인된 `clipper-studio` / `clipper-studio-updater`, 개발은 `clipper-studio-dev` / `clipper-studio-dev-updater`다. 후속 Electron build·전체975, Web API build·전체2,884 PASS(21 SKIP), Web Admin build·전체571 PASS, Infra 전체36 PASS. Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`를 각 원격 통합 브랜치에 push했고 로컬/원격 SHA 일치·clean이다. [상세 결과](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 설치형 offline/online 비-ML 경계의 추가 실기 범위 확인 후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5와 서버 변경 HOLD.
 
 ## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
 
@@ -38,7 +38,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
-| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로그인/session·필수 템플릿 PASS. 운영/개발 updater package·cache 통일 및 runner 최종 산출물 검증 보완, Electron975·Infra36 PASS. 코드4repo 로컬 커밋·clean/ahead1·미푸시. Mac 운영/개발 동시 실행·Windows 설치 실기 남음 | [W04 후속 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [다음 단계](tasks/app-window-name.md) |
+| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로그인/session·필수 템플릿 PASS. 운영/개발 updater package·cache 통일 및 runner 최종 산출물 검증 보완, Electron975·Infra36 PASS. 코드4repo 원격 통합 브랜치 push·SHA 일치·clean. Mac 운영/개발 동시 실행·Windows 설치 실기 남음 | [W04 후속 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [다음 단계](tasks/app-window-name.md) |
 
 ## 공통 작업 공간과 보존
 

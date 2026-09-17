@@ -10,7 +10,7 @@
 
 - 8개 원본 checkout은 `integration/dev-pg-local-validation-20260917`.
 - Angular `19b407a7a6de`, Electron `6766c0645d81`, Nest `884fa8bc7abf`, Python `60417ce86549`, Web API `8b074a59a454`, Web Client `a4bc54b5852e`, Admin `3d47536b9f8c`, Infra `f975f34924bc`.
-- Electron/Web API/Admin/Infra의 독립 개발판 identity·로그인·release 분리 변경은 아래 최종 검증 후 각각 `d95c050` / `36b049f` / `01d0b93` / `f0af3f5`로 로컬 커밋했다. 네 저장소는 clean/ahead 1이며 미푸시다. Angular/Nest는 템플릿 수정 로컬 커밋 뒤 clean/ahead 1이다.
+- Electron/Web API/Admin/Infra의 독립 개발판 identity·로그인·release 분리 변경은 아래 최종 검증 후 각각 `d95c050` / `36b049f` / `01d0b93` / `f0af3f5`로 커밋하고 각 원격 통합 브랜치에 push했다. 네 저장소는 로컬/원격 SHA 일치·clean이다. Angular/Nest는 템플릿 수정 로컬 커밋 뒤 clean/ahead 1이다.
 
 ## 자동 검증
 
@@ -40,7 +40,7 @@
 - 독립 개발판 package name 누락을 발견했다. 설계·lockfile·테스트는 `clipper-studio-dev`였지만 `package.json`만 `clipper-electron`이었다. 이 상태면 Windows updater cache가 옛 개발판과 `clipper-electron-updater`를 공유할 수 있다.
 - 이미 존재하던 실패 테스트 2건으로 RED를 재현한 뒤 `package.json`의 root `name` 한 줄을 `clipper-studio-dev`로 수정했다. dependency/version 변경 없음.
 - TypeScript build 및 전체 suite 975 PASS. 이후 승인된 명칭 통일에 따라 개발/운영 updater cache 계약은 각각 `clipper-studio-dev-updater` / `clipper-studio-updater`로 변경했다. 개발 protocol은 `clipperstudio-dev`, Mac 자동 업데이트 HOLD를 유지한다. 변경 후 재검증 결과는 이 문서의 후속 기록에 추가한다.
-- 이 변경은 Electron의 위 로컬 커밋에 포함했으며 미푸시다.
+- 이 변경은 Electron의 위 커밋에 포함해 원격 통합 브랜치에 push했다.
 
 ### Release/profile 후속 리뷰 보완
 
@@ -77,6 +77,6 @@
 ## 변경·배포 상태
 
 - 새 병합 0, push 0, dev/main 변경 0, 배포 0, 원격 DB 변경 0.
-- 코드 로컬 커밋: Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`. 모두 clean/ahead 1이며 미푸시.
-- `.codex` 결과/인계 문서는 로컬 커밋으로 보존하며 원격 push는 별도 승인 전 수행하지 않는다.
+- 코드 커밋: Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`. 모두 원격 통합 브랜치 push·로컬/원격 SHA 일치·clean.
+- `.codex` 결과/인계 문서도 승인된 `main` push로 보존한다.
 - 실제 ML/Build 5 전체 QA, Mac 공개·자동빌드·자동업데이트 HOLD 유지.

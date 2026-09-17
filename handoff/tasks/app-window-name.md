@@ -43,7 +43,7 @@ Mac 필수 템플릿 이관은 완료했다. 2026-09-18 사용자 결정으로 �
 
 ## 현재 상태·중단 지점
 
-2026-09-18 검증에서 독립 개발판 설계·`package-lock.json`·테스트는 root package name `clipper-studio-dev`를 요구하지만 실제 `package.json`만 `clipper-electron`으로 남아 있음을 발견했다. 이대로면 Windows updater cache가 옛 개발판의 `clipper-electron-updater`와 겹칠 수 있다. 기존 실패 테스트 2건을 재현한 뒤 `package.json` 한 줄만 `clipper-studio-dev`로 보완했고 Electron build·전체 975 PASS를 확인했다. dependency/version 변경 없음. 후속 승인으로 독립 개발판 전체 변경은 Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`에 로컬 커밋했다. 네 저장소는 clean/ahead1이며 미푸시이고, 새 병합·배포는 없다. [검증 상세](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md).
+2026-09-18 검증에서 독립 개발판 설계·`package-lock.json`·테스트는 root package name `clipper-studio-dev`를 요구하지만 실제 `package.json`만 `clipper-electron`으로 남아 있음을 발견했다. 이대로면 Windows updater cache가 옛 개발판의 `clipper-electron-updater`와 겹칠 수 있다. 기존 실패 테스트 2건을 재현한 뒤 `package.json` 한 줄만 `clipper-studio-dev`로 보완했고 Electron build·전체 975 PASS를 확인했다. dependency/version 변경 없음. 후속 승인으로 독립 개발판 전체 변경은 Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`에 커밋하고 각 원격 통합 브랜치에 push했다. 네 저장소는 로컬/원격 SHA 일치·clean이고, 새 병합·배포는 없다. [검증 상세](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md).
 
 같은 날 후속 리뷰에서 운영 package/cache의 과거 내부명 `clipper` / `clipper-updater`도 공개 배포 전 정리하기로 사용자가 승인했다. 최종 계약은 개발 `clipper-studio-dev` / `clipper-studio-dev-updater`, 운영 `clipper-studio` / `clipper-studio-updater`다. Web API는 Windows/x64 보고가 exe인지, macOS/arm64 보고가 dmg인지 성공 저장 전에 검사한다. Infra runner는 Windows 최종 `app-update.yml`의 정확한 feed/cache와 effective package name을 업로드 전에 검사한다. 후속 검증은 Electron build·전체 975, Web API build·전체 2,884 PASS(21 SKIP), Web Admin build·전체 571 PASS, Infra 전체 36 PASS다. 실제 Windows EXE/NSIS 설치 실기는 아직 사용자 Windows 장비에서 수행해야 한다.
 
