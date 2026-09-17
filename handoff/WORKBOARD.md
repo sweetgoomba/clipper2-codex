@@ -1,12 +1,16 @@
 # 작업 현황판
 
+## 최신 W04: 개발서버 전환 런북 검토 대기
+
+2026-09-18 실제 개발서버/DB는 변경하지 않은 채 [정식 PG 전환 실행 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md)을 검토용으로 작성했다. m2-stage의 기존 image/env/secret 보존과 새 image 사전 build, 전체 쓰기 정지 뒤 m2-db 세 DB 최종 dump·두 번째 복사본·보존 hash, User→Admin→Release migration, no-op/정책 검증, 서비스·새 개발판 smoke, 실패 시 세 DB와 세 image 동시 rollback을 명시했다. Infra 배포·PG env 자동검증 95 PASS. Web API `fe58b65`, Angular `19b407a7`, Nest `884fa8bc`와 Web/Admin/Infra/Client가 원격 통합 branch와 일치한다. Angular 전체4,494+스타일6/build, Nest 전체2,685/build를 push 직전 fresh 검증했다. 현재 런북·handoff 변경은 이번 `.codex` 문서 커밋 대상이며 실제 server/DB/deploy 0건, ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지.
+
 ## 최신 W04: 비-ML 로컬 PG acceptance
 
-2026-09-18 비-ML 자동 acceptance와 실제 dev DB 복제본 rehearsal을 완료했다. 첫 clone에서 발견한 `all` tier의 stale `pluginKeys`는 사용자 승인 뒤 Web API 응답 파생·관리 API 원자적 정리·Admin cleanup migration으로 보완했다. 독립 리뷰의 race 지적까지 tier row lock transaction으로 수정했고 build, 관련72, 전체2,892 PASS/21 SKIP. 같은 dump를 새 59533–59535 clone에 다시 복원한 2차 rehearsal에서 전체 migration/no-op, 핵심 ID 해시 보존, `/health`, 모든 유료 tier 동일 6 plugin key, 기존 사용자 무료체험 비소급을 통과했다. 실제 개발 DB·서비스·배포는 변경하지 않았다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 Web API 미커밋 9파일의 커밋 승인 및 개발서버 전환 런북 확인이며 실제 ML/Build5와 서버 변경 HOLD.
+2026-09-18 비-ML 자동 acceptance와 실제 dev DB 복제본 rehearsal을 완료했다. 첫 clone에서 발견한 `all` tier의 stale `pluginKeys`는 사용자 승인 뒤 Web API 응답 파생·관리 API 원자적 정리·Admin cleanup migration으로 보완했다. 독립 리뷰의 race 지적까지 tier row lock transaction으로 수정했고 build, 관련72, 전체2,892 PASS/21 SKIP. 같은 dump를 새 59533–59535 clone에 다시 복원한 2차 rehearsal에서 전체 migration/no-op, 핵심 ID 해시 보존, `/health`, 모든 유료 tier 동일 6 plugin key, 기존 사용자 무료체험 비소급을 통과했다. Web API 보완은 후속 `fe58b65` commit·push가 완료됐다. 실제 개발 DB·서비스·배포는 변경하지 않았다. [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [전체 acceptance](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 위 전환 런북 확인이며 실제 ML/Build5와 서버 변경 HOLD.
 
 ## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
 
-새 macOS 개발판의 실제 Google 로그인·무료 체험/access/credit 표시를 사용자 확인했고, 필수 `.cliptpl` 이관 중 기본 제공 16개가 중복 복제되는 결함을 발견·수정했다. 옛 17개 번들 재가져오기 후 기본16+사용자1=총17, 잘못된 복제본0, 내보내기 사용자 템플릿만 표시를 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc` 로컬 커밋, 두 repo clean/ahead1. Nest build·대상69·전체 suite exit0, Angular 대상31·전체4,494 PASS. [상세 결과](../implementation/2026-09-17-template-transfer-dedup-validation.md). push·추가 병합·배포·원격 DB 변경 없음. W09의 Mac 필수 템플릿 이관은 완료했고 새 session 재실행·로그아웃 및 Windows 실기가 남는다. 다음 작업축은 W04 남은 비-ML 로컬 PG acceptance이며 이후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5 HOLD 유지.
+새 macOS 개발판의 실제 Google 로그인·무료 체험/access/credit 표시를 사용자 확인했고, 필수 `.cliptpl` 이관 중 기본 제공 16개가 중복 복제되는 결함을 발견·수정했다. 옛 17개 번들 재가져오기 후 기본16+사용자1=총17, 잘못된 복제본0, 내보내기 사용자 템플릿만 표시를 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc`는 원격 통합 branch에 push·SHA 확인 완료. fresh Angular 전체4,494+스타일6/build, Nest 전체2,685/build PASS. [상세 결과](../implementation/2026-09-17-template-transfer-dedup-validation.md). 추가 병합·배포·원격 DB 변경 없음. W09의 Mac 필수 템플릿 이관은 완료했고 Windows 실기가 남는다. 다음 작업축은 W04 개발서버 전환 런북 검토다. 실제 ML/Build5 HOLD 유지.
 
 2026-09-18 사용자 최종 결정: 프로젝트·소재관리·작업 이력의 복제/자동 이관은 하지 않는다. 옛 데이터 루트는 그대로 보존하지만 새 개발판과 공유하지 않으며, 직접 폴더 복사·경로 치환·사용자 UUID 재매핑도 범위에서 제외한다.
 
@@ -33,7 +37,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB, 실제 dev dump 2회 clone migration·rollback PASS. stale pluginKeys 보완·동시성 리뷰 수정·2차 clone 검증 PASS, Web API 9파일 미커밋 | [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 비-ML/실제 dev dump clone 2회 PASS. Web API·Angular·Nest 보완 commit/push 완료. 개발서버 전환 런북 검토·전환 시점·실제 Gate A 별도 승인 대기 | [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [복제본 결과](../implementation/2026-09-18-development-db-clone-rehearsal-result.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |

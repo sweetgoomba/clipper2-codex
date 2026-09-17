@@ -1,5 +1,11 @@
 # 운영·dev 통합 및 main 반영
 
+## 2026-09-18 개발서버 전환 런북 최신 상태
+
+[개발서버 정식 PG 전환 실행 런북](../../implementation/2026-09-18-development-pg-cutover-runbook.md)을 검토용으로 작성했다. 실제 server/DB에는 접속하거나 변경하지 않았다. 런북은 m2-stage의 기존 image/env/secret 보존, 정확한 네 web repo SHA의 새 image 사전 build, Web/Admin/API 쓰기 정지, m2-db User/Admin/Release 최종 dump·off-host hash 검증, 보존 대상 ID hash, User→Admin→Release migration, no-op·정책 확인, health/catalog/로그인 smoke, 실패 시 세 DB와 세 image를 함께 복원하는 순서다. migration down은 사용하지 않는다. Infra 배포·PG env 자동검증 95 PASS.
+
+Web API catalog 보완 `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f`, Angular 템플릿 export 보완 `19b407a7a6de56d7a43428f688e3e4e7258fdc8d`, Nest 템플릿 import 보완 `884fa8bc7abf5d802a142c918568d8e606041900`은 commit·push·원격 확인까지 완료됐다. Web Client `a4bc54b`, Web Admin `01d0b93`, Infra `f0af3f5`도 원격 통합 branch와 일치한다. push 직전 Angular 전체4,494+스타일6/build와 Nest 전체2,685/build를 fresh 검증했다. Nest 전체 테스트는 실제 `.env.local`의 `jwt`와 격리하기 위해 `CLIPPER_AUTH_MODE=local`을 명시했다. 다음 승인 단계는 런북 내용, 실제 점검 일시, Gate A 실행이다. 실제 ML/Build5, Windows 실기, Mac 자동 업데이트 HOLD를 유지한다.
+
 ## 2026-09-18 개발 DB 복제본 리허설 최신 상태
 
 [개발 DB 복제본 PG 전환 리허설 결과](../../implementation/2026-09-18-development-db-clone-rehearsal-result.md)를 현재 정본으로 사용한다. 사용자가 m2-db에서 만든 User/Admin/Release read-only dump를 별도 59433–59435 PostgreSQL 16 clone에 복원해 migration, 반복 no-op, 핵심 ID 해시 보존, API health, 기존 사용자 무료체험 소급 방지, 별도 rollback-check DB의 원본 dump 복원을 확인했다. 실제 개발 DB·서비스·배포는 변경하지 않았다.

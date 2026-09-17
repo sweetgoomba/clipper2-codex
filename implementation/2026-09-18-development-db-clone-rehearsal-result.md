@@ -2,6 +2,8 @@
 
 검증일: 2026-09-18 KST
 
+후속 상태: 아래 catalog 보완 9파일은 이후 `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f`로 commit되어 원격 `integration/dev-pg-local-validation-20260917`과 일치한다. 같은 dump의 2차 clone 검증 결과는 그대로 유효하다. 다음 단계의 실제 개발서버 명령·중단·복구 절차는 [개발서버 정식 PG 전환 실행 런북](2026-09-18-development-pg-cutover-runbook.md)에 분리했다. 실제 개발 DB·서비스 변경·배포는 여전히 0건이다.
+
 ## 결론
 
 실제 개발 DB 3개의 read-only custom dump를 별도 로컬 PostgreSQL 16 컨테이너에 복원하고, 현재 통합 브랜치 migration을 적용한 뒤 반복 실행 no-op, API 기동, 핵심 데이터 보존, dump 복원 rollback을 검증했다. 실제 개발 DB·개발서버·원격 서비스는 변경하지 않았다.
@@ -178,7 +180,7 @@ DB의 네 tier는 모두 `entitlement_mode=all`이고 operation 시작 경로는
 
 ## 변경 상태
 
-- Web API 제품 코드·테스트·Admin migration 9파일이 현재 통합 브랜치에 미커밋 상태다. 새 병합·코드 push는 없다.
+- 리허설 종료 시점에는 Web API 제품 코드·테스트·Admin migration 9파일이 미커밋이었다. 이후 사용자 승인으로 `fe58b6504c024fa94f3ab67e5a3f027b8d75ba0f`에 commit하고 같은 원격 통합 branch에 push·SHA 확인했다. 새 병합은 없다.
 - 실제 개발 DB 변경 0, 개발서버 배포 0.
 - 1차·2차 clone 컨테이너는 검증 후 중지했고 전용 volume·dump는 보존했다. 1차 rollback-check DB는 검증 후 제거했다.
-- `.codex`의 이전 결과 commit `3a7a814`는 사용자 승인으로 `origin/main`에 push됐다. 이번 보완 결과 문서는 아직 미커밋이다.
+- `.codex`의 이전 결과 `c83d20c`까지 사용자 승인으로 `origin/main`에 push됐다. 이번 전환 런북과 최신 handoff 갱신은 현재 문서 커밋 대상이다.
