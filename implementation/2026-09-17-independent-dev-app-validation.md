@@ -1,5 +1,7 @@
 # 독립 개발판 — Electron 기반·로그인 결속 구현 검증
 
+> 2026-09-18 후속 정정: 이 문서 작성 당시 `package-lock.json`과 테스트만 `clipper-studio-dev`였고 실제 `package.json`은 `clipper-electron`으로 남아 있었다. W04 재검증에서 실패 테스트 2건으로 발견해 root package name 한 줄을 보완했으며 Electron build·전체 975 PASS를 확인했다. 현재 수정은 미커밋이다. [후속 검증](2026-09-18-w04-non-ml-local-acceptance.md)을 이 문서의 과거 완료 표현보다 우선한다.
+
 날짜: 2026-09-17. 작업 위치: 원본 `desktop/clipper_electron`, 브랜치 `integration/dev-pg-local-validation-20260917`, 기준 HEAD `6766c0645d8151eac1ea075e08f89871cb4ad4df`. 이 문서의 변경은 **미커밋**이다.
 
 ## 판정
@@ -44,7 +46,7 @@ Task 1–2 기반에 이어 Task 3–4의 Web API/Electron 로그인 요청 결�
 | appData 아래 userData/sessionData | Clipper Studio Dev | Clipper |
 | 업데이트 채널 | dev | stable |
 | Windows x64 feed | https://dev-api.clipperstudio.ai/releases/updates/dev/windows/x64 | https://api.clipperstudio.ai/releases/updates/stable/windows/x64 |
-| updater cache | clipper-studio-dev-updater | clipper-updater |
+| updater cache | clipper-studio-dev-updater | clipper-studio-updater |
 
 - Mac ARM64 feed 경로는 각각 `https://dev-api.clipperstudio.ai/releases/updates/dev/macos/arm64`, `https://api.clipperstudio.ai/releases/updates/stable/macos/arm64`로 해석됨을 단위 검증했다. **이 주소가 있다고 Mac 업데이트를 켠 것이 아니다.** 모든 새 Mac 빌드 설정에 autoUpdateDisabled=true, 실행 코드에 Darwin 차단, 생성 builder config에 mac.publish=null을 넣었다. ZIP 추가 없음. Mac 공개/자동빌드/업데이트 HOLD 유지.
 - local-api는 같은 development/dev identity, loopback API, 업데이트 비활성이다. 별도 네 번째 앱이 아니다.

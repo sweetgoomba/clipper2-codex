@@ -1,8 +1,16 @@
 # 작업 현황판
 
+## 최신 W04: 비-ML 로컬 PG acceptance
+
+2026-09-18 Desktop Nest build 및 대상 115+41+37, Angular 202, Web API build와 대상 61/107/63, Electron build·전체 975 PASS. 새 격리 DB `clipper-pg-w04-20260918-*`에서 Admin64/Release3/User10 migration, access/credit 정책 e2e 1 PASS, 모든 현행 tier `entitlement_mode=all`을 확인하고 컨테이너를 중지했으며 전용 volume은 보존했다. 기존 개발/로그인/원격 DB는 변경하지 않았다. 후속 리뷰의 installer 종류 교차검증과 Windows 최종 package/feed/cache 검증도 보완했다. 운영 package/cache는 승인된 `clipper-studio` / `clipper-studio-updater`, 개발은 `clipper-studio-dev` / `clipper-studio-dev-updater`다. 후속 Electron build·전체975, Web API build·전체2,884 PASS(21 SKIP), Web Admin build·전체571 PASS, Infra 전체36 PASS. Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5` 로컬 커밋 완료, clean/ahead1이며 미푸시다. [상세 결과](../implementation/2026-09-18-w04-non-ml-local-acceptance.md). 다음은 설치형 offline/online 비-ML 경계의 추가 실기 범위 확인 후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5와 서버 변경 HOLD.
+
 ## 최신 실기: 독립 개발판 로그인·필수 템플릿 이관
 
-새 macOS 개발판의 실제 Google 로그인·무료 체험/access/credit 표시를 사용자 확인했고, 필수 `.cliptpl` 이관 중 기본 제공 16개가 중복 복제되는 결함을 발견·수정했다. 옛 17개 번들 재가져오기 후 기본16+사용자1=총17, 잘못된 복제본0, 내보내기 사용자 템플릿만 표시를 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc` 로컬 커밋, 두 repo clean/ahead1. Nest build·대상69·전체 suite exit0, Angular 대상31·전체4,494 PASS. [상세 결과](../implementation/2026-09-17-template-transfer-dedup-validation.md). push·추가 병합·배포·원격 DB 변경 없음. W09의 Mac 필수 템플릿 이관은 완료했고 Windows 실기와 선택 데이터 이관은 남는다. 다음 주 작업축은 W04 남은 비-ML 로컬 PG acceptance이며 이후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5 HOLD 유지.
+새 macOS 개발판의 실제 Google 로그인·무료 체험/access/credit 표시를 사용자 확인했고, 필수 `.cliptpl` 이관 중 기본 제공 16개가 중복 복제되는 결함을 발견·수정했다. 옛 17개 번들 재가져오기 후 기본16+사용자1=총17, 잘못된 복제본0, 내보내기 사용자 템플릿만 표시를 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc` 로컬 커밋, 두 repo clean/ahead1. Nest build·대상69·전체 suite exit0, Angular 대상31·전체4,494 PASS. [상세 결과](../implementation/2026-09-17-template-transfer-dedup-validation.md). push·추가 병합·배포·원격 DB 변경 없음. W09의 Mac 필수 템플릿 이관은 완료했고 새 session 재실행·로그아웃 및 Windows 실기가 남는다. 다음 작업축은 W04 남은 비-ML 로컬 PG acceptance이며 이후 개발 DB 복제본 rehearsal이다. 실제 ML/Build5 HOLD 유지.
+
+2026-09-18 사용자 최종 결정: 프로젝트·소재관리·작업 이력의 복제/자동 이관은 하지 않는다. 옛 데이터 루트는 그대로 보존하지만 새 개발판과 공유하지 않으며, 직접 폴더 복사·경로 치환·사용자 UUID 재매핑도 범위에서 제외한다.
+
+같은 날 Mac session 실기 PASS: 로그인 상태 재실행 시 동일 계정·무료 체험·크레딧400·템플릿17 유지, 로그아웃 상태 재실행 시 로그인 화면 유지, Google 재로그인 연결창 `Clipper Studio (dev).app` 및 동일 데이터 복원을 사용자 확인했다. W09의 Mac 로그인/session/필수 템플릿 검증은 완료했고 Windows 실기가 남는다. 다음 작업축은 W04 비-ML PG 로컬 acceptance다.
 
 ## 최신 사용자 조건: 개발판 독립 분리 설계
 
@@ -10,7 +18,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 
 2026-09-17 후속: 앱 identity·로그인 결속 후 release API/runner/Admin Task 1–3 코드·자동 검증 완료. **Web API build/2,882 PASS·21 SKIP, Infra 51 PASS·1 SKIP, Admin build/50 PASS.** [최신 결과·리뷰·남은 작업](../implementation/2026-09-17-independent-dev-release-validation.md). Electron은 이번에 수정하지 않았으며 이전 build/975 PASS 기록 유지. 다음은 **새 격리 DB 대상과 영향 제시→별도 승인→nullable migration/실제 트랜잭션 검증**, 이어 새 설치본 Google 로그인·동시 실행·필수 템플릿 export/import 실기. 실제 환경파일·DB·앱 재패키징/기동·커밋/푸시/병합/배포 변경 없음. Electron/API/Infra/Admin/문서 미커밋이며 아래 clean/구현 전 표현은 과거 단계다. Mac 공개·자동빌드·업데이트 HOLD, ZIP 제외, ML/Build5 HOLD 유지. 주간 잔여 96% 기록, reset credit 사용 없음.
 
-새 개발판 빈 데이터 허용, 템플릿 이관 필수(.cliptpl 기존 기능 우선), 소재/프로젝트 보존은 선택. 기존 개발 앱 대치/데이터 경로 유지 필수 아님. 운영/새 개발판 Mac·Windows 동시 실행과 데이터 격리 필수, 옛 개발판이 남거나 재실행돼도 새 로그인 연결 영향 금지. 자동 옛 앱 탐색/삭제를 안전성 전제로 삼지 않는다. `ai.clipperstudio.dev` / `clipperstudio-dev` / `Clipper Studio Dev` / 채널 `dev` 및 연결 변경 범위 승인 후 조사·세부 계획 작성 완료. [정확한 값·변경 경계·검증 설계](../implementation/2026-09-17-independent-dev-identity-design.md), [작업카드](tasks/app-window-name.md) 참조. 아래 identity 유지 방침은 과거 구현 기록이다.
+새 개발판은 프로젝트·소재·작업 이력 없이 시작하고, 필수 템플릿 이관만 수행한다. 기존 개발 앱 대치/데이터 경로 유지 필수 아님. 운영/새 개발판 Mac·Windows 동시 실행과 데이터 격리 필수, 옛 개발판이 남거나 재실행돼도 새 로그인 연결 영향 금지. 자동 옛 앱 탐색/삭제를 안전성 전제로 삼지 않는다. `ai.clipperstudio.dev` / `clipperstudio-dev` / `Clipper Studio Dev` / 채널 `dev` 및 연결 변경 범위 승인 후 조사·세부 계획 작성 완료. [정확한 값·변경 경계·검증 설계](../implementation/2026-09-17-independent-dev-identity-design.md), [작업카드](tasks/app-window-name.md) 참조. 아래 identity 유지 방침은 과거 구현 기록이다.
 
 ## 2026-09-17 macOS 개발 앱 로그인 실기 후속
 
@@ -25,12 +33,12 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 원본8repo dev 최신·clean. 통합8repo push 완료·원격 SHA 일치·clean. 설치형 실기 남음 | [최신 Git 결과](../implementation/2026-09-17-integration-commit-proposal.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 비-ML 자동/격리 DB acceptance PASS. 설치형 offline/online 추가 실기 범위 확인 및 개발 DB 복제본 rehearsal 남음 | [2026-09-18 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [상세 인계](tasks/integration.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
-| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 실제 로그인·무료체험/access/credit 및 필수 템플릿 이관 PASS. 중복 방지 Angular/Nest 로컬 커밋 완료·미push. Windows/선택 데이터 실기 남음 | [템플릿 실기](../implementation/2026-09-17-template-transfer-dedup-validation.md) · [다음 단계](tasks/app-window-name.md) |
+| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로그인/session·필수 템플릿 PASS. 운영/개발 updater package·cache 통일 및 runner 최종 산출물 검증 보완, Electron975·Infra36 PASS. 코드4repo 로컬 커밋·clean/ahead1·미푸시. Mac 운영/개발 동시 실행·Windows 설치 실기 남음 | [W04 후속 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [다음 단계](tasks/app-window-name.md) |
 
 ## 공통 작업 공간과 보존
 

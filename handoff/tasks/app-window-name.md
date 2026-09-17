@@ -6,7 +6,7 @@
 
 잘못 생긴 로컬 복제본 16개만 백업 후 정상 API로 삭제했고 사용자 템플릿은 보존했다. 같은 17개 번들을 재가져온 뒤 기본16+사용자1=총17, 복제본0, 내보내기 사용자 항목1만 표시를 사용자 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc`에 로컬 커밋했으며 각 원격 통합 브랜치보다 1커밋 앞선 clean 상태다. [상세 구현·실기·검증](../../implementation/2026-09-17-template-transfer-dedup-validation.md). 코드 push·추가 병합·dev/main 변경·배포·원격 DB 변경은 없다.
 
-Mac 필수 템플릿 이관은 완료했다. 남은 W09 항목은 Windows 실제 installer/identity/template 실기와 선택사항인 소재·프로젝트 데이터 이관 검토다. Mac 공개·자동 업데이트, 실제 ML, Build5 전체 QA HOLD를 유지한다. 아래의 “템플릿 실기 남음”, 옛 identity 보존, 코드 미커밋 표현은 과거 체크포인트다.
+Mac 필수 템플릿 이관은 완료했다. 2026-09-18 사용자 결정으로 소재관리·프로젝트·작업 이력의 복제/자동 이관은 구현하지 않는다. 옛 데이터 루트는 삭제·수정하지 않고 보존하지만 새 개발판과 공유하지 않는다. 같은 날 로그인 상태 재실행 유지, 로그아웃 상태 재실행 유지, Google 재로그인과 동일 계정·무료 체험·크레딧400·템플릿17 복원까지 사용자 확인했다. 남은 W09 항목은 Windows 실제 installer/identity/template 실기다. Mac 공개·자동 업데이트, 실제 ML, Build5 전체 QA HOLD를 유지한다. 아래의 “템플릿 실기 남음”, 옛 identity/데이터 경로 보존, 코드 미커밋 표현은 과거 체크포인트다.
 
 ## 최신 사용자 요구: 독립 개발판 전환 (아래 identity 보존 방침보다 우선)
 
@@ -14,7 +14,7 @@ Mac 필수 템플릿 이관은 완료했다. 남은 W09 항목은 Windows 실제
 
 - 새 개발판은 백지 상태로 시작해도 된다. 기존 개발판을 덮어쓰거나 같은 데이터 경로를 유지하는 것은 필수가 아니다. 옛 앱이 남아 있어도 새 앱의 로그인 연결을 방해해서는 안 된다. 옛 앱 탐색/삭제나 lsregister 수동 실행을 정상 로그인 전제로 삼지 않는다.
 - 운영판과 새 개발판은 macOS/Windows 한 PC에서 동시 설치·실행 필수. 데이터 경로 등 가변 상태는 분리. 운영 표시명은 Clipper Studio, 개발 표시는 Clipper Studio (dev).
-- 템플릿 이관은 필수: 기존 .cliptpl export/import 우선 활용, 실제 옛 배포본→새 앱의 자산/폰트/레이아웃 보존을 검증해야 하며 구현 존재만으로 통과 처리하지 않는다. 소재·프로젝트 등은 최대한 보존하고 싶지만 선택 사항이다.
+- 템플릿 이관은 필수이며 실제 옛 배포본→새 앱의 자산/폰트/레이아웃 보존까지 검증 완료했다. 소재관리·프로젝트·작업 이력은 조사 후 이관하지 않기로 최종 결정했다.
 - 직원에게 필요한 자료를 보관한 뒤 옛 개발판 사용 중단/삭제를 공지할 수 있다. 하지만 공지 이행이나 모든 옛 사본 발견 여부에 안전성을 의존하지 않는다.
 - 사용자 설정안 동의: 새 개발판 appId `ai.clipperstudio.dev`, protocol `clipperstudio-dev`, 데이터 루트 `Clipper Studio Dev`, 업데이트 채널 `dev`. 표시명 `Clipper Studio (dev)`. 운영은 `ai.clipperstudio.app` / `clipperstudio` / `Clipper` / `stable` / 표시명 `Clipper Studio`.
 - [선택된 값·실제 코드 차이·연결 변경안](../../implementation/2026-09-17-independent-dev-identity-design.md)에 Mac/Windows 업데이트 URL과 검증 게이트를 기록했다. 로그인 target 구분, 관리자 stable 고정 해소, 서버 오게시 차단, runner 환경 전달이 추가로 필요하다. 설정값 동의와 이 상세 구현 범위의 승인을 구분한다.
@@ -29,19 +29,23 @@ Mac 필수 템플릿 이관은 완료했다. 남은 W09 항목은 Windows 실제
 
 원본 checkout의 새 개발 빌드에서 실제 Google 로그인·무료 체험 400 표시를 사용자 확인. macOS 기본 `clipper://` 핸들러가 /Applications의 옛 개발 앱이었음을 조회하고 옛 앱/이전 worktree 등록만 해제, 원본 새 개발 앱 재등록 후 사용자 재로그인 확인창 이름까지 정상 확인했다. 앱 파일·데이터 삭제 없음. 이 로컬 조치는 배포 업그레이드 해결책이 아니며, 파일명 변경으로 인한 구·신 개발 앱 공존과 콜백 대상 문제는 배포 전 설계/실기 잔여 항목이다. [조회 명령·실행 이력·배포 잔여 과제](../../implementation/2026-09-17-macos-dev-oauth-handler-validation.md) 참조. Windows NSIS·서명/공증·DMG 업그레이드 실기는 여전히 대기.
 
-최종 확인: 2026-09-17 KST. 상태: **이름·환경별 identity 보존 / R06·R07 수정·회귀 통과·로컬 커밋 / 실제 Google OAuth·Windows NSIS 실기 대기**.
+최종 확인: 2026-09-18 KST. 상태: **독립 개발 identity 적용 / 실제 Google OAuth·session 재실행·로그아웃·재로그인·무료체험·필수 템플릿 이관 PASS / Windows NSIS 실기 대기 / 프로젝트·소재·작업 이력 이관 제외**.
 
 [전체 현황](../WORKBOARD.md)
 
 ## 목표·범위
 
-통합판의 운영 앱은 macOS·Windows 모두 `Clipper Studio`, 개발 앱은 macOS·Windows 모두 `Clipper Studio (dev)`로 구분한다. 설치파일도 같은 이름을 사용한다. **운영은 기존 `appId=ai.clipperstudio.app`, protocol `clipperstudio://`, `Application Support/Clipper`를, 개발은 기존 `appId=ai.clipperstudio.desktop`, protocol `clipper://`, `Application Support/Clipper Studio`를 각각 유지한다.** 캐시·포트·업데이트 구조도 환경별 기존 값을 보존한다. 변경 대상은 사용자에게 보이는 앱·패키지 이름뿐이다.
+통합판의 운영 앱은 macOS·Windows 모두 `Clipper Studio`, 개발 앱은 macOS·Windows 모두 `Clipper Studio (dev)`로 구분한다. 설치파일도 같은 이름을 사용한다. 운영은 `appId=ai.clipperstudio.app`, protocol `clipperstudio://`, `Application Support/Clipper`; 개발은 `appId=ai.clipperstudio.dev`, protocol `clipperstudio-dev://`, `Application Support/Clipper Studio Dev`로 분리한다. 두 앱은 로그인·데이터·업데이트 identity를 공유하지 않는다.
 
 사용자는 2026-09-16 기존 운영 macOS 앱이 정식 배포된 적 없고 본인 테스트 설치만 있었으므로 옛 `Clipper.app`과의 공존 문제는 고려하지 않아도 된다고 확정했다. 운영 macOS 설치 앱 이름을 `Clipper.app`으로 유지하는 안은 명시적으로 거부했으며, 목표는 `Clipper Studio.app`이다.
 
 사용자는 운영·개발 macOS 앱 동시 설치를 전제로 개발 설치 앱을 `Clipper Studio (dev).app`으로 분리하는 안에 동의했다. Windows도 같은 운영/개발 이름 규칙을 적용하는 것이 요구사항이다.
 
 ## 현재 상태·중단 지점
+
+2026-09-18 검증에서 독립 개발판 설계·`package-lock.json`·테스트는 root package name `clipper-studio-dev`를 요구하지만 실제 `package.json`만 `clipper-electron`으로 남아 있음을 발견했다. 이대로면 Windows updater cache가 옛 개발판의 `clipper-electron-updater`와 겹칠 수 있다. 기존 실패 테스트 2건을 재현한 뒤 `package.json` 한 줄만 `clipper-studio-dev`로 보완했고 Electron build·전체 975 PASS를 확인했다. dependency/version 변경 없음. 후속 승인으로 독립 개발판 전체 변경은 Electron `d95c050`, Web API `36b049f`, Web Admin `01d0b93`, Infra `f0af3f5`에 로컬 커밋했다. 네 저장소는 clean/ahead1이며 미푸시이고, 새 병합·배포는 없다. [검증 상세](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md).
+
+같은 날 후속 리뷰에서 운영 package/cache의 과거 내부명 `clipper` / `clipper-updater`도 공개 배포 전 정리하기로 사용자가 승인했다. 최종 계약은 개발 `clipper-studio-dev` / `clipper-studio-dev-updater`, 운영 `clipper-studio` / `clipper-studio-updater`다. Web API는 Windows/x64 보고가 exe인지, macOS/arm64 보고가 dmg인지 성공 저장 전에 검사한다. Infra runner는 Windows 최종 `app-update.yml`의 정확한 feed/cache와 effective package name을 업로드 전에 검사한다. 후속 검증은 Electron build·전체 975, Web API build·전체 2,884 PASS(21 SKIP), Web Admin build·전체 571 PASS, Infra 전체 36 PASS다. 실제 Windows EXE/NSIS 설치 실기는 아직 사용자 Windows 장비에서 수행해야 한다.
 
 사용자 승인 후 Electron `6766c0645d8151eac1ea075e08f89871cb4ad4df`, Nest `fda1eda586fe2b80a444691303fb1e52fef57a34`에 보완을 로컬 커밋했다. fresh build와 Electron955/Nest2,678 테스트 PASS, 두 worktree clean이다. [커밋 결과](../../implementation/2026-09-17-integration-commit-proposal.md)가 아래 커밋 전 기록의 미커밋/옛 HEAD 표현보다 우선한다. 코드 push·추가 병합·원본 dev 변경·배포는 없다.
 
@@ -78,23 +82,22 @@ Mac 필수 템플릿 이관은 완료했다. 남은 W09 항목은 Windows 실제
 
 ## 다음 행동
 
-앱 이름 커밋은 이미 승인된 통합에 포함됐고 R06/R07 수정·회귀도 위 최신 기록대로 통과했다. 새 수정본의 설치형 종료 실기, Windows 서버의 NSIS 실물 설치·업그레이드와 배포 전 서명·공증 smoke는 남아 있다. 운영·개발은 서로 다른 기존 appId·protocol·데이터 경로와 서로 다른 표시명을 유지하므로 독립 설치 대상으로 다룬다.
+앱 이름 커밋은 이미 승인된 통합에 포함됐고 R06/R07 수정·회귀도 위 최신 기록대로 통과했다. 새 수정본의 session 재실행·로그아웃 실기, Windows 서버의 NSIS 실물 설치·업그레이드와 배포 전 서명·공증 smoke는 남아 있다. 운영·개발은 서로 다른 appId·protocol·데이터 경로와 표시명을 유지하므로 독립 설치 대상으로 다룬다. 옛 개발판 프로젝트·소재·작업 이력은 새 개발판으로 가져오지 않는다.
 
-macOS 실기 smoke는 다음 순서를 필수 게이트로 고정한다.
+macOS 새 개발판 자체의 session 수명주기는 다음과 같이 확인 완료했다.
 
-1. 옛 개발판에서 로그인하고 식별 가능한 로컬 프로젝트·설정을 만든 뒤 정상 종료한다.
-2. `Clipper Studio (dev).dmg`의 새 앱을 `/Applications`에 설치한다. 파일명이 달라 옛 `Clipper Studio.app`과 공존할 수 있지만, 두 앱을 번갈아 실행하는 것은 지원하지 않는다.
-3. 새 앱 첫 실행에서 옛 `auth.bin` 복호화 실패가 크래시·네이티브 Keychain 반복 프롬프트·무한 로그인 루프 없이 **로그아웃 상태**로 귀결되는지 확인한다. 현재 `getTokenBundle()`은 decrypt 예외를 잡아 `null`을 반환하도록 구현돼 있으나 실제 서명 앱/Keychain 동작은 별도 확인한다.
-4. 같은 개발 `userData` 경로에서 기존 프로젝트·설정이 그대로 보이는지 확인한다.
-5. 다시 로그인해 새 identity로 토큰을 저장하고 앱을 완전히 종료·재실행한 뒤 로그인 유지 여부를 확인한다.
-6. 로그아웃 후 토큰 파일 정리, protocol 딥링크, 자동 업데이트 대상, DMG 앱 이름·Dock/Finder 표시를 함께 확인한다.
+1. 로그인 상태 앱 완전 종료·재실행: 동일 계정, access, 크레딧 400, 템플릿 17개 유지 PASS.
+2. 로그아웃 후 앱 완전 종료·재실행: 로그인 화면 유지 PASS.
+3. Google 재로그인: 연결창 `Clipper Studio (dev).app`, 동일 계정·access·크레딧·템플릿 복원 PASS.
+4. 운영판과 새 개발판의 동시 설치·실행, 각 protocol 딥링크, 분리된 데이터 경로는 별도 실기로 남는다.
+5. 실제 서명·공증·DMG 및 Windows NSIS 실기는 배포 전 별도 게이트로 유지한다.
 
-3의 복호화 실패가 크래시 없이 로그아웃 상태로 귀결되는 것과 검증용 일회성 code session·정상 종료는 확인했다. 그러나 옛 개발판에서 직접 만든 상태를 이어받는 1~2, 실제 Google OAuth 재로그인, 4의 식별 가능한 기존 프로젝트 표시, 새 session의 재실행 유지, 실제 서명·공증·업데이트는 배포 전 남은 smoke다.
+옛 개발판 데이터 이어받기는 더 이상 smoke 항목이 아니다. 옛 앱 데이터는 보존만 하며 새 앱에서 읽거나 수정하지 않는다.
 
 ## 제약·미확인
 
 - Windows 설치/업데이트와 운영 배포는 미실행. Windows는 사용자가 Windows 서버에서 직접 검증한다.
-- 운영 appId/protocol/data path(`ai.clipperstudio.app`, `clipperstudio`, `Clipper`)와 개발 값(`ai.clipperstudio.desktop`, `clipper`, `Clipper Studio`)을 각각 보존한다. 캐시·포트·자동 업데이트 구조도 유지한다. macOS 개발판 표시명 변경에 따른 기존 암호화 로그인 session은 보존 대상에서 제외하고 1회 재로그인을 허용한다.
+- 운영 appId/protocol/data path는 `ai.clipperstudio.app` / `clipperstudio` / `Clipper`, 새 개발판은 `ai.clipperstudio.dev` / `clipperstudio-dev` / `Clipper Studio Dev`로 분리한다. macOS 개발판의 옛 암호화 로그인 session은 보존 대상에서 제외하고 1회 재로그인을 허용한다.
 - 실제 ML 플러그인 실행과 Build 5 전체 QA HOLD 유지. 서버 직접 접속 없음.
 
 ## 상세 근거

@@ -193,6 +193,10 @@ formal-PG와 최신 dev 모두 operation start 요청 DTO/DB에는 한 logical a
 
 ## 로컬 PG 검증 체크리스트
 
+### 2026-09-18 비-ML 실행 결과
+
+자동/격리 DB 범위는 [W04 비-ML 로컬 PG acceptance 결과](../../implementation/2026-09-18-w04-non-ml-local-acceptance.md)를 정본으로 한다. stable attempt/outbox/restart/cancel·delete/owner isolation/retry 새 attempt/잔액 refresh/runtime JSON validation/Shortform preflight/process 종료와 access·credit 정책 DB e2e가 통과했다. 모든 현행 tier의 실제 migration 결과는 `entitlement_mode=all`이다. 실제 ML 렌더 성공·실패를 발생시키는 설치형 실기와 개발 DB 복제본 rehearsal은 아직 남았으므로 아래 전체 체크리스트를 완료로 바꾸지 않는다.
+
 다음 항목은 구현·병합 승인 뒤 별도 로컬 DB에서 모두 검증하며, 일부만 통과한 상태를 전체 검증 완료로 기록하지 않는다.
 
 - access 없음/활성/만료와 크레딧 0/충분/추가구매만 잔존 조합별 조회·작업 시작 허용 결과
