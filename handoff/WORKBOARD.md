@@ -18,6 +18,8 @@
 
 ## 공통 작업 공간과 보존
 
+최신 checkout 결정: 사용자 승인으로 원본8repo가 모두 `integration/dev-pg-local-validation-20260917`이며 clean, origin 통합 참조와 0/0이다. 원본 폴더에서 다음 검증을 수행한다. 기존 통합8worktree는 동일 SHA detached로 유지, dev 브랜치 참조는 변경하지 않았다. 기존 ignored 환경파일11개 해시 불변. Nest `.env.local` 비-loopback DB 설정·실행 환경 로딩과 의존성/산출물 확인이 다음 단계다. 기존 통합 Nest cwd의 Node4프로세스는 건드리지 않았으며 새 기동 전 포트/소유권 확인 필요. 아래 원본dev 표현은 전환 전 기록이다.
+
 옛 PG 보완은 Nest `000414f`·Web API `3c33268`로 커밋·push·원격 SHA 확인 후 두 fix worktree 제거 완료. 앱 이름 feature `7aed9f6`도 push 완료했고 해당 worktree는 유지했다. 로컬/원격 브랜치와 커밋은 보존, 재병합 없음. [최종 정리 결과](../implementation/2026-09-17-old-pg-worktree-disposition.md)를 따른다.
 
 최신 push 상태는 위 W04와 최신 Git 결과를 따른다. 아래 커밋 시점의 “원본 유지/코드 push 없음”은 후속 사용자 승인 이전 기록이다. 문서 작성 위치는 사용자 지시에 따라 `.codex`로 한정하며 잘못 추가한 `clipper_docs` TODO는 이동 완료했다.

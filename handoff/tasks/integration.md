@@ -2,6 +2,8 @@
 
 ## 최신 Git 후속 상태
 
+원본 checkout 전환 완료: 사용자 “응” 승인 후 원본8repo를 `integration/dev-pg-local-validation-20260917`로 전환했다. 기존 통합 worktree8개는 같은 HEAD에서 detach해 보존했다. 원본은 clean 및 origin 통합 참조와 일치, dev 참조는 origin/dev와 계속 일치한다. `checkout --no-overwrite-ignore` 사용, 기존 ignored 환경파일11개(앱 산출물 내부2개 포함) 전후 SHA256 비교 불변. 비밀값 출력/복사/수정 없음. 원본 환경의 Nest `.env.local` DB 호스트가 비-loopback이며 실제 사용 여부는 미확인이다. 앱 실행 전 환경 로딩·연결 목적지·로컬 포트·의존성/산출물을 점검한다. 기존 통합 Nest cwd Node4개는 종료하지 않았다. 앱/DB/ML 실행·코드커밋·코드push·병합 없음. 앞으로 검증은 원본 폴더에서 하며 아래 옛 작업위치 설명보다 이 절이 우선한다.
+
 옛 fix 정리 완료: Nest `000414f`, Web API `3c33268` 및 앱 이름 feature `7aed9f6` push·원격 SHA 확인 완료. 두 fix worktree만 제거했으며 로컬/원격 브랜치·커밋과 앱 이름 worktree는 유지했다. [상세](../../implementation/2026-09-17-old-pg-worktree-disposition.md). 아래 “미커밋/승인 전/보류”는 조사 당시 기록이다.
 
 후속 [옛 fix worktree 대조](../../implementation/2026-09-17-old-pg-worktree-disposition.md): Nest7파일/Web API1파일의 초기 수정 목적은 현 통합 구현에 반영·대체됐다. 고유 미통합 커밋은 없으나 미커밋 파일을 그대로 병합했던 것은 아니다. 현재 통합 관련148 tests PASS. 보존용 커밋·push·worktree 제거는 승인 전이며 아직 실행하지 않았다.
