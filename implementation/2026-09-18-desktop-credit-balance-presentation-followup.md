@@ -102,8 +102,8 @@ creditHeld = creditTotal - creditBalance
 - 설정 화면과 홈 사이드 패널에서 `available / total` 미터, `보류` 범례, 관련 aria 표시를 제거했다.
 - 출처별 잔액과 크레딧 변동 내역은 그대로 유지했다.
 - API의 `heldBalance` 필드, Web API, DB schema/data, 과금·환불 상태는 변경하지 않았다.
-- 실패하는 UI 회귀 테스트를 먼저 확인한 뒤 구현했고, `AccountSummaryStore`·설정·홈 사이드 패널 관련 테스트 55개가 통과했다.
-- 이어서 Desktop Angular 전체 테스트 4,677개가 통과했고, 프로덕션 빌드 산출물도 정상 생성됐다.
+- 실패하는 UI 회귀 테스트를 먼저 확인한 뒤 구현했고, `AccountSummaryStore`·설정·홈 사이드 패널 관련 테스트를 포함한 회귀 검증이 통과했다.
+- 최종적으로 Desktop Angular 전체 테스트 4,683개와 프로덕션 빌드가 통과했다.
 
 ## 8. 남은 경계
 
@@ -128,4 +128,4 @@ creditHeld = creditTotal - creditBalance
 - `admin_adjustment`: 관리자가 이용권과 무관하게 크레딧만 직접 지급한 것. `사용 가능` 총액에는 포함하지만 진행 막대에는 포함하지 않는다.
 - `topup`, `promotion`: `사용 가능` 총액에는 포함하지만 현재 이용권/무료 체험 진행 막대에는 포함하지 않는다.
 
-최종 로컬 검증은 Web API 2,906 tests와 빌드, Desktop Angular 4,683 tests와 빌드까지 통과했다. 커밋·푸시·배포는 별도 승인 전 상태다.
+최종 로컬 검증은 Web API 2,906 tests와 빌드, Desktop Angular 4,683 tests와 빌드까지 통과했다. 구현과 문서는 각 기능 브랜치 및 `.codex/main`에 커밋·푸시했으며, 개발 브랜치 병합과 서버 배포는 아직 수행하지 않았다.
