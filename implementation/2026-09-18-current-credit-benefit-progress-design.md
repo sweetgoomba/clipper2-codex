@@ -2,7 +2,7 @@
 
 날짜: 2026-09-18 KST
 
-상태: **구현 완료·로컬 회귀 검증 완료·미배포**
+상태: **Web API·Desktop Angular 구현 완료. Desktop NestJS 전달 누락 보완 및 로컬 회귀 검증 완료. 보완분 미커밋·미배포.**
 
 ## 1. 목적
 
@@ -167,6 +167,10 @@ interface CreditSummary {
 
 ## 7. Desktop UI
 
+데스크톱 설치형 앱의 실제 응답 경로는 `Web API → Desktop NestJS → Desktop Angular`다. Angular가 Web API를 직접 호출하는 구조가 아니다. Desktop NestJS의 `CreditsService`가 `/credits/summary` 응답을 허용 목록 방식으로 다시 투영하므로, Web API에 필드를 추가할 때 이 계층의 응답 타입·검증·전달도 함께 갱신해야 한다.
+
+이번 최초 구현에서는 이 중간 계층이 계획과 검증 범위에서 빠져 `currentBenefit`을 제거했다. Web API 단위 테스트와 Angular mock 테스트는 각각 통과했지만 실제 설치형 앱에서는 막대가 보이지 않았다. 보완 후 Desktop NestJS는 유효한 `currentBenefit`만 전달하고, 필드가 없거나 `null`인 구버전 Web API 응답은 `null`로 정규화한다.
+
 1단계에서 단일화한 `사용 가능 N` 표시는 그대로 유지한다.
 
 `currentBenefit !== null`일 때만 그 아래에 진행 막대를 다시 표시한다.
@@ -185,11 +189,12 @@ interface CreditSummary {
 
 1. Web API에 nullable `currentBenefit`을 추가하고 OpenAPI/단위/통합 테스트를 갱신한다.
 2. API를 먼저 배포한다.
-3. Desktop Angular가 필드 부재도 허용하도록 optional 계약으로 소비한다.
-4. 새 Desktop을 배포한다.
-5. 기존 Desktop은 추가 필드를 무시하므로 영향을 받지 않는다.
+3. Desktop NestJS가 필드 부재를 `null`로 정규화하고, 필드가 있으면 닫힌 계약으로 검증·전달한다.
+4. Desktop Angular가 nullable 계약을 소비한다.
+5. 새 Desktop을 배포한다.
+6. 기존 Desktop은 추가 필드를 기존 투영 과정에서 무시하므로 영향을 받지 않는다.
 
-로컬 개발처럼 Desktop이 아직 이전 API와 연결될 수 있는 경우에도 진행 막대만 숨고 `사용 가능 N`은 정상 표시되어야 한다.
+여기서 `이전 API`는 전체 PG 적용 전 서버라는 뜻으로 한정되지 않는다. `currentBenefit` 필드를 추가하기 전의 모든 Web API 빌드를 뜻한다. 새 Desktop이 그런 서버에 연결돼도 Desktop NestJS가 누락 필드를 `null`로 바꾸므로 진행 막대만 숨고 `사용 가능 N`은 정상 표시된다. 이 호환 처리는 구버전 앱의 로그인이나 기능을 차단하지 않는다.
 
 ## 9. 필수 테스트
 
@@ -216,6 +221,15 @@ interface CreditSummary {
 - `보류` 문구가 다시 나타나지 않음
 - 설정 화면과 홈 사이드 패널 동일 동작
 
+### Desktop NestJS 계약 브리지
+
+- Web API의 유효한 `currentBenefit`을 필드별로 검증해 그대로 전달
+- 알 수 없는 상위·하위 필드는 기존 보안 경계대로 제거
+- 구버전 Web API처럼 `currentBenefit`이 없거나 `null`이면 `null`로 정규화
+- `free_trial`은 source `free_trial`만 허용
+- `plan_period`는 source `subscription` 또는 `admin_plan`만 허용하고 `periodEnd` 필수
+- 잘못된 응답은 `BadGatewayException`으로 변환
+
 ## 10. 이번 후속 작업에서 하지 않는 것
 
 - 기존 grant/ledger 데이터 재작성
@@ -231,8 +245,8 @@ interface CreditSummary {
 - Web API `GET /credits/summary`에 `currentBenefit`을 추가했다.
 - 플랜 혜택은 현재 유효한 access의 source와 현재 benefit period가 일치하는 `active`/`depleted` 지급 건만 합산한다.
 - 무료 체험은 정기결제·관리자 부여 이용권 혜택이 없을 때 현재 유효한 최신 지급 건을 사용한다.
-- Desktop은 `spendableBalance`를 `사용 가능 N`의 정본으로 유지하고, 검증된 `currentBenefit`이 있을 때만 설정 화면과 홈 사이드 패널에 진행 막대를 표시한다.
-- 구버전 API처럼 `currentBenefit` 필드가 없거나 값이 비정상이면 진행 막대만 숨긴다.
+- Desktop NestJS는 Web API 응답의 `currentBenefit`을 검증해 Angular로 전달한다. 필드가 없거나 `null`인 구버전 응답은 `null`로 정규화하며, 잘못된 값은 유효한 데이터처럼 전달하지 않는다.
+- Desktop Angular는 `spendableBalance`를 `사용 가능 N`의 정본으로 유지하고, 검증된 `currentBenefit`이 있을 때만 설정 화면과 홈 사이드 패널에 진행 막대를 표시한다.
 - DB migration과 기존 grant/ledger 데이터 변경은 없다.
 
 검증 결과:
@@ -246,4 +260,14 @@ interface CreditSummary {
   - 이 우회는 소스·설정·산출물 계약을 변경하지 않는다.
 - 세 작업 공간 `git diff --check`: 통과
 
-아직 커밋, 푸시, 서버 배포, 앱 배포는 하지 않았다.
+최초 완료 판정 뒤 실제 설치형 응답 경로에서 Desktop NestJS 투영 누락을 발견했다. 2026-09-18 보완 작업에서는 별도 `fix/desktop-credit-summary-proxy-20260918` 작업공간에서 실패 재현 테스트를 먼저 추가하고, 유효 값 전달·구버전 필드 부재/null 호환·잘못된 variant 거부를 구현했다.
+
+보완 검증 결과:
+
+- Desktop NestJS 프로덕션 TypeScript 빌드: 통과
+- 크레딧 프록시 계약 테스트: 8/8 통과
+- 기존 경로 의존 프로세스 테스트 파일 1개를 제외한 전체 회귀: 2,711/2,711 통과
+- `owned-child-process-registry.test.js`: 긴 격리 worktree 경로에서는 5/6, 변경 전 원본 checkout에서는 6/6 통과. 실패 항목은 child process identity 비교이며 크레딧 코드와 무관하다.
+- Desktop NestJS `git diff --check`: 통과
+
+기존 Web API·Desktop Angular 구현은 각 기능 브랜치와 문서에 커밋·푸시돼 있다. 이번 Desktop NestJS 보완 코드와 문서 보완만 아직 커밋·푸시·dev 반영·앱 재빌드를 하지 않았다.

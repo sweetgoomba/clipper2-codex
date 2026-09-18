@@ -2,7 +2,7 @@
 
 날짜: 2026-09-18 KST
 
-상태: **1단계 표시 정리와 현재 혜택 진행 막대 구현·로컬 회귀 테스트 완료. 미배포.**
+상태: **표시 정리와 진행 막대 UI 구현 완료. 실제 Desktop NestJS 전달 누락 보완 및 로컬 회귀 검증 완료. 보완분 미커밋·미배포.**
 
 ## 1. 사용자 확인 현상
 
@@ -129,3 +129,30 @@ creditHeld = creditTotal - creditBalance
 - `topup`, `promotion`: `사용 가능` 총액에는 포함하지만 현재 이용권/무료 체험 진행 막대에는 포함하지 않는다.
 
 최종 로컬 검증은 Web API 2,906 tests와 빌드, Desktop Angular 4,683 tests와 빌드까지 통과했다. 구현과 문서는 각 기능 브랜치 및 `.codex/main`에 커밋·푸시했으며, 개발 브랜치 병합과 서버 배포는 아직 수행하지 않았다.
+
+## 10. 실제 설치형 응답 경로 누락과 보완
+
+최초 문서와 테스트는 `Web API → Desktop Angular`처럼 두 끝점만 다뤘다. 실제 설치형 앱의 경로는 다음과 같다.
+
+```text
+Web API /credits/summary
+  → Desktop NestJS CreditsService의 허용 목록 투영
+  → Desktop Angular SettingsAccountService
+  → AccountSummaryStore
+  → 설정 화면·홈 사이드 패널
+```
+
+Desktop NestJS는 외부 응답을 그대로 통과시키지 않고 필요한 필드만 새 객체로 만든다. 이는 알 수 없는 서버 필드가 로컬 UI로 새는 일을 막는 의도된 경계다. 그러나 Web API에 `currentBenefit`을 추가하면서 이 허용 목록과 타입을 갱신하지 않아 해당 필드만 사라졌다. 호환성을 위해 제거한 것이 아니라 단순 구현·검증 누락이었다.
+
+보완 원칙:
+
+- 새 Web API + 새 Desktop: 유효한 `currentBenefit`을 검증·전달하여 두 화면에 막대를 표시한다.
+- 새 Web API + 옛 Desktop: 옛 Desktop NestJS가 새 필드를 무시하지만 기존 잔액 기능은 계속 동작한다.
+- 옛 Web API + 새 Desktop: 필드 부재를 `null`로 정규화하여 잔액·출처는 표시하고 막대만 숨긴다.
+- 잘못된 Web API 응답: 무료 체험/플랜 source 조합과 필수 종료일을 검증하고 잘못된 값을 UI에 전달하지 않는다.
+
+이 수정 때문에 구버전 앱을 사용할 수 없게 되거나 로그인이 차단되지는 않는다. 로그인 호환 정책과 `/credits/summary`의 선택 필드 호환은 서로 별개의 경로다.
+
+재발 방지는 [데스크톱 API 계약 변경 체크리스트](2026-09-18-desktop-api-contract-change-checklist.md)를 모든 Web API → 설치형 UI 계약 변경에 적용한다.
+
+보완 검증은 Desktop NestJS 빌드, 크레딧 프록시 8/8, 기존 경로 의존 프로세스 테스트 파일을 제외한 전체 2,711/2,711, `git diff --check`까지 통과했다. 프로세스 테스트 파일은 긴 격리 worktree에서 5/6이지만 변경 전 원본 checkout에서 6/6이며, 실패 지점은 이번 크레딧 경로와 무관한 process identity 비교다.

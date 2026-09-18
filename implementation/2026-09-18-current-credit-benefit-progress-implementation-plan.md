@@ -4,7 +4,7 @@
 
 **Goal:** Keep total spendable credits truthful while restoring a progress bar backed by the current free-trial or monthly-plan benefit.
 
-**Architecture:** Web API adds a backward-compatible `currentBenefit` projection to `GET /credits/summary`, derived from existing credit grants and the effective paid access. Desktop Angular keeps `spendableBalance` as the headline and renders a progress meter only when the new projection is present and valid.
+**Architecture:** Web API adds a backward-compatible `currentBenefit` projection to `GET /credits/summary`, derived from existing credit grants and the effective paid access. The installed app receives it through the Desktop NestJS allowlist projector, then Desktop Angular keeps `spendableBalance` as the headline and renders a progress meter only when the validated projection is present.
 
 **Tech Stack:** NestJS 11, TypeORM/PostgreSQL, Jest, OpenAPI YAML, Angular 22 signals/templates/SCSS, Jasmine/Karma.
 
@@ -143,7 +143,44 @@ Expected: build succeeds and all selected credit/access tests pass.
 
 ---
 
-### Task 2: Desktop progress meter backed by currentBenefit
+### Task 2: Desktop NestJS credit-summary contract bridge
+
+**Files:**
+- Modify: `/Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/credits/application/credits.service.ts`
+- Test: `/Users/jina/project/adlight/desktop/clipper_nestjs/test/access-credit-proxy.test.js`
+
+**Interfaces:**
+- Consumes the Web API `CreditSummary` contract.
+- Produces the closed Desktop-local response consumed by Angular.
+- Normalizes an absent or null `currentBenefit` to null for older Web API compatibility.
+
+- [x] **Step 1: Reproduce the omission with a failing bridge test**
+
+Return a complete Web API summary containing `currentBenefit` from the fake upstream and assert the exact projected Desktop NestJS result. Confirm that the old implementation drops the field.
+
+- [x] **Step 2: Implement closed projection and compatibility normalization**
+
+Validate and copy `kind`, `source`, `initialCredits`, `remainingCredits`, `periodStart`, and `periodEnd`. Enforce the OpenAPI discriminated variants. Treat both an absent field and explicit null as null so a new Desktop can still use an older Web API.
+
+- [x] **Step 3: Add malformed and compatibility coverage**
+
+Cover valid projection, unknown-field stripping, absent/null fallback, invalid kind/source combinations, and a missing plan-period end.
+
+- [x] **Step 4: Run full Desktop NestJS regression and build**
+
+Run the complete Node test suite, production TypeScript build, and `git diff --check`. Record the observed result rather than inferring it from focused tests.
+
+Observed on the isolated worktree:
+
+- production TypeScript build: pass
+- credit proxy contract tests: 8/8 pass
+- all test files except the pre-existing path-sensitive `owned-child-process-registry.test.js`: 2,711/2,711 pass
+- that process-registry file: 5/6 in the long isolated-worktree path, while the unchanged original checkout passes 6/6; the failure is the existing child-process identity test and does not touch credit code
+- Desktop NestJS `git diff --check`: pass
+
+---
+
+### Task 3: Desktop Angular progress meter backed by currentBenefit
 
 **Files:**
 - Modify: `/Users/jina/project/adlight/desktop/clipper_angular/src/shell/settings/settings/settings-account.service.ts`
@@ -251,7 +288,7 @@ Expected: full suite and build pass; no whitespace errors.
 
 ---
 
-### Task 3: Closeout documentation and cross-repo verification
+### Task 4: Closeout documentation and cross-repo verification
 
 **Files:**
 - Modify: `/Users/jina/project/adlight/.codex/implementation/2026-09-18-current-credit-benefit-progress-design.md`
