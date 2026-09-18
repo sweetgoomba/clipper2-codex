@@ -64,5 +64,5 @@
 
 - [x] **Step 1:** 링크 검사, 비밀값 패턴 검사, `git diff --check`를 실행한다.
 - [x] **Step 2:** 이번 작업의 문서만 stage하고 staged diff를 확인한다.
-- [ ] **Step 3:** 문서 커밋을 만들고 `origin/main`에 일반 push한다.
-- [ ] **Step 4:** `git fetch` 후 로컬·원격 SHA 일치와 최종 상태를 확인한다.
+- [x] **Step 3:** 문서 커밋을 만들고 `origin/main`에 일반 push한다.
+- [x] **Step 4:** `git fetch` 후 로컬·원격 SHA 일치와 최종 상태를 확인한다.

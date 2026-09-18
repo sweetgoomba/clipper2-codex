@@ -6,6 +6,7 @@
 - 실제 카드 결제/webhook/환불, 유료 operation 차감·환급, 30–60분 로그 관찰, Windows 설치 후 실기, macOS 서명·공증 배포를 잔여 범위로 분리했다. Release 생성 폼 입력값 유지와 0.0.34 폐기 상태도 미완료로 기록했다.
 - 최신 정본: [정식 PG 통합 종료 감사와 남은 작업](./2026-09-18-pg-integration-closeout-and-remaining-work.md). WORKBOARD·통합 카드·앱 카드·Release Coordinator 설계 상단에서 이 문서로 연결했다.
 - Angular 진행 차단 UI는 원본 checkout을 `feature/billable-operation-blocking-progress-20260918`로 전환해 `6ec58054d894e4f6171dc47329e8ef06bf2520ab`로 커밋했다. Angular 원격 push·dev merge·배포는 하지 않았다.
+- `.codex` 종료 감사와 진행 차단 설계·계획은 `85e034d0f1c43e2af231bb9564dd9f172e61415a`로 커밋해 `origin/main`에 push했고, fetch 뒤 로컬·원격 SHA 일치를 확인했다.
 
 ## 2026-09-18 — 설치형 유료 작업 대기 구간 전체 화면 차단 구현
 
