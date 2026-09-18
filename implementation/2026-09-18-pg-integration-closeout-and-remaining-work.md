@@ -111,7 +111,8 @@
 
 ## 4. 확인된 후속 결함·미완료 UX
 
-- Angular 유료 작업의 과금 확인창 전후 대기 동안 화면이 다시 조작되던 문제는 공용 전체 화면 스피너로 수정했지만, 현재 별도 feature 브랜치의 후속 변경이다. 0.0.35 미포함, 원격 push·dev merge·앱 재릴리즈·설치형 수동 확인 전이다.
+- Angular 유료 작업의 과금 확인창 전후 대기 동안 화면이 다시 조작되던 문제는 공용 전체 화면 스피너로 수정했고, 사용자 숏폼 실기 뒤 크기를 `40px/3px`로 축소했다. Angular feature branch `feature/billable-operation-blocking-progress-20260918`에 `58eafe60`까지 push했고 관련 452 tests와 production build를 통과했다. 0.0.35에는 포함되지 않으며 dev merge·앱 재릴리즈 및 숏폼 외 진입점 수동 확인은 아직 남았다.
+- 크레딧 summary가 현재 `heldBalance`와 `spendableBalance`에 같은 잔액을 반환하는데 Desktop이 두 값의 차이를 `보류`로 표시하고, `heldBalance`를 최초 지급량처럼 사용해 `300 / 300`, `보류 0`을 노출한다. 일반 유료 operation은 즉시 차감 후 실패·취소 환급 구조이므로 일반적인 보류 잔액은 필요하지 않다. 이번에는 코드 수정 없이 [데스크톱 크레딧 잔액 표시 후속](2026-09-18-desktop-credit-balance-presentation-followup.md)에 원인, `refund_locked`와의 구분, 제거·계약 정리안을 기록했다.
 - Release 페이지에서 새 릴리즈 생성 후 버전·브랜치·릴리즈 노트 입력값이 그대로 남는 UI 문제는 사용자가 나중에 수정하기로 했고 현재 미수정이다.
 - 옛 개발판 로그인 차단은 서버에서 해제했지만 `9886f96` 배포 뒤 실제 옛 앱 Google 로그인을 다시 시도한 사용자 확인 기록은 없다. 로그인 허용은 옛 앱의 전체 API 호환 보장이 아니므로 편집/다운로드 등은 각 계약 차이로 실패할 수 있다.
 - API 배포 직후 health가 준비되기 전에 외부 요청하면 일시 502가 발생한다. 현재 서비스 장애는 아니지만 `deploy-dev.sh`가 application readiness 완료까지 기다리지 않는 운영 UX는 필요하면 별도 개선한다.

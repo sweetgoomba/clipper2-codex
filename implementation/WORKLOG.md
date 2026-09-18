@@ -361,3 +361,12 @@
 - API build: PASS.
 - API 전체 테스트: 590/591 PASS. 유일한 실패는 별도 브랜치로 분리한 기존 운영자 JWT 고정 날짜 fixture다.
 - 후속 배포는 API 이미지 빌드와 API container recreate만 필요하다. migration, web client, web admin, infra, proxy, DB restart는 필요하지 않다.
+
+## 2026-09-18 — 공용 과금 진행 스피너 축소·크레딧 표시 결함 문서화
+
+- 사용자 로컬 실기에서 숏폼 과금 확인창 전후의 전체 화면 차단 동작을 확인했다. 공용 스피너만 `48px/4px`에서 `40px/3px`로 축소하고 스크림·입력 차단·과금창 전환 수명주기는 유지했다. Angular feature branch에 commit `58eafe60`을 push했다.
+- TDD: component spec에 새 크기를 먼저 요구해 기존 `48/4`에서 1 FAIL을 확인한 뒤 구현. 공용 component/service와 숏폼·안무/대사 하이라이트·Variation 생성/결과 재시도·보관함 재시도 8개 spec 묶음 **452 PASS**, Angular production build PASS.
+- 수동 검증할 여섯 진입점의 시작·과금창 중단·승인 뒤 재개·종료 시점을 [설계 문서](../design/2026-09-18-billable-operation-blocking-progress-design.md)에 표로 기록했다.
+- 무료체험 400에서 100 사용 후 `300 / 300`, `보류 0`이 보이는 결함을 조사했다. Web API는 현재 `heldBalance=spendableBalance=300`을 반환하고 Desktop이 `held-spendable`을 보류로 잘못 표시한다. 일반 operation에는 예약 보류가 없고 `refund_locked`는 개별 환불 처리 상태다.
+- 사용자 지시대로 크레딧 제품 코드는 이번에 수정하지 않았다. 원인, 과거 adapter 제거 시 회귀, `보류` 제거, available 단일 표시, 선택적 300/400 계약 설계를 [전용 후속 문서](./2026-09-18-desktop-credit-balance-presentation-followup.md)와 PG 종료 감사에 기록했다.
+- 로컬 57433(Admin)/57434(Release)/57435(User)는 새 개발판 실제 로그인·무료체험·템플릿·플러그인 수동 검증을 기존 5433–5435/원격 DB와 격리하려 만든 환경임을 재확인했다.
