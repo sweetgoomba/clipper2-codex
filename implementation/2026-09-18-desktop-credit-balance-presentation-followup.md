@@ -2,7 +2,7 @@
 
 날짜: 2026-09-18 KST
 
-상태: **원인 확인·정책 제안 기록 완료. 이번 작업에서는 제품 코드 수정 안 함.**
+상태: **1단계 표시 정리와 현재 혜택 진행 막대 구현·로컬 회귀 테스트 완료. 미배포.**
 
 ## 1. 사용자 확인 현상
 
@@ -69,15 +69,15 @@ creditHeld = creditTotal - creditBalance
 - `heldBalance`는 기존 소비처를 조사한 뒤 deprecated 처리하고 단계적으로 제거한다.
 - `refund_locked`는 grant 상태로 유지하고 계정 전체 잔액 필드와 섞지 않는다.
 
-### 선택 사항 — 300 / 400과 사용 100 복원
+### 후속 구현 — 현재 혜택의 300 / 400 복원
 
-이 표기를 제품에서 계속 원한다면 `heldBalance`로 추론하지 않는다. 서버가 다음 중 합의된 의미를 명시적으로 제공해야 한다.
+이 표기는 `heldBalance`에서 추론하지 않고 서버가 명시적으로 제공하는 `currentBenefit`으로 구현했다.
 
-- 현재 유효한 grant의 `initialCredits` 합계
-- 현재 유효한 grant의 `remainingCredits` 합계
-- 그 둘을 기준으로 계산한 `consumedCredits`
+- 현재 무료 체험 또는 현재 플랜 benefit period의 `initialCredits` 합계
+- 같은 지급 범위의 `remainingCredits` 합계
+- 추가 구매·프로모션·관리자 조정은 분모에서 제외
 
-무료체험, 구독, 추가 구매, 만료, 취소, 환불이 섞일 때 어떤 grant를 분모에 포함할지 정책을 먼저 정해야 한다. 정책 결정 전의 안전한 최소 UI는 `사용 가능 300` 단일 표시다.
+따라서 무료 체험 400 중 100을 사용했다면 `무료 체험 남음 300 / 400`을 표시한다. 추가 구매 1,000이 있어도 막대는 `300 / 400`을 유지하고 전체 잔액만 `사용 가능 1,300`이 된다.
 
 ## 6. 영향 파일과 검증 기준
 
@@ -94,6 +94,38 @@ creditHeld = creditTotal - creditBalance
 3. 환불 처리 중인 grant만 해당 이력/지급 건에 `환불 처리 중`으로 표시된다.
 4. 여러 credit source와 만료·환불이 섞여도 최초 지급량/사용량을 `heldBalance`에서 추론하지 않는다.
 
-## 7. 이번 작업의 경계
+## 7. 1단계 구현 결과
 
-이번에는 원인 조사와 문서화만 수행한다. Desktop/Web API 제품 코드, DB schema/data, 배포 환경은 이 문제 때문에 변경하지 않는다. 실제 표시 수정은 별도 사용자 승인과 테스트 우선 구현으로 진행한다.
+2026-09-18에 사용자 승인 후 Desktop Angular에 다음 최소 수정을 적용했다.
+
+- `AccountSummaryStore` 표시 규칙을 `spendableBalance` 기준의 `사용 가능 N`으로 단일화했다.
+- 설정 화면과 홈 사이드 패널에서 `available / total` 미터, `보류` 범례, 관련 aria 표시를 제거했다.
+- 출처별 잔액과 크레딧 변동 내역은 그대로 유지했다.
+- API의 `heldBalance` 필드, Web API, DB schema/data, 과금·환불 상태는 변경하지 않았다.
+- 실패하는 UI 회귀 테스트를 먼저 확인한 뒤 구현했고, `AccountSummaryStore`·설정·홈 사이드 패널 관련 테스트 55개가 통과했다.
+- 이어서 Desktop Angular 전체 테스트 4,677개가 통과했고, 프로덕션 빌드 산출물도 정상 생성됐다.
+
+## 8. 남은 경계
+
+- API 계약에서 `heldBalance`를 deprecated/제거할지는 기존 소비처 조사 후 별도로 결정한다.
+- `initialCredits - remainingCredits`를 일반적인 `사용`이라고 부르지는 않는다. 관리자 회수나 결제 조정도 차이를 만들 수 있으므로 화면은 `남음`으로 표현한다.
+- `refund_locked`는 개별 grant의 환불 처리 상태로 유지하며, 계정 전체 `보류` 잔액으로 표시하지 않는다.
+
+## 9. 현재 혜택 진행 막대 구현 결과
+
+확정 정책과 상세 구현은 `2026-09-18-current-credit-benefit-progress-design.md`에 기록했다.
+
+- 계정 전체 정본: `spendableBalance` → `사용 가능 N`
+- 진행 막대 정본: nullable `currentBenefit`
+- 무료 체험: `무료 체험 남음 N / 최초 지급량`
+- 정기결제·관리자 부여 이용권: `이번 이용기간 남음 N / 현재 period 지급량`
+- 추가 구매만 보유하거나 구버전 API 응답이면 진행 막대 없음
+- 설정 화면과 홈 사이드 패널은 동일한 `AccountSummaryStore` 파생값을 사용
+
+용어 구분:
+
+- `admin_plan`: 관리자가 사용자에게 이용권을 부여하고, 그 이용권 정책에 따라 지급한 현재 period 기본 크레딧. 진행 막대에 포함한다.
+- `admin_adjustment`: 관리자가 이용권과 무관하게 크레딧만 직접 지급한 것. `사용 가능` 총액에는 포함하지만 진행 막대에는 포함하지 않는다.
+- `topup`, `promotion`: `사용 가능` 총액에는 포함하지만 현재 이용권/무료 체험 진행 막대에는 포함하지 않는다.
+
+최종 로컬 검증은 Web API 2,906 tests와 빌드, Desktop Angular 4,683 tests와 빌드까지 통과했다. 커밋·푸시·배포는 별도 승인 전 상태다.
