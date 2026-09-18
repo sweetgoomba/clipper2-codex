@@ -2,7 +2,7 @@
 
 날짜: 2026-09-18 KST
 
-판정: **개발환경 PG 통합·DB 전환·독립 개발판 Windows 0.0.35 게시는 완료. 실제 결제/유료 작업 전체 E2E와 플랫폼별 설치·업데이트 검증은 별도 잔여 작업.**
+판정: **개발환경 PG 통합·DB 전환·독립 개발판 Windows 0.0.35 게시는 완료. 후속 결함을 선별 반영한 0.0.36 source와 dev 병합도 완료했으며, 0.0.36 서버 배포·Windows 설치 파일 빌드·게시와 실제 결제/유료 작업 전체 E2E는 잔여 작업이다.**
 
 이 문서는 여러 날짜의 계획·중간 체크포인트보다 우선하는 현재 정본이다. 과거 문서의 `미커밋`, `dev 미반영`, `Gate A 대기`, `Windows 빌드 전` 표현은 당시 이력으로만 읽는다.
 
@@ -15,13 +15,13 @@
 
 | 저장소 | `origin/dev` |
 | --- | --- |
-| `clipper_angular` | `40d9096c3cb598e952b81532d81e0c929e9ae405` |
-| `clipper_electron` | `3fca00b6a9e91ecb304333b45ca1f3443d4df7d1` |
-| `clipper_nestjs` | `1adb62fc50119a96f22d3bc9ee62600588477dab` |
-| `clipper_python` | `60417ce865499df519971650a43a7ca1a82d9867` |
+| `clipper_angular` | `b511e15824eb7ac20d4802e145a6c3a5923f4eb4` |
+| `clipper_electron` | `0cd7ed7b9444bb00c6372bdcff47a356f5520c35` |
+| `clipper_nestjs` | `c2e227c244e786af4dfa51bd132692eb38cd1cd2` |
+| `clipper_python` | `964c523bd9660713f8d4e6ba316410d7f208a0fc` |
 | `clipper_infra` | `8adbfcdedb95fc0a56efcd7bb7154752c49b23f6` |
 | `clipper_web_admin` | `bdcbae3b0d3fbb581506ba1686ed97dcefa9cfa4` |
-| `clipper_web_api` | `9886f9681718b26ef4959aeab4e156bbb9fdaf5e` |
+| `clipper_web_api` | `9304cec77b30b72a9b89355393878a84896dcd86` |
 | `clipper_web_client` | `72829210ecbe2d56b61bfc132f2b6e7e886b933a` |
 
 - 로컬 checkout은 모두 `dev`일 필요가 없다. 일부는 보존용 integration branch에 머물러 있지만 원격 `dev` 포함 여부와는 별개다. 이번 종료 감사에서는 원격 ancestry를 정본으로 사용한다.
@@ -60,7 +60,7 @@
   - `https://dev-api.clipperstudio.ai/releases/updates/dev/windows/x64/latest.yml`: version `0.0.35`와 같은 Build 54 파일을 반환.
 - 처음 다운로드 페이지가 0.0.31을 반환한 문제는 환경별 정식 게시 대상을 조회하도록 API를 보완한 뒤 해소됐다. API 재배포 직후의 502는 앱 기동 전 요청이었고, 같은 컨테이너가 재시작 없이 정상 기동한 뒤 내부·외부 health 200을 확인했다.
 
-## 2. 0.0.35에 포함된 source와 이후 변경의 경계
+## 2. 0.0.35와 0.0.36 source 경계
 
 `release/0.0.35`는 릴리즈 생성 시점의 source를 고정한 브랜치다.
 
@@ -75,6 +75,25 @@
 - 이후의 Angular 홈 카드 변경과 이번 `BlockingProgress` 변경은 0.0.35에 포함되지 않는다.
 - 현재 개발 API에는 release snapshot 이후 다운로드 대상 수정과 옛 개발판 로그인 허용 보완까지 배포됐다. 데스크톱 릴리즈 source와 서버 runtime source가 반드시 같은 SHA일 필요는 없지만, 이 차이를 릴리즈 이력에서 숨기지 않는다.
 - 0.0.34는 사용하지 않기로 했지만 관리자 DB에서 실제 `폐기` 처리됐는지는 확인하지 않았다. Build 52/53 실패 이력을 삭제하거나 고쳐 쓰지 않는다.
+
+`release/0.0.36`은 최신 `dev` 전체를 복제하지 않았다. 다른 팀의 미출시 Angular 작업이 우연히 포함되지 않도록 `release/0.0.35`에서 시작해 승인된 후속 변경만 선별했다. 그 후 동일한 릴리즈 브랜치를 `dev` 방향으로 병합했다. 반대로 `dev`를 릴리즈 브랜치에 병합하지 않았다.
+
+| 빌드 source | `release/0.0.36` | 포함한 후속 범위 |
+| --- | --- | --- |
+| Angular | `436964bdce97c6995f81c5f2eca32ef3e5fedab8` | 과금 모달 전후 blocking progress, spinner 축소, 현재 혜택 기준 크레딧 표시 |
+| Electron | `24467585e706439b442c28d804f1f84fc139a1c2` | 같은 앱 버전 재빌드에서도 bundled Python source 변경 시 plugin venv 갱신 |
+| NestJS | `82a86c2b33147698310654087111c22ca6e886ae` | 과대 실패 메시지 환급 outbox 영속화, `currentBenefit` 프록시 계약 보존 |
+| Python | `52ff9cdaa230543c5960f74ff170671e8a52ba17` | 세로 입력 안무 하이라이트 montage scale/pad 수정 |
+| Runtime Web API snapshot | `b3ea91d9ee4e9c819ee306f32eb74065245daf12` | 환경별 게시 다운로드, 옛 개발판 로그인 호환, 현재 혜택 크레딧 응답 |
+
+릴리즈 source 검증 결과:
+
+- Angular: 4,668 tests, style tests 6개, packaged build 통과.
+- Electron: 980 tests 및 TypeScript build 통과.
+- Web API: 2,906 tests 및 Nest build 통과.
+- Python: 안무 하이라이트 회귀 tests 2개 통과.
+- NestJS: build와 변경 대상 회귀 tests 통과. 전체 실행의 유일한 실패는 격리 worktree에 gitignored `.env.packaged`가 없어서 발생했고, 실제 배포 env를 연결한 뒤 해당 테스트가 통과했다.
+- Angular의 기존 다른 팀 `dev` 변경과 0.0.36 변경을 합친 최종 `dev`에서도 4,683 tests, style tests 6개, packaged build가 통과했다.
 
 ## 3. 지금 남은 필수 확인
 
@@ -111,8 +130,8 @@
 
 ## 4. 확인된 후속 결함·미완료 UX
 
-- Angular 유료 작업의 과금 확인창 전후 대기 동안 화면이 다시 조작되던 문제는 공용 전체 화면 스피너로 수정했고, 사용자 숏폼 실기 뒤 크기를 `40px/3px`로 축소했다. Angular feature branch `feature/billable-operation-blocking-progress-20260918`에 `58eafe60`까지 push했고 관련 452 tests와 production build를 통과했다. 0.0.35에는 포함되지 않으며 dev merge·앱 재릴리즈 및 숏폼 외 진입점 수동 확인은 아직 남았다.
-- 크레딧의 잘못된 `300 / 300`, `보류 0` 표시는 Desktop Angular에서 제거했고, Web API가 현재 무료 체험/이용권 혜택을 `currentBenefit`으로 제공하도록 구현했다. 이후 실기에서 Desktop NestJS의 허용 목록 투영이 새 필드를 제거하는 계층 누락을 발견했다. 별도 `fix/desktop-credit-summary-proxy-20260918` 작업공간에서 유효 필드 전달, 구버전 Web API의 필드 부재/null 호환, 잘못된 variant 거부 테스트와 보완을 완료했으며 아직 커밋·dev 반영·앱 재빌드는 하지 않았다. 상세 원인과 호환 행렬은 [데스크톱 크레딧 잔액 표시 후속](2026-09-18-desktop-credit-balance-presentation-followup.md)에 기록했다.
+- Angular 유료 작업의 과금 확인창 전후 대기 동안 화면이 다시 조작되던 문제는 공용 전체 화면 스피너로 수정했고, 사용자 숏폼 실기 뒤 크기를 `40px/3px`로 축소했다. 0.0.36 source와 `dev` 반영 및 자동 테스트는 완료했다. 새 설치 파일에서 숏폼 외 유료 진입점의 표시 시작·종료 시점 수동 확인은 아직 남았다.
+- 크레딧의 잘못된 `300 / 300`, `보류 0` 표시는 Desktop Angular에서 제거했고, Web API가 현재 무료 체험/이용권 혜택을 `currentBenefit`으로 제공하도록 구현했다. Desktop NestJS가 새 필드를 제거하던 프록시 계약 누락도 보완해 0.0.36 source와 `dev`에 반영했다. 구버전 Web API가 필드를 생략하는 경우에는 막대를 숨기되 앱은 계속 동작한다. 상세 원인과 호환 행렬은 [데스크톱 크레딧 잔액 표시 후속](2026-09-18-desktop-credit-balance-presentation-followup.md)에 기록했다.
 - Release 페이지에서 새 릴리즈 생성 후 버전·브랜치·릴리즈 노트 입력값이 그대로 남는 UI 문제는 사용자가 나중에 수정하기로 했고 현재 미수정이다.
 - 옛 개발판 로그인 차단은 서버에서 해제했지만 `9886f96` 배포 뒤 실제 옛 앱 Google 로그인을 다시 시도한 사용자 확인 기록은 없다. 로그인 허용은 옛 앱의 전체 API 호환 보장이 아니므로 편집/다운로드 등은 각 계약 차이로 실패할 수 있다.
 - API 배포 직후 health가 준비되기 전에 외부 요청하면 일시 502가 발생한다. 현재 서비스 장애는 아니지만 `deploy-dev.sh`가 application readiness 완료까지 기다리지 않는 운영 UX는 필요하면 별도 개선한다.
@@ -129,8 +148,8 @@
 
 다른 팀에 새 개발판 사용을 안내할 수 있는 핵심 전환은 완료됐다. 다만 이 판정은 “모든 결제·환불·ML·설치·자동 업데이트 시나리오가 끝났다”는 뜻이 아니다. 다음 실무 우선순위는 다음과 같다.
 
-1. Windows 0.0.35 공개 설치본의 설치·로그인·운영판 공존 확인.
-2. 이번 `BlockingProgress` 후속 변경의 수동 UX 확인과 dev 반영 여부 결정.
+1. 개발 서버에 최신 Web API `dev`를 배포하고 0.0.36 source snapshot·Windows 원격 빌드·게시를 완료한다.
+2. Windows 0.0.36 공개 설치본의 설치·로그인·운영판 공존과 `BlockingProgress`·크레딧 막대·안무 하이라이트 수정 실기를 확인한다.
 3. 전환된 개발환경에서 테스트 카드 기반 PG 핵심 E2E.
 4. 실제 유료 operation 차감·환급 E2E와 30–60분 로그 관찰.
 5. 필요할 때 macOS 서명·공증 배포와 자동 업데이트 정책을 별도 프로젝트로 재개.
