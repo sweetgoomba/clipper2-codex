@@ -1,5 +1,21 @@
 # Clipper PG Worklog
 
+## 2026-09-18 — PG 통합 종료 감사와 source 정리
+
+- 8repo 원격을 fresh fetch해 모든 정식 PG integration ref가 현재 `origin/dev`에 포함됨을 확인했다. 개발 DB/서비스 Gate A–G, 독립 개발판, Windows 0.0.35 Build54 게시와 공개 다운로드/update feed까지를 완료 범위로 확정했다.
+- 실제 카드 결제/webhook/환불, 유료 operation 차감·환급, 30–60분 로그 관찰, Windows 설치 후 실기, macOS 서명·공증 배포를 잔여 범위로 분리했다. Release 생성 폼 입력값 유지와 0.0.34 폐기 상태도 미완료로 기록했다.
+- 최신 정본: [정식 PG 통합 종료 감사와 남은 작업](./2026-09-18-pg-integration-closeout-and-remaining-work.md). WORKBOARD·통합 카드·앱 카드·Release Coordinator 설계 상단에서 이 문서로 연결했다.
+- Angular 진행 차단 UI는 원본 checkout을 `feature/billable-operation-blocking-progress-20260918`로 전환해 `6ec58054d894e4f6171dc47329e8ef06bf2520ab`로 커밋했다. Angular 원격 push·dev merge·배포는 하지 않았다.
+
+## 2026-09-18 — 설치형 유료 작업 대기 구간 전체 화면 차단 구현
+
+- Angular 공용 UI `shared/ui/blocking-progress`에 페이지 전체 입력을 막는 어두운 배경과 중앙 스피너를 추가했다. 화면 문구·카드 없이 스피너만 표시한다.
+- 과금 작업 버튼을 누른 직후부터 사전 검사·저장·파일 확인·견적 조회가 끝날 때까지 표시하고, 과금 확인창이 열리기 직전에 숨긴다. 취소하면 원래 화면으로 복구하고, 승인하면 다시 표시하여 작업 생성·서버 응답·보관함 이동이 끝날 때까지 유지한다. 오류·예외 경로는 `finally`에서 닫는다.
+- 적용 범위는 숏폼 프롬프트/URL/붙여넣기 생성, 대사 하이라이트, 댄스 하이라이트, Variation 일괄 생성, Variation 단건 재시도, 보관함의 유료 작업 재시도다. 댓글·순위 등 무료 재시도는 제외했다.
+- 공용 과금 확인 서비스에는 확인창 직전/직후 생명주기 훅만 추가했다. 과금액·과금 정책·API·DB·서버 코드는 변경하지 않았다.
+- 검증: 영향 범위 Angular 458/458, 전체 Angular 4678/4678, 스타일 6/6 통과. TypeScript spec compile, production build, `git diff --check`도 통과했다.
+- 후속 사용자 요청으로 `feature/billable-operation-blocking-progress-20260918` 브랜치에 `6ec58054d894e4f6171dc47329e8ef06bf2520ab`로 커밋했다. 원격 push·dev merge·배포는 수행하지 않았다.
+
 ## 2026-09-09 — 다음 작업을 PG 테스트와 운영 구축 두 세션으로 분리
 
 - 사용자 요청으로 시작 문구를 A(PG 기능 테스트/결함수정), B(TASKS5번의 개발 전환 제외 운영 구축)로 분리했다.

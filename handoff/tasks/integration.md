@@ -1,5 +1,9 @@
 # 운영·dev 통합 및 main 반영
 
+## 2026-09-18 종료 감사
+
+정식 PG 통합은 원격 8repo `dev` 포함, 개발 DB/서비스 Gate A–G, Windows 개발판 0.0.35 Build54 게시까지 완료됐다. 현재 완료 범위와 실제 결제·operation·플랫폼 실기 잔여는 [정식 PG 통합 종료 감사와 남은 작업](../../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md)을 우선한다. 이 문서 아래의 과거 `dev 미반영`, `서버 변경 0건`, `Windows 빌드 전` 표현은 역사 기록이다.
+
 ## 2026-09-18 개발서버 정식 PG 전환 완료
 
 최신 정본은 [개발서버 정식 PG 전환 실행 기록](../../implementation/2026-09-18-development-pg-cutover-execution-log.md)이다. `dev-pg-20260918-035446`으로 Gate A–G와 사용자 smoke를 완료했고 rollback은 사용하지 않았다. User/Admin/Release migration과 no-op 재실행, 보존 table count+ID hash 일치, 옛 finance table 정리, 새 plan/operation seed, health/catalog/HTTPS, 기존 사용자 비소급과 신규 사용자 Trial/400/30일 1회 지급을 확인했다.

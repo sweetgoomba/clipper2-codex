@@ -1,6 +1,24 @@
 # Clipper 운영 구축·PG 전환 Tasks
 전체 작업의 현재 상태와 재개 위치는 [작업 현황판](../handoff/WORKBOARD.md)을 따른다. 이 파일은 PG·리소스의 상세 증거/체크리스트이며 전체 프로젝트 우선순위표가 아니다.
 
+## 2026-09-18 PG 통합 종료 감사
+
+[정식 PG 통합 종료 감사와 남은 작업](./2026-09-18-pg-integration-closeout-and-remaining-work.md)을 최신 정본으로 사용한다.
+
+- [x] 8repo 통합 결과의 원격 `dev` 포함 여부 확인.
+- [x] 개발 DB Gate A–G, 보존 hash, migration/no-op, 기존 사용자 비소급, 신규 Trial/400 정책 확인.
+- [x] 독립 개발판 identity·Mac 로그인/session·필수 템플릿 이관 확인.
+- [x] Windows Build54 `0.0.35` 게시, 공개 다운로드와 dev update feed 확인.
+- [ ] Windows 0.0.35 실제 설치·로그인·운영판 공존·업데이트 실기.
+- [ ] 전환된 개발환경의 실제 카드 결제/webhook/환불 핵심 E2E.
+- [ ] 실제 유료 operation 차감·환급 E2E와 30–60분 로그 관찰.
+- [ ] macOS 공개 배포가 필요할 때 서명·공증·설치 검증. 자동 업데이트는 승인 전까지 HOLD.
+- [ ] Release 생성 폼 입력값 초기화 UX 보완과 0.0.34 폐기 상태 확인.
+
+## 2026-09-18 설치형 유료 작업 진행 차단
+
+- [x] 과금 확인창 전후 비동기 대기 중 전체 화면 스피너와 입력 차단을 공용 UI로 구현하고, 확인된 여섯 유료 작업 진입점에 적용했다. 설계와 계획은 각각 `../design/2026-09-18-billable-operation-blocking-progress-design.md`, `../plans/2026-09-18-billable-operation-blocking-progress.md`를 따른다. 과금 확인창이 열려 있는 동안에는 차단 UI를 숨기며, 취소·오류 시 즉시 복구한다.
+
 최신 운영 상태(2026-09-15): [카드사 심사용 운영 전환·복원 런북](./2026-09-15-pg-review-production-cutover-and-rollback.md), [실행 명령 부록](./2026-09-15-pg-review-production-cutover-commands.md). 운영 도메인은 개발 기준 심사 Client/Admin/API와 m4-prod의 별도 복사 DB로 전환됨. 사용자 단건·정기결제 및 주소 유지·로고 수정 확인. 기존 운영 컨테이너/DB/이미지 태그 보존. 웹훅 수신은 심사 버전에 없음. 복원은 미실행. 사용자 PC 원본8repo는 후속 요청으로 최신 dev로 전환했고 로컬 API·설치형 앱 정상 실행 보고. 이 상태가 아래 과거 상태보다 우선함.
 
 최신 integration 진행(2026-09-15): [8개 저장소 반영 결과](./2026-09-15-main-integration-result.md). 별도 공통 integration에 운영+dev+보관 개선을 조합하고 충돌 해결/stage 완료. 후속 사용자 승인으로 7repo merge commit 및 8repo 원격 SHA 확인 완료, Client 추가 변경0. 원본 보존. 테스트·빌드·배포 미실행, Build5/실제 ML HOLD 유지.

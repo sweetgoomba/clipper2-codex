@@ -1,5 +1,11 @@
 # 작업 현황판
 
+## 2026-09-18 PG 통합 종료 감사 — 현재 정본
+
+개발환경 정식 PG 통합, User/Admin/Release DB 전환, 독립 개발판 identity, Windows Build 54와 개발 정식 배포 `0.0.35`, 공개 다운로드·Windows dev update feed 반영까지 완료됐다. 8개 저장소의 통합 branch는 fresh fetch 기준 모두 `origin/dev`에 포함돼 있다. 다른 팀에는 새 개발판 사용을 안내한 상태다.
+
+완료 범위와 아직 끝나지 않은 실제 결제/webhook, 유료 operation 차감·환급, Windows 설치 후 실기, macOS 서명·공증 배포, 로그 관찰은 [정식 PG 통합 종료 감사와 남은 작업](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md)을 현재 정본으로 사용한다. 아래 날짜별 체크포인트의 `dev 미반영`, `Windows 빌드 전`, `새 앱 배포 전` 표현은 역사 기록이다.
+
 ## 최신 W04: 개발서버 정식 PG 전환·Web cache 보완 완료
 
 2026-09-18 `dev-pg-20260918-035446`으로 Gate A–G를 실행했다. 설정·secret·기존 image와 User/Admin/Release 최종 dump를 보존하고, 서비스를 중지한 뒤 User→Admin→Release migration 및 no-op 재실행을 완료했다. 보존 table의 count+ID hash는 전후 동일했고, 옛 finance table 정리·새 finance schema/plan/operation seed를 확인했다. 새 서비스의 health/catalog/HTTPS와 기존·신규 사용자 정책을 검증했으며 rollback은 사용하지 않았다. 신규 사용자는 Trial/400/30일을 한 번만 받았고 기존 사용자20명은 무료체험·크레딧이 소급되지 않았다. 실제 카드 등록·결제·webhook은 실행하지 않았다.
@@ -47,12 +53,12 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W01 | 대사 하이라이트 개선 | 감사·5worktree 준비 이후 | [최신dev 대조 후 개선 범위 결정](tasks/dialog-highlight.md) |
 | W02 | 밈 오버레이·seek | 사용자 작업 보존 | [기존 수정·추가요구 확인](tasks/meme-overlay.md) |
 | W03 | 카드사 심사·임시 운영 | 심사 결과 대기 | [결과 후 기존운영 복원 또는 integration 배포](tasks/pg-card-review.md) |
-| W04 | 운영·dev 통합 | 개발서버 Gate A–G·사용자 smoke PASS, rollback 미사용. Web cache 최소 보완 배포·재확인 완료. 실제 결제/operation E2E·ML/Build5·Windows HOLD | [최종 실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md) · [전환 런북](../implementation/2026-09-18-development-pg-cutover-runbook.md) · [상세 인계](tasks/integration.md) |
+| W04 | 운영·dev 통합 | 개발서버 Gate A–G·사용자 smoke·Web cache 보완 PASS. 8repo 통합은 원격 dev 포함. 실제 결제/webhook·유료 operation E2E와 로그 관찰 남음 | [종료 감사](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md) · [최종 실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
 | W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
-| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로그인/session·필수 템플릿 PASS. 운영/개발 updater package·cache 통일 및 runner 최종 산출물 검증 보완, Electron975·Infra36 PASS. 코드4repo 원격 통합 브랜치 push·SHA 일치·clean. Mac 운영/개발 동시 실행·Windows 설치 실기 남음 | [W04 후속 검증](../implementation/2026-09-18-w04-non-ml-local-acceptance.md) · [다음 단계](tasks/app-window-name.md) |
+| W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로컬 로그인/session·필수 템플릿 PASS. Windows Build54 `0.0.35` 게시와 공개 다운로드/update feed PASS. Windows 실제 설치·운영판 공존 및 Mac 서명·공증 배포 남음 | [종료 감사](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md) · [앱 상세](tasks/app-window-name.md) |
 
 ## 공통 작업 공간과 보존
 

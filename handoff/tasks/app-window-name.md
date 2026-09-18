@@ -1,5 +1,9 @@
 # 운영·개발 앱 표시 이름
 
+## 2026-09-18 Windows 0.0.35 게시 후 현재 상태
+
+Windows 개발판 Build54가 `Clipper Studio (dev) Setup 0.0.35.exe`로 성공했고 개발 정식 배포 대상, 공개 다운로드, `dev/windows/x64/latest.yml`에 게시됐다. 따라서 아래의 “Windows 빌드 전” 표현은 과거 기록이다. 남은 항목은 실제 Windows 설치·로그인·운영판 공존·업데이트 실기와 macOS 서명·공증 공개 배포다. 전체 경계는 [정식 PG 통합 종료 감사와 남은 작업](../../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md)을 따른다.
+
 ## 최신 결과: 새 macOS 개발판·필수 템플릿 이관 PASS
 
 새 개발판 `Clipper Studio (dev).app`의 `ai.clipperstudio.dev` / `clipperstudio-dev` identity와 실제 Google 로그인, 무료 체험 400, 계정/access/credit 표시를 사용자 확인했다. 필수 템플릿 이관에서는 옛 번들에 함께 들어간 기본 제공 16개가 사용자 복사본으로 중복되는 결함을 발견했다. 내보내기 UI/backend는 사용자 생성 항목만 허용하고 importer는 옛 format v1을 포함해 canonical 기본 제공 템플릿과 그 전용 font를 건너뛰도록 수정했다.

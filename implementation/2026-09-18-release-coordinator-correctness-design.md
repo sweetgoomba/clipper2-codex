@@ -2,6 +2,8 @@
 
 Date: 2026-09-18 KST
 
+> **후속 완료 상태:** 아래 설계 뒤 runner module 누락과 effective config 위치 가정도 수정했고 Windows Build54 `0.0.35.54`가 성공했다. 개발 정식 배포 대상과 공개 다운로드/update feed는 0.0.35를 반환한다. 최신 결과와 남은 설치 실기는 [PG 통합 종료 감사](2026-09-18-pg-integration-closeout-and-remaining-work.md)를 우선한다. 아래 Build53 기대 문구는 설계 당시 기록이다.
+
 ## Problem
 
 The first real development Windows build after the independent desktop identity cutover exposed three coupled defects.
