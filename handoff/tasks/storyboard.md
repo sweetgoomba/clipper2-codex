@@ -1,6 +1,6 @@
 # 스토리보드 UI/UX 재설계
 
-최종 확인: 2026-09-21 KST. **별도 worktree의 코드 3개 저장소 미커밋 / `.codex` 문서만 커밋·푸시 승인.** 사용자가 생성 결과를 확인하고 후속 UI 수정을 요청했다. 아래 검증 수치는 각 수정 시점의 기록이며 최신 원격 dev 통합 후 재검증 결과가 아니다. 운영 배포 검증은 미실행.
+최종 확인: 2026-09-21 KST. **사용자 승인으로 코드 3개 저장소를 `feature/storyboard-ux-update`로 변경하고 커밋·푸시 완료. dev 병합 없음.** 각 작업 트리는 깨끗하며 원격과 일치한다. 검증 수치는 각 수정 시점의 기록으로 최신 dev 통합 검증을 의미하지 않는다.
 
 [전체 작업 현황](../WORKBOARD.md) · [구현·검증 결과](../../implementation/2026-09-21-storyboard-implementation-verification.md) · [구현 계획](../../implementation/2026-09-21-storyboard-implementation-plan.md) · [9/21 세션](../../records/sessions/2026/09/21.md)
 
@@ -18,27 +18,19 @@ W07은 이번 세션 선택이며 다른 작업보다 영구 우선하지 않는
 
 ## 작업 공간
 
-branch `feature/storyboard-ux-overhaul-20260920`, root `/Users/jina/project/adlight/.worktrees/storyboard-ux-overhaul-20260920/`.
+worktree root `/Users/jina/project/adlight/.worktrees/storyboard-ux-overhaul-20260920/`는 그대로 유지한다. 사용자 승인으로 코드 3개 저장소의 브랜치만 `feature/storyboard-ux-update`로 변경했다.
 
-|저장소|변경 없는 HEAD|
-|---|---|
-|desktop/clipper_angular|b511e15824eb7ac20d4802e145a6c3a5923f4eb4|
-|desktop/clipper_nestjs|c2e227c244e786af4dfa51bd132692eb38cd1cd2|
-|web/clipper_web_api|9304cec77b30b72a9b89355393878a84896dcd86|
+| 저장소 | 푸시 완료 커밋 | 커밋 파일 수 | 현재 상태 |
+|---|---|---:|---|
+| desktop/clipper_angular | 18006cb0 | 68 | clean, origin/feature/storyboard-ux-update와 일치 |
+| desktop/clipper_nestjs | 693edf6 | 99 | clean, origin/feature/storyboard-ux-update와 일치 |
+| web/clipper_web_api | 580211e | 33 | clean, origin/feature/storyboard-ux-update와 일치 |
 
-원본 checkout 5개는 모두 깨끗하며 기존 브랜치를 유지한다. 9/21 원격 dev를 fetch해 재확인한 결과:
+Electron/Python은 소스 변경 없이 기존 `feature/storyboard-ux-overhaul-20260920` 작업 브랜치를 유지한다. 원본 checkout 5개 역시 기존 브랜치를 유지하며 깨끗하다. `.env` 등 로컬 설정과 빌드 산출물은 커밋하지 않았다.
 
-| 작업 저장소 | 기존 파일 변경 | 신규 파일 | 합계 | HEAD 대비 원격 dev 추가 커밋 |
-|---|---:|---:|---:|---:|
-| desktop/clipper_angular | 42 | 26 | 68 | 162 |
-| desktop/clipper_nestjs | 45 | 54 | 99 | 64 |
-| web/clipper_web_api | 18 | 15 | 33 | 3 |
-| desktop/clipper_electron | 0 | 0 | 0 | 5 |
-| desktop/clipper_python | 0 | 0 | 0 | 11 |
+코드 커밋 전 원격 dev는 작업 기준보다 Angular162/Nest64/Web API3/Electron5/Python11 커밋 앞서 있었다. 수정 경로 중복은 Angular17/Nest3/Web API0이며 실제 충돌 확정을 의미하지 않는다. 이번에는 dev를 병합하거나 rebase하지 않았고 dev에 푸시하지 않았다. 향후 dev 통합에는 별도 승인 및 통합 후 검증이 필요하다.
 
-5개 작업 브랜치는 모두 upstream이 없고 원격에 같은 이름의 브랜치도 없다. HEAD에만 있는 커밋은 모두 0개이며 표의 변경은 전부 미커밋이다. 원격 dev와 수정 파일 경로가 겹치는 것은 Angular 17개, Nest 3개, Web API 0개다. 경로 중복은 실제 merge conflict 확정을 의미하지 않는다. 소스 병합/rebase는 실행하지 않았다. `.env` 등 로컬 설정과 빌드 산출물은 Git 제외 상태를 유지한다.
-
-`.codex`는 별도 저장소의 main이며 이번 사용자 승인은 문서 커밋·푸시에만 적용한다. 코드 커밋·푸시·통합은 별도 승인 전 수행하지 않는다.
+`.codex`는 별도 저장소 main이다. 이전 문서 10개는 3cc7d51로 푸시했고, 이번 브랜치 변경·코드 푸시 결과도 작업 카드·보드·세션에 기록한다.
 
 ## 검증과 다음 단계
 
@@ -48,7 +40,7 @@ branch `feature/storyboard-ux-overhaul-20260920`, root `/Users/jina/project/adli
 - 실제 PDFKit6쪽·9쪽 예시 전 페이지 렌더/한글·필드 확인. 예시 데이터는 fixture이며 실제 AI 출력 아님.
 - 최종 전체검토에서 지적된 오류분류/응답유실/정산새로고침/후보길이 및 카드/PDF누락 수정 후 회귀 통과. 보류한 minor 없음.
 
-다음은 사용자의 구현 화면/결과 확인이다. 실제 ML·Build5는 별도 승인 없이는 실행하지 않는다. 실제 AI 품질/검색 적합성·Electron 전체 패키지·운영 DB/배포는 검증 완료로 간주하지 않는다. 서버 직접 접속·배포 금지. **이번에는 `.codex` 문서만 커밋·푸시 승인. 코드 commit/push는 별도 승인 전 금지.**
+다음은 필요 시 최신 dev와의 통합 검토 및 사용자 확인이다. 실제 ML·Build5는 별도 승인 없이는 실행하지 않는다. 실제 AI 품질/검색 적합성·Electron 전체 패키지·운영 DB/배포는 검증 완료로 간주하지 않는다. 서버 직접 접속·배포 금지. **코드 3개 저장소의 브랜치 변경·커밋·푸시는 승인 범위대로 완료했다. dev 병합은 승인하지 않았으며 실행하지 않았다.**
 
 ## 과거 근거와 변경 이력
 
