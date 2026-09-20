@@ -56,7 +56,7 @@ DB 최신 단계: 사용자 로컬 실행 승인 후 새 58433–58435의 `clipp
 | W04 | 운영·dev 통합 | 개발서버 Gate A–G·사용자 smoke·Web cache 보완 PASS. 8repo 통합은 원격 dev 포함. 실제 결제/webhook·유료 operation E2E와 로그 관찰 남음 | [종료 감사](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md) · [최종 실행 기록](../implementation/2026-09-18-development-pg-cutover-execution-log.md) |
 | W05 | CPU·리소스 안전성 | 구현·원격보존 완료, 실기 HOLD | [Windows/Build7 증거·SDK조건 확인](tasks/resource-safety.md) |
 | W06 | 정식PG·운영 구축 잔여 | 기록상 미완료, 최신성 확인 | [환불/구독/웹훅·runner/운영 항목 선택](tasks/pg-production-followups.md) |
-| W07 | 스토리보드 후속 | 8월기록, 재확인 필요 | [TODO와 최신코드 대조](tasks/storyboard.md) |
+| W07 | 스토리보드 UI/UX 재설계 | 별도 worktree 구현·후속 UI/PDF/생성 오류 수정 및 각 집중 검증 완료. 현재 홈 카드 200px·성별/연령층/스타일, 새 프리셋 10개, 전체 복사/PDF, 주제 근거 UI 제거. 코드 A68/N99/W33 파일 미커밋. 최신 dev가 A162/N64/W3 커밋 앞서 통합 검토·재검증 필요. 사용자 승인 범위는 .codex 문서 커밋·푸시만; 코드 커밋/푸시 대기 | [구현 결과·검증 한계·Git 현황](tasks/storyboard.md) |
 | W08 | 기타 장기보류 후보 | 재평가 대상 | [첫실행UX·stdout·보안·쇼츠분석 등](tasks/historical-backlog.md) |
 | W09 | 운영·개발 앱 표시 이름·독립 개발판 | Mac 로컬 로그인/session·필수 템플릿 PASS. Windows Build54 `0.0.35` 게시와 공개 다운로드/update feed PASS. Windows 실제 설치·운영판 공존 및 Mac 서명·공증 배포 남음 | [종료 감사](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md) · [앱 상세](tasks/app-window-name.md) |
 
