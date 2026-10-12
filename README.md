@@ -37,13 +37,17 @@ legacy/
 
 ## Current Focus
 
-2026-09-15부터 세션순서 대신 **작업별 상태**로 관리한다.
+2026-09-29 기준 작업별 새 세션으로 재개한다. 우선순위는 사용자 선택에 따른다.
 
 - 시작: [작업 현황판](handoff/WORKBOARD.md)
 - 재개 규칙: [NEXT](handoff/NEXT.md)
-- 최근 종료 기록: [2026-09-15](records/sessions/2026/09/15.md)
+- 새 세션 프롬프트 5개: [공통 수정・PG・스토리보드・홈・하이라이트](handoff/prompts/2026-09-29-new-sessions.md)
+- 최근 종료 기록: [2026-09-29](records/sessions/2026/09/29.md)
 
-현재 원본8repo는 dev, integration/복구branch는 원격보존이다. 운영 도메인은 카드사심사용 임시버전이며 [복원 런북](implementation/2026-09-15-pg-review-production-cutover-and-rollback.md)을 따른다. 아래 날짜별 기록은 당시 이력이며 현재 우선순위가 아니다.
+원본8repo는 조회 당시 dev·clean·로컬 origin/dev와 0/0이며, 새 개발 전 필요한 repo의 원격 최신성을 다시 확인한다.
+기존 스토리보드 작업은 dev에 포함됐고 storyboard/dev-merge 옛 worktree 폴더는 제거했다. 브랜치는 보존했다.
+카드사 심사 완료·새 MID와 테스트/라이브 키 발급은 사용자 보고 단계이며, 실제 키 전환/운영 배포/실결제 결과는 아직 확인하지 않았다.
+임시 심사판의 현재 서버 상태는 PG 세션에서 다시 확인한다. 과거 날짜별 기록은 현재 상태나 우선순위가 아니다.
 
 ## Historical Focus — 2026-06 기록
 

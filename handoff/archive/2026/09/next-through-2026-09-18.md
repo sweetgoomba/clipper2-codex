@@ -1,0 +1,53 @@
+> 과거 기록입니다. 현재 상태는 `.codex/handoff/WORKBOARD.md`와 해당 작업카드를 확인하세요.
+
+# 다음 세션 시작 안내
+
+최신 갱신: 2026-09-18 KST.
+
+최신 W04 정본: `dev-pg-20260918-035446`으로 개발서버 Gate A–G와 사용자 smoke를 완료했고 rollback은 사용하지 않았다. User/Admin/Release dump·설정·기존 image를 보존했고 migration 전후 보존 hash가 일치했다. 기존 사용자20명은 이용권/무료체험/크레딧 비소급, 신규 사용자는 Trial/400/30일 1회 지급을 확인했다. Customer/Admin/API health·catalog·로그인·계정/크레딧·템플릿 중복 방지·개발판 링크를 확인했다. Smoke 중 발견한 stale SPA asset fallback은 Customer `72829210`, Admin `583c6f23`의 내부 Nginx 최소 보완으로 수정·`dev`/integration push·Web 두 서비스 재배포했고, 외부 cache header/404와 사용자 일반 새로고침·로그인·메뉴 이동을 재확인했다. API는 `fe58b650` 그대로다. 다음은 전용 30–60분 로그 관찰이다. 실제 카드 등록·결제·webhook 및 유료 operation 실차감/환급 E2E는 별도 승인 전 수행하지 않는다. ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지. [최종 실행 기록](../../../../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+
+전환 전 dev 반영 기록: 사용자에게 8repo의 정확한 출발/목표 SHA와 기능·영향·검증을 제시하고 승인받아, 모두 force 없이 원격 `dev`에 fast-forward했다. `git ls-remote` 재검증 결과 Angular `9dc31ec1`, Electron `d95c050`, Nest `884fa8bc`, Python `60417ce`, Infra `f0af3f5`, Web Admin `01d0b93`, Web API `fe58b65`, Web Client `a4bc54b`가 정확히 일치했다. 이 뒤 실제 Gate A–G 실행과 후속 Web cache 보완 상태는 위 최신 W04 정본을 따른다. 실제 ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD 유지. [실행 기록](../../../../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+
+직전 Angular Git 게이트 기록: 사용자 승인으로 Angular `integration/dev-pg-local-validation-20260917`의 `19b407a7`에 최신 `origin/dev` `7c04e14e`를 로컬 merge해 `4c7993cd`를 만들었다. 자동 충돌과 변경 파일 교집합은 없고 dev의 page/page-header 가이드 시트 22파일이 PG 통합본에 결합됐다. 최초 전체4,540 중 1건 실패는 8월부터 `origin/dev`에 있던 clipboard 실패 spec이 실제 실패를 stub하지 않은 테스트 격리 결함으로 확정했다. 사용자 승인 후 제품 코드는 건드리지 않고 spec 한 줄에 실패 결과를 명시해 `9dc31ec1`로 commit·통합 branch push했으며 fetch 후 로컬/원격 SHA 일치를 확인했다. 수정 후 대상4/4, 전체4,540/4,540, 스타일6/6, Node24 `CI=1 build:devapp` PASS. 일반 로컬 build는 persistent Angular cache의 LMDB native addon crash가 있어 CI mode로 검증했다. 당시 다음 단계는 Gate B였고, 이후 실제 Gate A–G 완료 상태는 위 최신 W04 정본을 따른다. 실제 개발서버는 integration branch를 직접 쓰지 않고 최종 통합 결과가 반영된 `dev`를 계속 사용한다. [실행 기록](../../../../implementation/2026-09-18-development-pg-cutover-execution-log.md).
+
+직전 런북 교차검토 기록: 실제 개발서버 전환은 아직 실행하지 않은 상태에서 [개발서버 정식 PG 전환 실행 런북](../../../../implementation/2026-09-18-development-pg-cutover-runbook.md)을 실제 Infra 스크립트와 2026-09-18 dev dump schema에 다시 교차검토했다. 컨테이너명·포트·배포 옵션·migration 순서는 일치했다. 보존 hash에서 빠졌던 project clip/workspace/reference replay, Admin 오류·telemetry·구 key source, Release 하위 테이블을 모두 추가했고, migration 전에는 없는 새 PG 테이블을 직접 조회해 정상 DB에서도 실패하던 preflight를 `absent/present/count` 동적 조회로 고쳤다. migration 기준선·build-only 내부 재-pull 중단 조건·source rollback 제한도 명시했다. 22개 shell block `sh -n` PASS, 동적 SQL은 중지된 로컬 2차 clone을 잠깐 기동해 존재/부재 양쪽 분기를 확인한 뒤 다시 중지했다. 리허설 결과 문서에는 당시 hash 범위가 전체 보존 약속보다 좁았다는 점을 소급 은폐하지 않고 기록했다. 서버 접속·실제 DB 변경·배포는 0건이다. 당시 Web API `fe58b65`, Angular `19b407a7`, Nest `884fa8bc`와 나머지 Web/Admin/Infra/Client는 원격 integration branch에 반영돼 있었다. 이후 Angular는 위 최신 Git 게이트대로 `9dc31ec1`이 됐고 8repo `dev` 반영도 완료됐다. 사용자는 로컬 `.env`의 Google OAuth client secret을 교체하지 않고 현재 설정을 유지하기로 결정했으며 이 항목은 Gate A blocker가 아니다. 값은 다시 출력·문서화하거나 Git에 포함하지 않는다. 실제 ML/Build5·Windows 실기·Mac 자동 업데이트 HOLD를 유지한다.
+
+W04 비-ML 로컬 acceptance와 개발 DB 복제본 리허설 완료: Desktop Nest 115+41+37 및 후속 outbox/restart 27 PASS, Angular 202 및 후속 recovery/account 24 PASS, Web API·Electron·Web/Admin/Infra 자동 검증 통과. 첫 실제 dev dump clone에서 발견한 `/catalog`의 stale `pluginKeys`도 사용자 승인으로 보완했다. 독립 리뷰의 관리 요청 race 지적까지 tier row lock을 쓰는 단일 transaction으로 수정했고 Web API build, 관련72, 전체2,892 PASS/21 SKIP. 같은 원본 dump를 새 59533–59535 clone에 처음부터 복원해 신규 cleanup migration, 반복 no-op, 핵심 해시 보존, `/health`, Basic/Pro/Business 동일 6 plugin key, 기존 사용자20명 무료체험 비소급을 재확인했다. 두 clone 컨테이너군은 중지했고 dump·볼륨만 보존했다. 실제 개발 DB/서비스 변경·배포는 없다. Web API 보완은 후속 commit·push까지 완료됐고 전환 런북도 위 최신 단계에서 작성했다. [복제본 상세 결과](../../../../implementation/2026-09-18-development-db-clone-rehearsal-result.md)와 [전체 acceptance](../../../../implementation/2026-09-18-w04-non-ml-local-acceptance.md)를 따른다. 실제 ML/Build5, 에이전트의 서버 접속·배포는 HOLD다.
+
+최신 사용자 결정: 옛 개발판의 프로젝트·소재관리·작업 이력을 새 독립 개발판으로 복제하거나 자동 이관하는 기능은 만들지 않는다. 새 개발판은 해당 데이터가 없는 상태로 시작하며, 필수 이관 대상은 이미 실기 완료한 사용자 생성 템플릿뿐이다. 옛 개발판 데이터 루트는 삭제·수정하지 않고 보존하되 새 앱은 읽거나 공유하지 않는다. 폴더 직접 복사·절대경로 치환·owner UUID 재매핑도 수행하지 않는다.
+
+2026-09-18 macOS session 실기 PASS: 로그인 상태에서 앱 완전 종료·재실행 후 동일 계정, 무료 체험, 사용 가능 크레딧 400, 템플릿 17개 유지. 로그아웃 후 종료·재실행에서는 로그인 화면 유지. Google 재로그인 연결창에 `Clipper Studio (dev).app`이 표시됐고 동일 계정·무료 체험·400·템플릿 17개 복원까지 사용자 확인했다. 다음은 W04 남은 비-ML PG 로컬 acceptance다.
+
+최신 실기 완료: 새 독립 개발판에서 실제 Google 로그인·무료 체험 400·계정/access/credit 표시와 필수 템플릿 이관을 확인했다. 옛 번들의 기본 제공 16개가 사용자 복사본으로 중복되는 결함을 발견해 Angular/Nest 양쪽을 보완했고, 중복 16개만 백업 후 정상 API로 제거했다. 같은 17개 번들을 다시 가져온 뒤 **기본 16 + 사용자 1 = 총 17**, 복제본 0, 내보내기에는 사용자 템플릿만 표시됨을 사용자 UI와 로컬 API에서 확인했다. Angular `19b407a7`, Nest `884fa8bc`는 사용자 승인 후 같은 원격 통합 branch에 push했고 원격 SHA 일치를 확인했다. 직전 fresh 검증은 Angular 전체4,494+스타일6 및 개발판 build, Nest 전체2,685 및 build PASS다. [상세 결과](../../../../implementation/2026-09-17-template-transfer-dedup-validation.md). 추가 병합·dev/main 변경·배포·원격 DB 변경 없음. 다음은 위 전환 런북 검토와 실제 전환 시점 결정이다. Windows 실기는 사용자 장비, 실제 ML/Build5 HOLD 유지. 아래 템플릿 실기 대기·코드 미커밋 표현은 과거 체크포인트다.
+
+DB 후속 **승인·실행 완료**: 새 로컬 `clipper-identity-check-20260917-{admin,release,user}` / 58433–58435 / 전용 볼륨에서 migration과 실제 DB 검증 **9 PASS**. User10/Admin64/Release3 및 별도 로컬 production fixture3 migration, 반복 실행 pending 없음. 새 컨테이너 3개는 정상 중지·볼륨 보존. 기존 5433–5435 및 57433–57435는 계속 실행 중이며 SQL/데이터 변경 없음. [실행 결과·다음 단계](../../../../implementation/2026-09-17-independent-dev-real-db-validation.md). 다음은 실제 앱용 로컬 API/DB 연결·환경 설정 범위를 설명한 뒤 새 패키징 앱의 Google 로그인/공존/필수 템플릿 이관 실기다. 실 env·원격 서버·commit/push/deploy 변경 없음. 주간 잔여 95% 기록. 아래 DB 승인 대기/미실행 표현은 이전 체크포인트다.
+
+최신 후속: 앱 identity·로그인 결속에 이어 [release 계획](../../../../implementation/2026-09-17-independent-dev-release-plan.md) Task 1–3(API dev 채널/profile/오게시 방어, runner 산출물 대조, Admin 명시 채널 선택, 배포 예제) 코드·자동 검증 완료. **API build/2,882 PASS·21 SKIP, Infra 51 PASS·1 SKIP, Admin build/50 PASS.** 독립 리뷰의 잠금 순서/direct CLI 플랫폼 검증 지적 수정 후 추가 중요 지적 없음. [최신 실행 결과·남은 게이트](../../../../implementation/2026-09-17-independent-dev-release-validation.md). Electron은 이번에 수정하지 않았으며 이전 build/975 PASS 증거는 [앱 실행 결과](../../../../implementation/2026-09-17-independent-dev-app-validation.md) 참조. 다음은 **새 격리 DB의 정확한 대상·영향을 제시하고 승인받은 뒤** User/Release nullable migration 및 실제 트랜잭션 검증, 이어 새 설치본 Google 로그인/동시 실행/필수 템플릿 이관이다. 실제 `.env`·DB·dist-app/OS 등록 변경 없음. Electron/API/Infra/Admin/문서 미커밋, 새 commit/push/merge/deploy 없음. **Mac 공개·자동빌드·업데이트 HOLD, ZIP 제외**, 실제 ML/Build5 HOLD 유지. 주간 한도 마지막 잔여 96%; reset credit 호출 없음. 재개 시 실제 Git diff와 현재 한도를 다시 확인한다.
+
+현재 요구사항: `ai.clipperstudio.dev` / `clipperstudio-dev` / 데이터 `Clipper Studio Dev` / 업데이트 채널 `dev`. 템플릿 이관은 필수 실기 완료했고 프로젝트·소재·작업 이력 이관은 하지 않는다. [코드 조사 및 연결 변경안](../../../../implementation/2026-09-17-independent-dev-identity-design.md)을 따른다. 아래 개발 identity 유지·실기 대기 표현은 과거 단계이며, 사용자의 과거 Google 로그인 및 무료 체험 400 표시는 이번 독립 전환의 검증 증거로 재사용하지 않는다. 현재 구현 상태는 맨 위 후속과 연결된 실행 결과가 정본이다.
+
+과거 checkout 전환 기록: 사용자 승인으로 원본 `desktop/*`, `web/*` 8repo를 `integration/dev-pg-local-validation-20260917`로 checkout해 로컬 검증을 수행했다. 기존 `.worktrees/dev-pg-local-validation-20260917/`는 같은 SHA의 detached HEAD로 보존했다. 당시 원본8repo clean, 환경파일11개 해시 불변, dev 참조 불변이었다. 현재 원격 dev 상태는 맨 위 최신 dev 반영 기록을 따른다. Nest `.env.local`의 비-loopback DB 설정은 실제 사용/로딩 순서 확인 전 실행 금지 원칙을 유지한다.
+
+Git 후속 상태: 사용자 승인으로 원본 Angular/Nest dev fast-forward 완료, 원본8repo 최신·clean. 나머지5repo의 정확한 목적지 승인 후 통합8repo push 완료·원격 SHA 일치·clean 확인. 다음은 수정본 설치형 로컬 실기다. [상세 최신 결과](../../../../implementation/2026-09-17-integration-commit-proposal.md)를 아래 이전 단계 표현보다 우선한다. 출시 후 API 호환 TODO는 사용자 지시대로 [`.codex/todos`](../../../../todos/2026-09-16-post-launch-desktop-api-compatibility.md)로 이동했다.
+
+**먼저 [작업 현황판](../../../WORKBOARD.md)을 읽고, 사용자가 선택한 작업카드로 이동한다.** 여러 작업이 병행 중이며 이 파일은 특정 작업을 자동으로 최우선 지정하지 않는다.
+
+1. 사용자 요청과 현황판을 대조한다. 애매하면 후보를 짧게 확인한다.
+2. 해당 작업카드의 branch/worktree/HEAD와 실제 Git 상태를 읽기 전용으로 확인한다.
+3. 상세 이력은 카드가 연결한 문서만 필요한 범위로 읽는다. 과거 체크박스만으로 새 작업을 만들지 않는다.
+4. 서버에는 직접 접속하지 않는다. 서버 명령은 사용자가 실행한다.
+5. 실제ML·Build5 전체QA HOLD를 유지한다. 명시된 사용자후속이 있을 때만 범위를 바꾼다.
+6. 종료 시 작업카드·현황판·세션기록을 갱신하고 문서의 미커밋 상태를 알린다.
+
+현재 사용자PC 원본8repo는 dev. 통합branch와 복구branch는 원격보존. 운영주소는 임시 카드사심사판이다. 로컬dev와 서버심사판/integration을 혼동하지 않는다.
+
+- [이번 세션 요약](../../../../records/sessions/2026/09/15.md)
+- [2026-09-17 Git 정리·코드 커밋 결과](../../../../implementation/2026-09-17-integration-commit-proposal.md): 사용자 승인 후 코드4repo 로컬 커밋 완료, 통합8repo clean. `.codex` 커밋·푸시는 사용자 요청 범위이며 원본 dev 갱신/코드 push는 별도 승인.
+- [PG 통합 전 결정·누락 감사](../../../../implementation/2026-09-17-pre-merge-decisions-and-gap-audit.md)
+- [Astra 수정·재검증 — 현재 우선 판정](../../../../implementation/2026-09-17-astra-fix-result.md)
+- [Astra 독립 재감사 — 수정 전 증거](../../../../implementation/2026-09-17-astra-independent-review.md)
+- [PG 로컬 통합·검증 최종 결과](../../../../implementation/2026-09-17-local-pg-integration-validation-result.md)
+- [운영 복원 런북](../../../../implementation/2026-09-15-pg-review-production-cutover-and-rollback.md)
+- [이전 NEXT 전체 원문](next-before-task-board-2026-09-15.md): 기존스토리보드와 이전작업 기록을 삭제하지 않고 보존했다.
+
+W04는 **R01–R13+A14 및 추가 환급 누락·Dialog 테스트 수정 검증·로컬 커밋 후 설치형 로컬 실기 단계**다. [최신 수정 결과](../../../../implementation/2026-09-17-archive-refund-fix-result.md)와 위 커밋 결과를 먼저 읽는다. preparing/queued 취소의 정확한 근거와 환급 outbox를 삭제 전에 보존하고, stale attempt fallback을 제거했다. Dialog는 테스트만 분리했다. 이번 fresh 검증은 Angular 관련226, Electron955, Nest2,678, Web API2,802 PASS와 4repo build PASS다. 새 HEAD는 Angular `dba50096`, Electron `6766c06`, Nest `fda1eda`, Web API `8b074a5`이며 코드 push·원본 dev 갱신·추가 병합·배포는 없다. 다음은 새 수정본 설치형 앱의 offline/online·재시작·계정전환·환급/잔액 UI 실기다. Google 로그인과 Windows 빌드/설치는 사용자 실행이며 ML/Build5 HOLD 유지. DB 복제본 리허설은 그 뒤이며 dump 명령은 사용자 실행 장비·DB 정보를 확인한 뒤 안내한다. 서버 직접 접속·실제 DB migration·배포 금지와 별도 승인 게이트를 유지한다.
