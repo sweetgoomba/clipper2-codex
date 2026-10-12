@@ -1,167 +1,159 @@
-# 스토리보드 UI/UX 재설계
+# W07 — 스토리보드 후속 수정・개선
 
-최종 확인: 2026-09-21 KST. **사용자 승인으로 코드 3개 저장소를 `feature/storyboard-ux-update`로 변경하고 커밋·푸시 완료. dev 병합 없음.** 각 작업 트리는 깨끗하며 원격과 일치한다. 검증 수치는 각 수정 시점의 기록으로 최신 dev 통합 검증을 의미하지 않는다.
+최종 확인: 2026-09-30 KST. 상태: **입력/목적 선행 변경과 선택 삭제·카드 UI·진행 표시/계측·원장 명칭을 Angular/Nest/Web API 원격 dev에 병합·푸시. 전체 삭제 UX 사용자 최종 판정과 구형 화면/API 정리, 실제 생성 시간 단축은 미완료. 실행 Web API 반영과 로그인 후 최신 앱 화면은 미확인**.
 
-[전체 작업 현황](../WORKBOARD.md) · [구현·검증 결과](../../implementation/2026-09-21-storyboard-implementation-verification.md) · [구현 계획](../../implementation/2026-09-21-storyboard-implementation-plan.md) · [9/21 세션](../../records/sessions/2026/09/21.md)
+**9/30 최신 병합:** 사용자 확인 후, 아래 첫 부분 병합에서 빠졌던 선택 삭제·카드/결과 안내·공통 모달·진행 표시/계측·원장 문구를 Angular `705c49c1`, Nest `60a7771`, Web API `1feac57`로 각 원격 `dev`에 추가 병합·푸시했다. 원본 W07 격리 worktree의 미커밋 변경은 그대로 보존했다. 구형 화면/API 정리(D12/D13), 실제 속도 단축과 동일 조건 실공급자 전후 비교는 **미병합·미완료**. 실행 중인 Web API 서버는 재시작하지 않아 런타임 원장 문구 반영은 미확인. [최신 범위·검증](../../implementation/2026-09-30-storyboard-final-dev-merge.md).
 
-## 현재 결과
+## 9/30 사용자 요청에 따른 부분 dev 병합
 
-W07은 이번 세션 선택이며 다른 작업보다 영구 우선하지 않는다. 프로필→주제→시나리오→상세 생성 의존성을 유지하고 사용자 조작을 무료 프로필 저장→수량·크레딧 동의→하나의 홈 큐로 통합했다.
+Angular `5570f8ca`, Nest `c8b8b07`을 각각 원격 `dev`에 fast-forward 병합했다. 포함 범위는 (1) 삭제 기록의 **읽기·활성 목록 제외만** 적용해 Nest 부팅 실패를 막는 처리, (2) 한글 키워드 IME 최종 글자 누락 수정, (3) 제작 목적 추천 해제 후 빈 목적 표시·저장 차단, (4) 신규 이름50자·목적150자 제한과 안내/예시 및 복제 이름 자르기다. 기존 120/500자 저장값은 읽고 다른 필드를 수정해도 그대로 유지한다. 기존 목적 필드 두 개의 값이 서로 다른 프로필을 복제할 때도 각각 보존한다.
 
-- 기본3×5, 주제1~5/주제별2~10, 완료 문서1개5크레딧. 서버 quote/수량 정산, 미완성 환급, 서버 확인 전 환급 완료 표시 금지.
-- 성공 stage·문서 저장/재개, 실패 stage 최대3회 내부 재시도. 재시도·API비용·기술ID는 새 화면에 노출하지 않음. 새 흐름에서 local 대체 결과 성공 처리 금지.
-- 21/128 분야, 분야별 목적5개+직접입력, 스타일8→16→24, Enter만 태그 확정. AI 목적·스타일 추천은 고도화로 보류.
-- 프로필 카드 아이콘/삭제 제거, 레이블·값/반응형, 복제·수정 메뉴. 완료1개 이상 수정/재생성 잠금; 완료0개 전액환급 confirmed 뒤 새 동의로 재사용.
-- 최초4단계 설명, 내부 스크롤 모달, 결과의 뒤로가기/전체 프로필 카드, 주제별 가로 시나리오(타입/타이틀/훅).
-- 주제 필수3항목을 생성/API/저장까지 연결. 최종3열 대본 중심, 화면문구 유지, 소재 검색어→영상프롬프트→이미지프롬프트 모두 표시.
-- 실제 PDF 다운로드 구현: 프로필·주제·선택 문서 전체, 요약표/대본표/구간별 제작시트, 한글 번들폰트, 가변 페이지. 기존 v1 다중 컷은 원본·시간을 보존한 읽기 전용 조회/PDF.
+**이번 병합 제외:** 레거시 화면/API 정리 또는 전환, 프로필 선택 삭제 UI/API, 카드 hover·완료 문구 정렬, 진행 미터/단계 메시지, 공통 모달, 삭제 원본 복제 버튼 툴팁, 설정 정렬, Web 원장, 생성 속도 계측/최적화. 이 항목들은 W07 구현·사용자 확인·완료 여부를 별도로 판단한다. 레거시 정리는 사용자가 이해·승인한 완료 항목이 아니므로 dev 병합 완료로 보지 않는다. [부분 병합 계획·검증](../../implementation/2026-09-30-storyboard-ready-dev-merge-plan.md).
+
+검증: 통합/병합 후 Angular 전체5418/5418, 스타일6/6, local build; Nest build와 프로필 API·저장소38/38, ncc 패키지 모드 임시 데이터 사본 `/v1/health` `ok`. 원본 Angular checkout의 다른 설계 문서 미커밋 변경은 유지했다. 전체 Electron GUI 앱을 새 병합 커밋으로 빌드·실행한 것은 아니다.
+
+[전체 현황](../WORKBOARD.md) · [새 세션 프롬프트](../prompts/2026-09-29-new-sessions.md)
+
+## 현재 상태 — 요구별 재감사
+
+- 프로필 삭제: **완료 판정 보류**. 사용자 선택에 따라 다중 선택 삭제를 유지한다. 상단 버튼 스타일·문구를 고치고 카드 클릭·키보드 선택, 추천 전구 아이콘, 확인창 ‘취소’를 적용했다. 이전 앱에서 선택 모드 진입·취소를 확인했으며 이번 새 앱은 패키지 검증까지만 마쳤다. 사용자는 실제 프로필 삭제·홈 결과 보존·결과 페이지 열기를 확인했다. 삭제된 원본의 복제/재생성 액션은 이번 후속에서 막았으며 새 앱 실기와 전체 삭제 UX 완료 판정은 남았다.
+[전체 요구·구현/적용/미완료 구분](../../implementation/2026-09-29-storyboard-status-audit.md).
+
+- 초기 조사 세분 메시지와 프로필 카드 진행 미터: **구현·최신 테스트 앱 포함**, 관련 재검증27/27. 단계 진행률이며 예상 남은 시간 기능은 아니다.
+- 원장 `스토리보드 생성 · 크레딧 사용/반환`: **Web API 소스·테스트19/19 완료 / 실행 서버 반영 미완료**. 현재3000은 원본 checkout이고 표시 map이 빠져 있다. 테스트 앱에는 Web API 서버가 포함되지 않는다.
+- 지연 조사: 코드/기존 로그/오프라인 측정 완료. 새로 남은 실제 성공 job233926ms(약3분54초) 시간대의 stage 로그에서 소재 결정98.5초(43%), 본문 구성43.9초(19%), 두 정규화40.0초(17%)를 측정했다. 외부 웹 검색/새 유료 생성 요청은 하지 않았다.
+- **생성 병렬화·실제 시간 단축 구현 및 같은 조건의 전후 품질/비용/정산 평가는 미완료**. 목록 옛 조회180→0은 생성 시간 개선 증거가 아니다.
+- 추가 레거시 철거·물리IME·실DB/과금 검증·W07 나머지 코드의 커밋/병합/배포는 남아 있다. 위 4항목의 9/30 부분 병합이 최신 상태이며, 아래 검증/빌드 문단은 각 시점 이력이다.
+
+## 기존 작업의 완료 상태
+
+`feature/storyboard-ux-update`의 Angular/Nest/Web API 커밋은 현재 원본 dev에 모두 포함됐다. 이번 확인에서도 각 저장소 `git rev-list --count dev..feature/storyboard-ux-update`는 0이다.
+
+기존 원격 보존 커밋: Angular `18006cb0`, Nest `693edf6`, Web API `580211e`. 이 Git 포함 확인은 후속 모든 기능/배포/실제 AI 검증 완료를 뜻하지 않는다.
+
+옛 `.worktrees/storyboard-ux-overhaul-20260920`는 5repo 모두 dev 포함·clean 확인 후 사용자 요청으로 **백업 없이 제거**했다. 브랜치는 보존했으며 원본 repo는 dev다. 옛 폴더나 LOCAL-PREVIEW.md를 새 세션의 실행 경로로 사용하지 않는다.
+
+[기존 구현·검증 증거](../../implementation/2026-09-21-storyboard-implementation-verification.md) · [9/21까지 카드 이력](../archive/2026/09/storyboard-through-2026-09-21.md)
+
+## 이번 요구 — 9/29 구현·검증 상태
+
+### A. 팀원(민준님)의 후속 범위
+
+이전 대화에서 아래 항목은 원본 작업 누락이 아닌 새 후속 설계의 미완료 범위로 구분했다. 새 세션에서는 현재 dev 코드에 이미 반영된 부분을 다시 확인한다.
+
+- [ ] 프로필 삭제: 선택 모드·DELETE API·상단 버튼 스타일 코드는 수정·자동화·패키지 UI 확인. 사용자는 선택 삭제 유지를 결정했다. 실제 삭제·보관함 결과 보존의 사용자 실기 전까지 완료 처리하지 않는다.
+- [ ] 레거시 잠금 제거·레거시 결과 화면 철거: W07에는 코드 변경이 있으나 사용자에게 범위·필요성이 충분히 설명되지 않아 완료 판정·dev 병합 보류. 기존 데이터 처리/보존 요구도 별도 판단한다.
+- [x] 초기 조사 단계의 세분된 진행 메시지 및 프로필 카드 진행 미터.
+
+팀원 출처:
+`/Users/jina/project/adlight/desktop/clipper_angular/docs/superpowers/specs/2026-09-21-storyboard-v2-ui-refinement-design.md`,
+`.../plans/2026-09-21-storyboard-v2-ui-refinement-fe.md`.
+D6–D13과 단계4–6이 관련 범위다. 설계 파일 존재만으로 구현 완료로 표시하지 않는다.
+
+### B. 입력・선택 상태 버그
+
+- [x] 키워드 입력에서 “독서”를 입력했는데 조합/입력이 씹혀 최종 “독”만 남는 현상. 한글 IME composition, 태그 입력·Enter/blur·폼 갱신 경로를 실제 재현으로 확인한다.
+- [x] 제작 목적의 추천 선택을 모두 해제하고 직접 입력도 비었는데 “프로필 수정하기”가 활성화된다.
+- [x] 위 상태에서 저장/생성한 프로필에는 마지막에 선택했다가 해제한 제작 목적이 남는다. UI 선택 상태·폼값·검증·저장 payload/읽기 값까지 함께 확인한다.
+
+### C. 표시・크레딧 명칭
+
+- [x] 프로필별 세부 설정의 레이블/값 위치와 컬럼 정렬·반응형이 어색한 부분을 확인하고 맞춘다. 캡처/실제 화면 기준으로 정한다.
+- [x] 원장 표시 map 소스 수정: `스토리보드 생성 · 크레딧 사용/반환`, 관련19/19.
+- [ ] 원장 표시 수정의 실행 Web API 반영. 현재 localhost3000은 원본 checkout이며 이 map이 빠져 있다.
+
+### D. 생성 속도
+
+- [x] 기존 실로그 총시간·재시도와 코드 순차 경계를 조사하고, 단계별 요청·대기·재시도·검색·저장/취소 계측 및 오프라인 전후 측정을 추가했다. 초기에는 실공급자 단계 비중이 미확인이었고, 최신 실로그1건에서 소재 결정/본문 구성/정규화 비중을 추가 측정했다.
+- [x] 프로필→주제→시나리오→상세 의존성과 병렬 가능한 독립 호출을 구분한다.
+- [x] 병렬 처리, 중복 요청 제거, 캐시/배치 등 후보의 품질·요청 제한·비용·취소/복구/정산 영향을 비교한다.
+- [ ] 실제 생성 시간 단축(제한 병렬화 등)을 구현한다. 계측/후보 검토만 완료했으며 아직 순차 실행이다.
+- [ ] **실공급자로** 같은 입력·조건의 전후 시간/품질/정산을 비교한다. 오프라인 fixture의 호출·결과·복구·정산 불변성 전후 비교는 완료했으나 실성능 개선을 증명하지 않는다. 원인 측정 전 병렬화나 모델 교체를 확정하지 않는다.
 
 ## 작업 공간
 
-worktree root `/Users/jina/project/adlight/.worktrees/storyboard-ux-overhaul-20260920/`는 그대로 유지한다. 사용자 승인으로 코드 3개 저장소의 브랜치만 `feature/storyboard-ux-update`로 변경했다.
+우선 `desktop/clipper_angular`, `desktop/clipper_nestjs`. 원장/추론/정산 계약 변경이 필요하면 `web/clipper_web_api`. 전체 패키징이면 Electron/Python 형제 경로도 준비한다.
 
-| 저장소 | 푸시 완료 커밋 | 커밋 파일 수 | 현재 상태 |
-|---|---|---:|---|
-| desktop/clipper_angular | 18006cb0 | 68 | clean, origin/feature/storyboard-ux-update와 일치 |
-| desktop/clipper_nestjs | 693edf6 | 99 | clean, origin/feature/storyboard-ux-update와 일치 |
-| web/clipper_web_api | 580211e | 33 | clean, origin/feature/storyboard-ux-update와 일치 |
+9/29 세 대상 repo fetch 성공 후 최신 origin/dev 기반 공통 브랜치 `feat/storyboard-followups-20260929`, 격리 루트 `/Users/jina/project/adlight/.worktrees/storyboard-followups-20260929`를 준비했다. Angular `797782e8`, Nest `824a7a9f`, Web API `31f44826`. 원본 checkout은 dev·clean·0/0, 변경은 새 worktree 미커밋이다. W10 공통 폼/UI·W11 shell/projects·TC4 logging/jobs·하이라이트 Web credits/inference 겹침을 검증 보고서에 기록했다.
 
-Electron/Python은 소스 변경 없이 기존 `feature/storyboard-ux-overhaul-20260920` 작업 브랜치를 유지한다. 원본 checkout 5개 역시 기존 브랜치를 유지하며 깨끗하다. `.env` 등 로컬 설정과 빌드 산출물은 커밋하지 않았다.
+## 실행 결과・남은 검증
 
-코드 커밋 전 원격 dev는 작업 기준보다 Angular162/Nest64/Web API3/Electron5/Python11 커밋 앞서 있었다. 수정 경로 중복은 Angular17/Nest3/Web API0이며 실제 충돌 확정을 의미하지 않는다. 이번에는 dev를 병합하거나 rebase하지 않았고 dev에 푸시하지 않았다. 향후 dev 통합에는 별도 승인 및 통합 후 검증이 필요하다.
+현행 dev·민준님 D6–D13/단계4–6 대조 후 누락된 선택 삭제/API·레거시 표시/잠금 철거·초기 메시지/미터를 구현했다. 한글 composition 경계와 실제 Material 목적 해제 RED→GREEN, 저장 payload 일치 확인. 삭제는 owner/busy·정산/시작/복구 lock을 지키며 역사 profile·batch/artifact 데이터는 tombstone과 snapshot으로 보존한다. 설정 정렬·반응형, `스토리보드 생성 · 크레딧 사용/반환` 명칭을 수정했다.
 
-`.codex`는 별도 저장소 main이다. 이전 문서 10개는 3cc7d51로 푸시했고, 이번 브랜치 변경·코드 푸시 결과도 작업 카드·보드·세션에 기록한다.
+최종 Angular5395/5395 + 스타일6/6 + local AOT, Nest build875/875, Web 관련503/build PASS. Web 전체 기존7개 실패는 원본 동일 재현. 브라우저 fixture에서 payload·순차 삭제/실패 재시도·active 제외·삭제 후 결과 접근·다크/라이트1920/1280/768/390 PASS, JS error0. OS 물리 한글 입력/설치형 Electron은 미검증. 리뷰의 확인 대상 expansion과 취소 elapsed 누락도 보완·재검토했다.
 
-## 검증과 다음 단계
+성능: 기존 실제 로그 총시간610563/142428ms를 관측했으나 서로 다른 입력의 작업이며 단계 비중/수량은 미확인. 신규 단계·재시도·검색·저장·취소 시간 로그 추가, 20-profile fixture의 obsolete legacy reads180→0. 병렬/캐시/모델 후보의 비용·품질·취소/복구/정산 영향을 비교했다. 실공급자 전후 비교 없이 병렬화나 모델 교체를 적용하지 않았다.
 
-- Angular704/704, SCSS6/6, Nest853/853, Web API516/516 통과. 세 저장소 build 및 Nest ncc bundle 통과.
-- 임시 PostgreSQL migration up/down·동시정산·rollback·성공응답 JSONB replay 통과. 운영DB 변경 없음.
-- 실제 Angular+가짜 API로 프로필→동의→홈큐→결과 이동, 화면 폭/테마/모달 확인. 실제 임시 디스크2회 재시작 복구와 수량 최소·최대/부분실패 검증.
-- 실제 PDFKit6쪽·9쪽 예시 전 페이지 렌더/한글·필드 확인. 예시 데이터는 fixture이며 실제 AI 출력 아님.
-- 최종 전체검토에서 지적된 오류분류/응답유실/정산새로고침/후보길이 및 카드/PDF누락 수정 후 회귀 통과. 보류한 minor 없음.
+[구현·회귀·화면·충돌 경로](../../implementation/2026-09-29-storyboard-followups-verification.md) · [성능 근거·후보 분석](../../diagnostics/2026-09-29-storyboard-performance.md) · [실행 계획](../../implementation/2026-09-29-storyboard-followups-plan.md) · [독립 리뷰/보완](../../implementation/2026-09-29-storyboard-followups-review.md)
 
-다음은 필요 시 최신 dev와의 통합 검토 및 사용자 확인이다. 실제 ML·Build5는 별도 승인 없이는 실행하지 않는다. 실제 AI 품질/검색 적합성·Electron 전체 패키지·운영 DB/배포는 검증 완료로 간주하지 않는다. 서버 직접 접속·배포 금지. **코드 3개 저장소의 브랜치 변경·커밋·푸시는 승인 범위대로 완료했다. dev 병합은 승인하지 않았으며 실행하지 않았다.**
+남은 실기: 같은 입력/수량/모델/조건의 실공급자 시간·품질·정산 비교, 설치형 macOS IME·패키징, 실제 서버/DB/과금 확인. 이번에 commit/push/merge/deploy/DB/실AI는 하지 않았다.
 
-## 과거 근거와 변경 이력
+회귀는 실제 한글 입력/선택 해제/저장 payload와 UI, 삭제 API의 실행 중 작업·차감/환급 경계, 진행 상태·레거시 데이터, 성능 전후를 확인한다. 실제 AI/과금 테스트 범위는 해당 세션의 명시 지시로 구체화한다.
 
-아래 항목은 각 작업 당시의 기록이다. 문서 미커밋·승인 대기 등 과거 상태는 위 최신 상태와 이후 기록을 우선한다.
+## 근거
 
-[8/25 TODO](../../todos/2026-08-25-storyboard-followups.md), [8/25 세션](../../records/sessions/2026/08/25.md), [9/20 기록](../../records/sessions/2026/09/20.md), [9/21 설계](../../implementation/2026-09-21-storyboard-ui-design-draft.md), [목적·스타일](../../implementation/2026-09-21-storyboard-purpose-style-catalog-draft.md), [최종 상세 재검토](../../implementation/2026-09-21-storyboard-final-detail-reassessment.md).
+- [9/29 인계](../../records/sessions/2026/09/29.md)
+- [기존 구현 계획](../../implementation/2026-09-21-storyboard-implementation-plan.md)
+- [과거 9/21 기록](../../records/sessions/2026/09/21.md)
 
-과거 TODO 전부를 미완료로 간주하지 않았다. 품질 경고·복제·archive 제거의 기존 구현은 유지하고 새 정책과 연결했다. 옛 영상/render 코드는 호환 경로에 남아 있으며 새 batch는 영상 렌더를 실행하지 않는다. 9/4 제거됐던 검색어는 승인된 v2 계약으로 다시 도입했다. 과거 공급자 단가·환율을 현재 값으로 인용하지 않았다. 제품 미적용/Task2 진행이라는 이전 카드 내용은 이번 구현 결과로 대체한다.
 
+## 후속 — 사용자 테스트 앱 빌드
 
-## 로컬 앱 확인 준비 (9/21 후속)
+사용자 요청으로 현재 W07 변경을 포함한 macOS arm64 local-api `.app` 전체 빌드를 완료했다. Angular packaged/Nest ncc bundle/Electron TS/uv/electron-builder --dir exit0. 실제 패키지 renderer86파일 및 Nest bundle hash 일치, Python .git 미포함, production 의존성 problems0, actual Electron updater/fs-extra 로드 PASS. Electron 최신 origin/dev0cd7ed7b 기반 새 격리 worktree와 Python 최신47782953의 Git 없는 archive 빌드 입력을 추가했다. 제품 소스 추가 변경 없음.
 
-원본 Electron 빌드는 원본 형제 폴더를 참조하므로 별도 구현이 반영되지 않았다. 기존 storyboard 작업 공간에 Electron/Python worktree와 Git 제외 로컬 설정·키·uv 바이너리를 준비했다. 실행 명령은 동일하며 cwd만 새 `desktop/clipper_electron`, `web/clipper_web_api`로 바꾼다. 자세한 명령은 작업 공간 `LOCAL-PREVIEW.md`. Electron/Python 소스 변경 없음, Electron 설정테스트41개/tsc 통과. 전체 앱 빌드는 사용자 실행 대기.
+[실행 명령·빌드 입력·주석 질문 근거](../../implementation/2026-09-29-storyboard-native-test-build.md). 기존 앱을 종료한 뒤 `open "/Users/jina/project/adlight/.worktrees/storyboard-followups-20260929/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app"`을 실행한다. 기존 원본 Web API localhost3000 프로세스는 변경하지 않았으므로 Web 원장 명칭은 그 API에 W07 코드를 별도로 반영해야 한다. 에이전트는 앱 UI를 실행하거나 기존 앱을 종료하지 않았고 실AI/DB/서버 재시작/commit/push/merge/deploy 없음. 위 초기 검증 기록의 패키징 미실행은 이 후속에서 해소됐으며 물리 IME/실성능은 사용자 실기 대상으로 남는다.
 
-새 정산용 DB migration은 아직 미실행이며 개발전용DB 여부/적용 승인을 질문했다. API/앱/실제AI를 임의로 실행하지 않음. 원본checkout 유지, commit/push 없음.
 
+## 후속 — 제작 목적 UX·150자 / 이름50자
 
-### 로컬 실행 선행조건 정정
+사용자 최신 지시에 따라 목적 미입력 이유를 고정 footer에 표시하고 목적 이동/포커스, 필수 표기·항상 보이는 입력 안내, 상호작용 후 인라인 오류·유효 입력 회복을 구현했다. 이름120→50, 목적500→150을 UI와 생성/수정 API에 적용하고 목적 placeholder를 대상·방법·기대 행동 예시로 바꾸며3줄 입력란으로 넓혔다. 복제 이름의 접미사 포함50자/충돌도 처리했다. 저장 parser 기존 스키마는 그대로며 새 호환 분기나 데이터 변환 없음.
 
-실제 API 시작에서 plugin_key 부재 확인. 로컬Docker DB metadata 읽기전용 조사 결과 Admin38/User3/Release1 미적용(신규스토리보드 포함). 기존plugin entitlement migration도 미적용이며, 과거이력삭제/구형테이블제거 migration이 포함돼 자동전체적용하지 않았다. 기존DB보존+복제DB 적용 또는 백업후개발DB갱신 선택을 사용자에게 질문한 상태. 이 결정/DB정렬 전 로컬 API 실행 문제는 미해결이며, 기존 코드의 로컬단위·임시DB검증통과와 구분한다. 코드변경/DB변경/commit/push없음.
+최신 Angular5400/5400·스타일6/6·Nest관련54/54·packaged/native PASS. Chrome fixture dark/light1280/390 overflow없음·JSerror0. 최신 앱은 `dist-app/purpose-ux/mac-arm64/Clipper Studio (dev).app`이며 이전 앱은 이번 변경 전 빌드다. [구현·화면·검증·새 실행 명령](../../implementation/2026-09-29-storyboard-purpose-ux.md). 실공급자 성능/물리IME 대기, 미커밋.
 
+프로필 이름 예시 후속: 생활 팁 placeholder 누락을 “예: 퇴근 후 10분 독서 루틴”으로 수정해 목적 예시와 맞췄다. 최신 앱은 `dist-app/purpose-ux-name/mac-arm64/Clipper Studio (dev).app`. Angular packaged/native build 및 실제 package 문구/hash 검증 PASS. HTML문구만 변경, 기존50/150 동작 유지.
 
-### 로컬 실행 선행조건 해결
+완료 카드 문구 철회 후속: 사용자 요청으로 “결과 보기 ›”와 전용CSS를 제거했다. 완료 개수/기존 클릭 이동 유지, 관련33/33·packaged/native PASS. 최신 앱 `dist-app/result-label-reverted/mac-arm64/Clipper Studio (dev).app`; 실행 명령은 최신 목적 UX 보고서.
 
-사용자가 개발DB 백업 없이 갱신 승인. 동일 로컬Docker DB에 User3/Admin38/Release1건 적용 완료, 미적용0건. plugin_key와스토리보드정산schema 확인, 실제API 초기화/정책seed 및 /health HTTP200(3DBok) 검증. 위 승인대기/시작문제미해결 상태는 이 기록으로 대체. 기존DB를사용하며복제DB/백업생성없음. 검증용서버는종료, 사용자start:dev 재실행가능. 기존종료훅defaultDataSource문제는 별도이며 이번수정범위제외. 코드·문서미커밋,commit/push/실제ML/Build5/원격운영DB작업없음.
 
+## 후속 — 카드 hover 배경
 
-## W07 프로필 없는 첫 화면 버튼 위치 조정 (9/21)
+사용자 요청으로 hover 추가외곽선 대신 모든 프로필 카드에 primary6% 옅은 배경을 적용했다. mouseout원복·border/레이아웃불변·키보드focus-visible outline유지. 실제Chrome dark/light1440/768/390·스타일6/6·packaged/native PASS. 최신 앱 `dist-app/hover-tint/mac-arm64/Clipper Studio (dev).app`. [화면·검증·실행 명령](../../implementation/2026-09-29-storyboard-card-hover.md).
 
-사용자 요청대로 첫 화면 하단의 `프로필 추천`·`프로필 생성하기`를 상단 actions로 이동하고 기존 상단 생성 버튼과 중복되지 않도록 했다. 프로필이 있는 화면은 기존 생성 버튼 유지. 사용하지 않는 하단 actions CSS 제거. 기존 빈 상태 테스트를 보완해 수정 전 1실패/10성공 확인 후 스토리보드 Angular253/253 통과, packaged Angular build 통과. 실행 중인 Electron 패키지에는 재빌드가 필요하며 전체 Electron 패키징/실제ML/Build5는 실행하지 않았다. 작업 branch 유지, 코드·문서 모두 미커밋, commit/push 없음.
 
+## 후속 — 완료 표시 세로 중앙·레거시 정리안
 
-## W07 생성 동의 모달의 반복 실패 조사·안내 보완 (9/21)
+사용자 피드백으로 완료 카드 액션 영역의 세로 중앙을 복구했다. Chrome RED중앙오차42.28125px→GREEN dark/light1440에서1px미만, hover/focus/responsive도 PASS. 스타일6/6·packaged/native·renderer86/Nesthash확인. 최신 앱 `dist-app/card-alignment/mac-arm64/Clipper Studio (dev).app`. [정렬 검증/명령](../../implementation/2026-09-29-storyboard-card-alignment.md).
 
-실행 중인 앱 로그에서 storyboard-quote의503과 StoryboardBatchPreflight 서비스 준비 검사 실패 확인. 로컬 개발Admin DB를 READ ONLY로 확인한 결과 OpenAI 활성키는 복호화 가능하지만 기존 네이버 키들의 naver_usage_apis가 모두 빈 배열이다. 기존1789000000000-AddNaverUsageApis migration은 기존키에 권한을 추정하지 않고 빈 배열을 설정한다. 검색/데이터랩이 둘 다 준비 안 됨으로 판정되어 과금quote 전에 차단된다. 실제 네이버 개발자센터 권한은 확인하지 않았으며 사용자에게 관리자페이지 API 키의 사용 API 설정 확인을 안내했다. 사용자가 관리자페이지에서 직접 확인 예정. DB 설정/공급자 키/잔액을 임의로 변경하지 않았다.
+레거시 감사 결과 실제 옛 API와 닿지 않는 코드/전환UI가 남아 있다. [현행v2전용 철거 정리안](../../implementation/2026-09-29-storyboard-legacy-retirement-plan.md)을 작성했다. 이전 D13 전환 유지 방침을 바꾸는 **제안·미구현**으로, 공용 함수를 먼저 분리하고 독립 옛 지원을 철거하는 순서다. 이번 추가 build에는 세로 정렬만 반영했고 레거시 추가철거/데이터 변경은 없다. 실제 구데이터 존재/사용을 확인했다는 뜻이 아니다.
 
-Nest preflight는 준비되지 않은 provider 이름과 안정코드 STORYBOARD_SERVICES_NOT_READY를 반환하도록 보완, Angular 동의 모달은 일반 수량·크레딧 조회실패 대신 생성 서비스 설정 확인·관리자 문의·미차감 안내를 표시한다. 준비검사 및 동의 전 차단 유지, 사용자 화면에 provider 기술정보나 서버 원문 미노출. 누락설정 HTTP필터 회귀와 UI 차단 회귀를 RED 확인 후 구현. Nest 집중81/81, Angular 스토리보드254/254 및 양쪽 build(Angular packaged) 통과. 실제 생성/차감/외부 공급자 호출/Build5/전체 Electron 패키징 없음. 설정 해결 및 사용자 재확인 대기이며 생성 성공으로 보고하지 않는다. 코드·문서 미커밋, commit/push 없음.
 
+## 후속 — 9/21 팀원 설계 전체 대조·선택 삭제 버튼 수정 (9/30)
 
-## W07 큐 직후 실패: 추론 입력 경계 수정 (9/21)
+사용자가 선택 삭제 유지에 동의했다. D6의 과거 ‘사용자 요청’ 출처는 현재 대화로 입증되지 않으므로 이를 새 동의와 구분한다. [D1~D25 항목별 설명·dev 선행/W07 구현/철회·미검증 구분](../../implementation/2026-09-30-storyboard-v2-design-audit.md)을 작성했다. 상단 추천/생성/삭제 버튼 모두 Material 아이콘·버튼 방식으로 통일하고 삭제 문구를 ‘프로필 삭제’로 변경했다. 빈 화면의 추천/생성에도 같은 아이콘을 썼다. Angular5402/5402·스타일6/6·diff check PASS. 별도 macOS arm64 local-api 앱을 빌드해 실제 앱에서 세 버튼과 선택 모드 진입/취소를 확인했다. Electron 원격 다운로드 실패는 설치된 로컬 배포판으로 패키징을 마쳤다. 최신 테스트 앱: `/Users/jina/project/adlight/.worktrees/storyboard-delete-style-build-20260930/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app`. 실제 삭제/보관함 데이터, 라이트 테마 앱, 실행 Web API 원장 명칭, 실공급자 성능은 미확인. 앱 빌드 미러는 기존 앱 산출물을 덮지 않았고 W07 소스는 미커밋이다. 검증 로그: `output/storyboard/2026-09-30/storyboard-delete-*.log`.
 
-사용자 오류번호 b2722b30 보고. 첨부30줄은 이전quote503이고 해당번호 자체는 첨부/현재로그/오류보고DB에서 찾지 못했다. 실제 앱 기록의22:18:34 시작→22:18:35 실패한 shortform_director_ff413bfa-130d-4b0e-839c-3ea87de5089d 작업 확인. batch는source:trends 성공, discovery:queries 1회 직후 종료. 로컬 manifest와서버operation_runs(58e8870f-578c-4248-9654-d16ecbbe4842) 모두요청4/완료0/차감20/환급20/정산confirmed(22:18:35.302Z) 확인. 읽기전용조회, 수동환급/재생성 없음.
 
-저장된 실제프로필과 실제ResearchInputBuilder로 첫요청 재구성 후 Web API 실제input guard에넣어 SHORTFORM_DIRECTOR_INFERENCE_INPUT_INVALID 재현. batchContext.stageKey='discovery:queries'가 URI탐지에걸리며 그필드만빼면통과. 오류원문은executor의최종환급처리로보존되지않아 과거HTTP본문을확보한것은아니지만 동일입력검사실패를로컬에서재현했다. 서버에서소비하지않는로컬체크포인트이름을discovery·topic/candidate/editorial/material 전송에서제거. 로컬체크포인트키/배치·과금·slot연결은유지하고 Web API입력방어는완화하지않았다.
+## 후속 — 전구 아이콘·카드 전체 선택·삭제 확인 문구 (9/30)
 
-기존discovery/stage테스트에API경계허용필드회귀추가, 수정전3실패후 Nest스토리보드64/64통과. discovery·stage의생성요청을실제Web API입력guard에연결한임시교차검증6/6통과(가짜공급자; 실제AI없음). Nest build/ncc bundle와git diff --check통과. 이전Angular254/254검증이후이번UI변경없음. 현재실행앱은기존패키지이므로작업Electron에서재빌드필요. 실제AI/Build5/전체앱패키징/원격접속/DB변경/commit/push없음. 코드·문서모두미커밋.
+추천 아이콘을 목록/빈 화면에서 `lightbulb`로 통일했다. 선택 모드 카드 자체 클릭·Enter·Space를 선택 토글로 연결하고, 체크박스와 선택 수가 함께 갱신되며 잠긴 카드·평소 결과 이동이 유지됨을 검증했다. 삭제 확인창의 ‘그대로 두기’를 홈과 같은 ‘취소’로 변경했다. 홈과 스토리보드는 같은 `ConfirmDialogService`를 쓰며, 취소는 공통 디자인 규칙의 text 버튼이라 hover 상태 레이어가 옅게 보이는 것이지 hover를 끄는 코드가 있는 것은 아니다. 자세한 근거·빌드·남은 검증: [카드 선택·공통 모달 조사](../../implementation/2026-09-30-storyboard-card-selection-confirm-ux.md). 집중41/41·전체5405/5405(종료0)·스타일6/6·패키지 renderer86개 hash 일치. 최신 테스트 앱: `/Users/jina/project/adlight/.worktrees/storyboard-card-select-build-20260930/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app`. 이번 앱의 실제 화면 열기는 UI 도구 시간 초과로 못 했고 실제 삭제·보관함 사용자 실기도 여전히 미완료. 소스 미커밋.
 
 
-## W07 두 번째 생성 실패5898ca76: 상세 진단 보완·단일 호출 승인검토 대기
+## 후속 — 삭제된 프로필 결과 액션·확인창 초기 포커스 (9/30)
 
-22:24:29 시작한 batch run.director.2f963e2c4f844fdc85c88d796a815218은 source:trends 성공 후 discovery:queries 3회 시도,22:24:43 실패. 로컬기록과서버operation_runs cf63dec0-1b65-4461-b12b-d067604606a6에서30차감/30환급확인. 오류번호 자체나세부실패응답은기록되지않았고사용자도Web API터미널로그없음을확인. 첫실패(stageKey입력검사)와달리이번실패원인은미확정.
+실제 삭제 후 결과 보존·열기는 사용자가 확인했다. 결과 스냅샷 때문에 삭제된 프로필이 카드에 계속 보이는데, 복제 버튼은 현존 목록 프로필이 필요해 빈 이동을 일으켰다. 결과 화면에서 원본 404를 확인하면 복제·재생성을 막는다. 이유는 복제 버튼 툴팁에서만 안내한다. 공통 확인창은 Material의 첫 버튼 자동 포커스 때문에 취소 버튼에 열린 직후 배경이 보인다는 것을 실제 오버레이 테스트로 재현하고 대화상자 자체에 초기 포커스를 옮겼다. [원인·회귀·새 앱](../../implementation/2026-09-30-storyboard-deleted-profile-and-dialog-focus.md). 관련52/52·전체5409/5409·스타일6/6·macOS arm64 local-api 패키지 renderer86/86 hash 일치. 새 앱은 `storyboard-deleted-profile-build-20260930/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app`. 원본 dev/기존 앱/실행 Web API는 그대로이며 소스 미커밋.
 
-누락된진단을수정: stage 재시도경계에 batch/stage/시도수/오류분류/HTTP·provider상태/검증통과여부/안정코드만구조화로그로기록. 키·프롬프트·응답원문미노출,사용자화면에재시도미노출. 로그기록실패는원래오류·정산을변경하지않음. query-plan로컬검증원인보존. RED후Nest스토리보드66/66·build/bundle·diff check통과.
 
-실패프로필의검색어생성1회만실행하는진단스크립트 /private/tmp/storyboard-query-diagnostic.cjs 준비. 기본dry run으로입력guard통과및네트워크/DB호출0확인. 사용자가단일실제AI진단승인했으나auto-review가구체제공자/전송payload명시부족사유로실행전거절했다. 우회/재시도하지않았고실제AI호출0회. OpenAI Responses URL/model/profile입력/시스템지시/응답schema를자격증명없이 /private/tmp/storyboard-query-openai-request.json에미리보기작성. 구체전송범위를보여주고추가확인필요. 아직원인수정완료아님. 코드·문서미커밋,commit/push없음.
+## 후속 — 삭제 프로필 복제 버튼 표시·툴팁 (9/30)
 
+사용자 최신 지시로 삭제된 원본의 복제 버튼 숨김을 철회했다. 버튼은 결과 화면에 남되 disabled이며 hover/키보드 포커스 시 짧은 이유를 보여준다. 이미 삭제된 원본으로는 복제·재생성할 수 없고 저장된 결과는 계속 읽는다. [구현·테스트·최신 앱](../../implementation/2026-09-30-storyboard-disabled-duplicate-tooltip.md). Angular5409/5409·스타일6/6·macOS arm64 local-api 앱 renderer86/86 hash 일치. 앱: `storyboard-disabled-duplicate-build-20260930/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app`. 앱 실기는 아직 사용자 확인 전, 소스 미커밋.
 
-## W07 5898ca76 단일 AI 진단·관련 키워드 검증 결함 수정
 
-사용자가구체OpenAI제공자/model/프로필전송payload 확인후다시승인. 단일진단스크립트실행: 실제OpenAI Responses API 정확히1회, HTTP200/공급자출력검증통과/데스크톱응답projection통과, projectResearchQueryPlan에서거절됨확인. 앱크레딧차감·operation상태변경·후속검색/생성없음. 기존실패작업30전액환급유지.
+툴팁 문구 후속: 사용자가 ‘프로필이 삭제되어 복제할 수 없어요.’를 선택했다. 별도 삭제 안내 블록과 오류 안내 블록·전용 재확인 메서드는 제거했고, 최신 앱은 `storyboard-tooltip-only-build-20260930/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app`다. 전체5409/5409·스타일6/6·패키지 문구 부재/해시 확인. [최신 기록](../../implementation/2026-09-30-storyboard-disabled-duplicate-tooltip.md).
 
-코드비교에서inferenceProfile은settingsV2.relatedKeywords(etf·용어해설)를AI에전달하지만projectResearchQueryPlan의derivedFrom근거는이름/분야/대상/목적/focusKeyword만포함하는불일치발견. 관련키워드를근거로한정상ETF검색어가거절되는회귀를RED로재현한뒤관련키워드도검증근거에포함. 키워드없는프로필의ETF근거거절및근거없는계약논란첨가거절유지. Nest스토리보드/조사관련148/148·build·ncc bundle·diff check통과.
+## 후속 — 완료 카드 결과 안내 재추가·호버 범위 (9/30)
 
-정확한한계: 단일실제호출진단은실패지점만출력하고생성된검색어원문은저장하지않았으므로그응답의어느항목이실패했는지는확보하지못했다. 관련키워드누락은별도재현으로확인한명확한결함이며, 이것이해당실제응답의유일한실패원인인지또는수정후전체생성이완료되는지는미검증. 추가실제AI호출하지않음. 실패원인로그보완과함께작업Electron재빌드후사용자확인필요. 코드·문서미커밋,commit/push/Build5/배포없음.
+사용자 최신 요청으로 완료 개수 아래에 `결과 보기 →`를 작고 별도 배경 없는 안내로 다시 추가했다. 완료 개수는 세로 중앙에 유지하고 카드 전체 클릭은 그대로다. 옅은 초록 배경은 결과를 열 수 있는 완료 카드의 hover에만 적용한다. 생성 전·생성 중·선택 모드에는 적용하지 않는다. 집중8/8, 전체5410/5410, 스타일6/6, packaged Angular 통과. 최초 macOS arm64 local-api 앱은 Electron `node_modules` 심볼릭 링크로 인해 `fs-extra`가 누락돼 실행 실패했다. 같은 경로에 실물 의존성 폴더로 재빌드했고 앱 패키지의 Electron 런타임에서 `electron-updater`/`fs-extra` 로드를 확인했다. 로그인 후 실데이터 화면은 아직 직접 확인하지 못했다. [디자인·검증·새 앱 경로·패키징 오류](../../implementation/2026-09-30-storyboard-result-cue-and-hover.md). 이 변경은 W07에만 있으며 `dev` 미병합이다.
 
 
-## W07 프로필 상단 두 버튼 표시 조건 정정
+## 후속 — 삭제 기록이 있는 사용자 데이터 사본으로 패키지 서버 부팅 (9/30)
 
-사용자는추천·생성두버튼유지를요청했으나이전수정은빈화면에만표시해프로필생성후추천이사라졌다. 상단프로필수조건및openPresetDialog의빈목록조건제거. 프로필유무와무관하게 `프로필 추천`·`프로필 생성하기` 유지, busy비활성/편집중추천전환차단유지,모달안추천버튼없음. 기존프로필상태에서두버튼표시와클릭후추천/생성다이얼로그열림회귀를RED확인후수정. Angular스토리보드254/254·packaged build·diff check통과. 과거빈화면한정권고·기록은이결정으로대체. 실행중패키지에는재빌드필요. 코드·문서미커밋,commit/push없음.
-
-
-## W07 사이드바 도움말의 구형 기능 설명 정정
-
-사용자지적대로스토리보드사이드바도움말의레퍼런스영상분석설명제거. 같은잘못된문구를쓰던공통플러그인subtitle도현재흐름으로통일: “프로필에 맞는 주제와 시나리오를 제안해 다음 영상을 기획하도록 돕습니다. 대본과 이미지·영상 검색어, AI 생성 프롬프트를 함께 제공합니다.” 기존설명단언만갱신,동작변경없음. 관련Angular27/27·packaged build·diff check통과,대상에서구형문구잔존없음. 앱재빌드후반영,코드·문서미커밋,commit/push없음.
-
-
-## W07 홈 스토리보드 카드 너비·글자 크기 조정
-
-사용자 요청에 따라 홈 스토리보드 카드만 기존 152px에서 304px로 확대했다. 높이 270px는 유지하고, 공간이 좁으면 부모 너비 이내로 축소한다. 타이틀 16→13px, 본문 12→11px, 라벨 11→10px 및 카드 배지·하단 제목/날짜 글씨도 축소했다. 상단 칩과 하단 개수 배지를 위한 여백, 설명 목록 기본 margin 제거, 긴 단어 줄바꿈을 적용했다. 다른 플러그인 카드 규칙과 API/데이터 동작은 변경하지 않았다.
-
-관련 Angular 단위 테스트 87/87, packaged build, git diff --check 통과. 실제 컴포넌트 SCSS를 사용한 별도 샘플 렌더에서 다크/라이트 304×270px 및 240px 좁은 컨테이너 확인, 샘플 텍스트 잘림·배지 겹침 없음. 실행 중 Electron 앱의 실제 데이터 화면은 재빌드 후 사용자 확인 필요. 로그: /private/tmp/storyboard-card-size-test.log, /private/tmp/storyboard-card-size-build.log. 코드·문서는 미커밋이며 커밋/푸시, 실제 AI 호출, Build5, 배포는 하지 않았다.
-
-
-## W07 홈 카드 250px·전체 스토리보드 복사·PDF 패키징 오류 수정
-
-- 홈 스토리보드 카드 너비를 사용자 요청대로 304px에서 250px로 축소했다. 기존 축소 폰트와 좁은 컨테이너 대응은 유지한다. 실제 SCSS 샘플 렌더에서 다크/라이트 250×270px 및 240px 컨테이너, 샘플 글자 잘림 없음 확인.
-- `전체 대본 복사`를 `스토리보드 복사`로 바꾸었다. 프로필(타겟·목적·스타일·키워드), 주제 및 기획 3항목, 개요(타입·타이틀·훅·길이), 모든 대본 구간의 시간·대본·화면 문구·보여줄 화면·한/영 검색어·영상/이미지 프롬프트, 조사 근거와 참고사항을 텍스트로 구성한다. 선택한 구간과 관계없이 전체를 순서대로 복사하며 기술 ID는 제외한다. 구간별 복사는 유지했다.
-- PDF 실제 앱 로그 2026-09-20T22:41:07Z/15Z의 POST 오류는 `Cannot find module '#standard-fonts/Helvetica'`였다. PDFKit 생성자에서 기본 Helvetica를 동적 로드하는 과정이 ncc 패키징 상태에서 실패해, 문서 생성과 저장 창 이전에 중단됐다. 앱에 포함된 한글 글꼴을 생성자부터 지정하도록 수정했다. 실제 ncc 번들 재현 테스트에서 동일 오류 RED를 확인한 후 수정하여 PDF 및 임베디드 글꼴 생성 통과. 저장 흐름은 기존 문서 조회·PDF 생성·일회성 다운로드 티켓·Electron 저장 창/저장 순이며, AI 재생성이나 추가 과금은 없다.
-- 검증: Angular 스토리보드/카드 275/275 및 packaged build, Nest 스토리보드 67/67 및 build/ncc bundle, 양쪽 diff check 통과. 샘플 PDF 3페이지 생성 후 기획 개요·세부내용 페이지의 한글과 표 배치를 확인했다. 실행 중 패키지의 실제 저장 창부터 파일 저장까지는 재빌드 후 사용자 확인 필요.
-- 로그: /private/tmp/storyboard-copy-red.log, /private/tmp/storyboard-export-copy-green.log, /private/tmp/storyboard-export-copy-build.log, /private/tmp/storyboard-pdf-fix-red.log, /private/tmp/storyboard-pdf-fix-green.log, /private/tmp/storyboard-pdf-fix-build.log, /private/tmp/storyboard-pdf-fix-bundle.log. 코드와 문서는 전부 미커밋. 커밋/푸시·실제 AI 호출·Build5·서버 접속/배포 없음.
-
-
-## W07 추천 프리셋 새 입력 구조 전환·추천 모달 디자인 정리
-
-기존 추천 10개는 자유입력 `domain`/대상 문자열만 갖고 `settingsV2`가 없어, 새 생성 폼의 분야 ID가 비어 있었다. 이번에 기존 추천 내용을 모두 새 프리셋으로 교체했다: 뉴스 뒤의 맥락, 월급 지키는 돈 공부, 바로 써먹는 AI 도구, 알고 보면 더 재밌는 K-POP, 오늘 볼 작품 골라드립니다, 게임 입문 길잡이, 냉장고 속 재료로 한 끼, 주말에 떠나는 국내 여행, 덜 힘들게 사는 자취 살림, 일상 속 왜 그럴까.
-
-각 프리셋은 현행 카탈로그의 분야·세부 분야 ID, 성별·연령, 해당 분야 제작 목적, 스타일, 관련/금지 키워드를 갖는다. 수동 폼과 같은 buildProfileWorkflow로 기존 API 필드를 함께 구성하고 선택 시 settingsV2를 깊은 복사한다. 길이 표시는 제거하되 기존 생성 contract의 내부 기본값 30초는 유지한다. 기존 저장 프로필은 수정하지 않았다.
-
-추천 모달은 폭 최대 880px, 제목 18px·카드 제목 14px·본문 12px·레이블 11px로 정리했다. 분야/대상/목적/스타일의 레이블과 값을 정렬하고 키워드는 펼침 영역에 표시한다. 헤더는 유지하고 카드 목록만 스크롤하며, 좁은 화면은 1열이다. 좁은 화면에서 사이드바가 모달을 가리던 쌓임 순서도 해당 모달에서 수정했다.
-
-검증: 실제 추천 버튼→10개 각각 이 프로필 사용→실제 Material 생성 폼→저장 경로의 카테고리·타겟·목적·스타일·태그 보존 회귀 RED 후 GREEN. Angular 스토리보드 256/256, 스타일 검사 6/6, packaged build, diff check 통과. 외부 API를 모두 가짜 응답으로 차단한 실제 Chrome에서 다크/라이트 1280/390px, 내부 스크롤·가로 넘침·사이드바 가림 없음 확인 및 10개 각각 분야명 표시/생성 버튼 활성화 확인. 로그 /private/tmp/storyboard-presets-{red,green,build,styles}.log, 스크린샷 /private/tmp/storyboard-presets-{dark,light}-{1280,390}.png.
-
-코드·문서 모두 미커밋. 커밋/푸시·실제 AI 호출·Build5·서버 접속/배포 없음. 실행 중 Electron 앱에는 재빌드 후 반영된다.
-
-
-## W07 홈 카드 200px·PDF 파일명 타이틀만 사용
-
-사용자 요청에 따라 홈 스토리보드 카드 너비를 250→200px로 변경했다. PDF 다운로드 이름은 현재/이전 결과 모두 프로필 이름이나 접두사 없이 `스토리보드 타이틀.pdf`로 구성한다. 파일명에 사용할 수 없는 문자 치환, 길이 제한, 빈 이름 기본값은 유지하며 문서 본문과 제목 원본은 변경하지 않는다.
-
-파일명 회귀 RED(프로필 접두사로 실패) 후 수정해 PDF 집중 테스트 5/5 통과. Angular 카드·다운로드 관련 21/21, Angular packaged build, Nest build/ncc bundle, 양쪽 diff check 통과. 실제 SCSS 샘플로 다크/라이트 200×270px, 샘플 텍스트 잘림 없음, 180px 컨테이너 축소 확인. 로그: /private/tmp/storyboard-title-filename-{red,green,build,bundle}.log 및 /private/tmp/storyboard-200-title-angular-{test,build}.log. 실행 앱에는 재빌드 후 반영. 코드·문서 미커밋, commit/push·실제 AI·Build5·서버 접속/배포 없음.
-
-
-## W07 홈 스토리보드 카드 성별·연령층·스타일 표시
-
-사용자 요청대로 홈 카드에서 합쳐진 시청 타겟을 제거하고, 분야 아래 구분선 다음에 성별과 연령층을 가로 한 줄로 배치했다. 이어서 제작 목적과 스타일을 표시한다. 잡 결과의 profileSnapshot.settingsV2에서 성별/연령/스타일을 읽고 기존 공통 카탈로그 레이블을 사용한다. 구조화된 타겟 정보가 없는 과거 결과는 임의 추정하지 않고 정보 없음으로 표시하며, 스타일은 기존 toneKeywords를 사용할 수 있다.
-
-카드 너비 200px와 기존 글자 크기는 유지한다. 긴 스타일과 설명이 잘리지 않도록 줄바꿈하고 카드 높이는 최소 270px에서 내용에 맞춰 늘어난다. 성별/연령/스타일 매핑 및 표시 회귀 2건 RED 후 수정. Angular 관련 196/196, 스타일 6/6, packaged build, diff check 통과. 실제 카드 SCSS로 다크/라이트 샘플에서 구분선·성별/연령 같은 행·텍스트 잘림 없음·180px 축소 확인. 로그 /private/tmp/storyboard-card-demographics-{red,green,build,styles}.log.
-
-백엔드/API/저장 contract 변경 없음. 실행 앱에는 재빌드 후 반영된다. 코드·문서 전부 미커밋이며 commit/push·실제 AI·Build5·서버 접속/배포 없음.
-
-
-## W07 주제 목록 조사 근거 표시 제거
-
-사용자 요청으로 주제 결과 카드의 `조사 근거` 펼침 영역 및 전용 스타일을 제거했다. 주제에는 기존 추천 이유·시청자의 궁금증·기획 포인트를 유지한다. 범위는 주제 화면 표시이며 저장 데이터, API, PDF 및 스토리보드 복사 내용은 변경하지 않았다. 근거가 있는 데이터로 기존 화면 테스트를 보완해 RED 확인 후 수정, 관련 Angular 4/4·packaged build·diff check 통과. 로그 /private/tmp/storyboard-hide-evidence-{red,green,build}.log. 앱 재빌드 후 반영. 코드·문서 미커밋, 커밋/푸시·실제 AI·Build5·배포 없음.
+당시 원본 `dev`는 삭제 기록 2개를 일반 프로필로 파싱해 보고된 `ShortformDirectorStorageCorruptionError`가 재현됐다. W07은 같은 임시 사본에서 색인 초기화와 활성6/삭제2 분리·삭제 ID 미노출, 배치7/완료문서35 열람, 프로젝트 파일298개 해시 보존을 확인했다. Nest build와 관련36/36 통과. 당시 최신 `.app` 안의 NestJS 번들을 패키지 설정/JWT 공개키 및 사본 데이터로 실행해 `/v1/health`의 `status: ok`를 확인했다. macOS Electron은 임시 `HOME`에서도 실제 appData를 사용하므로 **전체 GUI 앱 실행은 하지 않았다**. [상세·한계](../../implementation/2026-09-30-storyboard-deleted-record-boot-verification.md). 9/30 부분 병합에서는 이 읽기 전용 수정만 Nest `dev`에 반영하고 새 번들로 패키지 모드 health를 재확인했다. 원본 사용자 데이터와 실행 Web API는 수정하지 않았다.
