@@ -13,6 +13,8 @@
 
 시험 대상 프로필은 **주말 여행 짐 싸기**, **퇴근 후 책상 정리**, **스마트폰으로 음식 사진** 3개다. 각 프로필에서 주제 1개와 시나리오 2개를 사용해 스토리보드 6개를 확인한다. 각 결과의 대본에 설정된 고유 필수 포함 표현이 80% 이상 나타나고, 대본과 화면 문구에 금지 표현이 0건이면 이 항목을 충족한 것으로 판정한다. 2026-10-08에 저장한 6개 결과의 100% 반영률·금지 표현 0건은 실제 관측값이지 고정 점수가 아니다. 이 검사는 **표현 포함 여부**를 수치화하며 스토리의 완성도·창의성·프로필과의 의미상 연관성을 보증하지 않는다.
 
-구현 계획과 시험 대상 선정은 Angular 저장소의 [`docs/superpowers/plans/2026-10-08-storyboard-requirement-check.md`](https://github.com/OhMyMetabuzz/clipper_angular/blob/feat/storyboard-profile-requirement-check/docs/superpowers/plans/2026-10-08-storyboard-requirement-check.md)에 있다. 실제 화면 캡처와 생성 원문은 로컬 `/Users/jina/project/adlight/workspaces/tips-storyboard-20261008/evidence/ui-update/`에 있으며 Angular 원격 저장소에는 포함되지 않았다.
+구현 계획과 시험 대상 선정은 Angular 저장소의 [`docs/superpowers/plans/2026-10-08-storyboard-requirement-check.md`](https://github.com/OhMyMetabuzz/clipper_angular/blob/feat/storyboard-profile-requirement-check/docs/superpowers/plans/2026-10-08-storyboard-requirement-check.md)에 있다. 실제 화면 캡처와 생성 원문은 로컬 `/Users/jina/project/adlight/evidence/tips-storyboard-20261008/ui-update/`에 있으며 Angular 원격 저장소에는 포함되지 않았다.
+
+2026-10-12 정리: 임시 작업 공간의 독립 복제본 4개를 제거했다. Angular 구현 커밋과 기능 브랜치는 원격에 남아 있다. Electron·NestJS·Web API 복제본의 동명 로컬 브랜치는 각각 `origin/dev`와 동일한 커밋(독자 커밋 0개)이었고, 복제본 삭제와 함께 제거됐다. 화면·생성 증거 44개와 로컬 실행 데이터 347개는 파일별 SHA-256 일치를 확인해 `/Users/jina/project/adlight/evidence/tips-storyboard-20261008/`에 보존했다.
 
 향후 이 기능을 제품에 쓰기로 한다면 시험인증용 기준을 그대로 제품 요구사항으로 간주하지 않고, 사용자 경험과 품질 기준을 별도로 검토한 뒤 통합 여부를 결정한다.
