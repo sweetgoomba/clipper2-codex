@@ -1,0 +1,35 @@
+commit fe223e3b9339a14994bcef1e55d0f4665396e352
+Author:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+AuthorDate: Wed Jul 1 17:13:11 2026 +0900
+Commit:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+CommitDate: Wed Jul 1 17:13:11 2026 +0900
+
+    feat: make dance face matching Windows-safe
+
+Parent: e34cdbcc62518a8079a988dd8add015b569dd7e1
+
+commit 86fc71a02dd278c0fb5fd9dbcb59b75b67cad00c
+Author:     곽민준 <gwak0214@naver.com>
+AuthorDate: Thu Aug 13 13:50:53 2026 +0900
+Commit:     곽민준 <gwak0214@naver.com>
+CommitDate: Thu Aug 13 13:50:53 2026 +0900
+
+    fix(dance): 참조 멤버 1명일 때 모든 클러스터가 그 멤버로 흡수되는 문제 수정
+    
+    폴백 배정에 중복 검사가 없어, 참조가 1명이면 임계값(0.60) 안에 든 남의
+    클러스터까지 전부 그 한 명에게 붙었다. 이미 주인 클러스터가 있는 멤버에
+    덧붙일 때는 min(중복상한, 주인거리+마진) 이내일 때만 허용한다.
+    
+    Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+
+commit 65bbd33de0f0af0e1a64cdfe25cb0347bf559b4a
+Author:     곽민준 <gwak0214@naver.com>
+AuthorDate: Thu Aug 13 13:52:14 2026 +0900
+Commit:     곽민준 <gwak0214@naver.com>
+CommitDate: Thu Aug 13 13:52:14 2026 +0900
+
+    refactor(dance): 멤버 매칭 임계값을 DanceConfig로 노출
+    
+    실영상 로그를 보고 코드 수정 없이 조정할 수 있게 한다.
+    
+    Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>

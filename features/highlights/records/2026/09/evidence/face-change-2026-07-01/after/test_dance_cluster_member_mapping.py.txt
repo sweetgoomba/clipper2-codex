@@ -1,0 +1,30 @@
+from __future__ import annotations
+
+import math
+
+import numpy as np
+
+from dance_highlight.services.pipeline import DancePipeline
+
+
+def _unit(dot_a: float, dot_b: float) -> np.ndarray:
+    rest = math.sqrt(max(0.0, 1.0 - dot_a * dot_a - dot_b * dot_b))
+    return np.array([dot_a, dot_b, rest], dtype=np.float32)
+
+
+def test_cluster_mapping_assigns_distinct_members_before_duplicate_matches() -> None:
+    pipeline = DancePipeline.__new__(DancePipeline)
+
+    mapping = pipeline._map_cluster_to_member_name(
+        cluster_centroids={
+            1: _unit(0.70, 0.52),
+            2: _unit(0.68, 0.51),
+        },
+        ref_embs={
+            "A": np.array([1.0, 0.0, 0.0], dtype=np.float32),
+            "B": np.array([0.0, 1.0, 0.0], dtype=np.float32),
+        },
+        threshold=0.60,
+    )
+
+    assert mapping == {1: "A", 2: "B"}

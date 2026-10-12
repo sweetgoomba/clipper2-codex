@@ -1,0 +1,160 @@
+# User-approved scoped MoveNet metadata run completed on 2026-10-01; this manifest cannot start another run.
+schema: w13_pose_candidate_comparison_v1
+status: completed_scoped_metadata_run
+candidate:
+  name: google_movenet_multipose_lightning
+  format_proposed: tensorflow2_saved_model
+  variation_version: 1
+  official_url: https://www.kaggle.com/models/google/movenet/tensorFlow2/multipose-lightning/1
+  declared_weight_license: Apache-2.0
+  license_checked_date: 2026-10-01
+  model_revision: google/movenet/tensorFlow2/multipose-lightning/1
+  artifact_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/model-assets/google-movenet-multipose-lightning-v1/model
+  artifact_sha256: ea71312368f39053ed7b9b2e4fac3bcecd94c667f679830a0a999b31ccaf705c # sha256_tree of extracted SavedModel
+  archive_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/model-assets/google-movenet-multipose-lightning-v1/archive.tar.gz
+  archive_sha256: f01b9e5e8c3bc31f82e9ca7fa4a2876f25d7a54b65c83da5df2eca3e1632cec8
+  archive_bytes: 18612451
+  acquired_date: 2026-10-01
+  download_approved: true # scoped file acquisition completed before the separate inference approval
+  min_person_score_proposed: 0.25
+  min_person_score: 0.25
+input:
+  path: '/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4'
+  sha256: 7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4
+  interval_ms: [0, 133654.059]
+  selected_by_user: true
+reference_images: [] # pose/main comparison; identity is a separate experiment
+labels:
+  frozen_main_and_person_instances_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-pose-scoring-labels-v1.json
+  frozen_sha256: c76866b1962279b6320e0222dc47e4056d950e3068590df1902c078ebebad704
+  frozen_scope: four_audited_main_anchor_frames_45_person_boxes_on_nine_frames_two_empty_frames_five_solo_reference_windows
+  fully_labeled_video: false
+  scoring_policy_path: .codex/features/highlights/records/2026/10/01-w13-pose-scoring-policy-v1.md
+  scoring_policy_sha256: 469b7a7d174b84cdf4da04719634bb6d7fda6773abb65f86b059f93a76672604
+  independent_label_audit_path: .codex/features/highlights/records/2026/10/01-w13-independent-label-audit.md
+  independent_label_audit_sha256: 8927ecdea5351031c7e9d313f3ab6667d9cd848081fde7dbd6409e1f02221a04
+  existing_draft_path: .codex/features/highlights/records/2026/10/01-w13-full-source-label-draft.json
+  existing_draft_sha256: 3e27285b7e43625c6681d50bd0e2f1c7afa372b44aaa6c32dd24678aabafd00b
+  existing_draft_is_scoring_ground_truth: false
+  anonymous_review_draft_path: .codex/features/highlights/records/2026/10/01-w13-anonymous-main-review.json
+  anonymous_review_draft_sha256: ae1fb3033e6f6f7db70eb09d42ca7071b0628ba5141b2d27d7e8b66df2920da3
+  anonymous_review_draft_is_scoring_ground_truth: false
+  source_frame_observations_draft_path: .codex/features/highlights/records/2026/10/01-w13-source-frame-observations.json
+  source_frame_observations_draft_sha256: 6fc58419ab1c7395bd95f130584f7709641bd7966d3252e60f1ed360925ec19c
+  source_frame_observations_draft_is_scoring_ground_truth: false
+  source_only_second_review_path: .codex/features/highlights/records/2026/10/01-w13-source-only-second-review.md
+  source_only_second_review_sha256: e9798ed7155b11764170b5cdd1fe42b1573818e8b27fd7f2c0aa2245099e7c73
+  source_only_second_review_is_scoring_ground_truth: false
+  dense_source_review_path: .codex/features/highlights/records/2026/10/01-w13-dense-source-review.md
+  dense_source_review_sha256: c7956657f2dd00c8718e6f19430daf9750f95fa6b8e997c5da71aa35e8d12cae
+  dense_source_review_is_scoring_ground_truth: false
+comparison:
+  changed_variable_only: pose_observation_model
+  baseline: existing_app_artifact_only
+  baseline_new_yolo_runs: 0
+  controlled_head_to_head_with_yolo_possible_now: false
+  candidate_new_runs_proposed_max: 3
+  candidate_new_runs: 3
+  candidate_new_runs_approved: true # user reply "해" after the one-page full-video/limits request
+  metadata_only: true
+  clip_export: false
+  face_inference: false
+  metrics: [sampled_person_detection_count_by_visibility, sampled_unmatched_prediction_count, four_anchor_main_match_count, raw_main_group_candidate_coverage, wall_time, peak_rss, errors]
+  metrics_not_scored: [full_video_main_accuracy, eighteen_second_framewise_main_accuracy, p5_main_accuracy, switch_delay_point_estimate, group_main_set_precision_recall, identity_precision]
+  identity_metrics_in_scope: false
+execution:
+  repository_head: 47782953228861f4bdbdc135265d067c2a826b0e
+  implementation_worktree: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python
+  pose_adapter_contract_tested_with_fake_output: true
+  pose_only_evaluation_entrypoint_tested_with_fake_frames: true
+  saved_model_signature_load_verified: true # load preflight; signature invocation occurred in the three approved passes
+  saved_model_signature_name: serving_default
+  saved_model_input: {name: input, dtype: int32, shape: [1, null, null, 3]}
+  saved_model_output: {name: output_0, dtype: float32, shape: [1, 6, 56]}
+  real_model_integration_verified: true # three full-source metadata-only passes; no app integration
+  video_inference_executed: true
+  executed_runs: 3
+  resource_limit_runner_ready: true # tested with fixture workers before approved real model execution
+  runner_path: .worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_movenet_runner.py
+  exact_code_fingerprint: 333b11306a8edea2a0339d91b26da2e0ef1b6f76d6be49ed8582a255ae7df2b1
+  code_fingerprint_observed_draft: 333b11306a8edea2a0339d91b26da2e0ef1b6f76d6be49ed8582a255ae7df2b1
+  os: macOS 27.0 (26A428)
+  os_fingerprint_observed: macOS-27.0-arm64-arm-64bit
+  os_fingerprint: macOS-27.0-arm64-arm-64bit
+  hardware: Mac mini M4, 24 GB RAM, 10-core GPU
+  python_version_observed: 3.11.12
+  python_version: 3.11.12
+  device_proposed: cpu
+  device: cpu
+  analyze_skip_proposed: 4
+  analyze_skip: 4
+  runtime_lock:
+    absl-py: 2.5.0
+    astunparse: 1.6.3
+    certifi: 2026.7.22
+    charset-normalizer: 3.5.2
+    flatbuffers: 25.12.19
+    gast: 0.7.0
+    google-pasta: 0.2.0
+    grpcio: 1.84.0
+    h5py: 3.14.0
+    idna: '3.20'
+    keras: 3.15.1
+    libclang: 18.1.1
+    markdown-it-py: 4.2.0
+    mdurl: 0.1.2
+    ml_dtypes: 0.6.0
+    namex: 0.1.0
+    numpy: 2.4.4
+    opencv-python: 4.13.0.92
+    opt_einsum: 3.4.0
+    optree: 0.20.0
+    packaging: '26.3'
+    pip: 25.0.1
+    protobuf: 7.36.2
+    psutil: 7.2.2
+    Pygments: 2.21.0
+    PyYAML: 6.0.3
+    requests: 2.33.1
+    rich: 15.0.0
+    setuptools: 78.1.0
+    six: 1.17.0
+    tensorflow: 2.21.0
+    termcolor: 3.3.0
+    typing_extensions: 4.16.0
+    urllib3: 2.8.0
+    wheel: 0.48.0
+    wrapt: 2.5.0
+  runtime_lock_required_packages: [tensorflow, numpy, opencv-python, psutil, PyYAML, requests]
+  tensorflow_wheel_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/runtime-wheels/tensorflow-2.21.0-cp311-cp311-macosx_12_0_arm64.whl
+  tensorflow_wheel_sha256: 51f46f4806139d01fc7920cc72a4c75876f80649bf40ff083ab6212ceb43ca88
+  tensorflow_wheel_bytes: 223405849
+  isolated_venv_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/.venv
+  offline_for_video_inference_proposed: true
+  per_run_wall_time_limit_sec_proposed: 600
+  per_run_wall_time_limit_sec: 600
+  overall_wall_time_limit_sec_proposed: 1800
+  overall_wall_time_limit_sec: 1800
+  worker_peak_rss_limit_mb_proposed: 12288 # direct worker PID; TensorFlow threads share this process
+  worker_peak_rss_limit_mb: 12288
+  metadata_total_limit_mb_proposed: 250
+  metadata_total_limit_mb: 250
+  limits_enforced_by_runner: true # tested with synthetic worker processes
+output:
+  proposed_directory: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-v1
+  directory_approved: true # same user scope approval; isolated worktree output only
+  keep_existing_app_project_read_only: true
+results:
+  summary_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-v1/summary.json
+  summary_sha256: 5dc8641377eebd2bd37088c1c9d007164811284fe26e42134baf1775990dff2a
+  pose_sha256_all_three_runs: fcc077e5826a9ea8e729a7b8fa39b70f099121485bb0fd584529e7ba7a1260d3
+  score_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-v1/score-v1.json
+  score_sha256: 376f169b94a92977379fd4349b24a85863d75894079f5213e7d81c30be052239
+  scorer_path: .worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_score_pose_metadata.py
+  scorer_sha256: bde0cfae091e2b03592ca336634467521e9385b72f053fd2043a0f4826a43363
+  face_inference_executed: false
+  clip_export_executed: false
+  product_model_changed: false
+  interpretation_path: .codex/features/highlights/records/2026/10/01-w13-movenet-first-real-metadata-evaluation.md
+future_ml_gate:
+  - new_manifest_new_empty_output_directory_and_user_selected_scope_required

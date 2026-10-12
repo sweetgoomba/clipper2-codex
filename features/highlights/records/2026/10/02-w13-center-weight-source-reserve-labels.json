@@ -1,0 +1,32 @@
+{
+  "schema": "w13_center_weight_source_reserve_labels_v1",
+  "status": "source_only_labels_frozen_before_pose_comparison_at_these_indices",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "plan_sha256": "65a6560f9255a52a5e6703c3f74dfa502277ec70e0670f84b2d2ff6317d6fddd",
+  "audit": "One reviewer aware of earlier windows inspected only original-frame contact sheets /private/tmp/w13-center-reserve-20261002/sheet-1.jpg through sheet-4.jpg. Torso points are approximate from one-third-width source frames. This is same-video exploratory validation, not a blind or whole-video accuracy estimate. Group and transition frames are not forced to a single main.",
+  "point_score_rule": "At each strict_solo frame, the selected main bounding box must contain the source-marked approximate lead torso point. Report raw person detection separately. Exact-index near-neighbors of older samples remain correlated.",
+  "strict_solo": [
+    {"frame_index": 1020, "main_id": "P1", "torso_xy_px": [945, 615]},
+    {"frame_index": 1084, "main_id": "P1", "torso_xy_px": [930, 606]},
+    {"frame_index": 1108, "main_id": "P1", "torso_xy_px": [855, 560]},
+    {"frame_index": 1164, "main_id": "P1", "torso_xy_px": [840, 570]},
+    {"frame_index": 1324, "main_id": "P2", "torso_xy_px": [666, 590]},
+    {"frame_index": 1448, "main_id": "P2", "torso_xy_px": [750, 590]},
+    {"frame_index": 1540, "main_id": "P2", "torso_xy_px": [690, 610]},
+    {"frame_index": 1576, "main_id": "P2", "torso_xy_px": [690, 610]},
+    {"frame_index": 1776, "main_id": "P3", "torso_xy_px": [870, 670]},
+    {"frame_index": 1808, "main_id": "P3", "torso_xy_px": [850, 625]},
+    {"frame_index": 1904, "main_id": "P3", "torso_xy_px": [975, 615]},
+    {"frame_index": 1956, "main_id": "P3", "torso_xy_px": [780, 620]},
+    {"frame_index": 3212, "main_id": "P4", "torso_xy_px": [300, 590]},
+    {"frame_index": 3256, "main_id": "P4", "torso_xy_px": [260, 590]},
+    {"frame_index": 3336, "main_id": "P4", "torso_xy_px": [410, 750]},
+    {"frame_index": 3404, "main_id": "P4", "torso_xy_px": [365, 640]},
+    {"frame_index": 3540, "main_id": "P5", "torso_xy_px": [690, 590]},
+    {"frame_index": 3588, "main_id": "P5", "torso_xy_px": [585, 575]},
+    {"frame_index": 3636, "main_id": "P5", "torso_xy_px": [705, 575]},
+    {"frame_index": 3696, "main_id": "P5", "torso_xy_px": [690, 590]}
+  ],
+  "group_not_solo": [2540, 2628, 2712, 2860],
+  "transition_not_scored_as_exclusive_main": [5992, 6028, 6120, 6204]
+}

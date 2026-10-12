@@ -1,0 +1,246 @@
+{
+  "schema": "w13_saved_pose_followup_probe_v1",
+  "scope": "exploratory same-video follow-up, single reviewer, approximate GT boxes; no new inference",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "plan_sha256": "fb22571e81485ed10ec43ad3e8334b88d7006b8fbe408fe49ee5b3e558323cc9",
+  "labels_sha256": "7b7e526f0006ef704d17440be0b9abea34b225f25ea20097373940726c05f297",
+  "pose_sha256": "fcc077e5826a9ea8e729a7b8fa39b70f099121485bb0fd584529e7ba7a1260d3",
+  "metric": "selected or motion winner bbox IoU >= .30 with approximate source-only bbox",
+  "summary": {
+    "all_solo": 17,
+    "all_target_detected": 15,
+    "all_current_correct": 7,
+    "all_motion_correct": 10,
+    "nonoverlap_solo": 14,
+    "nonoverlap_current_correct": 6,
+    "nonoverlap_motion_correct": 9,
+    "group": 4,
+    "group_flag_true": 4,
+    "nonoverlap_group": 2,
+    "nonoverlap_group_flag_true": 2
+  },
+  "rows": [
+    {
+      "frame_index": 1060,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": false,
+      "person_count": 3,
+      "main_id": "P1",
+      "target_detected": false,
+      "current_correct": false,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 1120,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": false,
+      "person_count": 4,
+      "main_id": "P1",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1176,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": false,
+      "person_count": 3,
+      "main_id": "P1",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1376,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": true,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P2",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 1436,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 3,
+      "main_id": "P2",
+      "target_detected": false,
+      "current_correct": false,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 1496,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P2",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1556,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P2",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 1616,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P2",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1796,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 5,
+      "main_id": "P3",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1856,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": true,
+      "group_flag": true,
+      "person_count": 5,
+      "main_id": "P3",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 1916,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 5,
+      "main_id": "P3",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 1976,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 3,
+      "main_id": "P3",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 2616,
+      "stratum": "group_not_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 2
+    },
+    {
+      "frame_index": 2704,
+      "stratum": "group_not_solo",
+      "prior_exact_overlap": true,
+      "group_flag": true,
+      "person_count": 3
+    },
+    {
+      "frame_index": 2796,
+      "stratum": "group_not_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 3
+    },
+    {
+      "frame_index": 2876,
+      "stratum": "group_not_solo",
+      "prior_exact_overlap": true,
+      "group_flag": true,
+      "person_count": 3
+    },
+    {
+      "frame_index": 3296,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P4",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 3356,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": true,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P4",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 3416,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 4,
+      "main_id": "P4",
+      "target_detected": true,
+      "current_correct": false,
+      "motion_correct": true
+    },
+    {
+      "frame_index": 3596,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 3,
+      "main_id": "P5",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 3676,
+      "stratum": "strict_solo",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 2,
+      "main_id": "P5",
+      "target_detected": true,
+      "current_correct": true,
+      "motion_correct": false
+    },
+    {
+      "frame_index": 3716,
+      "stratum": "uncertain_transition",
+      "prior_exact_overlap": false,
+      "group_flag": true,
+      "person_count": 2
+    }
+  ]
+}

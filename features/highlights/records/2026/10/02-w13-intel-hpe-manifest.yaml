@@ -1,0 +1,66 @@
+# Intel candidate deferred: current evidence points first to main selection after person detection.
+# No model/runtime bytes have been fetched and no inference is authorized.
+schema: w13_pose_candidate_comparison_v1
+status: deferred_pending_main_selection_diagnosis
+candidate:
+  name: intel_human_pose_estimation_0007_fp32
+  format: openvino_ir_fp32
+  declared_weight_license: Apache-2.0
+  official_model_yml: https://raw.githubusercontent.com/openvinotoolkit/open_model_zoo/master/models/intel/human-pose-estimation-0007/model.yml
+  model_dir: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/model-assets/intel-human-pose-estimation-0007-fp32/model
+  xml_source: https://storage.openvinotoolkit.org/repositories/open_model_zoo/2023.0/models_bin/1/human-pose-estimation-0007/FP32/human-pose-estimation-0007.xml
+  xml_sha384: 52b32d13c47ce42db642283128b439ee9eadcc68c8bd32e8edcc574c849b3cde702cf0ee033378b37dd9671e236842ff
+  bin_source: https://storage.openvinotoolkit.org/repositories/open_model_zoo/2023.0/models_bin/1/human-pose-estimation-0007/FP32/human-pose-estimation-0007.bin
+  bin_sha384: 5711b763909990db35f20ce3dc82710001d030ea600ae81b8187d908d9f751ded6dd9bdbbdc2182225dc79cac92ffb1d
+  decoder_source_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/model-assets/intel-human-pose-estimation-0007-fp32/model-api
+  decoder_source_sha256: null # fill from the exact official source copy after approved acquisition
+  min_person_score: 0.25
+acquisition:
+  approved: false
+  max_new_download_mb: 250
+  external_cost_approved: false
+input:
+  path: '/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4'
+  sha256: 7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4
+  interval_ms: [0, 133654.059]
+reference_images: []
+labels:
+  person_instances_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-pose-scoring-labels-v1.json
+  person_instances_sha256: c76866b1962279b6320e0222dc47e4056d950e3068590df1902c078ebebad704
+  holdout_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-holdout-source-labels-v1.json
+  holdout_sha256: 9eb66dda4c59ca7434e04145b8b6ebfb10afc18313b116783fa5cab443155f2d
+  followup_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/02-w13-followup-source-labels.json
+  followup_sha256: 7b7e526f0006ef704d17440be0b9abea34b225f25ea20097373940726c05f297
+  motion_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-motion-probe-source-labels-v1.json
+  motion_sha256: d364e461c93f2e18d5243662a30a9886b5559952bd6774648e44ea46f06490b4
+  reserve_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/02-w13-center-weight-source-reserve-labels.json
+  reserve_sha256: 42369380a9d37cf787b70155535313041dd85cdee868c127cb7f820a7c1bb5fe
+comparison:
+  changed_variable_only: pose_model_movenet512_to_intel_hpe0007 # selection/tracker/UX fixed at existing code
+  baseline: saved_movenet_512_pose_metadata
+  baseline_pose_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-512-v1/run-01/pose.json
+  baseline_pose_sha256: 369e2fea3f04bee0a1158aa47d7988bb7f9a4b3cd95a9fe4e12eb5fd61a908d0
+  baseline_new_yolo_runs: 0
+  candidate_new_runs: 1
+  candidate_new_runs_approved: false
+  metadata_only: true
+  clip_export: false
+  face_inference: false
+  metrics: [person_detection_on_frozen_frames, selected_main_match_on_strict_solo_frames, group_false_solo_on_group_frames, raw_group_duration, main_continuity_proxy, wall_time, peak_rss, errors]
+  identity_metrics_in_scope: false
+execution:
+  exact_code_fingerprint: 394dee5dd350aebbf638fc4c17f0a74017d8395a3286777555b1133d0df885ff
+  os_fingerprint: macOS-27.0-arm64-arm-64bit
+  hardware: Mac mini M4, 24 GB RAM
+  python_version: 3.11.12
+  device: cpu
+  analyze_skip: 4
+  runtime_lock: {} # fill after approved installation, before execution confirmation
+  per_run_wall_time_limit_sec: 1200
+  overall_wall_time_limit_sec: 1200
+  worker_peak_rss_limit_mb: 12288
+  metadata_total_limit_mb: 250
+output:
+  proposed_directory: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/intel-hpe0007-fp32-v1
+  directory_approved: false
+  keep_existing_app_project_read_only: true

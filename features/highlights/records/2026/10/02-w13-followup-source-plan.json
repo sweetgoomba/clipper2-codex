@@ -1,0 +1,42 @@
+{
+  "schema": "w13_source_only_followup_plan_v1",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "fps": "60000/1001",
+  "selection": "manual alternate source frame indexes in known solo/group windows; overlap with prior scoring sets audited after source labels were frozen; this is exploratory within-video follow-up, not a blind holdout",
+  "windows": {
+    "P1": [
+      1060,
+      1120,
+      1176
+    ],
+    "P2": [
+      1376,
+      1436,
+      1496,
+      1556,
+      1616
+    ],
+    "P3": [
+      1796,
+      1856,
+      1916,
+      1976
+    ],
+    "P4": [
+      3296,
+      3356,
+      3416
+    ],
+    "P5": [
+      3596,
+      3676,
+      3716
+    ],
+    "group": [
+      2616,
+      2704,
+      2796,
+      2876
+    ]
+  }
+}

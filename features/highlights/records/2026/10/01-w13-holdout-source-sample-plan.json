@@ -1,0 +1,25 @@
+{
+  "schema": "w13_source_only_holdout_sample_plan_v1",
+  "status": "pre_registered_before_new_pose_comparison",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_fps": "60000/1001",
+  "sampled_pose_frame_modulus": 4,
+  "solo_reference_frame_indices": [1032, 1092, 1152, 1348, 1408, 1468, 1528, 1588, 1768, 1828, 1888, 1948, 3268, 3328, 3388, 3568, 3628, 3656],
+  "group_review_frame_indices": [2576, 2668, 2756, 2848],
+  "fast_handoff_review_frame_indices": [5948, 6008, 6084, 6160, 6220],
+  "sampling_rule": "preselected at spaced source times inside previously source-audited solo windows, plus four group-feature and five fast-handoff frames; snap to nearest multiple-of-four source frame; no frame added or removed after reading model outcomes",
+  "reviewer_input": "original video frames only, anonymous P1-P5 visual identity, no app/MoveNet outputs",
+  "annotation_rule": "record confidently visible solo main ID and approximate full-person pixel xyxy box; if group, possible joint, severe occlusion, or uncertainty, preserve review state and do not force a solo score",
+  "scoring_rule": "IoU >= 0.30 matches the independently labeled main person; report detection, selected main, static score rank separately; no full-video accuracy estimate",
+  "planned_offline_conditions": [
+    "exact current selector replay",
+    "only switch streak counts converted from source-fps units to analyzed-frame units",
+    "only static same-frame pose-energy coefficient set to zero"
+  ],
+  "continuity_guard": "report count of adjacent selected boxes with IoU < 0.1 in the original visible performance window 6.0-112.5 seconds, separately from label accuracy",
+  "joint_main_score_allowed": false,
+  "switch_delay_point_estimate_allowed": false,
+  "product_code_change_allowed": false,
+  "new_model_inference_allowed": false
+}

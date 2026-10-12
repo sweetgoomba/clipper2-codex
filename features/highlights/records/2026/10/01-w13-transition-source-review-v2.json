@@ -1,0 +1,69 @@
+{
+  "schema": "w13_transition_source_review_v2",
+  "status": "provisional_source_review_after_pose_result_exposure_not_scoring_ground_truth",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "prior_blind_scoring_label_path": ".codex/features/highlights/records/2026/10/01-w13-pose-scoring-labels-v1.json",
+  "prior_blind_scoring_label_sha256": "c76866b1962279b6320e0222dc47e4056d950e3068590df1902c078ebebad704",
+  "prior_blind_scoring_label_unchanged": true,
+  "review_method": {
+    "input": "original video frames without model overlays or app decisions",
+    "sampling": "every sixth source frame within focused windows; 60000/1001 fps, approximately 0.1001 second spacing",
+    "exact_anchor_frames": [1320, 1740, 3356],
+    "model_result_previously_seen_by_reviewer": true,
+    "independent_second_audit_for_new_boundaries": false,
+    "full_frame_by_frame_60fps_review": false,
+    "sheet_directory": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/label-samples/yFTAYXDTjqI/transition_review"
+  },
+  "person_ids": {
+    "P1": "first previously audited solo person",
+    "P2": "second previously audited solo person",
+    "P3": "third previously audited solo person",
+    "P4": "fourth previously audited solo person",
+    "P5": "fifth previously audited solo person"
+  },
+  "interval_semantics": "source-relative seconds; start inclusive and end exclusive; null main_ids means unresolved and retained, not no person",
+  "windows": [
+    {
+      "source_interval_sec": [20.0, 23.5],
+      "sheet_files": ["w22_01.jpg", "w22_02.jpg", "anchor_01.jpg"],
+      "visual_observation": "P1 moves away and turns from the audience while P2 advances and faces forward; all five remain on screen.",
+      "transition_review_band_sec": [20.5, 22.0],
+      "new_lead_clearly_present_at_sec": 22.022,
+      "intervals": [
+        {"start_sec": 20.0, "end_sec": 20.5, "main_ids": null, "possible_ids": ["P1"], "state": "solo_tail_review"},
+        {"start_sec": 20.5, "end_sec": 22.0, "main_ids": null, "possible_ids": ["P1", "P2"], "state": "handoff_review_no_confirmed_co_main"},
+        {"start_sec": 22.0, "end_sec": 23.5, "main_ids": ["P2"], "possible_ids": ["P2"], "state": "prior_blind_v1_solo_window_supported_by_new_source_review"}
+      ]
+    },
+    {
+      "source_interval_sec": [26.5, 31.0],
+      "sheet_files": ["w28pre_01.jpg", "w29_01.jpg", "w29_02.jpg", "anchor_02.jpg"],
+      "visual_observation": "P2 finishes the forward sequence; P3 moves out from behind and is forward facing by the audited 29.029-second frame.",
+      "transition_review_band_sec": [27.0, 29.0],
+      "new_lead_clearly_present_at_sec": 29.029,
+      "intervals": [
+        {"start_sec": 26.5, "end_sec": 27.0, "main_ids": ["P2"], "possible_ids": ["P2"], "state": "prior_blind_v1_solo_window"},
+        {"start_sec": 27.0, "end_sec": 29.0, "main_ids": null, "possible_ids": ["P2", "P3"], "state": "handoff_review_no_confirmed_co_main"},
+        {"start_sec": 29.0, "end_sec": 31.0, "main_ids": ["P3"], "possible_ids": ["P3"], "state": "prior_blind_v1_solo_window_supported_by_new_source_review"}
+      ]
+    },
+    {
+      "source_interval_sec": [51.5, 59.5],
+      "sheet_files": ["w56pre_01.jpg", "w56_01.jpg", "w56_02.jpg", "w56post_01.jpg", "anchor_03.jpg"],
+      "visual_observation": "P4 waits on the left, then steps into a distinct low solo while the others largely hold their places; P5 advances after it.",
+      "transition_review_band_sec": [52.8, 54.0],
+      "new_lead_clearly_present_at_sec": 54.054,
+      "intervals": [
+        {"start_sec": 51.5, "end_sec": 54.0, "main_ids": null, "possible_ids": null, "state": "group_to_P4_handoff_review"},
+        {"start_sec": 54.0, "end_sec": 57.0, "main_ids": ["P4"], "possible_ids": ["P4"], "state": "prior_blind_v1_solo_window_supported_by_new_source_review"},
+        {"start_sec": 57.0, "end_sec": 59.0, "main_ids": null, "possible_ids": ["P4", "P5"], "state": "handoff_review_no_confirmed_co_main"},
+        {"start_sec": 59.0, "end_sec": 59.5, "main_ids": ["P5"], "possible_ids": ["P5"], "state": "prior_blind_v1_solo_window"}
+      ]
+    }
+  ],
+  "new_scoring_ground_truth_created": false,
+  "confirmed_joint_main_intervals_created": false,
+  "switch_delay_point_estimate_allowed": false
+}

@@ -1,0 +1,141 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+import hashlib
+import json
+import os
+from pathlib import Path
+from typing import Callable, Iterable
+import urllib.request
+
+
+ProgressCallback = Callable[[str, float], None]
+DownloadProgressCallback = Callable[[float], None]
+Downloader = Callable[[str, Path, DownloadProgressCallback], None]
+
+
+@dataclass(frozen=True)
+class FaceModelSpec:
+    name: str
+    filename: str
+    url: str
+    sha256: str
+    size: int
+
+
+FACE_MODEL_SPECS: tuple[FaceModelSpec, ...] = (
+    FaceModelSpec(
+        name="opencv-yunet-face-detection",
+        filename="face_detection_yunet_2023mar.onnx",
+        url=(
+            "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/"
+            "models/face_detection_yunet/face_detection_yunet_2023mar.onnx"
+        ),
+        sha256="8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+        size=232589,
+    ),
+    FaceModelSpec(
+        name="opencv-sface-face-recognition",
+        filename="face_recognition_sface_2021dec.onnx",
+        url=(
+            "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/"
+            "models/face_recognition_sface/face_recognition_sface_2021dec.onnx"
+        ),
+        sha256="0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+        size=38696353,
+    ),
+)
+
+
+def get_face_model_dir() -> Path:
+    override = os.environ.get("CLIPPER_DANCE_FACE_MODEL_DIR")
+    if override:
+        return Path(override)
+    return Path.cwd() / "plugin_models" / "dance_highlight"
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def is_model_file_valid(path: Path, spec: FaceModelSpec) -> bool:
+    try:
+        if path.stat().st_size != spec.size:
+            return False
+        return sha256_file(path) == spec.sha256
+    except OSError:
+        return False
+
+
+def print_download_progress(model_name: str, pct: float) -> None:
+    print(
+        json.dumps(
+            {
+                "type": "download_progress",
+                "model_name": model_name,
+                "pct": max(0.0, min(1.0, float(pct))),
+            },
+            ensure_ascii=False,
+        ),
+        flush=True,
+    )
+
+
+def ensure_face_models(
+    model_dir: Path | None = None,
+    specs: Iterable[FaceModelSpec] = FACE_MODEL_SPECS,
+    downloader: Downloader | None = None,
+    progress_cb: ProgressCallback | None = print_download_progress,
+) -> dict[str, Path]:
+    target_dir = model_dir or get_face_model_dir()
+    target_dir.mkdir(parents=True, exist_ok=True)
+    download = downloader or download_url
+    paths: dict[str, Path] = {}
+
+    for spec in specs:
+        target = target_dir / spec.filename
+        paths[spec.name] = target
+        if is_model_file_valid(target, spec):
+            continue
+
+        tmp = target.with_name(f"{target.name}.tmp")
+        if tmp.exists():
+            tmp.unlink()
+
+        def on_progress(pct: float, model_name: str = spec.name) -> None:
+            if progress_cb:
+                progress_cb(model_name, pct)
+
+        download(spec.url, tmp, on_progress)
+        if not is_model_file_valid(tmp, spec):
+            try:
+                actual_size = tmp.stat().st_size
+            except OSError:
+                actual_size = -1
+            raise RuntimeError(
+                f"Downloaded face model failed verification: {spec.name} "
+                f"size={actual_size} sha256={sha256_file(tmp) if tmp.exists() else 'missing'}"
+            )
+        tmp.replace(target)
+
+    return paths
+
+
+def download_url(url: str, target: Path, progress_cb: DownloadProgressCallback) -> None:
+    with urllib.request.urlopen(url, timeout=120) as resp:
+        total = int(resp.headers.get("Content-Length") or "0")
+        done = 0
+        with target.open("wb") as f:
+            while True:
+                chunk = resp.read(1024 * 1024)
+                if not chunk:
+                    break
+                f.write(chunk)
+                done += len(chunk)
+                if total > 0:
+                    progress_cb(done / total)
+        progress_cb(1.0)

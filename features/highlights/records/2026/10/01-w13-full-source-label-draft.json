@@ -1,0 +1,59 @@
+{
+  "schema": "w13_full_source_human_review_draft_v1",
+  "status": "visual_screening_only_not_frozen_ground_truth",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_duration_sec_ffprobe": 133.654059,
+  "sampling": {
+    "method": "ffmpeg fps=2 contact sheets at 0.0-133.0 seconds (267 frames) plus fps=4 focused stills at 15.0-38.75 and 50.0-65.75 seconds",
+    "frame_spacing_sec": 0.5,
+    "contact_sheet_directory": "w13-yFTAYXDTjqI-contact-sheets",
+    "focused_frame_spacing_sec": 0.25,
+    "focused_sheet_directory": "w13-yFTAYXDTjqI-focused-sheets",
+    "boundary_uncertainty_sec_at_least": 0.5,
+    "focused_boundary_uncertainty_sec_at_least": 0.25,
+    "audio_reviewed": false,
+    "continuous_video_reviewed": false
+  },
+  "label_rules": {
+    "performance_visible": "People or a performance pose are visible, including entrance and final pose; this is not the dance-active accuracy denominator.",
+    "dance_active_provisional": "true, false, or null when still images do not settle the question.",
+    "lead_mode_provisional": "none, solo_candidate, group_or_joint_review, or transition_review; no mode is frozen ground truth.",
+    "main_track_ids": "null until frame-level person continuity and boxes are independently reviewed.",
+    "visual_anchor_ids": "V1-V5 are anonymous on-stage visual references, not member names, face identity, or confirmed track IDs.",
+    "group_and_main_can_coexist": true,
+    "uncertain_performance_is_reviewable": true
+  },
+  "visual_anchors": [
+    {"id": "V1", "anchor_sec": 18.0, "description": "front solo candidate in the first clear solo turn"},
+    {"id": "V2", "anchor_sec": 24.0, "description": "front solo candidate in the next turn"},
+    {"id": "V3", "anchor_sec": 31.0, "description": "front solo candidate in the following turn"},
+    {"id": "V4", "anchor_sec": 55.0, "description": "left/front low-pose candidate"},
+    {"id": "V5", "anchor_sec": 60.5, "description": "front/crossing candidate after V4"}
+  ],
+  "intervals": [
+    {"start_sec": 0.0, "end_sec": 5.5, "performance_visible": false, "dance_active_provisional": false, "lead_mode_provisional": "none", "provisional_main_visual_ids": [], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "empty stage; first entrance boundary is between sampled frames", "sheets": [1]},
+    {"start_sec": 5.5, "end_sec": 15.5, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "entrance and crossing; stills do not establish a sustained lead", "sheets": [1, 2]},
+    {"start_sec": 15.5, "end_sec": 20.5, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "solo_candidate", "provisional_main_visual_ids": ["V1"], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "V1 moves forward while the others mostly hold formation; candidate boundary refined with 4fps stills", "sheets": [2, 3], "focused_sheets": ["a_sheet_01.jpg", "a_sheet_02.jpg"]},
+    {"start_sec": 20.5, "end_sec": 21.25, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": ["V1", "V2"], "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "V1 exits focus and V2 comes forward within the existing output gap", "sheets": [3], "focused_sheets": ["a_sheet_02.jpg"]},
+    {"start_sec": 21.25, "end_sec": 27.5, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "solo_candidate", "provisional_main_visual_ids": ["V2"], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "V2 steps forward while others mostly hold formation; existing output changes to group at 23.357 seconds", "sheets": [3, 4], "focused_sheets": ["a_sheet_02.jpg", "a_sheet_03.jpg", "a_sheet_04.jpg"]},
+    {"start_sec": 27.5, "end_sec": 28.5, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": ["V2", "V3"], "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "V2-to-V3 lead handoff candidate", "sheets": [4], "focused_sheets": ["a_sheet_04.jpg"]},
+    {"start_sec": 28.5, "end_sec": 33.5, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "solo_candidate", "provisional_main_visual_ids": ["V3"], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "V3 moves at front; existing output is group until 33.433 seconds then absent", "sheets": [4, 5], "focused_sheets": ["a_sheet_04.jpg", "a_sheet_05.jpg"]},
+    {"start_sec": 33.5, "end_sec": 35.0, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "V3-to-group formation change crosses existing output gap", "sheets": [5], "focused_sheets": ["a_sheet_05.jpg", "a_sheet_06.jpg"]},
+    {"start_sec": 35.0, "end_sec": 52.0, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "group_or_joint_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": true, "review_required": true, "reason": "synchronized choreography and formation changes; decide any co-main set during continuous review", "sheets": [5, 6, 7]},
+    {"start_sec": 52.0, "end_sec": 53.5, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": ["V4"], "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "formation shifts toward the left/front V4 turn", "sheets": [7], "focused_sheets": ["b_sheet_01.jpg"]},
+    {"start_sec": 53.5, "end_sec": 57.5, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "solo_candidate", "provisional_main_visual_ids": ["V4"], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "V4 is the only person doing a sustained front/low-pose phrase while others mostly hold", "sheets": [7, 8], "focused_sheets": ["b_sheet_01.jpg", "b_sheet_02.jpg"]},
+    {"start_sec": 57.5, "end_sec": 58.5, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": ["V4", "V5"], "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "V4-to-V5 lead handoff candidate", "sheets": [8], "focused_sheets": ["b_sheet_02.jpg", "b_sheet_03.jpg"]},
+    {"start_sec": 58.5, "end_sec": 61.75, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "solo_candidate", "provisional_main_visual_ids": ["V5"], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "V5 moves to the front and crosses while others mostly hold; precise end unverified", "sheets": [8], "focused_sheets": ["b_sheet_03.jpg"]},
+    {"start_sec": 61.75, "end_sec": 62.5, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "transition_review", "provisional_main_visual_ids": ["V5"], "main_track_ids": null, "group_provisional": null, "review_required": true, "reason": "V5 returns to group formation", "sheets": [8], "focused_sheets": ["b_sheet_03.jpg", "b_sheet_04.jpg"]},
+    {"start_sec": 62.5, "end_sec": 80.0, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "group_or_joint_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": true, "review_required": true, "reason": "synchronized choreography with crossing; do not force a single center person", "sheets": [8, 9, 10]},
+    {"start_sec": 80.0, "end_sec": 96.0, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "group_or_joint_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": true, "review_required": true, "reason": "group choreography and formation changes; person-level leads require continuous review", "sheets": [11, 12]},
+    {"start_sec": 96.0, "end_sec": 105.0, "performance_visible": true, "dance_active_provisional": true, "lead_mode_provisional": "group_or_joint_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": true, "review_required": true, "reason": "group movement and crossing; possible joint lead remains unresolved", "sheets": [13, 14]},
+    {"start_sec": 105.0, "end_sec": 113.0, "performance_visible": true, "dance_active_provisional": null, "lead_mode_provisional": "group_or_joint_review", "provisional_main_visual_ids": null, "main_track_ids": null, "group_provisional": true, "review_required": true, "reason": "group finish and held pose; decide dance-active end separately from visible-performance end", "sheets": [14, 15]},
+    {"start_sec": 113.0, "end_sec": 133.654059, "performance_visible": false, "dance_active_provisional": false, "lead_mode_provisional": "none", "provisional_main_visual_ids": [], "main_track_ids": null, "group_provisional": false, "review_required": true, "reason": "KBS/Studio K end cards; stage-to-card cut lies between sampled frames", "sheets": [15, 16, 17]}
+  ],
+  "identity_labels": [],
+  "face_labels": [],
+  "person_boxes": [],
+  "frozen_for_scoring": false
+}

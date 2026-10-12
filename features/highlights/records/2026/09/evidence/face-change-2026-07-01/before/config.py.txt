@@ -1,0 +1,153 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Tuple, Literal, Optional
+import platform
+
+try:
+    import torch
+except Exception:
+    torch = None
+
+
+ClusterMethod = Literal["agglomerative", "dbscan"]
+
+
+def detect_yolo_device() -> object:
+    sysname = platform.system()
+
+    if sysname == "Darwin":
+        if torch is not None and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            return "mps"
+        return "cpu"
+
+    if torch is None:
+        print("[CONFIG] torch import failed → cpu", flush=True)
+        return "cpu"
+
+    try:
+        available = torch.cuda.is_available()
+        count = torch.cuda.device_count() if available else 0
+        print(f"[CONFIG] torch.cuda.is_available()={available} device_count={count}", flush=True)
+        if available:
+            return 0
+    except Exception as e:
+        print(f"[CONFIG] torch.cuda check failed: {e}", flush=True)
+
+    return "cpu"
+
+
+def detect_face_ctx_id() -> int:
+    """
+    InsightFace ctx_id:
+      >= 0 → CUDA GPU index
+        -1 → CPU
+    macOS는 InsightFace가 MPS를 지원하지 않으므로 CPU(-1)로 명시.
+    Windows/Linux에서 CUDA가 있으면 GPU 0, 없으면 CPU.
+    """
+    if platform.system() == "Darwin":
+        return -1
+
+    # onnxruntime-gpu와 torch CUDA runtime DLL 충돌로 frozen build에서
+    # InsightFace CUDA 초기화 실패 → YOLO NMS crash 유발
+    # InsightFace는 프레임당 실행이 아니므로 CPU로 고정해도 성능 영향 미미
+    return -1
+
+
+def detect_ffmpeg_hw_encoder() -> Optional[str]:
+    """
+    플랫폼별 ffmpeg 하드웨어 인코더를 탐색.
+    - macOS  : h264_videotoolbox (Apple VideoToolbox)
+    - Windows/Linux + NVIDIA : h264_nvenc
+    - 지원 없음 : None (libx264 fallback)
+    """
+    import subprocess
+    try:
+        result = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-encoders"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=5,
+        )
+        encoders = result.stdout + result.stderr
+
+        if platform.system() == "Darwin" and "h264_videotoolbox" in encoders:
+            return "h264_videotoolbox"
+
+        if "h264_nvenc" in encoders:
+            # h264_nvenc은 NVIDIA GPU 필요 — 컴파일되어 있어도 GPU 없으면 런타임 실패
+            if torch is not None and torch.cuda.is_available():
+                return "h264_nvenc"
+
+    except Exception:
+        pass
+
+    return None
+
+
+@dataclass(frozen=True)
+class DanceConfig:
+    # YOLO Pose
+    yolo_model_path: str = "yolov8s-pose.pt"
+    yolo_device: object = detect_yolo_device()
+    yolo_half: bool = True
+    yolo_conf: float = 0.25
+    yolo_iou: float = 0.7
+
+    # 분석 샘플링 (프레임 스킵)
+    # TrackAssigner는 시간(초) 기반 TTL이므로 skip 증가가 트랙 연속성에 무영향
+    analyze_skip: int = 4
+
+    # 메인/그룹 후처리
+    min_main_seg_sec: float = 1.2
+    bridge_gap_sec: float = 1.2
+    min_group_seg_sec: float = 1.2
+    merge_gap_sec: float = 0.8
+
+    # 메인 트랙 ID 할당(간단 트래커)
+    track_match_iou: float = 0.35
+    track_ttl_sec: float = 1.0
+
+    # Face(InsightFace)
+    insightface_model: str = "buffalo_l"
+    face_ctx_id: int = detect_face_ctx_id()
+    face_det_size: Tuple[int, int] = (320, 320)
+    face_min_det_score: float = 0.28
+
+    # 메인 bbox에서 얼굴 ROI 확장 비율
+    face_roi_expand_w: float = 0.15
+    face_roi_expand_h_top: float = 0.35
+    face_roi_expand_h_bottom: float = 0.10
+
+    # 세그먼트당 얼굴 샘플 프레임 수
+    face_sample_frames: int = 5
+
+    # 클러스터링
+    cluster_method: ClusterMethod = "agglomerative"
+    cluster_distance_threshold: float = 0.42
+    dbscan_eps: float = 0.6
+    dbscan_min_samples: int = 2
+
+    # ffmpeg 인코딩
+    use_stream_copy: bool = True
+    encode_preset: str = "medium"
+    encode_crf: int = 18
+    ffmpeg_hw_encoder: Optional[str] = detect_ffmpeg_hw_encoder()
+
+    # montage
+    montage_min_sec: float = 30.0
+    montage_max_sec: float = 60.0
+    montage_max_clips: int = 12
+    montage_reencode_normalize: bool = True
+
+    # FS 경로
+    clips_dir_rel: str = "clips/dance"
+    renders_dir_rel: str = "renders/dance"
+    json_dir_rel: str = "json"
+    meta_filename: str = "dance_meta.json"
+
+    def resolved_yolo_half(self) -> bool:
+        if self.yolo_device == 0 or self.yolo_device == "mps":
+            return bool(self.yolo_half)
+        return False

@@ -1,0 +1,39 @@
+# 첫 결과의 0–20초 회귀 구간 후보. 정답표가 불완전하여 ML 실행 입력이 아니다.
+schema_version: w14-quick-check-candidate-v1
+status: partial_gt_no_ml_run
+source:
+  absolute_path: /Users/jina/project/adlight/.worktrees/person-highlight-mvp-20261001/desktop/clipper_nestjs/.clipper_data/sources/youtube/0KQDhi7ddrk/source.mp4
+  sha256: 29101ea99c489fba8be54ec56f3470a92730485b905528e359c67a5b16ecdea3
+  duration_ms: 2239286
+  video_stream_index: 0
+  video_size_px: [1280, 720]
+  interval_ms: [0, 20000]
+  local_use_rights_confirmed: null
+existing_result:
+  job_id: person_highlight_retry_1790838316793
+  person_ids_confirmed_same_by_user: [person_005, person_006, person_008, person_013]
+  observation_times_sec:
+    person_005: [3.5, 4.0, 4.5]
+    person_006: [4.5]
+    person_008: [6.5]
+    person_013: [10.5, 11.0, 17.5, 18.0, 18.5, 19.0, 19.5]
+  note: 위 시각은 기존 결과의 관측 interval이며 완전한 실제 등장 정답이 아니다.
+gt_draft:
+  anonymous_person_a: person_005/person_006/person_008/person_013의 동일인 관계만 확정
+  other_people: unlabeled
+  background_and_bystanders: unlabeled
+  simultaneous_pairs: unlabeled
+  shot_boundaries: unverified
+  interval_boundaries: unverified
+  face_bboxes: unverified
+runtime_observed:
+  os: macOS-27.0-arm64
+  opencv: 4.13.0
+  python_repo_head: 47782953228861f4bdbdc135265d067c2a826b0e
+  uncommitted_code_state: true
+  detector_sha256: 8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4
+  recognizer_sha256: 0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79
+  device_and_ram_cap: unset
+  output_directory: unset
+  inference_runs: 0
+next_step: 다른 등장 인물·배경·동시 출연·shot/interval 정답과 자원/출력 상한을 완성한 뒤 짧은 회귀를 실행한다.

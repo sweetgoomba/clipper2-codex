@@ -1,0 +1,17 @@
+{
+  "schema": "w13_source_only_motion_probe_plan_v1",
+  "status": "source_only_amendment_frozen_before_new_sample_pose_outcomes",
+  "purpose": "Exploratory paired comparison of current single-main selector and one temporal-motion ranking rule on saved MoveNet observations; not a YOLO comparison or product-accuracy claim",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_fps": "60000/1001",
+  "pose_condition": "existing run-01 pose.json only; no new inference",
+  "sampling": "three source frames inside each previously documented conservative solo window, distinct from the earlier 18 strict-solo holdout frames; three separate group checks",
+  "strict_solo_frame_indices": [1008, 1068, 1128, 1376, 1440, 1552, 1784, 1856, 1928, 3240, 3304, 3376, 3576, 3600, 3616],
+  "source_only_amendment": "Initial 3544 and 3664 looked ambiguous for a strict sole lead when the original frames were viewed. Before opening pose outcomes for these indices, exclude both and replace with source-only reviewed 3576 and 3616 in the same P5 window. This is a subjective source-label selection and limits generalization.",
+  "excluded_ambiguous_frame_indices": [3544, 3664],
+  "group_check_frame_indices": [2600, 2704, 2800],
+  "labeling_rule": "inspect exact source frame only; mark a strict sole lead and approximate full-body xyxy only if visually clear; otherwise mark uncertain and exclude from strict score; label before opening saved pose outcomes for these indices",
+  "comparison_rule": "current saved main_bbox against strict source bbox IoU>=0.30; exploratory motion-only candidate ranks detections by median normalized keypoint-shape displacement over five analyze_skip=4 steps, with previous person matched by bbox IoU>=0.10 and at least five keypoints scored >0.30 at both times; no temporal winner smoothing or product assignment",
+  "limits": "same original video and one pose model; prior windows and old labels informed sampling, one reviewer; not a fully independent test set"
+}

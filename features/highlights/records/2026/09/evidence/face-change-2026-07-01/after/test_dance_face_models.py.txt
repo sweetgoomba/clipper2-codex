@@ -1,0 +1,88 @@
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+from dance_highlight.services.face_models import (
+    FACE_MODEL_SPECS,
+    FaceModelSpec,
+    ensure_face_models,
+    get_face_model_dir,
+    is_model_file_valid,
+)
+
+
+def test_face_model_specs_are_pinned_to_opencv_models() -> None:
+    specs = {spec.name: spec for spec in FACE_MODEL_SPECS}
+
+    assert specs["opencv-yunet-face-detection"].filename == "face_detection_yunet_2023mar.onnx"
+    assert (
+        specs["opencv-yunet-face-detection"].sha256
+        == "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
+    )
+    assert specs["opencv-yunet-face-detection"].size == 232589
+
+    assert specs["opencv-sface-face-recognition"].filename == "face_recognition_sface_2021dec.onnx"
+    assert (
+        specs["opencv-sface-face-recognition"].sha256
+        == "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79"
+    )
+    assert specs["opencv-sface-face-recognition"].size == 38696353
+
+
+def test_get_face_model_dir_uses_env_override(monkeypatch, tmp_path: Path) -> None:
+    target = tmp_path / "models"
+    monkeypatch.setenv("CLIPPER_DANCE_FACE_MODEL_DIR", str(target))
+
+    assert get_face_model_dir() == target
+
+
+def test_get_face_model_dir_defaults_to_cwd_plugin_models(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.delenv("CLIPPER_DANCE_FACE_MODEL_DIR", raising=False)
+    monkeypatch.chdir(tmp_path)
+
+    assert get_face_model_dir() == tmp_path / "plugin_models" / "dance_highlight"
+
+
+def test_is_model_file_valid_checks_size_and_sha256(tmp_path: Path) -> None:
+    body = b"model-bytes"
+    path = tmp_path / "model.onnx"
+    path.write_bytes(body)
+    spec = FaceModelSpec(
+        name="fake",
+        filename="model.onnx",
+        url="https://example.invalid/model.onnx",
+        sha256=hashlib.sha256(body).hexdigest(),
+        size=len(body),
+    )
+
+    assert is_model_file_valid(path, spec)
+    assert not is_model_file_valid(path, FaceModelSpec(**{**spec.__dict__, "size": len(body) + 1}))
+    assert not is_model_file_valid(path, FaceModelSpec(**{**spec.__dict__, "sha256": "0" * 64}))
+
+
+def test_ensure_face_models_downloads_missing_files_and_emits_progress(tmp_path: Path) -> None:
+    body = b"downloaded-model"
+    spec = FaceModelSpec(
+        name="fake-opencv-model",
+        filename="model.onnx",
+        url="https://example.invalid/model.onnx",
+        sha256=hashlib.sha256(body).hexdigest(),
+        size=len(body),
+    )
+    events: list[tuple[str, float]] = []
+
+    def fake_downloader(url: str, target: Path, progress_cb) -> None:
+        assert url == spec.url
+        target.write_bytes(body)
+        progress_cb(1.0)
+
+    paths = ensure_face_models(
+        model_dir=tmp_path,
+        specs=[spec],
+        downloader=fake_downloader,
+        progress_cb=lambda name, pct: events.append((name, pct)),
+    )
+
+    assert paths == {"fake-opencv-model": tmp_path / "model.onnx"}
+    assert events == [("fake-opencv-model", 1.0)]

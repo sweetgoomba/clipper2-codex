@@ -1,0 +1,83 @@
+{
+  "name": "dance_highlight",
+  "version": "0.1.0",
+  "sdk_version": "1",
+
+  "display_name": "안무 영상 하이라이트 추출",
+  "description": "댄스 영상에서 포즈 분석과 얼굴 인식을 기반으로 하이라이트 구간을 추출합니다.",
+  "author": "Clipper Studio",
+  "license": "proprietary",
+
+  "entrypoint": "__main__.py",
+  "ipc_protocol": "http+ws",
+
+  "dependencies": {
+    "onnxruntime": ">=1.19",
+    "insightface": ">=0.7",
+    "ultralytics": ">=8.0",
+    "requests": ">=2.31",
+    "scikit-learn": ">=1.3"
+  },
+
+  "models": [
+    {
+      "name": "yolov8s-pose",
+      "source": "library",
+      "library": "ultralytics",
+      "note": "YOLO('yolov8s-pose.pt') 호출 시 ultralytics가 자동 다운로드"
+    },
+    {
+      "name": "insightface-buffalo_l",
+      "source": "library",
+      "library": "insightface",
+      "note": "FaceAnalysis(name='buffalo_l') 호출 시 자동 다운로드"
+    }
+  ],
+
+  "accelerators": ["cuda", "mps", "cpu"],
+
+  "capabilities": {
+    "provides": ["workflow.dance_highlight"],
+    "requires": ["video.analyze", "project.manifest"]
+  },
+
+  "resources": {
+    "estimated_ram_mb": 4096,
+    "estimated_vram_mb": 2048,
+    "requires_gpu": false,
+    "preferred_accelerators": ["cuda", "mps", "cpu"],
+    "cold_start_cost": "high",
+    "max_concurrency": 1,
+    "idle_policy": {
+      "default": "manual",
+      "safe_to_evict_when_idle": true
+    }
+  },
+
+  "runtime_requirements": {
+    "python_min": "3.11",
+    "python_max": "3.11"
+  },
+
+  "min_app_version": "0.0.0",
+  "update_channel": "stable",
+
+  "permissions": {
+    "filesystem": {
+      "read": ["<input_video>", "<reference_images>"],
+      "write": ["<output_root>"]
+    },
+    "network": {
+      "allow": [
+        "openapi.naver.com",
+        "dapi.kakao.com",
+        "huggingface.co",
+        "*.huggingface.co",
+        "github.com",
+        "objects.githubusercontent.com"
+      ]
+    }
+  },
+
+  "signature": null
+}

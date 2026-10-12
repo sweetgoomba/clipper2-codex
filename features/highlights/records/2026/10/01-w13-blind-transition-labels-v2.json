@@ -1,0 +1,47 @@
+{
+  "schema": "w13_blind_transition_keyframes_v2",
+  "status": "frozen_limited_source_only_transition_keyframes",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_dimensions_px": [1920, 1012],
+  "source_fps": "60000/1001",
+  "prior_frozen_label_path": ".codex/features/highlights/records/2026/10/01-w13-pose-scoring-labels-v1.json",
+  "prior_frozen_label_sha256": "c76866b1962279b6320e0222dc47e4056d950e3068590df1902c078ebebad704",
+  "audit": {
+    "reviewer": "same separate reviewer as source-only v1 audit",
+    "review_input": "original video and source-only frames; no app or MoveNet predictions",
+    "prediction_unseen_by_reviewer": true,
+    "video_audio_reviewed": false,
+    "sample_method": "approximately 10 fps focused source review plus exact proposed source frames",
+    "continuous_all_source_frames_audited": false,
+    "boundary_precision": "approximate 0.1 second visual bands; not point switch times",
+    "person_ids": "P1 green, P2 yellow, P3 red, P4 blue, P5 lavender are anonymous source-video visual IDs, not member names"
+  },
+  "bands": [
+    {"interval_sec": [20.5, 21.1], "state": "solo", "main_ids": ["P1"]},
+    {"interval_sec": [21.2, 21.5], "state": "handoff_review", "main_ids": null, "possible_ids": ["P1", "P2"]},
+    {"interval_sec": [21.6, 22.0], "state": "solo", "main_ids": ["P2"]},
+    {"interval_sec": [27.0, 28.1], "state": "solo", "main_ids": ["P2"]},
+    {"interval_sec": [28.2, 28.6], "state": "occluded_joint_main_candidate_review", "main_ids": null, "possible_ids": ["P2", "P3"]},
+    {"interval_sec": [28.7, 29.0], "state": "solo", "main_ids": ["P3"]},
+    {"interval_sec": [52.8, 53.4], "state": "group_to_solo_review", "main_ids": null, "possible_ids": ["P4"]},
+    {"interval_sec": [53.5, 54.0], "state": "weak_solo_candidate", "main_ids": null, "possible_ids": ["P4"]},
+    {"interval_sec": [57.0, 57.2], "state": "solo_tail_near_handoff", "main_ids": ["P4"]},
+    {"interval_sec": [57.3, 57.6], "state": "handoff_review", "main_ids": null, "possible_ids": ["P4", "P5"]},
+    {"interval_sec": [57.7, 59.0], "state": "solo", "main_ids": ["P5"]}
+  ],
+  "keyframes": [
+    {"frame_index": 1248, "time_sec": 20.8208, "main_ids": ["P1"], "main_bbox_xyxy_px": [315, 310, 530, 905], "stratum": "strict_solo"},
+    {"frame_index": 1308, "time_sec": 21.8218, "main_ids": ["P2"], "main_bbox_xyxy_px": [480, 380, 731, 898], "stratum": "strict_solo", "note": "lower camera equipment mostly separate from feet"},
+    {"frame_index": 1668, "time_sec": 27.8278, "main_ids": ["P2"], "main_bbox_xyxy_px": [636, 403, 867, 893], "stratum": "strict_solo", "note": "P3 is substantially occluded behind P2"},
+    {"frame_index": 1736, "time_sec": 28.962267, "main_ids": ["P3"], "main_bbox_xyxy_px": [751, 435, 952, 893], "stratum": "strict_solo"},
+    {"frame_index": 3224, "time_sec": 53.787067, "main_ids": null, "possible_ids": ["P4"], "main_bbox_xyxy_px": [258, 404, 510, 906], "stratum": "weak_candidate_not_scored", "note": "camera equipment occludes lower leg/foot; solo not established enough for strict score"},
+    {"frame_index": 3424, "time_sec": 57.123733, "main_ids": ["P4"], "main_bbox_xyxy_px": [323, 406, 566, 899], "stratum": "edge_near_handoff_not_scored"},
+    {"frame_index": 3496, "time_sec": 58.324933, "main_ids": ["P5"], "main_bbox_xyxy_px": [872, 331, 1170, 909], "stratum": "strict_solo", "note": "slight overlap with P1"},
+    {"frame_index": 3524, "time_sec": 58.792067, "main_ids": ["P5"], "main_bbox_xyxy_px": [685, 305, 898, 908], "stratum": "strict_solo"}
+  ],
+  "strict_score_frame_indices": [1248, 1308, 1668, 1736, 3496, 3524],
+  "joint_main_ground_truth_confirmed": false,
+  "switch_delay_point_estimate_allowed": false,
+  "full_video_accuracy_claim_allowed": false
+}

@@ -1,0 +1,29 @@
+Source: before e34cdbcc62518a8079a988dd8add015b569dd7e1; after fe223e3b9339a14994bcef1e55d0f4665396e352
+
+Removed uv.lock packages:
+albucore==0.0.24
+albumentations==2.0.8
+cython==3.2.4
+easydict==1.13
+imageio==2.37.3
+insightface==0.7.3
+ml-dtypes==0.5.4
+onnx==1.21.0
+prettytable==3.17.0
+scikit-image==0.26.0
+simsimd==6.5.16
+stringzilla==4.6.0
+tifffile==2026.3.3
+
+Added uv.lock packages:
+
+Versions changed for existing packages:
+
+Selected retained packages:
+numpy: 2.4.4 -> 2.4.4
+opencv-python: 4.13.0.92 -> 4.13.0.92
+scikit-learn: 1.8.0 -> 1.8.0
+torch: 2.11.0 -> 2.11.0
+ultralytics: 8.4.38 -> 8.4.38
+onnxruntime: 1.24.4 -> 1.24.4
+onnxruntime-gpu: absent -> absent

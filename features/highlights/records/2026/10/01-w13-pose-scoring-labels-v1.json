@@ -1,0 +1,1116 @@
+{
+  "schema": "w13_pose_scoring_labels_v1",
+  "status": "frozen_limited_pose_ground_truth_no_model_run",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "interval_sec": [
+    0.0,
+    133.654059
+  ],
+  "source_dimensions_px": [
+    1920,
+    1012
+  ],
+  "source_fps": "60000/1001",
+  "frozen_for_scoring": true,
+  "fully_labeled_video": false,
+  "independent_audit_complete": true,
+  "independent_audit_scope": "source-only audit of five conservative solo windows and 45 boxes on nine sampled frames; no continuous all-frame audit",
+  "independent_audit_record_path": ".codex/features/highlights/records/2026/10/01-w13-independent-label-audit.md",
+  "independent_audit_record_sha256": "8927ecdea5351031c7e9d313f3ab6667d9cd848081fde7dbd6409e1f02221a04",
+  "source_visibility_label_path": ".codex/features/highlights/records/2026/10/01-w13-retention-visibility-label-v1.json",
+  "source_visibility_label_sha256": "5ac90c4ed574cc5282120f06a66a4c85281e73b22b1e8784682e0e3a4ade7bc2",
+  "anonymous_people": [
+    {
+      "id": "P1",
+      "visual_cue_only": "green outfit at the first clear solo turn",
+      "member_name": null
+    },
+    {
+      "id": "P2",
+      "visual_cue_only": "yellow top and light skirt at the second solo turn",
+      "member_name": null
+    },
+    {
+      "id": "P3",
+      "visual_cue_only": "pink top and red trousers at the third solo turn",
+      "member_name": null
+    },
+    {
+      "id": "P4",
+      "visual_cue_only": "blue top and blue trousers at the low-pose turn",
+      "member_name": null
+    },
+    {
+      "id": "P5",
+      "visual_cue_only": "lavender outfit at the crossing solo turn",
+      "member_name": null
+    }
+  ],
+  "score_policy": {
+    "full_source_is_inference_input": true,
+    "main_reference_window_count": 5,
+    "main_reference_window_duration_sec": 18.0,
+    "main_identity_score_requires_audited_person_box_at_frame": true,
+    "main_identity_scored_frame_indices": [1080, 1320, 1740, 3356],
+    "main_identity_scored_frame_count": 4,
+    "p5_window_has_no_audited_person_box": true,
+    "switch_delay_point_estimate_allowed": false,
+    "unscored_group_or_uncertain_is_not_main_error": true,
+    "unscored_group_or_uncertain_is_retained_for_review_coverage": true,
+    "person_detection_score_only_on_frame_samples": true,
+    "report_full_and_partly_occluded_strata_separately": true,
+    "identity_member_names_or_reference_images_in_scope": false,
+    "baseline_existing_app_artifact_is_not_controlled_pose_head_to_head": true
+  },
+  "intervals": [
+    {
+      "start_sec": 0.0,
+      "end_sec": 5.5,
+      "scene_role": "no_performance",
+      "score_main": false,
+      "main_ids": [],
+      "retain_for_coverage": false,
+      "review_required": false
+    },
+    {
+      "start_sec": 5.5,
+      "end_sec": 15.5,
+      "scene_role": "transition_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 15.5,
+      "end_sec": 16.5,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P1"
+      ]
+    },
+    {
+      "start_sec": 16.5,
+      "end_sec": 20.0,
+      "scene_role": "solo_candidate",
+      "score_main": true,
+      "main_ids": [
+        "P1"
+      ],
+      "retain_for_coverage": true,
+      "review_required": false
+    },
+    {
+      "start_sec": 20.0,
+      "end_sec": 20.5,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P1"
+      ]
+    },
+    {
+      "start_sec": 20.5,
+      "end_sec": 21.25,
+      "scene_role": "handoff_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P1",
+        "P2"
+      ]
+    },
+    {
+      "start_sec": 21.25,
+      "end_sec": 22.0,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P2"
+      ]
+    },
+    {
+      "start_sec": 22.0,
+      "end_sec": 27.0,
+      "scene_role": "solo_candidate",
+      "score_main": true,
+      "main_ids": [
+        "P2"
+      ],
+      "retain_for_coverage": true,
+      "review_required": false
+    },
+    {
+      "start_sec": 27.0,
+      "end_sec": 27.5,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P2"
+      ]
+    },
+    {
+      "start_sec": 27.5,
+      "end_sec": 28.5,
+      "scene_role": "handoff_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P2",
+        "P3"
+      ]
+    },
+    {
+      "start_sec": 28.5,
+      "end_sec": 29.0,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P3"
+      ]
+    },
+    {
+      "start_sec": 29.0,
+      "end_sec": 33.0,
+      "scene_role": "solo_candidate",
+      "score_main": true,
+      "main_ids": [
+        "P3"
+      ],
+      "retain_for_coverage": true,
+      "review_required": false
+    },
+    {
+      "start_sec": 33.0,
+      "end_sec": 33.5,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P3"
+      ]
+    },
+    {
+      "start_sec": 33.5,
+      "end_sec": 35.0,
+      "scene_role": "transition_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 35.0,
+      "end_sec": 42.0,
+      "scene_role": "group_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 42.0,
+      "end_sec": 48.5,
+      "scene_role": "group_with_feature_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P5"
+      ]
+    },
+    {
+      "start_sec": 48.5,
+      "end_sec": 52.0,
+      "scene_role": "group_formation_change_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 52.0,
+      "end_sec": 53.5,
+      "scene_role": "transition_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P4"
+      ]
+    },
+    {
+      "start_sec": 53.5,
+      "end_sec": 54.0,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P4"
+      ]
+    },
+    {
+      "start_sec": 54.0,
+      "end_sec": 57.0,
+      "scene_role": "solo_candidate",
+      "score_main": true,
+      "main_ids": [
+        "P4"
+      ],
+      "retain_for_coverage": true,
+      "review_required": false
+    },
+    {
+      "start_sec": 57.0,
+      "end_sec": 57.5,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P4"
+      ]
+    },
+    {
+      "start_sec": 57.5,
+      "end_sec": 58.5,
+      "scene_role": "handoff_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P4",
+        "P5"
+      ]
+    },
+    {
+      "start_sec": 58.5,
+      "end_sec": 59.0,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P5"
+      ]
+    },
+    {
+      "start_sec": 59.0,
+      "end_sec": 61.5,
+      "scene_role": "solo_candidate",
+      "score_main": true,
+      "main_ids": [
+        "P5"
+      ],
+      "retain_for_coverage": true,
+      "review_required": false
+    },
+    {
+      "start_sec": 61.5,
+      "end_sec": 61.75,
+      "scene_role": "solo_candidate",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P5"
+      ]
+    },
+    {
+      "start_sec": 61.75,
+      "end_sec": 62.5,
+      "scene_role": "transition_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P5"
+      ]
+    },
+    {
+      "start_sec": 62.5,
+      "end_sec": 80.0,
+      "scene_role": "group_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 80.0,
+      "end_sec": 96.0,
+      "scene_role": "group_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 96.0,
+      "end_sec": 98.5,
+      "scene_role": "group_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 98.5,
+      "end_sec": 100.8,
+      "scene_role": "short_feature_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P2"
+      ]
+    },
+    {
+      "start_sec": 100.8,
+      "end_sec": 101.2,
+      "scene_role": "handoff_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P2",
+        "P3"
+      ]
+    },
+    {
+      "start_sec": 101.2,
+      "end_sec": 102.6,
+      "scene_role": "short_feature_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P3"
+      ]
+    },
+    {
+      "start_sec": 102.6,
+      "end_sec": 104.3,
+      "scene_role": "short_feature_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true,
+      "visual_candidates_not_ground_truth": [
+        "P4"
+      ]
+    },
+    {
+      "start_sec": 104.3,
+      "end_sec": 106.5,
+      "scene_role": "group_formation_change_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 106.5,
+      "end_sec": 113.0,
+      "scene_role": "group_or_finish_review",
+      "score_main": false,
+      "main_ids": null,
+      "retain_for_coverage": true,
+      "review_required": true
+    },
+    {
+      "start_sec": 113.0,
+      "end_sec": 133.654059,
+      "scene_role": "no_performance",
+      "score_main": false,
+      "main_ids": [],
+      "retain_for_coverage": false,
+      "review_required": false
+    }
+  ],
+  "detection_frame_samples": [
+    {
+      "frame_index": 0,
+      "time_sec": 0.0,
+      "expected_person_count": 0
+    },
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "expected_person_count": 5
+    },
+    {
+      "frame_index": 6832,
+      "time_sec": 113.980533,
+      "expected_person_count": 0
+    }
+  ],
+  "person_instances": [
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        835,
+        294,
+        1045,
+        903
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        428,
+        349,
+        653,
+        896
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        677,
+        418,
+        866,
+        885
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1087,
+        406,
+        1272,
+        884
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1080,
+      "time_sec": 18.018,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        1354,
+        329,
+        1582,
+        902
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        236,
+        315,
+        486,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        574,
+        399,
+        745,
+        895
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        701,
+        421,
+        861,
+        890
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1080,
+        407,
+        1255,
+        888
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1320,
+      "time_sec": 22.022,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        1346,
+        326,
+        1574,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        256,
+        314,
+        422,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        518,
+        392,
+        726,
+        902
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        760,
+        435,
+        984,
+        892
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1107,
+        410,
+        1283,
+        889
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 1740,
+      "time_sec": 29.029,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        1380,
+        320,
+        1564,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        901,
+        447,
+        1112,
+        896
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        1066,
+        443,
+        1253,
+        894
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        380,
+        419,
+        559,
+        903
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        788,
+        388,
+        978,
+        899
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 2276,
+      "time_sec": 37.971267,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        650,
+        441,
+        811,
+        890
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        1215,
+        382,
+        1412,
+        903
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        1026,
+        445,
+        1237,
+        900
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        462,
+        430,
+        692,
+        904
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        739,
+        445,
+        868,
+        901
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 2636,
+      "time_sec": 43.977267,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        831,
+        369,
+        1016,
+        904
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        844,
+        418,
+        1046,
+        901
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        608,
+        393,
+        844,
+        902
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        1066,
+        484,
+        1318,
+        895
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        277,
+        557,
+        617,
+        899
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 3356,
+      "time_sec": 55.989267,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        1308,
+        371,
+        1585,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        803,
+        336,
+        1071,
+        928
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        989,
+        433,
+        1213,
+        915
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        447,
+        378,
+        683,
+        928
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1190,
+        375,
+        1503,
+        925
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5156,
+      "time_sec": 86.019267,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        678,
+        416,
+        847,
+        912
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        1275,
+        460,
+        1523,
+        899
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        847,
+        333,
+        1086,
+        908
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        54,
+        350,
+        333,
+        920
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1019,
+        344,
+        1357,
+        910
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 5996,
+      "time_sec": 100.033267,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        442,
+        365,
+        871,
+        907
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "person_id": "P1",
+      "bbox_xyxy_px": [
+        202,
+        419,
+        480,
+        900
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "person_id": "P2",
+      "bbox_xyxy_px": [
+        1387,
+        471,
+        1634,
+        888
+      ],
+      "visibility": "partly_occluded",
+      "detection_stratum": "partly_occluded"
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "person_id": "P3",
+      "bbox_xyxy_px": [
+        1570,
+        379,
+        1890,
+        906
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "person_id": "P4",
+      "bbox_xyxy_px": [
+        1104,
+        317,
+        1515,
+        908
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    },
+    {
+      "frame_index": 6232,
+      "time_sec": 103.970533,
+      "person_id": "P5",
+      "bbox_xyxy_px": [
+        698,
+        432,
+        957,
+        884
+      ],
+      "visibility": "full",
+      "detection_stratum": "full"
+    }
+  ],
+  "limitations": [
+    "Five conservative solo interiors totaling 18.0 seconds are reference windows; main identity can be checked at only four independently audited anchor frames inside them (P1-P4). P5 has no audited anchor. No whole-video or 18-second framewise main accuracy.",
+    "Person boxes are coarse source-pixel rectangles on nine source-selected frames, audited for obvious ID swaps and gross alignment only.",
+    "No member names, face identity, precise switch boundaries, or continuous all-frame boxes.",
+    "All other visible performance stays reviewable; null main IDs do not mean that no main exists."
+  ]
+}

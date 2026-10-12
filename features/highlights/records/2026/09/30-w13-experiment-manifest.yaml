@@ -1,0 +1,116 @@
+# W13 adapter selected. Existing app inputs inventoried read-only; no new video/model run is authorized or recorded by this file.
+schema: w13_dance_eval_proposal_v1
+status: retention_visibility_label_frozen_execution_pending
+input_candidate:
+  url: https://youtu.be/yFTAYXDTjqI
+  video_id: yFTAYXDTjqI
+  case_assignment: full_source_single_video # user selected entire video; D1/D2/D3 stratification remains unlabeled
+  youtube_metadata_verified: false # duration was measured from the existing local MP4, not YouTube
+  existing_app_inventory: .codex/features/highlights/records/2026/10/01-w13-existing-app-input-inventory.json
+  existing_download_use_selected_by_user: true
+  visual_screening: two_fps_267_frames_plus_four_fps_15_to_38_75_and_50_to_65_75 # stills only; not continuous review, ground truth, or ML
+scope:
+  selected_stage: adapter # static_artifacts | adapter | metadata_6pass | crop_16
+  comparison_variable: null # choose one per experiment: retention, multi_main, streak, pose, tracker, face, mapping
+  proposed_first_variable: reviewable_retention_of_group_and_face_drops # proposal, not selected for ML execution
+  proposed_first_comparison_plan: .codex/features/highlights/records/2026/10/01-w13-first-comparison-scope.md
+  current_adapter_main_cardinality: one # measures existing baseline; multi-main inference is design only
+  multi_main_product_change_authorized: false
+  external_calls_max: 0
+  model_downloads_max: 0
+  build5: false
+inputs:
+  - case: full_source
+    source_path: '/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4'
+    source_sha256: 7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4
+    interval_ms: [0, 133654.059] # ffprobe container duration, 133.654059 s
+    duration_limit_ms: 133655
+    selected_by_user: true
+input_total_duration_limit_ms: 133655
+total_source_minutes_across_six_passes_limit_proposed: 13.366 # six full passes; run count is not approved
+first_three_pass_source_minutes_proposed: 6.683 # retention comparison reuses baseline metadata; run count is not approved
+references:
+  inventory_path: .codex/features/highlights/records/2026/10/01-w13-existing-app-input-inventory.json
+  selected_urls_in_existing_app: 24
+  cached_local_files: 23 # Hanni ref_00 was not retained locally
+  selected_for_new_run: null # no actual run fixed; retention-only proposal below uses none, later identity requires independent refs
+  proposed_for_first_retention_comparison: [] # no member identity scoring; adapter supports empty local references
+  reuse_rights_confirmed: false
+labels:
+  path: null # person-level/dance-active ground truth remains unfrozen
+  sha256: null
+  retention_visibility_path: .codex/features/highlights/records/2026/10/01-w13-retention-visibility-label-v1.json
+  retention_visibility_sha256: 5ac90c4ed574cc5282120f06a66a4c85281e73b22b1e8784682e0e3a4ade7bc2
+  retention_visibility_scoring_interval_sec: [6.0, 112.5]
+  retention_visibility_only: true # no main, identity, dance-active, or regression metric
+  draft_path: .codex/features/highlights/records/2026/10/01-w13-full-source-label-draft.json
+  draft_sha256: 3e27285b7e43625c6681d50bd0e2f1c7afa372b44aaa6c32dd24678aabafd00b
+  draft_intervals: 19 # broad, unverified intervals covering the whole source; not scoring labels
+  draft_review_guide: .codex/features/highlights/records/2026/10/01-w13-full-source-review-guide.md
+  schema: source_ms_interval_dance_active_main_track_ids_array_per_person_bbox_group_review_candidate_ids_face_visible_independently_verified_member_or_unknown_shot
+  main_track_ids_can_have_multiple_members: true
+  group_can_coexist_with_main: true
+  uncertain_dance_interval_is_reviewable: true
+  anonymous_person_ids_allowed_for_main_metrics: true
+  member_names_required_only_for_identity_metrics: true
+  existing_app_predictions_are_not_ground_truth: true
+  min_comparison_intervals_proposed: 60
+baseline:
+  python_sha: 47782953228861f4bdbdc135265d067c2a826b0e
+  pose_weight_path: '/Users/jina/Library/Application Support/Clipper Studio Dev/yolov8s-pose.pt'
+  pose_weight_sha256: 234314cd8baf62616791aceb9ea6ad5c19f26cf6c0d8f3a1bfce1e23b186cfb3
+  yunet_weight_path: '/Users/jina/Library/Application Support/Clipper Studio Dev/plugin_models/dance_highlight/face_detection_yunet_2023mar.onnx'
+  yunet_weight_sha256: 8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4
+  sface_weight_path: '/Users/jina/Library/Application Support/Clipper Studio Dev/plugin_models/dance_highlight/face_recognition_sface_2021dec.onnx'
+  sface_weight_sha256: 0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79
+  config_sha256: null
+comparison:
+  python_sha: null
+  weight_paths_and_sha256: null
+  changed_parameter_only: null
+  commercial_weight_rights_verified: false
+  pose_weight_rights_review: historical_approval_reported_by_user_evidence_not_found_in_repo # no conclusion that rights are absent or noncompliant
+  pose_weight_execution_gate: compare_prior_review_or_contract_with_current_use_before_new_inference # execution also requires user-selected scope and frozen manifest
+  existing_weight_files_present: true
+  new_weight_download_approved: false
+environment:
+  os_version: macOS 27.0 (26A428)
+  host_hardware: Mac mini M4, 24 GB RAM, 10-core GPU
+  inference_device_for_new_run: null
+  proposed_first_retention_device: cpu # import-only probe of source venv found no available MPS/CUDA
+  prior_app_inference_device: null
+  observed_local_runtime: {python: '3.11.12', torch: '2.11.0', opencv: '4.13.0', ultralytics: '8.4.38', mps_available: false, cuda_available: false} # import-only probe of existing source checkout venv; not an inference run
+  runtime_versions: null # freeze exact interpreter/environment for a future run
+  execution_sha: null
+  candidate_python_head: 47782953228861f4bdbdc135265d067c2a826b0e
+  candidate_uncommitted_code_diff_sha256: 19b80be58133cfa18e3460841ae95017a255ba93eb7a99f630c293489cffaa92 # not a frozen execution revision
+  offline: true
+  process_tree_peak_rss_limit_mb: null
+  proposed_process_tree_peak_rss_limit_mb: 12288
+  vram_limit_mb: null
+  per_pass_wall_time_limit_sec: null
+  proposed_per_pass_wall_time_limit_sec: 600
+  overall_wall_time_limit_sec: null
+  proposed_overall_wall_time_limit_sec: 1800
+runs:
+  baseline_max_proposed: 3
+  comparison_max_proposed: 0 # first proposed retention policy uses the same baseline metadata offline
+  total_max_proposed: 3 # original general cap was 6; this narrower proposal does not approve execution
+  approved_for_execution: false
+  metadata_only: true
+  evaluation_adapter_ready: true # only in W13 isolated worktree; no approved real evaluation
+outputs:
+  directory: null
+  suggested_directory: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/retention-v1
+  proposed_total_metadata_limit_mb: 250
+  retain_until: null
+  include_raw_faces_or_embeddings: false
+  record: [manifest_frozen, raw_and_smoothed_segments, dropped_reason, multi_main_precision_recall, reviewable_retention, unreviewable_loss, conditional_identity_metrics, over_assignment, wall_time, peak_resources, errors]
+one_page_execution_proposal: .codex/features/highlights/records/2026/10/01-w13-first-evaluation-one-page.md
+crop_followup:
+  interval_count: 4
+  interval_limit_ms: 10000
+  ratios: ['1:1', '4:3']
+  modes: [center, follow]
+  max_outputs: 16
+  exact_intervals_and_output_directory: null

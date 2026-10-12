@@ -1,0 +1,61 @@
+# User approved the presented 512-input scope on 2026-10-02: "몇 회든 상관없이 진행해도 돼."
+# This manifest deliberately limits the first run to one pass and the limits below.
+schema: w13_pose_candidate_comparison_v1
+status: completed_scoped_metadata_run # one pass completed; the runner refuses a second execution
+candidate:
+  name: google_movenet_multipose_lightning
+  format: tensorflow2_saved_model
+  variation_version: 1
+  official_url: https://www.kaggle.com/models/google/movenet/tensorFlow2/multipose-lightning/1
+  declared_weight_license: Apache-2.0
+  artifact_path: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/model-assets/google-movenet-multipose-lightning-v1/model
+  artifact_sha256: ea71312368f39053ed7b9b2e4fac3bcecd94c667f679830a0a999b31ccaf705c
+  download_approved: true # existing local bytes only; no new acquisition
+  min_person_score: 0.25
+  input_size: 512 # only changed inference variable; previous run used 256
+input:
+  path: '/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4'
+  sha256: 7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4
+  interval_ms: [0, 133654.059]
+reference_images: []
+labels:
+  frozen_main_and_person_instances_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-pose-scoring-labels-v1.json
+  frozen_sha256: c76866b1962279b6320e0222dc47e4056d950e3068590df1902c078ebebad704
+  holdout_source_labels_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-holdout-source-labels-v1.json
+  holdout_source_labels_sha256: 9eb66dda4c59ca7434e04145b8b6ebfb10afc18313b116783fa5cab443155f2d
+  additional_exploratory_source_labels_path: /Users/jina/project/adlight/.codex/features/highlights/records/2026/10/02-w13-followup-source-labels.json
+  additional_exploratory_source_labels_sha256: 7b7e526f0006ef704d17440be0b9abea34b225f25ea20097373940726c05f297
+  scope_note: 18 previously frozen solo frames and 14 nonoverlapping follow-up solo frames; one source and known windows, not independent whole-video accuracy
+comparison:
+  changed_variable_only: input_size_256_to_512
+  baseline: saved_movenet_256_pose_metadata
+  baseline_new_yolo_runs: 0
+  candidate_new_runs: 1
+  candidate_new_runs_approved: true
+  metadata_only: true
+  clip_export: false
+  face_inference: false
+  metrics: [person_detection_on_frozen_frames, selected_main_match_on_strict_solo_frames, group_false_solo_on_group_frames, wall_time, peak_rss, errors]
+  identity_metrics_in_scope: false
+execution:
+  exact_code_fingerprint: 541065292178c11b4f40445ad9d3f1c654d3984ff45cdcdc0c62c938301f7cf0
+  os_fingerprint: macOS-27.0-arm64-arm-64bit
+  hardware: Mac mini M4, 24 GB RAM
+  python_version: 3.11.12
+  device: cpu
+  analyze_skip: 4
+  runtime_lock:
+    tensorflow: 2.21.0
+    numpy: 2.4.4
+    opencv-python: 4.13.0.92
+    psutil: 7.2.2
+    PyYAML: 6.0.3
+    requests: 2.33.1
+  per_run_wall_time_limit_sec: 600
+  overall_wall_time_limit_sec: 600
+  worker_peak_rss_limit_mb: 12288
+  metadata_total_limit_mb: 250
+output:
+  proposed_directory: /Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-512-v1
+  directory_approved: true
+  keep_existing_app_project_read_only: true

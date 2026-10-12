@@ -1,0 +1,40 @@
+{
+  "schema": "w13_motion_probe_source_labels_v1",
+  "status": "frozen_before_pose_outcomes_for_these_frames",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_dimensions_px": [1920, 1012],
+  "source_fps": "60000/1001",
+  "sample_plan_path": ".codex/features/highlights/records/2026/10/01-w13-motion-probe-sample-plan.json",
+  "audit": {
+    "reviewer": "one Codex reviewer; aware of prior frame-window findings but did not inspect saved pose outcomes at these new indices before freezing these labels",
+    "review_input": "exact original-video still frames only, without model/app overlays",
+    "box_precision": "approximate full-person xyxy; arms, hair, squats and partial overlap make box edges uncertain",
+    "person_ids": "P1 green, P2 yellow, P3 red, P4 blue, P5 lavender; anonymous within-video IDs",
+    "sample_selection": "source-only amendment after viewing original frames; two ambiguous P5 indices replaced before pose inspection",
+    "continuous_video_reviewed_for_these_labels": false
+  },
+  "frames": [
+    {"frame_index": 1008, "stratum": "strict_solo", "main_ids": ["P1"], "main_bbox_xyxy_px": [840, 300, 1030, 900]},
+    {"frame_index": 1068, "stratum": "strict_solo", "main_ids": ["P1"], "main_bbox_xyxy_px": [845, 300, 1020, 900]},
+    {"frame_index": 1128, "stratum": "strict_solo", "main_ids": ["P1"], "main_bbox_xyxy_px": [675, 340, 865, 900]},
+    {"frame_index": 1376, "stratum": "strict_solo", "main_ids": ["P2"], "main_bbox_xyxy_px": [520, 350, 800, 890]},
+    {"frame_index": 1440, "stratum": "strict_solo", "main_ids": ["P2"], "main_bbox_xyxy_px": [520, 410, 770, 900]},
+    {"frame_index": 1552, "stratum": "strict_solo", "main_ids": ["P2"], "main_bbox_xyxy_px": [500, 410, 865, 895]},
+    {"frame_index": 1784, "stratum": "strict_solo", "main_ids": ["P3"], "main_bbox_xyxy_px": [770, 440, 980, 890]},
+    {"frame_index": 1856, "stratum": "strict_solo", "main_ids": ["P3"], "main_bbox_xyxy_px": [670, 380, 1000, 900]},
+    {"frame_index": 1928, "stratum": "strict_solo", "main_ids": ["P3"], "main_bbox_xyxy_px": [780, 345, 980, 905]},
+    {"frame_index": 3240, "stratum": "strict_solo", "main_ids": ["P4"], "main_bbox_xyxy_px": [200, 390, 540, 900], "note": "extended arm makes full-person box broad"},
+    {"frame_index": 3304, "stratum": "strict_solo", "main_ids": ["P4"], "main_bbox_xyxy_px": [300, 540, 515, 900], "note": "low squat"},
+    {"frame_index": 3376, "stratum": "strict_solo", "main_ids": ["P4"], "main_bbox_xyxy_px": [310, 555, 565, 900], "note": "low pose"},
+    {"frame_index": 3576, "stratum": "strict_solo", "main_ids": ["P5"], "main_bbox_xyxy_px": [420, 290, 815, 905], "note": "wide arms"},
+    {"frame_index": 3600, "stratum": "strict_solo", "main_ids": ["P5"], "main_bbox_xyxy_px": [450, 325, 740, 900]},
+    {"frame_index": 3616, "stratum": "strict_solo", "main_ids": ["P5"], "main_bbox_xyxy_px": [540, 330, 780, 905]},
+    {"frame_index": 2600, "stratum": "group_not_solo", "main_ids": null, "possible_ids": ["P5"], "note": "centrally featured lavender person but several members share movement"},
+    {"frame_index": 2704, "stratum": "group_not_solo", "main_ids": null, "possible_ids": ["P5"], "note": "formation movement, no certain sole lead"},
+    {"frame_index": 2800, "stratum": "group_not_solo", "main_ids": null, "possible_ids": ["P5"], "note": "formation movement, no certain sole lead"}
+  ],
+  "strict_score_frame_count": 15,
+  "group_negative_frame_count": 3,
+  "full_video_accuracy_claim_allowed": false
+}

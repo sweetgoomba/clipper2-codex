@@ -1,0 +1,40 @@
+# W14 두 번째 영상 원본 우선 평가와 고정 ArcFace 교차 확인 — 2026-10-01
+
+## 목적·격리
+
+사용자 완료 결과의 짧은 클립·동일인 과분리·다른 사람 오합침·대표 얼굴 문제를 다른 영상에서도 확인했다. 기존 앱 결과와 다른 세션 저장물은 읽기만 했다. 평가 파일은 W14 격리 Python worktree의 [입력·GT·실행 폴더](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/)에 있다. 새 완료 카드·MP4·제품 모델/문턱·공용 API·W13 Dance adapter 수정은 0회다.
+
+- 원본은 이미 로컬에 있던 별도 드라마 `dWSR6qBzFLM/source.mp4`: SHA-256 `90e6a9fea7d3967773bbb841fb8d15013a2c6442c8a30bd592414d17e3bd6c69`, 438.787초, 1920×960, 24000/1001fps. 외부 다운로드 0회. 원본 SHA로 세 층에서 난수 선정한 `[78,98)`, `[164,184)`, `[308,328)`초, 총 60초. [선정 파일](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/selection.json) SHA-256 `d9399a95ba2d539fea26c23140c5811f64b370a919cef9a0fd0de307fed1cbae`.
+- 모델 출력 열람 전 원본 프레임만 보며 두 익명 반복 인물 `D_A`/`D_B`와 얼굴 명확/불확실·등/몸만·손만 보이는 초를 기록했다. [잠금 1초 grid](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/source-grid-gt.json) SHA-256 `dc1a414fe62799a232edde5a6df554f31e01d0fe4ca317cb2bad1dc96c1c5ab3`; 세 창에 **명확한 배경 인물이 없으므로** 배경/거리 recall 자료가 아니다. 연속 등장 경계 GT도 아니다.
+- [기존 모델 실행 계획](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/plan.json) SHA-256 `387b8d257f80c87e1316222b9c48f2a246208fc84530b181fa44c15e9cc84ad0`: Mac CPU, 기존 YuNet SHA-256 `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4`/SFace SHA-256 `0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79`, 기존 backend config SHA-256 `c4c4ce232d3ec490e2595bc48fbb39571b6bf45456ddfe4528867328e2c47097`. 5프레임 간격, 300표본 프레임/1,000관측/10분/RSS4GiB/출력100MiB 상한. 모델·소스·GT·코드·runner hash를 검증한 dry run 뒤 실행했다.
+- [실제 기존 모델 결과](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/probe-existing-model/run-report.json): 288프레임, 278관측, 11그룹, 26클립, 9.612초, 최대 RSS 525,369,344B, 출력 829,357B. 원본은 26개 shot으로 나뉘고 생성 클립 26개 중 **22개가 3초 미만**이었다. 이 드라마의 빠른 shot/reverse shot에서 원본 컷을 제거하거나 다른 사람 구간을 이어 붙이는 것은 자동으로 안전하지 않다.
+
+## 정렬·채점 한계
+
+1초 GT의 `165초` 프레임은 `D_B`지만 바로 뒤 가장 가까운 5프레임 간격 표본은 컷을 넘은 `D_A`다. 잠금 GT를 바꾸지 않고 이 한 셀을 대조에서 제외했다. `311/312초`에는 실제 얼굴 옆의 **오토바이 바퀴** 검출이 있어 실제 얼굴 상자를 수동 대응시켰고 `321초`에는 두 얼굴 동시 출연 중 뒤쪽 `D_A` 상자를 대응시켰다. [대응 규칙과 개별 셀](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/score_source_grid.py)을 공개한다. 원본 grid에는 `81초 D_A`의 명확한 얼굴을 clear 목록에 넣지 않은 누락도 사후 발견했으며 GT를 조용히 수정하지 않았다. 이 수치는 **표시한 46개 셀의 희소 평가**이고 전체 얼굴 검출 recall로 확대하지 않는다.
+
+| 조건 | 같은 사람 pair TP/FN | 다른 사람 오합침 pair FP | pairwise precision/recall | B-cubed precision/recall |
+| --- | ---: | ---: | ---: | ---: |
+| 기존 YuNet/SFace, cosine 0.55 | 376/120 | **380** | 0.497/0.758 | 0.567/0.795 |
+| 저장 SFace 관측만 0.65 재묶기 | 306/190 | 0 | 1.000/0.617 | 1.000/0.654 |
+| 기존 YuNet 동일 상자 + 이전에 고정한 ArcFace cosine 0.30 | **496/0** | **0** | 1.000/1.000 | 1.000/1.000 |
+
+46개 대조 셀 중 45개가 관측과 대응했고 1개(`78초 D_A`)는 검출되지 않았다. pairwise/B-cubed는 대응된 45개만 대상으로 한다. 기존 SFace는 `D_A` 19개 모두와 `D_B` 20개를 `person_001`로 **잘못 합쳤고**, 나머지 `D_B` 6개를 다른 그룹으로 쪼갰다. 0.65로 올리면 이 영상의 오합침은 없어지지만 동일인 쪼개짐은 120→190쌍 증가한다. [0.55–0.80 저장 관측 비교](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/threshold-comparison.json). 앞선 별도 방송 영상의 **독립 60초**에서는 SFace 0.65도 오합침 14쌍을 그대로 남기고, 같은 사람 합친 쌍을 개발 90초에서 332→228로 줄였다. 따라서 0.65 전역 적용도 기각한다.
+
+ArcFace는 [사전 범위·hash·자원 잠금](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/arcface-fixed-holdout-plan.json) 뒤 이미 받은 공식 ONNX SHA-256 `f0a2e278b430372d308fef67c1aea308c2baf37f32e8908d9bfce035c26a3fb4`를 같은 278상자에서 사용했다. 이전 방송 영상 개발 GT에서 **이미 고정한** cosine 0.30과 별도 ArcFace config SHA-256 `e43af94246ef297e484a05a6dcc8c1d79dea2abfa8ba42d74`를 바꾸지 않았다. [실제 ArcFace 실행](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/probe-arcface-fixed/run-report.json): 288프레임/278특징, 상자 대응 278/278·최소 IoU 1.0, 6그룹, 18.57초, 최대 RSS 1,832,517,632B. [고정 기준 채점](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/arcface-fixed-score.json)에서 주요 두 인물은 위 희소 셀상 정확히 분리됐다. 그러나 **이전에 독립 방송 창 I1의 다른 두 남성 오합침 14쌍과 동일인 과분리가 남아 제품 채택 gate가 이미 실패**했다. 두 영상의 다른 결과는 범용 안정성을 증명하지 않는다. SFace와 ArcFace embedding/캐시/문턱을 섞지 않았다.
+
+대표 후보를 원본 crop으로 확인한 [진단 시트](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-source-first/representative-diagnostic.jpg)에서 기존 `person_004`는 바퀴, `person_006`은 후드/로고, `person_008`은 손/전화기다. 기존 `person_009`은 흐린 얼굴을 대표로 골랐다. 이는 확실한 비얼굴과 흐린 대표 사례이며 전체 nonface precision 또는 새 대표 선택 규칙의 성능 수치는 아니다. 사용자 요청대로 불확실/배경 관측을 자동 숨기는 정책을 적용하지 않았다.
+
+## 대표 얼굴 선명도 후보의 실제 동일 입력 비교
+
+`person_009`의 흐린 큰 얼굴은 상자 아래 자막의 선명한 글자 때문에 기존 **상자 전체** Laplacian 선명도가 1.0이었다. 실제 얼굴 안쪽 위쪽만 계산하면 같은 관측의 선명도가 0.026으로 내려갔다. 작은 편이지만 얼굴 자체가 선명한 `W3_obs_0000009`가 이 그룹의 새 대표로 올라오는 것을 원본 crop으로 확인했다. 이를 위해 W14 격리 worktree의 [OpenCV backend](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py)에서 `FaceDetection.sharpness`만 얼굴 안쪽으로 계산하고, clustering에 쓰는 기존 `quality`·모델 weight·검출 설정은 그대로 두었다. 선명도 의미가 바뀌어 backend config SHA를 `c4c4ce...`→`bca4dc55a1ac77e4afdf34f5eeb7c31a9bb484d01022a80d5ce0d270e2cf4710`로 분리했다. 기존 artifact/config 공간과 혼용하지 않는다.
+
+TDD에서 자막 고주파가 흐린 얼굴을 선명하다고 만드는 [회귀 테스트](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/clipper_face_core/tests/test_opencv_backend.py)는 이전 구현에서 `AssertionError`, 수정 뒤 통과했다. [새 코드/모델/GT SHA 잠금 계획](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-focus-v2/plan.json) SHA-256 `59d8738da471c3f9dd85e2414705433792916b2e830ad4874f2fbe8cdbcb220f`으로 같은 60초/288프레임을 다시 격리 추론했다. [실행 기록](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-focus-v2/probe-focus-v2/run-report.json): 278관측/11그룹/26클립, 9.473초, 최대 RSS 514,408,448B. [기존 대비](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-focus-v2/comparison.json) ID·track·shot·시간·bbox·quality·embedding·그룹 배정·clip 경계 **모두 동일**, sharpness 276/278개 변화, 대표 2/11그룹 변경. `person_009` 대표는 흐린 `W3_obs_0000074`→선명한 `W3_obs_0000009`; 혼합 그룹 `person_001`의 대표도 다른 실제 얼굴로 바뀌었으나 **그룹 오합침 자체는 해결되지 않는다**. 인물별 대표가 실제로 더 좋은지의 정량 평가와 원래 37분 영상 499그룹·Windows/W13 호환은 미검증이다.
+
+관련 core/Person fixture 없는 직접 테스트 24개, Ruff/compileall이 통과했다. 격리 venv에 `pytest`가 없어 전체 pytest 실행은 `No module named pytest`로 막혔고 fixture 필요 테스트 1개와 job 통합 테스트는 실행하지 않았다. 이 변경은 **격리 W14 Python 소스의 후보**이며 설치된 앱 모델/기존 완료 프로젝트·사용자 편집을 갱신하지 않았다. 다음 제품 작업에는 Person plugin venv fingerprint/새 config, 기존 대표 override 보존, W13의 Dance main/ROI/mapping/crop 및 Windows 패키징 호환을 먼저 검증해야 한다.
+
+사용자가 동일인 중복으로 지목한 기존 37분 결과의 `Person 5/6/8/13`도 저장 관측·원본 프레임을 **읽기만 하며** 새 선명도로 대표를 다시 계산했다. [범위와 결과](../../../../../../.worktrees/person-highlight-mvp-20261001/desktop/clipper_python/evaluation/2026-10-01-drama-focus-v2/original-user-groups-focus-check.json): `Person 6` 2,236관측의 대표가 자막 가장자리가 선명한 흐린 얼굴 `obs_0014640`→원본 crop에서 더 선명한 **같은 남성** `obs_0006522`로 바뀌었다. 나머지 `Person 5` 2관측, `Person 8` 152관측, `Person 13` 단일 관측의 대표는 그대로다. 이 오프라인 대조는 실제 재분석/저장/앱 표시가 아니며 **네 그룹의 과분리·오합침에는 효과가 없다**. 499개 전체 대표의 개선 비율이나 사용자 선호 평가는 여전히 미검증이다.
+
+## 판정·다음 검증
+
+제품 품질은 **불합격 유지**. 새 모델 교체, 전역 cosine 변경, 자동 clip 컷 결합, 비얼굴 자동 숨김은 적용하지 않는다. 저장된 37분 결과와 사용자 수정은 보존했다. 후속에는 (1) 정수 초가 아닌 **실제 분석 표본 프레임**의 원본 우선 라벨, (2) 배경·동시 출연이 있는 **새 영상**의 연속 인물/구간 GT, (3) 비얼굴 판별과 대표 얼굴 선명도를 각각 평가할 별도 후보, (4) shot과 사용자가 말하는 장면 단위의 경계 계약이 필요하다. 이 기록은 새 후보의 출시나 추가 모델 다운로드 승인이 아니다. W13 공통 API/adapter 소유와 compatibility gate는 기존 인계를 유지한다.

@@ -1,0 +1,31 @@
+{
+  "schema": "w13_retention_visibility_label_v1",
+  "status": "frozen_for_visible_performance_retention_only",
+  "source_video_id": "yFTAYXDTjqI",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_interval_sec": [0.0, 133.654059],
+  "evidence": {
+    "full_source_stills": "267 frames at 2 fps, timestamps 0.0 through 133.0 seconds",
+    "focused_stills": "4 fps over 15.0-38.75 and 50.0-65.75 seconds",
+    "quicktime": "existing local source opened and spot-checked; continuous frame-by-frame review not completed",
+    "existing_app_predictions_used_as_labels": false
+  },
+  "intervals": [
+    {"start_sec": 0.0, "end_sec": 5.0, "visibility": "definite_nonperformance", "score": true},
+    {"start_sec": 5.0, "end_sec": 6.0, "visibility": "boundary_review", "score": false},
+    {"start_sec": 6.0, "end_sec": 112.5, "visibility": "definite_visible_performance", "score": true},
+    {"start_sec": 112.5, "end_sec": 113.5, "visibility": "boundary_review", "score": false},
+    {"start_sec": 113.5, "end_sec": 133.654059, "visibility": "definite_nonperformance", "score": true}
+  ],
+  "scoring_contract": {
+    "unit": "source timeline seconds, half-open intervals",
+    "categories": ["exported_main", "exported_group", "reviewable_candidate", "unaddressed"],
+    "overlap_rule": "A source instant may belong to multiple categories; report each category duration and the union of all addressable categories separately.",
+    "review_candidate_rule": "A reviewable candidate contains source start/end and a drop reason; it is not an exported clip or a correct person assignment.",
+    "primary_metric": "unaddressed seconds within definite_visible_performance",
+    "secondary_metrics": ["reviewable_candidate seconds within definite_visible_performance", "reviewable_candidate seconds within definite_nonperformance", "review candidate count"],
+    "boundary_review_scoring": "exclude 5.0-6.0 and 112.5-113.5 seconds from metrics"
+  },
+  "excluded_claims": ["dance-active recall", "main-person accuracy", "main transition latency", "member identity precision", "unknown misassignment", "crop quality", "regression versus an earlier model"],
+  "frozen_for_scoring": true
+}

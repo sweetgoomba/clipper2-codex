@@ -1,0 +1,265 @@
+from __future__ import annotations
+
+from collections import defaultdict
+from dataclasses import dataclass
+from typing import Callable, Dict, List, Optional, Tuple
+import numpy as np
+import cv2
+
+from .segment import Segment
+
+
+@dataclass
+class SegmentFaceResult:
+    seg: Segment
+    track_embeddings: List[np.ndarray]   # track 단위 평균 임베딩
+    face_detected: bool
+
+
+def clamp_int(v: int, lo: int, hi: int) -> int:
+    return max(lo, min(hi, v))
+
+
+class FaceClusterService:
+    def __init__(self, config):
+        self.config = config
+        self._app = None
+        self._ensure_app()
+
+    def _ensure_app(self):
+        if self._app is not None:
+            return
+        from insightface.app import FaceAnalysis
+        app = FaceAnalysis(name=self.config.insightface_model, allowed_modules=["detection", "recognition"])
+        app.prepare(ctx_id=self.config.face_ctx_id, det_size=self.config.face_det_size)
+        self._app = app
+
+    def _l2(self, v: np.ndarray) -> np.ndarray:
+        n = float(np.linalg.norm(v) + 1e-9)
+        return v / n
+
+    def get_face_embedding(self, img_bgr: np.ndarray) -> Optional[np.ndarray]:
+        self._ensure_app()
+        faces = self._app.get(img_bgr)
+        if not faces:
+            return None
+        faces = sorted(faces, key=lambda f: float(f.det_score), reverse=True)
+        if float(faces[0].det_score) < float(self.config.face_min_det_score):
+            return None
+        emb = np.asarray(faces[0].embedding, dtype=np.float32)
+        return self._l2(emb)
+
+    def expand_face_roi(self, bbox: np.ndarray, w: int, h: int) -> Tuple[int, int, int, int]:
+        x1, y1, x2, y2 = bbox.astype(np.float32)
+        bw = float(x2 - x1)
+        bh = float(y2 - y1)
+
+        nx1 = int(x1 - bw * float(self.config.face_roi_expand_w))
+        nx2 = int(x2 + bw * float(self.config.face_roi_expand_w))
+
+        ny1 = int(y1 - bh * float(self.config.face_roi_expand_h_top))
+        ny2 = int(y2 + bh * float(self.config.face_roi_expand_h_bottom))
+
+        nx1 = clamp_int(nx1, 0, w - 1)
+        nx2 = clamp_int(nx2, 0, w - 1)
+        ny1 = clamp_int(ny1, 0, h - 1)
+        ny2 = clamp_int(ny2, 0, h - 1)
+
+        if nx2 <= nx1:
+            nx2 = min(w - 1, nx1 + 1)
+        if ny2 <= ny1:
+            ny2 = min(h - 1, ny1 + 1)
+
+        return nx1, ny1, nx2, ny2
+
+    def _sample_bboxes(
+        self,
+        bboxes: List[Tuple],
+        max_frames: int,
+    ) -> List[Tuple]:
+        """세그먼트 bbox 목록에서 최대 max_frames 개를 균등 간격으로 샘플링."""
+        n = len(bboxes)
+        if n <= max_frames:
+            return bboxes
+        indices = [int(i * n / max_frames) for i in range(max_frames)]
+        return [bboxes[i] for i in indices]
+
+    def batch_segment_embeddings(
+        self,
+        video_path: str,
+        segments: List[Segment],
+        on_progress: Optional[Callable[[int, int], None]] = None,
+    ) -> List[SegmentFaceResult]:
+        """
+        VideoCapture를 한 번만 열어 모든 세그먼트의 얼굴 임베딩을 추출.
+
+        - 세그먼트마다 cap을 재오픈하는 오버헤드 제거
+        - config.face_sample_frames 개로 bbox 균등 샘플링 (처리 시간 상한 보장)
+        - Sequential forward read: random seek 대신 cap.grab()으로 비대상 프레임
+          건너뜀 → H.264 seek 오버헤드(~1s/seek) 완전 제거
+        - on_progress(completed: int, total: int)
+        """
+        total = len(segments)
+        max_frames = int(self.config.face_sample_frames)
+        completed = 0
+
+        results: List[Optional[SegmentFaceResult]] = [None] * total
+
+        # 처리 대상: (t, bbox, track_id, seg_idx) 수집 및 시간순 정렬
+        tasks: List[Tuple[float, np.ndarray, int, int]] = []
+
+        for seg_idx, seg in enumerate(segments):
+            if seg.seg_type != "main" or not seg.bboxes:
+                results[seg_idx] = SegmentFaceResult(seg=seg, track_embeddings=[], face_detected=False)
+                completed += 1
+                if on_progress:
+                    on_progress(completed, total)
+                continue
+
+            sampled = self._sample_bboxes(seg.bboxes, max_frames)
+            for t, bbox, track_id in sampled:
+                tasks.append((float(t), bbox, int(track_id), seg_idx))
+
+        if not tasks:
+            return results  # type: ignore
+
+        # 시간순 정렬
+        tasks.sort(key=lambda x: x[0])
+
+        # 각 seg_idx의 마지막 task 위치 파악 → 그 시점에 on_progress 호출
+        last_task_pos: Dict[int, int] = {}
+        for i, (_, _, _, seg_idx) in enumerate(tasks):
+            last_task_pos[seg_idx] = i
+
+        # (seg_idx, track_id) → List[embedding]
+        seg_track_embs: Dict[Tuple[int, int], List[np.ndarray]] = defaultdict(list)
+
+        cap = cv2.VideoCapture(video_path)
+        if cap.isOpened():
+            vid_fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+
+            # 타임스탬프 → 프레임 인덱스로 변환 후 그룹화.
+            # t = fidx / fps 역산이므로 round()로 정확히 복원.
+            # 같은 frame_idx에 복수 task가 있으면 한 번 decode로 모두 처리.
+            frame_to_tasks: Dict[int, List[Tuple[int, np.ndarray, int, int]]] = {}
+            for task_i, (t, bbox, track_id, seg_idx) in enumerate(tasks):
+                fidx = int(round(t * vid_fps))
+                frame_to_tasks.setdefault(fidx, []).append(
+                    (task_i, bbox, track_id, seg_idx)
+                )
+
+            max_frame_idx = max(frame_to_tasks.keys())
+            cur_fidx = 0
+
+            while cur_fidx <= max_frame_idx:
+                if cur_fidx in frame_to_tasks:
+                    ret, frame = cap.read()
+                    if not ret:
+                        # 영상 조기 종료: 해당 프레임들의 progress 처리 후 중단
+                        for task_i, _, _, seg_idx in frame_to_tasks[cur_fidx]:
+                            if on_progress and last_task_pos.get(seg_idx) == task_i:
+                                completed += 1
+                                on_progress(completed, total)
+                        break
+                    fh, fw = frame.shape[:2]
+                    for task_i, bbox, track_id, seg_idx in frame_to_tasks[cur_fidx]:
+                        x1, y1, x2, y2 = self.expand_face_roi(bbox, fw, fh)
+                        roi = frame[y1:y2, x1:x2]
+                        if roi.size > 0:
+                            emb = self.get_face_embedding(roi)
+                            if emb is not None:
+                                seg_track_embs[(seg_idx, track_id)].append(emb)
+                        if on_progress and last_task_pos.get(seg_idx) == task_i:
+                            completed += 1
+                            on_progress(completed, total)
+                else:
+                    # 비대상 프레임: decode 없이 건너뜀 (seek 오버헤드 제거 핵심)
+                    if not cap.grab():
+                        break
+                cur_fidx += 1
+
+            cap.release()
+
+        # 세그먼트별 결과 조립
+        for seg_idx, seg in enumerate(segments):
+            if results[seg_idx] is not None:
+                continue  # 이미 처리됨 (non-main 세그먼트)
+
+            track_ids = {int(track_id) for _, _, track_id in seg.bboxes}
+            track_avg_embs: List[np.ndarray] = []
+
+            for tid in track_ids:
+                embs = seg_track_embs.get((seg_idx, tid), [])
+                if len(embs) < 2:
+                    continue
+                avg = np.mean(np.stack(embs), axis=0)
+                avg = self._l2(avg.astype(np.float32))
+                track_avg_embs.append(avg)
+
+            results[seg_idx] = SegmentFaceResult(
+                seg=seg,
+                track_embeddings=track_avg_embs,
+                face_detected=len(track_avg_embs) > 0,
+            )
+
+        return results  # type: ignore
+
+    def cluster_embeddings(self, embeddings: List[np.ndarray]) -> List[Optional[int]]:
+        if not embeddings:
+            return []
+
+        X = np.stack(embeddings, axis=0)
+
+        if self.config.cluster_method == "dbscan":
+            try:
+                from sklearn.cluster import DBSCAN
+            except Exception as e:
+                raise RuntimeError("cluster_method=dbscan 사용하려면 scikit-learn이 필요합니다.") from e
+
+            model = DBSCAN(
+                eps=float(self.config.dbscan_eps),
+                min_samples=int(self.config.dbscan_min_samples),
+                metric="cosine",
+            )
+            labels = model.fit_predict(X)
+
+        else:
+            try:
+                from sklearn.cluster import AgglomerativeClustering
+            except Exception as e:
+                raise RuntimeError("cluster_method=agglomerative 사용하려면 scikit-learn이 필요합니다.") from e
+
+            model = AgglomerativeClustering(
+                n_clusters=None,
+                metric="cosine",
+                linkage="average",
+                distance_threshold=float(self.config.cluster_distance_threshold),
+            )
+            labels = model.fit_predict(X)
+
+        out: List[Optional[int]] = []
+        for lab in labels:
+            if int(lab) < 0:
+                out.append(None)
+            else:
+                out.append(int(lab) + 1)
+
+        return out
+
+    def get_face_embedding_from_image_path(self, image_path: str) -> Optional[np.ndarray]:
+        # cv2.imread는 Windows에서 한글/유니코드 경로를 처리 못함
+        # np.fromfile + cv2.imdecode로 우회
+        try:
+            buf = np.fromfile(image_path, dtype=np.uint8)
+            img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
+        except Exception:
+            img = None
+        if img is None:
+            return None
+        return self.get_face_embedding(img)
+
+    def average_embeddings(self, embeddings: List[np.ndarray]) -> Optional[np.ndarray]:
+        if not embeddings:
+            return None
+        avg = np.mean(np.stack(embeddings), axis=0)
+        return self._l2(avg.astype(np.float32))

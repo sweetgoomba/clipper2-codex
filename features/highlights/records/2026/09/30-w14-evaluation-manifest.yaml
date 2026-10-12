@@ -1,0 +1,145 @@
+# W14 face-only 평가 준비안. status=blocked_inputs: 실행 승인 또는 측정 결과가 아님.
+schema_version: person-highlight-evaluation-proposal-v1
+created_date_kst: '2026-09-30'
+status: blocked_inputs
+purpose: 참조 없이 같은 영상의 익명 인물/등장 구간을 묶어 전체 인물 누락과 오합침·과분리를 평가
+primary_success_criteria_confirmed_2026_10_01:
+  - 주요·배경·단역의 인물 및 correctly grouped 등장 interval 누락 최소화
+  - 서로 다른 GT 인물을 동일 그룹에 넣는 false merge 최소화
+selection_rule: 두 1차 지표를 각각 보고하고 어느 한쪽의 악화를 다른 쪽의 개선으로 상쇄하지 않음; 불확실한 관측은 확인 필요로 보존
+selected_product_scope:
+  ui_direction: 클립 MP4·인물 전체 ZIP·전체 클립 ZIP 직접 다운로드
+  arbitrary_multi_select: false
+  joined_mp4: false  # 2026-10-01 사용자 결정
+  design_spec_reviewed: false
+repository:
+  python_local_head_read_only: 47782953228861f4bdbdc135265d067c2a826b0e
+  fetch_verified_origin_dev_sha: null
+  evaluation_adapter_sha: null
+runtime:
+  observed_host_os: macOS
+  observed_host_version: '27.0'
+  observed_host_arch: arm64
+  execution_os_version: null
+  execution_device: null  # CPU / CUDA와 provider를 실제 설치 환경에서 기록
+  physical_ram_bytes: null
+  process_tree_peak_rss_cap_bytes: null  # 시작 전 min(4 GiB, 물리 RAM 25%)로 수치 확정
+  swap_growth_abort_bytes: 1073741824
+  wall_clock_cap_seconds_per_inference: 900
+  max_total_inference_wall_seconds: 2700
+  output_bytes_cap: 2147483648
+  max_parallel_inference: 1
+  paid_external_api_calls: 0
+  new_model_downloads: 0
+  build5_runs: 0
+models:
+  detector:
+    id: opencv-yunet-face-detection
+    expected_filename: face_detection_yunet_2023mar.onnx
+    expected_sha256_from_code: 8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4
+    actual_file_path: null
+    actual_sha256: null
+  recognizer:
+    id: opencv-sface-face-recognition
+    expected_filename: face_recognition_sface_2021dec.onnx
+    expected_sha256_from_code: 0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79
+    actual_file_path: null
+    actual_sha256: null
+  opencv_runtime_version: null
+  package_lock_sha256: null
+  detector_config_hash: null
+  recognizer_preprocess_hash: null
+  grouping_config_hash_a: null
+  grouping_config_hash_b: null  # 하나의 grouping 기준만 A와 다르게 고정
+  embedding_space_id: null
+sampling:
+  initial_candidate_fps: 5  # 분석 cadence 후보; P3 짧은 등장 누락으로 검증
+  actual_fps: null
+  no_card_count_or_duration_filter: true
+  include_all_detected_background_and_bystanders: true
+inputs:
+  - id: P1
+    role: 인터뷰·토크 2~3명 반복 등장
+    absolute_path: null
+    source_sha256: null
+    source_stream_index: null
+    source_duration_ms: null
+    selected_interval_ms: null  # [start,end), <=120000
+    rights_and_local_use_confirmed: null
+    gt_label_path: null
+    gt_label_sha256: null
+  - id: P2
+    role: cut·재등장·동시 출연 3~6명
+    absolute_path: null
+    source_sha256: null
+    source_stream_index: null
+    source_duration_ms: null
+    selected_interval_ms: null
+    rights_and_local_use_confirmed: null
+    gt_label_path: null
+    gt_label_sha256: null
+  - id: P3
+    role: 주요 인물+짧은 배경/단역 등장
+    absolute_path: null
+    source_sha256: null
+    source_stream_index: null
+    source_duration_ms: null
+    selected_interval_ms: null
+    rights_and_local_use_confirmed: null
+    gt_label_path: null
+    gt_label_sha256: null
+gt_schema_required:
+  anonymous_person_id: 영상 내부 익명 ID; 실명 사용 금지
+  person_role: main | background | bystander
+  intervals: source PTS 기반 [startMs,endMs), face_visible·occluded·body_only 분리
+  shot_boundaries: source [startMs,endMs)
+  sample_frame_faces: frame PTS·사람 ID·face bbox; detection/matching 평가용
+  simultaneous_pairs: 같은 frame/scene에 다른 두 ID가 함께 있는 쌍
+  unknown_policy: 검출된 얼굴이나 GT ID를 사람이 확정할 수 없으면 별도 ambiguous 라벨
+  annotation_protocol: 라벨러·수정 시각·충돌 해소 규칙을 GT 파일에 기록
+run_plan:
+  inference: P1/P2/P3 각 1회, face-only 관측·embedding만 저장, MP4 export 없음, 최대 3회
+  grouping_a: 세 관측 artifact에 사전 고정된 기준 A 적용
+  grouping_b: 같은 세 관측/embedding에 기준 하나만 바꾼 B 적용
+  max_condition_results: 6
+  soft_filter_comparison: false
+  new_model_or_body_reid_or_speaker_fusion: false
+  threshold_values_locked_before_run: false
+  grouping_condition_to_change: null
+metrics:
+  joint_decision:
+    - 모든 인물/배경·단역별 correctly grouped interval recall과 false merge를 동등한 1차 판정으로 따로 제시
+    - A/B에서 한쪽 개선·다른 쪽 악화면 우승 조건 없음으로 표시하고 오류 사례와 수정 부담 검토
+    - uncertain coverage와 false split을 별도 제시하여 보수적 미합침의 비용을 숨기지 않음
+  detection:
+    - GT 모든 사람의 face-visible interval 대비 검출 관측 coverage
+    - main/background/bystander별 사람 단위 발견 recall과 interval-time recall
+    - body-only/occluded 전체 interval recall 별도 표기; face-only 보장 밖 누락 기록
+    - 모델 미검출/검출 후 임베딩 실패/uncertain 보존/UI 제외를 서로 분리
+  grouping:
+    - GT face observation과 예측 observation을 PTS+bbox로 매칭한 표본의 pairwise precision/recall/F1
+    - 같은 표본의 B-cubed precision/recall/F1; uncertain singleton과 assignment coverage 별도 표기
+    - false merge: 한 예측 그룹에 GT ID 둘 이상, 특히 동시 출연 쌍 위반 개수
+    - false split: 한 GT ID가 예측 그룹 둘 이상에 걸친 개수
+    - 배경·단역 포함 correctly grouped appearance interval-time recall
+  usability:
+    - 대표 이미지 선명도·가림·크기·실제 같은 사람 여부의 사람 평가
+    - 정해진 탐색 과제의 완료 시간·재배정/병합/분리/대표 변경 횟수
+  export_contract:
+    - 정확히 동일한 편집 source interval 중복 MP4/ZIP entry 0
+    - 같은 scene ID의 서로 다른 편집 경계 보존, 겹친 다른 구간 자동 union 0
+    - source audio·경계 PTS·취소/재개·edit revision/대표 override 보존
+resource_record:
+  - 각 phase wall time, CPU, process-tree peak RSS, CUDA 사용 시 별도 VRAM
+  - 분석 source-minutes, sampled/decoded frame 수, 검출/유효 embedding 수, 파일 크기
+  - model cold load와 warm grouping 처리 분리; 오류/중단 사유 기록
+output:
+  absolute_directory: null  # 예: 선택된 격리 Python worktree/evaluation/person-highlight/<run-id>
+  source_media_copy: false
+  artifacts: observations.jsonl, tracks.json, groups-a.json, groups-b.json, metrics.json, run-manifest.json
+stop_conditions:
+  - 입력 경로/hash/GT/권리·모델 실제 hash/OS-device/SHA/출력 위치 중 하나라도 미확정
+  - 추론 3회, 결과 6조건, trial 15분 또는 총 45분 상한 도달
+  - process-tree RSS 상한 초과, swap 1GiB 증가, UI 응답 불가 또는 출력 2GiB 초과
+  - 새 모델 다운로드/외부 유료 API/Build5 필요
+note: 현재 실제 실행 0회이며 수치·모델 품질·사용성 결과가 없다.

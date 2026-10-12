@@ -1,0 +1,14 @@
+{
+  "schema": "w13_motion_assisted_reserve_check_plan_v1",
+  "created_before_scoring_reserved_indices_with_this_candidate": true,
+  "pose_input": "saved MoveNet MultiPose Lightning 512-input run-01, no new inference",
+  "pose_sha256": "369e2fea3f04bee0a1158aa47d7988bb7f9a4b3cd95a9fe4e12eb5fd61a908d0",
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "reserve_plan_sha256": "65a6560f9255a52a5e6703c3f74dfa502277ec70e0670f84b2d2ff6317d6fddd",
+  "reserve_labels_sha256": "42369380a9d37cf787b70155535313041dd85cdee868c127cb7f820a7c1bb5fe",
+  "development_selection": "On earlier same-video source labels, beta 0.8 obtained 14/18 old holdout, 14/17 follow-up and 11/15 motion probe. Beta was selected from 0, 0.1, 0.2, 0.3, 0.5, 0.8 and 1.0 before opening reserve scores. These development figures are not independent verification.",
+  "candidate_rule": "Main score = 0.20*existing center + 0.35*existing bbox scale + 0.20*(existing static pose-energy/300) + 0.80*min(0.5, motion). Motion is median normalized keypoint displacement against frame index minus 20 after best previous bbox IoU >= 0.10, requiring at least five paired keypoints with confidence > 0.30. Missing motion contributes zero. Existing MainSelector switch thresholds/streak and bbox tracking stay fixed. Group flag is computed with existing 0.45-center score, independent of candidate main score, so the saved 512 group decision should be reproduced.",
+  "reserve_metric": "At 20 source-only strict solo frames, count selected bbox containing approximate lead torso point, and report raw detection, all five person strata, group flag on four group and 20 solo frames, source-frame continuity and raw segment length separately.",
+  "promotion_gate": "Reserve total must exceed the saved 512 baseline 8/20 and the static 0.20 candidate 11/20; blue P4 must be at least 2/4; green P1, red P3 and lavender P5 must not fall below their saved 512 baseline 3/4, 3/4, 2/4; group flags must match saved 512 because the group path is intentionally fixed. Even if this gate passes, no product replacement or clip-quality claim follows without temporal/identity/export checks.",
+  "limits": "One source, nearby frames, one reviewer aware of earlier failures, approximate torso points. This can nominate a same-video candidate only; it cannot estimate other-video accuracy."
+}

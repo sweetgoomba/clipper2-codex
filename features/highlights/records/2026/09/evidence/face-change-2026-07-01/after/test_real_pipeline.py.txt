@@ -1,0 +1,148 @@
+"""실제 영상으로 파이프라인을 돌리는 E2E 테스트.
+
+기본값으로 skip. 다음 환경변수 지정 시 동작:
+- `CLIPPER_E2E_DIALOG_VIDEO` — 대사 포함 영상 경로 (dialog_highlight 테스트용)
+- `CLIPPER_E2E_DANCE_VIDEO`  — 안무 영상 경로 (dance_highlight 테스트용)
+- `CLIPPER_E2E_OUTPUT_ROOT`  — 산출물 출력 루트(선택). 지정 시 `<루트>/dialog/`,
+  `<루트>/dance/`에 결과물 남김(테스트 후에도 보존돼 사용자가 직접 검증 가능).
+  미지정 시 `tmp_path`를 써서 테스트 종료와 함께 정리.
+
+실행 예:
+    export CLIPPER_E2E_DIALOG_VIDEO=/path/to/talk.mp4
+    export CLIPPER_E2E_OUTPUT_ROOT=/tmp/clipper_e2e_out
+    uv run --extra test pytest tests/e2e/test_real_pipeline.py -v -s
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import time
+import urllib.error
+import urllib.request
+import uuid
+from pathlib import Path
+
+import pytest
+
+
+PIPELINE_TIMEOUT_SEC = 1800.0  # 30분
+
+
+def _resolve_output_dir(subdir: str, tmp_path: Path) -> Path:
+    """env var 지정 시 고정 경로, 미지정 시 tmp_path.
+
+    고정 경로는 테스트 후에도 보존되어 사용자가 직접 산출물 검증 가능.
+    """
+    fixed = os.environ.get("CLIPPER_E2E_OUTPUT_ROOT", "").strip()
+    if fixed:
+        out = Path(fixed) / subdir
+        out.mkdir(parents=True, exist_ok=True)
+        return out
+    out = tmp_path / f"{subdir}_output"
+    out.mkdir(parents=True, exist_ok=True)
+    return out
+
+
+def _http(method: str, url: str, payload: dict | None = None, timeout: float = 10.0):
+    data = json.dumps(payload).encode() if payload is not None else None
+    req = urllib.request.Request(
+        url,
+        data=data,
+        method=method,
+        headers={"Content-Type": "application/json"} if payload else {},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = resp.read().decode()
+            return resp.status, json.loads(body) if body else None
+    except urllib.error.HTTPError as exc:
+        return exc.code, json.loads(exc.read().decode() or "null")
+
+
+def _wait_for_job_done(port: int, job_id: str, timeout: float) -> dict:
+    """active_jobs가 0이 될 때까지 폴링."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        status, body = _http("GET", f"http://127.0.0.1:{port}/health")
+        assert status == 200
+        if body["active_jobs"] == 0:
+            return body
+        time.sleep(2.0)
+    pytest.fail(f"job {job_id} did not finish within {timeout}s")
+
+
+@pytest.mark.skipif(
+    not os.environ.get("CLIPPER_E2E_DIALOG_VIDEO"),
+    reason="CLIPPER_E2E_DIALOG_VIDEO 미설정",
+)
+def test_dialog_highlight_real_pipeline(plugin_process, free_port, tmp_path):
+    video_path = Path(os.environ["CLIPPER_E2E_DIALOG_VIDEO"])
+    assert video_path.exists(), f"video not found: {video_path}"
+
+    plugin_process("dialog_highlight", free_port, idle_timeout=0.0)
+
+    output_root = _resolve_output_dir("dialog", tmp_path)
+    print(f"\n[dialog] output_root={output_root}")
+
+    job_id = f"real-{uuid.uuid4().hex[:8]}"
+    status, body = _http(
+        "POST",
+        f"http://127.0.0.1:{free_port}/jobs",
+        payload={
+            "job_id": job_id,
+            "params": {
+                "video_path": str(video_path),
+                "output_root": str(output_root),
+            },
+        },
+        timeout=30.0,
+    )
+    assert status == 200 and body["status"] == "queued"
+
+    _wait_for_job_done(free_port, job_id, PIPELINE_TIMEOUT_SEC)
+
+    # 출력 산출물 확인: manifest.json 생성 여부
+    manifest_path = output_root / "json" / "manifest.json"
+    assert manifest_path.exists(), f"pipeline output missing: {manifest_path}"
+
+    with open(manifest_path) as f:
+        manifest = json.load(f)
+    assert isinstance(manifest, dict)
+
+
+@pytest.mark.skipif(
+    not os.environ.get("CLIPPER_E2E_DANCE_VIDEO"),
+    reason="CLIPPER_E2E_DANCE_VIDEO 미설정",
+)
+def test_dance_highlight_real_pipeline(plugin_process, free_port, tmp_path):
+    video_path = Path(os.environ["CLIPPER_E2E_DANCE_VIDEO"])
+    assert video_path.exists(), f"video not found: {video_path}"
+
+    plugin_process("dance_highlight", free_port, idle_timeout=0.0)
+
+    output_root = _resolve_output_dir("dance", tmp_path)
+    print(f"\n[dance] output_root={output_root}")
+
+    job_id = f"real-{uuid.uuid4().hex[:8]}"
+    status, body = _http(
+        "POST",
+        f"http://127.0.0.1:{free_port}/jobs",
+        payload={
+            "job_id": job_id,
+            "params": {
+                "video_path": str(video_path),
+                "output_root": str(output_root),
+                "project_id": 0,
+            },
+        },
+        timeout=30.0,
+    )
+    assert status == 200 and body["status"] == "queued"
+
+    _wait_for_job_done(free_port, job_id, PIPELINE_TIMEOUT_SEC)
+
+    # 안무 파이프라인은 dance_meta에서 자체 메타를 반환.
+    # 최소 요건: output_root 내부에 어떤 산출물이든 생성됐는지 확인
+    produced_any = any(output_root.rglob("*"))
+    assert produced_any, f"dance pipeline produced no output in {output_root}"

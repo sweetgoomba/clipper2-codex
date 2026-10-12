@@ -1,0 +1,125 @@
+diff --git a/plugins/dance_highlight/dance_highlight/services/pipeline.py b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+index de9a9e3..c2ab9c0 100644
+--- a/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -215,6 +215,8 @@ class DancePipeline:
+         cluster_centroids: Dict[int, np.ndarray],
+         ref_embs: Dict[str, np.ndarray],
+         threshold: float = 0.60,
++        duplicate_threshold: float = 0.45,
++        duplicate_margin: float = 0.08,
+     ) -> Dict[int, str]:
+         if not cluster_centroids or not ref_embs:
+             print(f"[MAP] skipped cluster_centroids={len(cluster_centroids)} ref_embs={len(ref_embs)}", flush=True)
+@@ -242,6 +244,8 @@ class DancePipeline:
+ 
+         assigned_clusters: set[int] = set()
+         assigned_members: set[str] = set()
++        # 멤버별 '주인(primary)' 클러스터까지의 거리. 아래 폴백의 중복 배정 판정 기준이 된다.
++        primary_dist: Dict[str, float] = {}
+         candidate_pairs = sorted(
+             (
+                 (dist, cid, member_name)
+@@ -252,19 +256,43 @@ class DancePipeline:
+             key=lambda item: item[0],
+         )
+ 
+-        for _dist, cid, member_name in candidate_pairs:
++        for dist, cid, member_name in candidate_pairs:
+             if cid in assigned_clusters or member_name in assigned_members:
+                 continue
+             mapping[cid] = member_name
+             assigned_clusters.add(cid)
+             assigned_members.add(member_name)
++            primary_dist[member_name] = dist
+ 
++        # 폴백: 위에서 못 붙은 클러스터. 한 사람이 각도·조명 탓에 여러 클러스터로 쪼개지는
++        # 경우를 살리려면 중복 배정이 필요하지만, 조건 없이 허용하면 참조 멤버가 1명일 때
++        # 임계값 안에 든 남의 클러스터까지 전부 그 한 명에게 빨려든다. 그래서 이미 주인
++        # 클러스터가 있는 멤버에 덧붙일 때는 '그 주인만큼 닮았을 때'만 붙인다.
+         for cid, candidates in cluster_candidates.items():
+             if cid in assigned_clusters or not candidates:
+                 continue
+             best_name, best_dist = candidates[0]
+-            if best_dist <= threshold:
++            if best_dist > threshold:
++                continue
++
++            if best_name not in assigned_members:
+                 mapping[cid] = best_name
++                assigned_clusters.add(cid)
++                assigned_members.add(best_name)
++                primary_dist[best_name] = best_dist
++                continue
++
++            limit = min(duplicate_threshold, primary_dist[best_name] + duplicate_margin)
++            if best_dist > limit:
++                print(
++                    f"[MAP] dup_rejected cluster={cid} member={best_name}"
++                    f" dist={best_dist:.4f} limit={limit:.4f}",
++                    flush=True,
++                )
++                continue
++
++            mapping[cid] = best_name
++            assigned_clusters.add(cid)
+ 
+         print(f"[MAP] final_mapping={mapping}", flush=True)
+         return mapping
+diff --git a/tests/test_dance_cluster_member_mapping.py b/tests/test_dance_cluster_member_mapping.py
+index e448722..eca6279 100644
+--- a/tests/test_dance_cluster_member_mapping.py
++++ b/tests/test_dance_cluster_member_mapping.py
+@@ -28,3 +28,52 @@ def test_cluster_mapping_assigns_distinct_members_before_duplicate_matches() ->
+     )
+ 
+     assert mapping == {1: "A", 2: "B"}
++
++
++def test_single_reference_does_not_absorb_every_cluster() -> None:
++    """참조 멤버가 1명일 때, 임계값 안이라는 이유만으로 모든 클러스터가 흡수되면 안 된다."""
++    pipeline = DancePipeline.__new__(DancePipeline)
++
++    mapping = pipeline._map_cluster_to_member_name(
++        cluster_centroids={
++            1: _unit(0.85, 0.0),   # dist 0.15 — 본인
++            2: _unit(0.50, 0.0),   # dist 0.50 — 남 (0.60 이내지만 본인과 한참 멀다)
++            3: _unit(0.42, 0.0),   # dist 0.58 — 남
++        },
++        ref_embs={"A": np.array([1.0, 0.0, 0.0], dtype=np.float32)},
++        threshold=0.60,
++    )
++
++    assert mapping == {1: "A"}
++
++
++def test_split_clusters_of_same_person_still_merge() -> None:
++    """같은 사람이 두 클러스터로 쪼개진 경우는 계속 한 멤버로 묶여야 한다."""
++    pipeline = DancePipeline.__new__(DancePipeline)
++
++    mapping = pipeline._map_cluster_to_member_name(
++        cluster_centroids={
++            1: _unit(0.85, 0.0),   # dist 0.15
++            2: _unit(0.80, 0.0),   # dist 0.20 — 주인(0.15) + 마진(0.08) 이내
++        },
++        ref_embs={"A": np.array([1.0, 0.0, 0.0], dtype=np.float32)},
++        threshold=0.60,
++    )
++
++    assert mapping == {1: "A", 2: "A"}
++
++
++def test_duplicate_absolute_ceiling_wins_over_margin() -> None:
++    """주인이 멀면 마진만으로 붙지 않는다 — 절대 상한(0.45)이 먼저 막는다."""
++    pipeline = DancePipeline.__new__(DancePipeline)
++
++    mapping = pipeline._map_cluster_to_member_name(
++        cluster_centroids={
++            1: _unit(0.60, 0.0),   # dist 0.40 — 주인
++            2: _unit(0.53, 0.0),   # dist 0.47 — 마진(0.48)엔 들지만 상한 0.45 초과
++        },
++        ref_embs={"A": np.array([1.0, 0.0, 0.0], dtype=np.float32)},
++        threshold=0.60,
++    )
++
++    assert mapping == {1: "A"}

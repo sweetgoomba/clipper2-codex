@@ -1,0 +1,174 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import numpy as np
+
+from dance_highlight.services.face_cluster import FaceClusterService
+from dance_highlight.services.segment import Segment
+
+
+@dataclass
+class DummyConfig:
+    face_det_size: tuple[int, int] = (320, 320)
+    face_min_det_score: float = 0.28
+    face_nms_threshold: float = 0.3
+    face_top_k: int = 5000
+    face_roi_expand_w: float = 0.0
+    face_roi_expand_h_top: float = 0.0
+    face_roi_expand_h_bottom: float = 0.0
+    face_sample_frames: int = 5
+    face_candidate_sample_frames: int = 12
+
+
+class FakeDetector:
+    def __init__(self, faces: np.ndarray | None) -> None:
+        self.faces = faces
+        self.input_size: tuple[int, int] | None = None
+
+    def setInputSize(self, size: tuple[int, int]) -> None:
+        self.input_size = size
+
+    def detect(self, _img: np.ndarray):
+        return 1, self.faces
+
+
+class FakeRecognizer:
+    def __init__(self, feature: np.ndarray) -> None:
+        self.feature_value = feature
+        self.aligned_shape: tuple[int, ...] | None = None
+
+    def alignCrop(self, img: np.ndarray, _face: np.ndarray) -> np.ndarray:
+        self.aligned_shape = img.shape
+        return img
+
+    def feature(self, _aligned: np.ndarray) -> np.ndarray:
+        return self.feature_value
+
+
+class FrameScoreDetector:
+    def setInputSize(self, _size: tuple[int, int]) -> None:
+        pass
+
+    def detect(self, img: np.ndarray):
+        frame_id = int(img[0, 0, 0])
+        score = 0.10 + frame_id * 0.07
+        face = np.array([[0, 0, 10, 10, 1, 1, 8, 1, 5, 5, 2, 8, 8, 8, score]], dtype=np.float32)
+        return 1, face
+
+
+class FrameFeatureRecognizer:
+    def alignCrop(self, img: np.ndarray, _face: np.ndarray) -> np.ndarray:
+        return img
+
+    def feature(self, aligned: np.ndarray) -> np.ndarray:
+        frame_id = float(aligned[0, 0, 0])
+        return np.array([[1.0, frame_id]], dtype=np.float32)
+
+
+class FakeVideoCapture:
+    def __init__(self, total_frames: int = 12, fps: float = 1.0) -> None:
+        self.total_frames = total_frames
+        self.fps = fps
+        self.index = 0
+
+    def isOpened(self) -> bool:
+        return True
+
+    def get(self, prop: int) -> float:
+        if prop == 5:  # cv2.CAP_PROP_FPS
+            return self.fps
+        return 0.0
+
+    def read(self):
+        if self.index >= self.total_frames:
+            return False, None
+        frame = np.full((24, 24, 3), self.index, dtype=np.uint8)
+        self.index += 1
+        return True, frame
+
+    def grab(self) -> bool:
+        if self.index >= self.total_frames:
+            return False
+        self.index += 1
+        return True
+
+    def release(self) -> None:
+        pass
+
+
+def make_service(detector: FakeDetector, recognizer: FakeRecognizer) -> FaceClusterService:
+    service = FaceClusterService.__new__(FaceClusterService)
+    service.config = DummyConfig()
+    service._detector = detector
+    service._recognizer = recognizer
+    return service
+
+
+def test_get_face_embedding_uses_opencv_detector_and_normalizes_feature() -> None:
+    # OpenCV YuNet face row: x, y, w, h, five landmarks, score.
+    faces = np.array([[0, 0, 10, 10, 1, 1, 8, 1, 5, 5, 2, 8, 8, 8, 0.95]], dtype=np.float32)
+    detector = FakeDetector(faces)
+    recognizer = FakeRecognizer(np.array([[3.0, 4.0]], dtype=np.float32))
+    service = make_service(detector, recognizer)
+
+    emb = service.get_face_embedding(np.zeros((24, 32, 3), dtype=np.uint8))
+
+    assert detector.input_size == (32, 24)
+    assert recognizer.aligned_shape == (24, 32, 3)
+    assert emb is not None
+    np.testing.assert_allclose(emb, np.array([0.6, 0.8], dtype=np.float32), rtol=1e-6)
+
+
+def test_get_face_embedding_rejects_below_threshold_face() -> None:
+    faces = np.array([[0, 0, 10, 10, 1, 1, 8, 1, 5, 5, 2, 8, 8, 8, 0.10]], dtype=np.float32)
+    service = make_service(
+        FakeDetector(faces),
+        FakeRecognizer(np.array([[3.0, 4.0]], dtype=np.float32)),
+    )
+
+    assert service.get_face_embedding(np.zeros((24, 32, 3), dtype=np.uint8)) is None
+
+
+def test_get_face_embedding_returns_none_when_no_face_detected() -> None:
+    service = make_service(
+        FakeDetector(None),
+        FakeRecognizer(np.array([[3.0, 4.0]], dtype=np.float32)),
+    )
+
+    assert service.get_face_embedding(np.zeros((24, 32, 3), dtype=np.uint8)) is None
+
+
+def test_batch_segment_embeddings_scans_candidate_frames_and_averages_top_quality(monkeypatch) -> None:
+    service = FaceClusterService.__new__(FaceClusterService)
+    service.config = DummyConfig(face_min_det_score=0.0)
+    service._detector = FrameScoreDetector()
+    service._recognizer = FrameFeatureRecognizer()
+    monkeypatch.setattr(
+        "dance_highlight.services.face_cluster.cv2.VideoCapture",
+        lambda _path: FakeVideoCapture(),
+    )
+
+    segment = Segment(
+        seg_type="main",
+        label=7,
+        start=0.0,
+        end=11.0,
+        bboxes=[
+            (float(i), np.array([0, 0, 20, 20], dtype=np.float32), 7)
+            for i in range(12)
+        ],
+    )
+
+    results = service.batch_segment_embeddings("fake.mp4", [segment])
+
+    top_frame_embeddings = []
+    for frame_id in range(7, 12):
+        emb = np.array([1.0, float(frame_id)], dtype=np.float32)
+        top_frame_embeddings.append(emb / (np.linalg.norm(emb) + 1e-9))
+    expected = np.mean(np.stack(top_frame_embeddings), axis=0)
+    expected = expected / (np.linalg.norm(expected) + 1e-9)
+
+    assert results[0].face_detected is True
+    assert len(results[0].track_embeddings) == 1
+    np.testing.assert_allclose(results[0].track_embeddings[0], expected, rtol=1e-6)

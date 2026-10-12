@@ -1,0 +1,765 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Any
+import json
+import os
+import requests
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# AV1(libdav1d) 멀티스레드 크래시 방지: VideoCapture 열기 전에 설정
+os.environ.setdefault('OPENCV_FFMPEG_THREAD_COUNT', '1')
+
+import cv2
+import numpy as np
+
+from .config import DanceConfig
+from .protocols import PoseAnalyzer, FaceClusterer, Renderer, MetaBuilder, SegmentFaceResultLike
+from .track import TrackAssigner
+from .segment import (
+    MainSelector,
+    FrameRec,
+    Segment,
+    build_raw_main_segments,
+    build_raw_group_segments,
+    smooth_main_segments,
+    smooth_group_segments,
+)
+from .dance_meta import DanceClipItem
+from collections import Counter, defaultdict
+
+def _safe_filename(name: str) -> str:
+    """파일명으로 안전한 문자열로 변환."""
+    import re
+    import unicodedata
+    s = unicodedata.normalize("NFC", (name or "").strip())
+    s = s.replace("\\", " ").replace("/", " ")
+    s = re.sub(r"[<>:\"|?*\x00-\x1F]", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    if not s:
+        s = "untitled"
+    return s
+
+
+class DancePipeline:
+    """안무 하이라이트 파이프라인 오케스트레이터.
+
+    모든 의존성은 Protocol 타입으로 받는다.
+    구체 구현은 외부에서 주입하거나 create_default_pipeline() 팩토리로 생성.
+    """
+
+    def __init__(
+        self,
+        config: DanceConfig,
+        pose: PoseAnalyzer,
+        face: FaceClusterer,
+        render: Renderer,
+        meta_builder: MetaBuilder,
+    ):
+        self.config = config
+        self.pose = pose
+        self.face = face
+        self.render = render
+        self.meta_builder = meta_builder
+
+    def analyze_video_to_records(
+        self,
+        video_path: str,
+        frame_progress_cb=None,
+    ) -> Tuple[List[FrameRec], float, float]:
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            raise RuntimeError(f"cannot open video: {video_path}")
+
+        fps = float(cap.get(cv2.CAP_PROP_FPS) or 30.0)
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        duration = (total_frames / fps) if total_frames > 0 else 0.0
+
+        selector = MainSelector(fps=fps)
+        tracker = TrackAssigner(
+            track_match_iou=self.config.track_match_iou,
+            track_ttl_sec=self.config.track_ttl_sec,
+        )
+
+        recs: List[FrameRec] = []
+        fidx = 0
+        report_every = max(1, int(self.config.analyze_skip) * 30)
+        last_reported = -1
+
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            if (fidx % int(self.config.analyze_skip)) != 0:
+                fidx += 1
+                continue
+
+            t = float(fidx) / fps
+            persons = self.pose.run_pose_on_frame(frame)
+            main, is_group = selector.select(persons, frame.shape)
+
+            if main is None:
+                recs.append(FrameRec(t=t, main_id=None, main_bbox=None, is_group=bool(is_group)))
+            else:
+                mid = tracker.assign(t, main["bbox"])
+                recs.append(FrameRec(t=t, main_id=int(mid), main_bbox=main["bbox"], is_group=bool(is_group)))
+
+            if frame_progress_cb and total_frames > 0 and fidx % report_every == 0:
+                ratio = min(fidx / total_frames, 1.0)
+                bucket = int(ratio * 10)
+                if bucket != last_reported:
+                    last_reported = bucket
+                    frame_progress_cb(ratio)
+
+            fidx += 1
+
+        cap.release()
+        return recs, fps, float(duration)
+    
+    def _download_reference_images(
+        self,
+        project_root: Path,
+        dance_setup: Optional[Dict[str, Any]],
+    ) -> Dict[str, List[Path]]:
+        if not dance_setup:
+            return {}
+
+        members = dance_setup.get("members", []) or []
+        out: Dict[str, List[Path]] = {}
+
+        refs_root = project_root / "refs" / "dance"
+        refs_root.mkdir(parents=True, exist_ok=True)
+
+        for member in members:
+            member_name = (
+                member.get("memberName")
+                or member.get("memberKey")
+                or "member"
+            )
+            member_key = _safe_filename(member_name).lower().replace(" ", "_")
+            member_dir = refs_root / member_key
+            member_dir.mkdir(parents=True, exist_ok=True)
+
+            saved_paths: List[Path] = []
+            for idx, image_url in enumerate(member.get("selectedImages", []) or []):
+                try:
+                    ext = Path(image_url.split("?")[0]).suffix.lower() or ".jpg"
+                    if ext not in [".jpg", ".jpeg", ".png", ".webp"]:
+                        ext = ".jpg"
+
+                    save_path = member_dir / f"ref_{idx:02d}{ext}"
+
+                    if not save_path.exists():
+                        resp = requests.get(image_url, timeout=15)
+                        resp.raise_for_status()
+                        save_path.write_bytes(resp.content)
+
+                    saved_paths.append(save_path)
+                except Exception:
+                    continue
+
+            if saved_paths:
+                out[member_name] = saved_paths
+
+        return out
+
+    def _build_reference_embeddings(
+        self,
+        ref_image_paths: Dict[str, List[Path]],
+    ) -> Dict[str, np.ndarray]:
+        ref_embs: Dict[str, np.ndarray] = {}
+
+        for member_name, paths in ref_image_paths.items():
+            embs: List[np.ndarray] = []
+
+            for p in paths:
+                emb = self.face.get_face_embedding_from_image_path(str(p))
+                if emb is not None:
+                    embs.append(emb)
+
+            print(f"[REF] member={member_name} total_images={len(paths)} valid_face_embs={len(embs)}", flush=True)
+
+            avg = self.face.average_embeddings(embs)
+            if avg is not None:
+                ref_embs[member_name] = avg
+
+        print(f"[REF] built_ref_embeddings={list(ref_embs.keys())}", flush=True)
+        return ref_embs
+
+    def _cluster_centroids_from_tracks(
+        self,
+        labels: List[Optional[int]],
+        all_embs: List[np.ndarray],
+    ) -> Dict[int, np.ndarray]:
+        cluster_to_embs = defaultdict(list)
+
+        for lab, emb in zip(labels, all_embs):
+            if lab is None:
+                continue
+            cluster_to_embs[int(lab)].append(emb)
+
+        centroids: Dict[int, np.ndarray] = {}
+        for cid, embs in cluster_to_embs.items():
+            if not embs:
+                continue
+            centroid = np.mean(np.stack(embs), axis=0)
+            centroid = centroid / (np.linalg.norm(centroid) + 1e-9)
+            centroids[cid] = centroid.astype(np.float32)
+
+        return centroids
+
+    def _map_cluster_to_member_name(
+        self,
+        cluster_centroids: Dict[int, np.ndarray],
+        ref_embs: Dict[str, np.ndarray],
+        threshold: float = 0.60,
+    ) -> Dict[int, str]:
+        if not cluster_centroids or not ref_embs:
+            print(f"[MAP] skipped cluster_centroids={len(cluster_centroids)} ref_embs={len(ref_embs)}", flush=True)
+            return {}
+
+        mapping: Dict[int, str] = {}
+
+        for cid, cent in cluster_centroids.items():
+            best_name = None
+            best_dist = 999.0
+
+            for member_name, ref_emb in ref_embs.items():
+                dist = 1 - float(np.dot(cent, ref_emb))
+                print(f"[MAP] cluster={cid} candidate={member_name} dist={dist:.4f}", flush=True)
+
+                if dist < best_dist:
+                    best_dist = dist
+                    best_name = member_name
+
+            print(f"[MAP] cluster={cid} best_name={best_name} best_dist={best_dist:.4f} threshold={threshold}", flush=True)
+
+            if best_name is not None and best_dist <= threshold:
+                mapping[cid] = best_name
+
+        print(f"[MAP] final_mapping={mapping}", flush=True)
+        return mapping
+    
+
+    def _segment_overlap_ratio(self, a_start: float, a_end: float, b_start: float, b_end: float) -> float:
+        inter = max(0.0, min(a_end, b_end) - max(a_start, b_start))
+        dur = max(1e-9, a_end - a_start)
+        return inter / dur
+
+    def _filter_group_like_main_segments(
+        self,
+        main_segs: List[Segment],
+        group_segs: List[Segment],
+        overlap_threshold: float = 0.6,
+        keep_short_intro_sec: float = 3.2,
+    ) -> List[Segment]:
+        if not main_segs or not group_segs:
+            return main_segs
+
+        filtered: List[Segment] = []
+
+        for seg in main_segs:
+            seg_dur = float(seg.end - seg.start)
+
+            if seg.start < 12.0 and seg_dur <= keep_short_intro_sec:
+                filtered.append(seg)
+                continue
+
+            max_overlap = 0.0
+            for g in group_segs:
+                ov = self._segment_overlap_ratio(seg.start, seg.end, g.start, g.end)
+                if ov > max_overlap:
+                    max_overlap = ov
+
+            if max_overlap >= overlap_threshold:
+                print(
+                    f"[GROUP-FILTER] drop main seg start={seg.start:.3f} end={seg.end:.3f} "
+                    f"dur={seg_dur:.3f} overlap={max_overlap:.3f}",
+                    flush=True
+                )
+                continue
+
+            filtered.append(seg)
+
+        print(
+            f"[GROUP-FILTER] main_before={len(main_segs)} main_after={len(filtered)} group_count={len(group_segs)}",
+            flush=True
+        )
+        return filtered
+    
+    def run(
+        self,
+        project_root: Path,
+        input_video: Path,
+        project_id: int,
+        progress_cb: Optional[callable] = None,
+        dance_setup: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+
+        def _progress(p: int, msg: str):
+            if progress_cb:
+                try:
+                    progress_cb(int(p), str(msg))
+                except Exception:
+                    pass
+
+        def _fmt(sec: float) -> str:
+            """초 → '1m 23.4s' 형식"""
+            m = int(sec) // 60
+            s = sec - m * 60
+            return f"{m}m {s:.1f}s" if m else f"{s:.1f}s"
+
+        _t_total = time.perf_counter()
+        _timings: dict = {}
+
+        project_root = project_root.resolve()
+        input_video = input_video.resolve()
+
+        print("[DANCE] step: download_reference_images start", flush=True)
+        _t = time.perf_counter()
+        ref_image_paths = self._download_reference_images(project_root, dance_setup)
+        _timings["download_refs"] = time.perf_counter() - _t
+        print(f"[DANCE] step: download_reference_images done, count={len(ref_image_paths)}", flush=True)
+        print(f"[DANCE][T] download_refs: {_fmt(_timings['download_refs'])}", flush=True)
+
+        clips_root = project_root / self.config.clips_dir_rel
+        renders_root = project_root / self.config.renders_dir_rel
+        json_root = project_root / self.config.json_dir_rel
+        clips_main_dir = clips_root / "main"
+        clips_group_dir = clips_root / "group"
+
+        clips_main_dir.mkdir(parents=True, exist_ok=True)
+        clips_group_dir.mkdir(parents=True, exist_ok=True)
+        renders_root.mkdir(parents=True, exist_ok=True)
+        json_root.mkdir(parents=True, exist_ok=True)
+
+        def _frame_progress_cb(ratio: float):
+            p = int(10 + ratio * 10)  # 10% → 20%
+            _progress(p, "영상 프레임을 분석하고 있습니다")
+
+        # analyze_video_to_records(YOLO/torch CUDA)를 먼저 실행해 torch CUDA context를 선점.
+        # InsightFace(onnxruntime)가 cudaSetDevice(-1) 실패로 sticky CUDA error를 남기기 전에
+        # torch CUDA가 초기화되어야 이후 YOLO Conv2d crash를 방지할 수 있음.
+        print("[DANCE] step: analyze_video_to_records start", flush=True)
+        _progress(10, "영상 프레임을 분석하고 있습니다")
+        _t = time.perf_counter()
+        recs, fps, duration = self.analyze_video_to_records(str(input_video), frame_progress_cb=_frame_progress_cb)
+        _timings["yolo"] = time.perf_counter() - _t
+        print(
+            f"[DANCE] step: analyze_video_to_records done, frames={len(recs)}", flush=True
+        )
+        print(
+            f"[DANCE][T] yolo: {_fmt(_timings['yolo'])}"
+            f"  (frames={len(recs)}, video={_fmt(duration)}, fps={fps:.1f})",
+            flush=True,
+        )
+
+        _t = time.perf_counter()
+        ref_embs = self._build_reference_embeddings(ref_image_paths)
+        _timings["ref_embs"] = time.perf_counter() - _t
+        print(f"[DANCE] step: build_reference_embeddings done, embs={list(ref_embs.keys())}", flush=True)
+        print(f"[DANCE][T] ref_embeddings: {_fmt(_timings['ref_embs'])}", flush=True)
+        _progress(20, "영상 프레임을 분석하고 있습니다")
+
+        _t = time.perf_counter()
+        raw_main = build_raw_main_segments(recs)
+        raw_group = build_raw_group_segments(recs)
+
+        main_segs = smooth_main_segments(
+            raw_main,
+            min_main_seg_sec=self.config.min_main_seg_sec,
+            bridge_gap_sec=self.config.bridge_gap_sec,
+            merge_gap_sec=self.config.merge_gap_sec,
+        )
+        group_segs = smooth_group_segments(
+            raw_group,
+            min_group_seg_sec=self.config.min_group_seg_sec,
+            merge_gap_sec=self.config.merge_gap_sec,
+        )
+
+        main_segs = self._filter_group_like_main_segments(
+            main_segs=main_segs,
+            group_segs=group_segs,
+            overlap_threshold=0.6,
+            keep_short_intro_sec=3.2,
+        )
+        _timings["segment_build"] = time.perf_counter() - _t
+        print(
+            f"[DANCE][T] segment_build: {_fmt(_timings['segment_build'])}"
+            f"  (main={len(main_segs)}, group={len(group_segs)})",
+            flush=True,
+        )
+        _progress(30, "구간을 정리하고 있습니다")
+
+        # 얼굴 분석 (main only) + 얼굴 자체 없는 세그먼트 제거
+        # batch_segment_embeddings: VideoCapture를 한 번만 열어 전체 처리
+
+        def _face_progress(done: int, total: int):
+            p = 30 + int(done / total * 15)  # 30% → 45%
+            _progress(p, "얼굴 특징을 추출하고 있습니다")
+
+        _t = time.perf_counter()
+        face_results: List[SegmentFaceResultLike] = self.face.batch_segment_embeddings(
+            str(input_video),
+            main_segs,
+            on_progress=_face_progress,
+        )
+        _timings["face_extract"] = time.perf_counter() - _t
+        print(
+            f"[DANCE][T] face_extract: {_fmt(_timings['face_extract'])}"
+            f"  (segs={len(main_segs)}, samples/seg={self.config.face_sample_frames},"
+            f" calls≤{len(main_segs) * self.config.face_sample_frames})",
+            flush=True,
+        )
+
+        _progress(45, "얼굴 특징을 추출하고 있습니다")
+
+        kept_main_segs: List[Segment] = []
+        dropped_no_face = 0
+
+        # 🔥 1. 모든 track embedding 수집
+        all_embs: List[np.ndarray] = []
+        track_map: List[int] = []  # index → segment index
+
+        for seg_idx, r in enumerate(face_results):
+            if not r.face_detected or not r.track_embeddings:
+                dropped_no_face += 1
+                continue
+
+            kept_main_segs.append(r.seg)
+
+            for emb in r.track_embeddings:
+                all_embs.append(emb)
+                track_map.append(len(kept_main_segs) - 1)
+
+        # 🔥 2. 클러스터링
+        _t = time.perf_counter()
+        if all_embs:
+            labels = self.face.cluster_embeddings(all_embs)
+        else:
+            labels = []
+
+        # ---------------------------------
+        # 🔥 작은 cluster 병합 (post merge)
+        # ---------------------------------
+
+        cluster_to_embs = defaultdict(list)
+
+        for lab, emb in zip(labels, all_embs):
+            if lab is None:
+                continue
+            cluster_to_embs[int(lab)].append(emb)
+
+        # centroid 계산
+        cluster_centroids = {}
+        for cid, embs in cluster_to_embs.items():
+            if not embs:
+                continue
+            centroid = np.mean(np.stack(embs), axis=0)
+            centroid = centroid / (np.linalg.norm(centroid) + 1e-9)
+            cluster_centroids[cid] = centroid
+
+        # 작은 cluster 탐지 (3개 미만)
+        small_clusters = [cid for cid, embs in cluster_to_embs.items() if len(embs) < 3]
+
+        for small_cid in small_clusters:
+            if small_cid not in cluster_centroids:
+                continue
+
+            small_cent = cluster_centroids[small_cid]
+
+            best_match = None
+            best_dist = 999
+
+            for cid, cent in cluster_centroids.items():
+                if cid == small_cid:
+                    continue
+                dist = 1 - float(np.dot(small_cent, cent))  # cosine distance
+                if dist < best_dist:
+                    best_dist = dist
+                    best_match = cid
+
+            # 0.45 이하이면 병합
+            if best_match is not None and best_dist < 0.45:
+                for i in range(len(labels)):
+                    if labels[i] == small_cid:
+                        labels[i] = best_match
+
+        # 3. segment별 majority voting
+        segment_votes: Dict[int, List[int]] = {}
+
+        for lab, seg_idx in zip(labels, track_map):
+            if lab is None:
+                continue
+            segment_votes.setdefault(seg_idx, []).append(int(lab))
+
+        # 1. segment별 raw cluster label 계산
+        raw_labels: List[Optional[int]] = []
+
+        for seg_idx in range(len(kept_main_segs)):
+            votes = segment_votes.get(seg_idx, [])
+            if not votes:
+                raw_labels.append(None)
+            else:
+                most_common_label = Counter(votes).most_common(1)[0][0]
+                raw_labels.append(int(most_common_label))
+
+        # 2. cluster centroid 계산
+        cluster_centroids = self._cluster_centroids_from_tracks(labels, all_embs)
+
+        # 3. reference image 기반 실제 멤버명 매핑
+        cluster_to_member_name = self._map_cluster_to_member_name(
+            cluster_centroids=cluster_centroids,
+            ref_embs=ref_embs,
+            threshold=0.60,
+        )
+
+        # 4. unique cluster label 수집 (None 제외)
+        unique_labels = sorted({lab for lab in raw_labels if lab is not None})
+
+        # 5. 연속 번호 재매핑
+        label_map = {old: idx + 1 for idx, old in enumerate(unique_labels)}
+
+        # 6. 최종 person_ids 생성
+        person_ids: List[str] = []
+        for lab in raw_labels:
+            if lab is None:
+                person_ids.append("unknown")
+                continue
+
+            member_name = cluster_to_member_name.get(lab)
+            if member_name:
+                safe_name = _safe_filename(member_name).lower().replace(" ", "_")
+                person_ids.append(safe_name)
+            else:
+                person_ids.append(f"person_{label_map[lab]}")
+
+        _timings["cluster_map"] = time.perf_counter() - _t
+        print(
+            f"[DANCE][T] cluster_map: {_fmt(_timings['cluster_map'])}"
+            f"  (embs={len(all_embs)}, clusters={len(unique_labels)},"
+            f" persons={len(set(p for p in person_ids if p != 'unknown'))})",
+            flush=True,
+        )
+        _progress(75, "클립을 생성하고 있습니다")
+
+        # clip 추출
+        _t = time.perf_counter()
+        main_items: List[DanceClipItem] = []
+        total_main_clips = max(len(kept_main_segs), 1)
+        for idx, seg in enumerate(kept_main_segs):
+            person_id = person_ids[idx]
+            out_path = clips_main_dir / f"main_{idx:04d}.mp4"
+            self.render.extract_clip(str(input_video), out_path, seg.start, seg.end)
+
+            thumb_path = clips_main_dir / f"main_{idx:04d}.jpg"
+            self.render.extract_thumbnail(str(input_video), thumb_path, ts_sec=float(seg.start))
+
+            main_items.append(DanceClipItem(
+                seg_id=idx,
+                seg_type="main",
+                start=float(seg.start),
+                end=float(seg.end),
+                clip_path=str(out_path.relative_to(project_root)),
+                person_id=person_id,
+            ))
+            p = 75 + int((idx + 1) / total_main_clips * 7)  # 75% → 82%
+            _progress(p, "클립을 생성하고 있습니다")
+
+        _timings["clips_main"] = time.perf_counter() - _t
+        print(
+            f"[DANCE][T] clips_main: {_fmt(_timings['clips_main'])}"
+            f"  (n={len(kept_main_segs)})",
+            flush=True,
+        )
+
+        _t = time.perf_counter()
+        group_items: List[DanceClipItem] = []
+        total_group_clips = max(len(group_segs), 1)
+        for idx, seg in enumerate(group_segs):
+            out_path = clips_group_dir / f"group_{idx:04d}.mp4"
+            self.render.extract_clip(str(input_video), out_path, seg.start, seg.end)
+
+            group_items.append(DanceClipItem(
+                seg_id=idx,
+                seg_type="group",
+                start=float(seg.start),
+                end=float(seg.end),
+                clip_path=str(out_path.relative_to(project_root)),
+                person_id=None,
+            ))
+            p = 82 + int((idx + 1) / total_group_clips * 3)  # 82% → 85%
+            _progress(p, "그룹 클립을 생성하고 있습니다")
+
+        _timings["clips_group"] = time.perf_counter() - _t
+        print(
+            f"[DANCE][T] clips_group: {_fmt(_timings['clips_group'])}"
+            f"  (n={len(group_segs)})",
+            flush=True,
+        )
+
+        # person별 clip 모으기
+        person_to_clips: Dict[str, List[Path]] = {}
+        for item in main_items:
+            pid = item.person_id or "unknown"
+            person_to_clips.setdefault(pid, []).append(project_root / item.clip_path)
+
+        # montage 생성
+        montages: List[Dict[str, Any]] = []
+        persons: List[Dict[str, Any]] = []
+
+        _progress(85, "인물별 하이라이트를 만들고 있습니다")
+
+        person_items = sorted(person_to_clips.items(), key=lambda kv: kv[0])
+        total_persons = max(len([pid for pid, _ in person_items if pid != "unknown"]), 1)
+
+        # persons 목록 순서 보존하며 수집
+        for pid, clips in person_items:
+            clips_sorted = sorted(clips, key=lambda p: p.name)
+            persons.append({
+                "person_id": pid,
+                "person_name": pid.replace("_", " ") if pid != "unknown" else "unknown",
+                "num_clips": len(clips_sorted),
+                "clip_paths": [str(c.relative_to(project_root)) for c in clips_sorted],
+            })
+
+        # unknown 제외한 montage 작업 목록
+        _work_items = [
+            (pid, sorted(clips, key=lambda p: p.name))
+            for pid, clips in person_items
+            if pid != "unknown"
+        ]
+
+        def _make_montage(pid: str, clips: List[Path]):
+            chosen, total_sec = self.render.select_clips_for_duration(
+                clips,
+                min_sec=self.config.montage_min_sec,
+                max_sec=self.config.montage_max_sec,
+                max_clips=self.config.montage_max_clips,
+            )
+            if not chosen:
+                return None
+
+            _t = time.perf_counter()
+            if self.config.montage_reencode_normalize:
+                norm_dir = renders_root / f"{pid}_norm_tmp"
+                norm_dir.mkdir(parents=True, exist_ok=True)
+                norm_clips: List[Path] = []
+                for clip in chosen:
+                    norm_out = norm_dir / clip.name
+                    self.render.normalize_clip(clip, norm_out)
+                    norm_clips.append(norm_out)
+                concat_inputs = norm_clips
+            else:
+                concat_inputs = chosen
+
+            out_path = renders_root / f"{pid}_montage.mp4"
+            self.render.concat_clips(concat_inputs, out_path)
+
+            if self.config.montage_reencode_normalize:
+                import shutil
+                shutil.rmtree(norm_dir, ignore_errors=True)
+            out_dur = self.render.probe_duration(out_path)
+            elapsed = time.perf_counter() - _t
+            print(
+                f"[DANCE][T] montage[{pid}]: {_fmt(elapsed)}"
+                f"  (clips={len(chosen)}, dur={_fmt(out_dur)})",
+                flush=True,
+            )
+            return {
+                "person_id": pid,
+                "render_path": str(out_path.relative_to(project_root)),
+                "duration_sec": float(out_dur),
+                "input_total_sec_selected": float(total_sec),
+                "num_clips_selected": len(chosen),
+                "selected_clip_paths": [str(c.relative_to(project_root)) for c in chosen],
+                "target_range_sec": [float(self.config.montage_min_sec), float(self.config.montage_max_sec)],
+            }
+
+        _t = time.perf_counter()
+        _timings["montage"] = 0.0
+        if _work_items:
+            # consumer GPU NVENC 동시 세션 상한(~3)을 고려해 max 3 병렬
+            _max_workers = min(len(_work_items), 3)
+            _completed = 0
+            with ThreadPoolExecutor(max_workers=_max_workers) as _executor:
+                _futures = {
+                    _executor.submit(_make_montage, pid, clips): pid
+                    for pid, clips in _work_items
+                }
+                for _future in as_completed(_futures):
+                    _result = _future.result()
+                    if _result is not None:
+                        montages.append(_result)
+                    _completed += 1
+                    p = 85 + int(_completed / total_persons * 10)  # 85% → 95%
+                    _progress(p, "인물별 하이라이트를 만들고 있습니다")
+        _timings["montage"] = time.perf_counter() - _t
+
+        stats = {
+            "fps": float(fps),
+            "duration_sec": float(duration),
+            "raw_main_segments": int(len(raw_main)),
+            "raw_group_segments": int(len(raw_group)),
+            "smoothed_main_segments": int(len(main_segs)),
+            "smoothed_group_segments": int(len(group_segs)),
+            "kept_main_segments": int(len(kept_main_segs)),
+            "dropped_main_no_face": int(dropped_no_face),
+            "num_persons_inferred": int(len([p for p in person_to_clips.keys() if p != "unknown"])),
+        }
+
+        input_rel = str(input_video.relative_to(project_root)) if str(input_video).startswith(str(project_root)) else str(input_video)
+
+        _progress(95, "결과를 정리하고 있습니다")
+
+        meta = self.meta_builder.build(
+            project_id=project_id,
+            input_video_rel=input_rel,
+            main_items=main_items,
+            group_items=group_items,
+            persons=persons,
+            montages=montages,
+            stats=stats,
+            dance_setup=dance_setup,
+        )
+
+        out_meta = json_root / self.config.meta_filename
+        out_meta.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        _t_elapsed = time.perf_counter() - _t_total
+        print(
+            f"[DANCE][T] TOTAL: {_fmt(_t_elapsed)}"
+            f"  | download_refs={_fmt(_timings.get('download_refs', 0))}"
+            f"  yolo={_fmt(_timings.get('yolo', 0))}"
+            f"  ref_embs={_fmt(_timings.get('ref_embs', 0))}"
+            f"  segment_build={_fmt(_timings.get('segment_build', 0))}"
+            f"  face_extract={_fmt(_timings.get('face_extract', 0))}"
+            f"  cluster_map={_fmt(_timings.get('cluster_map', 0))}"
+            f"  clips_main={_fmt(_timings.get('clips_main', 0))}"
+            f"  clips_group={_fmt(_timings.get('clips_group', 0))}"
+            f"  montage={_fmt(_timings.get('montage', 0))}",
+            flush=True,
+        )
+
+        return meta
+
+
+def create_default_pipeline(config: DanceConfig | None = None) -> DancePipeline:
+    """기본 구체 구현으로 DancePipeline을 생성하는 팩토리."""
+    from .pose_engine import PoseEngine
+    from .face_cluster import FaceClusterService
+    from .render import RenderService
+    from .dance_meta import DanceMetaBuilder
+
+    if config is None:
+        config = DanceConfig()
+
+    return DancePipeline(
+        config=config,
+        pose=PoseEngine(config),
+        face=FaceClusterService(config),
+        render=RenderService(config),
+        meta_builder=DanceMetaBuilder(config),
+    )

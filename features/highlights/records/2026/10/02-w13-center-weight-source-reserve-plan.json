@@ -1,0 +1,29 @@
+{
+  "schema": "w13_center_weight_source_reserve_plan_v1",
+  "created_before_inspecting_pose_outcomes_at_these_exact_indices": true,
+  "source_sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+  "source_fps": "60000/1001",
+  "source_interval_sec": [0.0, 133.654059],
+  "sampling": "Four equal index bins per named source window; seeded Python random choice among analyze_skip=4 indices, excluding prior label indices within four source frames. Seed: SHA-256 first eight bytes of 2026-10-02-w13-source-only-reserve-v1.",
+  "windows": {
+    "P1": [1000, 1196],
+    "P2": [1324, 1616],
+    "P3": [1744, 1972],
+    "P4": [3180, 3412],
+    "P5": [3540, 3712],
+    "group": [2520, 2900],
+    "transition": [5940, 6224]
+  },
+  "frame_indices": {
+    "P1": [1020, 1084, 1108, 1164],
+    "P2": [1324, 1448, 1540, 1576],
+    "P3": [1776, 1808, 1904, 1956],
+    "P4": [3212, 3256, 3336, 3404],
+    "P5": [3540, 3588, 3636, 3696],
+    "group": [2540, 2628, 2712, 2860],
+    "transition": [5992, 6028, 6120, 6204]
+  },
+  "score_policy": "Source-only reviewer marks strict solo, group, or uncertain before checking candidate pose; only strict solo with approximate full-person bbox is main accuracy denominator. Group and transition are reported separately, not forced to one person.",
+  "candidate": "saved 512-input MoveNet pose, center_score coefficient 0.20 rather than 0.45, remaining main score and switch logic fixed; compare with saved 512-input current selector and saved 256-input current selector",
+  "limits": "Same video and overlapping time windows as development sets; one aware reviewer; no independent-video or whole-video accuracy claim. No model inference, face analysis, clip export, or product code change."
+}
