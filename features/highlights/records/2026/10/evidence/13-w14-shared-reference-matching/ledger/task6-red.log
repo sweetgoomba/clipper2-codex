@@ -1,0 +1,58 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_consumer_keeps_intervals_ids_uncertainty_and_conflicts __________
+
+    def test_consumer_keeps_intervals_ids_uncertainty_and_conflicts():
+        def at(q,scope):return replace(q,source=replace(SOURCE,scope_id=scope,scope_range_seconds=None if scope is None else (0,2)))
+        qs=[at(query('a1'),'a'),at(query('a2'),'b'),at(query('unknown',association='unassigned'),None),
+            at(query('bad',None),None),at(query('conflict1'),'c'),at(query('conflict2',(0,1)),'c')]
+        before=[q.fingerprint for q in qs]
+>       gallery,results,scopes=classify(qs)
+                               ^^^^^^^^^^^^
+
+clipper_face_core/tests/test_consumer_contract.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_consumer_contract.py:12: in classify
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:936: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1073: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x1069e8e90>
+path = '/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py'
+
+<frozen importlib._bootstrap_external>:1130: FileNotFoundError
+___________________ test_consumer_rejects_cross_source_batch ___________________
+
+    def test_consumer_rejects_cross_source_batch():
+        with pytest.raises(ValueError,match='same analysis/source'):
+>           classify([query('a'),query('b',source=replace(SOURCE,source_sha256='e'*64))])
+
+clipper_face_core/tests/test_consumer_contract.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_consumer_contract.py:12: in classify
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:936: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1073: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x1070eb950>
+path = '/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py'
+
+<frozen importlib._bootstrap_external>:1130: FileNotFoundError
+=========================== short test summary info ============================
+FAILED clipper_face_core/tests/test_consumer_contract.py::test_consumer_keeps_intervals_ids_uncertainty_and_conflicts
+FAILED clipper_face_core/tests/test_consumer_contract.py::test_consumer_rejects_cross_source_batch
+2 failed in 0.08s

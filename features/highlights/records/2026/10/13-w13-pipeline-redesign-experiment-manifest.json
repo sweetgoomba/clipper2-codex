@@ -1,0 +1,213 @@
+{
+  "schema": "w13_pipeline_redesign_research_manifest_v1",
+  "status": "draft_not_executed",
+  "prepared_at": "2026-10-13",
+  "purpose": "저장 자세로 역할 판정과 짧은 오선택 완화만 독립 비교; 이번 turn은 조사·설계",
+  "worktree": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python",
+    "branch": "feature/w13-dance-metadata-eval-20261001",
+    "base_head": "47782953228861f4bdbdc135265d067c2a826b0e",
+    "preserve_existing_dirty_files": true
+  },
+  "source": {
+    "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/yFTAYXDTjqI/source.mp4",
+    "sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+    "interval_seconds": [
+      0,
+      133.654059
+    ],
+    "size": [
+      1920,
+      1012
+    ],
+    "fps": "60000/1001",
+    "analyze_skip": 4,
+    "time_basis": "existing cache frame_index/fps; not independently verified source PTS"
+  },
+  "truth": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/human-review/yFTAYXDTjqI/user-ground-truth.json",
+    "sha256": "d451572c00142fc8b110678da974665b26d9d058938c5be2e7115e6080e00ab0",
+    "immutable": true,
+    "rows": 21,
+    "unmarked_policy": "ignore in scoring; do not auto-label exclude",
+    "exclude_policy": "explicit negative labels for scoring; never prediction mask",
+    "main_group_overlap_policy": "separate report; never rewrite ground truth or treat overlap as strict group-only",
+    "identity_evaluation": false,
+    "frame_body_labels": "existing investigator-authored sparse auxiliary labels; not full human body-ID ground truth"
+  },
+  "reference_images": [],
+  "inputs": [
+    {
+      "id": "movenet512",
+      "pose_path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/movenet-512-v1/run-01/pose.json",
+      "pose_sha256": "369e2fea3f04bee0a1158aa47d7988bb7f9a4b3cd95a9fe4e12eb5fd61a908d0",
+      "observations": 2002,
+      "model_family": "MoveNet MultiPose Lightning v1",
+      "input_size": 512,
+      "existing_model_artifact_sha256": "ea71312368f39053ed7b9b2e4fac3bcecd94c667f679830a0a999b31ccaf705c",
+      "model_provenance_manifest": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/02-w13-movenet-512-manifest.yaml",
+      "load_model": false
+    },
+    {
+      "id": "yolo26s",
+      "pose_path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/yolo26s-pose-v1/run-01/pose.json",
+      "pose_sha256": "ad7ddc240834b3738e55bea0eac22f2b6e20ba5ee750546e6ddd649399527110",
+      "observations": 2002,
+      "model_family": "Ultralytics YOLO26s-Pose",
+      "existing_weight_sha256": "a083adb42303728ae14c4bd6bd56d80da46f82fb2564dbd6f31dcc92ea321646",
+      "model_provenance_manifest": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_yolo26s_execution_manifest.yaml",
+      "keypoint_confidence_available": false,
+      "load_model": false
+    }
+  ],
+  "baseline": {
+    "results_path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/temporal-iteration-12/verified/results.json",
+    "results_sha256": "b1407380d82153c3570fbee49d85db65f119874b813645dfbaf58c7e843a3914",
+    "pose_code_path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_temporal_pose.py",
+    "pose_code_sha256": "8d454e04a9e7291475417ff78d0c0a127b15f2f63e91f133fb99500eabc97822",
+    "evaluation_code_path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_temporal_experiment.py",
+    "evaluation_code_sha256": "ec547803a46fde6159b424d902b8af98a74814bd5139b54134790dc6dc2e3365",
+    "quality_status": "rejected_by_user; baseline only"
+  },
+  "conditions": [
+    {
+      "id": "C0",
+      "description": "Reproduce/reference existing iteration12",
+      "role_logic": "existing independent main and group",
+      "temporal": "existing main persistence"
+    },
+    {
+      "id": "C1",
+      "description": "Change role semantics only",
+      "role_logic": "single/joint/group/unknown; dominant subset and quality gates",
+      "temporal": "same main persistence as C0",
+      "fixed": [
+        "pose",
+        "association",
+        "motion_features",
+        "main_score"
+      ]
+    },
+    {
+      "id": "C2",
+      "description": "C1 plus one short false-selection suppression policy",
+      "role_logic": "same as C1",
+      "fixed": [
+        "pose",
+        "association",
+        "motion_features",
+        "main_score",
+        "role_thresholds"
+      ]
+    }
+  ],
+  "execution_proposal": {
+    "mode": "cached_metadata_replay",
+    "device": "cpu",
+    "hardware": "Mac mini M4, 24GB RAM (existing execution record)",
+    "os_observed": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "existing Python3.11 environment; capture exact interpreter/dependency versions before replay",
+    "new_inference_passes": 0,
+    "replays_per_input": 3,
+    "max_replays": 6,
+    "per_replay_wall_seconds": 120,
+    "total_wall_seconds": 720,
+    "peak_rss_bytes": 2147483648,
+    "total_output_bytes": 104857600,
+    "network": false,
+    "download": false,
+    "face_inference": false,
+    "clip_export": false,
+    "build5": false,
+    "external_cost": 0,
+    "role_threshold_values": null,
+    "short_run_filter_parameters": null,
+    "candidate_code_sha256": null,
+    "before_execution": [
+      "implementation revision and file hashes frozen",
+      "exact role thresholds and short-run filter frozen before scoring",
+      "fail on source/truth/cache mismatch",
+      "truth not accessible to predictor; evaluator reads truth",
+      "record elapsed time/RSS/errors and all six outputs",
+      "do not silently expand sweep; additional comparisons get a new manifest revision"
+    ]
+  },
+  "metrics": {
+    "roles": [
+      "group precision/recall on strict group-only",
+      "false group on main-only",
+      "joint-main set precision/recall where correspondence exists",
+      "unknown coverage",
+      "excluded false-positive rate",
+      "overlap separate report"
+    ],
+    "selection": [
+      "correct body on sparse labeled frames",
+      "conditional selection precision",
+      "total correct-body coverage",
+      "detection missing",
+      "wrong selection",
+      "unassigned"
+    ],
+    "segments": [
+      "boundary error",
+      "boundary F1 at .25/.5/1s",
+      "temporal IoU",
+      "switch latency median/p95 where correspondence exists",
+      "sub-1s fragments"
+    ],
+    "unavailable": [
+      "full-video HOTA",
+      "full-video IDF1",
+      "face identity accuracy",
+      "independent-video generalization"
+    ]
+  },
+  "proposed_gates": {
+    "status": "proposal_not_user_confirmed",
+    "false_group_on_main_only_max": 0.1,
+    "strict_group_recall": "no regression from same-model C0",
+    "sparse_correct_total_rate": "no regression from C0; unknown counted as not correct",
+    "anchors_seconds": [
+      22.02,
+      28.03,
+      54.39,
+      60.19
+    ],
+    "temporal_p95_latency_regression_limit_seconds": 0.2,
+    "group_main_ids_must_be_empty": true
+  },
+  "output": {
+    "directory": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/pipeline-redesign-13",
+    "directory_created": false,
+    "new_notebook_only": true,
+    "overwrite_existing": false,
+    "expected": [
+      "manifest-frozen.json",
+      "conditions.json",
+      "frame-decisions.jsonl",
+      "segments.json",
+      "metrics.json",
+      "failure-windows.json",
+      "new numbered review notebook"
+    ]
+  },
+  "additional_candidates": {
+    "status": "research_candidates_not_downloaded",
+    "ordered": [
+      "RTMO-s exact body7 checkpoint via rtmlib/ONNX Runtime",
+      "RTMPose-s/m plus separately audited person detector",
+      "MediaPipe Pose Landmarker"
+    ],
+    "next_independent_controls": [
+      "shot reset",
+      "OC-SORT vs existing geometry association"
+    ],
+    "deployment_gates": [
+      "exact weights, pretraining/data terms and redistribution scope",
+      "OS-specific locked dependency/license inventory",
+      "clean Windows x64 and Mac arm64 CPU installation smoke",
+      "Intel Mac compatibility decision"
+    ]
+  }
+}

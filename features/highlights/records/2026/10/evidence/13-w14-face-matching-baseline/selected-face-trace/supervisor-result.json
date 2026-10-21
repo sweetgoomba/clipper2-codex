@@ -1,0 +1,9 @@
+{
+  "exit_code": 0,
+  "stopped_by_limit": null,
+  "wall_seconds": 4.669690999988234,
+  "peak_sampled_rss_bytes": 416808960,
+  "output_bytes": 2519060,
+  "output_limit_ok": true,
+  "completed": true
+}

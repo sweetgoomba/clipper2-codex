@@ -1,0 +1,848 @@
+........................................................................ [ 11%]
+...................................................EEEEEEEEEEEssFFFF.... [ 23%]
+........................................................................ [ 34%]
+.....................................s.................................. [ 46%]
+...........................EE.E...E..................................... [ 57%]
+........................................................................ [ 69%]
+........................................................................ [ 80%]
+.................................................................E...... [ 92%]
+..................................................                       [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_health_reports_plugin_identity[dialog_highlight-dialog_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_health_reports_plugin_identity[dialog_highlight-dialog_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_health_reports_plugin_identity[dance_highlight-dance_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_health_reports_plugin_identity[dance_highlight-dance_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_health_reports_plugin_identity[clipper_video_render-clipper_video_render] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_health_reports_plugin_identity[clipper_video_render-clipper_video_render]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_job_with_missing_video_fails_gracefully[dialog_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_job_with_missing_video_fails_gracefully[dialog_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_job_with_missing_video_fails_gracefully[dance_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_job_with_missing_video_fails_gracefully[dance_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+___ ERROR at setup of test_cancel_unknown_job_returns_404[dialog_highlight] ____
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_cancel_unknown_job_returns_404[dialog_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+____ ERROR at setup of test_cancel_unknown_job_returns_404[dance_highlight] ____
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_cancel_unknown_job_returns_404[dance_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+____ ERROR at setup of test_duplicate_job_id_returns_409[dialog_highlight] _____
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_duplicate_job_id_returns_409[dialog_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_____ ERROR at setup of test_duplicate_job_id_returns_409[dance_highlight] _____
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_duplicate_job_id_returns_409[dance_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_shutdown_endpoint_terminates_process[dialog_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_shutdown_endpoint_terminates_process[dialog_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_ ERROR at setup of test_shutdown_endpoint_terminates_process[dance_highlight] _
+
+fixturedef = <FixtureDef argname='free_port' scope='function' baseid='tests/e2e'>
+request = <SubRequest 'free_port' for <Function test_shutdown_endpoint_terminates_process[dance_highlight]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+>               return (yield)
+                        ^^^^^
+
+../../../../desktop/clipper_python/.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:49: in free_port
+    return _pick_free_port()
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/conftest.py:28: PermissionError
+_______ ERROR at setup of test_remote_asset_stager_downloads_and_caches ________
+
+    @pytest.fixture
+    def asset_server() -> Iterator[tuple[str, list[str]]]:
+        requests: list[str] = []
+    
+        routes = {
+            "/image": ("image/png", b"remote-image"),
+            "/layout": ("image/png", b"remote-layout"),
+            "/logo": ("image/webp", b"remote-logo"),
+            "/media.mp4": ("video/mp4", b"remote-media"),
+            "/tts": ("audio/mpeg", b"remote-tts"),
+            "/too-large": ("audio/mpeg", b"remote-too-large"),
+        }
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests.append(self.path)
+                path = urllib.parse.urlparse(self.path).path
+                route = routes.get(path)
+                if route is None:
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+    
+                content_type, body = route
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, format: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_clipper_video_render_remote_assets.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:456: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x132599c50>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:472: PermissionError
+____ ERROR at setup of test_remote_stager_rejects_oversized_content_length _____
+
+    @pytest.fixture
+    def asset_server() -> Iterator[tuple[str, list[str]]]:
+        requests: list[str] = []
+    
+        routes = {
+            "/image": ("image/png", b"remote-image"),
+            "/layout": ("image/png", b"remote-layout"),
+            "/logo": ("image/webp", b"remote-logo"),
+            "/media.mp4": ("video/mp4", b"remote-media"),
+            "/tts": ("audio/mpeg", b"remote-tts"),
+            "/too-large": ("audio/mpeg", b"remote-too-large"),
+        }
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests.append(self.path)
+                path = urllib.parse.urlparse(self.path).path
+                route = routes.get(path)
+                if route is None:
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+    
+                content_type, body = route
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, format: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_clipper_video_render_remote_assets.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:456: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x133ce8710>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:472: PermissionError
+_ ERROR at setup of test_render_adapter_stages_remote_media_audio_and_visuals __
+
+    @pytest.fixture
+    def asset_server() -> Iterator[tuple[str, list[str]]]:
+        requests: list[str] = []
+    
+        routes = {
+            "/image": ("image/png", b"remote-image"),
+            "/layout": ("image/png", b"remote-layout"),
+            "/logo": ("image/webp", b"remote-logo"),
+            "/media.mp4": ("video/mp4", b"remote-media"),
+            "/tts": ("audio/mpeg", b"remote-tts"),
+            "/too-large": ("audio/mpeg", b"remote-too-large"),
+        }
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests.append(self.path)
+                path = urllib.parse.urlparse(self.path).path
+                route = routes.get(path)
+                if route is None:
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+    
+                content_type, body = route
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, format: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_clipper_video_render_remote_assets.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:456: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x133ceb610>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:472: PermissionError
+_ ERROR at setup of test_render_execute_stages_remote_media_layout_logo_tts_and_bgm _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-13/test_render_execute_stages_rem0')
+
+    @pytest.fixture
+    def executable_asset_server(tmp_path: Path) -> Iterator[tuple[str, list[str]]]:
+        routes_dir = tmp_path / "http-assets"
+        routes_dir.mkdir()
+    
+        _ffmpeg(
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=0x264653:s=320x568:d=0.8:r=12",
+            "-c:v",
+            "libx264",
+            "-pix_fmt",
+            "yuv420p",
+            str(routes_dir / "media.mp4"),
+        )
+        _ffmpeg(
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=0xf4a261:s=320x568",
+            "-frames:v",
+            "1",
+            str(routes_dir / "layout.png"),
+        )
+        _ffmpeg(
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=0xe76f51:s=64x64",
+            "-frames:v",
+            "1",
+            str(routes_dir / "logo.png"),
+        )
+        _ffmpeg(
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "sine=frequency=880:duration=0.8",
+            "-ac",
+            "2",
+            "-ar",
+            "48000",
+            str(routes_dir / "tts.wav"),
+        )
+        _ffmpeg(
+            "-y",
+            "-f",
+            "lavfi",
+            "-i",
+            "sine=frequency=220:duration=0.8",
+            "-ac",
+            "2",
+            "-ar",
+            "48000",
+            str(routes_dir / "bgm.wav"),
+        )
+    
+        requests: list[str] = []
+        routes = {
+            "/media": ("video/mp4", routes_dir / "media.mp4"),
+            "/layout": ("image/png", routes_dir / "layout.png"),
+            "/logo": ("image/png", routes_dir / "logo.png"),
+            "/tts": ("audio/wav", routes_dir / "tts.wav"),
+            "/bgm": ("audio/wav", routes_dir / "bgm.wav"),
+        }
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests.append(self.path)
+                path = urllib.parse.urlparse(self.path).path
+                route = routes.get(path)
+                if route is None:
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+    
+                content_type, file_path = route
+                body = file_path.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, format: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_clipper_video_render_remote_assets.py:405: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:456: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x132630b10>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:472: PermissionError
+_ ERROR at setup of test_modern_template_builder_text_renderer_resolves_remote_font_url _
+
+    @pytest.fixture
+    def font_server() -> Iterator[str]:
+        font_path = template_test_font_path()
+        body = font_path.read_bytes()
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                path = urllib.parse.urlparse(self.path).path
+                if path != "/Pretendard-SemiBold.otf":
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+    
+                self.send_response(200)
+                self.send_header("Content-Type", "font/otf")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+    
+            def log_message(self, format: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_template_builder_text_renderer.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:456: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x134811c50>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socketserver.py:472: PermissionError
+=================================== FAILURES ===================================
+__ test_load_models_failure_produces_expected_exit_code[vram_oom_by_name-10] ___
+
+failure_kind = 'vram_oom_by_name', expected_exit = 10
+
+    @pytest.mark.parametrize(
+        "failure_kind,expected_exit",
+        [
+            ("vram_oom_by_name", EXIT_VRAM_OOM),
+            ("vram_oom_by_message", EXIT_VRAM_OOM),
+            ("ram_oom", EXIT_RAM_OOM),
+            ("generic", EXIT_LOAD_FAILED),
+        ],
+    )
+    def test_load_models_failure_produces_expected_exit_code(failure_kind, expected_exit):
+>       port = _pick_free_port()
+               ^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_runtime_oom_subprocess.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/test_runtime_oom_subprocess.py:30: PermissionError
+_ test_load_models_failure_produces_expected_exit_code[vram_oom_by_message-10] _
+
+failure_kind = 'vram_oom_by_message', expected_exit = 10
+
+    @pytest.mark.parametrize(
+        "failure_kind,expected_exit",
+        [
+            ("vram_oom_by_name", EXIT_VRAM_OOM),
+            ("vram_oom_by_message", EXIT_VRAM_OOM),
+            ("ram_oom", EXIT_RAM_OOM),
+            ("generic", EXIT_LOAD_FAILED),
+        ],
+    )
+    def test_load_models_failure_produces_expected_exit_code(failure_kind, expected_exit):
+>       port = _pick_free_port()
+               ^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_runtime_oom_subprocess.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/test_runtime_oom_subprocess.py:30: PermissionError
+_______ test_load_models_failure_produces_expected_exit_code[ram_oom-11] _______
+
+failure_kind = 'ram_oom', expected_exit = 11
+
+    @pytest.mark.parametrize(
+        "failure_kind,expected_exit",
+        [
+            ("vram_oom_by_name", EXIT_VRAM_OOM),
+            ("vram_oom_by_message", EXIT_VRAM_OOM),
+            ("ram_oom", EXIT_RAM_OOM),
+            ("generic", EXIT_LOAD_FAILED),
+        ],
+    )
+    def test_load_models_failure_produces_expected_exit_code(failure_kind, expected_exit):
+>       port = _pick_free_port()
+               ^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_runtime_oom_subprocess.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/test_runtime_oom_subprocess.py:30: PermissionError
+_______ test_load_models_failure_produces_expected_exit_code[generic-12] _______
+
+failure_kind = 'generic', expected_exit = 12
+
+    @pytest.mark.parametrize(
+        "failure_kind,expected_exit",
+        [
+            ("vram_oom_by_name", EXIT_VRAM_OOM),
+            ("vram_oom_by_message", EXIT_VRAM_OOM),
+            ("ram_oom", EXIT_RAM_OOM),
+            ("generic", EXIT_LOAD_FAILED),
+        ],
+    )
+    def test_load_models_failure_produces_expected_exit_code(failure_kind, expected_exit):
+>       port = _pick_free_port()
+               ^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_runtime_oom_subprocess.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _pick_free_port() -> int:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+>           s.bind(("127.0.0.1", 0))
+E           PermissionError: [Errno 1] Operation not permitted
+
+tests/e2e/test_runtime_oom_subprocess.py:30: PermissionError
+=============================== warnings summary ===============================
+tests/test_clipper_video_render_comment_bubble.py::test_blur_author_id_changes_id_region_pixels
+tests/test_clipper_video_render_comment_bubble.py::test_blur_author_id_changes_id_region_pixels
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:94: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(sharp.image.getdata()) != list(blurred.image.getdata())
+
+tests/test_clipper_video_render_comment_bubble.py::test_render_bubble_youtube_no_meta_matches_default_call
+tests/test_clipper_video_render_comment_bubble.py::test_render_bubble_youtube_no_meta_matches_default_call
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:297: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(legacy.image.getdata()) == list(explicit.image.getdata())
+
+tests/test_clipper_video_render_comment_bubble.py::test_body_weight_wired_into_render_differs_from_uniform_semibold
+tests/test_clipper_video_render_comment_bubble.py::test_body_weight_wired_into_render_differs_from_uniform_semibold
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:346: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(per_role.image.getdata()) != list(uniform.image.getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_more_revealed_draws_more_ink
+tests/test_clipper_video_render_ranking_list.py::test_more_revealed_draws_more_ink
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:31: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for a in img.getchannel("A").getdata() if a > 0)
+
+tests/test_clipper_video_render_ranking_list.py::test_family_name_font_resolves_to_bundled_korean_font
+tests/test_clipper_video_render_ranking_list.py::test_family_name_font_resolves_to_bundled_korean_font
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:315: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(named.getdata()) == list(bundled.getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_no_hard_outline_around_glyphs
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:501: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return list(img.convert("RGBA").getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:596: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for a in band.getchannel("A").getdata() if a > 0)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/e2e/test_real_pipeline.py:75: CLIPPER_E2E_DIALOG_VIDEO 미설정
+SKIPPED [1] tests/e2e/test_real_pipeline.py:114: CLIPPER_E2E_DANCE_VIDEO 미설정
+SKIPPED [1] tests/test_clipper_video_render_rank_list_parity.py:49: clipper_angular가 옆에 없다(단일 레포 체크아웃)
+ERROR tests/e2e/test_plugin_smoke.py::test_health_reports_plugin_identity[dialog_highlight-dialog_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_health_reports_plugin_identity[dance_highlight-dance_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_health_reports_plugin_identity[clipper_video_render-clipper_video_render]
+ERROR tests/e2e/test_plugin_smoke.py::test_job_with_missing_video_fails_gracefully[dialog_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_job_with_missing_video_fails_gracefully[dance_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_cancel_unknown_job_returns_404[dialog_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_cancel_unknown_job_returns_404[dance_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_duplicate_job_id_returns_409[dialog_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_duplicate_job_id_returns_409[dance_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_shutdown_endpoint_terminates_process[dialog_highlight]
+ERROR tests/e2e/test_plugin_smoke.py::test_shutdown_endpoint_terminates_process[dance_highlight]
+ERROR tests/test_clipper_video_render_remote_assets.py::test_remote_asset_stager_downloads_and_caches
+ERROR tests/test_clipper_video_render_remote_assets.py::test_remote_stager_rejects_oversized_content_length
+ERROR tests/test_clipper_video_render_remote_assets.py::test_render_adapter_stages_remote_media_audio_and_visuals
+ERROR tests/test_clipper_video_render_remote_assets.py::test_render_execute_stages_remote_media_layout_logo_tts_and_bgm
+ERROR tests/test_template_builder_text_renderer.py::test_modern_template_builder_text_renderer_resolves_remote_font_url
+FAILED tests/e2e/test_runtime_oom_subprocess.py::test_load_models_failure_produces_expected_exit_code[vram_oom_by_name-10]
+FAILED tests/e2e/test_runtime_oom_subprocess.py::test_load_models_failure_produces_expected_exit_code[vram_oom_by_message-10]
+FAILED tests/e2e/test_runtime_oom_subprocess.py::test_load_models_failure_produces_expected_exit_code[ram_oom-11]
+FAILED tests/e2e/test_runtime_oom_subprocess.py::test_load_models_failure_produces_expected_exit_code[generic-12]
+4 failed, 603 passed, 3 skipped, 17 warnings, 16 errors in 27.71s

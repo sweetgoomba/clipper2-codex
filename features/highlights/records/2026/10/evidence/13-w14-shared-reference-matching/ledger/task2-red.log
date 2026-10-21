@@ -1,0 +1,364 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_______________________ test_mean_matches_existing_dance _______________________
+
+    def test_mean_matches_existing_dance():
+        vectors=[np.array([1,0],np.float32),np.array([0,1],np.float32)]
+        avg=np.mean(np.stack(vectors),axis=0)
+        expected=avg/(float(np.linalg.norm(avg))+1e-9)
+>       g=build([sample('r1',vector=vectors[0]),sample('r2',vector=vectors[1])])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+________________ test_duplicate_sample_id_is_not_an_extra_vote _________________
+
+    def test_duplicate_sample_id_is_not_an_extra_vote():
+        a,b=sample(),sample('r2',vector=(0,1))
+>       g=build([a,b])
+          ^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____________________ test_conflicting_sample_id_rejected ______________________
+
+    def test_conflicting_sample_id_rejected():
+        with pytest.raises(ValueError,match='conflicting_sample_id'):
+>           build([sample(),sample(label='B')])
+
+clipper_face_core/tests/test_gallery.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____________________ test_gallery_owns_immutable_vectors ______________________
+
+    def test_gallery_owns_immutable_vectors():
+        a=np.array([1,0],np.float32)
+>       s=sample(vector=a);g=build([s]);stamp=g.fingerprint
+                             ^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____ test_invalid_samples_preserved_without_losing_valid_reference[None] ______
+
+vector = None
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_invalid_samples_preserved_without_losing_valid_reference[vector1] ____
+
+vector = (0, 0)
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_invalid_samples_preserved_without_losing_valid_reference[vector2] ____
+
+vector = (2, 0)
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_invalid_samples_preserved_without_losing_valid_reference[vector3] ____
+
+vector = (nan, 0)
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_invalid_samples_preserved_without_losing_valid_reference[vector4] ____
+
+vector = (inf, 0)
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_invalid_samples_preserved_without_losing_valid_reference[vector5] ____
+
+vector = (1, 0, 0)
+
+    @pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
+    def test_invalid_samples_preserved_without_losing_valid_reference(vector):
+>       g=build([sample('valid'),sample('bad','B',vector)])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_gallery.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____________ test_all_failed_and_cancelled_means_report_failures ______________
+
+    def test_all_failed_and_cancelled_means_report_failures():
+        with pytest.raises(ValueError,match='no_valid_references') as exc:
+>           build([sample(vector=None)])
+
+clipper_face_core/tests/test_gallery.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+________ test_mixed_embedding_space_rejected_even_if_one_sample_failed _________
+
+    def test_mixed_embedding_space_rejected_even_if_one_sample_failed():
+        wrong=replace(SPACE,normalization_version='different')
+        with pytest.raises(ValueError,match='space_mismatch'):
+>           build([sample(),sample('r2',vector=None,space=wrong)])
+
+clipper_face_core/tests/test_gallery.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_gallery.py:9: in build
+    module=importlib.import_module('clipper_face_core.gallery')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.gallery'
+import_ = <function _gcd_import at 0x104c33d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.gallery'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED clipper_face_core/tests/test_gallery.py::test_mean_matches_existing_dance
+FAILED clipper_face_core/tests/test_gallery.py::test_duplicate_sample_id_is_not_an_extra_vote
+FAILED clipper_face_core/tests/test_gallery.py::test_conflicting_sample_id_rejected
+FAILED clipper_face_core/tests/test_gallery.py::test_gallery_owns_immutable_vectors
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[None]
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[vector1]
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[vector2]
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[vector3]
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[vector4]
+FAILED clipper_face_core/tests/test_gallery.py::test_invalid_samples_preserved_without_losing_valid_reference[vector5]
+FAILED clipper_face_core/tests/test_gallery.py::test_all_failed_and_cancelled_means_report_failures
+FAILED clipper_face_core/tests/test_gallery.py::test_mixed_embedding_space_rejected_even_if_one_sample_failed
+12 failed in 0.10s

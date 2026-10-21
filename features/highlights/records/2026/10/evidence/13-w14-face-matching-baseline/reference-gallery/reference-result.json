@@ -1,0 +1,1008 @@
+{
+  "schema": "w14_reference_gallery_diagnostic_result_v1",
+  "summary": {
+    "reference_count": 23,
+    "embedded": 23,
+    "no_detection": 0,
+    "multi_face_images": 7,
+    "nearest_correct": 23,
+    "threshold_correct": 23,
+    "threshold_unknown": 0,
+    "member_counts": {
+      "다니엘": 5,
+      "민지": 5,
+      "하니": 4,
+      "해린": 5,
+      "혜인": 4
+    },
+    "stored_centroid_checks": {
+      "다니엘": {
+        "max_abs_diff": 0.0,
+        "within_1e_5": true
+      },
+      "민지": {
+        "max_abs_diff": 0.0,
+        "within_1e_5": true
+      },
+      "하니": {
+        "max_abs_diff": 0.0,
+        "within_1e_5": true
+      },
+      "해린": {
+        "max_abs_diff": 0.0,
+        "within_1e_5": true
+      },
+      "혜인": {
+        "max_abs_diff": 0.0,
+        "within_1e_5": true
+      }
+    },
+    "wall_seconds": 1.771689208006137,
+    "peak_rss_bytes": 684032000,
+    "opencv_version": "4.13.0",
+    "numpy_version": "2.4.4",
+    "python_version": "3.11.12"
+  },
+  "rows": [
+    {
+      "index": 0,
+      "label": "다니엘",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_00.jpg",
+      "sha256": "391eb036eb724c9fd109b56a45a4719e2b4bd6ea15df03d2e028d11b2b2e0cab",
+      "width": 736,
+      "height": 736,
+      "detected_faces": [
+        {
+          "xywh": [
+            192.2251739501953,
+            179.7739715576172,
+            236.56900024414062,
+            353.1815490722656
+          ],
+          "score": 0.938770592212677
+        },
+        {
+          "xywh": [
+            520.0655517578125,
+            103.4043960571289,
+            84.1645736694336,
+            88.39082336425781
+          ],
+          "score": 0.3618994653224945
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.23188233375549316,
+          "민지": 0.7375476360321045,
+          "하니": 0.7004182040691376,
+          "해린": 0.7531118094921112,
+          "혜인": 0.7683206349611282
+        },
+        "nearest": "다니엘",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "다니엘",
+        "own_distance": 0.23188233375549316,
+        "best_other_distance": 0.7004182040691376,
+        "own_advantage": 0.4685358703136444
+      }
+    },
+    {
+      "index": 1,
+      "label": "다니엘",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_01.jpg",
+      "sha256": "20c20ffb77e0ad96eccceb78731dbefec3a7e6bdd799c4c3923c84add744cd87",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            350.26708984375,
+            292.58258056640625,
+            333.488525390625,
+            440.4888610839844
+          ],
+          "score": 0.9085313677787781
+        },
+        {
+          "xywh": [
+            623.8004150390625,
+            349.8465576171875,
+            175.49099731445312,
+            226.47012329101562
+          ],
+          "score": 0.5843915939331055
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.29730653762817383,
+          "민지": 0.7974618822336197,
+          "하니": 0.7377700805664062,
+          "해린": 0.7078322768211365,
+          "혜인": 0.804817408323288
+        },
+        "nearest": "다니엘",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "다니엘",
+        "own_distance": 0.29730653762817383,
+        "best_other_distance": 0.7078322768211365,
+        "own_advantage": 0.41052573919296265
+      }
+    },
+    {
+      "index": 2,
+      "label": "다니엘",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_02.jpg",
+      "sha256": "98652a3c58ef40fff057c9418fbaf1c2deaa829d5d554b9ba3f72944e8534d99",
+      "width": 570,
+      "height": 437,
+      "detected_faces": [
+        {
+          "xywh": [
+            194.51254272460938,
+            75.11518859863281,
+            124.88227081298828,
+            183.38253784179688
+          ],
+          "score": 0.9363512396812439
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.1984967589378357,
+          "민지": 0.8484911620616913,
+          "하니": 0.8003508895635605,
+          "해린": 0.7506880611181259,
+          "혜인": 0.7256889343261719
+        },
+        "nearest": "다니엘",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "다니엘",
+        "own_distance": 0.1984967589378357,
+        "best_other_distance": 0.7256889343261719,
+        "own_advantage": 0.5271921753883362
+      }
+    },
+    {
+      "index": 3,
+      "label": "다니엘",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_03.jpg",
+      "sha256": "72fccb4b2e4d513cc5718ad1ba9fbcc75416a4c332ddd4f02e279ee768abc4d0",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            474.05718994140625,
+            325.6619567871094,
+            274.9292907714844,
+            358.03472900390625
+          ],
+          "score": 0.939678430557251
+        },
+        {
+          "xywh": [
+            368.978759765625,
+            839.5932006835938,
+            482.2625732421875,
+            508.3502197265625
+          ],
+          "score": 0.28697147965431213
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.21185851097106934,
+          "민지": 0.9244130030274391,
+          "하니": 0.8625047206878662,
+          "해린": 0.7511760145425797,
+          "혜인": 0.8025877475738525
+        },
+        "nearest": "다니엘",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "다니엘",
+        "own_distance": 0.21185851097106934,
+        "best_other_distance": 0.7511760145425797,
+        "own_advantage": 0.5393175035715103
+      }
+    },
+    {
+      "index": 4,
+      "label": "다니엘",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_04.jpg",
+      "sha256": "d989d3f0e57d335bd47eca58dc4a5da46322e6751c125ab40680b74f1adaabb6",
+      "width": 600,
+      "height": 456,
+      "detected_faces": [
+        {
+          "xywh": [
+            205.72808837890625,
+            78.05276489257812,
+            154.82086181640625,
+            208.83737182617188
+          ],
+          "score": 0.943416953086853
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.21604859828948975,
+          "민지": 0.7393614053726196,
+          "하니": 0.7075621783733368,
+          "해린": 0.7757522165775299,
+          "혜인": 0.7801190465688705
+        },
+        "nearest": "다니엘",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "다니엘",
+        "own_distance": 0.21604859828948975,
+        "best_other_distance": 0.7075621783733368,
+        "own_advantage": 0.49151358008384705
+      }
+    },
+    {
+      "index": 5,
+      "label": "민지",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_00.jpg",
+      "sha256": "0acee0dbbcf8f0f7cbc1f2440be469a83b2b2a552ec9b780333f4773b7af4459",
+      "width": 982,
+      "height": 1500,
+      "detected_faces": [
+        {
+          "xywh": [
+            259.37420654296875,
+            229.2874755859375,
+            394.05499267578125,
+            473.647705078125
+          ],
+          "score": 0.900757908821106
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8002310544252396,
+          "민지": 0.24913406372070312,
+          "하니": 0.5468159914016724,
+          "해린": 0.6799457669258118,
+          "혜인": 0.6822399795055389
+        },
+        "nearest": "민지",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "민지",
+        "own_distance": 0.24913406372070312,
+        "best_other_distance": 0.5468159914016724,
+        "own_advantage": 0.29768192768096924
+      }
+    },
+    {
+      "index": 6,
+      "label": "민지",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_01.webp",
+      "sha256": "3c094d52fba13995a5f302df1cb51243d72f7a61d76c6fc471d7babc753c3b27",
+      "width": 463,
+      "height": 694,
+      "detected_faces": [
+        {
+          "xywh": [
+            122.03219604492188,
+            130.12753295898438,
+            152.61358642578125,
+            196.22616577148438
+          ],
+          "score": 0.915195643901825
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7848699688911438,
+          "민지": 0.4621967077255249,
+          "하니": 0.5968099534511566,
+          "해린": 0.684309720993042,
+          "혜인": 0.6961396932601929
+        },
+        "nearest": "민지",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "민지",
+        "own_distance": 0.4621967077255249,
+        "best_other_distance": 0.5968099534511566,
+        "own_advantage": 0.1346132457256317
+      }
+    },
+    {
+      "index": 7,
+      "label": "민지",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_02.jpg",
+      "sha256": "1ccf67842ee3b6feb9f41fcadcbff4db799b5666379f206132c64897afb33432",
+      "width": 1200,
+      "height": 1921,
+      "detected_faces": [
+        {
+          "xywh": [
+            353.4444580078125,
+            622.6036987304688,
+            452.2806396484375,
+            512.3690185546875
+          ],
+          "score": 0.729659914970398
+        },
+        {
+          "xywh": [
+            244.37205505371094,
+            365.6537780761719,
+            411.9775695800781,
+            548.8423461914062
+          ],
+          "score": 0.540477991104126
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8187675178050995,
+          "민지": 0.291165292263031,
+          "하니": 0.6446611285209656,
+          "해린": 0.7252998352050781,
+          "혜인": 0.7523742914199829
+        },
+        "nearest": "민지",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "민지",
+        "own_distance": 0.291165292263031,
+        "best_other_distance": 0.6446611285209656,
+        "own_advantage": 0.35349583625793457
+      }
+    },
+    {
+      "index": 8,
+      "label": "민지",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_03.jpg",
+      "sha256": "fcb616dd9bbc0c64504fe940dfb7bd9a23184fd0b2c967474ee6b9e869d22264",
+      "width": 800,
+      "height": 1280,
+      "detected_faces": [
+        {
+          "xywh": [
+            269.5585632324219,
+            228.79153442382812,
+            249.1725311279297,
+            345.40008544921875
+          ],
+          "score": 0.9410637617111206
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8135113567113876,
+          "민지": 0.3234713077545166,
+          "하니": 0.6020306050777435,
+          "해린": 0.6521193385124207,
+          "혜인": 0.7633955776691437
+        },
+        "nearest": "민지",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "민지",
+        "own_distance": 0.3234713077545166,
+        "best_other_distance": 0.6020306050777435,
+        "own_advantage": 0.27855929732322693
+      }
+    },
+    {
+      "index": 9,
+      "label": "민지",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_04.png",
+      "sha256": "38c8ea61b1171fff1091737531a6c756a623efaa948f28a81111082b45638df8",
+      "width": 1080,
+      "height": 1346,
+      "detected_faces": [
+        {
+          "xywh": [
+            500.36737060546875,
+            332.18646240234375,
+            381.9439392089844,
+            486.2225646972656
+          ],
+          "score": 0.874823272228241
+        },
+        {
+          "xywh": [
+            150.47061157226562,
+            353.45269775390625,
+            527.7833251953125,
+            684.338623046875
+          ],
+          "score": 0.35962721705436707
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.9011986777186394,
+          "민지": 0.35955262184143066,
+          "하니": 0.690301775932312,
+          "해린": 0.826787143945694,
+          "혜인": 0.8562009632587433
+        },
+        "nearest": "민지",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "민지",
+        "own_distance": 0.35955262184143066,
+        "best_other_distance": 0.690301775932312,
+        "own_advantage": 0.33074915409088135
+      }
+    },
+    {
+      "index": 10,
+      "label": "하니",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_01.webp",
+      "sha256": "9595310155622d0606b188b7ebc7ab215f07ad98f6ee4805331dc939349ae3d1",
+      "width": 1000,
+      "height": 562,
+      "detected_faces": [
+        {
+          "xywh": [
+            408.5873718261719,
+            147.20852661132812,
+            206.23023986816406,
+            296.92596435546875
+          ],
+          "score": 0.9295903444290161
+        },
+        {
+          "xywh": [
+            862.4114379882812,
+            87.3717041015625,
+            37.58222579956055,
+            45.6484375
+          ],
+          "score": 0.3693917393684387
+        }
+      ],
+      "face_count": 2,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7593564987182617,
+          "민지": 0.5750499665737152,
+          "하니": 0.3389570713043213,
+          "해린": 0.6811648011207581,
+          "혜인": 0.6211575865745544
+        },
+        "nearest": "하니",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "하니",
+        "own_distance": 0.3389570713043213,
+        "best_other_distance": 0.5750499665737152,
+        "own_advantage": 0.23609289526939392
+      }
+    },
+    {
+      "index": 11,
+      "label": "하니",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_02.jpg",
+      "sha256": "4c7da1b878d8ac620f273772b0d7eb97743075ec44d501dd764a845c17eb714c",
+      "width": 736,
+      "height": 981,
+      "detected_faces": [
+        {
+          "xywh": [
+            319.16912841796875,
+            99.0881118774414,
+            141.84207153320312,
+            208.62290954589844
+          ],
+          "score": 0.9430851340293884
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8537280559539795,
+          "민지": 0.6687723696231842,
+          "하니": 0.560578316450119,
+          "해린": 0.8051342815160751,
+          "혜인": 0.7372746765613556
+        },
+        "nearest": "하니",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "하니",
+        "own_distance": 0.560578316450119,
+        "best_other_distance": 0.6687723696231842,
+        "own_advantage": 0.10819405317306519
+      }
+    },
+    {
+      "index": 12,
+      "label": "하니",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_03.webp",
+      "sha256": "14680d2fff0b3c07f1b5ec11f8177874e56363ba2237429744ee5d4ff14a2e57",
+      "width": 500,
+      "height": 750,
+      "detected_faces": [
+        {
+          "xywh": [
+            179.2734375,
+            83.76301574707031,
+            178.464599609375,
+            257.020263671875
+          ],
+          "score": 0.9258887767791748
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8840550780296326,
+          "민지": 0.7253189384937286,
+          "하니": 0.5977332293987274,
+          "해린": 0.7443162798881531,
+          "혜인": 0.7365649044513702
+        },
+        "nearest": "하니",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "하니",
+        "own_distance": 0.5977332293987274,
+        "best_other_distance": 0.7253189384937286,
+        "own_advantage": 0.12758570909500122
+      }
+    },
+    {
+      "index": 13,
+      "label": "하니",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_04.jpg",
+      "sha256": "4a32f1d9f7f8183cf41a4e3f74b9bbdf51af7f1540316fdd653d1f54788c0e7a",
+      "width": 736,
+      "height": 1105,
+      "detected_faces": [
+        {
+          "xywh": [
+            258.14776611328125,
+            143.61505126953125,
+            199.19866943359375,
+            249.1986083984375
+          ],
+          "score": 0.9370875954627991
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.6694935858249664,
+          "민지": 0.5796636939048767,
+          "하니": 0.36575961112976074,
+          "해린": 0.6605162024497986,
+          "혜인": 0.6910066306591034
+        },
+        "nearest": "하니",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "하니",
+        "own_distance": 0.36575961112976074,
+        "best_other_distance": 0.5796636939048767,
+        "own_advantage": 0.21390408277511597
+      }
+    },
+    {
+      "index": 14,
+      "label": "해린",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_00.jpg",
+      "sha256": "cceceb4444fb7d47a6a59cabf1f1f6cb4cc60a2890bf44dd0fb7d693578a14bf",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            365.412841796875,
+            379.99993896484375,
+            437.5317687988281,
+            513.0101318359375
+          ],
+          "score": 0.8790967464447021
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7930645048618317,
+          "민지": 0.6659510135650635,
+          "하니": 0.7457165718078613,
+          "해린": 0.2865915298461914,
+          "혜인": 0.6680997014045715
+        },
+        "nearest": "해린",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "해린",
+        "own_distance": 0.2865915298461914,
+        "best_other_distance": 0.6659510135650635,
+        "own_advantage": 0.37935948371887207
+      }
+    },
+    {
+      "index": 15,
+      "label": "해린",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_01.jpg",
+      "sha256": "36857e049d49bb279b1972704935c7749e23cbdc70f75191852a2cb7dc20255a",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            345.21337890625,
+            398.37078857421875,
+            492.746826171875,
+            607.6810302734375
+          ],
+          "score": 0.7961471676826477
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.736742377281189,
+          "민지": 0.7178128957748413,
+          "하니": 0.7144570350646973,
+          "해린": 0.26083052158355713,
+          "혜인": 0.6100453734397888
+        },
+        "nearest": "해린",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "해린",
+        "own_distance": 0.26083052158355713,
+        "best_other_distance": 0.6100453734397888,
+        "own_advantage": 0.3492148518562317
+      }
+    },
+    {
+      "index": 16,
+      "label": "해린",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_02.jpg",
+      "sha256": "bd5699809713f89324c67bb518952c16fd38bf928708f8d01c32183689e11297",
+      "width": 730,
+      "height": 1167,
+      "detected_faces": [
+        {
+          "xywh": [
+            178.4635009765625,
+            253.4356231689453,
+            312.89703369140625,
+            448.9687805175781
+          ],
+          "score": 0.9247788190841675
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.6134330630302429,
+          "민지": 0.6821204423904419,
+          "하니": 0.5892492830753326,
+          "해린": 0.3230189085006714,
+          "혜인": 0.6996475160121918
+        },
+        "nearest": "해린",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "해린",
+        "own_distance": 0.3230189085006714,
+        "best_other_distance": 0.5892492830753326,
+        "own_advantage": 0.26623037457466125
+      }
+    },
+    {
+      "index": 17,
+      "label": "해린",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_03.jpg",
+      "sha256": "bfe8ece40580a38ae81ea97cd7fbb892f8164bd3fe85b30313fa29b470e46ea3",
+      "width": 736,
+      "height": 1176,
+      "detected_faces": [
+        {
+          "xywh": [
+            165.0293731689453,
+            232.11874389648438,
+            415.7807312011719,
+            519.7733764648438
+          ],
+          "score": 0.884162187576294
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.9194500967860222,
+          "민지": 0.730501115322113,
+          "하니": 0.74341881275177,
+          "해린": 0.31942296028137207,
+          "혜인": 0.7404317259788513
+        },
+        "nearest": "해린",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "해린",
+        "own_distance": 0.31942296028137207,
+        "best_other_distance": 0.730501115322113,
+        "own_advantage": 0.41107815504074097
+      }
+    },
+    {
+      "index": 18,
+      "label": "해린",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_04.jpg",
+      "sha256": "e4f2c4b93528840d912ecc6fd11757bc181dc6b3f13e94acbc6e5ce2932bfca1",
+      "width": 640,
+      "height": 960,
+      "detected_faces": [
+        {
+          "xywh": [
+            223.96282958984375,
+            134.41099548339844,
+            219.36463928222656,
+            283.2972106933594
+          ],
+          "score": 0.9499610662460327
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7320612668991089,
+          "민지": 0.7251971960067749,
+          "하니": 0.692518413066864,
+          "해린": 0.283438503742218,
+          "혜인": 0.6460311114788055
+        },
+        "nearest": "해린",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "해린",
+        "own_distance": 0.283438503742218,
+        "best_other_distance": 0.6460311114788055,
+        "own_advantage": 0.3625926077365875
+      }
+    },
+    {
+      "index": 19,
+      "label": "혜인",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_00.jpg",
+      "sha256": "0abd01500ff0ddb1b3d3a16c84d506a71c7131c4fb6ce28e9dfbc671a82a78de",
+      "width": 736,
+      "height": 1104,
+      "detected_faces": [
+        {
+          "xywh": [
+            297.8619384765625,
+            183.66943359375,
+            182.79335021972656,
+            265.54193115234375
+          ],
+          "score": 0.9465590119361877
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7344985604286194,
+          "민지": 0.7519042491912842,
+          "하니": 0.6280695199966431,
+          "해린": 0.6722410023212433,
+          "혜인": 0.21483761072158813
+        },
+        "nearest": "혜인",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "혜인",
+        "own_distance": 0.21483761072158813,
+        "best_other_distance": 0.6280695199966431,
+        "own_advantage": 0.41323190927505493
+      }
+    },
+    {
+      "index": 20,
+      "label": "혜인",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_01.jpg",
+      "sha256": "2ac5bc3ccfb8625af17214a41cbb32dde3b2ab2ea9404d1e24c1f35d8cb3b23f",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            440.91552734375,
+            244.7332000732422,
+            258.5224914550781,
+            406.5149841308594
+          ],
+          "score": 0.9268084168434143
+        },
+        {
+          "xywh": [
+            523.2969360351562,
+            1131.6649169921875,
+            56.61359405517578,
+            79.71524810791016
+          ],
+          "score": 0.9059476852416992
+        },
+        {
+          "xywh": [
+            528.86083984375,
+            1030.822021484375,
+            49.46113204956055,
+            60.71229934692383
+          ],
+          "score": 0.8711288571357727
+        },
+        {
+          "xywh": [
+            517.4790649414062,
+            882.809814453125,
+            74.69642639160156,
+            95.23741149902344
+          ],
+          "score": 0.8575965166091919
+        },
+        {
+          "xywh": [
+            610.5909423828125,
+            1263.5118408203125,
+            42.794734954833984,
+            60.211891174316406
+          ],
+          "score": 0.5849712491035461
+        },
+        {
+          "xywh": [
+            430.0705871582031,
+            1133.37255859375,
+            49.29685592651367,
+            67.08463287353516
+          ],
+          "score": 0.39089182019233704
+        },
+        {
+          "xywh": [
+            455.4768981933594,
+            1303.2587890625,
+            82.20988464355469,
+            89.99301147460938
+          ],
+          "score": 0.3031288683414459
+        }
+      ],
+      "face_count": 7,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.8185577094554901,
+          "민지": 0.7714284658432007,
+          "하니": 0.6972808241844177,
+          "해린": 0.7076684534549713,
+          "혜인": 0.2967514991760254
+        },
+        "nearest": "혜인",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "혜인",
+        "own_distance": 0.2967514991760254,
+        "best_other_distance": 0.6972808241844177,
+        "own_advantage": 0.40052932500839233
+      }
+    },
+    {
+      "index": 21,
+      "label": "혜인",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_02.jpg",
+      "sha256": "c88a05b6ee2bd4e0144876816bd21b5bb8f7aefc99cdbdd778241e7c46a86dd5",
+      "width": 736,
+      "height": 1104,
+      "detected_faces": [
+        {
+          "xywh": [
+            285.808837890625,
+            200.0016632080078,
+            163.6862030029297,
+            221.83932495117188
+          ],
+          "score": 0.9405813813209534
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7929206788539886,
+          "민지": 0.6705259680747986,
+          "하니": 0.6201125681400299,
+          "해린": 0.6067824959754944,
+          "혜인": 0.23338353633880615
+        },
+        "nearest": "혜인",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "혜인",
+        "own_distance": 0.23338353633880615,
+        "best_other_distance": 0.6067824959754944,
+        "own_advantage": 0.37339895963668823
+      }
+    },
+    {
+      "index": 22,
+      "label": "혜인",
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_03.jpg",
+      "sha256": "ffb9d66f3f2810cf2dbcb8e058ee993ef4d7542460b48de96ebe8232d3aba52a",
+      "width": 1200,
+      "height": 1920,
+      "detected_faces": [
+        {
+          "xywh": [
+            469.9560852050781,
+            236.4465789794922,
+            237.3212432861328,
+            299.0788269042969
+          ],
+          "score": 0.9416266679763794
+        }
+      ],
+      "face_count": 1,
+      "status": "embedded",
+      "selected_face_index": 0,
+      "leave_one_out": {
+        "distances": {
+          "다니엘": 0.7437092661857605,
+          "민지": 0.706780344247818,
+          "하니": 0.6419841647148132,
+          "해린": 0.6199155151844025,
+          "혜인": 0.19628381729125977
+        },
+        "nearest": "혜인",
+        "nearest_correct_to_input_label": true,
+        "with_existing_threshold": "혜인",
+        "own_distance": 0.19628381729125977,
+        "best_other_distance": 0.6199155151844025,
+        "own_advantage": 0.4236316978931427
+      }
+    }
+  ],
+  "limits": "User-labelled gallery consistency only; no video accuracy, face identity ground truth or model-selection claim."
+}

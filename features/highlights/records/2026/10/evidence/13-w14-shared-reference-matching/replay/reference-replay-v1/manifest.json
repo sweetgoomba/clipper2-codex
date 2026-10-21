@@ -1,0 +1,140 @@
+{
+  "schema": "reference_replay_v1",
+  "space": {
+    "recognizer_sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+    "alignment_version": "opencv_sface_alignCrop_5pt_v1",
+    "preprocessing_version": "opencv_bgr_u8_v1",
+    "normalization_version": "float32_l2_eps1e-9_v1",
+    "dimension": 128,
+    "backend_version": "opencv-4.13.0",
+    "metric": "cosine_distance"
+  },
+  "policy": {
+    "max_distance": 0.6,
+    "min_margin": 0,
+    "minimum_support": 1
+  },
+  "inputs": {
+    "references": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/reference-gallery/reference-embeddings.local.npz",
+      "sha256": "f0c06b3e49e953bb823f9dddb6d81c97df1f15749a4673e3036301056b4557a9"
+    },
+    "queries": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/selected-face-trace/query-embeddings.local.npz",
+      "sha256": "2152934fb3c31a5222b5eacc7861741342dcea379af78f4dab091399baa4ea8b"
+    },
+    "dataset": {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/dataset.json",
+      "sha256": "f0446ba41ce18213983d6ab19d7d35ce4d037b1f2d32e1d6054d3fe84a2fa246"
+    },
+    "baseline_centroids": {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/baseline-centroids.npz",
+      "sha256": "2bc3abcb1cd39af27641746b20d7d4e98d74a87c8f0fbc30a68e9d835920b80d"
+    },
+    "source": {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/sources/youtube/yFTAYXDTjqI/source.mp4",
+      "sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4"
+    },
+    "truth": {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/human-review/yFTAYXDTjqI/user-ground-truth.json",
+      "sha256": "d451572c00142fc8b110678da974665b26d9d058938c5be2e7115e6080e00ab0"
+    },
+    "cache512": {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/movenet512-face-baseline.json",
+      "sha256": "d376886310728da8aa6209c5b54233026bd0e8711c0d381bb147430a94bb8164"
+    },
+    "reference_plan": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/reference-gallery/plan.json",
+      "sha256": "eb144a101f8c0ca0af5e06a56cc3872331df96669818c7766c89e74206107767"
+    },
+    "query_plan": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/selected-face-trace/plan.json",
+      "sha256": "6dbb044c4ff761d327067b009dea7870cff346fa3b7d6a4d7d45bc4ce8f8d1c6"
+    },
+    "reference_result": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/reference-gallery/reference-result.json",
+      "sha256": "eb58d05de3c69dbc089f449bf63d57ae2ff022fbdc721aee2c09d8ba73a96d1b"
+    },
+    "query_result": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/selected-face-trace/trace-result.json",
+      "sha256": "5955af518e5dcbea971239f27adc60b5b1e833d16c577300e0c8fab7cde9d45c"
+    },
+    "reference_worker": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/reference-gallery/reference_probe.py",
+      "sha256": "be24c9296238bfe374c5c243d16323c5318ecbb6876730ebd5e86520d73e60e0"
+    },
+    "query_worker": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/selected-face-trace/trace.py",
+      "sha256": "bc5885b43d2af89473ccdaa2606bce7114b224164d0070abd1ddde258041dea0"
+    },
+    "archive_manifest": {
+      "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/archive-manifest.json",
+      "sha256": "9d81350f69b33f8260ac224b27b145ee97f26d30d52a1ffc47bb7d480f9f71b5"
+    },
+    "preparation_script": {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/prepare_replay.py",
+      "sha256": "0934d687c8895afaba73f6d1b8457ba3a97704b27bf39d4466098aff0ec1ec0c"
+    },
+    "supervisor_script": {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/supervise_replay.py",
+      "sha256": "f64c2c4fb49119bff98a51a9a8f5bf5206fabe6371d62ce42f6cec1f7ea8a3ed"
+    }
+  },
+  "code": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py",
+      "sha256": "26362a0d20d7d436a2bd914d7285fa408371e0dff66cd89575f8fbe0d31baaee"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py",
+      "sha256": "e096d4ec2556835d7d8dec960804d55c7661cbd5454e26dc6bdd2e8ad1772f27"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/backend_types.py",
+      "sha256": "d0fb0d950105084530b94bacadffe542bcc2bcc21687ac76315c67a1ee595fae"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/consensus.py",
+      "sha256": "f889a1037fb82c88725bd4f73dc84d1e78d9a76de37a859e7f214121c098a9c9"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+      "sha256": "e63be83462e18038d40e877a96530e1fd27e618254f53d5c7ed137d07776c75a"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/gallery.py",
+      "sha256": "bcdf44544f832943be015ace3a029b1b3d1ff38f1bc9681c84eeeaa28ffe482d"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/grouping.py",
+      "sha256": "911fc6bc4b923924c12c40f676b0a98fed7e3ea78ca60852f825f5b28077d1a2"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+      "sha256": "34a5f89c4f2b1741579431cd524b9783281734b86fa6898de4cb9fbcb976bde1"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py",
+      "sha256": "30b6f333a6aa0e7f76173e04374edb0719c35173b764a21af642b9cd2de8b831"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/__init__.py",
+      "sha256": "59b47d4a766a2650aed0b9a45bb687dda7e968d896ff67ffe6bac4dc404fd811"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/manifest.py",
+      "sha256": "debbd91fb7864df8081b285dcfc31c540fe38a9e21f3a2d41b40a84d6cc91bb8"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/replay.py",
+      "sha256": "61a3241adb75a5f67614c15006013f5265ea75aba8b9ae34783292a3ee1914cb"
+    }
+  ],
+  "label_limitation": "Previously viewed 18 source body labels; no independent face ownership GT or held-out accuracy.",
+  "association_basis": "legacy_selected_candidate_assumption_not_face_ownership_gt",
+  "limits": {
+    "wall_seconds": 120,
+    "rss_bytes": 2147483648,
+    "output_bytes": 26214400
+  }
+}

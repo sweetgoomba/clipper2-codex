@@ -1,0 +1,249 @@
+FFFFFFF.FF                                                               [100%]
+=================================== FAILURES ===================================
+_________ test_space_captures_preprocessing_and_rejects_empty_identity _________
+
+    def test_space_captures_preprocessing_and_rejects_empty_identity():
+>       a=space()
+          ^^^^^^^
+
+clipper_face_core/tests/test_contracts.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:12: in space
+    return api().EmbeddingSpace('a'*64, 'align1', 'bgr1', 'l2epsilon1', 2, 'backend1')
+           ^^^^^
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+________________ test_coordinates_and_time_never_fabricate_pts _________________
+
+    def test_coordinates_and_time_never_fabricate_pts():
+>       a=source()
+          ^^^^^^^^
+
+clipper_face_core/tests/test_contracts.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:22: in source
+    return api().SourceEvidence(**args)
+           ^^^^^
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_policy_rejected[values0] _____________________
+
+values = (0.6, 0, True)
+
+    @pytest.mark.parametrize('values', [(0.6,0,True),(-1,0,1),(0.6,float('nan'),1),(0.6,0,0)])
+    def test_invalid_policy_rejected(values):
+>       with pytest.raises(ValueError): api().MatchPolicy(*values)
+                                        ^^^^^
+
+clipper_face_core/tests/test_contracts.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_policy_rejected[values1] _____________________
+
+values = (-1, 0, 1)
+
+    @pytest.mark.parametrize('values', [(0.6,0,True),(-1,0,1),(0.6,float('nan'),1),(0.6,0,0)])
+    def test_invalid_policy_rejected(values):
+>       with pytest.raises(ValueError): api().MatchPolicy(*values)
+                                        ^^^^^
+
+clipper_face_core/tests/test_contracts.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_policy_rejected[values2] _____________________
+
+values = (0.6, nan, 1)
+
+    @pytest.mark.parametrize('values', [(0.6,0,True),(-1,0,1),(0.6,float('nan'),1),(0.6,0,0)])
+    def test_invalid_policy_rejected(values):
+>       with pytest.raises(ValueError): api().MatchPolicy(*values)
+                                        ^^^^^
+
+clipper_face_core/tests/test_contracts.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_policy_rejected[values3] _____________________
+
+values = (0.6, 0, 0)
+
+    @pytest.mark.parametrize('values', [(0.6,0,True),(-1,0,1),(0.6,float('nan'),1),(0.6,0,0)])
+    def test_invalid_policy_rejected(values):
+>       with pytest.raises(ValueError): api().MatchPolicy(*values)
+                                        ^^^^^
+
+clipper_face_core/tests/test_contracts.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____ test_vectors_own_immutable_storage_and_failures_remain_representable _____
+
+    def test_vectors_own_immutable_storage_and_failures_remain_representable():
+        a=np.array([1.,0.],np.float32)
+>       sample=api().ReferenceSample('r1','A',source(),space(),a,None)
+               ^^^^^
+
+clipper_face_core/tests/test_contracts.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_contracts.py:8: in api
+    return importlib.import_module('clipper_face_core.contracts')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.contracts'
+import_ = <function _gcd_import at 0x104c4bd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.contracts'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+________________________ test_core_types_without_opencv ________________________
+
+    def test_core_types_without_opencv():
+        r=probe('from clipper_face_core import FaceDetection, ModelFiles; from clipper_face_core.contracts import MatchPolicy','cv2,torch,onnxruntime')
+>       assert r.returncode==0,r.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 6, in <module>
+E           File "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py", line 4, in <module>
+E             from .opencv_backend import OpenCvFaceBackend, ModelFiles, FaceDetection
+E           File "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py", line 13, in <module>
+E             import cv2
+E           File "<string>", line 4, in find_spec
+E         ImportError: blocked cv2
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python', '-c', "import importlib....ackend.py", line 13, in <module>\n    import cv2\n  File "<string>", line 4, in find_spec\nImportError: blocked cv2\n').returncode
+
+clipper_face_core/tests/test_import_boundary.py:22: AssertionError
+______ test_explicit_backend_without_opencv_explains_optional_dependency _______
+
+    def test_explicit_backend_without_opencv_explains_optional_dependency():
+        r=probe('from clipper_face_core import OpenCvFaceBackend','cv2')
+        assert r.returncode!=0
+>       assert 'clipper-face-core[opencv]' in r.stderr
+E       assert 'clipper-face-core[opencv]' in 'Traceback (most recent call last):\n  File "<string>", line 6, in <module>\n  File "/Users/jina/project/adlight/.work...backend.py", line 13, in <module>\n    import cv2\n  File "<string>", line 4, in find_spec\nImportError: blocked cv2\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 6, in <module>\n  File "/Users/jina/project/adlight/.work...backend.py", line 13, in <module>\n    import cv2\n  File "<string>", line 4, in find_spec\nImportError: blocked cv2\n' = CompletedProcess(args=['/Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python', '-c', "import importlib....ackend.py", line 13, in <module>\n    import cv2\n  File "<string>", line 4, in find_spec\nImportError: blocked cv2\n').stderr
+
+clipper_face_core/tests/test_import_boundary.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED clipper_face_core/tests/test_contracts.py::test_space_captures_preprocessing_and_rejects_empty_identity
+FAILED clipper_face_core/tests/test_contracts.py::test_coordinates_and_time_never_fabricate_pts
+FAILED clipper_face_core/tests/test_contracts.py::test_invalid_policy_rejected[values0]
+FAILED clipper_face_core/tests/test_contracts.py::test_invalid_policy_rejected[values1]
+FAILED clipper_face_core/tests/test_contracts.py::test_invalid_policy_rejected[values2]
+FAILED clipper_face_core/tests/test_contracts.py::test_invalid_policy_rejected[values3]
+FAILED clipper_face_core/tests/test_contracts.py::test_vectors_own_immutable_storage_and_failures_remain_representable
+FAILED clipper_face_core/tests/test_import_boundary.py::test_core_types_without_opencv
+FAILED clipper_face_core/tests/test_import_boundary.py::test_explicit_backend_without_opencv_explains_optional_dependency
+9 failed, 1 passed in 0.41s

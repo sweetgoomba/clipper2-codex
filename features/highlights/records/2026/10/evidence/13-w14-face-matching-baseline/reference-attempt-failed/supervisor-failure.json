@@ -1,0 +1,5 @@
+{
+  "status": "supervisor_failed_before_monitoring",
+  "reason": "sandbox denied ps after child spawn; execution session ended, no child remains, no result or progress available",
+  "completed_reference_count": null
+}

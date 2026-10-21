@@ -1,0 +1,74 @@
+............F..FFF......F                                                [100%]
+=================================== FAILURES ===================================
+_____ test_nearly_cancelled_reference_does_not_invalidate_other_references _____
+
+    def test_nearly_cancelled_reference_does_not_invalidate_other_references():
+        from clipper_face_core import MatchPolicy, match_reference
+        from face_fixtures import query
+        g = build([sample('a1', 'A'), sample('b1', 'B'),
+                   sample('b2', 'B', (-1, .0001))])
+>       assert [entry.reference_id for entry in g.entries] == ['A']
+E       AssertionError: assert ['A', 'B'] == ['A']
+E         
+E         Left contains one more item: 'B'
+E         Use -v to get more diff
+
+clipper_face_core/tests/test_gallery.py:72: AssertionError
+___ test_consumer_rejects_conflicting_observation_ids_across_batch[scopes0] ____
+
+scopes = (None, None)
+
+    @pytest.mark.parametrize('scopes', [(None, None), ('first', 'second')])
+    def test_consumer_rejects_conflicting_observation_ids_across_batch(scopes):
+        qs = [query('same', vector, source=replace(SOURCE, scope_id=scope,
+                  scope_range_seconds=None if scope is None else (0, 2)))
+              for vector, scope in zip([(1, 0), (0, 1)], scopes)]
+>       with pytest.raises(ValueError, match='conflicting observation ID'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+clipper_face_core/tests/test_consumer_contract.py:39: Failed
+___ test_consumer_rejects_conflicting_observation_ids_across_batch[scopes1] ____
+
+scopes = ('first', 'second')
+
+    @pytest.mark.parametrize('scopes', [(None, None), ('first', 'second')])
+    def test_consumer_rejects_conflicting_observation_ids_across_batch(scopes):
+        qs = [query('same', vector, source=replace(SOURCE, scope_id=scope,
+                  scope_range_seconds=None if scope is None else (0, 2)))
+              for vector, scope in zip([(1, 0), (0, 1)], scopes)]
+>       with pytest.raises(ValueError, match='conflicting observation ID'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+clipper_face_core/tests/test_consumer_contract.py:39: Failed
+______________ test_consumer_deduplicates_identical_observations _______________
+
+    def test_consumer_deduplicates_identical_observations():
+        q = query('same')
+        _, results, scopes = classify([q, q])
+>       assert len(results) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len((ReferenceMatch(observation_id='same', status='matched', reference_id='A', candidates=(CandidateDistance(reference_id=...eefcf3d1bfce6742dc4772cb88b', evidence_fingerprint='009557e964b460da08b7c606b84eef8859e42425d7446fdd663897b7ad5dc767')))
+
+clipper_face_core/tests/test_consumer_contract.py:46: AssertionError
+_______________ test_missing_ownership_is_not_assumed_confirmed ________________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-16/test_missing_ownership_is_not_0')
+
+    def test_missing_ownership_is_not_assumed_confirmed(tmp_path):
+        path, data, plan = fixture(tmp_path)
+        data['queries'][0].pop('association', None)
+        dataset = tmp_path / 'dataset.json'
+        dataset.write_text(json.dumps(data))
+        plan['inputs']['dataset']['sha256'] = hashlib.sha256(dataset.read_bytes()).hexdigest()
+        path.write_text(json.dumps(plan))
+>       with pytest.raises(ValueError, match='explicit association'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+evaluation/reference_matching/tests/test_replay.py:100: Failed
+=========================== short test summary info ============================
+FAILED clipper_face_core/tests/test_gallery.py::test_nearly_cancelled_reference_does_not_invalidate_other_references
+FAILED clipper_face_core/tests/test_consumer_contract.py::test_consumer_rejects_conflicting_observation_ids_across_batch[scopes0]
+FAILED clipper_face_core/tests/test_consumer_contract.py::test_consumer_rejects_conflicting_observation_ids_across_batch[scopes1]
+FAILED clipper_face_core/tests/test_consumer_contract.py::test_consumer_deduplicates_identical_observations
+FAILED evaluation/reference_matching/tests/test_replay.py::test_missing_ownership_is_not_assumed_confirmed
+5 failed, 20 passed in 0.23s

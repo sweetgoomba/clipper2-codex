@@ -1,0 +1,1868 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 5ceeb49..b613f83 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,6 +8,7 @@ environments = [
+ [tool.uv.workspace]
+ members = [
+     "clipper_plugin_sdk",
++    "clipper_face_core",
+     "plugins/dialog_highlight",
+     "plugins/dance_highlight",
+     "plugins/clipper_video_render",
+diff --git a/uv.lock b/uv.lock
+index 02af1cb..3fc89d4 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -17,6 +17,7 @@ supported-markers = [
+ 
+ [manifest]
+ members = [
++    "clipper-face-core",
+     "clipper-plugin-clipper-video-render",
+     "clipper-plugin-dance-highlight",
+     "clipper-plugin-dialog-highlight",
+@@ -180,6 +181,26 @@ wheels = [
+     { url = "https://files.pythonhosted.org/packages/85/32/10bb5764d90a8eee674e9dc6f4db6a0ab47c8c4d0d83c27f7c39ac415a4d/click-8.2.1-py3-none-any.whl", hash = "sha256:61a3265b914e850b85317d0b3109c7f8cd35a670f963866005d6ef1d5175a12b", size = 102215, upload-time = "2025-05-20T23:19:47.796Z" },
+ ]
+ 
++[[package]]
++name = "clipper-face-core"
++version = "0.2.0"
++source = { editable = "clipper_face_core" }
++dependencies = [
++    { name = "numpy", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
++]
++
++[package.optional-dependencies]
++opencv = [
++    { name = "opencv-python", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
++]
++
++[package.metadata]
++requires-dist = [
++    { name = "numpy", specifier = ">=1.26" },
++    { name = "opencv-python", marker = "extra == 'opencv'", specifier = ">=4.10" },
++]
++provides-extras = ["opencv"]
++
+ [[package]]
+ name = "clipper-plugin-clipper-video-render"
+ version = "0.1.0"
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md
+new file mode 100644
+index 0000000..eeed286
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md
+@@ -0,0 +1,84 @@
++# clipper-face-core 0.2.0
++
++Optional, plugin-neutral face observations and reference matching for Python 3.11.
++The SDK has no dependency on this package. Consumers own model preparation and their
++venvs; package import never downloads weights or initializes a model. NumPy is the
++base dependency. Install `clipper-face-core[opencv]` only in consumers using the
++YuNet/SFace backend. CPU wheels are the tested route; Windows is not yet verified.
++
++## Reference matching
++
++```python
++from clipper_face_core import build_gallery, match_reference, combine_reference_matches
++
++gallery = build_gallery(reference_samples, space=embedding_space)
++results = [match_reference(q, gallery, explicit_policy) for q in selected_faces]
++consensus = combine_reference_matches(scope_id, selected_faces, results, explicit_policy)
++```
++
++See `examples/reference_matching.py` for a complete consumer adapter with scope
++partitioning. It takes no Dance Segment, UI, SDK/job or PersonGroup objects.
++
++- `EmbeddingSpace` fingerprints recognizer weight SHA, alignment, preprocessing,
++  normalization, dimension, backend version and cosine **distance** (smaller is closer).
++  Detector/config hashes live separately in `SourceEvidence`.
++- `ReferenceSample` connects an opaque, consumer-supplied reference ID to an image
++  source/observation, a feature or explicit failure. `build_gallery` uses float32
++  mean followed by L2 with epsilon 1e-9, preserving the existing Dance baseline.
++  Invalid samples remain in `failures`; no valid reference raises `GalleryBuildError`.
++  Mixed spaces and conflicting duplicate sample IDs are rejected. Identical IDs
++  do not acquire extra weight. Vectors have immutable, owned storage.
++- `QueryEvidence` carries the selected observation, source provenance, feature or
++  failure, quality evidence and consumer-declared `association` certainty. The core
++  does not decide which body owns a face. `confirmed` is a consumer assertion, not
++  proof that a body/face connection is correct.
++- `MatchPolicy(max_distance, min_margin, minimum_support)` has no defaults. Thresholds
++  need evaluation per embedding space. `match_reference` returns all reference
++  distances, top-two margin, `matched / ambiguous / unmatched / invalid`, reasons,
++  and fingerprints binding the query, gallery and policy. Different queries may
++  match the same reference. Adding a query cannot reserve a name or change another
++  query's choice. A tie is ambiguous; a single reference must pass distance and has
++  no margin evidence.
++- `combine_reference_matches` accepts only one source/analysis/scope with matching
++  provenance. Duplicate observations do not add support. Strong matches to different
++  references produce `conflicting_references`, never an averaged-away identity.
++  Insufficient support remains ambiguous. Individual failed/uncertain results are
++  retained in the consensus. An empty scope returns `invalid / no_evidence`.
++
++Time and geometry are explicit: display-frame pixel xyxy plus derived normalized
++coordinates, rotation applied before coordinates, integer PTS + rational time base
++when known, otherwise `derived_seconds`. Never label frame-index/FPS estimates as
++source PTS. Scope ranges are consumer-supplied half-open intervals. The library does
++not create tracks, split a consumer's clips or infer physical identity continuity.
++
++## Existing observation/grouping API
++
++The prior `ModelFiles`, `FaceDetection`, `OpenCvFaceBackend`, `FaceObservation`,
++`FaceGroup`, `FaceInterval`, `group_observations` and `rank_representatives` exports
++remain available. The OpenCV class is lazily imported; DTOs do not require cv2.
++
++`OpenCvFaceBackend.detect(frame_bgr)` returns all **valid-geometry** YuNet candidates;
++SFace alignment/embedding failures preserve a candidate with `embedding=None`.
++Legacy grouping/representative policies and optional progress callback are unchanged.
++The legacy Person `FaceObservation` still uses seconds/frame index and recognizer/
++config fingerprints. It is not silently upgraded to the new reference contract.
++
++Do not directly mix legacy Person vectors normalized by `vector/norm` with the
++Dance baseline normalized by `vector/(norm+1e-9)`. Declare and evaluate the precise
++processing space. This package does not add a persistent embedding cache.
++
++## Verification and current integration boundary
++
++`evaluation/reference_matching` replays hashed local feature artifacts without
++loading ML models. Its manifest pins files, code, processing space, policy and
++limits; changed inputs, incompatible spaces, pickle arrays and existing output
++folders are rejected. Run the CLI under an external supervisor for enforceable
++wall-time/RSS limits; the worker also checks measured limits before writing output.
++
++The initial replay reproduced all five reference centroids and all 54 saved query
++comparisons exactly. A three-sample diagnostic scope returns the expected reference
++instead of the old global cluster's different name. These are previously inspected
++examples, not independent accuracy results. W13 product integration, consumer venv
++installation/fingerprint, independent face-ownership labels, broader video quality
++and Windows remain separate verification steps. No Dance/Person app behavior is
++changed merely by adding this workspace package.
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py
+new file mode 100644
+index 0000000..f27c1a5
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py
+@@ -0,0 +1,32 @@
++"""Plugin-neutral face detection and observation grouping API (schema v1)."""
++
++from .grouping import FaceObservation, FaceGroup, FaceInterval, group_observations, rank_representatives
++from .backend_types import ModelFiles, FaceDetection
++
++__all__ = [
++    "FaceObservation", "FaceGroup", "FaceInterval", "group_observations", "rank_representatives",
++    "OpenCvFaceBackend", "ModelFiles", "FaceDetection",
++]
++
++
++def __getattr__(name):
++    if name == "OpenCvFaceBackend":
++        from .opencv_backend import OpenCvFaceBackend
++        return OpenCvFaceBackend
++    raise AttributeError(name)
++
++from .contracts import (
++    EmbeddingSpace, SourceEvidence, ReferenceSample, QueryEvidence, MatchPolicy,
++    ReferenceGallery, ReferenceMatch, ConsensusResult, CandidateDistance,
++)
++from .gallery import build_gallery, GalleryBuildError
++
++__all__ += [
++    'EmbeddingSpace', 'SourceEvidence', 'ReferenceSample', 'QueryEvidence', 'MatchPolicy',
++    'ReferenceGallery', 'ReferenceMatch', 'ConsensusResult', 'CandidateDistance',
++    'build_gallery', 'GalleryBuildError',
++]
++from .matching import match_reference
++__all__ += ['match_reference']
++from .consensus import combine_reference_matches
++__all__ += ['combine_reference_matches']
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py
+new file mode 100644
+index 0000000..9e7548e
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py
+@@ -0,0 +1,17 @@
++"""Validation shared by gallery preparation and query comparison."""
++import numpy as np
++
++
++def embedding_failure(vector, dimension: int) -> str | None:
++    if vector is None:
++        return 'missing_embedding'
++    if vector.shape != (dimension,):
++        return 'dimension_mismatch'
++    if not np.all(np.isfinite(vector)):
++        return 'non_finite_embedding'
++    norm = float(np.linalg.norm(vector))
++    if norm <= 1e-8:
++        return 'zero_embedding'
++    if not np.isfinite(norm) or abs(norm - 1.0) > 1e-5:
++        return 'not_normalized'
++    return None
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/backend_types.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/backend_types.py
+new file mode 100644
+index 0000000..8163fda
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/backend_types.py
+@@ -0,0 +1,31 @@
++"""Model files and legacy detection DTO; no backend import."""
++from dataclasses import dataclass
++from pathlib import Path
++import hashlib
++import numpy as np
++
++@dataclass(frozen=True)
++class ModelFiles:
++    detector: Path
++    recognizer: Path
++    detector_sha256: str
++    recognizer_sha256: str
++
++    def verify(self) -> None:
++        for path, expected in ((self.detector, self.detector_sha256),
++                               (self.recognizer, self.recognizer_sha256)):
++            digest = hashlib.sha256(path.read_bytes()).hexdigest()
++            if digest != expected:
++                raise ValueError(f"Face model hash mismatch: {path.name}")
++
++
++@dataclass(frozen=True)
++class FaceDetection:
++    bbox_px: tuple[int, int, int, int]
++    embedding: np.ndarray | None
++    quality: float
++    score: float
++    failure: str
++    sharpness: float | None = None
++
++
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/consensus.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/consensus.py
+new file mode 100644
+index 0000000..8437174
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/consensus.py
+@@ -0,0 +1,59 @@
++"""Combine only consumer-declared same-person observations, preserving conflicts."""
++from collections.abc import Sequence
++from .contracts import QueryEvidence, ReferenceMatch, MatchPolicy, ConsensusResult
++
++
++def combine_reference_matches(scope_id: str, evidence: Sequence[QueryEvidence],
++                              matches: Sequence[ReferenceMatch], policy: MatchPolicy) -> ConsensusResult:
++    if not isinstance(scope_id, str) or not scope_id.strip():
++        raise ValueError('empty_scope_id')
++    observations, results = {}, {}
++    scope_key = None
++    for q in evidence:
++        if q.observation_id in observations and observations[q.observation_id].fingerprint != q.fingerprint:
++            raise ValueError('conflicting_observation_id')
++        s = q.source
++        key = (s.analysis_id, s.source_sha256, s.scope_id, s.scope_range_seconds)
++        if s.scope_id != scope_id or (scope_key is not None and key != scope_key):
++            raise ValueError('source_or_scope_mismatch')
++        scope_key = key
++        observations[q.observation_id] = q
++    for match in matches:
++        previous = results.get(match.observation_id)
++        if previous is not None and previous != match:
++            raise ValueError('conflicting_match')
++        results[match.observation_id] = match
++    if observations.keys() != results.keys():
++        raise ValueError('missing_evidence_or_match')
++    ordered = tuple(results[id] for id in observations)
++    gallery_id, space_id = None, None
++    for m in ordered:
++        q = observations[m.observation_id]
++        if (m.policy_fingerprint != policy.fingerprint or m.space_fingerprint != q.space.fingerprint
++                or m.evidence_fingerprint != q.fingerprint
++                or (gallery_id is not None and m.gallery_fingerprint != gallery_id)
++                or (space_id is not None and m.space_fingerprint != space_id)):
++            raise ValueError('match_provenance_mismatch')
++        if m.status not in ('matched', 'ambiguous', 'unmatched', 'invalid') or (
++                (m.status == 'matched') != (m.reference_id is not None)):
++            raise ValueError('invalid_match_state')
++        gallery_id, space_id = m.gallery_fingerprint, m.space_fingerprint
++    support = {m.reference_id for m in ordered if m.status == 'matched'}
++    selected = None
++    if not ordered:
++        status, reason = 'invalid', 'no_evidence'
++    elif len(support) > 1:
++        status, reason = 'ambiguous', 'conflicting_references'
++    elif len(support) == 1 and sum(m.status == 'matched' for m in ordered) >= policy.minimum_support:
++        status, reason, selected = 'matched', 'supported_reference', next(iter(support))
++    elif all(m.status == 'invalid' for m in ordered):
++        status, reason = 'invalid', 'no_valid_evidence'
++    elif all(m.status in ('invalid', 'unmatched') for m in ordered):
++        status, reason = 'unmatched', 'distance_exceeded'
++    else:
++        status, reason = 'ambiguous', 'insufficient_support'
++    used = tuple(m.observation_id for m in ordered if selected is not None and m.reference_id == selected)
++    excluded = tuple((m.observation_id, reason if m.status == 'matched' else m.reason)
++                     for m in ordered if m.observation_id not in used)
++    return ConsensusResult(scope_id, status, selected, reason, ordered, used, excluded,
++                           gallery_id or '', policy.fingerprint)
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py
+new file mode 100644
+index 0000000..f42090f
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py
+@@ -0,0 +1,285 @@
++"""Versioned, plugin-neutral reference matching contracts. No model imports."""
++from __future__ import annotations
++
++from dataclasses import dataclass, field, fields, is_dataclass
++import hashlib
++import json
++import math
++import re
++from typing import Literal
++import numpy as np
++
++Status = Literal['matched', 'ambiguous', 'unmatched', 'invalid']
++
++
++def _text(value: str) -> None:
++    if not isinstance(value, str) or not value.strip():
++        raise ValueError('Expected non-empty identifier')
++
++
++def _sha(value: str) -> None:
++    if not isinstance(value, str) or not re.fullmatch('[0-9a-f]{64}', value):
++        raise ValueError('Expected lowercase SHA-256')
++
++
++def _integer(value: int, minimum: int) -> None:
++    if type(value) is not int or value < minimum:
++        raise ValueError('Invalid integer')
++
++
++def _finite(value: float) -> bool:
++    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
++
++
++def _immutable(vector: np.ndarray | None) -> np.ndarray | None:
++    if vector is None:
++        return None
++    a = np.asarray(vector, dtype='<f4')
++    return np.frombuffer(a.tobytes(), dtype='<f4').reshape(a.shape)
++
++
++def _payload(value):
++    if isinstance(value, np.ndarray):
++        return {'shape': list(value.shape), 'f32_sha256': hashlib.sha256(value.tobytes()).hexdigest()}
++    if is_dataclass(value):
++        return {f.name: _payload(getattr(value, f.name)) for f in fields(value)}
++    if isinstance(value, dict):
++        return {k: _payload(v) for k, v in value.items()}
++    if isinstance(value, (tuple, list)):
++        return [_payload(v) for v in value]
++    return value
++
++
++def fingerprint(value) -> str:
++    raw = json.dumps({'schema': 'face_matching_v1', 'value': _payload(value)},
++                     sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False)
++    return hashlib.sha256(raw.encode('utf-8')).hexdigest()
++
++
++@dataclass(frozen=True)
++class EmbeddingSpace:
++    recognizer_sha256: str
++    alignment_version: str
++    preprocessing_version: str
++    normalization_version: str
++    dimension: int
++    backend_version: str
++    metric: str = 'cosine_distance'
++
++    def __post_init__(self):
++        _sha(self.recognizer_sha256)
++        for name in ('alignment_version', 'preprocessing_version', 'normalization_version', 'backend_version'):
++            _text(getattr(self, name))
++        _integer(self.dimension, 1)
++        if self.metric != 'cosine_distance':
++            raise ValueError('Unsupported metric')
++
++    @property
++    def fingerprint(self):
++        return fingerprint(self)
++
++
++@dataclass(frozen=True)
++class SourceEvidence:
++    analysis_id: str
++    source_sha256: str
++    observation_version: int
++    detector_sha256: str
++    config_sha256: str
++    adapter_version: str
++    time_kind: Literal['pts', 'derived_seconds', 'still_image']
++    time_seconds: float | None
++    pts: int | None
++    time_base: tuple[int, int] | None
++    frame_index: int | None
++    width: int
++    height: int
++    rotation: int
++    bbox_px: tuple[float, float, float, float] | None
++    track_id: str | None
++    scope_id: str | None
++    scope_range_seconds: tuple[float, float] | None
++
++    def __post_init__(self):
++        for v in (self.analysis_id, self.adapter_version):
++            _text(v)
++        for v in (self.source_sha256, self.detector_sha256, self.config_sha256):
++            _sha(v)
++        for v in (self.observation_version, self.width, self.height):
++            _integer(v, 1)
++        if type(self.rotation) is not int or self.rotation not in (0, 90, 180, 270):
++            raise ValueError('Invalid display rotation')
++        if self.frame_index is not None:
++            _integer(self.frame_index, 0)
++        for name in ('track_id', 'scope_id'):
++            if getattr(self, name) is not None:
++                _text(getattr(self, name))
++        for name in ('bbox_px', 'time_base', 'scope_range_seconds'):
++            if getattr(self, name) is not None:
++                object.__setattr__(self, name, tuple(getattr(self, name)))
++        if self.time_kind == 'pts':
++            if type(self.pts) is not int or self.time_base is None or len(self.time_base) != 2:
++                raise ValueError('PTS requires integer timestamp and rational time base')
++            for v in self.time_base:
++                _integer(v, 1)
++            expected = self.pts * self.time_base[0] / self.time_base[1]
++            if not _finite(self.time_seconds) or not math.isclose(self.time_seconds, expected, abs_tol=1e-9):
++                raise ValueError('PTS and seconds disagree')
++        elif self.time_kind == 'derived_seconds':
++            if not _finite(self.time_seconds) or self.pts is not None or self.time_base is not None:
++                raise ValueError('Derived seconds cannot claim source PTS')
++        elif self.time_kind == 'still_image':
++            if any(v is not None for v in (self.time_seconds, self.pts, self.time_base, self.frame_index)):
++                raise ValueError('Still image cannot claim video time')
++        else:
++            raise ValueError('Invalid time kind')
++        if self.bbox_px is not None:
++            if len(self.bbox_px) != 4 or not all(_finite(v) for v in self.bbox_px):
++                raise ValueError('Invalid bbox')
++            x1, y1, x2, y2 = self.bbox_px
++            if not (0 <= x1 < x2 <= self.width and 0 <= y1 < y2 <= self.height):
++                raise ValueError('Bbox outside display frame')
++        if self.scope_range_seconds is not None:
++            r = self.scope_range_seconds
++            if (not self.scope_id or len(r) != 2 or not all(_finite(v) for v in r)
++                    or self.time_seconds is None or not r[0] <= self.time_seconds < r[1]):
++                raise ValueError('Observation outside declared scope')
++
++    @property
++    def bbox_normalized(self):
++        if self.bbox_px is None:
++            return None
++        x1, y1, x2, y2 = self.bbox_px
++        return x1 / self.width, y1 / self.height, x2 / self.width, y2 / self.height
++
++
++@dataclass(frozen=True, eq=False)
++class ReferenceSample:
++    sample_id: str
++    reference_id: str
++    source: SourceEvidence
++    space: EmbeddingSpace
++    embedding: np.ndarray | None = field(repr=False)
++    failure: str | None
++
++    def __post_init__(self):
++        _text(self.sample_id)
++        _text(self.reference_id)
++        object.__setattr__(self, 'embedding', _immutable(self.embedding))
++        if self.failure is not None:
++            _text(self.failure)
++
++
++@dataclass(frozen=True, eq=False)
++class QueryEvidence:
++    observation_id: str
++    source: SourceEvidence
++    space: EmbeddingSpace
++    embedding: np.ndarray | None = field(repr=False)
++    association: Literal['confirmed', 'ambiguous', 'unassigned']
++    failure: str | None
++    quality: tuple[tuple[str, float], ...]
++
++    def __post_init__(self):
++        _text(self.observation_id)
++        if self.association not in ('confirmed', 'ambiguous', 'unassigned'):
++            raise ValueError('Invalid association')
++        if self.failure is not None:
++            _text(self.failure)
++        object.__setattr__(self, 'embedding', _immutable(self.embedding))
++        object.__setattr__(self, 'quality', tuple(tuple(v) for v in self.quality))
++        for key, value in self.quality:
++            _text(key)
++            if not _finite(value):
++                raise ValueError('Invalid quality value')
++
++    @property
++    def fingerprint(self):
++        return fingerprint(self)
++
++
++@dataclass(frozen=True)
++class MatchPolicy:
++    max_distance: float
++    min_margin: float
++    minimum_support: int
++
++    def __post_init__(self):
++        for v in (self.max_distance, self.min_margin):
++            if not _finite(v) or not 0 <= v <= 2:
++                raise ValueError('Cosine distance policy must be within [0,2]')
++        _integer(self.minimum_support, 1)
++
++    @property
++    def fingerprint(self):
++        return fingerprint(self)
++
++
++@dataclass(frozen=True)
++class SampleFailure:
++    sample_id: str
++    reference_id: str
++    reason: str
++
++
++@dataclass(frozen=True, eq=False)
++class GalleryEntry:
++    reference_id: str
++    centroid: np.ndarray = field(repr=False)
++    used_sample_ids: tuple[str, ...]
++
++    def __post_init__(self):
++        _text(self.reference_id)
++        object.__setattr__(self, 'centroid', _immutable(self.centroid))
++        object.__setattr__(self, 'used_sample_ids', tuple(self.used_sample_ids))
++
++
++@dataclass(frozen=True)
++class ReferenceGallery:
++    space: EmbeddingSpace
++    entries: tuple[GalleryEntry, ...]
++    samples: tuple[ReferenceSample, ...]
++    failures: tuple[SampleFailure, ...]
++    aggregation_version: str
++
++    def __post_init__(self):
++        for name in ('entries', 'samples', 'failures'):
++            object.__setattr__(self, name, tuple(getattr(self, name)))
++        _text(self.aggregation_version)
++
++    @property
++    def fingerprint(self):
++        return fingerprint(self)
++
++
++@dataclass(frozen=True)
++class CandidateDistance:
++    reference_id: str
++    distance: float
++
++
++@dataclass(frozen=True)
++class ReferenceMatch:
++    observation_id: str
++    status: Status
++    reference_id: str | None
++    candidates: tuple[CandidateDistance, ...]
++    margin: float | None
++    reason: str
++    space_fingerprint: str
++    gallery_fingerprint: str
++    policy_fingerprint: str
++    evidence_fingerprint: str
++
++
++@dataclass(frozen=True)
++class ConsensusResult:
++    scope_id: str
++    status: Status
++    reference_id: str | None
++    reason: str
++    matches: tuple[ReferenceMatch, ...]
++    used_observation_ids: tuple[str, ...]
++    excluded: tuple[tuple[str, str], ...]
++    gallery_fingerprint: str
++    policy_fingerprint: str
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/gallery.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/gallery.py
+new file mode 100644
+index 0000000..97988df
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/gallery.py
+@@ -0,0 +1,46 @@
++"""Prepare reference centroids without importing a detector or a consumer plugin."""
++from collections import defaultdict
++from collections.abc import Sequence
++import numpy as np
++from .contracts import (EmbeddingSpace, ReferenceSample, ReferenceGallery,
++                        GalleryEntry, SampleFailure, fingerprint)
++from ._vectors import embedding_failure
++
++
++class GalleryBuildError(ValueError):
++    def __init__(self, reason: str, failures=()):
++        super().__init__(reason)
++        self.reason = reason
++        self.failures = tuple(failures)
++
++
++def build_gallery(samples: Sequence[ReferenceSample], *, space: EmbeddingSpace) -> ReferenceGallery:
++    unique, stamps, groups, failures = [], {}, defaultdict(list), []
++    for sample in samples:
++        if sample.space != space:
++            raise GalleryBuildError('space_mismatch', failures)
++        stamp = fingerprint(sample)
++        if sample.sample_id in stamps:
++            if stamps[sample.sample_id] != stamp:
++                raise GalleryBuildError('conflicting_sample_id', failures)
++            continue
++        stamps[sample.sample_id] = stamp
++        unique.append(sample)
++        reason = sample.failure or embedding_failure(sample.embedding, space.dimension)
++        if reason:
++            failures.append(SampleFailure(sample.sample_id, sample.reference_id, reason))
++        else:
++            groups[sample.reference_id].append(sample)
++    entries = []
++    for reference_id, items in groups.items():
++        mean = np.mean(np.stack([s.embedding for s in items]), axis=0)
++        norm = float(np.linalg.norm(mean))
++        if not np.isfinite(norm) or norm <= 1e-8:
++            failures.extend(SampleFailure(s.sample_id, reference_id, 'invalid_centroid') for s in items)
++            continue
++        centroid = mean / (norm + 1e-9)
++        entries.append(GalleryEntry(reference_id, centroid, tuple(s.sample_id for s in items)))
++    if not entries:
++        raise GalleryBuildError('no_valid_references', failures)
++    return ReferenceGallery(space, tuple(entries), tuple(unique), tuple(failures),
++                            'mean_f32_l2_eps1e-9_v1')
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/grouping.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/grouping.py
+new file mode 100644
+index 0000000..e47bc78
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/grouping.py
+@@ -0,0 +1,193 @@
++"""Deterministic, plugin-independent grouping of face observations.
++
++Embeddings may only be compared within one model SHA/config space. Callers must
++persist provenance; this module refuses to compare observations from different
++spaces. Detection failure and uncertainty are different from an absent face.
++"""
++
++from __future__ import annotations
++
++from dataclasses import dataclass
++from collections import defaultdict
++from typing import Callable, Literal, Sequence
++import numpy as np
++
++
++@dataclass(frozen=True)
++class FaceObservation:
++    observation_id: str
++    track_id: str
++    shot_id: str
++    time_sec: float
++    bbox_px: tuple[int, int, int, int]  # x1, y1, x2, y2 in source pixels
++    embedding: np.ndarray | None
++    quality: float
++    source_sha256: str = ""
++    model_sha256: str = ""
++    config_sha256: str = ""
++    time_base: str = "seconds"
++    frame_width: int = 0
++    frame_height: int = 0
++    version: int = 1
++    failure: Literal["none", "alignment", "embedding"] = "none"
++    sharpness: float | None = None
++    association_uncertain: bool = False
++
++    @property
++    def bbox_normalized(self) -> tuple[float, float, float, float] | None:
++        if self.frame_width <= 0 or self.frame_height <= 0:
++            return None
++        x1, y1, x2, y2 = self.bbox_px
++        return (x1 / self.frame_width, y1 / self.frame_height,
++                x2 / self.frame_width, y2 / self.frame_height)
++
++
++@dataclass(frozen=True)
++class FaceInterval:
++    shot_id: str
++    start_sec: float
++    end_sec: float
++    observation_ids: tuple[str, ...]
++
++
++@dataclass(frozen=True)
++class FaceGroup:
++    group_id: str
++    track_ids: tuple[str, ...]
++    observation_ids: tuple[str, ...]
++    intervals: tuple[FaceInterval, ...]
++    representative_observation_id: str
++    status: Literal["grouped", "needs_review"]
++
++
++def _normalized(vector: np.ndarray) -> np.ndarray:
++    vector = np.asarray(vector, dtype=np.float32).reshape(-1)
++    norm = float(np.linalg.norm(vector))
++    if not np.isfinite(norm) or norm <= 1e-8:
++        raise ValueError("Invalid face embedding")
++    return vector / norm
++
++
++def _intervals(observations: list[FaceObservation], gap: float) -> tuple[FaceInterval, ...]:
++    by_shot: dict[str, list[FaceObservation]] = defaultdict(list)
++    for observation in observations:
++        by_shot[observation.shot_id].append(observation)
++    intervals: list[FaceInterval] = []
++    for shot_id, items in by_shot.items():
++        items.sort(key=lambda item: (item.time_sec, item.observation_id))
++        run: list[FaceObservation] = []
++        for item in items:
++            if run and item.time_sec - run[-1].time_sec > gap:
++                intervals.append(FaceInterval(shot_id, run[0].time_sec, run[-1].time_sec,
++                                              tuple(o.observation_id for o in run)))
++                run = []
++            run.append(item)
++        if run:
++            intervals.append(FaceInterval(shot_id, run[0].time_sec, run[-1].time_sec,
++                                          tuple(o.observation_id for o in run)))
++    return tuple(sorted(intervals, key=lambda item: (item.start_sec, item.shot_id)))
++
++
++def rank_representatives(observations: Sequence[FaceObservation]) -> list[str]:
++    """Order a group's observed faces for primary and replacement images."""
++    spaces = {(item.model_sha256, item.config_sha256) for item in observations
++              if item.embedding is not None}
++    if len(spaces) > 1:
++        raise ValueError("Cannot mix face embedding model/config spaces")
++    vectors = [_normalized(item.embedding) for item in observations
++               if item.embedding is not None]
++    weights = [max(.01, item.quality) for item in observations
++               if item.embedding is not None]
++    center = _normalized(np.average(vectors, axis=0, weights=weights)) if vectors else None
++
++    def score(item: FaceObservation) -> float:
++        x1, y1, x2, y2 = item.bbox_px
++        # Tiny crops can have high Laplacian variance from compression noise.
++        size_factor = min(1.0, max(0, min(x2 - x1, y2 - y1)) / 80.0)
++        sharpness = item.sharpness if item.sharpness is not None else item.quality
++        similarity = (float(np.dot(_normalized(item.embedding), center))
++                      if item.embedding is not None and center is not None else 0.0)
++        return .5 * item.quality + .5 * sharpness * size_factor + .15 * similarity
++
++    return [item.observation_id for item in sorted(observations, key=score, reverse=True)]
++
++
++def group_observations(
++    observations: list[FaceObservation], *, cosine_threshold: float = 0.55,
++    max_gap_sec: float = 1.5,
++    on_intervals_start: Callable[[], None] | None = None,
++) -> list[FaceGroup]:
++    """Group shot-local tracks, prohibiting co-visible tracks from merging.
++
++    Greedy matching is deliberately conservative. Every observed track remains
++    visible, including a track with no usable embedding. A face the detector did
++    not find has no observation and cannot be recovered by this API.
++    """
++    if not 0 <= cosine_threshold <= 1 or max_gap_sec < 0:
++        raise ValueError("Invalid grouping configuration")
++    spaces = {(o.model_sha256, o.config_sha256) for o in observations if o.embedding is not None}
++    if len(spaces) > 1:
++        raise ValueError("Cannot mix face embedding model/config spaces")
++    by_track: dict[str, list[FaceObservation]] = defaultdict(list)
++    for observation in observations:
++        by_track[observation.track_id].append(observation)
++    track_order = sorted(by_track, key=lambda track: (
++        min(o.time_sec for o in by_track[track]), track))
++
++    def centroid(track_ids: list[str]) -> np.ndarray | None:
++        vectors: list[np.ndarray] = []
++        weights: list[float] = []
++        for track in track_ids:
++            for item in by_track[track]:
++                if item.embedding is None:
++                    continue
++                vectors.append(_normalized(item.embedding))
++                weights.append(max(0.01, item.quality))
++        return _normalized(np.average(vectors, axis=0, weights=weights)) if vectors else None
++
++    def co_visible(left: list[str], right: str) -> bool:
++        for track in left:
++            for a in by_track[track]:
++                for b in by_track[right]:
++                    if a.shot_id == b.shot_id and abs(a.time_sec - b.time_sec) < 0.001:
++                        return True
++        return False
++
++    clusters: list[list[str]] = []
++    uncertain: set[str] = set()
++    for track in track_order:
++        vector = centroid([track])
++        candidates: list[tuple[float, int]] = []
++        if vector is not None:
++            for index, cluster in enumerate(clusters):
++                other = centroid(cluster)
++                if other is not None and not co_visible(cluster, track):
++                    score = float(np.dot(vector, other))
++                    if score >= cosine_threshold:
++                        candidates.append((score, index))
++        candidates.sort(reverse=True)
++        if vector is None:
++            uncertain.add(track)
++        elif len(candidates) > 1 and candidates[0][0] - candidates[1][0] < 0.04:
++            uncertain.add(track)
++        if candidates:
++            clusters[candidates[0][1]].append(track)
++        else:
++            clusters.append([track])
++
++    if on_intervals_start is not None:
++        on_intervals_start()
++    groups: list[FaceGroup] = []
++    for index, tracks in enumerate(clusters, 1):
++        items = sorted((o for track in tracks for o in by_track[track]),
++                       key=lambda o: (o.time_sec, o.observation_id))
++        representative_id = rank_representatives(items)[0]
++        groups.append(FaceGroup(
++            group_id=f"person_{index:03d}", track_ids=tuple(tracks),
++            observation_ids=tuple(o.observation_id for o in items),
++            intervals=_intervals(items, max_gap_sec),
++            representative_observation_id=representative_id,
++            status="needs_review" if len(items) == 1 or any(t in uncertain for t in tracks)
++            or any(item.association_uncertain for item in items) else "grouped",
++        ))
++    return groups
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py
+new file mode 100644
+index 0000000..9918c3a
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py
+@@ -0,0 +1,36 @@
++"""Independent reference comparison: no cross-query allocation or clustering."""
++import numpy as np
++from .contracts import QueryEvidence, ReferenceGallery, MatchPolicy, ReferenceMatch, CandidateDistance
++from ._vectors import embedding_failure
++
++
++def match_reference(query: QueryEvidence, gallery: ReferenceGallery,
++                    policy: MatchPolicy) -> ReferenceMatch:
++    def result(status, reason, candidates=(), margin=None, reference_id=None):
++        return ReferenceMatch(query.observation_id, status, reference_id, candidates, margin,
++                              reason, query.space.fingerprint, gallery.fingerprint,
++                              policy.fingerprint, query.fingerprint)
++
++    if query.space != gallery.space:
++        return result('invalid', 'space_mismatch')
++    reason = query.failure or embedding_failure(query.embedding, query.space.dimension)
++    if reason:
++        return result('invalid', reason)
++    ids = [e.reference_id for e in gallery.entries]
++    if (not ids or len(ids) != len(set(ids)) or any(
++            embedding_failure(e.centroid, gallery.space.dimension) for e in gallery.entries)):
++        return result('invalid', 'invalid_gallery')
++    candidates = tuple(sorted((CandidateDistance(e.reference_id,
++        max(0.0, min(2.0, 1.0 - float(np.dot(query.embedding, e.centroid)))))
++        for e in gallery.entries), key=lambda c: (c.distance, c.reference_id)))
++    first = candidates[0]
++    margin = candidates[1].distance - first.distance if len(candidates) > 1 else None
++    if query.association != 'confirmed':
++        return result('ambiguous', 'association_' + query.association, candidates, margin)
++    if first.distance > policy.max_distance:
++        return result('unmatched', 'distance_exceeded', candidates, margin)
++    if margin is not None and (margin == 0 or margin < policy.min_margin):
++        return result('ambiguous', 'tied_references' if margin == 0 else 'insufficient_margin',
++                      candidates, margin)
++    return result('matched', 'single_reference_distance_only' if margin is None else 'accepted',
++                  candidates, margin, first.reference_id)
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py
+new file mode 100644
+index 0000000..c046ee6
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py
+@@ -0,0 +1,82 @@
++"""Optional OpenCV YuNet/SFace backend for all-face observations.
++
++No model download happens here. Plugins decide when/how licensed model assets are
++prepared and pass verified files. Replacing the backend requires a new model hash,
++embedding cache namespace and calibrated threshold; old vectors must not mix.
++"""
++
++from __future__ import annotations
++
++import hashlib
++try:
++    import cv2
++except ImportError as exc:
++    raise ImportError("Install clipper-face-core[opencv] in the consuming plugin environment") from exc
++from .backend_types import ModelFiles, FaceDetection
++import numpy as np
++
++
++class OpenCvFaceBackend:
++    backend_id = "opencv-yunet-2023mar+sface-2021dec+focus-v2"
++
++    def __init__(self, files: ModelFiles, *, score_threshold: float = 0.6,
++                 nms_threshold: float = 0.3, top_k: int = 5000):
++        files.verify()
++        self.model_sha256 = files.recognizer_sha256
++        self.config_sha256 = hashlib.sha256(
++            f"{self.backend_id}:{score_threshold}:{nms_threshold}:{top_k}".encode()
++        ).hexdigest()
++        empty = np.empty(0, dtype=np.uint8)
++        self.detector = cv2.FaceDetectorYN.create(
++            "onnx", np.frombuffer(files.detector.read_bytes(), np.uint8), empty,
++            (320, 320), score_threshold, nms_threshold, top_k,
++        )
++        self.recognizer = cv2.FaceRecognizerSF.create(
++            "onnx", np.frombuffer(files.recognizer.read_bytes(), np.uint8), empty,
++        )
++
++    def detect(self, frame_bgr: np.ndarray) -> list[FaceDetection]:
++        if frame_bgr is None or frame_bgr.size == 0:
++            return []
++        height, width = frame_bgr.shape[:2]
++        self.detector.setInputSize((width, height))
++        _, faces = self.detector.detect(frame_bgr)
++        results: list[FaceDetection] = []
++        for raw in faces if faces is not None else []:
++            face = np.asarray(raw, dtype=np.float32)
++            x, y, w, h = (float(v) for v in face[:4])
++            bbox = (max(0, int(x)), max(0, int(y)),
++                    min(width, int(x + w)), min(height, int(y + h)))
++            if bbox[2] <= bbox[0] or bbox[3] <= bbox[1]:
++                continue
++            score = float(face[-1])
++            crop = frame_bgr[bbox[1]:bbox[3], bbox[0]:bbox[2]]
++            blur = min(1.0, float(cv2.Laplacian(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY),
++                                                cv2.CV_64F).var()) / 150.0)
++            crop_height, crop_width = crop.shape[:2]
++            if min(crop_height, crop_width) < 8:
++                focus = 0.0
++            else:
++                # Bottom edges may be subtitles or clothing rather than a sharp face.
++                upper_face = crop[int(crop_height * .12):int(crop_height * .55),
++                                  int(crop_width * .13):int(crop_width * .87)]
++                focus = min(1.0, float(cv2.Laplacian(
++                    cv2.cvtColor(upper_face, cv2.COLOR_BGR2GRAY), cv2.CV_64F).var()) / 150.0)
++            size = min(1.0, (w * h) / max(1.0, width * height) * 12.0)
++            # Landmark symmetry is a limited proxy for frontal/unoccluded faces.
++            eyes = face[4:8].reshape(2, 2)
++            nose = face[8:10]
++            eye_mid = eyes.mean(axis=0)
++            symmetry = 1.0 - min(1.0, abs(float(nose[0] - eye_mid[0])) / max(1.0, w / 2))
++            quality = max(0.0, min(1.0, .4 * score + .25 * blur + .2 * size + .15 * symmetry))
++            try:
++                aligned = self.recognizer.alignCrop(frame_bgr, face)
++                vector = np.asarray(self.recognizer.feature(aligned), np.float32).reshape(-1)
++                norm = float(np.linalg.norm(vector))
++                if norm <= 1e-8:
++                    raise ValueError("empty embedding")
++                embedding, failure = vector / norm, "none"
++            except (cv2.error, ValueError):
++                embedding, failure = None, "embedding"
++            results.append(FaceDetection(bbox, embedding, quality, score, failure, focus))
++        return results
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py
+new file mode 100644
+index 0000000..c468a94
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py
+@@ -0,0 +1,24 @@
++"""Adapter example. The consumer supplies selected faces and same-person scopes."""
++from collections import defaultdict
++from collections.abc import Sequence
++from clipper_face_core import (
++    ReferenceSample, QueryEvidence, EmbeddingSpace, MatchPolicy, ReferenceGallery,
++    ReferenceMatch, ConsensusResult, build_gallery, match_reference, combine_reference_matches,
++)
++
++
++def classify_selected_faces(
++    references: Sequence[ReferenceSample], queries: Sequence[QueryEvidence], *,
++    space: EmbeddingSpace, policy: MatchPolicy,
++) -> tuple[ReferenceGallery, tuple[ReferenceMatch, ...], tuple[ConsensusResult, ...]]:
++    if len({(q.source.analysis_id, q.source.source_sha256) for q in queries}) > 1:
++        raise ValueError('Example requires the same analysis/source per query batch')
++    gallery = build_gallery(references, space=space)
++    results = tuple(match_reference(q, gallery, policy) for q in queries)
++    groups = defaultdict(list)
++    for q, result in zip(queries, results):
++        if q.source.scope_id is not None:
++            groups[q.source.scope_id].append((q, result))
++    scopes = tuple(combine_reference_matches(id, [q for q, _ in rows], [m for _, m in rows], policy)
++                   for id, rows in groups.items())
++    return gallery, results, scopes
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/pyproject.toml b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/pyproject.toml
+new file mode 100644
+index 0000000..f5b63fa
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/pyproject.toml
+@@ -0,0 +1,16 @@
++[project]
++name = "clipper-face-core"
++version = "0.2.0"
++description = "Plugin-neutral face observations and grouping"
++requires-python = ">=3.11,<3.12"
++dependencies = ["numpy>=1.26"]
++
++[project.optional-dependencies]
++opencv = ["opencv-python>=4.10"]
++
++[tool.hatch.build.targets.wheel]
++packages = ["clipper_face_core"]
++
++[build-system]
++requires = ["hatchling"]
++build-backend = "hatchling.build"
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/face_fixtures.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/face_fixtures.py
+new file mode 100644
+index 0000000..f6d6b8b
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/face_fixtures.py
+@@ -0,0 +1,20 @@
++from dataclasses import replace
++import numpy as np
++from clipper_face_core.contracts import EmbeddingSpace, SourceEvidence, ReferenceSample, QueryEvidence
++
++SPACE=EmbeddingSpace('a'*64,'align','bgr','l2_eps1e-9',2,'test')
++SOURCE=SourceEvidence('run','b'*64,1,'c'*64,'d'*64,'test','derived_seconds',1.0,None,None,30,100,100,0,(10,20,50,80),'track','scope',(0,2))
++
++
++def sample(id='r1', label='A', vector=(1,0), **kw):
++    values=dict(sample_id=id,reference_id=label,source=SOURCE,space=SPACE,
++                embedding=None if vector is None else np.array(vector,np.float32),failure=None)
++    values.update(kw)
++    return ReferenceSample(**values)
++
++
++def query(id='q1', vector=(1,0), **kw):
++    values=dict(observation_id=id,source=SOURCE,space=SPACE,
++                embedding=None if vector is None else np.array(vector,np.float32),association='confirmed',failure=None,quality=())
++    values.update(kw)
++    return QueryEvidence(**values)
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consensus.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consensus.py
+new file mode 100644
+index 0000000..6b61f56
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consensus.py
+@@ -0,0 +1,70 @@
++from dataclasses import replace
++import importlib
++import pytest
++from face_fixtures import sample, query, SOURCE, SPACE
++from clipper_face_core import MatchPolicy, build_gallery, match_reference
++
++G=build_gallery([sample(),sample('r2','B',(0,1))],space=SPACE)
++P=MatchPolicy(.6,0,2)
++
++
++def combine(qs, matches=None, policy=P):
++    matches=[match_reference(q,G,policy) for q in qs] if matches is None else matches
++    return importlib.import_module('clipper_face_core.consensus').combine_reference_matches('scope',qs,matches,policy)
++
++
++def test_conflicting_references_are_preserved():
++    r=combine([query('a'),query('b',(0,1))])
++    assert (r.status,r.reason,r.reference_id)==('ambiguous','conflicting_references',None)
++    assert {m.reference_id for m in r.matches}=={'A','B'}
++    assert set(dict(r.excluded))=={'a','b'}
++
++
++def test_support_preserves_failed_and_ambiguous_evidence():
++    r=combine([query('a'),query('b'),query('bad',None)])
++    assert r.reference_id=='A' and r.used_observation_ids==('a','b')
++    assert dict(r.excluded)=={'bad':'missing_embedding'}
++    low=combine([query('a'),query('uncertain',association='ambiguous')])
++    assert low.status=='ambiguous' and low.reason=='insufficient_support'
++    assert len(low.matches)==2
++
++
++def test_duplicate_observation_is_not_an_extra_vote_and_conflict_rejected():
++    a=query()
++    r=combine([a,a])
++    assert r.reason=='insufficient_support' and len(r.matches)==1
++    with pytest.raises(ValueError,match='conflicting_observation_id'):
++        combine([a,query(vector=(0,1))])
++
++
++@pytest.mark.parametrize('change', [dict(source_sha256='e'*64),dict(analysis_id='other'),dict(scope_id='other'),dict(scope_range_seconds=(0,3))])
++def test_same_track_number_cannot_mix_sources_or_scopes(change):
++    q=replace(query('b'),source=replace(SOURCE,**change))
++    with pytest.raises(ValueError): combine([query('a'),q])
++
++
++def test_gallery_policy_space_or_stale_evidence_cannot_mix():
++    qs=[query('a'),query('b')];ms=[match_reference(q,G,P) for q in qs]
++    for field in ('gallery_fingerprint','policy_fingerprint','space_fingerprint','evidence_fingerprint'):
++        with pytest.raises(ValueError): combine(qs,[ms[0],replace(ms[1],**{field:'e'*64})])
++    with pytest.raises(ValueError): combine([query('a',(0,1)),qs[1]],ms)
++    with pytest.raises(ValueError): combine(qs,ms[:1])
++
++
++@pytest.mark.parametrize('qs,status,reason',[
++    ([], 'invalid','no_evidence'),
++    ([query(vector=None)],'invalid','no_valid_evidence'),
++    ([query(vector=(-1,0))],'unmatched','distance_exceeded'),
++    ([query(association='ambiguous')],'ambiguous','insufficient_support'),
++])
++def test_empty_and_nonmatching_scopes_remain_visible(qs,status,reason):
++    r=combine(qs)
++    assert (r.status,r.reason)==(status,reason)
++    assert len(r.matches)==len(qs)
++
++
++def test_independent_scopes_do_not_change_previous_result():
++    qs=[query('a'),query('b')]
++    expected=combine(qs)
++    combine([query('c',(0,1)),query('d',(0,1))])
++    assert combine(qs)==expected
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consumer_contract.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consumer_contract.py
+new file mode 100644
+index 0000000..f2069f8
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consumer_contract.py
+@@ -0,0 +1,31 @@
++from dataclasses import replace
++import importlib.util
++from pathlib import Path
++import pytest
++from face_fixtures import sample, query, SOURCE, SPACE
++from clipper_face_core import MatchPolicy
++
++
++def classify(qs):
++    path=Path(__file__).parents[1]/'examples/reference_matching.py'
++    spec=importlib.util.spec_from_file_location('face_consumer_example',path)
++    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
++    return module.classify_selected_faces([sample(),sample('r2','B',(0,1))],qs,space=SPACE,policy=MatchPolicy(.6,0,1))
++
++
++def test_consumer_keeps_intervals_ids_uncertainty_and_conflicts():
++    def at(q,scope):return replace(q,source=replace(SOURCE,scope_id=scope,scope_range_seconds=None if scope is None else (0,2)))
++    qs=[at(query('a1'),'a'),at(query('a2'),'b'),at(query('unknown',association='unassigned'),None),
++        at(query('bad',None),None),at(query('conflict1'),'c'),at(query('conflict2',(0,1)),'c')]
++    before=[q.fingerprint for q in qs]
++    gallery,results,scopes=classify(qs)
++    assert [q.fingerprint for q in qs]==before
++    assert [r.observation_id for r in results]==[q.observation_id for q in qs]
++    assert [r.status for r in results]==['matched','matched','ambiguous','invalid','matched','matched']
++    assert [(s.scope_id,s.reference_id,s.status) for s in scopes]==[('a','A','matched'),('b','A','matched'),('c',None,'ambiguous')]
++    assert len(gallery.entries)==2
++
++
++def test_consumer_rejects_cross_source_batch():
++    with pytest.raises(ValueError,match='same analysis/source'):
++        classify([query('a'),query('b',source=replace(SOURCE,source_sha256='e'*64))])
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_contracts.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_contracts.py
+new file mode 100644
+index 0000000..14ece08
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_contracts.py
+@@ -0,0 +1,57 @@
++from dataclasses import replace
++import importlib
++import numpy as np
++import pytest
++
++
++def api():
++    return importlib.import_module('clipper_face_core.contracts')
++
++
++def space():
++    return api().EmbeddingSpace('a'*64, 'align1', 'bgr1', 'l2epsilon1', 2, 'backend1')
++
++
++def source(**kw):
++    args = dict(analysis_id='run1', source_sha256='b'*64, observation_version=1,
++                detector_sha256='c'*64, config_sha256='d'*64, adapter_version='adapter1',
++                time_kind='derived_seconds', time_seconds=1.0, pts=None, time_base=None,
++                frame_index=30, width=100, height=100, rotation=0, bbox_px=(10,20,50,80),
++                track_id='track1', scope_id='scope1', scope_range_seconds=(0.0,2.0))
++    args.update(kw)
++    return api().SourceEvidence(**args)
++
++
++def test_space_captures_preprocessing_and_rejects_empty_identity():
++    a=space()
++    for field in ['alignment_version','preprocessing_version','normalization_version','backend_version']:
++        assert a.fingerprint != replace(a, **{field:'other'}).fingerprint
++    with pytest.raises(ValueError): replace(a, recognizer_sha256='')
++    with pytest.raises(ValueError): replace(a, dimension=True)
++
++
++def test_coordinates_and_time_never_fabricate_pts():
++    a=source()
++    assert a.bbox_normalized == (0.1,0.2,0.5,0.8)
++    assert a.pts is None and a.time_kind == 'derived_seconds'
++    pts=source(time_kind='pts', pts=90, time_base=(1,90))
++    with pytest.raises(ValueError): replace(pts,time_base=(1,0))
++    with pytest.raises(ValueError): replace(pts,time_seconds=3)
++    with pytest.raises(ValueError): replace(a,bbox_px=(0,0,101,100))
++    with pytest.raises(ValueError): replace(a,scope_range_seconds=(0,1))
++    with pytest.raises(ValueError): replace(a,rotation=45)
++
++
++@pytest.mark.parametrize('values', [(0.6,0,True),(-1,0,1),(0.6,float('nan'),1),(0.6,0,0)])
++def test_invalid_policy_rejected(values):
++    with pytest.raises(ValueError): api().MatchPolicy(*values)
++
++
++def test_vectors_own_immutable_storage_and_failures_remain_representable():
++    a=np.array([1.,0.],np.float32)
++    sample=api().ReferenceSample('r1','A',source(),space(),a,None)
++    a[0]=0
++    assert sample.embedding.tolist()==[1.,0.]
++    with pytest.raises(ValueError): sample.embedding.setflags(write=True)
++    q=api().QueryEvidence('q',source(),space(),np.array([np.nan,0]),'confirmed',None,())
++    assert np.isnan(q.embedding[0])  # matching must return invalid, not erase this observation
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_gallery.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_gallery.py
+new file mode 100644
+index 0000000..c734a95
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_gallery.py
+@@ -0,0 +1,64 @@
++from dataclasses import replace
++import importlib
++import numpy as np
++import pytest
++from face_fixtures import SPACE, sample
++
++
++def build(samples):
++    module=importlib.import_module('clipper_face_core.gallery')
++    return module.build_gallery(samples, space=SPACE)
++
++
++def test_mean_matches_existing_dance():
++    vectors=[np.array([1,0],np.float32),np.array([0,1],np.float32)]
++    avg=np.mean(np.stack(vectors),axis=0)
++    expected=avg/(float(np.linalg.norm(avg))+1e-9)
++    g=build([sample('r1',vector=vectors[0]),sample('r2',vector=vectors[1])])
++    np.testing.assert_array_equal(g.entries[0].centroid,expected)
++    assert g.entries[0].used_sample_ids==('r1','r2')
++
++
++def test_duplicate_sample_id_is_not_an_extra_vote():
++    a,b=sample(),sample('r2',vector=(0,1))
++    g=build([a,b])
++    d=build([a,a,b])
++    assert g.fingerprint==d.fingerprint
++    assert len(d.samples)==2
++
++
++def test_conflicting_sample_id_rejected():
++    with pytest.raises(ValueError,match='conflicting_sample_id'):
++        build([sample(),sample(label='B')])
++
++
++def test_gallery_owns_immutable_vectors():
++    a=np.array([1,0],np.float32)
++    s=sample(vector=a);g=build([s]);stamp=g.fingerprint
++    a[:]=[0,1]
++    assert g.entries[0].centroid.tolist()==[1,0]
++    assert g.fingerprint==stamp
++    with pytest.raises(ValueError): g.entries[0].centroid.setflags(write=True)
++
++
++@pytest.mark.parametrize('vector', [None,(0,0),(2,0),(float('nan'),0),(float('inf'),0),(1,0,0)])
++def test_invalid_samples_preserved_without_losing_valid_reference(vector):
++    g=build([sample('valid'),sample('bad','B',vector)])
++    assert [e.reference_id for e in g.entries]==['A']
++    assert g.failures[0].sample_id=='bad'
++    assert len(g.samples)==2
++
++
++def test_all_failed_and_cancelled_means_report_failures():
++    with pytest.raises(ValueError,match='no_valid_references') as exc:
++        build([sample(vector=None)])
++    assert len(exc.value.failures)==1
++    g=build([sample('a1','A'),sample('b1','B'),sample('b2','B',(-1,0))])
++    assert [e.reference_id for e in g.entries]==['A']
++    assert {f.sample_id for f in g.failures}=={'b1','b2'}
++
++
++def test_mixed_embedding_space_rejected_even_if_one_sample_failed():
++    wrong=replace(SPACE,normalization_version='different')
++    with pytest.raises(ValueError,match='space_mismatch'):
++        build([sample(),sample('r2',vector=None,space=wrong)])
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_grouping.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_grouping.py
+new file mode 100644
+index 0000000..7632267
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_grouping.py
+@@ -0,0 +1,121 @@
++import numpy as np
++from dataclasses import replace
++
++from clipper_face_core import grouping
++from clipper_face_core.grouping import FaceObservation, group_observations
++
++
++def face(identifier: str, track: str, shot: str, sec: float, vector, box=(0, 0, 20, 20)):
++    return FaceObservation(
++        observation_id=identifier,
++        track_id=track,
++        shot_id=shot,
++        time_sec=sec,
++        bbox_px=box,
++        embedding=np.asarray(vector, dtype=np.float32) if vector is not None else None,
++        quality=0.8,
++    )
++
++
++def test_two_simultaneous_faces_never_merge_even_with_identical_embeddings():
++    observations = [
++        face('a1', 'a', 's0', 0.0, [1, 0]),
++        face('b1', 'b', 's0', 0.0, [1, 0], (30, 0, 50, 20)),
++        face('a2', 'a', 's0', 0.5, [1, 0]),
++        face('b2', 'b', 's0', 0.5, [1, 0], (30, 0, 50, 20)),
++    ]
++    groups = group_observations(observations, cosine_threshold=0.5)
++    assert len(groups) == 2
++    assert {frozenset(group.track_ids) for group in groups} == {frozenset({'a'}), frozenset({'b'})}
++
++
++def test_reappearance_joins_across_shots_but_unknown_is_preserved():
++    observations = [
++        face('a1', 'a', 's0', 0.0, [1, 0]),
++        face('a2', 'a', 's0', 0.5, [1, 0]),
++        face('b1', 'b', 's1', 5.0, [0.99, 0.01]),
++        face('u1', 'u', 's1', 5.0, None, (30, 0, 50, 20)),
++    ]
++    groups = group_observations(observations, cosine_threshold=0.7)
++    assert len(groups) == 2
++    assert any(set(group.track_ids) == {'a', 'b'} for group in groups)
++    assert any(group.status == 'needs_review' and group.track_ids == ('u',) for group in groups)
++
++
++def test_same_scene_id_distinct_source_intervals_are_retained():
++    observations = [
++        face('a1', 'a', 's0', 1.0, [1, 0]),
++        face('a2', 'a', 's0', 1.5, [1, 0]),
++        face('a3', 'a', 's0', 8.0, [1, 0]),
++    ]
++    [group] = group_observations(observations, cosine_threshold=0.7, max_gap_sec=1.0)
++    assert [(interval.shot_id, interval.start_sec, interval.end_sec) for interval in group.intervals] == [
++        ('s0', 1.0, 1.5), ('s0', 8.0, 8.0),
++    ]
++
++
++def test_interval_phase_starts_before_intervals_are_calculated(monkeypatch):
++    events = []
++    calculate = grouping._intervals
++
++    def record_calculation(observations, gap):
++        events.append('calculate')
++        return calculate(observations, gap)
++
++    monkeypatch.setattr(grouping, '_intervals', record_calculation)
++    grouping.group_observations(
++        [face('a1', 'a', 's0', 0.0, [1, 0])],
++        on_intervals_start=lambda: events.append('intervals'),
++    )
++    assert events == ['intervals', 'calculate']
++
++
++def test_representative_prefers_sharp_face_over_slightly_higher_composite_quality():
++    blurry = FaceObservation('blur', 'track', 'shot', 0.0, (0, 0, 100, 100),
++                             np.array([1, 0], np.float32), 0.9, sharpness=0.1)
++    sharp = FaceObservation('sharp', 'track', 'shot', 0.5, (0, 0, 100, 100),
++                            np.array([1, 0], np.float32), 0.8, sharpness=0.9)
++
++    [group] = group_observations([blurry, sharp])
++
++    assert group.representative_observation_id == 'sharp'
++
++
++def test_single_observation_is_retained_but_marked_for_review():
++    [group] = group_observations([face('one', 'track', 'shot', 0.0, [1, 0])])
++
++    assert group.status == 'needs_review'
++    assert group.observation_ids == ('one',)
++
++
++def test_representative_does_not_favor_noisy_tiny_face_over_larger_clear_face():
++    tiny = FaceObservation('tiny', 'track', 'shot', 0.0, (0, 0, 20, 20),
++                           np.array([1, 0], np.float32), 0.7, sharpness=1.0)
++    large = FaceObservation('large', 'track', 'shot', 0.5, (0, 0, 100, 100),
++                            np.array([1, 0], np.float32), 0.7, sharpness=0.6)
++
++    [group] = group_observations([tiny, large])
++
++    assert group.representative_observation_id == 'large'
++
++
++def test_replacement_candidates_use_the_same_quality_order_as_primary():
++    tiny = FaceObservation('tiny', 'track', 'shot', 0.0, (0, 0, 20, 20),
++                           np.array([1, 0], np.float32), 0.7, sharpness=1.0)
++    large = FaceObservation('large', 'track', 'shot', 0.5, (0, 0, 100, 100),
++                            np.array([1, 0], np.float32), 0.7, sharpness=0.6)
++    medium = FaceObservation('medium', 'track', 'shot', 1.0, (0, 0, 70, 70),
++                             np.array([1, 0], np.float32), 0.7, sharpness=0.5)
++
++    ranked = grouping.rank_representatives([tiny, large, medium])
++
++    assert ranked == ['large', 'medium', 'tiny']
++    assert group_observations([tiny, large, medium])[0].representative_observation_id == ranked[0]
++
++
++def test_representative_ranking_rejects_mixed_embedding_spaces():
++    first = replace(face('a', 'track', 'shot', 0.0, [1, 0]), model_sha256='model-a')
++    second = replace(face('b', 'track', 'shot', 0.5, [1, 0]), model_sha256='model-b')
++
++    with np.testing.assert_raises_regex(ValueError, 'embedding model/config spaces'):
++        grouping.rank_representatives([first, second])
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_import_boundary.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_import_boundary.py
+new file mode 100644
+index 0000000..1e9694c
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_import_boundary.py
+@@ -0,0 +1,28 @@
++import subprocess
++import sys
++
++
++def probe(statement, blocked):
++    code='''import importlib.abc,sys
++class Block(importlib.abc.MetaPathFinder):
++ def find_spec(self,fullname,path=None,target=None):
++  if fullname.split('.')[0] in sys.argv[1].split(','): raise ImportError('blocked '+fullname)
++sys.meta_path.insert(0,Block())
++'''+statement
++    return subprocess.run([sys.executable,'-c',code,blocked],text=True,capture_output=True)
++
++
++def test_sdk_starts_without_ml():
++    r=probe('import clipper_plugin_sdk','numpy,cv2,torch,onnxruntime')
++    assert r.returncode==0,r.stderr
++
++
++def test_core_types_without_opencv():
++    r=probe('from clipper_face_core import FaceDetection, ModelFiles, build_gallery, match_reference, combine_reference_matches; from clipper_face_core.contracts import MatchPolicy','cv2,torch,onnxruntime')
++    assert r.returncode==0,r.stderr
++
++
++def test_explicit_backend_without_opencv_explains_optional_dependency():
++    r=probe('from clipper_face_core import OpenCvFaceBackend','cv2')
++    assert r.returncode!=0
++    assert 'clipper-face-core[opencv]' in r.stderr
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_matching.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_matching.py
+new file mode 100644
+index 0000000..2b8f7ab
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_matching.py
+@@ -0,0 +1,70 @@
++from dataclasses import replace, asdict
++import importlib
++import json
++import numpy as np
++import pytest
++from face_fixtures import sample, query, SPACE
++from clipper_face_core import build_gallery, MatchPolicy
++
++
++def match(q, g=None, p=None):
++    g=build_gallery([sample(),sample('r2','B',(0,1))],space=SPACE) if g is None else g
++    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
++
++
++def test_repeated_identity_is_independent_of_other_queries_and_call_order():
++    qs=[query('q1'),query('q2'),query('q3',(0,1))]
++    original=match(qs[0])
++    forward=[match(q) for q in qs]
++    reverse=[match(q) for q in reversed(qs)]
++    assert [r.reference_id for r in forward]==['A','A','B']
++    assert forward==list(reversed(reverse))
++    assert original==forward[0]
++
++
++def test_distance_and_margin_boundaries_and_tie():
++    g=build_gallery([sample()],space=SPACE)
++    assert match(query(vector=(0,1)),g,MatchPolicy(1,0,1)).status=='matched'
++    assert match(query(vector=(0,1)),g,MatchPolicy(.99,0,1)).status=='unmatched'
++    assert match(query(),p=MatchPolicy(.6,1,1)).status=='matched' # distances 0 and 1
++    tie=query(vector=np.array([1,1],np.float32)/np.sqrt(np.float32(2)))
++    result=match(tie)
++    assert result.status=='ambiguous' and result.margin==0 and result.reference_id is None
++
++
++def test_single_reference_still_requires_distance():
++    g=build_gallery([sample()],space=SPACE)
++    result=match(query(),g)
++    assert result.status=='matched' and result.margin is None
++    assert result.reason=='single_reference_distance_only'
++    assert match(query(vector=(-1,0)),g).status=='unmatched'
++
++
++@pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
++    dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
++    dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
++def test_invalid_query_preserved(values):
++    r=match(query(**values))
++    assert r.status=='invalid' and r.reference_id is None
++    assert r.observation_id=='q1' and r.reason and r.evidence_fingerprint
++
++
++@pytest.mark.parametrize('association',['ambiguous','unassigned'])
++def test_uncertain_face_ownership_does_not_get_name_but_retains_distances(association):
++    r=match(query(association=association))
++    assert r.status=='ambiguous' and r.reference_id is None
++    assert [(v.reference_id,v.distance) for v in r.candidates]==[('A',0.0),('B',1.0)]
++
++
++def test_results_bind_policy_gallery_and_evidence_without_embedding_payload():
++    r=match(query())
++    assert r.policy_fingerprint!=match(query(),p=MatchPolicy(.5,0,1)).policy_fingerprint
++    assert r.evidence_fingerprint!=match(query(vector=(0,1))).evidence_fingerprint
++    assert 'embedding' not in json.dumps(asdict(r))
++
++
++def test_malformed_gallery_is_not_compared():
++    g=build_gallery([sample()],space=SPACE)
++    assert match(query(),replace(g,entries=())).status=='invalid'
++    bad=replace(g.entries[0],centroid=np.array([0,0],np.float32))
++    assert match(query(),replace(g,entries=(bad,))).status=='invalid'
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_opencv_backend.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_opencv_backend.py
+new file mode 100644
+index 0000000..9a64ea5
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_opencv_backend.py
+@@ -0,0 +1,42 @@
++import numpy as np
++
++from clipper_face_core.opencv_backend import OpenCvFaceBackend
++
++
++class _SingleFaceDetector:
++    def setInputSize(self, size):
++        assert size == (160, 160)
++
++    def detect(self, frame):
++        face = np.array([[0, 0, 160, 160, 40, 40, 120, 40, 80, 80,
++                          48, 116, 112, 116, .99]], dtype=np.float32)
++        return 1, face
++
++
++class _Recognizer:
++    def alignCrop(self, frame, face):
++        return frame
++
++    def feature(self, crop):
++        return np.array([1.0, 0.0], dtype=np.float32)
++
++
++def test_subtitle_edges_do_not_make_a_blurred_face_sharp():
++    # Both frames have identical high-frequency text-like edges below the face.
++    # Only the eye/upper-face region differs. The detector/recognizer are replaced
++    # at the model boundary; the real backend's quality calculation is exercised.
++    blurred = np.full((160, 160, 3), 128, dtype=np.uint8)
++    blurred[120:, ::2] = 0
++    blurred[120:, 1::2] = 255
++    clear = blurred.copy()
++    checker = ((np.indices((70, 112)).sum(axis=0) % 2) * 255).astype(np.uint8)
++    clear[20:90, 24:136] = checker[..., None]
++    backend = object.__new__(OpenCvFaceBackend)
++    backend.detector = _SingleFaceDetector()
++    backend.recognizer = _Recognizer()
++
++    [blurred_face] = backend.detect(blurred)
++    [clear_face] = backend.detect(clear)
++
++    assert blurred_face.sharpness < 0.1
++    assert clear_face.sharpness > 0.8
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/__init__.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/__init__.py
+new file mode 100644
+index 0000000..ccdc130
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/__init__.py
+@@ -0,0 +1 @@
++"""Local, model-free replay of explicitly fingerprinted reference evidence."""
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/manifest.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/manifest.py
+new file mode 100644
+index 0000000..3627b63
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/manifest.py
+@@ -0,0 +1,45 @@
++"""Reject changed inputs/code before a saved-feature replay produces output."""
++import hashlib
++import json
++import math
++from pathlib import Path
++import clipper_face_core
++from clipper_face_core import EmbeddingSpace, MatchPolicy
++
++
++def file_sha256(path: Path) -> str:
++    digest = hashlib.sha256()
++    with path.open('rb') as stream:
++        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def code_inventory() -> list[dict]:
++    roots = [Path(clipper_face_core.__file__).parent, Path(__file__).parent]
++    files = sorted(p.resolve() for root in roots for p in root.glob('*.py'))
++    return [{'path': str(p), 'sha256': file_sha256(p)} for p in files]
++
++
++def load_replay_manifest(path: Path) -> dict:
++    data = json.loads(Path(path).read_text())
++    if data.get('schema') != 'reference_replay_v1':
++        raise ValueError('unsupported manifest schema')
++    EmbeddingSpace(**data['space'])
++    MatchPolicy(**data['policy'])
++    for name in ('label_limitation', 'association_basis'):
++        if not isinstance(data.get(name), str) or not data[name].strip():
++            raise ValueError('missing ' + name)
++    for name in ('wall_seconds', 'rss_bytes', 'output_bytes'):
++        limit = data['limits'][name]
++        if isinstance(limit, bool) or not isinstance(limit, (int, float)) or not math.isfinite(limit) or limit <= 0:
++            raise ValueError('invalid resource limit')
++    if data['code'] != code_inventory():
++        raise ValueError('code hash inventory mismatch')
++    if not {'references', 'queries', 'dataset', 'source'} <= data['inputs'].keys():
++        raise ValueError('missing replay input')
++    for entry in data['inputs'].values():
++        p = Path(entry['path'])
++        if not p.is_absolute() or file_sha256(p) != entry['sha256']:
++            raise ValueError('input hash mismatch: ' + str(p))
++    return data
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/replay.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/replay.py
+new file mode 100644
+index 0000000..f61d430
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/replay.py
+@@ -0,0 +1,123 @@
++"""Replay normalized local evidence; never import a face detector or download assets."""
++import argparse
++from dataclasses import asdict
++import json
++from pathlib import Path
++import sys
++import time
++import numpy as np
++from clipper_face_core import (
++    EmbeddingSpace, SourceEvidence, ReferenceSample, QueryEvidence, MatchPolicy,
++    build_gallery, match_reference, combine_reference_matches,
++)
++from .manifest import load_replay_manifest, file_sha256
++
++
++def _rss_bytes():
++    import resource
++    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform == 'darwin' else 1024)
++
++
++def _counts(rows):
++    counts = dict(total=len(rows), correct=0, wrong=0, unmatched=0, ambiguous=0, invalid=0, unlabelled=0)
++    for row in rows:
++        if row['expected_reference'] is None:
++            counts['unlabelled'] += 1
++        if row['status'] == 'matched':
++            if row['expected_reference'] is not None:
++                counts['correct' if row['reference_id'] == row['expected_reference'] else 'wrong'] += 1
++        else:
++            counts[row['status']] += 1
++    return counts
++
++
++def run_replay(manifest_path: Path, output_dir: Path) -> dict:
++    start = time.monotonic()
++    output_dir = Path(output_dir)
++    if output_dir.exists():
++        raise FileExistsError(output_dir)
++    manifest = load_replay_manifest(manifest_path)
++    inputs = {k: Path(v['path']) for k, v in manifest['inputs'].items()}
++    dataset = json.loads(inputs['dataset'].read_text())
++    space, policy = EmbeddingSpace(**manifest['space']), MatchPolicy(**manifest['policy'])
++
++    def values(row, vectors):
++        if row['space_fingerprint'] != space.fingerprint:
++            raise ValueError('dataset embedding space mismatch')
++        key = row['embedding_key']
++        return SourceEvidence(**row['source']), None if key is None else vectors[key]
++
++    with np.load(inputs['references'], allow_pickle=False) as vectors:
++        references = []
++        for row in dataset['references']:
++            source, vector = values(row, vectors)
++            references.append(ReferenceSample(row['id'], row['reference_id'], source, space,
++                                               vector, row.get('failure')))
++    gallery = build_gallery(references, space=space)
++    queries, matches, rows = {}, {}, []
++    with np.load(inputs['queries'], allow_pickle=False) as vectors:
++        for row in dataset['queries']:
++            if row['id'] in queries:
++                raise ValueError('duplicate replay query ID')
++            source, vector = values(row, vectors)
++            q = QueryEvidence(row['id'], source, space, vector, row.get('association', 'confirmed'),
++                              row.get('failure'), tuple(tuple(v) for v in row.get('quality', [])))
++            result = match_reference(q, gallery, policy)
++            queries[q.observation_id], matches[q.observation_id] = q, result
++            item = asdict(result)
++            item.update(condition=row.get('condition', 'default'), expected_reference=row.get('expected_reference'))
++            if 'expected_distances' in row:
++                current = {c.reference_id: c.distance for c in result.candidates}
++                expected = row['expected_distances']
++                if current.keys() != expected.keys():
++                    raise ValueError('distance comparison reference IDs differ')
++                item['max_distance_delta'] = max(abs(current[k] - expected[k]) for k in current)
++            if 'baseline_assigned' in row:
++                item['baseline_assigned'] = row['baseline_assigned']
++                item['baseline_assignment_agrees'] = result.reference_id == row['baseline_assigned']
++            rows.append(item)
++    scopes = []
++    for scope in dataset.get('scopes', []):
++        ids = scope['observation_ids']
++        result = combine_reference_matches(scope['id'], [queries[k] for k in ids], [matches[k] for k in ids], policy)
++        scopes.append({**asdict(result), 'baseline_reference_id': scope.get('baseline_reference_id')})
++    centroid_checks = {}
++    if 'baseline_centroids' in inputs:
++        with np.load(inputs['baseline_centroids'], allow_pickle=False) as vectors:
++            for entry in gallery.entries:
++                prior = vectors[entry.reference_id]
++                if prior.shape != entry.centroid.shape:
++                    raise ValueError('centroid dimensions differ')
++                centroid_checks[entry.reference_id] = {
++                    'array_equal': bool(np.array_equal(entry.centroid, prior)),
++                    'max_abs_delta': float(np.max(np.abs(entry.centroid - prior)))}
++    report = dict(schema='reference_replay_result_v1', manifest_sha256=file_sha256(Path(manifest_path)),
++                  model_calls=0, label_limitation=manifest['label_limitation'],
++                  association_basis=manifest['association_basis'], space_fingerprint=space.fingerprint,
++                  gallery_fingerprint=gallery.fingerprint, policy=asdict(policy), counts=_counts(rows),
++                  by_condition={c: _counts([r for r in rows if r['condition'] == c])
++                                for c in sorted({r['condition'] for r in rows})},
++                  rows=rows, scopes=scopes, centroid_checks=centroid_checks,
++                  reference_failures=[asdict(f) for f in gallery.failures],
++                  wall_seconds=time.monotonic() - start, peak_rss_bytes=_rss_bytes())
++    raw = json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False).encode('utf-8')
++    limits = manifest['limits']
++    if (report['wall_seconds'] > limits['wall_seconds'] or report['peak_rss_bytes'] > limits['rss_bytes']
++            or len(raw) > limits['output_bytes']):
++        raise RuntimeError('replay resource limit exceeded')
++    output_dir.mkdir(parents=True, exist_ok=False)
++    (output_dir / 'report.json').write_bytes(raw)
++    return report
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--manifest', required=True, type=Path)
++    parser.add_argument('--output-dir', required=True, type=Path)
++    args = parser.parse_args()
++    report = run_replay(args.manifest, args.output_dir)
++    print(json.dumps({'model_calls': report['model_calls'], 'counts': report['counts']}))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/tests/test_replay.py b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/tests/test_replay.py
+new file mode 100644
+index 0000000..dc2ceb3
+--- /dev/null
++++ b/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/tests/test_replay.py
+@@ -0,0 +1,90 @@
++from dataclasses import asdict
++import hashlib
++import importlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++import numpy as np
++import pytest
++from clipper_face_core import EmbeddingSpace, SourceEvidence, MatchPolicy
++
++SPACE=EmbeddingSpace('a'*64,'align','bgr','l2eps',2,'test')
++SOURCE=SourceEvidence('run','b'*64,1,'c'*64,'d'*64,'adapter','derived_seconds',1,None,None,30,100,100,0,(0,0,10,10),None,None,None)
++
++
++def fixture(tmp_path):
++    module=importlib.import_module('evaluation.reference_matching.manifest')
++    np.savez(tmp_path/'references.npz',a=np.array([1,0],np.float32),b=np.array([0,1],np.float32))
++    np.savez(tmp_path/'queries.npz',ok=[1,0],wrong=[0,1],far=[-1,0],uncertain=[1,0])
++    def record(id,key,**kw):
++        return dict(id=id,embedding_key=key,source=asdict(SOURCE),space_fingerprint=SPACE.fingerprint,**kw)
++    data={'references':[record('a','a',reference_id='A'),record('b','b',reference_id='B')],
++          'queries':[record('ok','ok',expected_reference='A'),record('wrong','wrong',expected_reference='A'),
++                     record('far','far',expected_reference='A'),record('uncertain','uncertain',expected_reference='A',association='ambiguous'),
++                     record('failed',None,expected_reference='A',failure='no_detection')],
++          'scopes':[]}
++    (tmp_path/'dataset.json').write_text(json.dumps(data))
++    (tmp_path/'source.bin').write_bytes(b'fixed local source')
++    entries={name:{'path':str(tmp_path/f),'sha256':hashlib.sha256((tmp_path/f).read_bytes()).hexdigest()} for name,f in
++             [('references','references.npz'),('queries','queries.npz'),('dataset','dataset.json'),('source','source.bin')]}
++    plan={'schema':'reference_replay_v1','space':asdict(SPACE),'policy':asdict(MatchPolicy(.6,0,1)),
++          'inputs':entries,'code':module.code_inventory(), 'label_limitation':'synthetic test only',
++          'association_basis':'consumer-provided fixture',
++          'limits':{'wall_seconds':120,'rss_bytes':2147483648,'output_bytes':26214400}}
++    path=tmp_path/'manifest.json';path.write_text(json.dumps(plan));return path,data,plan
++
++
++def run(path,out):
++    return importlib.import_module('evaluation.reference_matching.replay').run_replay(path,out)
++
++
++def test_replay_counts_all_outcomes_without_loading_models(tmp_path):
++    path,_,_=fixture(tmp_path)
++    r=run(path,tmp_path/'out')
++    assert r['counts']=={'total':5,'correct':1,'wrong':1,'unmatched':1,'ambiguous':1,'invalid':1,'unlabelled':0}
++    saved=json.loads((tmp_path/'out/report.json').read_text())
++    assert saved['model_calls']==0 and len(saved['rows'])==5
++    assert all('embedding' not in row for row in saved['rows'])
++
++
++def test_changed_source_rejected_before_output(tmp_path):
++    path,_,_=fixture(tmp_path);(tmp_path/'source.bin').write_bytes(b'changed')
++    with pytest.raises(ValueError,match='hash'):run(path,tmp_path/'out')
++    assert not (tmp_path/'out').exists()
++
++
++def test_existing_output_is_never_overwritten(tmp_path):
++    path,_,_=fixture(tmp_path);out=tmp_path/'out';out.mkdir();(out/'keep').write_text('user')
++    with pytest.raises(FileExistsError):run(path,out)
++    assert (out/'keep').read_text()=='user'
++
++
++def test_dataset_space_cannot_be_assumed_from_manifest(tmp_path):
++    path,data,plan=fixture(tmp_path)
++    data['queries'][0]['space_fingerprint']='e'*64
++    dataset=tmp_path/'dataset.json';dataset.write_text(json.dumps(data))
++    plan['inputs']['dataset']['sha256']=hashlib.sha256(dataset.read_bytes()).hexdigest();path.write_text(json.dumps(plan))
++    with pytest.raises(ValueError,match='space'):run(path,tmp_path/'out')
++
++
++def test_pickle_arrays_rejected(tmp_path):
++    path,_,plan=fixture(tmp_path)
++    np.savez(tmp_path/'queries.npz',ok=np.array([object()],dtype=object))
++    plan['inputs']['queries']['sha256']=hashlib.sha256((tmp_path/'queries.npz').read_bytes()).hexdigest();path.write_text(json.dumps(plan))
++    with pytest.raises(ValueError,match='Object arrays'):run(path,tmp_path/'out')
++
++
++def test_cli_runs_without_cv2_or_other_model_imports(tmp_path):
++    path,_,_=fixture(tmp_path)
++    script='''import importlib.abc,runpy,sys
++class Block(importlib.abc.MetaPathFinder):
++ def find_spec(self,name,path=None,target=None):
++  if name.split('.')[0] in ('cv2','torch','onnxruntime'): raise RuntimeError('model import '+name)
++sys.meta_path.insert(0,Block())
++sys.argv=['replay','--manifest',sys.argv[1],'--output-dir',sys.argv[2]]
++runpy.run_module('evaluation.reference_matching.replay',run_name='__main__')
++'''
++    r=subprocess.run([sys.executable,'-c',script,str(path),str(tmp_path/'out')],capture_output=True,text=True)
++    assert r.returncode==0,r.stderr
++    assert (tmp_path/'out/report.json').exists()

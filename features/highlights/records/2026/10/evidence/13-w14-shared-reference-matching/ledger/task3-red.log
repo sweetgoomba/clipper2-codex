@@ -1,0 +1,474 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+____ test_repeated_identity_is_independent_of_other_queries_and_call_order _____
+
+    def test_repeated_identity_is_independent_of_other_queries_and_call_order():
+        qs=[query('q1'),query('q2'),query('q3',(0,1))]
+>       original=match(qs[0])
+                 ^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_________________ test_distance_and_margin_boundaries_and_tie __________________
+
+    def test_distance_and_margin_boundaries_and_tie():
+        g=build_gallery([sample()],space=SPACE)
+>       assert match(query(vector=(0,1)),g,MatchPolicy(1,0,1)).status=='matched'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+________________ test_single_reference_still_requires_distance _________________
+
+    def test_single_reference_still_requires_distance():
+        g=build_gallery([sample()],space=SPACE)
+>       result=match(query(),g)
+               ^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values0] _____________________
+
+values = {'vector': None}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values1] _____________________
+
+values = {'vector': (0, 0)}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values2] _____________________
+
+values = {'vector': (2, 0)}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values3] _____________________
+
+values = {'vector': (nan, 0)}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values4] _____________________
+
+values = {'vector': (inf, 0)}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values5] _____________________
+
+values = {'vector': (1, 0, 0)}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values6] _____________________
+
+values = {'space': EmbeddingSpace(recognizer_sha256='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', alignme...ssing_version='bgr', normalization_version='different', dimension=2, backend_version='test', metric='cosine_distance')}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_invalid_query_preserved[values7] _____________________
+
+values = {'failure': 'align_failed'}
+
+    @pytest.mark.parametrize('values', [dict(vector=None),dict(vector=(0,0)),dict(vector=(2,0)),
+        dict(vector=(np.nan,0)),dict(vector=(np.inf,0)),dict(vector=(1,0,0)),
+        dict(space=replace(SPACE,normalization_version='different')),dict(failure='align_failed')])
+    def test_invalid_query_preserved(values):
+>       r=match(query(**values))
+          ^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_ test_uncertain_face_ownership_does_not_get_name_but_retains_distances[ambiguous] _
+
+association = 'ambiguous'
+
+    @pytest.mark.parametrize('association',['ambiguous','unassigned'])
+    def test_uncertain_face_ownership_does_not_get_name_but_retains_distances(association):
+>       r=match(query(association=association))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_ test_uncertain_face_ownership_does_not_get_name_but_retains_distances[unassigned] _
+
+association = 'unassigned'
+
+    @pytest.mark.parametrize('association',['ambiguous','unassigned'])
+    def test_uncertain_face_ownership_does_not_get_name_but_retains_distances(association):
+>       r=match(query(association=association))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+___ test_results_bind_policy_gallery_and_evidence_without_embedding_payload ____
+
+    def test_results_bind_policy_gallery_and_evidence_without_embedding_payload():
+>       r=match(query())
+          ^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________________ test_malformed_gallery_is_not_compared ____________________
+
+    def test_malformed_gallery_is_not_compared():
+        g=build_gallery([sample()],space=SPACE)
+>       assert match(query(),replace(g,entries=())).status=='invalid'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_face_core/tests/test_matching.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_face_core/tests/test_matching.py:12: in match
+    return importlib.import_module('clipper_face_core.matching').match_reference(q,g,p or MatchPolicy(.6,0,1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'clipper_face_core.matching'
+import_ = <function _gcd_import at 0x100a07d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'clipper_face_core.matching'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED clipper_face_core/tests/test_matching.py::test_repeated_identity_is_independent_of_other_queries_and_call_order
+FAILED clipper_face_core/tests/test_matching.py::test_distance_and_margin_boundaries_and_tie
+FAILED clipper_face_core/tests/test_matching.py::test_single_reference_still_requires_distance
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values0]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values1]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values2]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values3]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values4]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values5]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values6]
+FAILED clipper_face_core/tests/test_matching.py::test_invalid_query_preserved[values7]
+FAILED clipper_face_core/tests/test_matching.py::test_uncertain_face_ownership_does_not_get_name_but_retains_distances[ambiguous]
+FAILED clipper_face_core/tests/test_matching.py::test_uncertain_face_ownership_does_not_get_name_but_retains_distances[unassigned]
+FAILED clipper_face_core/tests/test_matching.py::test_results_bind_policy_gallery_and_evidence_without_embedding_payload
+FAILED clipper_face_core/tests/test_matching.py::test_malformed_gallery_is_not_compared
+15 failed in 0.14s

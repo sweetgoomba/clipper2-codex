@@ -1,0 +1,2574 @@
+{
+  "schema": "w14_target_roi_trace_result_v1",
+  "summary": {
+    "annotated_target": {
+      "samples": 18,
+      "embedded": 18,
+      "no_detection": 0,
+      "nearest_agrees_with_input_label": 14,
+      "threshold_agrees_with_input_label": 14,
+      "unknown": 2,
+      "body_box_matches": 18,
+      "direct_name_agrees_within_body_matches": 14
+    },
+    "saved256": {
+      "samples": 18,
+      "embedded": 18,
+      "no_detection": 0,
+      "nearest_agrees_with_input_label": 5,
+      "threshold_agrees_with_input_label": 4,
+      "unknown": 2,
+      "body_box_matches": 6,
+      "direct_name_agrees_within_body_matches": 4
+    },
+    "saved512": {
+      "samples": 18,
+      "embedded": 18,
+      "no_detection": 0,
+      "nearest_agrees_with_input_label": 7,
+      "threshold_agrees_with_input_label": 7,
+      "unknown": 3,
+      "body_box_matches": 6,
+      "direct_name_agrees_within_body_matches": 6
+    }
+  },
+  "rows": [
+    {
+      "frame_index": 1032,
+      "time_sec": 17.2172,
+      "condition": "annotated_target",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        870,
+        320,
+        1070,
+        900
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        840,
+        117,
+        1100,
+        958
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            920.0162963867188,
+            351.82220458984375,
+            46.680145263671875,
+            55.99936294555664
+          ],
+          "score": 0.9078474044799805
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7304432690143585,
+        "민지": 0.8245103359222412,
+        "하니": 0.68871009349823,
+        "해린": 0.5099140405654907,
+        "혜인": 0.7745061069726944
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.5099140405654907,
+      "nearest_margin": 0.17879605293273926,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1032_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1032,
+      "time_sec": 17.2172,
+      "condition": "saved256",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        418.0726013183594,
+        345.4757995605469,
+        638.106689453125,
+        894.9823608398438
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        385,
+        153,
+        671,
+        949
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            559.5830078125,
+            380.56195068359375,
+            36.24828338623047,
+            51.94375228881836
+          ],
+          "score": 0.8947620391845703
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.46746933460235596,
+        "민지": 0.6695713400840759,
+        "하니": 0.7955614477396011,
+        "해린": 0.7475107312202454,
+        "혜인": 0.7074377238750458
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.46746933460235596,
+      "nearest_margin": 0.20210200548171997,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1032_saved256.jpg"
+    },
+    {
+      "frame_index": 1032,
+      "time_sec": 17.2172,
+      "condition": "saved512",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        860.8187255859375,
+        329.01116943359375,
+        1067.9462890625,
+        900.7525024414062
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.9310274430542416,
+      "roi_xyxy": [
+        829,
+        128,
+        1099,
+        957
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            923.2122192382812,
+            352.82342529296875,
+            43.29766845703125,
+            55.29642105102539
+          ],
+          "score": 0.9191794395446777
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7307178974151611,
+        "민지": 0.8328644037246704,
+        "하니": 0.7209898829460144,
+        "해린": 0.5498525500297546,
+        "혜인": 0.8594540059566498
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.5498525500297546,
+      "nearest_margin": 0.17113733291625977,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1032_saved512.jpg"
+    },
+    {
+      "frame_index": 1092,
+      "time_sec": 18.2182,
+      "condition": "annotated_target",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        835,
+        315,
+        1055,
+        900
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        802,
+        110,
+        1088,
+        958
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            893.1407470703125,
+            342.1722412109375,
+            45.560604095458984,
+            53.874595642089844
+          ],
+          "score": 0.8977913856506348
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7699752002954483,
+        "민지": 0.8933384567499161,
+        "하니": 0.7725321799516678,
+        "해린": 0.4731588363647461,
+        "혜인": 0.782400831580162
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.4731588363647461,
+      "nearest_margin": 0.2968163639307022,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1092_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1092,
+      "time_sec": 18.2182,
+      "condition": "saved256",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        1077.3612060546875,
+        402.7312316894531,
+        1290.5299072265625,
+        886.0673217773438
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1045,
+        233,
+        1322,
+        934
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1145.117919921875,
+            424.1370849609375,
+            35.31036376953125,
+            50.39817810058594
+          ],
+          "score": 0.9094093441963196
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6717090606689453,
+        "민지": 0.465117871761322,
+        "하니": 0.624484121799469,
+        "해린": 0.6489540934562683,
+        "혜인": 0.7332135438919067
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.465117871761322,
+      "nearest_margin": 0.15936625003814697,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1092_saved256.jpg"
+    },
+    {
+      "frame_index": 1092,
+      "time_sec": 18.2182,
+      "condition": "saved512",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        819.69775390625,
+        318.0624084472656,
+        1049.3492431640625,
+        879.4544677734375
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.876491169674585,
+      "roi_xyxy": [
+        785,
+        121,
+        1083,
+        935
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            891.8787841796875,
+            341.82110595703125,
+            46.926116943359375,
+            55.84444808959961
+          ],
+          "score": 0.8913761377334595
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7806489020586014,
+        "민지": 0.8806277066469193,
+        "하니": 0.801625669002533,
+        "해린": 0.4796905517578125,
+        "혜인": 0.7742044627666473
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.4796905517578125,
+      "nearest_margin": 0.29451391100883484,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1092_saved512.jpg"
+    },
+    {
+      "frame_index": 1152,
+      "time_sec": 19.2192,
+      "condition": "annotated_target",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        560,
+        325,
+        792,
+        900
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        525,
+        123,
+        826,
+        957
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            687.9927978515625,
+            365.2538757324219,
+            46.71843719482422,
+            55.59246063232422
+          ],
+          "score": 0.9158601760864258
+        },
+        {
+          "source_xywh": [
+            566.4457397460938,
+            383.1987609863281,
+            33.516273498535156,
+            49.87977600097656
+          ],
+          "score": 0.8989232778549194
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7708665430545807,
+        "민지": 0.8741962760686874,
+        "하니": 0.6773910820484161,
+        "해린": 0.45778989791870117,
+        "혜인": 0.697665810585022
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.45778989791870117,
+      "nearest_margin": 0.21960118412971497,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1152_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1152,
+      "time_sec": 19.2192,
+      "condition": "saved256",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        568.8885498046875,
+        335.46240234375,
+        840.1864013671875,
+        896.6696166992188
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.7804148631964788,
+      "roi_xyxy": [
+        528,
+        139,
+        880,
+        952
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            688.976318359375,
+            364.49017333984375,
+            45.640193939208984,
+            56.81400680541992
+          ],
+          "score": 0.9213379621505737
+        },
+        {
+          "source_xywh": [
+            566.0360107421875,
+            382.4620056152344,
+            35.44725799560547,
+            51.89390563964844
+          ],
+          "score": 0.8969193696975708
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7081787586212158,
+        "민지": 0.8205803781747818,
+        "하니": 0.7059882283210754,
+        "해린": 0.44371289014816284,
+        "혜인": 0.6361105740070343
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.44371289014816284,
+      "nearest_margin": 0.19239768385887146,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1152_saved256.jpg"
+    },
+    {
+      "frame_index": 1152,
+      "time_sec": 19.2192,
+      "condition": "saved512",
+      "input_reference_label": "해린",
+      "body_bbox": [
+        587.8237915039062,
+        330.60821533203125,
+        833.5687255859375,
+        902.1838989257812
+      ],
+      "anonymous_source_id": "P1",
+      "body_iou_to_source_label": 0.737640513401599,
+      "roi_xyxy": [
+        550,
+        130,
+        870,
+        959
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            687.0541381835938,
+            362.5807189941406,
+            46.965450286865234,
+            59.324398040771484
+          ],
+          "score": 0.9121690988540649
+        },
+        {
+          "source_xywh": [
+            563.2201538085938,
+            379.19677734375,
+            37.48760223388672,
+            54.999534606933594
+          ],
+          "score": 0.8902066946029663
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7757458388805389,
+        "민지": 0.8078685998916626,
+        "하니": 0.6419317722320557,
+        "해린": 0.4461512565612793,
+        "혜인": 0.670081615447998
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.4461512565612793,
+      "nearest_margin": 0.19578051567077637,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "1152_saved512.jpg"
+    },
+    {
+      "frame_index": 1348,
+      "time_sec": 22.489133333333335,
+      "condition": "annotated_target",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        500,
+        355,
+        776,
+        895
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        458,
+        166,
+        817,
+        949
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            612.2295532226562,
+            371.3569030761719,
+            36.81446075439453,
+            53.67972183227539
+          ],
+          "score": 0.9029788374900818
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.40692436695098877,
+        "민지": 0.7083772420883179,
+        "하니": 0.7045572102069855,
+        "해린": 0.6568033993244171,
+        "혜인": 0.7046167850494385
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.40692436695098877,
+      "nearest_margin": 0.24987903237342834,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1348_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1348,
+      "time_sec": 22.489133333333335,
+      "condition": "saved256",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1068.5634765625,
+        396.51416015625,
+        1294.8017578125,
+        887.4868774414062
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1034,
+        224,
+        1328,
+        936
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1148.5489501953125,
+            426.08807373046875,
+            34.19279479980469,
+            51.341957092285156
+          ],
+          "score": 0.9143189787864685
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7678005695343018,
+        "민지": 0.4940629005432129,
+        "하니": 0.6378526389598846,
+        "해린": 0.7551967203617096,
+        "혜인": 0.7513258159160614
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.4940629005432129,
+      "nearest_margin": 0.14378973841667175,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1348_saved256.jpg"
+    },
+    {
+      "frame_index": 1348,
+      "time_sec": 22.489133333333335,
+      "condition": "saved512",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1084.311279296875,
+        408.0068664550781,
+        1273.1490478515625,
+        889.61669921875
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1055,
+        239,
+        1301,
+        937
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1148.533447265625,
+            426.6307067871094,
+            36.406219482421875,
+            49.709693908691406
+          ],
+          "score": 0.9166942238807678
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7298648357391357,
+        "민지": 0.4760563373565674,
+        "하니": 0.6161290109157562,
+        "해린": 0.6761554479598999,
+        "혜인": 0.6763065755367279
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.4760563373565674,
+      "nearest_margin": 0.14007267355918884,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1348_saved512.jpg"
+    },
+    {
+      "frame_index": 1408,
+      "time_sec": 23.490133333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        550,
+        400,
+        771,
+        893
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        516,
+        227,
+        804,
+        942
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            648.3867797851562,
+            421.4085998535156,
+            37.93191146850586,
+            51.991756439208984
+          ],
+          "score": 0.9191144704818726
+        },
+        {
+          "source_xywh": [
+            748.22998046875,
+            445.5405578613281,
+            30.08521270751953,
+            43.636871337890625
+          ],
+          "score": 0.5888102054595947
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.5557705163955688,
+        "민지": 0.7599852681159973,
+        "하니": 0.765238031744957,
+        "해린": 0.7691031992435455,
+        "혜인": 0.8813576251268387
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.5557705163955688,
+      "nearest_margin": 0.20421475172042847,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1408_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1408,
+      "time_sec": 23.490133333333333,
+      "condition": "saved256",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1074.048828125,
+        398.22021484375,
+        1288.3575439453125,
+        890.29931640625
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1041,
+        225,
+        1320,
+        939
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1148.69873046875,
+            425.20452880859375,
+            34.983428955078125,
+            52.32180404663086
+          ],
+          "score": 0.9165084362030029
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6232310831546783,
+        "민지": 0.5055957734584808,
+        "하니": 0.6939635872840881,
+        "해린": 0.6981030702590942,
+        "혜인": 0.7120720148086548
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5055957734584808,
+      "nearest_margin": 0.11763530969619751,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1408_saved256.jpg"
+    },
+    {
+      "frame_index": 1408,
+      "time_sec": 23.490133333333333,
+      "condition": "saved512",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1084.9237060546875,
+        409.939697265625,
+        1270.850830078125,
+        889.271728515625
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1057,
+        242,
+        1298,
+        937
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1148.9556884765625,
+            425.29534912109375,
+            34.89750289916992,
+            52.80215072631836
+          ],
+          "score": 0.9190342426300049
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6239461004734039,
+        "민지": 0.4813845157623291,
+        "하니": 0.656755805015564,
+        "해린": 0.66085085272789,
+        "혜인": 0.7030508518218994
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.4813845157623291,
+      "nearest_margin": 0.14256158471107483,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1408_saved512.jpg"
+    },
+    {
+      "frame_index": 1468,
+      "time_sec": 24.491133333333334,
+      "condition": "annotated_target",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        565,
+        340,
+        818,
+        894
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        527,
+        146,
+        855,
+        949
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            655.8616943359375,
+            363.8363037109375,
+            43.18733596801758,
+            60.483421325683594
+          ],
+          "score": 0.9126858711242676
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.35731685161590576,
+        "민지": 0.7175503671169281,
+        "하니": 0.7293487787246704,
+        "해린": 0.7232171893119812,
+        "혜인": 0.7469712793827057
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.35731685161590576,
+      "nearest_margin": 0.36023351550102234,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1468_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1468,
+      "time_sec": 24.491133333333334,
+      "condition": "saved256",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1071.61474609375,
+        399.96142578125,
+        1291.654296875,
+        890.3726806640625
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1038,
+        228,
+        1324,
+        939
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1149.3751220703125,
+            427.40716552734375,
+            35.82322692871094,
+            47.497169494628906
+          ],
+          "score": 0.9114452004432678
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6876875758171082,
+        "민지": 0.5729056000709534,
+        "하니": 0.6735050678253174,
+        "해린": 0.7255575656890869,
+        "혜인": 0.8115720748901367
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5729056000709534,
+      "nearest_margin": 0.10059946775436401,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1468_saved256.jpg"
+    },
+    {
+      "frame_index": 1468,
+      "time_sec": 24.491133333333334,
+      "condition": "saved512",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1085.205078125,
+        410.7655334472656,
+        1269.6524658203125,
+        889.5737915039062
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1057,
+        243,
+        1297,
+        937
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1149.302490234375,
+            424.97100830078125,
+            37.27159881591797,
+            50.91476821899414
+          ],
+          "score": 0.9210157990455627
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6829187870025635,
+        "민지": 0.5140955150127411,
+        "하니": 0.6595615744590759,
+        "해린": 0.7543648183345795,
+        "혜인": 0.8083293437957764
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5140955150127411,
+      "nearest_margin": 0.14546605944633484,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1468_saved512.jpg"
+    },
+    {
+      "frame_index": 1528,
+      "time_sec": 25.492133333333335,
+      "condition": "annotated_target",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        594,
+        387,
+        821,
+        894
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        559,
+        209,
+        855,
+        944
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            682.9522705078125,
+            416.9844970703125,
+            40.485443115234375,
+            56.441349029541016
+          ],
+          "score": 0.9241483807563782
+        },
+        {
+          "source_xywh": [
+            766.8777465820312,
+            446.1102294921875,
+            32.98461151123047,
+            45.018035888671875
+          ],
+          "score": 0.4582236707210541
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.38362693786621094,
+        "민지": 0.8018105179071426,
+        "하니": 0.7452733218669891,
+        "해린": 0.7257141172885895,
+        "혜인": 0.8052768707275391
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.38362693786621094,
+      "nearest_margin": 0.34208717942237854,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1528_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1528,
+      "time_sec": 25.492133333333335,
+      "condition": "saved256",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1070.74560546875,
+        386.4665832519531,
+        1291.645263671875,
+        889.0448608398438
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1037,
+        210,
+        1324,
+        939
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1149.129638671875,
+            426.91937255859375,
+            36.20387649536133,
+            48.94632339477539
+          ],
+          "score": 0.9166510105133057
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7391175925731659,
+        "민지": 0.4623062014579773,
+        "하니": 0.6481010019779205,
+        "해린": 0.7549633383750916,
+        "혜인": 0.7845997661352158
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.4623062014579773,
+      "nearest_margin": 0.18579480051994324,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1528_saved256.jpg"
+    },
+    {
+      "frame_index": 1528,
+      "time_sec": 25.492133333333335,
+      "condition": "saved512",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1084.401611328125,
+        409.84698486328125,
+        1271.86962890625,
+        889.687744140625
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1056,
+        241,
+        1299,
+        937
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1149.89990234375,
+            427.3453063964844,
+            36.353694915771484,
+            48.878787994384766
+          ],
+          "score": 0.9231401085853577
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7457107901573181,
+        "민지": 0.48038411140441895,
+        "하니": 0.6703594923019409,
+        "해린": 0.7387159168720245,
+        "혜인": 0.8424156457185745
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.48038411140441895,
+      "nearest_margin": 0.18997538089752197,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1528_saved512.jpg"
+    },
+    {
+      "frame_index": 1588,
+      "time_sec": 26.493133333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        615,
+        418,
+        764,
+        887
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        592,
+        253,
+        786,
+        933
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            692.32275390625,
+            444.64501953125,
+            37.13231658935547,
+            53.38843536376953
+          ],
+          "score": 0.9098525643348694
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.40056097507476807,
+        "민지": 0.7448360621929169,
+        "하니": 0.6856940984725952,
+        "해린": 0.633512407541275,
+        "혜인": 0.7636500597000122
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.40056097507476807,
+      "nearest_margin": 0.23295143246650696,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1588_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1588,
+      "time_sec": 26.493133333333333,
+      "condition": "saved256",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1064.0181884765625,
+        386.40057373046875,
+        1296.310791015625,
+        897.1406860351562
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1029,
+        207,
+        1331,
+        948
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1147.101318359375,
+            424.2035827636719,
+            34.67093276977539,
+            52.619388580322266
+          ],
+          "score": 0.9179143905639648
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.701952189207077,
+        "민지": 0.5162262320518494,
+        "하니": 0.6611482799053192,
+        "해린": 0.7569482624530792,
+        "혜인": 0.7598712742328644
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5162262320518494,
+      "nearest_margin": 0.14492204785346985,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1588_saved256.jpg"
+    },
+    {
+      "frame_index": 1588,
+      "time_sec": 26.493133333333333,
+      "condition": "saved512",
+      "input_reference_label": "다니엘",
+      "body_bbox": [
+        1083.4053955078125,
+        412.2037048339844,
+        1272.053466796875,
+        891.0322875976562
+      ],
+      "anonymous_source_id": "P2",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1055,
+        244,
+        1300,
+        938
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1147.724853515625,
+            426.44671630859375,
+            35.60861587524414,
+            53.490726470947266
+          ],
+          "score": 0.9185473322868347
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.664890855550766,
+        "민지": 0.45758235454559326,
+        "하니": 0.6596013903617859,
+        "해린": 0.7217457294464111,
+        "혜인": 0.7180846333503723
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.45758235454559326,
+      "nearest_margin": 0.20201903581619263,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "1588_saved512.jpg"
+    },
+    {
+      "frame_index": 1768,
+      "time_sec": 29.496133333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        800,
+        444,
+        979,
+        891
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        773,
+        287,
+        1005,
+        935
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            819.7120361328125,
+            459.96710205078125,
+            38.97881317138672,
+            53.536048889160156
+          ],
+          "score": 0.8936362266540527
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6630140244960785,
+        "민지": 0.6161035597324371,
+        "하니": 0.5116236209869385,
+        "해린": 0.7137201726436615,
+        "혜인": 0.7104356288909912
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.5116236209869385,
+      "nearest_margin": 0.10447993874549866,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1768_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1768,
+      "time_sec": 29.496133333333333,
+      "condition": "saved256",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        1085.0755615234375,
+        375.5419616699219,
+        1285.508056640625,
+        894.3005981445312
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1055,
+        193,
+        1315,
+        946
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1155.6376953125,
+            426.6488037109375,
+            28.544591903686523,
+            44.802955627441406
+          ],
+          "score": 0.8604540824890137
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.8989663645625114,
+        "민지": 0.7085289359092712,
+        "하니": 0.8480347394943237,
+        "해린": 0.9335829019546509,
+        "혜인": 0.9269388988614082
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.7085289359092712,
+      "nearest_margin": 0.1395058035850525,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "1768_saved256.jpg"
+    },
+    {
+      "frame_index": 1768,
+      "time_sec": 29.496133333333333,
+      "condition": "saved512",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        1104.8876953125,
+        401.42742919921875,
+        1282.7579345703125,
+        895.255615234375
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        1078,
+        228,
+        1309,
+        944
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            1159.3218994140625,
+            427.02935791015625,
+            28.038904190063477,
+            42.32046890258789
+          ],
+          "score": 0.861897349357605
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7773039489984512,
+        "민지": 0.7375677824020386,
+        "하니": 0.7834932506084442,
+        "해린": 0.8277679532766342,
+        "혜인": 0.9099849164485931
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.7375677824020386,
+      "nearest_margin": 0.03973616659641266,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "1768_saved512.jpg"
+    },
+    {
+      "frame_index": 1828,
+      "time_sec": 30.497133333333334,
+      "condition": "annotated_target",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        655,
+        398,
+        1003,
+        899
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        602,
+        222,
+        1055,
+        949
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            600.9296264648438,
+            416.0146484375,
+            29.896228790283203,
+            52.8125114440918
+          ],
+          "score": 0.9172399044036865
+        },
+        {
+          "source_xywh": [
+            855.4735107421875,
+            414.27886962890625,
+            45.556888580322266,
+            55.67277908325195
+          ],
+          "score": 0.9133689999580383
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.5759182870388031,
+        "민지": 0.8831151276826859,
+        "하니": 0.8130515217781067,
+        "해린": 0.8066256493330002,
+        "혜인": 0.8831482380628586
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.5759182870388031,
+      "nearest_margin": 0.23070736229419708,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "1828_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1828,
+      "time_sec": 30.497133333333334,
+      "condition": "saved256",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        740.2093505859375,
+        394.6635437011719,
+        967.9513549804688,
+        935.390380859375
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.6221459259524382,
+      "roi_xyxy": [
+        706,
+        205,
+        1002,
+        989
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            857.240234375,
+            415.0578308105469,
+            41.878204345703125,
+            52.03810119628906
+          ],
+          "score": 0.9097523093223572
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7448218762874603,
+        "민지": 0.71132692694664,
+        "하니": 0.529090017080307,
+        "해린": 0.6571497321128845,
+        "혜인": 0.717642068862915
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.529090017080307,
+      "nearest_margin": 0.12805971503257751,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1828_saved256.jpg"
+    },
+    {
+      "frame_index": 1828,
+      "time_sec": 30.497133333333334,
+      "condition": "saved512",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        763.5814819335938,
+        398.499755859375,
+        997.8955078125,
+        907.3421630859375
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.6651868439460901,
+      "roi_xyxy": [
+        728,
+        220,
+        1033,
+        958
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            855.51416015625,
+            413.60260009765625,
+            45.21513366699219,
+            55.02081298828125
+          ],
+          "score": 0.9069784879684448
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7753962725400925,
+        "민지": 0.7583109885454178,
+        "하니": 0.5406501889228821,
+        "해린": 0.6797899603843689,
+        "혜인": 0.7343371510505676
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.5406501889228821,
+      "nearest_margin": 0.13913977146148682,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1828_saved512.jpg"
+    },
+    {
+      "frame_index": 1888,
+      "time_sec": 31.49813333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        807,
+        396,
+        1107,
+        903
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        762,
+        218,
+        1152,
+        953
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            957.5982666015625,
+            420.3172607421875,
+            44.678123474121094,
+            55.95206069946289
+          ],
+          "score": 0.9118552803993225
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7659561634063721,
+        "민지": 0.7259319424629211,
+        "하니": 0.45072364807128906,
+        "해린": 0.6768387854099274,
+        "혜인": 0.7318290174007416
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.45072364807128906,
+      "nearest_margin": 0.2261151373386383,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1888_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1888,
+      "time_sec": 31.49813333333333,
+      "condition": "saved256",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        851.5508422851562,
+        392.70111083984375,
+        1109.2274169921875,
+        961.6456909179688
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.7654824886616193,
+      "roi_xyxy": [
+        812,
+        193,
+        1147,
+        1011
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            956.8984375,
+            418.90264892578125,
+            45.90860366821289,
+            57.20988464355469
+          ],
+          "score": 0.9066012501716614
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7617570906877518,
+        "민지": 0.7266125082969666,
+        "하니": 0.4496431350708008,
+        "해린": 0.6740227043628693,
+        "혜인": 0.7511611878871918
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.4496431350708008,
+      "nearest_margin": 0.22437956929206848,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1888_saved256.jpg"
+    },
+    {
+      "frame_index": 1888,
+      "time_sec": 31.49813333333333,
+      "condition": "saved512",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        796.4671630859375,
+        392.143310546875,
+        1108.8494873046875,
+        912.1094970703125
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.9364134864193038,
+      "roi_xyxy": [
+        749,
+        210,
+        1155,
+        964
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            956.9288940429688,
+            419.41864013671875,
+            46.32777404785156,
+            58.09283447265625
+          ],
+          "score": 0.9015762209892273
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7817361652851105,
+        "민지": 0.7329645156860352,
+        "하니": 0.4580717086791992,
+        "해린": 0.6682844758033752,
+        "혜인": 0.7298271059989929
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.4580717086791992,
+      "nearest_margin": 0.21021276712417603,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1888_saved512.jpg"
+    },
+    {
+      "frame_index": 1948,
+      "time_sec": 32.49913333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        697,
+        381,
+        888,
+        904
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        668,
+        197,
+        916,
+        956
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            793.6976318359375,
+            403.7510986328125,
+            43.366188049316406,
+            56.99500274658203
+          ],
+          "score": 0.8806804418563843
+        },
+        {
+          "source_xywh": [
+            770.7197265625,
+            414.77294921875,
+            24.455829620361328,
+            33.522178649902344
+          ],
+          "score": 0.31354695558547974
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.9446654953062534,
+        "민지": 0.6903373599052429,
+        "하니": 0.5869576036930084,
+        "해린": 0.7270931899547577,
+        "혜인": 0.8379121720790863
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.5869576036930084,
+      "nearest_margin": 0.1033797562122345,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1948_annotated_target.jpg"
+    },
+    {
+      "frame_index": 1948,
+      "time_sec": 32.49913333333333,
+      "condition": "saved256",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        691.2952880859375,
+        379.3363037109375,
+        896.6166381835938,
+        918.6176147460938
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.9021641700590325,
+      "roi_xyxy": [
+        660,
+        190,
+        927,
+        972
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            793.8452758789062,
+            403.554931640625,
+            42.04560852050781,
+            54.553016662597656
+          ],
+          "score": 0.8876903057098389
+        },
+        {
+          "source_xywh": [
+            766.4810791015625,
+            427.98980712890625,
+            34.0035514831543,
+            49.29959487915039
+          ],
+          "score": 0.33720073103904724
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.9119216948747635,
+        "민지": 0.5600561797618866,
+        "하니": 0.4637540578842163,
+        "해린": 0.7378507256507874,
+        "혜인": 0.764569953083992
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.4637540578842163,
+      "nearest_margin": 0.09630212187767029,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1948_saved256.jpg"
+    },
+    {
+      "frame_index": 1948,
+      "time_sec": 32.49913333333333,
+      "condition": "saved512",
+      "input_reference_label": "하니",
+      "body_bbox": [
+        690.209716796875,
+        389.85693359375,
+        879.835205078125,
+        910.4255981445312
+      ],
+      "anonymous_source_id": "P3",
+      "body_iou_to_source_label": 0.8986719473434736,
+      "roi_xyxy": [
+        661,
+        207,
+        908,
+        962
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            793.962890625,
+            403.8734130859375,
+            39.958152770996094,
+            53.35088348388672
+          ],
+          "score": 0.8814690709114075
+        },
+        {
+          "source_xywh": [
+            768.6664428710938,
+            416.0216369628906,
+            27.802114486694336,
+            35.24805450439453
+          ],
+          "score": 0.3829563856124878
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.940175786614418,
+        "민지": 0.5503977239131927,
+        "하니": 0.44787049293518066,
+        "해린": 0.7508696466684341,
+        "혜인": 0.7567639946937561
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.44787049293518066,
+      "nearest_margin": 0.10252723097801208,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "1948_saved512.jpg"
+    },
+    {
+      "frame_index": 3268,
+      "time_sec": 54.52113333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        279,
+        416,
+        541,
+        899
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        239,
+        246,
+        580,
+        947
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            437.59210205078125,
+            439.89227294921875,
+            38.530208587646484,
+            53.672279357910156
+          ],
+          "score": 0.9154586791992188
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7547359764575958,
+        "민지": 0.4176867604255676,
+        "하니": 0.6187037825584412,
+        "해린": 0.522261381149292,
+        "혜인": 0.7355783581733704
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.4176867604255676,
+      "nearest_margin": 0.10457462072372437,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "3268_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3268,
+      "time_sec": 54.52113333333333,
+      "condition": "saved256",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        856.1815795898438,
+        432.1015625,
+        1082.46728515625,
+        896.3234252929688
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        822,
+        269,
+        1116,
+        942
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            951.7205810546875,
+            452.0885314941406,
+            31.016935348510742,
+            43.7698974609375
+          ],
+          "score": 0.891595721244812
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7862934619188309,
+        "민지": 0.5911970734596252,
+        "하니": 0.567022442817688,
+        "해린": 0.6173893809318542,
+        "혜인": 0.7324054539203644
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.567022442817688,
+      "nearest_margin": 0.024174630641937256,
+      "assigned": "하니",
+      "selected_candidate": 0,
+      "roi_preview": "3268_saved256.jpg"
+    },
+    {
+      "frame_index": 3268,
+      "time_sec": 54.52113333333333,
+      "condition": "saved512",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        854.1732788085938,
+        431.1618347167969,
+        1051.9207763671875,
+        896.0046997070312
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        824,
+        268,
+        1081,
+        942
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            951.2379760742188,
+            451.87884521484375,
+            31.410972595214844,
+            45.16611099243164
+          ],
+          "score": 0.8943057060241699
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7685016542673111,
+        "민지": 0.5817636549472809,
+        "하니": 0.587783694267273,
+        "해린": 0.6834060847759247,
+        "혜인": 0.746825784444809
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5817636549472809,
+      "nearest_margin": 0.006020039319992065,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "3268_saved512.jpg"
+    },
+    {
+      "frame_index": 3328,
+      "time_sec": 55.522133333333336,
+      "condition": "annotated_target",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        307,
+        545,
+        519,
+        903
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        275,
+        419,
+        550,
+        938
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            381.42633056640625,
+            565.138916015625,
+            45.02744674682617,
+            59.98735809326172
+          ],
+          "score": 0.9181733131408691
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6860068440437317,
+        "민지": 0.44246000051498413,
+        "하니": 0.5866982042789459,
+        "해린": 0.6220522522926331,
+        "혜인": 0.7719940841197968
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.44246000051498413,
+      "nearest_margin": 0.1442382037639618,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "3328_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3328,
+      "time_sec": 55.522133333333336,
+      "condition": "saved256",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        623.3753662109375,
+        392.8531188964844,
+        857.2210693359375,
+        886.9898681640625
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        588,
+        219,
+        892,
+        936
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            752.3594360351562,
+            421.52752685546875,
+            34.73149108886719,
+            51.82021713256836
+          ],
+          "score": 0.8903182148933411
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.5345861911773682,
+        "민지": 0.6874968111515045,
+        "하니": 0.682714581489563,
+        "해린": 0.7197321057319641,
+        "혜인": 0.7458937168121338
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.5345861911773682,
+      "nearest_margin": 0.14812839031219482,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3328_saved256.jpg"
+    },
+    {
+      "frame_index": 3328,
+      "time_sec": 55.522133333333336,
+      "condition": "saved512",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        851.7517700195312,
+        427.2611999511719,
+        1048.893798828125,
+        896.1112060546875
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        822,
+        263,
+        1078,
+        942
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            945.5795288085938,
+            449.03594970703125,
+            31.713592529296875,
+            44.279945373535156
+          ],
+          "score": 0.8994282484054565
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.790854349732399,
+        "민지": 0.6817097663879395,
+        "하니": 0.640963613986969,
+        "해린": 0.6262934505939484,
+        "혜인": 0.8122048825025558
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.6262934505939484,
+      "nearest_margin": 0.01467016339302063,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "3328_saved512.jpg"
+    },
+    {
+      "frame_index": 3388,
+      "time_sec": 56.523133333333334,
+      "condition": "annotated_target",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        319,
+        491,
+        532,
+        903
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        287,
+        346,
+        563,
+        944
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            383.0018615722656,
+            511.3664855957031,
+            41.35972213745117,
+            56.35035705566406
+          ],
+          "score": 0.9120078086853027
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.6781872510910034,
+        "민지": 0.5370522737503052,
+        "하니": 0.6570302844047546,
+        "해린": 0.5852374732494354,
+        "혜인": 0.734459787607193
+      },
+      "nearest": "민지",
+      "nearest_distance": 0.5370522737503052,
+      "nearest_margin": 0.04818519949913025,
+      "assigned": "민지",
+      "selected_candidate": 0,
+      "roi_preview": "3388_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3388,
+      "time_sec": 56.523133333333334,
+      "condition": "saved256",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        619.9808349609375,
+        390.28759765625,
+        854.9326171875,
+        891.552978515625
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        584,
+        214,
+        890,
+        941
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            751.2467041015625,
+            421.03021240234375,
+            34.44477462768555,
+            50.50651931762695
+          ],
+          "score": 0.8958734273910522
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.5774648487567902,
+        "민지": 0.6911129355430603,
+        "하니": 0.7558961510658264,
+        "해린": 0.8077245652675629,
+        "혜인": 0.8367789685726166
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.5774648487567902,
+      "nearest_margin": 0.11364808678627014,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3388_saved256.jpg"
+    },
+    {
+      "frame_index": 3388,
+      "time_sec": 56.523133333333334,
+      "condition": "saved512",
+      "input_reference_label": "민지",
+      "body_bbox": [
+        851.4462890625,
+        426.6986083984375,
+        1046.81201171875,
+        897.5321044921875
+      ],
+      "anonymous_source_id": "P4",
+      "body_iou_to_source_label": 0.0,
+      "roi_xyxy": [
+        822,
+        261,
+        1076,
+        944
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            941.4351806640625,
+            448.3499755859375,
+            31.68560218811035,
+            43.477970123291016
+          ],
+          "score": 0.9076273441314697
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.7659787237644196,
+        "민지": 0.740269124507904,
+        "하니": 0.6945412158966064,
+        "해린": 0.7793432176113129,
+        "혜인": 0.8036758601665497
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.6945412158966064,
+      "nearest_margin": 0.04572790861129761,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "3388_saved512.jpg"
+    },
+    {
+      "frame_index": 3568,
+      "time_sec": 59.526133333333334,
+      "condition": "annotated_target",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        435,
+        287,
+        859,
+        908
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        371,
+        69,
+        922,
+        970
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            621.674560546875,
+            302.1376953125,
+            46.98394012451172,
+            61.21339416503906
+          ],
+          "score": 0.9125911593437195
+        },
+        {
+          "source_xywh": [
+            811.7429809570312,
+            427.1846008300781,
+            35.439945220947266,
+            51.56376647949219
+          ],
+          "score": 0.9015980958938599
+        },
+        {
+          "source_xywh": [
+            821.58447265625,
+            529.2808227539062,
+            58.91535568237305,
+            65.43032836914062
+          ],
+          "score": 0.3955996632575989
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.75949627161026,
+        "민지": 0.7206594049930573,
+        "하니": 0.6680411100387573,
+        "해린": 0.5938128232955933,
+        "혜인": 0.6337581276893616
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.5938128232955933,
+      "nearest_margin": 0.03994530439376831,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "3568_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3568,
+      "time_sec": 59.526133333333334,
+      "condition": "saved256",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        716.0401000976562,
+        410.5625,
+        927.0747680664062,
+        879.729736328125
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.2271763459549227,
+      "roi_xyxy": [
+        684,
+        246,
+        958,
+        926
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            811.296875,
+            424.0615234375,
+            39.10136413574219,
+            56.78995895385742
+          ],
+          "score": 0.8710012435913086
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.544452428817749,
+        "민지": 0.6057408452033997,
+        "하니": 0.6843713521957397,
+        "해린": 0.811327189207077,
+        "혜인": 0.7206097543239594
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.544452428817749,
+      "nearest_margin": 0.061288416385650635,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3568_saved256.jpg"
+    },
+    {
+      "frame_index": 3568,
+      "time_sec": 59.526133333333334,
+      "condition": "saved512",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        706.0547485351562,
+        407.63238525390625,
+        928.8792114257812,
+        894.1661987304688
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.2502939316511934,
+      "roi_xyxy": [
+        672,
+        237,
+        962,
+        942
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            811.1442260742188,
+            424.44384765625,
+            38.194889068603516,
+            55.038230895996094
+          ],
+          "score": 0.8800386190414429
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.5071797370910645,
+        "민지": 0.5819101333618164,
+        "하니": 0.6324547231197357,
+        "해린": 0.7064437568187714,
+        "혜인": 0.6975094079971313
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.5071797370910645,
+      "nearest_margin": 0.07473039627075195,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3568_saved512.jpg"
+    },
+    {
+      "frame_index": 3628,
+      "time_sec": 60.52713333333333,
+      "condition": "annotated_target",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        571,
+        318,
+        822,
+        908
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        533,
+        111,
+        859,
+        967
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            683.8851318359375,
+            355.46026611328125,
+            45.87855529785156,
+            57.82716369628906
+          ],
+          "score": 0.9044721126556396
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.8463774025440216,
+        "민지": 0.7381442487239838,
+        "하니": 0.6463504433631897,
+        "해린": 0.6094385087490082,
+        "혜인": 0.6170039772987366
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.6094385087490082,
+      "nearest_margin": 0.0075654685497283936,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "3628_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3628,
+      "time_sec": 60.52713333333333,
+      "condition": "saved256",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        501.1811828613281,
+        323.41973876953125,
+        787.9878540039062,
+        902.6669311523438
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.6666739298456219,
+      "roi_xyxy": [
+        458,
+        120,
+        831,
+        960
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            681.380615234375,
+            352.59613037109375,
+            49.3140869140625,
+            62.42289352416992
+          ],
+          "score": 0.8933077454566956
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.9400620460510254,
+        "민지": 0.7413035035133362,
+        "하니": 0.6432528793811798,
+        "해린": 0.5804468393325806,
+        "혜인": 0.6351690888404846
+      },
+      "nearest": "해린",
+      "nearest_distance": 0.5804468393325806,
+      "nearest_margin": 0.05472224950790405,
+      "assigned": "해린",
+      "selected_candidate": 0,
+      "roi_preview": "3628_saved256.jpg"
+    },
+    {
+      "frame_index": 3628,
+      "time_sec": 60.52713333333333,
+      "condition": "saved512",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        778.073974609375,
+        411.1001892089844,
+        975.5623779296875,
+        893.1005249023438
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.09532499094158609,
+      "roi_xyxy": [
+        748,
+        242,
+        1005,
+        941
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            847.2242431640625,
+            431.8370056152344,
+            36.51582717895508,
+            50.938682556152344
+          ],
+          "score": 0.8967610001564026
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.549067497253418,
+        "민지": 0.7035300433635712,
+        "하니": 0.6843927204608917,
+        "해린": 0.7625879347324371,
+        "혜인": 0.6519619524478912
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.549067497253418,
+      "nearest_margin": 0.10289445519447327,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3628_saved512.jpg"
+    },
+    {
+      "frame_index": 3656,
+      "time_sec": 60.99426666666667,
+      "condition": "annotated_target",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        565,
+        300,
+        811,
+        909
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 1.0,
+      "roi_xyxy": [
+        528,
+        86,
+        847,
+        969
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            683.3882446289062,
+            336.3661193847656,
+            43.14414596557617,
+            55.574893951416016
+          ],
+          "score": 0.8969027400016785
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.9364962875843048,
+        "민지": 0.7856421172618866,
+        "하니": 0.6902196407318115,
+        "해린": 0.9766568411141634,
+        "혜인": 0.7980005890130997
+      },
+      "nearest": "하니",
+      "nearest_distance": 0.6902196407318115,
+      "nearest_margin": 0.09542247653007507,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "3656_annotated_target.jpg"
+    },
+    {
+      "frame_index": 3656,
+      "time_sec": 60.99426666666667,
+      "condition": "saved256",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        566.2870483398438,
+        305.97369384765625,
+        784.9745483398438,
+        903.884765625
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.8727867723264038,
+      "roi_xyxy": [
+        533,
+        96,
+        817,
+        963
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            680.9375,
+            332.3382568359375,
+            45.80603790283203,
+            61.33567428588867
+          ],
+          "score": 0.8856591582298279
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.8535544872283936,
+        "민지": 0.7673386335372925,
+        "하니": 0.665816068649292,
+        "해린": 0.8799995258450508,
+        "혜인": 0.6638713777065277
+      },
+      "nearest": "혜인",
+      "nearest_distance": 0.6638713777065277,
+      "nearest_margin": 0.0019446909427642822,
+      "assigned": "unknown",
+      "selected_candidate": 0,
+      "roi_preview": "3656_saved256.jpg"
+    },
+    {
+      "frame_index": 3656,
+      "time_sec": 60.99426666666667,
+      "condition": "saved512",
+      "input_reference_label": "혜인",
+      "body_bbox": [
+        789.4996948242188,
+        394.4617004394531,
+        985.4053955078125,
+        890.6017456054688
+      ],
+      "anonymous_source_id": "P5",
+      "body_iou_to_source_label": 0.04513414730968859,
+      "roi_xyxy": [
+        760,
+        220,
+        1014,
+        940
+      ],
+      "face_candidates": [
+        {
+          "source_xywh": [
+            869.7772827148438,
+            418.5367431640625,
+            38.88479232788086,
+            53.0931510925293
+          ],
+          "score": 0.9268637299537659
+        }
+      ],
+      "status": "embedded",
+      "distances": {
+        "다니엘": 0.41448211669921875,
+        "민지": 0.7373945415019989,
+        "하니": 0.662166953086853,
+        "해린": 0.7816335558891296,
+        "혜인": 0.7035525143146515
+      },
+      "nearest": "다니엘",
+      "nearest_distance": 0.41448211669921875,
+      "nearest_margin": 0.24768483638763428,
+      "assigned": "다니엘",
+      "selected_candidate": 0,
+      "roi_preview": "3656_saved512.jpg"
+    }
+  ],
+  "actual": {
+    "frame_count": 18,
+    "detector_calls": 54,
+    "embedding_calls": 54,
+    "wall_seconds": 4.321784332991228,
+    "peak_rss_bytes": 416923648
+  },
+  "interpretation_limit": "Anonymous source body labels are linked to user timeline labels by timestamp; face ownership/visibility is not independently annotated. This is a causal diagnostic, not held-out recognition accuracy."
+}

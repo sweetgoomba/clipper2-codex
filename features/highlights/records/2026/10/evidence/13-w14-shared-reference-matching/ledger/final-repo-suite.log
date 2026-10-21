@@ -1,0 +1,54 @@
+........................................................................ [ 11%]
+........................................................ss.............. [ 23%]
+........................................................................ [ 34%]
+...............................s........................................ [ 46%]
+........................................................................ [ 58%]
+........................................................................ [ 69%]
+........................................................................ [ 81%]
+........................................................................ [ 92%]
+............................................                             [100%]
+=============================== warnings summary ===============================
+tests/test_clipper_video_render_comment_bubble.py::test_blur_author_id_changes_id_region_pixels
+tests/test_clipper_video_render_comment_bubble.py::test_blur_author_id_changes_id_region_pixels
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:94: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(sharp.image.getdata()) != list(blurred.image.getdata())
+
+tests/test_clipper_video_render_comment_bubble.py::test_render_bubble_youtube_no_meta_matches_default_call
+tests/test_clipper_video_render_comment_bubble.py::test_render_bubble_youtube_no_meta_matches_default_call
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:297: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(legacy.image.getdata()) == list(explicit.image.getdata())
+
+tests/test_clipper_video_render_comment_bubble.py::test_body_weight_wired_into_render_differs_from_uniform_semibold
+tests/test_clipper_video_render_comment_bubble.py::test_body_weight_wired_into_render_differs_from_uniform_semibold
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_comment_bubble.py:346: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(per_role.image.getdata()) != list(uniform.image.getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_more_revealed_draws_more_ink
+tests/test_clipper_video_render_ranking_list.py::test_more_revealed_draws_more_ink
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:31: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for a in img.getchannel("A").getdata() if a > 0)
+
+tests/test_clipper_video_render_ranking_list.py::test_family_name_font_resolves_to_bundled_korean_font
+tests/test_clipper_video_render_ranking_list.py::test_family_name_font_resolves_to_bundled_korean_font
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:315: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(named.getdata()) == list(bundled.getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_no_hard_outline_around_glyphs
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:501: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return list(img.convert("RGBA").getdata())
+
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+tests/test_clipper_video_render_ranking_list.py::test_reveals_by_rank_membership_not_by_count
+  /Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/tests/test_clipper_video_render_ranking_list.py:596: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for a in band.getchannel("A").getdata() if a > 0)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/e2e/test_real_pipeline.py:75: CLIPPER_E2E_DIALOG_VIDEO 미설정
+SKIPPED [1] tests/e2e/test_real_pipeline.py:114: CLIPPER_E2E_DANCE_VIDEO 미설정
+SKIPPED [1] tests/test_clipper_video_render_rank_list_parity.py:49: clipper_angular가 옆에 없다(단일 레포 체크아웃)
+617 passed, 3 skipped, 17 warnings in 33.72s

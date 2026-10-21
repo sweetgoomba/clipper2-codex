@@ -1,0 +1,184 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________ test_replay_counts_all_outcomes_without_loading_models ____________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_replay_counts_all_outcome0')
+
+    def test_replay_counts_all_outcomes_without_loading_models(tmp_path):
+>       path,_,_=fixture(tmp_path)
+                 ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+__________________ test_changed_source_rejected_before_output __________________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_changed_source_rejected_b0')
+
+    def test_changed_source_rejected_before_output(tmp_path):
+>       path,_,_=fixture(tmp_path);(tmp_path/'source.bin').write_bytes(b'changed')
+                 ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+__________________ test_existing_output_is_never_overwritten ___________________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_existing_output_is_never_0')
+
+    def test_existing_output_is_never_overwritten(tmp_path):
+>       path,_,_=fixture(tmp_path);out=tmp_path/'out';out.mkdir();(out/'keep').write_text('user')
+                 ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+______________ test_dataset_space_cannot_be_assumed_from_manifest ______________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_dataset_space_cannot_be_a0')
+
+    def test_dataset_space_cannot_be_assumed_from_manifest(tmp_path):
+>       path,data,plan=fixture(tmp_path)
+                       ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_________________________ test_pickle_arrays_rejected __________________________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_pickle_arrays_rejected0')
+
+    def test_pickle_arrays_rejected(tmp_path):
+>       path,_,plan=fixture(tmp_path)
+                    ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_______________ test_cli_runs_without_cv2_or_other_model_imports _______________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-8/test_cli_runs_without_cv2_or_o0')
+
+    def test_cli_runs_without_cv2_or_other_model_imports(tmp_path):
+>       path,_,_=fixture(tmp_path)
+                 ^^^^^^^^^^^^^^^^^
+
+evaluation/reference_matching/tests/test_replay.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+evaluation/reference_matching/tests/test_replay.py:17: in fixture
+    module=importlib.import_module('evaluation.reference_matching.manifest')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'evaluation.reference_matching.manifest'
+import_ = <function _gcd_import at 0x1057e3d80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'evaluation.reference_matching.manifest'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED evaluation/reference_matching/tests/test_replay.py::test_replay_counts_all_outcomes_without_loading_models
+FAILED evaluation/reference_matching/tests/test_replay.py::test_changed_source_rejected_before_output
+FAILED evaluation/reference_matching/tests/test_replay.py::test_existing_output_is_never_overwritten
+FAILED evaluation/reference_matching/tests/test_replay.py::test_dataset_space_cannot_be_assumed_from_manifest
+FAILED evaluation/reference_matching/tests/test_replay.py::test_pickle_arrays_rejected
+FAILED evaluation/reference_matching/tests/test_replay.py::test_cli_runs_without_cv2_or_other_model_imports
+6 failed in 0.18s

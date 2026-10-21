@@ -1,0 +1,13 @@
+## Task 5: 실제 저장 입력의 격리 대조 실행기
+
+**Files:** Create `evaluation/reference_matching/{__init__,manifest,replay}.py`, `evaluation/reference_matching/tests/test_replay.py`. 기존 W13 도구와 제품 소스는 읽기만 한다. 실행 결과는 Git 소스 밖의 새 output 디렉터리에 저장한다.
+
+**Interfaces:** `load_replay_manifest(path: Path) -> dict`, `run_replay(manifest_path: Path, output_dir: Path) -> dict`; CLI `python -m evaluation.reference_matching.replay --manifest PATH --output-dir PATH`. manifest v1은 정확한 input paths+SHA, code hashes, embedding space, policy, label limitation, 자원 상한을 필수로 한다. W13 cache 또는 이전 NPZ에 지문이 없으면 현재 지문을 추정해 넣지 않는다. 10/13 고정 worker/계산식/모델 hash로 복원 가능한 공간만 importer에 명시하고 근거를 기록한다.
+
+- [ ] **1.** 합성 fixture로 source hash 불일치 시 추론/출력 전에 실패, unknown/ambiguous/invalid를 분모에서 누락하지 않음, 출력 디렉터리 존재 시 덮어쓰기 거부, 서로 다른 space 파일의 혼합 거부, NPZ `allow_pickle=False`, JSON에 embedding 배열 없음 테스트를 작성한다. CLI 테스트에서는 cv2/모델 생성 자체를 차단해도 성공해야 한다.
+- [ ] **2.** `python -m pytest evaluation/reference_matching/tests/test_replay.py -q` → 구현 전 FAIL 확인.
+- [ ] **3.** 이 importer의 실입력은 [10/13 보관 자료](/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/evidence/13-w14-face-matching-baseline/archive-manifest.json)의 `reference-gallery/reference-embeddings.local.npz`, `reference-result.json`, `selected-face-trace/query-embeddings.local.npz`, `trace-result.json` 및 각 plan.json이다. archive-manifest의 hash와 실제 file hash를 먼저 대조한다. W13 기존 cache/helper는 `cache-audit.json`에 고정된 hash와 일치할 때만 대조군으로 읽는다. 코드 내용 변경 시 새 manifest로 기록한다.
+- [ ] **4.** 이 성공 2회에 사용한 Dance SFace space를 선언한다: recognizer SHA `0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79`, OpenCV 4.13.0, SFace alignCrop 5점/BGR 처리, float32 L2 `norm+1e-9`, dimension128, cosine distance. Person core의 `vector/norm` 특징과 동일 공간으로 합치지 않는다. detector YuNet SHA `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4`와 .28/NMS .30/topK5000은 관측 provenance로 보존한다.
+- [ ] **5.** 같은 명령 → PASS. 첫 실데이터 replay는 모델 호출 0회, max_distance=.60/min_margin=0/minimum_support=1의 **legacy nearest 재현 조건 한 개**만 사용한다. 이 비교에서는 기존 선택을 소비자의 확정 선택으로 가정해 association=confirmed로 전달하고 `association_basis=legacy_selected_candidate_assumption_not_face_ownership_gt`를 manifest/결과에 표시한다. 얼굴 소유 정답이 확보됐다는 뜻은 아니다. 참조23장의 갤러리 centroid는 기존 값과 array equality, 54개 query의 거리 허용오차≤1e-6와 후보/미배정 결과를 비교한다. 조건별 14/18·4/18·7/18 및 2·2·3 미배정을 재현한다. 이는 구현 재현이지 개선 점수가 아니다.
+- [ ] **6.** 세 표본(17.2172/18.2182/19.2192)의 saved512는 같은 기존 track 범위임을 cache로 대조한 후 합의 결과 해린을 확인한다. 기존 최종 하니와 나란히 기록한다. 다른 scope/몸 오선택/불확실한 소유는 verified same-person으로 넣지 않는다. 기존 데이터의 detector 선택을 새 알고리즘으로 개선했다고 주장하지 않는다. 시간·RSS·출력 상한은 각각120초/2GiB/25MiB로 manifest에 잠그고 enforce하는 supervisor로 실행한다. 제한 강제가 불가능하면 실행하지 않고 이유를 기록한다.
+

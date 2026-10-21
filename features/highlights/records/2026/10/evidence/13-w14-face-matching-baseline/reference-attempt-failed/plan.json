@@ -1,0 +1,155 @@
+{
+  "schema": "w14_reference_gallery_diagnostic_v1",
+  "status": "prepared_before_reference_inference",
+  "purpose": "Verify reference-image preprocessing, detection and leave-one-image-out matching using the existing Dance YuNet/SFace path. This is a diagnostic of user-labelled references, not video accuracy or a model selection experiment.",
+  "source_context": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/sources/youtube/yFTAYXDTjqI/source.mp4",
+    "sha256": "7f23b9ad8dd6873d8c39a8369083626de5e1807468d083247f0545c3299688d4",
+    "range_sec": [
+      0.0,
+      133.60013333333333
+    ]
+  },
+  "source_inference_range": null,
+  "video_inference_runs": 0,
+  "truth": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/human-review/yFTAYXDTjqI/user-ground-truth.json",
+    "sha256": "d451572c00142fc8b110678da974665b26d9d058938c5be2e7115e6080e00ab0",
+    "rows": 21
+  },
+  "references": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_00.jpg",
+      "sha256": "391eb036eb724c9fd109b56a45a4719e2b4bd6ea15df03d2e028d11b2b2e0cab"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_01.jpg",
+      "sha256": "20c20ffb77e0ad96eccceb78731dbefec3a7e6bdd799c4c3923c84add744cd87"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_02.jpg",
+      "sha256": "98652a3c58ef40fff057c9418fbaf1c2deaa829d5d554b9ba3f72944e8534d99"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_03.jpg",
+      "sha256": "72fccb4b2e4d513cc5718ad1ba9fbcc75416a4c332ddd4f02e279ee768abc4d0"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/다니엘/ref_04.jpg",
+      "sha256": "d989d3f0e57d335bd47eca58dc4a5da46322e6751c125ab40680b74f1adaabb6"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_00.jpg",
+      "sha256": "0acee0dbbcf8f0f7cbc1f2440be469a83b2b2a552ec9b780333f4773b7af4459"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_01.webp",
+      "sha256": "3c094d52fba13995a5f302df1cb51243d72f7a61d76c6fc471d7babc753c3b27"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_02.jpg",
+      "sha256": "1ccf67842ee3b6feb9f41fcadcbff4db799b5666379f206132c64897afb33432"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_03.jpg",
+      "sha256": "fcb616dd9bbc0c64504fe940dfb7bd9a23184fd0b2c967474ee6b9e869d22264"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/민지/ref_04.png",
+      "sha256": "38c8ea61b1171fff1091737531a6c756a623efaa948f28a81111082b45638df8"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_01.webp",
+      "sha256": "9595310155622d0606b188b7ebc7ab215f07ad98f6ee4805331dc939349ae3d1"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_02.jpg",
+      "sha256": "4c7da1b878d8ac620f273772b0d7eb97743075ec44d501dd764a845c17eb714c"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_03.webp",
+      "sha256": "14680d2fff0b3c07f1b5ec11f8177874e56363ba2237429744ee5d4ff14a2e57"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/하니/ref_04.jpg",
+      "sha256": "4a32f1d9f7f8183cf41a4e3f74b9bbdf51af7f1540316fdd653d1f54788c0e7a"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_00.jpg",
+      "sha256": "cceceb4444fb7d47a6a59cabf1f1f6cb4cc60a2890bf44dd0fb7d693578a14bf"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_01.jpg",
+      "sha256": "36857e049d49bb279b1972704935c7749e23cbdc70f75191852a2cb7dc20255a"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_02.jpg",
+      "sha256": "bd5699809713f89324c67bb518952c16fd38bf928708f8d01c32183689e11297"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_03.jpg",
+      "sha256": "bfe8ece40580a38ae81ea97cd7fbb892f8164bd3fe85b30313fa29b470e46ea3"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/해린/ref_04.jpg",
+      "sha256": "e4f2c4b93528840d912ecc6fd11757bc181dc6b3f13e94acbc6e5ce2932bfca1"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_00.jpg",
+      "sha256": "0abd01500ff0ddb1b3d3a16c84d506a71c7131c4fb6ce28e9dfbc671a82a78de"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_01.jpg",
+      "sha256": "2ac5bc3ccfb8625af17214a41cbb32dde3b2ab2ea9404d1e24c1f35d8cb3b23f"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_02.jpg",
+      "sha256": "c88a05b6ee2bd4e0144876816bd21b5bb8f7aefc99cdbdd778241e7c46a86dd5"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-review-scenes-20261001/runtime-preview/projects/files/local/1790950000001/refs/dance/혜인/ref_03.jpg",
+      "sha256": "ffb9d66f3f2810cf2dbcb8e058ee993ef4d7542460b48de96ebe8232d3aba52a"
+    }
+  ],
+  "models": [
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_python/plugin_models/dance_highlight/face_detection_yunet_2023mar.onnx",
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
+    },
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_python/plugin_models/dance_highlight/face_recognition_sface_2021dec.onnx",
+      "sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79"
+    }
+  ],
+  "input_labels": "member folder labels from the user-selected reference gallery; not independently re-identified",
+  "model_inference_budget": {
+    "reference_passes": 1,
+    "max_detector_calls": 23,
+    "max_embedding_calls": 23,
+    "wall_seconds": 120,
+    "process_rss_bytes": 2147483648,
+    "output_bytes": 26214400,
+    "device": "OpenCV CPU",
+    "model_downloads": 0
+  },
+  "os": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "python": "/Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python",
+  "output_dir": "/private/tmp/w14-face-matching-20261013/174219",
+  "algorithm": {
+    "detector_score": 0.28,
+    "nms": 0.3,
+    "top_k": 5000,
+    "face_choice": "highest detector score, matching current Dance",
+    "alignment": "OpenCV FaceRecognizerSF.alignCrop",
+    "embedding": "SFace float32 L2 normalized",
+    "gallery_rule": "member arithmetic mean then L2; exclude the query image from its own member centroid",
+    "comparison": "cosine distance; nearest member before threshold and after existing 0.60 distance threshold",
+    "multi_face": "retain detection count and boxes as a diagnostic; do not assume highest score is the labelled subject",
+    "opencv_threads": 1
+  },
+  "worker_sha256": "5226fab3ed0a52611771ab7c357a26be11ee9cb01f0368064f27f0e51f52fa3c",
+  "comparison_cache": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/movenet256-face-cache.json",
+    "sha256": "44cd2c3ede5a6b75fee0b3064f9365330355495bb326a0c4582fc7e36f3e154b"
+  }
+}

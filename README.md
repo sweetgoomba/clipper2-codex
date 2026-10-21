@@ -37,6 +37,10 @@ legacy/
 
 ## Current Focus
 
+2026-10-16 기준 고정 스레드 1~5·7~9와 8개 앱 저장소의 원격 `dev` 반영 상태를 다시 대조했다. 다음 세션은 [WORKBOARD](handoff/WORKBOARD.md)와 [NEXT](handoff/NEXT.md), [스레드·브랜치 감사](handoff/2026-10-16-pinned-thread-dev-reconciliation.md), [W13/W14 실험 회고](features/highlights/records/2026/10/16-w13-w14-experiment-reconciliation.md)에서 시작한다. W13 72번은 평가 전용·제품 미채택이고, W14 공통 얼굴 연결과 공유 클립의 일부 UX는 `dev`에 반영됐지만 실제 새 영상 정확도는 미확인이다. W06 개발 MID/DB 초기화는 실행됐으며 QA 원 제보의 수동 검증과 시험 tree 미커밋 코드가 남아 있다.
+
+## Historical Focus — 2026-09-29
+
 2026-09-29 기준 작업별 새 세션으로 재개한다. 우선순위는 사용자 선택에 따른다.
 
 - 시작: [작업 현황판](handoff/WORKBOARD.md)

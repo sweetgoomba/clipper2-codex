@@ -1,0 +1,1500 @@
+{
+  "schema": "w14_cached_mapping_audit_v1",
+  "truth": {
+    "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/human-review/yFTAYXDTjqI/user-ground-truth.json",
+    "sha256": "d451572c00142fc8b110678da974665b26d9d058938c5be2e7115e6080e00ab0"
+  },
+  "source_body_labels": {
+    "path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/01-w13-holdout-source-labels-v1.json",
+    "sha256": "9eb66dda4c59ca7434e04145b8b6ebfb10afc18313b116783fa5cab443155f2d"
+  },
+  "replayed_code": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_human_review.py",
+      "sha256": "d6b55105ebb649df1a2a0a539265a1adeea65a19603a5b8cdf50a027e26fc209"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/tools/w13_face_cache_sweep.py",
+      "sha256": "3772e8506ddc609afb76b95e56647dc9a3b7ee3bee9ca4e9705184f499d2462c"
+    }
+  ],
+  "results": {
+    "saved256": {
+      "cache": {
+        "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/movenet256-face-cache.json",
+        "sha256": "44cd2c3ede5a6b75fee0b3064f9365330355495bb326a0c4582fc7e36f3e154b"
+      },
+      "stored_mapping_and_scores_reproduced": true,
+      "mapping_rank_redirects": [
+        {
+          "cluster_id": "1",
+          "nearest": [
+            "하니",
+            0.4490460157394409
+          ],
+          "assigned": "혜인",
+          "assigned_distance": 0.5191292762756348,
+          "affected_intervals": [
+            [
+              9.142466666666667,
+              20.220200000000002
+            ],
+            [
+              59.6596,
+              62.529133333333334
+            ],
+            [
+              89.4894,
+              93.42666666666666
+            ]
+          ]
+        }
+      ],
+      "whole_pipeline_overlap_diagnostic": {
+        "stored": {
+          "scored_main_member_seconds": 82.50000000000001,
+          "matched_main_member_seconds": 25.807533333333332,
+          "wrong_main_member_seconds": 54.192466666666675,
+          "scored_group_seconds": 64.29999999999998,
+          "matched_group_seconds": 47.49079999999999,
+          "unscored_review_seconds": 0.0,
+          "excluded_clip_overlap_seconds": 1.5811333333333266
+        },
+        "nearest_only_counterfactual": {
+          "scored_main_member_seconds": 82.50000000000001,
+          "matched_main_member_seconds": 22.996266666666664,
+          "wrong_main_member_seconds": 57.003733333333344,
+          "scored_group_seconds": 64.29999999999998,
+          "matched_group_seconds": 47.49079999999999,
+          "unscored_review_seconds": 0.0,
+          "excluded_clip_overlap_seconds": 1.5811333333333266
+        }
+      },
+      "point_trace": [
+        {
+          "frame_index": 1032,
+          "time_sec": 17.2172,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "혜인"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1092,
+          "time_sec": 18.2182,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "혜인"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1152,
+          "time_sec": 19.2192,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "해린",
+          "existing_segment_label": [
+            "혜인"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1348,
+          "time_sec": 22.489133333333335,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1408,
+          "time_sec": 23.490133333333333,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1468,
+          "time_sec": 24.491133333333334,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1528,
+          "time_sec": 25.492133333333335,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1588,
+          "time_sec": 26.493133333333333,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1768,
+          "time_sec": 29.496133333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "unknown",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1828,
+          "time_sec": 30.497133333333334,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 1888,
+          "time_sec": 31.49813333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 1948,
+          "time_sec": 32.49913333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 3268,
+          "time_sec": 54.52113333333333,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "해린"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3328,
+          "time_sec": 55.522133333333336,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3388,
+          "time_sec": 56.523133333333334,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3568,
+          "time_sec": 59.526133333333334,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3628,
+          "time_sec": 60.52713333333333,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "해린",
+          "existing_segment_label": [
+            "혜인"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 3656,
+          "time_sec": 60.99426666666667,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "unknown",
+          "existing_segment_label": [
+            "혜인"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": true
+        }
+      ],
+      "stage_trace": [
+        {
+          "interval": [
+            5.739066666666667,
+            9.142466666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.33133224280184626
+              ],
+              [
+                "하니",
+                0.536263846075884
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            9.142466666666667,
+            20.220200000000002
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.5278654659529121
+              ],
+              [
+                "해린",
+                0.670218992547
+              ]
+            ],
+            [
+              [
+                "민지",
+                0.5308758212243404
+              ],
+              [
+                "해린",
+                0.5800745273531889
+              ]
+            ],
+            [
+              [
+                "해린",
+                0.3410293294063952
+              ],
+              [
+                "하니",
+                0.5731666904462153
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            20.220200000000002,
+            30.4304
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.47454267382261617
+              ],
+              [
+                "하니",
+                0.6211825235012114
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            30.4304,
+            45.4454
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.3625053944497417
+              ],
+              [
+                "민지",
+                0.6071805917062905
+              ]
+            ],
+            [
+              [
+                "민지",
+                0.39128241625724125
+              ],
+              [
+                "해린",
+                0.5847872511043146
+              ]
+            ],
+            [
+              [
+                "하니",
+                0.512950752554499
+              ],
+              [
+                "해린",
+                0.574713599448457
+              ]
+            ]
+          ],
+          "cluster_id": 5,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            45.4454,
+            49.78306666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.44948954260673346
+              ],
+              [
+                "해린",
+                0.5722840890717277
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            49.78306666666667,
+            54.58786666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.4046810795241301
+              ],
+              [
+                "하니",
+                0.42888238725151584
+              ]
+            ],
+            [
+              [
+                "다니엘",
+                0.5031108587966028
+              ],
+              [
+                "민지",
+                0.5645813699778885
+              ]
+            ]
+          ],
+          "cluster_id": 7,
+          "final_reference_label": "해린"
+        },
+        {
+          "interval": [
+            54.58786666666667,
+            59.6596
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.49765112129706546
+              ],
+              [
+                "하니",
+                0.6249531259577581
+              ]
+            ],
+            [
+              [
+                "해린",
+                0.5167987910973675
+              ],
+              [
+                "혜인",
+                0.5718469846319542
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            59.6596,
+            62.529133333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "혜인",
+                0.5136630977344527
+              ],
+              [
+                "하니",
+                0.5857106674980795
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            62.529133333333334,
+            71.6716
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.5159247877590857
+              ],
+              [
+                "다니엘",
+                0.526746778417837
+              ]
+            ],
+            [
+              [
+                "다니엘",
+                0.47938676354521603
+              ],
+              [
+                "하니",
+                0.5003346683871333
+              ]
+            ],
+            [
+              [
+                "민지",
+                0.49861461528036666
+              ],
+              [
+                "하니",
+                0.5332508571147081
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            71.6716,
+            81.61486666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.41486511100030776
+              ],
+              [
+                "하니",
+                0.6140786061358617
+              ]
+            ]
+          ],
+          "cluster_id": 7,
+          "final_reference_label": "해린"
+        },
+        {
+          "interval": [
+            81.61486666666667,
+            89.4894
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.3906259232147399
+              ],
+              [
+                "해린",
+                0.5796252424875632
+              ]
+            ],
+            [
+              [
+                "해린",
+                0.4753100447138445
+              ],
+              [
+                "하니",
+                0.5620636612935836
+              ]
+            ],
+            [
+              [
+                "하니",
+                0.3940944116592593
+              ],
+              [
+                "혜인",
+                0.5877734977721586
+              ]
+            ],
+            [
+              [
+                "해린",
+                0.46022612678295227
+              ],
+              [
+                "하니",
+                0.6288195653577779
+              ]
+            ]
+          ],
+          "cluster_id": 7,
+          "final_reference_label": "해린"
+        },
+        {
+          "interval": [
+            89.4894,
+            93.42666666666666
+          ],
+          "track_average_top2": [
+            [
+              [
+                "혜인",
+                0.5467159875959273
+              ],
+              [
+                "해린",
+                0.5814632616563902
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            93.42666666666666,
+            98.4984
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.3527613762215479
+              ],
+              [
+                "혜인",
+                0.6598501031782908
+              ]
+            ],
+            [
+              [
+                "혜인",
+                0.5282595773273016
+              ],
+              [
+                "하니",
+                0.5301323409581347
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            98.4984,
+            102.83606666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.30520835536824287
+              ],
+              [
+                "하니",
+                0.5406134433858043
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            102.83606666666667,
+            107.107
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.48731738245519884
+              ],
+              [
+                "해린",
+                0.6212856251165201
+              ]
+            ],
+            [
+              [
+                "하니",
+                0.7007561648457157
+              ],
+              [
+                "민지",
+                0.809331892863817
+              ]
+            ],
+            [
+              [
+                "하니",
+                0.33957915690714413
+              ],
+              [
+                "민지",
+                0.526029246864783
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            107.107,
+            112.97953333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.45453668468075503
+              ],
+              [
+                "민지",
+                0.5359337015267562
+              ]
+            ]
+          ],
+          "cluster_id": 5,
+          "final_reference_label": "하니"
+        }
+      ],
+      "selected_correct_subset": {
+        "count": 6,
+        "direct_roi_label_agrees": 4,
+        "stored_segment_label_agrees": 5
+      }
+    },
+    "saved512": {
+      "cache": {
+        "path": "/Users/jina/project/adlight/.worktrees/w13-dance-metadata-eval-20261001/desktop/clipper_python/output/evaluation/yFTAYXDTjqI/human-truth-iteration/movenet512-face-baseline.json",
+        "sha256": "d376886310728da8aa6209c5b54233026bd0e8711c0d381bb147430a94bb8164"
+      },
+      "stored_mapping_and_scores_reproduced": true,
+      "mapping_rank_redirects": [
+        {
+          "cluster_id": "2",
+          "nearest": [
+            "하니",
+            0.4773322343826294
+          ],
+          "assigned": "혜인",
+          "assigned_distance": 0.5058207809925079,
+          "affected_intervals": [
+            [
+              9.075733333333334,
+              10.6106
+            ],
+            [
+              43.043,
+              49.71633333333333
+            ],
+            [
+              62.529133333333334,
+              64.13073333333334
+            ]
+          ]
+        }
+      ],
+      "whole_pipeline_overlap_diagnostic": {
+        "stored": {
+          "scored_main_member_seconds": 82.50000000000001,
+          "matched_main_member_seconds": 29.311666666666678,
+          "wrong_main_member_seconds": 50.68833333333333,
+          "scored_group_seconds": 64.29999999999998,
+          "matched_group_seconds": 27.998999999999995,
+          "unscored_review_seconds": 0.0,
+          "excluded_clip_overlap_seconds": 8.5214
+        },
+        "nearest_only_counterfactual": {
+          "scored_main_member_seconds": 82.50000000000001,
+          "matched_main_member_seconds": 30.913266666666683,
+          "wrong_main_member_seconds": 49.08673333333333,
+          "scored_group_seconds": 64.29999999999998,
+          "matched_group_seconds": 27.998999999999995,
+          "unscored_review_seconds": 0.0,
+          "excluded_clip_overlap_seconds": 8.5214
+        }
+      },
+      "point_trace": [
+        {
+          "frame_index": 1032,
+          "time_sec": 17.2172,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "해린",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1092,
+          "time_sec": 18.2182,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "해린",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1152,
+          "time_sec": 19.2192,
+          "input_label": [
+            "해린"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "해린",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1348,
+          "time_sec": 22.489133333333335,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1408,
+          "time_sec": 23.490133333333333,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1468,
+          "time_sec": 24.491133333333334,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1528,
+          "time_sec": 25.492133333333335,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1588,
+          "time_sec": 26.493133333333333,
+          "input_label": [
+            "다니엘"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1768,
+          "time_sec": 29.496133333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "unknown",
+          "existing_segment_label": [
+            "민지"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 1828,
+          "time_sec": 30.497133333333334,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 1888,
+          "time_sec": 31.49813333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 1948,
+          "time_sec": 32.49913333333333,
+          "input_label": [
+            "하니"
+          ],
+          "selected_body_matches_source_bbox": true,
+          "direct_roi_label": "하니",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": true
+        },
+        {
+          "frame_index": 3268,
+          "time_sec": 54.52113333333333,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "민지",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": true,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3328,
+          "time_sec": 55.522133333333336,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "unknown",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3388,
+          "time_sec": 56.523133333333334,
+          "input_label": [
+            "민지"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "unknown",
+          "existing_segment_label": [
+            "하니"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3568,
+          "time_sec": 59.526133333333334,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3628,
+          "time_sec": 60.52713333333333,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        },
+        {
+          "frame_index": 3656,
+          "time_sec": 60.99426666666667,
+          "input_label": [
+            "혜인"
+          ],
+          "selected_body_matches_source_bbox": false,
+          "direct_roi_label": "다니엘",
+          "existing_segment_label": [
+            "다니엘"
+          ],
+          "direct_label_agrees": false,
+          "segment_label_agrees": false
+        }
+      ],
+      "stage_trace": [
+        {
+          "interval": [
+            5.538866666666666,
+            9.075733333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.36664684394647595
+              ],
+              [
+                "하니",
+                0.5739290682296315
+              ]
+            ]
+          ],
+          "cluster_id": 4,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            9.075733333333334,
+            10.6106
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.45945837265329115
+              ],
+              [
+                "혜인",
+                0.5953313863318348
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            10.6106,
+            20.220200000000002
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.451949604182052
+              ],
+              [
+                "하니",
+                0.6381477533842885
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            20.220200000000002,
+            30.163466666666668
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.48659804089412095
+              ],
+              [
+                "하니",
+                0.6213878469539292
+              ]
+            ]
+          ],
+          "cluster_id": 4,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            30.163466666666668,
+            35.16846666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.3506377252730396
+              ],
+              [
+                "해린",
+                0.5936720554391337
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            35.16846666666667,
+            43.043
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.42163421574226423
+              ],
+              [
+                "해린",
+                0.5612742366320875
+              ]
+            ]
+          ],
+          "cluster_id": 4,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            43.043,
+            49.71633333333333
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.5024600365640838
+              ],
+              [
+                "민지",
+                0.5030906874999901
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            49.71633333333333,
+            59.2592
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.43512065124930144
+              ],
+              [
+                "하니",
+                0.43756290618302185
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            59.2592,
+            62.529133333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.33630112839743764
+              ],
+              [
+                "하니",
+                0.623578987500204
+              ]
+            ],
+            [
+              [
+                "혜인",
+                0.6238069813179913
+              ],
+              [
+                "하니",
+                0.633345612253572
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            62.529133333333334,
+            64.13073333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.5459087823407598
+              ],
+              [
+                "혜인",
+                0.5744891157403638
+              ]
+            ]
+          ],
+          "cluster_id": 2,
+          "final_reference_label": "혜인"
+        },
+        {
+          "interval": [
+            64.13073333333334,
+            66.33293333333333
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.3341726079804347
+              ],
+              [
+                "해린",
+                0.7197285460325018
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        },
+        {
+          "interval": [
+            66.33293333333333,
+            71.93853333333334
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.33659823979908987
+              ],
+              [
+                "해린",
+                0.6244432713151553
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            71.93853333333334,
+            75.20846666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.33936426338234116
+              ],
+              [
+                "하니",
+                0.587618619941076
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            75.20846666666667,
+            80.6806
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.28896756109136734
+              ],
+              [
+                "민지",
+                0.6354472832582732
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            80.6806,
+            85.55213333333333
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.37666765642022904
+              ],
+              [
+                "해린",
+                0.5389856305320082
+              ]
+            ]
+          ],
+          "cluster_id": 4,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            85.55213333333333,
+            101.7016
+          ],
+          "track_average_top2": [
+            [
+              [
+                "해린",
+                0.4254690769438426
+              ],
+              [
+                "다니엘",
+                0.47248364025767087
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            101.7016,
+            102.9028
+          ],
+          "track_average_top2": [
+            [
+              [
+                "하니",
+                0.38843880897127925
+              ],
+              [
+                "해린",
+                0.6011498690150157
+              ]
+            ]
+          ],
+          "cluster_id": 1,
+          "final_reference_label": "하니"
+        },
+        {
+          "interval": [
+            102.9028,
+            105.23846666666667
+          ],
+          "track_average_top2": [
+            [
+              [
+                "민지",
+                0.6128798338863359
+              ],
+              [
+                "해린",
+                0.6227671748872641
+              ]
+            ]
+          ],
+          "cluster_id": 4,
+          "final_reference_label": "민지"
+        },
+        {
+          "interval": [
+            105.23846666666667,
+            119.7196
+          ],
+          "track_average_top2": [
+            [
+              [
+                "다니엘",
+                0.3495650059221218
+              ],
+              [
+                "해린",
+                0.6684864531699457
+              ]
+            ]
+          ],
+          "cluster_id": 3,
+          "final_reference_label": "다니엘"
+        }
+      ],
+      "selected_correct_subset": {
+        "count": 6,
+        "direct_roi_label_agrees": 6,
+        "stored_segment_label_agrees": 3
+      }
+    }
+  },
+  "limitation": "Same-video diagnostic on previously used labels. Interval overlap mixes body selection, boundaries and matching. Direct ROI vs segment aggregation is not an independent model accuracy comparison."
+}

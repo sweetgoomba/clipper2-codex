@@ -1,0 +1,442 @@
+{
+  "schema": "w14_reference_matching_implementation_archive_v1",
+  "date": "2026-10-13",
+  "repo": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python",
+  "branch": "feature/shared-reference-face-matching-20261013",
+  "head": "47782953228861f4bdbdc135265d067c2a826b0e",
+  "uncommitted": true,
+  "entries": [
+    {
+      "path": "code/clipper_face_core/README.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md",
+      "sha256": "f6965d82c03bb8896f8de7ce629b29883353b099416f77008527e509ea0aa306",
+      "bytes": 5615
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/__init__.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/__init__.py",
+      "sha256": "26362a0d20d7d436a2bd914d7285fa408371e0dff66cd89575f8fbe0d31baaee",
+      "bytes": 1212
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/_vectors.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py",
+      "sha256": "e096d4ec2556835d7d8dec960804d55c7661cbd5454e26dc6bdd2e8ad1772f27",
+      "bytes": 558
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/backend_types.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/backend_types.py",
+      "sha256": "d0fb0d950105084530b94bacadffe542bcc2bcc21687ac76315c67a1ee595fae",
+      "bytes": 853
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/consensus.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/consensus.py",
+      "sha256": "f889a1037fb82c88725bd4f73dc84d1e78d9a76de37a859e7f214121c098a9c9",
+      "bytes": 3377
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/contracts.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+      "sha256": "e63be83462e18038d40e877a96530e1fd27e618254f53d5c7ed137d07776c75a",
+      "bytes": 9546
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/gallery.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/gallery.py",
+      "sha256": "0182d43814071891a31777e24b40e80be0c7004c98e2179f9a4e044aa91cfc2a",
+      "bytes": 2299
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/grouping.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/grouping.py",
+      "sha256": "911fc6bc4b923924c12c40f676b0a98fed7e3ea78ca60852f825f5b28077d1a2",
+      "bytes": 8096
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/matching.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+      "sha256": "34a5f89c4f2b1741579431cd524b9783281734b86fa6898de4cb9fbcb976bde1",
+      "bytes": 2141
+    },
+    {
+      "path": "code/clipper_face_core/clipper_face_core/opencv_backend.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/clipper_face_core/opencv_backend.py",
+      "sha256": "30b6f333a6aa0e7f76173e04374edb0719c35173b764a21af642b9cd2de8b831",
+      "bytes": 3990
+    },
+    {
+      "path": "code/clipper_face_core/examples/reference_matching.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py",
+      "sha256": "e95b9fc2e1a21003088426b2d10318de8355d12b02ccb1498e41682ca1b025a2",
+      "bytes": 1618
+    },
+    {
+      "path": "code/clipper_face_core/pyproject.toml",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/pyproject.toml",
+      "sha256": "cae050d88965a6ae5214f7a17f657210137ae452a11857d8874b70a703ae7654",
+      "bytes": 389
+    },
+    {
+      "path": "code/clipper_face_core/tests/face_fixtures.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/face_fixtures.py",
+      "sha256": "be136a78ef24989af0a05caf8a1dc13284e64d3111db7603a50a86ed2772cf34",
+      "bytes": 935
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_consensus.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consensus.py",
+      "sha256": "fe4800733ea91220cdbeac4e9a184fe43ffba173319d97b681aa38723782a9cc",
+      "bytes": 2977
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_consumer_contract.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_consumer_contract.py",
+      "sha256": "44c6543f67824d1c95722eadeb4b17ab5c5b6d6af87cac0d2395b9423a4addf7",
+      "bytes": 2355
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_contracts.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_contracts.py",
+      "sha256": "609b614dcf81c431859d72ff067594c52d6b650c72e3ab55e85472622e0d7732",
+      "bytes": 2438
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_gallery.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_gallery.py",
+      "sha256": "2233c944fa60b903d84a786101399870e1f26a996d10588f05b2a7478509c6f9",
+      "bytes": 2931
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_grouping.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_grouping.py",
+      "sha256": "7b0f089784847f621ec32f7162103a1b8bdadc9a97a1c9fd3c62943ccd22f688",
+      "bytes": 4959
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_import_boundary.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_import_boundary.py",
+      "sha256": "459958e79ee5600b680461b9d557baae740a3f24d24f37958fd44afde80c6b43",
+      "bytes": 1075
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_matching.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_matching.py",
+      "sha256": "07e97a5795fcd58e8486aba5a5756f91659646ad79397cd167a8dd0a9abf7f3f",
+      "bytes": 3078
+    },
+    {
+      "path": "code/clipper_face_core/tests/test_opencv_backend.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/tests/test_opencv_backend.py",
+      "sha256": "67b2142d38331d3c8d19feecc044861dc9d279643bffa42cfd4de917c762f617",
+      "bytes": 1406
+    },
+    {
+      "path": "code/evaluation/reference_matching/__init__.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/__init__.py",
+      "sha256": "59b47d4a766a2650aed0b9a45bb687dda7e968d896ff67ffe6bac4dc404fd811",
+      "bytes": 79
+    },
+    {
+      "path": "code/evaluation/reference_matching/manifest.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/manifest.py",
+      "sha256": "debbd91fb7864df8081b285dcfc31c540fe38a9e21f3a2d41b40a84d6cc91bb8",
+      "bytes": 1901
+    },
+    {
+      "path": "code/evaluation/reference_matching/replay.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/replay.py",
+      "sha256": "eb0b50b539bd0d8d6937371bbc9d010e5f590625c4b2c26a15d01e5adc0507d3",
+      "bytes": 6363
+    },
+    {
+      "path": "code/evaluation/reference_matching/tests/test_replay.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/evaluation/reference_matching/tests/test_replay.py",
+      "sha256": "6b1a8eeb296740a2b68531b496a9874b104300c5cb240cd61d873a097a9da9fe",
+      "bytes": 5280
+    },
+    {
+      "path": "code/pyproject.toml",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/pyproject.toml",
+      "sha256": "342032340d92dfda9cabb52be0d683af797e66f0168628284bbe00eff530d29e",
+      "bytes": 903
+    },
+    {
+      "path": "code/uv.lock",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/uv.lock",
+      "sha256": "3967a7fa1b2cf8fe5af3fd34e897bf6818a773d3e56bbbeab93449de5621842b",
+      "bytes": 253348
+    },
+    {
+      "path": "ledger/archive_final.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/archive_final.py",
+      "sha256": "e2441941e3466cd930e1274bd75e7d0474aebeec9f244058c37b6726e235d433",
+      "bytes": 2571
+    },
+    {
+      "path": "ledger/final-compatibility.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/final-compatibility.log",
+      "sha256": "a7753bbc4db37b99d711004bc34fd1b181bc8d67503c5b9f5e94f9483487e336",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/final-repo-suite.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/final-repo-suite.log",
+      "sha256": "ad9e7cb59c93d023b2ccd4e41ca5c8766929e779058069e3ab4a899bdba6371f",
+      "bytes": 5454
+    },
+    {
+      "path": "ledger/final-review.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/final-review.md",
+      "sha256": "1b476713c058cb93959c0f8784dbee4c60f6fffca1dab3f36c680ce585785983",
+      "bytes": 1705
+    },
+    {
+      "path": "ledger/final-ruff.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/final-ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "ledger/full-suite.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/full-suite.log",
+      "sha256": "c3fb09b8714ab0c0beafdfce8de432b7a67c87d472a45f374b2946a0d1f15704",
+      "bytes": 41658
+    },
+    {
+      "path": "ledger/prepare_replay.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/prepare_replay.py",
+      "sha256": "0934d687c8895afaba73f6d1b8457ba3a97704b27bf39d4466098aff0ec1ec0c",
+      "bytes": 5306
+    },
+    {
+      "path": "ledger/progress.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/progress.md",
+      "sha256": "1c5bf80488f579548fef484777ecda11bf03894cdcad4fbb97b11e18beec3a9d",
+      "bytes": 6286
+    },
+    {
+      "path": "ledger/review-green.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/review-green.log",
+      "sha256": "190b648121a481b6cdd6bc9a8724533956f7a20d22d5f8b942c1d80e9df1387f",
+      "bytes": 179
+    },
+    {
+      "path": "ledger/review-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/review-red.log",
+      "sha256": "8de7563fe97de8ad2caaa8b98959794c23d251a27ff07914c46d60974000004a",
+      "bytes": 4265
+    },
+    {
+      "path": "ledger/supervise_replay.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/supervise_replay.py",
+      "sha256": "f64c2c4fb49119bff98a51a9a8f5bf5206fabe6371d62ce42f6cec1f7ea8a3ed",
+      "bytes": 1593
+    },
+    {
+      "path": "ledger/supervise_replay_v2.py",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/supervise_replay_v2.py",
+      "sha256": "c780e1f4b8ce000e85bd8a71047c645aee84f162f4a868bda78a46478be1fdba",
+      "bytes": 1593
+    },
+    {
+      "path": "ledger/task-1-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-1-brief.md",
+      "sha256": "86c733f71ed6babe2496f98fd215955d53f65b026dc1da6c44a03215a3dc23ef",
+      "bytes": 3036
+    },
+    {
+      "path": "ledger/task-1-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-1-tests.log",
+      "sha256": "fd3287ae817bf44d50af8ac80c09fa4ea2d10127bf8187b54e8ae8180ed210e7",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task-2-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-2-brief.md",
+      "sha256": "2b818b9ebf5c02ca200264f001b6146e19aa12560025bc726a2d07bb2a5436e6",
+      "bytes": 1921
+    },
+    {
+      "path": "ledger/task-2-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-2-tests.log",
+      "sha256": "d6e56c881c99cd169d90550745dc8fa09048a2a02da346241c84ba31b8b655f6",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task-3-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-3-brief.md",
+      "sha256": "136448cce277e57bb5ec378b70893a8b7a4d057c8c6d0e127d3ae55bb43dd741",
+      "bytes": 1897
+    },
+    {
+      "path": "ledger/task-3-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-3-tests.log",
+      "sha256": "7637183fbdf7eb3ca5ef3f450c410ddf8a1bc9211c7543ed9d0934e0781f5913",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task-4-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-4-brief.md",
+      "sha256": "df4bef6a7d638aaf82b8b858f818240950072a2411198919064329269c6cd5c0",
+      "bytes": 1992
+    },
+    {
+      "path": "ledger/task-4-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-4-tests.log",
+      "sha256": "a73013319078c9212681e2e57c4f1e9df8e38468f1d7f0da284b532d18f2694c",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task-5-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-5-brief.md",
+      "sha256": "a2cdf2c98138cb31117a6acdf280d4687e237d837819d526a4607f22a07a4389",
+      "bytes": 3877
+    },
+    {
+      "path": "ledger/task-5-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-5-tests.log",
+      "sha256": "aee0a2387d8c70a80ec6a7a4e6cafde8bdf5b81707635d88b7216162ed24c460",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task-6-brief.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-6-brief.md",
+      "sha256": "8bcf8db3e14a77cfbeb676bcf6da0371b0ae54b203034995eda585b03e6cf0b6",
+      "bytes": 4059
+    },
+    {
+      "path": "ledger/task-6-tests.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task-6-tests.log",
+      "sha256": "4c96ca2376c94190a73e2eb4b007c969bdc0e06bb37f691c29f360533629c4f1",
+      "bytes": 99
+    },
+    {
+      "path": "ledger/task1-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task1-red.log",
+      "sha256": "351f9d212cc2d8fda361670534e01981759d8866e69709efdfcd2d424d48a669",
+      "bytes": 13146
+    },
+    {
+      "path": "ledger/task2-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task2-red.log",
+      "sha256": "92fe486df67ea94a2fca2e0e620c2285db5ce1ad75a9fbb5e1482a064bd433ba",
+      "bytes": 17715
+    },
+    {
+      "path": "ledger/task3-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task3-red.log",
+      "sha256": "1afae49dbe8d5941c8ab3257fba8e054b1072ac5d73d56c13efc9690e5d91adf",
+      "bytes": 23840
+    },
+    {
+      "path": "ledger/task4-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task4-red.log",
+      "sha256": "4cb53b190e85e6bfb86b347bfcc15f7a3d645edf4dec176506dd549a67b083e3",
+      "bytes": 22258
+    },
+    {
+      "path": "ledger/task5-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task5-red.log",
+      "sha256": "e08eb4876c92c39ab59c9c17b60e7e72e47211d0cfb0d218369d8f8645b742cf",
+      "bytes": 9580
+    },
+    {
+      "path": "ledger/task6-red.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/task6-red.log",
+      "sha256": "950c4fc6d8c16b7e4403685d66ccab322b6c353d13d2605ac205e18cf31d3421",
+      "bytes": 3591
+    },
+    {
+      "path": "ledger/working-tree-inventory.md",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/working-tree-inventory.md",
+      "sha256": "53a924ffdca990c7721dfadefff0856717f95b812f33776f7c4627ab3580a6a9",
+      "bytes": 3305
+    },
+    {
+      "path": "ledger/working-tree.patch",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/.superpowers/sdd/2026-10-13-shared-reference-face-matching/working-tree.patch",
+      "sha256": "0078c26778f81d8539bdb5fbe6d805e862cd6dbd75e7736f2a100d152ea5d078",
+      "bytes": 89248
+    },
+    {
+      "path": "replay/reference-replay-v1/manifest.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/manifest.json",
+      "sha256": "35c191ec09dce6dbba195fea792dcd0b8d805ef79faf716539de81d06186c5ef",
+      "bytes": 8435
+    },
+    {
+      "path": "replay/reference-replay-v1/supervisor.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/supervisor.json",
+      "sha256": "6b548270bfc50443cf24150aca1dc9c4081740b9b4d3800264efa7487eda78b8",
+      "bytes": 151
+    },
+    {
+      "path": "replay/reference-replay-v1/stdout.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/stdout.log",
+      "sha256": "1e780691f55fccb74ffeee5b6e4b67949264ddb20cba95e1b0b2b1c96d5b3199",
+      "bytes": 135
+    },
+    {
+      "path": "replay/reference-replay-v1/stderr.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay/reference-replay-v1/result/report.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v1/result/report.json",
+      "sha256": "8e8c26dc49a8be97035a1de48eeb5ebb71c1b99ed7a2a3f2bb816bb78fea1a6c",
+      "bytes": 74892
+    },
+    {
+      "path": "replay/reference-replay-v2/manifest.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v2/manifest.json",
+      "sha256": "66fa2b56211722ea28543dd290761bef4ee5a8bc430ce12e5af9b1d5fbac7a9f",
+      "bytes": 8752
+    },
+    {
+      "path": "replay/reference-replay-v2/supervisor.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v2/supervisor.json",
+      "sha256": "fe7f775592aaaa8e1ff8d8ebf014f8cae7fac076ee68543bffd44f067091ca43",
+      "bytes": 148
+    },
+    {
+      "path": "replay/reference-replay-v2/stdout.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v2/stdout.log",
+      "sha256": "1e780691f55fccb74ffeee5b6e4b67949264ddb20cba95e1b0b2b1c96d5b3199",
+      "bytes": 135
+    },
+    {
+      "path": "replay/reference-replay-v2/stderr.log",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v2/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay/reference-replay-v2/result/report.json",
+      "original_path": "/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/evaluation-output/reference-replay-v2/result/report.json",
+      "sha256": "45d94607341c8425f621c07b4b4ae1f09a10a799ef02965abbc68ac406e8f134",
+      "bytes": 74892
+    },
+    {
+      "path": "documents/2026-10-13-shared-reference-face-matching.md",
+      "original_path": "/Users/jina/project/adlight/docs/superpowers/plans/2026-10-13-shared-reference-face-matching.md",
+      "sha256": "6c2e84bbec1d282c861df5d8e29fbd68da519c589e41eea5eaeb3f7b3d9c841e",
+      "bytes": 28628
+    },
+    {
+      "path": "documents/2026-10-13-shared-reference-face-matching-design.md",
+      "original_path": "/Users/jina/project/adlight/docs/superpowers/specs/2026-10-13-shared-reference-face-matching-design.md",
+      "sha256": "74863491f6ccfe0e626eb0a9f2306192b2568a111a6ff174e2a6b7bdd49158d4",
+      "bytes": 13069
+    },
+    {
+      "path": "documents/13-w14-shared-reference-matching-implementation.md",
+      "original_path": "/Users/jina/project/adlight/.codex/features/highlights/records/2026/10/13-w14-shared-reference-matching-implementation.md",
+      "sha256": "0faf452f5fbf7d8754dfa7fec15a576afa2b100f22e5073e492c306aaf137ed3",
+      "bytes": 11720
+    }
+  ]
+}
