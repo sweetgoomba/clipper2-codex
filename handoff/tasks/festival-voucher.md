@@ -1,6 +1,6 @@
 # W17 — 범용 프로모션 캠페인·레퍼럴 코드
 
-최종 확인: **2026-10-23 KST**. 상태: **Web API·관리자 웹·회원 웹 원격 `dev` 병합·푸시 완료**. 운영 배포 및 실제 결제망 검증은 별도다.
+최종 확인: **2026-10-23 KST**. 상태: **Web API·관리자 웹·회원 웹·데스크톱 NestJS·Angular 원격 `dev` 병합·푸시 완료**. 운영 배포 및 실제 결제망 검증은 별도다.
 
 [전체 현황](../WORKBOARD.md) · [현재 설계](../../design/2026-10-23-promotion-campaign-current-state.md) · [구현·병합 검증](../../implementation/2026-10-23-promotion-campaign-dev-merge.md)
 
@@ -15,6 +15,8 @@
 ## 현재 Git·검증
 
 세 저장소의 기능 브랜치 `feat/promotion-followups-20261023`에서 커밋한 뒤 최신 원격 `dev`와 병합했다. 원격 병합 커밋: API `0776268`, 관리자 `98e2e8c`, 회원 `fbd4573`. API의 마이그레이션 등록 파일에서 충돌 1건을 해결했고, 각 원격 `dev` SHA를 다시 확인했다. 병합 결과의 API Jest 4,169개, 관리자 ChromeHeadless 2,382개, 회원 웹 504개 테스트와 세 빌드가 통과했다. 상세 범위·기존 API 작업 폴더의 별도 미커밋 변경은 [병합 기록](../../implementation/2026-10-23-promotion-campaign-dev-merge.md)을 따른다.
+
+이어서 데스크톱 두 저장소의 미커밋 프로모션 변경만 최신 `origin/dev`에서 새 브랜치 `feat/promotion-desktop-followups-20261023`에 커밋해 병합했다. 원격 병합 커밋: NestJS `b9602b2f`, Angular `1a839571`. NestJS 빌드·관련 테스트 9개, Angular 빌드·전체 8,195개 테스트가 통과했다. NestJS 전체 테스트는 변경 범위 밖의 실패 15개·취소 27개로 통과하지 못했다. 기존 인물 하이라이트 작업 트리는 수정하지 않았다.
 
 ## 다음 확인
 
