@@ -1,5 +1,9 @@
 # 작업 현황판
 
+## 2026-10-23 W14 — 인물 하이라이트 체크포인트 / dev 병합 보류
+
+[구현·검증·공통 얼굴 모델·복귀점](../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md). 4개 desktop 저장소의 `feature/person-highlight-w14-20261020` 작업을 커밋·푸시했다. 결과 편집/숏폼 구성, 과분리·구간 경계·성능 개선을 보존한다. AuraFace 특징 추출은 인물과 안무가 공통 사용하며 YuNet/YOLO는 유지한다. 실제 안무 영향과 Windows 검증은 남아 있다. **사용자 지시로 dev 병합은 하지 않는다.** 10/16의 SFace 유지/Person 보류는 역사 기록이다.
+
 ## 2026-10-23 W17 프로모션 캠페인·코드 — 원격 `dev` 병합
 
 Web API `0776268`, 관리자 웹 `98e2e8c`, 회원 웹 `fbd4573`을 각 원격 `dev`에 병합·푸시하고 원격 SHA를 다시 확인했다. 캠페인 아래 여러 코드, **각 코드에 공통으로 적용되는 코드별 등록 상한**, 회원당 캠페인 1회, 과거 유료/관리자 지급 이력의 캠페인별 선택, 등록·회수·직접 유료 전환 성과와 XLSX, 회원 참여 이력·예약 흐름을 구현했다. API의 앱 소식/프로모션 마이그레이션 등록 충돌 1건을 해결했다. 병합 결과 API 4,169·관리자 2,382·회원 504개 테스트와 세 빌드 통과. **운영 배포·실제 Toss 결제망 검증은 별도**다. [W17 카드](tasks/festival-voucher.md) · [현재 설계](../design/2026-10-23-promotion-campaign-current-state.md) · [병합·검증](../implementation/2026-10-23-promotion-campaign-dev-merge.md).

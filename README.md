@@ -37,6 +37,8 @@ legacy/
 
 ## Current Focus
 
+2026-10-23 **W14 인물 하이라이트**: 결과 편집·숏폼 구성·성능/메모리·과분리 개선을 기존 기능 브랜치에서 구현했다. SFace→AuraFace 전환은 인물/안무 공통 얼굴 특징 추출기에 적용됐다. 현재 사용자 지시는 커밋·푸시까지이며 **dev 병합은 보류**다. [세션 체크포인트와 공통 모델 확인](features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md)을 10/16 W14 스냅샷보다 우선한다.
+
 2026-10-16 기준 고정 스레드 1~5·7~9와 8개 앱 저장소의 원격 `dev` 반영 상태를 다시 대조했다. 다음 세션은 [WORKBOARD](handoff/WORKBOARD.md)와 [NEXT](handoff/NEXT.md), [스레드·브랜치 감사](handoff/2026-10-16-pinned-thread-dev-reconciliation.md), [W13/W14 실험 회고](features/highlights/records/2026/10/16-w13-w14-experiment-reconciliation.md)에서 시작한다. W13 72번은 평가 전용·제품 미채택이고, W14 공통 얼굴 연결과 공유 클립의 일부 UX는 `dev`에 반영됐지만 실제 새 영상 정확도는 미확인이다. W06 개발 MID/DB 초기화는 실행됐으며 QA 원 제보의 수동 검증과 시험 tree 미커밋 코드가 남아 있다.
 
 ## Historical Focus — 2026-09-29

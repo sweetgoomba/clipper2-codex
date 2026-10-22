@@ -1,5 +1,7 @@
 # 다음 세션 시작 안내
 
+**2026-10-23 W14 추가 갱신:** 인물 하이라이트는 개발·macOS 앱 검증을 진행했고 현재 구현을 feature 브랜치에 커밋·푸시했다. **dev 병합 보류**가 최신 사용자 지시다. 먼저 [현재 구현 및 공통 AuraFace 영향](../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md), [W14 카드](tasks/person-highlight.md)를 읽는다. 인물과 안무는 같은 AuraFace 특징 추출기를 사용하지만 후속 인물 묶기/구간 정책은 다르다. 아래 10/16의 SFace 유지·Person 보류를 현재 상태로 적용하지 않는다.
+
 최신 갱신: **2026-10-23 KST (W17)**. 아래 W13/W14·QA 설명은 별도 표기된 10/16 스냅샷이다.
 
 **W17 프로모션:** Web API·관리자 웹·회원 웹의 프로모션 캠페인/복수 코드 후속 작업과 데스크톱 NestJS·Angular의 프로모션 출처 인식이 원격 `dev`에 병합됐다(API `0776268`, 관리자 `98e2e8c`, 회원 `fbd4573`, NestJS `b9602b2f`, Angular `1a839571`). 캠페인 공통 설정의 **코드별 등록 상한**, 회원당 캠페인 1회, 유료/관리자 지급 이력 선택, XLSX 성과와 회원 참여 내역이 현재 기준이다. 데스크톱 NestJS 전체 테스트는 별도 실패로 통과하지 못했고, 변경 경로 테스트와 빌드는 통과했다. 재개 시 [W17 카드](tasks/festival-voucher.md), [현행 설계](../design/2026-10-23-promotion-campaign-current-state.md), [병합 기록](../implementation/2026-10-23-promotion-campaign-dev-merge.md)을 먼저 읽는다. 운영 배포/DB 적용과 실제 Toss 결제망 검증은 완료로 취급하지 않는다.
