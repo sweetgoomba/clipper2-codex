@@ -1,6 +1,14 @@
 # W14 — 공통 얼굴 매칭 품질 개선・인물 하이라이트 플러그인 개발 재개
 
-**2026-10-23 현재:** 인물 하이라이트 결과 편집·숏폼 구성·성능/메모리 및 과분리 개선, 공통 SFace→AuraFace 교체를 구현해 macOS 앱에서 확인했다. 현재 상태를 feature 브랜치에 커밋·푸시했고, 사용자 지시로 **dev 병합은 보류**했다. 다음 확인은 공통 얼굴 모델 변경이 안무에도 적용되는지와 그 품질 영향이다. 코드상 인물/안무 모두 공통 `AuraFaceRecognizer`를 사용하고, YuNet/YOLO 및 후속 구간 구성은 구분한다. [현재 체크포인트·검증·복귀점](../../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md). 아래의 SFace 유지·AuraFace 미채택은 10/16 이전 결정이며 이번 사용자 승인으로 변경됐다.
+**2026-10-23 인물 이동 모달80px 후속:** Angular `af8fe16e`로 원격 dev 반영 완료. 이름/장면 수 간격2px를 포함하며 현재 실행한 별도 ARM64 앱도 같은 내용이다. 전체9,647·스타일14 및 템플릿 단독193 재검증 이력은 [후속 기록](../../features/highlights/records/2026/10/23-highlight-result-usability-followup.md)을 따른다.
+
+**2026-10-23 카드·이동 모달 후속:** Angular `7c06eade`로 원격 dev 반영 완료. 안무 카드 정렬과 인물 이동 공통 얼굴 모달(사진·이름·장면 수), 취소/범위 보호를 포함한다. 관련150·스타일14·화면 빌드·seed고정 전체9,619 통과. 임의 순서 간헐 실패와 후속 원본8개 pull·앱 재빌드/실행 완료 범위는 [후속 기록](../../features/highlights/records/2026/10/23-highlight-result-usability-followup.md)을 따른다.
+
+**2026-10-23 결과 화면 후속:** [구현·빌드·원격 dev 반영 기록](../../features/highlights/records/2026/10/23-highlight-result-usability-followup.md). Angular `baf2f54d`·Python `3b3e203`으로 원격 dev 반영 완료. 원본 체크아웃도 dev·clean이며 작업 브랜치는 보존했다.
+
+**2026-10-23 무대 후속 최종 통합:** 무대 사용성과 파이프라인 작업까지 원격 dev에 포함됐다. Angular `975e16f6`, Electron `dfc84d4`, Nest `15f534b9`, Python `584d76b`; 공통 얼굴 세션의 별도 미병합 제품 변경은 없다. [재감사·전체 검사·남은 범위](../../features/highlights/records/2026/10/23-stage-person-integration-dev-merge-result.md). 아래 Person 병합 SHA는 이전 체크포인트다.
+
+**2026-10-23 현재:** 인물 하이라이트의 결과 편집·숏폼 구성·성능/메모리·과분리 개선과 공통 SFace→AuraFace 교체를 담은 데스크톱 4개 저장소를 사용자 승인 후 원격 `dev`에 병합·푸시했다. Angular `8f45aef8`, Electron `43319ab8`, Nest `a577c8b6`, Python `153bb695`. [병합·검증·후속 인계](../../features/highlights/records/2026/10/23-person-highlight-dev-merge-and-stage-usability-handoff.md)가 최신 기준이며, [기존 구현·검증·복귀점](../../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md)은 보존한다. 인물/안무는 공통 AuraFace 특징 추출기를 사용하지만 후속 그룹화/구간 정책은 별도다. 안무 품질 개선은 무대 파이프라인 세션, Person UI 이식과 원본 구간 저장 전환은 무대 사용성 세션에서 구현하고 원격 dev에 반영했다([후속 결과](../../features/highlights/records/2026/10/23-stage-usability-source-ranges-dev-merge.md)). Web API 과금·권한 후속도 `ba68b2b`로 원격 dev 반영 및 로컬 DB 확인을 완료했다([기록](../../features/highlights/records/2026/10/23-person-highlight-web-api-billing-dev-merge.md)). 전체 영상 품질·Windows 검증은 남아 있다. 아래 SFace 유지·AuraFace 미채택과 Person 보류는 과거 결정이다.
 
 **2026-10-16 다음 주 방향:** 사용자는 인물 하이라이트를 무대·대사에 이은 **세 번째 하이라이트 플러그인**으로 대표님께 추가 시연하길 원한다. 공통 얼굴 분석의 정확도와 인물 플러그인의 제품 완성은 별도 작업이다. 입력 카테고리를 제한하지 않으며, 얼굴 검출만으로 수십 개의 1초 미만 클립이 나오는 문제를 포함해 등장 연속성·컷·구간 병합/분리·동일인 과분리/오합침·결과 편집을 검증한다. 10/1 Person MVP 보류는 당시 품질 판정으로 보존하고 다음 주 재개 요구를 최신 방향으로 따른다. [다음 주 범위 초안](../2026-10-16-next-week-scope-draft.md). 아래 10/16 재개점은 그 시점의 기록이다.
 

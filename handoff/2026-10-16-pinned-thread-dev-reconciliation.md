@@ -73,7 +73,7 @@
 
 Web API `e252a1c`, 고객 웹 `3e51f9e`, 인프라 `328f8b8`을 dev에 통합한 뒤, 사용자가 10/16 User/Admin/Release의 세 개발 DB 컨테이너와 `_dev` 볼륨만 재생성하고 마이그레이션·테스트키 교체·API/고객 웹 배포를 진행했다. 운영 DB 세 개는 healthy로 기록했다. m2-db에서 Git 인증 오류가 있어 checkout 최신성이라고 주장하지 않고 실제 compose 파일 SHA256을 대조했다. m2-stage Docker Desktop 메모리 한도 약 2GB에서는 빌드가 실패했고 약 4GB로 늘려 성공했다.
 
-정기 ₩29,900/4,000크레딧, 단건 ₩5,900/400크레딧, ₩5,900 전액환불 및 400회수 후 잔액 4,400 복귀, `PAYMENT_STATUS_CHANGED` 웹훅 처리를 사용자가 실행한 결과와 대조했다. 토스 키 원문은 기록하지 않았고, 사용자 MID 소속 대조와 키 형식 확인에 의존한다. `BILLING_DELETED`, 변경 후 정기결제 메일 호칭, 계좌이체 실거래는 미검증이다. 관리자 웹은 기존 컨테이너 포트와 프록시 대상 불일치로 502였고 admin만 재생성해 `073d044` 화면을 확인했다. 이후 개별 아티스트 API `b48c1c3`/Admin `e3b076d`도 개발서버 빌드·migration 후 health와 DB 3곳 OK를 확인했으나 KATSEYE 실제 게시 UI는 확인되지 않았다. [W06 실행 이력](../../web/clipper_infra/runbooks/toss-dev-mid-sync-execution-20261016.md)과 [05:26 당시 스냅샷](../../clipper_docs/status/2026-10-16-dev-merge-and-deployment-snapshot.md)을 본다. 후자에는 이후 개별 아티스트 배포/새 원격 dev 커밋이 없다.
+정기 ₩29,900/4,000크레딧, 단건 ₩5,900/400크레딧, ₩5,900 전액환불 및 400회수 후 잔액 4,400 복귀, `PAYMENT_STATUS_CHANGED` 웹훅 처리를 사용자가 실행한 결과와 대조했다. 토스 키 원문은 기록하지 않았고, 사용자 MID 소속 대조와 키 형식 확인에 의존한다. `BILLING_DELETED`, 변경 후 정기결제 메일 호칭, 계좌이체 실거래는 미검증이다. 관리자 웹은 기존 컨테이너 포트와 프록시 대상 불일치로 502였고 admin만 재생성해 `073d044` 화면을 확인했다. 이후 개별 아티스트 API `b48c1c3`/Admin `e3b076d`도 개발서버 빌드·migration 후 health와 DB 3곳 OK를 확인했으나 KATSEYE 실제 게시 UI는 확인되지 않았다. [W06 실행 이력](../../web/clipper_infra/runbooks/toss-dev-mid-sync-execution-20261016.md)과 [05:26 당시 스냅샷](../records/2026/10/16-dev-merge-and-deployment-snapshot.md)을 본다. 후자에는 이후 개별 아티스트 배포/새 원격 dev 커밋이 없다.
 
 ## 이어서 할 때의 순서
 

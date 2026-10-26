@@ -1,5 +1,9 @@
 # Codex Workspace
 
+**2026-10-23 최종 dev:** Person·무대 사용성·무대 파이프라인의 구현 커밋을 데스크톱 네 저장소 원격 dev에 통합하고 작업 브랜치와 일치를 확인했다. Angular `975e16f6`, Electron `dfc84d4`, Nest `15f534b9`, Python `584d76b`. [최종 원격 검증·전체 테스트·실영상/Windows 경계](features/highlights/records/2026/10/23-stage-person-integration-dev-merge-result.md). 아래 각 병합 SHA는 단계별 이력이다.
+
+**2026-10-23 무대 사용성 완료:** 원본 구간 저장 전환과 결과 편집·선택·숏폼 구성·묶음 드래그·미확인 인물 썸네일을 구현하고 원격 `dev`에 반영했다. Angular `f488e8a4`, Nest `8397afbc`, Python `3fbb002`; 충돌 없는 fast-forward, Electron 변경 없음. [이번 세션 구현·검증·병합 기록](features/highlights/records/2026/10/23-stage-usability-source-ranges-dev-merge.md). 아래 Person 병합 SHA는 이 작업의 이전 기준이다.
+
 이 저장소는 Clipper2 작업 중 Codex가 읽고 갱신하는 설계, 구현 기록, 다음 세션 인계 문서다.
 
 앱 소스 코드는 각 repo에 있고, 이 저장소는 판단과 작업 이력을 추적한다.
@@ -37,7 +41,7 @@ legacy/
 
 ## Current Focus
 
-2026-10-23 **W14 인물 하이라이트**: 결과 편집·숏폼 구성·성능/메모리·과분리 개선을 기존 기능 브랜치에서 구현했다. SFace→AuraFace 전환은 인물/안무 공통 얼굴 특징 추출기에 적용됐다. 현재 사용자 지시는 커밋·푸시까지이며 **dev 병합은 보류**다. [세션 체크포인트와 공통 모델 확인](features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md)을 10/16 W14 스냅샷보다 우선한다.
+2026-10-23 **W14 인물 하이라이트**: 사용자 승인으로 충돌을 해결하고 데스크톱 4개 저장소를 원격 `dev`에 병합·푸시했다(Angular `8f45aef8`, Electron `43319ab8`, Nest `a577c8b6`, Python `153bb695`). 이전의 dev 병합 보류는 해제됐다. [병합·검증·후속 세션 인계](features/highlights/records/2026/10/23-person-highlight-dev-merge-and-stage-usability-handoff.md)가 최신 기준이며, [기능 구현·모델·복귀점](features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md)은 병합 전 체크포인트다. 공통 AuraFace를 사용하는 안무의 품질 후속은 무대 파이프라인 세션, 결과 화면 기능 이식은 무대 사용성 세션이 맡는다. 사용성 후속은 위 기록과 같이 구현·원격 dev 반영을 완료했다. Web API 과금·권한도 후속 커밋 `ba68b2b`로 원격 dev 반영 및 로컬 DB 확인을 완료했다([기록](features/highlights/records/2026/10/23-person-highlight-web-api-billing-dev-merge.md)). 실제 영상 정확도·Windows 검증은 별도다.
 
 2026-10-16 기준 고정 스레드 1~5·7~9와 8개 앱 저장소의 원격 `dev` 반영 상태를 다시 대조했다. 다음 세션은 [WORKBOARD](handoff/WORKBOARD.md)와 [NEXT](handoff/NEXT.md), [스레드·브랜치 감사](handoff/2026-10-16-pinned-thread-dev-reconciliation.md), [W13/W14 실험 회고](features/highlights/records/2026/10/16-w13-w14-experiment-reconciliation.md)에서 시작한다. W13 72번은 평가 전용·제품 미채택이고, W14 공통 얼굴 연결과 공유 클립의 일부 UX는 `dev`에 반영됐지만 실제 새 영상 정확도는 미확인이다. W06 개발 MID/DB 초기화는 실행됐으며 QA 원 제보의 수동 검증과 시험 tree 미커밋 코드가 남아 있다.
 

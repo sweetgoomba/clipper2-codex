@@ -1,8 +1,22 @@
 # 작업 현황판
 
-## 2026-10-23 W14 — 인물 하이라이트 체크포인트 / dev 병합 보류
+## 2026-10-23 최종 — 무대 파이프라인까지 원격 dev 통합 완료
 
-[구현·검증·공통 얼굴 모델·복귀점](../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md). 4개 desktop 저장소의 `feature/person-highlight-w14-20261020` 작업을 커밋·푸시했다. 결과 편집/숏폼 구성, 과분리·구간 경계·성능 개선을 보존한다. AuraFace 특징 추출은 인물과 안무가 공통 사용하며 YuNet/YOLO는 유지한다. 실제 안무 영향과 Windows 검증은 남아 있다. **사용자 지시로 dev 병합은 하지 않는다.** 10/16의 SFace 유지/Person 보류는 역사 기록이다.
+[재감사·최종 커밋·전체 검사](../features/highlights/records/2026/10/23-stage-person-integration-dev-merge-result.md). 사용성은 이미 dev에 있었고, 파이프라인은 dev→작업 브랜치만 병합되어 있던 차이를 확인한 뒤 사용자 승인으로 실제 dev 반영을 완료했다. Angular `975e16f6`, Electron `dfc84d4`, Nest `15f534b9`, Python `584d76b`. 전체 Angular 8,330+스타일 14, Electron 1,721, Nest 4,258, Python 1,512 통과·6 skip. 기존 프로세스 종료 실패도 재검증 통과. 공통 얼굴 세션의 별도 미병합 제품 커밋은 없다. 새 앱·실영상·Windows 검증은 별도이며 아래 기록은 각 이전 단계다.
+
+## 2026-10-23 W13 무대 사용성 및 원본 구간 전환 완료
+
+[이번 세션 결과](../features/highlights/records/2026/10/23-stage-usability-source-ranges-dev-merge.md). 새 무대 분석의 클립/합본 MP4 사전 생성을 제거하고 원본·구간 메타데이터를 저장한다. 공통 장면 편집, 선택 메뉴, 숏폼 순서, 묶음 드래그, 미확인→멤버 병합과 실제 얼굴 썸네일을 연결했다. Angular `f488e8a4`, Nest `8397afbc`, Python `3fbb002`를 작업 브랜치와 원격 dev에 푸시했으며 충돌은 없었다. 최종 재검증은 Angular 전체 8,330·스타일 14, Nest 관련 97·빌드, Python Dance·face 161 통과다. 전체 Nest/Python의 별도 실패, 실제 카드 드롭·Windows·실영상 검증 한계는 상세 기록을 따른다.
+
+## 2026-10-23 W14 — 원격 dev 병합 완료 / 무대 후속 세션 인계
+
+[병합 커밋·충돌 해결·검증·인계](../features/highlights/records/2026/10/23-person-highlight-dev-merge-and-stage-usability-handoff.md) · [구현·공통 모델·복귀점](../features/highlights/records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md). 사용자 승인으로 `feature/person-highlight-w14-20261020`을 최신 원격 dev에 병합·푸시했다: Angular `8f45aef8`, Electron `43319ab8`, Nest `a577c8b6`, Python `153bb695`. 메뉴·모델 파일·lock 충돌을 해결했고 공유 모델 삭제/설치 보호와 큐레이션 저장 경로 계약을 함께 검증했다. Angular 8,304 + 스타일 14, Electron 1,721, Nest 4,237, Python 1,472 passed·6 skipped. 테스트 통과는 전체 실영상 정확도 보증이 아니다.
+
+**후속 담당:** ‘2026.10.19-23 무대 하이라이트 사용성’에 최신 dev 분기 후 결과 UI/구간 편집/선택/숏폼 구성/드래그앤드랍 이식을 전달했고, 이후 위 W13 기록처럼 구현·dev 반영을 완료했다. ‘2026.10.19-23 무대 하이라이트 파이프라인’에는 새 dev와 통합 주의점을 공유했으며 별도 정확도 개선을 이어간다. 공통 얼굴 매칭 검토 기록은 재사용한다. **Web API 후속 완료:** `ba68b2b`로 인물 과금·권한을 원격 dev에 반영하고 로컬 DB의 기존 적용 상태를 확인했다([기록](../features/highlights/records/2026/10/23-person-highlight-web-api-billing-dev-merge.md)). **남은 항목:** Windows·실제 영상 검증. 이 병합으로 앱 교체·운영 배포·실결제를 수행한 것은 아니다. 10/16의 SFace 유지/Person 보류와 10/23 초기 dev 보류는 이전 시점의 기록이다.
+
+## 2026-10-26 W17·결제 공통 흐름 감사 수정 — 원격 dev 병합 완료
+
+A01–A17 및 독립 리뷰 추가 2건의 수정 브랜치를 커밋·푸시하고 최신 원격 `dev`에 반영했다. **API `2ac17a9`, 회원 웹 `90f17e3`, 관리자 웹 `4e2fbe6`**. 추가 요청한 관리자 `ae9b15d`도 최종 dev에 포함됐다. 관리자 2파일 충돌은 확장된 현재 이용권 selector와 기존 테스트를 함께 보존해 해결했다. 이번 턴 API **4,490**, 실제 PostgreSQL **48**, 회원 **513**, 관리자 최종 병합본 **2,393** 검사와 세 빌드 통과. 원격 SHA를 재조회했다. 원본 checkout/로컬 변경은 유지하며 배포 상태 검증은 별도다. [커밋·충돌·검증 기록](../implementation/2026-10-26-billing-promotion-audit-dev-merge.md) · [수정 상세](../implementation/2026-10-23-billing-promotion-audit-fixes-result.md) · [W17 카드](tasks/festival-voucher.md).
 
 ## 2026-10-23 W17 프로모션 캠페인·코드 — 원격 `dev` 병합
 
@@ -22,7 +36,7 @@ Web API `0776268`, 관리자 웹 `98e2e8c`, 회원 웹 `fbd4573`을 각 원격 `
 
 ## 2026-10-16 `dev` 병합·개발서버 갱신 확인
 
-[저장소별 병합 커밋·개발서버 실행 revision·Wikidata User-Agent 확인·미검증 범위](../../clipper_docs/status/2026-10-16-dev-merge-and-deployment-snapshot.md). 로컬 `dev` 갱신 후 안무 사용성·W13/W14 공통 얼굴 매칭·ISS-028·결과 화면 원본 URL 복사·안무 카탈로그 관리자 화면·ISS-056·카탈로그 개인 활동자 보존·결제 고객명 보완을 해당 저장소 `dev`에 병합했다. W06 Toss 새 MID 개발 코드는 그보다 먼저 `dev`에 반영됐고, 이후 개발 DB 초기화·키 전환·API/고객 웹 배포와 테스트 거래를 진행했다. 개발서버 Web API `15ff474`, 고객 웹 `df60b7c`, 관리자 웹 `073d044` 실행 기록을 확인했다. Web API 컨테이너는 연락처 포함 Wikidata User-Agent의 **코드 기본값**을 사용한다. 05:09 전체 목록 수집 작업 `463c45e0-bd1b-4ae2-b55e-4f54d751009e`는 검증 완료이며 게시 여부는 아직 확인되지 않았다. 아래 10월 15일 W13/W14 기록은 당시 격리 시험 checkout의 범위이므로 이 병합·서버 상태보다 이전 시점의 설명으로 읽는다.
+[저장소별 병합 커밋·개발서버 실행 revision·Wikidata User-Agent 확인·미검증 범위](../records/2026/10/16-dev-merge-and-deployment-snapshot.md). 로컬 `dev` 갱신 후 안무 사용성·W13/W14 공통 얼굴 매칭·ISS-028·결과 화면 원본 URL 복사·안무 카탈로그 관리자 화면·ISS-056·카탈로그 개인 활동자 보존·결제 고객명 보완을 해당 저장소 `dev`에 병합했다. W06 Toss 새 MID 개발 코드는 그보다 먼저 `dev`에 반영됐고, 이후 개발 DB 초기화·키 전환·API/고객 웹 배포와 테스트 거래를 진행했다. 개발서버 Web API `15ff474`, 고객 웹 `df60b7c`, 관리자 웹 `073d044` 실행 기록을 확인했다. Web API 컨테이너는 연락처 포함 Wikidata User-Agent의 **코드 기본값**을 사용한다. 05:09 전체 목록 수집 작업 `463c45e0-bd1b-4ae2-b55e-4f54d751009e`는 검증 완료이며 게시 여부는 아직 확인되지 않았다. 아래 10월 15일 W13/W14 기록은 당시 격리 시험 checkout의 범위이므로 이 병합·서버 상태보다 이전 시점의 설명으로 읽는다.
 
 ## 2026-10-15 W13·W14 시험 빌드 입력 통합 — 사용자 Mac 패키징 대기
 

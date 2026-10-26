@@ -1,8 +1,14 @@
 # W17 — 범용 프로모션 캠페인·레퍼럴 코드
 
-최종 확인: **2026-10-23 KST**. 상태: **Web API·관리자 웹·회원 웹·데스크톱 NestJS·Angular 원격 `dev` 병합·푸시 완료**. 운영 배포 및 실제 결제망 검증은 별도다.
+최종 확인: **2026-10-26 KST**. **기존 프로모션 기능과 후속 감사 수정의 원격 `dev` 병합·푸시 완료**. 서버 배포 및 실제 결제망 검증은 별도다.
 
 [전체 현황](../WORKBOARD.md) · [현재 설계](../../design/2026-10-23-promotion-campaign-current-state.md) · [구현·병합 검증](../../implementation/2026-10-23-promotion-campaign-dev-merge.md)
+
+## 2026-10-26 후속 감사 수정 — 원격 dev 반영 완료
+
+[기준 감사](../../implementation/2026-10-23-billing-promotion-baseline-audit.md)의 **A01–A17** 및 추가 복구 경계 2건을 수정하고 새 브랜치에 커밋·푸시한 뒤 원격 dev에 병합했다. API `2ac17a9`, 회원 `90f17e3`, 관리자 `4e2fbe6`. 관리자 별도 표시 수정 `ae9b15d`도 포함한다.
+
+이번 턴 API 전체 4,490, 실제 PostgreSQL 48, 회원 513, 관리자 최종 병합본 2,393 검사와 세 빌드 통과. [병합·충돌 해결·원격 검증](../../implementation/2026-10-26-billing-promotion-audit-dev-merge.md) · [수정 상세](../../implementation/2026-10-23-billing-promotion-audit-fixes-result.md). 작업 트리는 깨끗한 수정 브랜치로 보존했고 원본 checkout/DB/서버는 유지했다. 로컬 저장 완료 정산의 신뢰 경계와 미측정 대량 집계 비용은 별도 검토 사항이다.
 
 ## 제품 범위와 결정
 

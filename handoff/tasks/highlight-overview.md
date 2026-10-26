@@ -1,6 +1,8 @@
 # W12 — 하이라이트 전체 조사・설계・세션 분리
 
-최종 확인: 2026-09-29 KST. 상태: **조사·설계·개별 프롬프트 작성 완료 / 실제 평가·구현 미실행**.
+**2026-10-23 후속 구현 상태:** W14 인물 하이라이트는 데스크톱 4개 원격 dev에 병합됐다. [최신 병합·검증·후속 세션 분담](../../features/highlights/records/2026/10/23-person-highlight-dev-merge-and-stage-usability-handoff.md)을 현재 기준으로 읽는다. Person 결과 UX의 무대 이식과 원본 구간 저장은 [사용성 후속 기록](../../features/highlights/records/2026/10/23-stage-usability-source-ranges-dev-merge.md)처럼 원격 dev에 반영됐다. W13 품질 후속은 별도 무대 파이프라인 세션에서 이어간다. 아래 ‘조사·설계만 완료’는 W12의 9/29 당시 범위다.
+
+W12 조사 세션 당시 확인: 2026-09-29 KST. 상태: **조사·설계·개별 프롬프트 작성 완료 / 실제 평가·구현 미실행**.
 
 [전체 현황](../WORKBOARD.md) · [안무 W13](dance-highlight.md) · [신규 인물 W14](person-highlight.md) · [대사 W01](dialog-highlight.md) · [새 세션 프롬프트](../prompts/2026-09-29-new-sessions.md)
 

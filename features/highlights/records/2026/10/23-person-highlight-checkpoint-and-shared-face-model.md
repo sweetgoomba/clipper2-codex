@@ -1,6 +1,9 @@
 # 2026-10-23 — W14 인물 하이라이트 세션 체크포인트와 공통 얼굴 모델
 
-## 현재 상태와 사용자 지시
+> **동일 날짜 후속 갱신:** 이 문서는 dev 병합 전 기능 체크포인트다. 이후 사용자가 충돌 해결·병합을 승인했고, 데스크톱 4개 원격 dev 병합·푸시를 완료했다. 최신 상태와 후속 담당은 [병합·검증·사용성 인계](23-person-highlight-dev-merge-and-stage-usability-handoff.md)를 따른다. 아래 보류 지시와 당시 dev SHA는 이력으로 보존한다.
+
+
+## 병합 전 상태와 당시 사용자 지시
 
 - 작업 위치: `/Users/jina/project/adlight/.worktrees/person-highlight-w14-20261020/desktop`.
 - Angular·Electron·NestJS·Python 모두 `feature/person-highlight-w14-20261020`에서 작업했다.
@@ -102,7 +105,7 @@
 원격 dev는 푸시 전후 동일했다: Angular `1a839571`, Electron `31bd8041`, NestJS `b9602b2f`, Python `09899982`. 추적 소스 변경은 모두 커밋됐고 Electron의 기존 `dist-app-person-*` 빌드 산출물은 untracked로 남겨 업로드하지 않았다. `.codex`는 별도 문서 저장소의 `main`에서 문서 커밋·푸시한다.
 <!-- /checkpoint-commits -->
 
-dev 병합·최신 dev 통합·PR 생성·배포는 이번 요청 범위가 아니다.
+당시 체크포인트 요청에는 dev 병합·최신 dev 통합·PR 생성·배포가 포함되지 않았다. 이후 승인된 dev 병합은 상단 후속 기록에 정리했다.
 
 ## 7. 이번 체크포인트의 검증
 
