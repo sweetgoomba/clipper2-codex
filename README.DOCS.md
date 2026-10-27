@@ -13,7 +13,8 @@
 
 ## Where To Add New Documents
 
-- 새 Markdown 문서는 기본적으로 이 `.codex` repo 안에만 만든다.
+- 새 Markdown 문서는 기본적으로 이 `.codex` repo 안에만 만든다. 이 규칙은 프로젝트 루트 `/Users/jina/project/adlight`에서 작업할 때도 적용한다.
+- Superpowers 등의 `docs/superpowers/specs/`, `docs/superpowers/plans/`는 기본 경로 예시다. 사용자 지정 문서 저장소인 `.codex`와 아래 domain 분류가 우선하며, 이를 위해 루트 `docs/` 아래에 새 설계·계획·병합 기록을 만들지 않는다.
 - `clipper_angular`, `clipper_nestjs`, `adlight_python` 같은 코드 repo에는 새 `*.md`
   문서나 작업 계획 문서를 추가하지 않는다. 기존 tracked README류를 수정해야 하는
   명시적 이유가 있을 때만 해당 repo 안에서 수정한다.
@@ -28,7 +29,11 @@
 
 ## Migration Rule
 
-기존 문서는 한 번에 모두 옮기지 않는다. 새 domain README를 먼저 만들고, 자주 읽는 문서부터 `git mv`로 이관한다.
+기존 문서는 한 번에 모두 옮기지 않는다. 새 domain README를 먼저 만들고, 자주 읽는 문서부터 `git mv`로 이관한다. 다른 저장소나 Git 비관리 경로에서 가져오는 문서는 원본 경로·hash와 새 경로를 이관 기록에 남긴다.
+
+이관할 때는 들어오는 링크와 문서 내부 상대 링크를 함께 바꾸고, 폐기·대체된 계획에는 후속 문서를 연결한다. hash로 봉인한 증거 사본·manifest의 `original_path`·과거 실행 원장은 당시 원본을 유지하고, 별도의 경로 대응표와 새 정본 링크를 제공한다. 다른 worktree의 사본은 해당 브랜치에서 별도로 반영한다.
+
+[2026-10-26 루트 docs 이관: 위치 대응표·보존 범위](records/2026/10/26-root-docs-relocation.md). 사용자 요청으로 제외한 루트 `docs/tips`는 이 이관 대상이 아니다.
 
 이관 후에는 다음을 확인한다.
 

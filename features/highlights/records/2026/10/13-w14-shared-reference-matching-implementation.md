@@ -14,7 +14,7 @@
 - 새 패키지 `clipper_face_core` 0.2.0, workspace member 및 lock 추가. NumPy 기본 의존성, OpenCV는 선택 extra 및 lazy import. SDK 시작 경로에 ML 의존성을 추가하지 않는다.
 - `uv lock --offline` 성공, 공통 패키지/member 외 기존 dependency 업그레이드 없음. 사용자 지시 없이 commit/push/merge/deploy하지 않았다.
 
-[패키지 설명·공개 API](/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md) · [소비 예제](/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py) · [실행한 계획](/Users/jina/project/adlight/docs/superpowers/plans/2026-10-13-shared-reference-face-matching.md).
+[패키지 설명·공개 API](/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/README.md) · [소비 예제](/Users/jina/project/adlight/.worktrees/shared-reference-face-matching-20261013/desktop/clipper_python/clipper_face_core/examples/reference_matching.py) · [실행한 계획](2026-10-13-shared-reference-face-matching.md).
 
 ## 2. 무엇이 달라졌는가
 

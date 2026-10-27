@@ -70,7 +70,7 @@
 
 ## 6. Superpowers 다음 gate와 작업 공간
 
-이 문서는 초기 검토용 접근·계약 제안이다. 두 1차 성공 기준과 이어 붙인 MP4 제외, 직접 다운로드 UI를 확인했다. [10/1 W14 서면 MVP 설계](../../../../../../docs/superpowers/specs/2026-10-01-person-highlight-mvp-design.md)를 리뷰한 뒤 `writing-plans` 계획 → 계획 리뷰·실행 방식 선택 순서로 간다. 과금/원본 보존 정책, 실제 평가 입력, W13 공통 계약 상호 확인은 실행 전 gate다. 공통 패키지 계약+관측 adapter를 먼저 독립 slice로, 제품 UI·export 계약은 뒤의 slice로 나누는 것이 충돌·검증 비용을 줄인다.
+이 문서는 초기 검토용 접근·계약 제안이다. 두 1차 성공 기준과 이어 붙인 MP4 제외, 직접 다운로드 UI를 확인했다. [10/1 W14 서면 MVP 설계](../10/2026-10-01-person-highlight-mvp-design.md)를 리뷰한 뒤 `writing-plans` 계획 → 계획 리뷰·실행 방식 선택 순서로 간다. 과금/원본 보존 정책, 실제 평가 입력, W13 공통 계약 상호 확인은 실행 전 gate다. 공통 패키지 계약+관측 adapter를 먼저 독립 slice로, 제품 UI·export 계약은 뒤의 slice로 나누는 것이 충돌·검증 비용을 줄인다.
 
 제품 구현을 시작할 때에만 실제 대상 Python/Nest/Angular, 등록·모델 준비가 필요한 Electron, 새 과금/권한이 필요한 Web API의 **각 최신 `origin/dev`를 fetch 확인한 새 브랜치·격리 worktree**를 만든다. 공통 root 아래 형제 경로를 유지한다. 현재 원본 checkout과 다른 세션 미커밋 변경을 건드리지 않는다. 9/29 SHA는 조사 기준일 뿐 최신 보증이 아니다.
 

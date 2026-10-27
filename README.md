@@ -131,6 +131,8 @@ Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
 
 - [features/template-builder/README.md](features/template-builder/README.md)
 - [features/dance-highlight/README.md](features/dance-highlight/README.md)
+- [features/highlights/README.md](features/highlights/README.md)
+- [features/shortform-director/README.md](features/shortform-director/README.md)
 - [features/clipper-studio/README.md](features/clipper-studio/README.md)
 - [operations/windows-packaging/README.md](operations/windows-packaging/README.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)

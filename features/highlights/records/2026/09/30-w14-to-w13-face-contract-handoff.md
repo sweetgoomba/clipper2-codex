@@ -309,7 +309,7 @@ W14 소유: `evaluation/segment_review/sampling.py`, `coverage_replay.py`, 평�
 
 **2026-10-13 방향 전환 당시 인계(보존 이력):** 사용자 결정으로 W14는 Person 자체 기능/여러 품질 실험을 보류하고 **안무에서 선택된 참조 멤버와 영상 속 얼굴의 매칭 품질 및 공통화**를 먼저 맡는다. W13은 메인 선택·추적·구간/군무/복수 메인·crop, Dance adapter 소비/통합을 계속 맡는다. W13은 10/1 파일 소유 경계를 이미 수용했지만 API 고정·Dance 이식은 미완료다. 현재 `clipper_face_core` 0.1.0은 W14 미커밋 시험판에서 Person만 사용하고, 참조 이미지 평균/멤버 배정은 Dance 내부에 남아 있다. [현재 코드 상태·보존 범위·평가 방향](../10/13-w14-face-matching-priority-reset.md)을 우선 읽는다. 실제 공통 매칭 엔진 이식 완료나 안무 정확도 개선으로 해석하지 않는다.
 
-**10/13 진단·새 계약 제안:** 기존 YuNet/SFace와 참조23사진·원본18프레임×3 ROI로 대상 얼굴 선택/개별 참조 비교/후단 배정을 분리했다. 참조 내부 23/23 일관성, 정답 몸 ROI 14/18 라벨 일치(다른 라벨2·미배정2), 옆 얼굴 선택 및 올바른 해린 특징의 전역 군집 후 하니 배정 사례를 확인했다. 최근접만 적용하는 저장 대조는 조건별 개선/악화가 섞여 미채택했다. [실제 진단·실패 시도·자원·한계](../10/13-w14-dance-face-matching-baseline.md), [서면 설계안](/Users/jina/project/adlight/docs/superpowers/specs/2026-10-13-shared-reference-face-matching-design.md). 새 제안에서 **참조 갤러리/거리·순위/모호·미배정/표본 충돌 계산은 W14 공통 API**, 대상 사람·선택 얼굴의 연결 정보/track·구간과 제품 반영은 W13 adapter 경계다. 아래 옛 문서의 '멤버 참조 mapping은 소비자 소유'는 표시 이름·구간 적용 정책을 뜻하도록 새 API에서 구체화한다. 새 설계의 W13 수용/실제 이식은 아직 확인하지 않았다. 공통 fixture/API → W14 격리 대조 → W13 소비 호환 순서이며 W13 코드·프로젝트 결과는 수정하지 않았다.
+**10/13 진단·새 계약 제안:** 기존 YuNet/SFace와 참조23사진·원본18프레임×3 ROI로 대상 얼굴 선택/개별 참조 비교/후단 배정을 분리했다. 참조 내부 23/23 일관성, 정답 몸 ROI 14/18 라벨 일치(다른 라벨2·미배정2), 옆 얼굴 선택 및 올바른 해린 특징의 전역 군집 후 하니 배정 사례를 확인했다. 최근접만 적용하는 저장 대조는 조건별 개선/악화가 섞여 미채택했다. [실제 진단·실패 시도·자원·한계](../10/13-w14-dance-face-matching-baseline.md), [서면 설계안](../10/2026-10-13-shared-reference-face-matching-design.md). 새 제안에서 **참조 갤러리/거리·순위/모호·미배정/표본 충돌 계산은 W14 공통 API**, 대상 사람·선택 얼굴의 연결 정보/track·구간과 제품 반영은 W13 adapter 경계다. 아래 옛 문서의 '멤버 참조 mapping은 소비자 소유'는 표시 이름·구간 적용 정책을 뜻하도록 새 API에서 구체화한다. 새 설계의 W13 수용/실제 이식은 아직 확인하지 않았다. 공통 fixture/API → W14 격리 대조 → W13 소비 호환 순서이며 W13 코드·프로젝트 결과는 수정하지 않았다.
 
 아래는 2026-09-30 당시 제안과 이후 진행 이력이다. 최초 작성 당시에는 W13 상호 확인 대기였으며 [10/1 소비자 검토](../10/01-w13-face-core-consumer-contract-review.md)에서 파일 소유 경계를 수용했다. [W14 MVP·artifact 제안](30-w14-person-highlight-design-proposal.md)과 [W13 9/30 설계](30-w13-investigation-evaluation-design.md)를 함께 본다.
 
@@ -373,7 +373,7 @@ Electron의 `computePluginSourceFingerprint()`는 현재 uv.lock·SDK·해당 pl
 
 ## 10/1 W14 MVP 출력 결정
 
-사용자는 확인한 결과 목업에서 인물 행의 전체 클립 ZIP, 클립 행의 개별 MP4, 상단 전체 다운로드를 원하며 체크박스를 제거했다. 이어 붙인 MP4는 **없다**고 명시했다. [W14 서면 설계](../../../../../../docs/superpowers/specs/2026-10-01-person-highlight-mvp-design.md)에 맞춰 Person export compatibility fixture를 직접 요청 3종으로 바꾼다. W13 기존 Dance adapter/ZIP 계약 변경을 뜻하지 않는다. 공통 API·파일 소유권의 W13 상호 확인은 여전히 필요하다.
+사용자는 확인한 결과 목업에서 인물 행의 전체 클립 ZIP, 클립 행의 개별 MP4, 상단 전체 다운로드를 원하며 체크박스를 제거했다. 이어 붙인 MP4는 **없다**고 명시했다. [W14 서면 설계](../10/2026-10-01-person-highlight-mvp-design.md)에 맞춰 Person export compatibility fixture를 직접 요청 3종으로 바꾼다. W13 기존 Dance adapter/ZIP 계약 변경을 뜻하지 않는다. 공통 API·파일 소유권의 W13 상호 확인은 여전히 필요하다.
 
 ## 10/1 W14 시험용 코드와 W13 확인 지점
 

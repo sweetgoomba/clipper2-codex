@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3.11/OpenCV/Ultralytics, NestJS 10, Angular 19, Electron TypeScript, ffmpeg.
 
-**Spec:** `../design/2026-10-19-person-highlight-continuity-design.md`; existing product contract `/Users/jina/project/adlight/docs/superpowers/specs/2026-10-01-person-highlight-mvp-design.md` where not superseded.
+**Spec:** [10/19 continuity design](../design/2026-10-19-person-highlight-continuity-design.md); existing [10/1 MVP product contract](../features/highlights/records/2026/10/2026-10-01-person-highlight-mvp-design.md) where not superseded.
 
 ## Global Constraints
 

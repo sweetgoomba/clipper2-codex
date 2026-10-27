@@ -15,7 +15,7 @@ Codex는 다음 기준으로 적용한다.
 1. 사용자의 직접 지시가 최우선이다.
 2. 현재 repo의 실제 코드, `package.json`, 테스트/빌드 결과를 우선 확인한다.
 3. 이 문서와 `clipper_docs`의 구조·코딩·리팩토링 원칙은 가능한 한 존중한다.
-4. Claude Code 전용 도구명, workflow, 문서 저장 위치 지시는 Codex 환경에 맞게 변환하거나 적용하지 않는다.
+4. Claude Code 전용 도구명, workflow, 문서 저장 위치 지시는 Codex 환경에 맞게 변환하거나 적용하지 않는다. 새 Markdown의 저장 위치는 [README.DOCS.md](README.DOCS.md)를 따른다. Superpowers의 기본 `docs/superpowers/` 경로도 사용자 지정 `.codex` 위치로 변환한다.
 5. `.codex`의 `README.md`, `handoff/`, `records/sessions/`는 Codex 작업 이력과 인계용으로 계속 유지한다.
 6. 충돌이 있으면 문서 문구보다 현재 코드 상태와 사용자의 명시 지시를 우선한다.
 7. Zeplin MCP를 사용하거나 연결을 점검하는 작업에서만

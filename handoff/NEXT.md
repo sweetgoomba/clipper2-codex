@@ -1,5 +1,7 @@
 # 다음 세션 시작 안내
 
+**2026-10-26 문서 위치 정리:** 루트 `docs/merge`·`docs/superpowers`의 Markdown 6개를 `.codex`로 옮겼다. [새 위치·옛 경로 대응·증거 사본 보존 범위](../records/2026/10/26-root-docs-relocation.md)를 참고한다. `docs/tips`는 유지한다. 새 설계·계획·병합 기록 위치는 [문서 규칙](../README.DOCS.md)을 따른다.
+
 **2026-10-23 안무 메인 전용·완료 지연 원격 dev 반영:** Python `ea27940`, Nest `0fe9f8b0`를 dev·작업 브랜치에 atomic push했고 원본 두 저장소 dev·clean·0/0이다. 안무 주변 얼굴 보충/단체 자동 멤버 배정을 제거하고 메인 얼굴 근거를 요구한다. 저장 병합·완료 복구·UI 준비 상태·취소/progress 경합을 보완했다. 관련 Python507·Nest전체4,941 통과. Python 전체의 렌더5개 실패는 기존 dev에서도 재현돼 남겨두었다. 후속 사용자 요청으로 기본 dist-app의 ARM64 앱을 다시 빌드·실행했다. 기존 완료 결과는 유지하며 새 분석에 정책이 적용된다. [원인·정책·회귀·빌드·검증 한계](../features/highlights/records/2026/10/23-dance-main-only-and-completion-delay.md).
 
 **2026-10-23 인물 이동 모달80px 원격 dev 반영 완료:** Angular `af8fe16e`을 dev·`fix/person-move-picker-spacing-20261023`에 커밋·atomic push했다. 썸네일80×80px·이름/장면 수 간격2px, 원본 Angular dev·clean·0/0 확인. 전체9,647(seed20261023)·스타일14 통과, 최초 템플릿 간헐 실패는 단독193·전체 재검사 통과 이력과 함께 기록했다. 앞서 실행한 별도 ARM64 앱에도 같은 수정이 포함됐다. [후속 기록](../features/highlights/records/2026/10/23-highlight-result-usability-followup.md).

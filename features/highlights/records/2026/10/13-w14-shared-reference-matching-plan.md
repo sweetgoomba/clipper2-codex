@@ -4,7 +4,7 @@
 
 ## 결정과 현재 단계
 
-사용자는 공통 얼굴 매칭 설계의 쉬운 설명을 요청했고, 설명 후 `진행해줘ㅗ`라고 답했다. 이를 설계 방향 승인으로 기록하고 Superpowers `writing-plans`를 적용했다. [구현 계획](/Users/jina/project/adlight/docs/superpowers/plans/2026-10-13-shared-reference-face-matching.md)은 여섯 task·31개 확인 가능한 단계로 작성했다. 계획 자체의 검토 및 실행 방식 선택은 아직 받지 않았다. 권고 방식은 이 세션에서 순서대로 직접 구현(Native), 마지막 독립 리뷰다.
+사용자는 공통 얼굴 매칭 설계의 쉬운 설명을 요청했고, 설명 후 `진행해줘ㅗ`라고 답했다. 이를 설계 방향 승인으로 기록하고 Superpowers `writing-plans`를 적용했다. [구현 계획](2026-10-13-shared-reference-face-matching.md)은 여섯 task·31개 확인 가능한 단계로 작성했다. 계획 자체의 검토 및 실행 방식 선택은 아직 받지 않았다. 권고 방식은 이 세션에서 순서대로 직접 구현(Native), 마지막 독립 리뷰다.
 
 1. 기존 core 선택 복사, 공개 계약, OpenCV 선택 import 경계.
 2. 참조 gallery 평균/L2 및 실패/중복/지문.

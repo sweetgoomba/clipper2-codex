@@ -1,5 +1,7 @@
 # Candidate Return Cleanup And Clipper Main Title Design
 
+> **Earlier plan:** [Candidate return and storyboard resume](../features/shortform-director/records/2026/08/2026-08-06-shortform-director-candidate-return-and-storyboard-resume.md). This follow-up removes that plan's custom scroll restoration while preserving route context. The earlier plan also records the separate historical-storyboard hydration fix.
+
 ## Problems
 
 1. The custom candidate-page scroll restoration has failed repeatedly. It

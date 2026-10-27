@@ -1,6 +1,6 @@
 # W14 인물 하이라이트: 등장 연속성과 얼굴·몸 근거 설계
 
-2026-10-19 · 검토용 설계. [2026-10-01 MVP 설계](/Users/jina/project/adlight/docs/superpowers/specs/2026-10-01-person-highlight-mvp-design.md)의 제품 흐름·수정·내보내기 계약을 이어받고, 분석과 구간 생성에 관한 이전 face-only 가정은 이 문서로 갱신한다. 제품 코드는 아직 변경하지 않았다.
+2026-10-19 · 검토용 설계. [2026-10-01 MVP 설계](../features/highlights/records/2026/10/2026-10-01-person-highlight-mvp-design.md)의 제품 흐름·수정·내보내기 계약을 이어받고, 분석과 구간 생성에 관한 이전 face-only 가정은 이 문서로 갱신한다. 제품 코드는 아직 변경하지 않았다.
 
 ## 목적과 결정
 
