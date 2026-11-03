@@ -400,6 +400,7 @@ W01 대사 하이라이트는 사용자 결정에 따라 이번 주 하이라이
 | W15 | ICP TC4 기존 로그 활용 | 절차 수정 방향 결정, 시험 실행 결과 미확인 | [TC4 카드](tasks/icp-tc4.md) |
 | W16 | 내부 QA 결제 버그 수정 | 결제 고객명 전달 수정은 Web API `15ff474`·Web Client `df60b7c`로 `dev` 병합·개발서버 배포. 추가 크레딧 결제·환불 안내 메일에 계정 이름 표시를 확인했다. BUG-02-005의 Windows 결제창 잔류는 실제 원인 미확인. 관리자 크레딧 원장 열 이름·전체 잔액 개선은 보류. | [결제 QA 카드](tasks/payment-qa-bugs.md). BUG-02-005 조사, 변경 후 정기결제 메일 검증은 별도. |
 | W17 | 범용 프로모션 캠페인·레퍼럴 코드 | 웹 3개와 데스크톱 2개 저장소의 기능 브랜치 커밋·최신 원격 `dev` 병합·푸시 완료(API `0776268`, 관리자 `98e2e8c`, 회원 `fbd4573`, NestJS `b9602b2f`, Angular `1a839571`). 캠페인은 코드 없이 생성·상세에서 복수 코드 발급. 상한은 **코드별**, 같은 캠페인은 회원당 1회. 이력 제한 선택지는 유료/관리자 지급만; 무료체험·다른 캠페인 이력 제한은 없음. AI 부스 실제 설정값은 운영 시 입력. 코드별 성과·XLSX와 회원 참여 이력·유료 예약 제공. 데스크톱 NestJS 전체 테스트는 별도 실패가 있어 통과로 표시하지 않는다. | [작업카드](tasks/festival-voucher.md), [현재 설계](../design/2026-10-23-promotion-campaign-current-state.md), [병합 검증](../implementation/2026-10-23-promotion-campaign-dev-merge.md). 운영 배포·DB 마이그레이션·실제 Toss 청구/환불 검증은 별도 |
+| W20 | macOS 보조 프로세스 종료 소유권 오인 | **사용자 승인 커밋·원격 dev 병합/푸시 완료.** 코드 `5708ee5e`·dev `c8b71e7f`, 충돌0·실제 병합 빌드/전체5,289통과·8skip·0실패(총5,297). Sol/xhigh 독립 검증과 polling 제거 반영. 최초 자연 실패 원인 미확정·Windows 실기/앱 배포 미검증 | [작업카드](tasks/macos-owned-child-identity.md) · [커밋·검증·병합](../operations/env-runtime/records/2026/11/03-macos-owned-child-identity-fix-result.md) · [독립 검증](../operations/env-runtime/records/2026/11/03-macos-owned-child-identity-independent-sol-xhigh-01a19fb6.md) |
 
 ## 여러 세션의 작업 공간
 
