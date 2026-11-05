@@ -1,0 +1,298 @@
+{
+  "scope": "Complete saved native observations of three actual-app baselines; scene replay plus interval projection, no full production rerun",
+  "totals_before": {
+    "total": 414,
+    "main": 296,
+    "group": 118,
+    "short": 230,
+    "short_group": 79,
+    "unknown_seconds": 38.60893333333358
+  },
+  "totals_projected_after": {
+    "total": 413,
+    "main": 296,
+    "group": 117,
+    "short": 229,
+    "short_group": 78,
+    "unknown_seconds": 38.60893333333358
+  },
+  "source_verification_seconds": 2.2443048750283197,
+  "pose_replay_seconds": 0.2682292909012176,
+  "videos": {
+    "MMN": {
+      "project_id": "1793633624877",
+      "saved_pose_rows": 2324,
+      "native_frames": 135,
+      "native_bodies": 384,
+      "before": {
+        "total": 89,
+        "main": 57,
+        "group": 32,
+        "short": 42,
+        "short_group": 21,
+        "unknown_seconds": 6.80720000000003
+      },
+      "projected_after": {
+        "total": 89,
+        "main": 57,
+        "group": 32,
+        "short": 42,
+        "short_group": 21,
+        "unknown_seconds": 6.80720000000003
+      },
+      "actual_pipeline_rerun": false,
+      "changed_records": [],
+      "added_group_ranges": [],
+      "main_overlap": [],
+      "named_identity_change": 0,
+      "unchanged_actual_boundaries": {
+        "50.83411666666667": [
+          [
+            3036,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            3040,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            3044,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            3048,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            3052,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            3056,
+            "main",
+            "main_eligible_composition"
+          ]
+        ]
+      },
+      "blocked_gap_details": [],
+      "pose_replay_seconds": 0.03434487496269867
+    },
+    "ANT": {
+      "project_id": "1793633679903",
+      "saved_pose_rows": 3310,
+      "native_frames": 299,
+      "native_bodies": 465,
+      "before": {
+        "total": 128,
+        "main": 96,
+        "group": 32,
+        "short": 73,
+        "short_group": 25,
+        "unknown_seconds": 15.483933333333418
+      },
+      "projected_after": {
+        "total": 128,
+        "main": 96,
+        "group": 32,
+        "short": 73,
+        "short_group": 25,
+        "unknown_seconds": 15.483933333333418
+      },
+      "actual_pipeline_rerun": false,
+      "changed_records": [],
+      "added_group_ranges": [],
+      "main_overlap": [],
+      "named_identity_change": 0,
+      "unchanged_actual_boundaries": {},
+      "blocked_gap_details": [],
+      "pose_replay_seconds": 0.040152582980226725
+    },
+    "NEON": {
+      "project_id": "1793633791815",
+      "saved_pose_rows": 3632,
+      "native_frames": 541,
+      "native_bodies": 2014,
+      "before": {
+        "total": 197,
+        "main": 143,
+        "group": 54,
+        "short": 115,
+        "short_group": 33,
+        "unknown_seconds": 16.317800000000137
+      },
+      "projected_after": {
+        "total": 196,
+        "main": 143,
+        "group": 53,
+        "short": 114,
+        "short_group": 32,
+        "unknown_seconds": 16.317800000000137
+      },
+      "actual_pipeline_rerun": false,
+      "changed_records": [
+        {
+          "frame": 9384,
+          "time": 156.5564,
+          "before": "no_person",
+          "after": "group"
+        },
+        {
+          "frame": 9388,
+          "time": 156.62313333333333,
+          "before": "no_person",
+          "after": "group"
+        }
+      ],
+      "added_group_ranges": [
+        {
+          "start": 156.5564,
+          "end": 156.68986666666666,
+          "frames": [
+            9384,
+            9388
+          ],
+          "left_frame": 9380,
+          "right_frame": 9392,
+          "counts": [
+            {
+              "frame": 9384,
+              "original_full": 1,
+              "partial_indices": [
+                0,
+                2
+              ],
+              "distinct_participants": 3
+            },
+            {
+              "frame": 9388,
+              "original_full": 2,
+              "partial_indices": [
+                1,
+                2
+              ],
+              "distinct_participants": 4
+            }
+          ],
+          "reason": "accepted"
+        }
+      ],
+      "main_overlap": [],
+      "named_identity_change": 0,
+      "unchanged_actual_boundaries": {
+        "157.92443333333333": [
+          [
+            9456,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            9460,
+            "no_person",
+            "no_selected_body"
+          ],
+          [
+            9464,
+            "no_person",
+            "no_selected_body"
+          ],
+          [
+            9468,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            9472,
+            "main",
+            "main_eligible_composition"
+          ],
+          [
+            9476,
+            "main",
+            "main_eligible_composition"
+          ]
+        ]
+      },
+      "blocked_gap_details": [
+        {
+          "start": 142.7426,
+          "end": 142.80933333333334,
+          "veto_rows": [
+            {
+              "frame": 8556,
+              "time": 142.7426,
+              "complete_count": 8,
+              "invalid": false,
+              "largest_native_extent": 188.0,
+              "original_foreground": false
+            }
+          ]
+        },
+        {
+          "start": 143.3432,
+          "end": 143.40993333333333,
+          "veto_rows": [
+            {
+              "frame": 8592,
+              "time": 143.3432,
+              "complete_count": 8,
+              "invalid": false,
+              "largest_native_extent": 238.0,
+              "original_foreground": false
+            }
+          ]
+        },
+        {
+          "start": 155.48866666666666,
+          "end": 156.02253333333334,
+          "veto_rows": [
+            {
+              "frame": 9320,
+              "time": 155.48866666666666,
+              "complete_count": 3,
+              "invalid": false,
+              "largest_native_extent": 251.0,
+              "original_foreground": false
+            },
+            {
+              "frame": 9332,
+              "time": 155.68886666666668,
+              "complete_count": 2,
+              "invalid": false,
+              "largest_native_extent": 260.0,
+              "original_foreground": false
+            }
+          ]
+        },
+        {
+          "start": 156.95680000000002,
+          "end": 157.3572,
+          "veto_rows": [
+            {
+              "frame": 9412,
+              "time": 157.02353333333335,
+              "complete_count": 2,
+              "invalid": false,
+              "largest_native_extent": 147.8458625412547,
+              "original_foreground": true
+            }
+          ]
+        }
+      ],
+      "pose_replay_seconds": 0.19373183295829222
+    }
+  },
+  "prototype_sha256": {
+    "source_guard.py": "5e90174c6866d567b1ae9ecb113b802394c39abcb1d751e2b8ccddbd70e02970",
+    "visual_source_check.py": "e620610679f024c652578e44da203805493675f5f6e75df5f2d2e1e9686995d2",
+    "test_partial_presence.py": "d383f1a8de514211b88b9289937a6f2b4e283299a03b3945632c49c6767c8908",
+    "finalize_replay.py": "2ace13d72b3f7acee5e0521d10a03c682fde64e7555d8f1a7aa7790608e2f3c4",
+    "partial_presence.py": "26026d149591cd1c86fdf77b9656da817c44886b41d74c12b25a23a7e0b8bb81",
+    "verify_source_candidate.py": "22e6959e6a74da24957ccd75713f5d6ffe982718d28a4c0cd946c46109f3ebf8",
+    "replay_saved.py": "94a2f922adda0489fbdaa1fcca3f1720b21bef54ca848d2bcf709c99d1ae98ce"
+  }
+}

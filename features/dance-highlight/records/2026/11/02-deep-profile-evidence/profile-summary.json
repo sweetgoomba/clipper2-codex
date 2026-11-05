@@ -1,0 +1,4043 @@
+{
+  "before": {
+    "main": {
+      "total_seconds": 145.72378217000005,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 9551,
+          "self_seconds": 86.97183678500001,
+          "cumulative_seconds": 86.97183678500001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 15554,
+          "self_seconds": 12.183999112,
+          "cumulative_seconds": 12.183999112
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 7471,
+          "self_seconds": 9.887835037,
+          "cumulative_seconds": 9.887835037
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 144,
+          "self_seconds": 9.066000378,
+          "cumulative_seconds": 9.066000378
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<blobFromImage>",
+          "calls": 9551,
+          "self_seconds": 4.158310231000001,
+          "cumulative_seconds": 4.158310231000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 5408914,
+          "self_seconds": 3.1950209550000004,
+          "cumulative_seconds": 3.1950209550000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 1500388,
+          "self_seconds": 2.5876743440000003,
+          "cumulative_seconds": 4.8214502480000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 123,
+          "function": "cost",
+          "calls": 277561,
+          "self_seconds": 1.6495467030000002,
+          "cumulative_seconds": 8.914150838000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 73,
+          "function": "<listcomp>",
+          "calls": 75651,
+          "self_seconds": 1.1891058680000002,
+          "cumulative_seconds": 2.1036471150000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+          "line": 33,
+          "function": "_distance",
+          "calls": 236155,
+          "self_seconds": 1.0997041680000001,
+          "cumulative_seconds": 4.1046419
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/linalg/_linalg.py",
+          "line": 2598,
+          "function": "norm",
+          "calls": 969932,
+          "self_seconds": 1.066632536,
+          "cumulative_seconds": 1.811322985
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 135,
+          "function": "<listcomp>",
+          "calls": 204433,
+          "self_seconds": 1.05170812,
+          "cumulative_seconds": 4.337865292
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 73,
+          "function": "_count_reduce_items",
+          "calls": 1500388,
+          "self_seconds": 0.836381895,
+          "cumulative_seconds": 0.970734466
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+          "line": 19,
+          "function": "_scale",
+          "calls": 398250,
+          "self_seconds": 0.526249325,
+          "cumulative_seconds": 1.358282263
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<copyMakeBorder>",
+          "calls": 3327,
+          "self_seconds": 0.524782089,
+          "cumulative_seconds": 0.524782089
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 89,
+          "function": "decode_yunet",
+          "calls": 3327,
+          "self_seconds": 0.48773099900000005,
+          "cumulative_seconds": 0.905032719
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 48,
+          "function": "select_pose_face",
+          "calls": 19347,
+          "self_seconds": 0.39192055400000003,
+          "cumulative_seconds": 2.946773417
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py",
+          "line": 66,
+          "function": "_wrapreduction",
+          "calls": 770181,
+          "self_seconds": 0.334498799,
+          "cumulative_seconds": 0.9499229210000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 14525,
+          "self_seconds": 0.334493062,
+          "cumulative_seconds": 0.334493062
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 21,
+          "function": "retained_bodies",
+          "calls": 3632,
+          "self_seconds": 0.288844628,
+          "cumulative_seconds": 0.681704469
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 32,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.0061004580000000004,
+          "cumulative_seconds": 145.724369292
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 241,
+          "function": "refine_main_roles",
+          "calls": 1,
+          "self_seconds": 0.027429377,
+          "cumulative_seconds": 145.718268834
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 9551,
+          "self_seconds": 0.035943744,
+          "cumulative_seconds": 87.075726016
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 9551,
+          "self_seconds": 86.97183678500001,
+          "cumulative_seconds": 86.97183678500001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 263,
+          "function": "corresponding",
+          "calls": 23501,
+          "self_seconds": 0.018246094,
+          "cumulative_seconds": 73.367605032
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_face_link.py",
+          "line": 117,
+          "function": "get",
+          "calls": 1898,
+          "self_seconds": 0.014257725,
+          "cumulative_seconds": 65.185765023
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 194,
+          "function": "collect_geometry",
+          "calls": 1,
+          "self_seconds": 0.12289379400000001,
+          "cumulative_seconds": 64.81077387500001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_role_timeline.py",
+          "line": 6,
+          "function": "choose_roles",
+          "calls": 1,
+          "self_seconds": 0.040475634,
+          "cumulative_seconds": 55.80657825
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+          "line": 121,
+          "function": "_faces",
+          "calls": 1029,
+          "self_seconds": 0.114772649,
+          "cumulative_seconds": 54.682785088
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 4356,
+          "self_seconds": 0.01110258,
+          "cumulative_seconds": 52.072388303000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 4356,
+          "self_seconds": 0.062290767000000004,
+          "cumulative_seconds": 52.060733055
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 80,
+          "function": "run",
+          "calls": 6439,
+          "self_seconds": 0.042510681,
+          "cumulative_seconds": 43.894105383
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 3112,
+          "self_seconds": 0.016215823,
+          "cumulative_seconds": 43.604919197
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 149,
+          "function": "run",
+          "calls": 3112,
+          "self_seconds": 0.00545387,
+          "cumulative_seconds": 43.538456411000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 3112,
+          "self_seconds": 0.036295007000000004,
+          "cumulative_seconds": 43.532108726000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 3327,
+          "self_seconds": 0.044331214,
+          "cumulative_seconds": 42.277561324000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 15554,
+          "self_seconds": 12.183999112,
+          "cumulative_seconds": 12.183999112
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 7471,
+          "self_seconds": 9.887835037,
+          "cumulative_seconds": 9.887835037
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 56,
+          "function": "_key",
+          "calls": 4356,
+          "self_seconds": 0.022702371000000002,
+          "cumulative_seconds": 9.702188482
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 122,
+          "function": "strict_pose_corresponding",
+          "calls": 31003,
+          "self_seconds": 0.015801903000000003,
+          "cumulative_seconds": 9.072904828
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 144,
+          "self_seconds": 9.066000378,
+          "cumulative_seconds": 9.066000378
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 146,
+          "function": "nearest",
+          "calls": 47592,
+          "self_seconds": 0.032329866,
+          "cumulative_seconds": 9.057102925
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 147,
+          "function": "<listcomp>",
+          "calls": 47592,
+          "self_seconds": 0.058025878,
+          "cumulative_seconds": 8.972176716
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 123,
+          "function": "cost",
+          "calls": 277561,
+          "self_seconds": 1.6495467030000002,
+          "cumulative_seconds": 8.914150838000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 215,
+          "function": "feature",
+          "calls": 3112,
+          "self_seconds": 0.030685970000000003,
+          "cumulative_seconds": 7.267089757000001
+        }
+      ]
+    },
+    "face": {
+      "total_seconds": 144.54998986700002,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 3646,
+          "self_seconds": 82.14558822800001,
+          "cumulative_seconds": 82.14558822800001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 3012,
+          "self_seconds": 45.862074538,
+          "cumulative_seconds": 45.862074538
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 3326,
+          "self_seconds": 3.175276202,
+          "cumulative_seconds": 3.175276202
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 6673,
+          "self_seconds": 2.7140650020000003,
+          "cumulative_seconds": 2.7140650020000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1225,
+          "self_seconds": 2.1149496020000003,
+          "cumulative_seconds": 2.1149496020000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Laplacian>",
+          "calls": 6054,
+          "self_seconds": 1.6843755070000002,
+          "cumulative_seconds": 1.6843755070000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<warpAffine>",
+          "calls": 3347,
+          "self_seconds": 1.0609697310000001,
+          "cumulative_seconds": 1.0609697310000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 148,
+          "function": "_var",
+          "calls": 6054,
+          "self_seconds": 0.8016572390000001,
+          "cumulative_seconds": 1.4562766420000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 103719,
+          "self_seconds": 0.7385602490000001,
+          "cumulative_seconds": 0.7385602490000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method numpy.ascontiguousarray>",
+          "calls": 9700,
+          "self_seconds": 0.698948019,
+          "cumulative_seconds": 0.698948019
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'grab' of 'cv2.VideoCapture' objects>",
+          "calls": 11195,
+          "self_seconds": 0.682225328,
+          "cumulative_seconds": 0.682225328
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 6054,
+          "self_seconds": 0.63918089,
+          "cumulative_seconds": 0.63918089
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<imencode>",
+          "calls": 6054,
+          "self_seconds": 0.42154817600000005,
+          "cumulative_seconds": 0.42154817600000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 314,
+          "function": "batch_segment_embeddings",
+          "calls": 1,
+          "self_seconds": 0.16182024,
+          "cumulative_seconds": 144.55672079200002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 48,
+          "function": "select_pose_face",
+          "calls": 3615,
+          "self_seconds": 0.14740788800000001,
+          "cumulative_seconds": 0.48982763500000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 73,
+          "function": "<listcomp>",
+          "calls": 7358,
+          "self_seconds": 0.11668818800000001,
+          "cumulative_seconds": 0.218942783
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 96,
+          "function": "_inspect_face",
+          "calls": 3402,
+          "self_seconds": 0.11500523500000001,
+          "cumulative_seconds": 140.287741796
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<estimateAffinePartial2D>",
+          "calls": 3027,
+          "self_seconds": 0.075604584,
+          "cumulative_seconds": 0.075604584
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'write' of '_io.BufferedRandom' objects>",
+          "calls": 3003,
+          "self_seconds": 0.072939825,
+          "cumulative_seconds": 0.072939825
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+          "line": 9,
+          "function": "rotated_pose_face",
+          "calls": 1252,
+          "self_seconds": 0.066815567,
+          "cumulative_seconds": 10.444370398
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 34,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.0014348330000000002,
+          "cumulative_seconds": 144.558155625
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 314,
+          "function": "batch_segment_embeddings",
+          "calls": 1,
+          "self_seconds": 0.16182024,
+          "cumulative_seconds": 144.55672079200002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 96,
+          "function": "_inspect_face",
+          "calls": 3402,
+          "self_seconds": 0.11500523500000001,
+          "cumulative_seconds": 140.287741796
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 3646,
+          "self_seconds": 0.009153781,
+          "cumulative_seconds": 85.54227096700001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 3646,
+          "self_seconds": 0.062317293,
+          "cumulative_seconds": 85.53266412100001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 3646,
+          "self_seconds": 0.018113614,
+          "cumulative_seconds": 82.165791096
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 3646,
+          "self_seconds": 82.14558822800001,
+          "cumulative_seconds": 82.14558822800001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 3027,
+          "self_seconds": 0.018768754000000002,
+          "cumulative_seconds": 46.251291261000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 149,
+          "function": "run",
+          "calls": 3027,
+          "self_seconds": 0.00596555,
+          "cumulative_seconds": 46.188269223000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 3027,
+          "self_seconds": 0.042653572,
+          "cumulative_seconds": 46.181504317000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 3012,
+          "self_seconds": 0.011568862000000001,
+          "cumulative_seconds": 45.900283839000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 3012,
+          "self_seconds": 45.862074538,
+          "cumulative_seconds": 45.862074538
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+          "line": 9,
+          "function": "rotated_pose_face",
+          "calls": 1252,
+          "self_seconds": 0.066815567,
+          "cumulative_seconds": 10.444370398
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 271,
+          "function": "blur_quality_score",
+          "calls": 6054,
+          "self_seconds": 0.015716522,
+          "cumulative_seconds": 3.807332354
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 263,
+          "function": "face_embedding_quality",
+          "calls": 3027,
+          "self_seconds": 0.010664215000000001,
+          "cumulative_seconds": 3.557463315
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 56,
+          "function": "_key",
+          "calls": 3646,
+          "self_seconds": 0.023170809,
+          "cumulative_seconds": 3.2766513240000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 3326,
+          "self_seconds": 3.175276202,
+          "cumulative_seconds": 3.175276202
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 6673,
+          "self_seconds": 2.7140650020000003,
+          "cumulative_seconds": 2.7140650020000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 185,
+          "function": "_display_thumbnail",
+          "calls": 3027,
+          "self_seconds": 0.017198400000000003,
+          "cumulative_seconds": 2.4122261910000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1225,
+          "self_seconds": 2.1149496020000003,
+          "cumulative_seconds": 2.1149496020000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Laplacian>",
+          "calls": 6054,
+          "self_seconds": 1.6843755070000002,
+          "cumulative_seconds": 1.6843755070000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'var' of 'numpy.ndarray' objects>",
+          "calls": 6054,
+          "self_seconds": 0.009738331000000001,
+          "cumulative_seconds": 1.466014973
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 148,
+          "function": "_var",
+          "calls": 6054,
+          "self_seconds": 0.8016572390000001,
+          "cumulative_seconds": 1.4562766420000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<warpAffine>",
+          "calls": 3347,
+          "self_seconds": 1.0609697310000001,
+          "cumulative_seconds": 1.0609697310000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 103719,
+          "self_seconds": 0.7385602490000001,
+          "cumulative_seconds": 0.7385602490000001
+        }
+      ]
+    },
+    "identity": {
+      "total_seconds": 23.45800463799998,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 88,
+          "self_seconds": 4.9600712940000005,
+          "cumulative_seconds": 4.9600712940000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 41,
+          "function": "_payload",
+          "calls": 10181155,
+          "self_seconds": 3.673323667,
+          "cumulative_seconds": 11.945017583
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1258,
+          "function": "is_dataclass",
+          "calls": 9823131,
+          "self_seconds": 1.815822065,
+          "cumulative_seconds": 3.2092804090000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 45,
+          "function": "<dictcomp>",
+          "calls": 974712,
+          "self_seconds": 1.7590316650000002,
+          "cumulative_seconds": 11.871366116
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py",
+          "line": 205,
+          "function": "iterencode",
+          "calls": 30441,
+          "self_seconds": 1.603909832,
+          "cumulative_seconds": 1.603909832
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "calls": 37862515,
+          "self_seconds": 1.284314062,
+          "cumulative_seconds": 1.284314062
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 41,
+          "function": "match_video_anchors",
+          "calls": 1629,
+          "self_seconds": 1.135449199,
+          "cumulative_seconds": 1.8285588970000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.hasattr>",
+          "calls": 9826476,
+          "self_seconds": 1.0935896360000001,
+          "cumulative_seconds": 1.0935896360000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 912,
+          "self_seconds": 0.8748816210000001,
+          "cumulative_seconds": 0.8748816210000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1235,
+          "function": "fields",
+          "calls": 974903,
+          "self_seconds": 0.805605228,
+          "cumulative_seconds": 1.4911164110000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1250,
+          "function": "<genexpr>",
+          "calls": 10443847,
+          "self_seconds": 0.6147351470000001,
+          "cumulative_seconds": 0.6147351470000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "calls": 10480769,
+          "self_seconds": 0.40263214900000005,
+          "cumulative_seconds": 0.40263214900000005
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 388465,
+          "self_seconds": 0.39579733,
+          "cumulative_seconds": 0.39579733
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 1881446,
+          "self_seconds": 0.286102915,
+          "cumulative_seconds": 0.375723699
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 18,
+          "function": "_valid",
+          "calls": 2472603,
+          "self_seconds": 0.243101856,
+          "cumulative_seconds": 0.243101856
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 38028,
+          "self_seconds": 0.21273940800000002,
+          "cumulative_seconds": 0.708327457
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py",
+          "line": 5,
+          "function": "embedding_failure",
+          "calls": 121600,
+          "self_seconds": 0.17624995000000002,
+          "cumulative_seconds": 0.5474759020000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 64,
+          "function": "<listcomp>",
+          "calls": 1037,
+          "self_seconds": 0.153018795,
+          "cumulative_seconds": 0.27428147
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 88,
+          "function": "<listcomp>",
+          "calls": 1751,
+          "self_seconds": 0.14990561600000002,
+          "cumulative_seconds": 0.28689133
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/linalg/_linalg.py",
+          "line": 2598,
+          "function": "norm",
+          "calls": 124841,
+          "self_seconds": 0.09270592600000001,
+          "cumulative_seconds": 0.17558563300000002
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 40,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 1.0417e-05,
+          "cumulative_seconds": 23.481375167000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 259,
+          "function": "refine_member_timeline",
+          "calls": 1,
+          "self_seconds": 0.0009179590000000001,
+          "cumulative_seconds": 23.481356542
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 431,
+          "function": "_refine_member_scopes",
+          "calls": 3,
+          "self_seconds": 0.019310295,
+          "cumulative_seconds": 23.478790375000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_recovery.py",
+          "line": 42,
+          "function": "match",
+          "calls": 3621,
+          "self_seconds": 0.009252360000000001,
+          "cumulative_seconds": 14.810047998000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 242,
+          "function": "_prepare_observations",
+          "calls": 3,
+          "self_seconds": 9.932800000000001e-05,
+          "cumulative_seconds": 13.890134167000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 248,
+          "function": "<listcomp>",
+          "calls": 21,
+          "self_seconds": 0.002648629,
+          "cumulative_seconds": 13.889016873000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 53,
+          "function": "fingerprint",
+          "calls": 30441,
+          "self_seconds": 0.061964683000000007,
+          "cumulative_seconds": 13.873116449000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 250,
+          "function": "fingerprint",
+          "calls": 7167,
+          "self_seconds": 0.002171658,
+          "cumulative_seconds": 13.249136692
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 41,
+          "function": "_payload",
+          "calls": 10181155,
+          "self_seconds": 3.673323667,
+          "cumulative_seconds": 11.945017583
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 45,
+          "function": "<dictcomp>",
+          "calls": 974712,
+          "self_seconds": 1.7590316650000002,
+          "cumulative_seconds": 11.871366116
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 49,
+          "function": "<listcomp>",
+          "calls": 108952,
+          "self_seconds": 0.07679955200000001,
+          "cumulative_seconds": 11.407184011
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 8,
+          "function": "match_reference",
+          "calls": 5394,
+          "self_seconds": 0.014751416000000002,
+          "cumulative_seconds": 10.803812394000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 10,
+          "function": "result",
+          "calls": 5394,
+          "self_seconds": 0.007120844,
+          "cumulative_seconds": 10.458323213
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 40,
+          "function": "match_reference_views",
+          "calls": 1773,
+          "self_seconds": 0.061857723,
+          "cumulative_seconds": 7.462171535
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_identity.py",
+          "line": 115,
+          "function": "refine_switch_boundaries",
+          "calls": 5,
+          "self_seconds": 0.046322944000000005,
+          "cumulative_seconds": 5.995258585
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 88,
+          "self_seconds": 4.9600712940000005,
+          "cumulative_seconds": 4.9600712940000005
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1258,
+          "function": "is_dataclass",
+          "calls": 9823131,
+          "self_seconds": 1.815822065,
+          "cumulative_seconds": 3.2092804090000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 41,
+          "function": "match_video_anchors",
+          "calls": 1629,
+          "self_seconds": 1.135449199,
+          "cumulative_seconds": 1.8285588970000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py",
+          "line": 183,
+          "function": "dumps",
+          "calls": 30441,
+          "self_seconds": 0.019681,
+          "cumulative_seconds": 1.6540603070000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py",
+          "line": 183,
+          "function": "encode",
+          "calls": 30441,
+          "self_seconds": 0.01918165,
+          "cumulative_seconds": 1.627022495
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py",
+          "line": 205,
+          "function": "iterencode",
+          "calls": 30441,
+          "self_seconds": 1.603909832,
+          "cumulative_seconds": 1.603909832
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1235,
+          "function": "fields",
+          "calls": 974903,
+          "self_seconds": 0.805605228,
+          "cumulative_seconds": 1.4911164110000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "calls": 37862515,
+          "self_seconds": 1.284314062,
+          "cumulative_seconds": 1.284314062
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.hasattr>",
+          "calls": 9826476,
+          "self_seconds": 1.0935896360000001,
+          "cumulative_seconds": 1.0935896360000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 197,
+          "function": "_assign_piece",
+          "calls": 203,
+          "self_seconds": 0.004140036000000001,
+          "cumulative_seconds": 0.9145352000000001
+        }
+      ]
+    },
+    "secondary": {
+      "total_seconds": 63.041620124999994,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 190,
+          "self_seconds": 31.992237210000003,
+          "cumulative_seconds": 31.992237210000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 14525,
+          "self_seconds": 11.19006,
+          "cumulative_seconds": 11.19006
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 2909,
+          "self_seconds": 9.804313624,
+          "cumulative_seconds": 9.804313624
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 190,
+          "self_seconds": 2.3095385910000004,
+          "cumulative_seconds": 2.3095385910000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 40,
+          "self_seconds": 1.835460917,
+          "cumulative_seconds": 1.835460917
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 6809632,
+          "self_seconds": 1.214807474,
+          "cumulative_seconds": 1.549080789
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 59353,
+          "self_seconds": 0.976960829,
+          "cumulative_seconds": 2.575767902
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 29086,
+          "self_seconds": 0.590041385,
+          "cumulative_seconds": 0.590041385
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 81,
+          "function": "<listcomp>",
+          "calls": 4203,
+          "self_seconds": 0.40391389200000005,
+          "cumulative_seconds": 0.41674076600000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method math.isfinite>",
+          "calls": 13626092,
+          "self_seconds": 0.334273315,
+          "cumulative_seconds": 0.334273315
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'alignCrop' of 'cv2.FaceRecognizerSF' objects>",
+          "calls": 2869,
+          "self_seconds": 0.220815074,
+          "cumulative_seconds": 0.220815074
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<imdecode>",
+          "calls": 40,
+          "self_seconds": 0.20238696,
+          "cumulative_seconds": 0.20238696
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 36987,
+          "self_seconds": 0.12358316700000001,
+          "cumulative_seconds": 0.12358316700000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 37226,
+          "self_seconds": 0.103074171,
+          "cumulative_seconds": 0.103074171
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.initialize_session>",
+          "calls": 1,
+          "self_seconds": 0.09137408300000001,
+          "cumulative_seconds": 0.09137408300000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 126,
+          "function": "<genexpr>",
+          "calls": 910622,
+          "self_seconds": 0.086460255,
+          "cumulative_seconds": 0.10362307600000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 66,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 0.084147021,
+          "cumulative_seconds": 2.514612708
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 137,
+          "function": "recover_secondary_names",
+          "calls": 1,
+          "self_seconds": 0.07873063100000001,
+          "cumulative_seconds": 63.05083195900001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 122,
+          "self_seconds": 0.07328762300000001,
+          "cumulative_seconds": 0.07328762300000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of '_io.BufferedReader' objects>",
+          "calls": 81,
+          "self_seconds": 0.05790829,
+          "cumulative_seconds": 0.05790829
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 46,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.0025267500000000003,
+          "cumulative_seconds": 63.05335937500001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 137,
+          "function": "recover_secondary_names",
+          "calls": 1,
+          "self_seconds": 0.07873063100000001,
+          "cumulative_seconds": 63.05083195900001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 49,
+          "function": "classify_transition",
+          "calls": 14524,
+          "self_seconds": 0.027988595,
+          "cumulative_seconds": 35.351435469
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 12,
+          "function": "structural_continuity",
+          "calls": 95,
+          "self_seconds": 0.014327564000000001,
+          "cumulative_seconds": 34.453589749
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 190,
+          "self_seconds": 31.992237210000003,
+          "cumulative_seconds": 31.992237210000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 14525,
+          "self_seconds": 11.19006,
+          "cumulative_seconds": 11.19006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 2909,
+          "self_seconds": 0.014177889,
+          "cumulative_seconds": 9.844533726
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 2909,
+          "self_seconds": 9.804313624,
+          "cumulative_seconds": 9.804313624
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 169,
+          "function": "feature",
+          "calls": 2869,
+          "self_seconds": 0.03373648,
+          "cumulative_seconds": 9.58127367
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 215,
+          "function": "feature",
+          "calls": 2869,
+          "self_seconds": 0.044856019000000004,
+          "cumulative_seconds": 9.251526949
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 80,
+          "function": "run",
+          "calls": 2869,
+          "self_seconds": 0.018238675000000003,
+          "cumulative_seconds": 9.148159487000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 93,
+          "function": "get_face_embedding_candidate",
+          "calls": 40,
+          "self_seconds": 0.00028107500000000004,
+          "cumulative_seconds": 2.803704707
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 96,
+          "function": "_inspect_face",
+          "calls": 40,
+          "self_seconds": 0.001364608,
+          "cumulative_seconds": 2.8034236320000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 18,
+          "function": "joint_video_matches",
+          "calls": 1,
+          "self_seconds": 0.035371478000000005,
+          "cumulative_seconds": 2.6432022080000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 5,
+          "function": "independent_pair",
+          "calls": 55125,
+          "self_seconds": 0.042852499,
+          "cumulative_seconds": 2.589613398
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 59353,
+          "self_seconds": 0.976960829,
+          "cumulative_seconds": 2.575767902
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 66,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 0.084147021,
+          "cumulative_seconds": 2.514612708
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 28,
+          "function": "matches",
+          "calls": 190,
+          "self_seconds": 0.00045453800000000004,
+          "cumulative_seconds": 2.34388084
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 190,
+          "self_seconds": 2.3095385910000004,
+          "cumulative_seconds": 2.3095385910000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 40,
+          "self_seconds": 9.9825e-05,
+          "cumulative_seconds": 1.8889971620000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 40,
+          "self_seconds": 0.000741215,
+          "cumulative_seconds": 1.888891295
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 40,
+          "self_seconds": 0.00020520600000000001,
+          "cumulative_seconds": 1.83568821
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 40,
+          "self_seconds": 1.835460917,
+          "cumulative_seconds": 1.835460917
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 6809632,
+          "self_seconds": 1.214807474,
+          "cumulative_seconds": 1.549080789
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 40,
+          "self_seconds": 0.000267673,
+          "cumulative_seconds": 0.71935446
+        }
+      ]
+    },
+    "scene": {
+      "total_seconds": 41.25684254100001,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 406,
+          "self_seconds": 23.164416535,
+          "cumulative_seconds": 23.164416535
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 84,
+          "self_seconds": 15.074571454,
+          "cumulative_seconds": 15.074571454
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 956,
+          "self_seconds": 1.353183504,
+          "cumulative_seconds": 1.353183504
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 84,
+          "self_seconds": 1.334632751,
+          "cumulative_seconds": 1.334632751
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1766,
+          "self_seconds": 0.080362284,
+          "cumulative_seconds": 0.080362284
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 2084,
+          "self_seconds": 0.026752822000000002,
+          "cumulative_seconds": 0.026752822000000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 156,
+          "function": "verify",
+          "calls": 400,
+          "self_seconds": 0.019191038,
+          "cumulative_seconds": 41.235669289
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Sobel>",
+          "calls": 1908,
+          "self_seconds": 0.015816836,
+          "cumulative_seconds": 0.015816836
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 29,
+          "function": "<dictcomp>",
+          "calls": 84,
+          "self_seconds": 0.015468048000000002,
+          "cumulative_seconds": 0.018505629000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 3942,
+          "self_seconds": 0.012316633,
+          "cumulative_seconds": 0.012316633
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 2495,
+          "self_seconds": 0.01225756,
+          "cumulative_seconds": 0.03328544
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method numpy.asarray>",
+          "calls": 3147,
+          "self_seconds": 0.012054398000000001,
+          "cumulative_seconds": 0.012054398000000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 7,
+          "function": "_distance",
+          "calls": 1530,
+          "self_seconds": 0.010777362,
+          "cumulative_seconds": 0.047093104000000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 25,
+          "function": "<listcomp>",
+          "calls": 84,
+          "self_seconds": 0.009884543,
+          "cumulative_seconds": 0.009884543
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.009013309,
+          "cumulative_seconds": 41.256747959
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/shape_base.py",
+          "line": 378,
+          "function": "stack",
+          "calls": 954,
+          "self_seconds": 0.008310711,
+          "cumulative_seconds": 0.010713082
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 73,
+          "function": "_count_reduce_items",
+          "calls": 3071,
+          "self_seconds": 0.007560132000000001,
+          "cumulative_seconds": 0.008054158
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 12,
+          "function": "structural_continuity",
+          "calls": 42,
+          "self_seconds": 0.006056461,
+          "cumulative_seconds": 16.479924127
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 15,
+          "function": "_features",
+          "calls": 954,
+          "self_seconds": 0.005959422000000001,
+          "cumulative_seconds": 0.096738265
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'astype' of 'numpy.ndarray' objects>",
+          "calls": 993,
+          "self_seconds": 0.005732704,
+          "cumulative_seconds": 0.005732704
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 56,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 9.4041e-05,
+          "cumulative_seconds": 41.256842000000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.009013309,
+          "cumulative_seconds": 41.256747959
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 156,
+          "function": "verify",
+          "calls": 400,
+          "self_seconds": 0.019191038,
+          "cumulative_seconds": 41.235669289
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 406,
+          "self_seconds": 23.164416535,
+          "cumulative_seconds": 23.164416535
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 12,
+          "function": "structural_continuity",
+          "calls": 42,
+          "self_seconds": 0.006056461,
+          "cumulative_seconds": 16.479924127
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 84,
+          "self_seconds": 15.074571454,
+          "cumulative_seconds": 15.074571454
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 49,
+          "function": "classify_transition",
+          "calls": 388,
+          "self_seconds": 0.001956536,
+          "cumulative_seconds": 9.287560488
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 55,
+          "function": "spatial_cut_evidence",
+          "calls": 18,
+          "self_seconds": 0.001052915,
+          "cumulative_seconds": 7.288647044
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 28,
+          "function": "matches",
+          "calls": 84,
+          "self_seconds": 0.000336577,
+          "cumulative_seconds": 1.353474957
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 956,
+          "self_seconds": 1.353183504,
+          "cumulative_seconds": 1.353183504
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 84,
+          "self_seconds": 1.334632751,
+          "cumulative_seconds": 1.334632751
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 23,
+          "function": "spatial_cut_candidate",
+          "calls": 387,
+          "self_seconds": 0.0016359080000000002,
+          "cumulative_seconds": 0.118224406
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 15,
+          "function": "_features",
+          "calls": 954,
+          "self_seconds": 0.005959422000000001,
+          "cumulative_seconds": 0.096738265
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1766,
+          "self_seconds": 0.080362284,
+          "cumulative_seconds": 0.080362284
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 7,
+          "function": "_distance",
+          "calls": 1530,
+          "self_seconds": 0.010777362,
+          "cumulative_seconds": 0.047093104000000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'mean' of 'numpy.ndarray' objects>",
+          "calls": 2279,
+          "self_seconds": 0.001288237,
+          "cumulative_seconds": 0.033841918000000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 2495,
+          "self_seconds": 0.01225756,
+          "cumulative_seconds": 0.03328544
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+          "line": 36,
+          "function": "_color_cut",
+          "calls": 388,
+          "self_seconds": 0.00220635,
+          "cumulative_seconds": 0.027537794
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 2084,
+          "self_seconds": 0.026752822000000002,
+          "cumulative_seconds": 0.026752822000000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 29,
+          "function": "<dictcomp>",
+          "calls": 84,
+          "self_seconds": 0.015468048000000002,
+          "cumulative_seconds": 0.018505629000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Sobel>",
+          "calls": 1908,
+          "self_seconds": 0.015816836,
+          "cumulative_seconds": 0.015816836
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 67,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 5.6505e-05,
+          "cumulative_seconds": 0.013943790000000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 33,
+          "function": "_color_layout_agreement",
+          "calls": 18,
+          "self_seconds": 0.002812272,
+          "cumulative_seconds": 0.013359583000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 3942,
+          "self_seconds": 0.012316633,
+          "cumulative_seconds": 0.012316633
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method numpy.asarray>",
+          "calls": 3147,
+          "self_seconds": 0.012054398000000001,
+          "cumulative_seconds": 0.012054398000000001
+        }
+      ]
+    }
+  },
+  "after": {
+    "main": {
+      "total_seconds": 170.622866933,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 9551,
+          "self_seconds": 104.58641080400001,
+          "cumulative_seconds": 104.58641080400001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 15554,
+          "self_seconds": 15.891977994000001,
+          "cumulative_seconds": 15.891977994000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 7471,
+          "self_seconds": 11.067749084,
+          "cumulative_seconds": 11.067749084
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 144,
+          "self_seconds": 11.017579125000001,
+          "cumulative_seconds": 11.017579125000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<blobFromImage>",
+          "calls": 9551,
+          "self_seconds": 4.941092676,
+          "cumulative_seconds": 4.941092676
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 4463005,
+          "self_seconds": 2.9959122010000003,
+          "cumulative_seconds": 2.9959122010000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 969364,
+          "self_seconds": 1.85134193,
+          "cumulative_seconds": 3.610969453
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 73,
+          "function": "<listcomp>",
+          "calls": 75651,
+          "self_seconds": 1.327710473,
+          "cumulative_seconds": 2.362659801
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+          "line": 33,
+          "function": "_distance",
+          "calls": 236155,
+          "self_seconds": 1.121731253,
+          "cumulative_seconds": 4.1628954380000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 123,
+          "function": "cost",
+          "calls": 164173,
+          "self_seconds": 1.076976256,
+          "cumulative_seconds": 5.723570936000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/linalg/_linalg.py",
+          "line": 2598,
+          "function": "norm",
+          "calls": 704420,
+          "self_seconds": 0.812226176,
+          "cumulative_seconds": 1.405232623
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<copyMakeBorder>",
+          "calls": 3327,
+          "self_seconds": 0.71741683,
+          "cumulative_seconds": 0.71741683
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 135,
+          "function": "<listcomp>",
+          "calls": 115929,
+          "self_seconds": 0.66266426,
+          "cumulative_seconds": 2.729096241
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 73,
+          "function": "_count_reduce_items",
+          "calls": 969364,
+          "self_seconds": 0.658915943,
+          "cumulative_seconds": 0.756325959
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 89,
+          "function": "decode_yunet",
+          "calls": 3327,
+          "self_seconds": 0.6488535360000001,
+          "cumulative_seconds": 1.2225522130000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+          "line": 19,
+          "function": "_scale",
+          "calls": 398250,
+          "self_seconds": 0.534715964,
+          "cumulative_seconds": 1.38166254
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 48,
+          "function": "select_pose_face",
+          "calls": 19347,
+          "self_seconds": 0.48578799100000003,
+          "cumulative_seconds": 3.371333555
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 14525,
+          "self_seconds": 0.45476220300000003,
+          "cumulative_seconds": 0.45476220300000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py",
+          "line": 66,
+          "function": "_wrapreduction",
+          "calls": 770181,
+          "self_seconds": 0.385585292,
+          "cumulative_seconds": 1.100184064
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'alignCrop' of 'cv2.FaceRecognizerSF' objects>",
+          "calls": 3112,
+          "self_seconds": 0.370694169,
+          "cumulative_seconds": 0.370694169
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 34,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.009244876,
+          "cumulative_seconds": 170.623436459
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 242,
+          "function": "refine_main_roles",
+          "calls": 1,
+          "self_seconds": 0.034805711,
+          "cumulative_seconds": 170.614191583
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 9551,
+          "self_seconds": 0.057133629000000005,
+          "cumulative_seconds": 104.761712415
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 9551,
+          "self_seconds": 104.58641080400001,
+          "cumulative_seconds": 104.58641080400001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 271,
+          "function": "corresponding",
+          "calls": 23501,
+          "self_seconds": 0.018709096,
+          "cumulative_seconds": 85.172505083
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_face_link.py",
+          "line": 117,
+          "function": "get",
+          "calls": 1898,
+          "self_seconds": 0.019965827000000002,
+          "cumulative_seconds": 79.23650691600001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 195,
+          "function": "collect_geometry",
+          "calls": 1,
+          "self_seconds": 0.238785346,
+          "cumulative_seconds": 78.613905875
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_role_timeline.py",
+          "line": 6,
+          "function": "choose_roles",
+          "calls": 1,
+          "self_seconds": 0.049169402,
+          "cumulative_seconds": 67.143627334
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+          "line": 121,
+          "function": "_faces",
+          "calls": 1029,
+          "self_seconds": 0.16039145500000002,
+          "cumulative_seconds": 66.422544954
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 4356,
+          "self_seconds": 0.015324108000000001,
+          "cumulative_seconds": 61.568253848000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 4356,
+          "self_seconds": 0.08704877100000001,
+          "cumulative_seconds": 61.551998574
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 80,
+          "function": "run",
+          "calls": 6439,
+          "self_seconds": 0.070103467,
+          "cumulative_seconds": 52.712567656000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 3112,
+          "self_seconds": 0.022669016,
+          "cumulative_seconds": 52.666404904000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 149,
+          "function": "run",
+          "calls": 3112,
+          "self_seconds": 0.008495698000000001,
+          "cumulative_seconds": 52.576369961000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 3112,
+          "self_seconds": 0.09741224300000001,
+          "cumulative_seconds": 52.566346135
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 3327,
+          "self_seconds": 0.077433794,
+          "cumulative_seconds": 50.547900065
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 15554,
+          "self_seconds": 15.891977994000001,
+          "cumulative_seconds": 15.891977994000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 7471,
+          "self_seconds": 11.067749084,
+          "cumulative_seconds": 11.067749084
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 144,
+          "self_seconds": 11.017579125000001,
+          "cumulative_seconds": 11.017579125000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 56,
+          "function": "_key",
+          "calls": 4356,
+          "self_seconds": 0.038483886,
+          "cumulative_seconds": 10.884129046
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 215,
+          "function": "feature",
+          "calls": 3112,
+          "self_seconds": 0.090701584,
+          "cumulative_seconds": 9.211625103000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 264,
+          "function": "pose_corresponding",
+          "calls": 31003,
+          "self_seconds": 0.02052766,
+          "cumulative_seconds": 5.856410933
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 122,
+          "function": "strict_pose_corresponding",
+          "calls": 18734,
+          "self_seconds": 0.011524504000000001,
+          "cumulative_seconds": 5.835883273
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 146,
+          "function": "nearest",
+          "calls": 27695,
+          "self_seconds": 0.022799445,
+          "cumulative_seconds": 5.824358769000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+          "line": 147,
+          "function": "<listcomp>",
+          "calls": 27695,
+          "self_seconds": 0.042114975000000006,
+          "cumulative_seconds": 5.765685911
+        }
+      ]
+    },
+    "face": {
+      "total_seconds": 115.85510224300002,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 3012,
+          "self_seconds": 54.930857436000004,
+          "cumulative_seconds": 54.930857436000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'acquire' of '_thread.lock' objects>",
+          "calls": 3964,
+          "self_seconds": 31.708881402000003,
+          "cumulative_seconds": 31.708881402000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 320,
+          "self_seconds": 9.288413839,
+          "cumulative_seconds": 9.288413839
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 320,
+          "self_seconds": 8.382551454,
+          "cumulative_seconds": 17.966407457000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1225,
+          "self_seconds": 2.254733444,
+          "cumulative_seconds": 2.254733444
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Laplacian>",
+          "calls": 6054,
+          "self_seconds": 1.9133933570000001,
+          "cumulative_seconds": 1.9133933570000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<warpAffine>",
+          "calls": 3347,
+          "self_seconds": 1.392603773,
+          "cumulative_seconds": 1.392603773
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 148,
+          "function": "_var",
+          "calls": 6054,
+          "self_seconds": 1.102520069,
+          "cumulative_seconds": 1.962938206
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 103719,
+          "self_seconds": 0.946167559,
+          "cumulative_seconds": 0.946167559
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 6054,
+          "self_seconds": 0.869339631,
+          "cumulative_seconds": 0.869339631
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<imencode>",
+          "calls": 6054,
+          "self_seconds": 0.500836861,
+          "cumulative_seconds": 0.500836861
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 3347,
+          "self_seconds": 0.47080121,
+          "cumulative_seconds": 0.47080121
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 48,
+          "function": "select_pose_face",
+          "calls": 3615,
+          "self_seconds": 0.161878296,
+          "cumulative_seconds": 0.5105852900000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 372,
+          "function": "batch_segment_embeddings",
+          "calls": 1,
+          "self_seconds": 0.139226916,
+          "cumulative_seconds": 115.86373937500001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 98,
+          "function": "_inspect_face",
+          "calls": 3402,
+          "self_seconds": 0.124583463,
+          "cumulative_seconds": 83.60861368200001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+          "line": 73,
+          "function": "<listcomp>",
+          "calls": 7358,
+          "self_seconds": 0.12307467600000001,
+          "cumulative_seconds": 0.229331418
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<estimateAffinePartial2D>",
+          "calls": 3027,
+          "self_seconds": 0.097275652,
+          "cumulative_seconds": 0.097275652
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'write' of '_io.BufferedRandom' objects>",
+          "calls": 3003,
+          "self_seconds": 0.09463721200000001,
+          "cumulative_seconds": 0.09463721200000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+          "line": 9,
+          "function": "rotated_pose_face",
+          "calls": 1252,
+          "self_seconds": 0.08480016600000001,
+          "cumulative_seconds": 19.304326826
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 3027,
+          "self_seconds": 0.071927736,
+          "cumulative_seconds": 55.371636709
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 36,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.000685334,
+          "cumulative_seconds": 115.864424709
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 372,
+          "function": "batch_segment_embeddings",
+          "calls": 1,
+          "self_seconds": 0.139226916,
+          "cumulative_seconds": 115.86373937500001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 98,
+          "function": "_inspect_face",
+          "calls": 3402,
+          "self_seconds": 0.124583463,
+          "cumulative_seconds": 83.60861368200001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 3027,
+          "self_seconds": 0.024289367000000003,
+          "cumulative_seconds": 55.477249527000005
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 149,
+          "function": "run",
+          "calls": 3027,
+          "self_seconds": 0.007454322,
+          "cumulative_seconds": 55.380238948000006
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 3027,
+          "self_seconds": 0.071927736,
+          "cumulative_seconds": 55.371636709
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 3012,
+          "self_seconds": 0.017470019,
+          "cumulative_seconds": 54.98471717
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 3012,
+          "self_seconds": 54.930857436000004,
+          "cumulative_seconds": 54.930857436000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 318,
+          "function": "_face_frames",
+          "calls": 3327,
+          "self_seconds": 0.015858654,
+          "cumulative_seconds": 31.832825419000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py",
+          "line": 428,
+          "function": "result",
+          "calls": 3327,
+          "self_seconds": 0.020024495,
+          "cumulative_seconds": 31.759240736000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py",
+          "line": 295,
+          "function": "wait",
+          "calls": 1979,
+          "self_seconds": 0.011099709000000001,
+          "cumulative_seconds": 31.728336849
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'acquire' of '_thread.lock' objects>",
+          "calls": 3964,
+          "self_seconds": 31.708881402000003,
+          "cumulative_seconds": 31.708881402000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+          "line": 9,
+          "function": "rotated_pose_face",
+          "calls": 1252,
+          "self_seconds": 0.08480016600000001,
+          "cumulative_seconds": 19.304326826
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 320,
+          "self_seconds": 8.382551454,
+          "cumulative_seconds": 17.966407457000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 320,
+          "self_seconds": 0.008274159,
+          "cumulative_seconds": 9.583699293
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 320,
+          "self_seconds": 0.002055416,
+          "cumulative_seconds": 9.290655539000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 320,
+          "self_seconds": 9.288413839,
+          "cumulative_seconds": 9.288413839
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 275,
+          "function": "blur_quality_score",
+          "calls": 6054,
+          "self_seconds": 0.022818325,
+          "cumulative_seconds": 4.783221042
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 267,
+          "function": "face_embedding_quality",
+          "calls": 3027,
+          "self_seconds": 0.016301975,
+          "cumulative_seconds": 4.42894014
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 189,
+          "function": "_display_thumbnail",
+          "calls": 3027,
+          "self_seconds": 0.030076063000000004,
+          "cumulative_seconds": 2.614078181
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1225,
+          "self_seconds": 2.254733444,
+          "cumulative_seconds": 2.254733444
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'var' of 'numpy.ndarray' objects>",
+          "calls": 6054,
+          "self_seconds": 0.011329027,
+          "cumulative_seconds": 1.9742672330000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 148,
+          "function": "_var",
+          "calls": 6054,
+          "self_seconds": 1.102520069,
+          "cumulative_seconds": 1.962938206
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Laplacian>",
+          "calls": 6054,
+          "self_seconds": 1.9133933570000001,
+          "cumulative_seconds": 1.9133933570000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<warpAffine>",
+          "calls": 3347,
+          "self_seconds": 1.392603773,
+          "cumulative_seconds": 1.392603773
+        }
+      ]
+    },
+    "identity": {
+      "total_seconds": 11.492711999000003,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 88,
+          "self_seconds": 5.922374836,
+          "cumulative_seconds": 5.922374836
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 41,
+          "function": "match_video_anchors",
+          "calls": 1629,
+          "self_seconds": 1.2002316240000002,
+          "cumulative_seconds": 1.919209093
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 912,
+          "self_seconds": 1.028325811,
+          "cumulative_seconds": 1.028325811
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 1881446,
+          "self_seconds": 0.29916479500000004,
+          "cumulative_seconds": 0.39248740600000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 18,
+          "function": "_valid",
+          "calls": 2472603,
+          "self_seconds": 0.24254227900000003,
+          "cumulative_seconds": 0.24254227900000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 38028,
+          "self_seconds": 0.217479104,
+          "cumulative_seconds": 0.73241953
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py",
+          "line": 5,
+          "function": "embedding_failure",
+          "calls": 121600,
+          "self_seconds": 0.17766573400000002,
+          "cumulative_seconds": 0.5529718370000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 41,
+          "function": "_payload",
+          "calls": 370901,
+          "self_seconds": 0.154324725,
+          "cumulative_seconds": 0.489481115
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 64,
+          "function": "<listcomp>",
+          "calls": 1037,
+          "self_seconds": 0.15204050700000002,
+          "cumulative_seconds": 0.27196099900000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 88,
+          "function": "<listcomp>",
+          "calls": 1751,
+          "self_seconds": 0.148225078,
+          "cumulative_seconds": 0.285543941
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py",
+          "line": 205,
+          "function": "iterencode",
+          "calls": 23275,
+          "self_seconds": 0.09542665700000001,
+          "cumulative_seconds": 0.09542665700000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method math.isfinite>",
+          "calls": 3757613,
+          "self_seconds": 0.094518078,
+          "cumulative_seconds": 0.094518078
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/linalg/_linalg.py",
+          "line": 2598,
+          "function": "norm",
+          "calls": 124841,
+          "self_seconds": 0.09374215100000001,
+          "cumulative_seconds": 0.175652359
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 125875,
+          "self_seconds": 0.08475637700000001,
+          "cumulative_seconds": 0.08475637700000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 912,
+          "self_seconds": 0.078280609,
+          "cumulative_seconds": 0.078280609
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1258,
+          "function": "is_dataclass",
+          "calls": 364011,
+          "self_seconds": 0.074198554,
+          "cumulative_seconds": 0.132999966
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 45,
+          "function": "<dictcomp>",
+          "calls": 35966,
+          "self_seconds": 0.06906129700000001,
+          "cumulative_seconds": 0.429187113
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 35,
+          "function": "<genexpr>",
+          "calls": 722994,
+          "self_seconds": 0.068901047,
+          "cumulative_seconds": 0.07255298
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 40,
+          "function": "match_reference_views",
+          "calls": 1773,
+          "self_seconds": 0.062659147,
+          "cumulative_seconds": 0.940759487
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "calls": 1538061,
+          "self_seconds": 0.060062204,
+          "cumulative_seconds": 0.060062204
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 40,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 9.666e-06,
+          "cumulative_seconds": 11.511690958
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 259,
+          "function": "refine_member_timeline",
+          "calls": 1,
+          "self_seconds": 0.0009828340000000001,
+          "cumulative_seconds": 11.511674375
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 431,
+          "function": "_refine_member_scopes",
+          "calls": 3,
+          "self_seconds": 0.021424888000000003,
+          "cumulative_seconds": 11.508997916
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_identity.py",
+          "line": 115,
+          "function": "refine_switch_boundaries",
+          "calls": 5,
+          "self_seconds": 0.053893322,
+          "cumulative_seconds": 7.141470125000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 88,
+          "self_seconds": 5.922374836,
+          "cumulative_seconds": 5.922374836
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 41,
+          "function": "match_video_anchors",
+          "calls": 1629,
+          "self_seconds": 1.2002316240000002,
+          "cumulative_seconds": 1.919209093
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_recovery.py",
+          "line": 54,
+          "function": "match",
+          "calls": 3621,
+          "self_seconds": 0.008106977000000001,
+          "cumulative_seconds": 1.5955034110000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 242,
+          "function": "_prepare_observations",
+          "calls": 3,
+          "self_seconds": 9.741300000000001e-05,
+          "cumulative_seconds": 1.4869332910000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 248,
+          "function": "<listcomp>",
+          "calls": 21,
+          "self_seconds": 0.0020613840000000003,
+          "cumulative_seconds": 1.485799082
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 912,
+          "self_seconds": 1.028325811,
+          "cumulative_seconds": 1.028325811
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 40,
+          "function": "match_reference_views",
+          "calls": 1773,
+          "self_seconds": 0.062659147,
+          "cumulative_seconds": 0.940759487
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 8,
+          "function": "match_reference",
+          "calls": 5394,
+          "self_seconds": 0.013875019,
+          "cumulative_seconds": 0.84156631
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 38028,
+          "self_seconds": 0.217479104,
+          "cumulative_seconds": 0.73241953
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 53,
+          "function": "fingerprint",
+          "calls": 23275,
+          "self_seconds": 0.023008996,
+          "cumulative_seconds": 0.661240602
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 5,
+          "function": "independent_pair",
+          "calls": 14661,
+          "self_seconds": 0.014224897,
+          "cumulative_seconds": 0.6099727850000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/_vectors.py",
+          "line": 5,
+          "function": "embedding_failure",
+          "calls": 121600,
+          "self_seconds": 0.17766573400000002,
+          "cumulative_seconds": 0.5529718370000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/matching.py",
+          "line": 10,
+          "function": "result",
+          "calls": 5394,
+          "self_seconds": 0.005693931,
+          "cumulative_seconds": 0.49717936900000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 41,
+          "function": "_payload",
+          "calls": 370901,
+          "self_seconds": 0.154324725,
+          "cumulative_seconds": 0.489481115
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 196,
+          "function": "fingerprint",
+          "calls": 7167,
+          "self_seconds": 0.001592263,
+          "cumulative_seconds": 0.44793783000000004
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/contracts.py",
+          "line": 45,
+          "function": "<dictcomp>",
+          "calls": 35966,
+          "self_seconds": 0.06906129700000001,
+          "cumulative_seconds": 0.429187113
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 1881446,
+          "self_seconds": 0.29916479500000004,
+          "cumulative_seconds": 0.39248740600000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.any>",
+          "calls": 8760,
+          "self_seconds": 0.046565563000000004,
+          "cumulative_seconds": 0.374299033
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 78,
+          "function": "_named_ranges",
+          "calls": 21,
+          "self_seconds": 0.001921954,
+          "cumulative_seconds": 0.343425668
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 62,
+          "function": "_window_name",
+          "calls": 1037,
+          "self_seconds": 0.006326671000000001,
+          "cumulative_seconds": 0.323578246
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+          "line": 197,
+          "function": "_assign_piece",
+          "calls": 203,
+          "self_seconds": 0.0046562800000000005,
+          "cumulative_seconds": 0.306379583
+        }
+      ]
+    },
+    "secondary": {
+      "total_seconds": 30.20798159900002,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 14525,
+          "self_seconds": 11.700198747,
+          "cumulative_seconds": 11.700198747
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 2909,
+          "self_seconds": 9.95395032,
+          "cumulative_seconds": 9.95395032
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 40,
+          "self_seconds": 2.2635255020000002,
+          "cumulative_seconds": 2.2635255020000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 6809632,
+          "self_seconds": 1.208855607,
+          "cumulative_seconds": 1.540658118
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 59353,
+          "self_seconds": 0.9586696570000001,
+          "cumulative_seconds": 2.5509859500000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 29086,
+          "self_seconds": 0.677144156,
+          "cumulative_seconds": 0.677144156
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 81,
+          "function": "<listcomp>",
+          "calls": 4203,
+          "self_seconds": 0.411005123,
+          "cumulative_seconds": 0.424059509
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method math.isfinite>",
+          "calls": 13626092,
+          "self_seconds": 0.331802511,
+          "cumulative_seconds": 0.331802511
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.initialize_session>",
+          "calls": 1,
+          "self_seconds": 0.270049666,
+          "cumulative_seconds": 0.270049666
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'alignCrop' of 'cv2.FaceRecognizerSF' objects>",
+          "calls": 2869,
+          "self_seconds": 0.243077228,
+          "cumulative_seconds": 0.243077228
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<imdecode>",
+          "calls": 40,
+          "self_seconds": 0.23378762800000003,
+          "cumulative_seconds": 0.23378762800000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 36733,
+          "self_seconds": 0.14794126100000002,
+          "cumulative_seconds": 0.14794126100000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 137,
+          "function": "recover_secondary_names",
+          "calls": 1,
+          "self_seconds": 0.09984696900000001,
+          "cumulative_seconds": 30.219545333000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _hashlib.openssl_sha256>",
+          "calls": 122,
+          "self_seconds": 0.09420599900000001,
+          "cumulative_seconds": 0.09420599900000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 126,
+          "function": "<genexpr>",
+          "calls": 910622,
+          "self_seconds": 0.08646583000000001,
+          "cumulative_seconds": 0.10362602700000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method create>",
+          "calls": 1,
+          "self_seconds": 0.077258959,
+          "cumulative_seconds": 0.077258959
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 66,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 0.074384877,
+          "cumulative_seconds": 2.4777675020000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 37036,
+          "self_seconds": 0.06602704100000001,
+          "cumulative_seconds": 0.06602704100000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 14824,
+          "self_seconds": 0.065573965,
+          "cumulative_seconds": 0.24366108600000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 73,
+          "function": "_count_reduce_items",
+          "calls": 14904,
+          "self_seconds": 0.063308818,
+          "cumulative_seconds": 0.067513796
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 46,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.000320292,
+          "cumulative_seconds": 30.219866792
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 137,
+          "function": "recover_secondary_names",
+          "calls": 1,
+          "self_seconds": 0.09984696900000001,
+          "cumulative_seconds": 30.219545333000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 14525,
+          "self_seconds": 11.700198747,
+          "cumulative_seconds": 11.700198747
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py",
+          "line": 372,
+          "function": "run",
+          "calls": 2909,
+          "self_seconds": 0.014796914000000001,
+          "cumulative_seconds": 10.006139292
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method onnxruntime.capi.onnxruntime_pybind11_state.run>",
+          "calls": 2909,
+          "self_seconds": 9.95395032,
+          "cumulative_seconds": 9.95395032
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 169,
+          "function": "feature",
+          "calls": 2869,
+          "self_seconds": 0.039280021000000005,
+          "cumulative_seconds": 9.763725149
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 215,
+          "function": "feature",
+          "calls": 2869,
+          "self_seconds": 0.051124612,
+          "cumulative_seconds": 9.396852427
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 80,
+          "function": "run",
+          "calls": 2869,
+          "self_seconds": 0.020954775000000002,
+          "cumulative_seconds": 9.280044565
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 95,
+          "function": "get_face_embedding_candidate",
+          "calls": 40,
+          "self_seconds": 0.000448338,
+          "cumulative_seconds": 3.319683377
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+          "line": 98,
+          "function": "_inspect_face",
+          "calls": 40,
+          "self_seconds": 0.002010061,
+          "cumulative_seconds": 3.319235039
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 18,
+          "function": "joint_video_matches",
+          "calls": 1,
+          "self_seconds": 0.034011682,
+          "cumulative_seconds": 2.605130583
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 5,
+          "function": "independent_pair",
+          "calls": 55125,
+          "self_seconds": 0.043520837,
+          "cumulative_seconds": 2.5632203230000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "calls": 59353,
+          "self_seconds": 0.9586696570000001,
+          "cumulative_seconds": 2.5509859500000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+          "line": 66,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 0.074384877,
+          "cumulative_seconds": 2.4777675020000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 61,
+          "function": "detect",
+          "calls": 40,
+          "self_seconds": 0.000148536,
+          "cumulative_seconds": 2.3351075000000003
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 65,
+          "function": "_detect",
+          "calls": 40,
+          "self_seconds": 0.00092705,
+          "cumulative_seconds": 2.334952129
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+          "line": 169,
+          "function": "detect",
+          "calls": 40,
+          "self_seconds": 0.00027695700000000004,
+          "cumulative_seconds": 2.263826125
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detect' of 'cv2.FaceDetectorYN' objects>",
+          "calls": 40,
+          "self_seconds": 2.2635255020000002,
+          "cumulative_seconds": 2.2635255020000002
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+          "line": 12,
+          "function": "<genexpr>",
+          "calls": 6809632,
+          "self_seconds": 1.208855607,
+          "cumulative_seconds": 1.540658118
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 49,
+          "function": "classify_transition",
+          "calls": 14524,
+          "self_seconds": 0.032282476000000004,
+          "cumulative_seconds": 1.05353815
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py",
+          "line": 43,
+          "function": "feature",
+          "calls": 40,
+          "self_seconds": 0.000322003,
+          "cumulative_seconds": 0.7530687100000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 149,
+          "function": "run",
+          "calls": 40,
+          "self_seconds": 0.00013083500000000002,
+          "cumulative_seconds": 0.7519558350000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+          "line": 154,
+          "function": "_run",
+          "calls": 40,
+          "self_seconds": 0.000696195,
+          "cumulative_seconds": 0.7518100000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 29086,
+          "self_seconds": 0.677144156,
+          "cumulative_seconds": 0.677144156
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+          "line": 75,
+          "function": "match_secondary_video",
+          "calls": 467,
+          "self_seconds": 0.008722078000000001,
+          "cumulative_seconds": 0.5940432680000001
+        }
+      ]
+    },
+    "scene": {
+      "total_seconds": 23.411583416,
+      "top_self": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 84,
+          "self_seconds": 14.806548378,
+          "cumulative_seconds": 14.806548378
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 95,
+          "self_seconds": 5.967488873000001,
+          "cumulative_seconds": 5.967488873000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 84,
+          "self_seconds": 1.494777542,
+          "cumulative_seconds": 1.494777542
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 568,
+          "self_seconds": 0.6790124150000001,
+          "cumulative_seconds": 0.6790124150000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 29,
+          "function": "<dictcomp>",
+          "calls": 84,
+          "self_seconds": 0.09730871,
+          "cumulative_seconds": 0.100340043
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'grab' of 'cv2.VideoCapture' objects>",
+          "calls": 201,
+          "self_seconds": 0.073063089,
+          "cumulative_seconds": 0.073063089
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1766,
+          "self_seconds": 0.07234631100000001,
+          "cumulative_seconds": 0.07234631100000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 2084,
+          "self_seconds": 0.02492667,
+          "cumulative_seconds": 0.02492667
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 28,
+          "function": "matches",
+          "calls": 84,
+          "self_seconds": 0.01971675,
+          "cumulative_seconds": 1.614834335
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/source_reader.py",
+          "line": 18,
+          "function": "get",
+          "calls": 956,
+          "self_seconds": 0.012624885,
+          "cumulative_seconds": 6.735115042
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<Sobel>",
+          "calls": 1908,
+          "self_seconds": 0.012380653,
+          "cumulative_seconds": 0.012380653
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method numpy.asarray>",
+          "calls": 3147,
+          "self_seconds": 0.012328036,
+          "cumulative_seconds": 0.012328036
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 25,
+          "function": "<listcomp>",
+          "calls": 84,
+          "self_seconds": 0.009489749,
+          "cumulative_seconds": 0.009489749
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 2495,
+          "self_seconds": 0.009302658,
+          "cumulative_seconds": 0.023095079
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+          "calls": 3942,
+          "self_seconds": 0.008873242,
+          "cumulative_seconds": 0.008873242
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 7,
+          "function": "_distance",
+          "calls": 1530,
+          "self_seconds": 0.008737965,
+          "cumulative_seconds": 0.03918089
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/shape_base.py",
+          "line": 378,
+          "function": "stack",
+          "calls": 954,
+          "self_seconds": 0.0066589200000000005,
+          "cumulative_seconds": 0.00862634
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 12,
+          "function": "structural_continuity",
+          "calls": 42,
+          "self_seconds": 0.006512355,
+          "cumulative_seconds": 16.473337131
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.006077334,
+          "cumulative_seconds": 23.411479083
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'astype' of 'numpy.ndarray' objects>",
+          "calls": 993,
+          "self_seconds": 0.004724679000000001,
+          "cumulative_seconds": 0.004724679000000001
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 57,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 0.000102125,
+          "cumulative_seconds": 23.411581208
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.006077334,
+          "cumulative_seconds": 23.411479083
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 172,
+          "function": "verify",
+          "calls": 400,
+          "self_seconds": 0.002326649,
+          "cumulative_seconds": 23.393970781
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 12,
+          "function": "structural_continuity",
+          "calls": 42,
+          "self_seconds": 0.006512355,
+          "cumulative_seconds": 16.473337131
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'detectAndCompute' of 'cv2.Feature2D' objects>",
+          "calls": 84,
+          "self_seconds": 14.806548378,
+          "cumulative_seconds": 14.806548378
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 49,
+          "function": "classify_transition",
+          "calls": 388,
+          "self_seconds": 0.001537947,
+          "cumulative_seconds": 9.267394580000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 55,
+          "function": "spatial_cut_evidence",
+          "calls": 18,
+          "self_seconds": 0.001045134,
+          "cumulative_seconds": 7.289276706000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/source_reader.py",
+          "line": 18,
+          "function": "get",
+          "calls": 956,
+          "self_seconds": 0.012624885,
+          "cumulative_seconds": 6.735115042
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'set' of 'cv2.VideoCapture' objects>",
+          "calls": 95,
+          "self_seconds": 5.967488873000001,
+          "cumulative_seconds": 5.967488873000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 28,
+          "function": "matches",
+          "calls": 84,
+          "self_seconds": 0.01971675,
+          "cumulative_seconds": 1.614834335
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'knnMatch' of 'cv2.DescriptorMatcher' objects>",
+          "calls": 84,
+          "self_seconds": 1.494777542,
+          "cumulative_seconds": 1.494777542
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 186,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 0.00020192200000000002,
+          "cumulative_seconds": 1.3432725010000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'read' of 'cv2.VideoCapture' objects>",
+          "calls": 568,
+          "self_seconds": 0.6790124150000001,
+          "cumulative_seconds": 0.6790124150000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+          "line": 29,
+          "function": "<dictcomp>",
+          "calls": 84,
+          "self_seconds": 0.09730871,
+          "cumulative_seconds": 0.100340043
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 23,
+          "function": "spatial_cut_candidate",
+          "calls": 387,
+          "self_seconds": 0.00110891,
+          "cumulative_seconds": 0.09517971400000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 15,
+          "function": "_features",
+          "calls": 954,
+          "self_seconds": 0.004473935,
+          "cumulative_seconds": 0.08400204700000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'grab' of 'cv2.VideoCapture' objects>",
+          "calls": 201,
+          "self_seconds": 0.073063089,
+          "cumulative_seconds": 0.073063089
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<resize>",
+          "calls": 1766,
+          "self_seconds": 0.07234631100000001,
+          "cumulative_seconds": 0.07234631100000001
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 7,
+          "function": "_distance",
+          "calls": 1530,
+          "self_seconds": 0.008737965,
+          "cumulative_seconds": 0.03918089
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<cvtColor>",
+          "calls": 2084,
+          "self_seconds": 0.02492667,
+          "cumulative_seconds": 0.02492667
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'mean' of 'numpy.ndarray' objects>",
+          "calls": 2279,
+          "self_seconds": 0.00087166,
+          "cumulative_seconds": 0.023228439
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py",
+          "line": 115,
+          "function": "_mean",
+          "calls": 2495,
+          "self_seconds": 0.009302658,
+          "cumulative_seconds": 0.023095079
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+          "line": 36,
+          "function": "_color_cut",
+          "calls": 388,
+          "self_seconds": 0.001210888,
+          "cumulative_seconds": 0.01678446
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 67,
+          "function": "<listcomp>",
+          "calls": 18,
+          "self_seconds": 6.0582000000000004e-05,
+          "cumulative_seconds": 0.01532254
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+          "line": 33,
+          "function": "_color_layout_agreement",
+          "calls": 18,
+          "self_seconds": 0.003242373,
+          "cumulative_seconds": 0.014027377
+        }
+      ]
+    },
+    "scene_reused": {
+      "total_seconds": 0.002946875,
+      "top_self": [
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.000909174,
+          "cumulative_seconds": 0.00292075
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 75,
+          "function": "align_scene_segment_boundaries",
+          "calls": 1,
+          "self_seconds": 0.00048066700000000005,
+          "cumulative_seconds": 0.00172875
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 120,
+          "function": "<listcomp>",
+          "calls": 116,
+          "self_seconds": 0.000450752,
+          "cumulative_seconds": 0.000450752
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 127,
+          "function": "<listcomp>",
+          "calls": 1,
+          "self_seconds": 0.000334932,
+          "cumulative_seconds": 0.00038620900000000004
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1455,
+          "function": "replace",
+          "calls": 116,
+          "self_seconds": 0.000135498,
+          "cumulative_seconds": 0.00019459200000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "calls": 2759,
+          "self_seconds": 0.000113412,
+          "cumulative_seconds": 0.000113412
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 110,
+          "function": "aligned",
+          "calls": 2,
+          "self_seconds": 8.9725e-05,
+          "cumulative_seconds": 0.000752333
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 172,
+          "function": "verify",
+          "calls": 400,
+          "self_seconds": 5.4669e-05,
+          "cumulative_seconds": 5.4669e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method posix.lstat>",
+          "calls": 9,
+          "self_seconds": 4.8916000000000004e-05,
+          "cumulative_seconds": 4.8916000000000004e-05
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 139,
+          "function": "<genexpr>",
+          "calls": 688,
+          "self_seconds": 4.2638e-05,
+          "cumulative_seconds": 4.2638e-05
+        },
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 61,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 2.6000000000000002e-05,
+          "cumulative_seconds": 0.00294675
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method sys.intern>",
+          "calls": 18,
+          "self_seconds": 2.4917000000000002e-05,
+          "cumulative_seconds": 2.4917000000000002e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sum>",
+          "calls": 1,
+          "self_seconds": 2.4404000000000002e-05,
+          "cumulative_seconds": 6.7042e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.round>",
+          "calls": 388,
+          "self_seconds": 2.2773e-05,
+          "cumulative_seconds": 2.2773e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1253,
+          "function": "_is_dataclass_instance",
+          "calls": 116,
+          "self_seconds": 1.8639000000000002e-05,
+          "cumulative_seconds": 2.5669e-05
+        },
+        {
+          "file": "<frozen posixpath>",
+          "line": 421,
+          "function": "_joinrealpath",
+          "calls": 1,
+          "self_seconds": 1.6040000000000002e-05,
+          "cumulative_seconds": 8.108300000000001e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _bisect.bisect_right>",
+          "calls": 194,
+          "self_seconds": 1.539e-05,
+          "cumulative_seconds": 1.539e-05
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__init__",
+          "calls": 116,
+          "self_seconds": 1.4298000000000001e-05,
+          "cumulative_seconds": 1.4298000000000001e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "calls": 348,
+          "self_seconds": 1.4043000000000001e-05,
+          "cumulative_seconds": 1.4043000000000001e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 484,
+          "function": "_parse_args",
+          "calls": 2,
+          "self_seconds": 1.3083000000000002e-05,
+          "cumulative_seconds": 5.3125000000000004e-05
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "/private/tmp/dance-deep-profile-20261102/profile_stages.py",
+          "line": 61,
+          "function": "<lambda>",
+          "calls": 1,
+          "self_seconds": 2.6000000000000002e-05,
+          "cumulative_seconds": 0.00294675
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 144,
+          "function": "align_scene_segments_from_source",
+          "calls": 1,
+          "self_seconds": 0.000909174,
+          "cumulative_seconds": 0.00292075
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 75,
+          "function": "align_scene_segment_boundaries",
+          "calls": 1,
+          "self_seconds": 0.00048066700000000005,
+          "cumulative_seconds": 0.00172875
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 110,
+          "function": "aligned",
+          "calls": 2,
+          "self_seconds": 8.9725e-05,
+          "cumulative_seconds": 0.000752333
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 120,
+          "function": "<listcomp>",
+          "calls": 116,
+          "self_seconds": 0.000450752,
+          "cumulative_seconds": 0.000450752
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 127,
+          "function": "<listcomp>",
+          "calls": 1,
+          "self_seconds": 0.000334932,
+          "cumulative_seconds": 0.00038620900000000004
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1455,
+          "function": "replace",
+          "calls": 116,
+          "self_seconds": 0.000135498,
+          "cumulative_seconds": 0.00019459200000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "calls": 2759,
+          "self_seconds": 0.000113412,
+          "cumulative_seconds": 0.000113412
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 981,
+          "function": "resolve",
+          "calls": 1,
+          "self_seconds": 6.416e-06,
+          "cumulative_seconds": 0.00011237500000000001
+        },
+        {
+          "file": "<frozen posixpath>",
+          "line": 412,
+          "function": "realpath",
+          "calls": 1,
+          "self_seconds": 1.2080000000000001e-06,
+          "cumulative_seconds": 9.062500000000001e-05
+        },
+        {
+          "file": "<frozen posixpath>",
+          "line": 421,
+          "function": "_joinrealpath",
+          "calls": 1,
+          "self_seconds": 1.6040000000000002e-05,
+          "cumulative_seconds": 8.108300000000001e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sum>",
+          "calls": 1,
+          "self_seconds": 2.4404000000000002e-05,
+          "cumulative_seconds": 6.7042e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 504,
+          "function": "_from_parts",
+          "calls": 2,
+          "self_seconds": 3.6670000000000002e-06,
+          "cumulative_seconds": 5.7042e-05
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 172,
+          "function": "verify",
+          "calls": 400,
+          "self_seconds": 5.4669e-05,
+          "cumulative_seconds": 5.4669e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 484,
+          "function": "_parse_args",
+          "calls": 2,
+          "self_seconds": 1.3083000000000002e-05,
+          "cumulative_seconds": 5.3125000000000004e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 868,
+          "function": "__new__",
+          "calls": 1,
+          "self_seconds": 1.334e-06,
+          "cumulative_seconds": 5.0167e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method posix.lstat>",
+          "calls": 9,
+          "self_seconds": 4.8916000000000004e-05,
+          "cumulative_seconds": 4.8916000000000004e-05
+        },
+        {
+          "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+          "line": 139,
+          "function": "<genexpr>",
+          "calls": 688,
+          "self_seconds": 4.2638e-05,
+          "cumulative_seconds": 4.2638e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py",
+          "line": 56,
+          "function": "parse_parts",
+          "calls": 2,
+          "self_seconds": 9.458e-06,
+          "cumulative_seconds": 3.9583000000000004e-05
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.11/3.11.12/Frameworks/Python.framework/Versions/3.11/lib/python3.11/dataclasses.py",
+          "line": 1253,
+          "function": "_is_dataclass_instance",
+          "calls": 116,
+          "self_seconds": 1.8639000000000002e-05,
+          "cumulative_seconds": 2.5669e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method sys.intern>",
+          "calls": 18,
+          "self_seconds": 2.4917000000000002e-05,
+          "cumulative_seconds": 2.4917000000000002e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.round>",
+          "calls": 388,
+          "self_seconds": 2.2773e-05,
+          "cumulative_seconds": 2.2773e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _bisect.bisect_right>",
+          "calls": 194,
+          "self_seconds": 1.539e-05,
+          "cumulative_seconds": 1.539e-05
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__init__",
+          "calls": 116,
+          "self_seconds": 1.4298000000000001e-05,
+          "cumulative_seconds": 1.4298000000000001e-05
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "calls": 348,
+          "self_seconds": 1.4043000000000001e-05,
+          "cumulative_seconds": 1.4043000000000001e-05
+        }
+      ]
+    }
+  }
+}

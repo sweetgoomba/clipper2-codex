@@ -1,0 +1,224 @@
+{
+  "MMN": {
+    "project_id": "1793649506337",
+    "seconds": 0.00899662502342835,
+    "projection_guard_seconds": 0.001826499996241182,
+    "projection_conflicts": [],
+    "source_sha256": "bcfb86378e111ec7c294a8dfe116adca9a59549cbc0df038fc161ba3b8b63a04",
+    "before": {
+      "clips": 68,
+      "short": 27,
+      "unknown": 5.672633333333366
+    },
+    "after": {
+      "clips": 67,
+      "short": 26,
+      "unknown": 5.6392666666667
+    },
+    "audit": {
+      "version": "single_observation_boundary_v1",
+      "joins": [
+        {
+          "source_indices": [
+            30,
+            31
+          ],
+          "boundary": 88.25483333333334,
+          "canonical_time": 88.2882,
+          "observation_frames": [
+            5288,
+            5292
+          ],
+          "event_uncertainty": [
+            88.22146666666667,
+            88.2882
+          ],
+          "event": "main_handoff",
+          "support_frames": [
+            5256,
+            5260,
+            5264,
+            5268,
+            5272,
+            5276,
+            5280,
+            5284,
+            5288
+          ],
+          "name": "김채원",
+          "newly_named_seconds": 0.03336666666666588,
+          "unknown_delta_seconds": -0.03336666666666588,
+          "reason": "existing_observation_boundary_policy"
+        }
+      ],
+      "rejected": []
+    },
+    "main_union_unchanged": true,
+    "group_unchanged": true,
+    "observations_unchanged": true
+  },
+  "ANT": {
+    "project_id": "1793649573540",
+    "seconds": 0.0022842499893158674,
+    "projection_guard_seconds": 0.0026504590059630573,
+    "projection_conflicts": [],
+    "source_sha256": "467f86b4165feda8ee5bb3a1d0b5dd67450a8b1504df1ad463eacf87a874b544",
+    "before": {
+      "clips": 116,
+      "short": 60,
+      "unknown": 14.349066666666722
+    },
+    "after": {
+      "clips": 116,
+      "short": 60,
+      "unknown": 14.349066666666722
+    },
+    "audit": {
+      "version": "single_observation_boundary_v1",
+      "joins": [],
+      "rejected": []
+    },
+    "main_union_unchanged": true,
+    "group_unchanged": true,
+    "observations_unchanged": true
+  },
+  "NEON": {
+    "project_id": "1793649654322",
+    "seconds": 0.01624091702979058,
+    "projection_guard_seconds": 0.012341999972704798,
+    "projection_conflicts": [
+      {
+        "parent_span": 112,
+        "start": 187.72086666666667,
+        "end": 187.75433333333334,
+        "name": "영",
+        "reason": "conflicting_projected_identity",
+        "conflicting_faces": [
+          {
+            "frame": 11252,
+            "name": "아이찡"
+          }
+        ]
+      }
+    ],
+    "source_sha256": "bc10f298a99688928c1576db01d85b3d41b53fea2fbb9e7ce031cbddcfe7814a",
+    "before": {
+      "clips": 190,
+      "short": 108,
+      "unknown": 16.784933333333466
+    },
+    "after": {
+      "clips": 187,
+      "short": 105,
+      "unknown": 16.78503333333347
+    },
+    "audit": {
+      "version": "single_observation_boundary_v1",
+      "joins": [
+        {
+          "source_indices": [
+            13,
+            14
+          ],
+          "boundary": 42.609233333333336,
+          "canonical_time": 42.6426,
+          "observation_frames": [
+            2552,
+            2556
+          ],
+          "event_uncertainty": [
+            42.57586666666667,
+            42.6426
+          ],
+          "event": "scene_exit",
+          "support_frames": [
+            2552
+          ],
+          "name": null,
+          "newly_named_seconds": 0.0,
+          "unknown_delta_seconds": -0.0,
+          "reason": "existing_observation_boundary_policy"
+        },
+        {
+          "source_indices": [
+            113,
+            114
+          ],
+          "boundary": 189.95643333333334,
+          "canonical_time": 189.9898,
+          "observation_frames": [
+            11384,
+            11388
+          ],
+          "event_uncertainty": [
+            189.92306666666667,
+            189.9898
+          ],
+          "event": "scene_exit",
+          "support_frames": [
+            11352,
+            11356,
+            11360,
+            11364,
+            11368,
+            11372,
+            11376,
+            11380,
+            11384
+          ],
+          "name": "메르시",
+          "newly_named_seconds": 0.03336666666666588,
+          "unknown_delta_seconds": -0.03336666666666588,
+          "reason": "existing_observation_boundary_policy"
+        },
+        {
+          "source_indices": [
+            134,
+            135
+          ],
+          "boundary": 221.85496666666668,
+          "canonical_time": 221.88833333333335,
+          "observation_frames": [
+            13296,
+            13300
+          ],
+          "event_uncertainty": [
+            221.82160000000002,
+            221.88833333333335
+          ],
+          "event": "scene_exit",
+          "support_frames": [
+            13296
+          ],
+          "name": null,
+          "newly_named_seconds": 0.0,
+          "unknown_delta_seconds": -0.0,
+          "reason": "existing_observation_boundary_policy"
+        }
+      ],
+      "rejected": [
+        {
+          "source_indices": [
+            5,
+            6
+          ],
+          "boundary": 34.3343,
+          "canonical_time": 34.367666666666665,
+          "observation_frames": [
+            2056,
+            2060
+          ],
+          "event_uncertainty": [
+            34.30093333333333,
+            34.367666666666665
+          ],
+          "event": "main_handoff",
+          "reason": "unconfirmed_outgoing_name"
+        }
+      ]
+    },
+    "main_union_unchanged": true,
+    "group_unchanged": true,
+    "observations_unchanged": true
+  }
+}

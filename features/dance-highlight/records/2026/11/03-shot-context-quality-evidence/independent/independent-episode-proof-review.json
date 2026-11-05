@@ -1,0 +1,345 @@
+{
+  "date": "2026-11-03 Asia/Seoul",
+  "scope": "Independent read-only structural review of final 414-clip baseline. No product edits, ML inference, SAM, or Person changes.",
+  "baseline_ids": {
+    "MMN": "1793633624877",
+    "ANT": "1793633679903",
+    "NEON": "1793633791815"
+  },
+  "finding": "Visual continuity is a sufficient proof route for filling unknown face gaps, not the definition of a continuous main-role part. Named-output coalescing already crosses cuts. Existing scene_context bounded group eligibility already has shot-local identity/cut/path support and should be reused or extended narrowly rather than inventing a global camera exception; the unknown face-gap path lacks this separate route.",
+  "source_references": [
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+      "line": 99,
+      "fact": "Every source frame is scanned; color_cut immediately rejects and isolated luma spike rejects after measured selected-body/pose links."
+    },
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/output_continuity.py",
+      "line": 205,
+      "fact": "Named adjacent spans may merge using original union identity support and handoff veto, without a source-cut veto."
+    },
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py",
+      "line": 164,
+      "fact": "confirmed_main_handoffs skips pairs crossing source cuts. An empty handoff list cannot prove same identity through an editorial cut."
+    },
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_role_timeline.py",
+      "line": 6,
+      "fact": "0.15s support confirms continuous-shot composition changes and backdates to the first supporting observation; cut reacquisition resets and may select immediately."
+    },
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+      "line": 130,
+      "fact": "Repeated-face conflict uses time-spanning coherent local evidence. Single embedding outliers do not automatically create a new part."
+    },
+    {
+      "file": "/Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/scene_context.py",
+      "line": 48,
+      "fact": "_composition requires exactly one torso crossing image center, which rejects off-center foreground even with accepted identity; the bounded path already protects original same-name support, local ownership, scene type, cuts, and strict within-shot body correspondence."
+    }
+  ],
+  "prior_counterexample_interpretation": {
+    "actual_modifications": "Only one unsampled source frame590 had foreground noise or mirroring; original identity/pose cache and observed frames588/592 stayed unchanged.",
+    "established": "The prior camera-model acceptance did not measure the intervening foreground pixels; global background flow and interpolated pose were insufficient to claim measured foreground continuity.",
+    "not_established": "It did not demonstrate a different real member or a sustained 0.15s role handoff. Mirror preserves the original identity; noise destroys visibility. Do not describe this as a proven member-switch regression.",
+    "appropriate_rule": "Treat unexplained foreground anomalies as uncertainty needing local original observation, not as automatically confirmed handoffs. A real, independently evidenced short B insert remains protected even below0.15s; the threshold is not a clip-length floor."
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "name": "Two-sided, shot-local identity and main-role proof before output union",
+      "placement": "A distinct proof path used for two-sided same-member unknown gaps in performance_parts; leave existing one-sided observed_member_edges requirements and original recognition spans intact.",
+      "proof_unit": "A sequence of source-local role intervals. Each interval owns original selected-body observations, identity evidence, competing-body checks, and observed scene eligibility. Source cuts reset visual correspondence, not necessarily the semantic member part.",
+      "acceptance": [
+        "Within each shot, a unique measured selected-body chain plus original same-member identity support; every shot must be accounted for.",
+        "Across a real cut, independently establish the same named selected main on each side; never transfer a body track or interpolated pose across the cut as identity proof.",
+        "For a lighting/zoom anomaly, validate foreground observations local to that anomaly and its supported episode rather than requiring every pixel to look similar or using a background camera model alone.",
+        "Require explicit absence of supported competing identity, confirmed main takeover, or intervening group/duet in the actual local evidence; handoffs=[] alone is insufficient.",
+        "Same-member output names may nominate a candidate, but original face/reference evidence must establish it. Preserve source timestamps, original spans, original labels, and cumulative-union conflict checks.",
+        "Unobserved intermediate shots or unresolved identity/role changes stay separate or unknown; no duration-based deletion or no-unknown target."
+      ],
+      "candidate_priority": [
+        "MMN38.204733–39.3393 (1.134567s): measured body links all passed, no raw cut, isolated luminance/zoom rejection. Positive investigation candidate, not approved recovery.",
+        "ANT9.9098–10.276933 (0.367133s): source616 flags lighting change; full sampled body chain passed. Positive investigation candidate, not approved recovery.",
+        "ANT64.430933–64.898267 (0.467333s): actual cut3858, direct original support on both shots but gap begins in later shot. Requires shot-local ownership/role proof; do not infer a cross-cut body link."
+      ],
+      "limits": "Same-name unknown blocks13 /11.045467s are a candidate inventory, not safe recovery. Four old visual-failure blocks total3.771033s but include unsafe ANT181 ensemble. The above three local windows total1.969033s before any proof; no measured gain claimed.",
+      "reuse_existing_proof": "scene_context.preserve_main_context already separates within-shot strict pose continuity from cross-shot independent original faces for bounded groups. Preserve that semantic unit and its original-evidence provenance; do not make a second generic camera override."
+    },
+    {
+      "priority": 2,
+      "name": "Fix distant-ensemble eligibility using observed participants before identity output",
+      "evidence": "NEON154.2–157.9 has56 pose rows: main10, no_person21, group25; final output has7 unknown-main pieces and4 group pieces. no_person rows contain zero body boxes, so they do not establish an empty stage.",
+      "approach": "Evaluate complete and reliably observed partial torso/head participants at scene scale; retain explicit vetoes for distinct close foreground or unmeasured plausible foreground competitors. Use native/source-local observations to resolve missing detections. Preserve raw body arrays and eligibility provenance.",
+      "limits": "No automatic interpolation across no_person, no deletion of partial bodies merely to reduce fragmentation, and no change to any names or main/group overlap policy. Scene agent owns implementation. This can address fragmentation upstream; safe gain is unmeasured."
+    }
+  ],
+  "protected_counterexamples": [
+    {
+      "case": "ANT82.182–82.683",
+      "why": "Actual central selected-body takeover without a useful handoff audit; original appearance/pose chain fails at4936 and4952. Must not propagate outgoing identity on no-handoff or smooth background."
+    },
+    {
+      "case": "NEON115.6155–115.9158",
+      "why": "Actual cut6930 to a duet/wide composition. Both appearance and pose correspondence fail at6932. Same center or prior label cannot prove one continuing solo role."
+    },
+    {
+      "case": "ANT180.8806–182.6826",
+      "why": "Same-name bracket spans a wide ensemble with competitors; do not equate a continuing center position with independently proven main role."
+    },
+    {
+      "case": "NEON93.059533–94.928167",
+      "why": "Original coherent repeated_face_change94.5945 survives even when member names are unresolved. Accumulated unknown or named unions must retain this veto."
+    },
+    {
+      "case": "Synthetic single anomaly vs repeated B",
+      "why": "A one-observation embedding/composition outlier is not sufficient to force a new role; a coherent B episode spanning0.2002s creates two identity boundaries and backdated role change. A separately cut short B is not erased by a0.15s floor."
+    },
+    {
+      "case": "Same outfit, faceless competitor, A-B-A across cut, reorder of boxes, missing/collapsed pose, source/cache mismatch",
+      "why": "Test independent identity/role ownership rather than body-array indices, background similarity, one-sided names, or recycled synthetic anchors."
+    }
+  ],
+  "support_probe": {
+    "path": "/private/tmp/dance-episode-review-20261103/independent-support-semantics-probe.json",
+    "checks": 5,
+    "all_passed": true,
+    "frozen_current_semantics_match": {
+      "main_role_timeline.py": true,
+      "member_timeline.py": true,
+      "stage_prominence.py": true
+    }
+  },
+  "structural_inventory": {
+    "path": "/private/tmp/dance-episode-review-20261103/fragment-pattern-inventory.json",
+    "named_short": 71,
+    "unknown_short": 80,
+    "group_short": 79,
+    "adjacent_same_named_short": 0,
+    "named_short_touching_unknown": 31,
+    "group_short_already_covered_by_one_named_main": 22,
+    "note": "Do not optimize short-count by deleting valid parallel main/group results."
+  },
+  "source_hashes": {
+    "main_role_timeline.py": {
+      "current_sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637",
+      "probe_frozen_sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+    },
+    "member_timeline.py": {
+      "current_sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6",
+      "probe_frozen_sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+    },
+    "stage_prominence.py": {
+      "current_sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a",
+      "probe_frozen_sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+    },
+    "body_continuity.py": {
+      "current_sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3",
+      "probe_frozen_sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3"
+    },
+    "output_continuity.py": {
+      "current_sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6",
+      "probe_frozen_sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+    },
+    "performance_parts.py": {
+      "current_sha256": "8c81570530cf5273ac3241bebcba3fc8f9c03877ebdf0626226b9dc50bf64b26",
+      "probe_frozen_sha256": "efac9af090367b1652e0de03f80c97d0e46487e483be445b4dc1bddbd61716d0"
+    },
+    "observed_main.py": {
+      "current_sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7",
+      "probe_frozen_sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+    },
+    "observed_member_edges.py": {
+      "current_sha256": "167fcd64e8926535640730bda97c8d7115fde202ff9c41a2a7eeb4e3355c3a1d",
+      "probe_frozen_sha256": null
+    }
+  },
+  "conclusion": "Recommend the two proof directions above; do not revive the old camera exception or approve any new merge based on this analysis alone.",
+  "group_foreground_followup": {
+    "reviewed_original_contacts": [
+      "/private/tmp/dance-continuity-next-20261103/MMN-group-examples.jpg",
+      "/private/tmp/dance-continuity-next-20261103/ANT-group-examples.jpg",
+      "/private/tmp/dance-continuity-next-20261103/NEON-group-examples.jpg"
+    ],
+    "audit": "/private/tmp/dance-episode-review-20261103/group-foreground-independent-audit.json",
+    "proposal_verdict": "Support a narrow additional positive role criterion in the existing bounded same-original-name group-to-main path, not a widened central stripe or weaker recognition threshold. Prototype and negative replay still required before approving an output change.",
+    "candidate_results": {
+      "NEON98.2982–98.5317667": {
+        "joint_accepted": 4,
+        "observations": 4,
+        "old_composition": 0,
+        "recomputed_foreground": 4,
+        "explicit_all_competitor_torso_guard": 4,
+        "actual_detected_face_rows": 4,
+        "independent_positive_span_seconds": 0.2002,
+        "verdict": "Best clean positive candidate; full existing bounded path must still pass."
+      },
+      "ANT174.5076667–175.2417333": {
+        "joint_accepted": 10,
+        "observations": 11,
+        "old_composition": 4,
+        "recomputed_foreground": 6,
+        "explicit_all_competitor_torso_guard": 7,
+        "old_or_safe_positive_fail_frames": [
+          10468,
+          10496
+        ],
+        "verdict": "Do not approve whole interval from the proposed simple OR. Explain remaining rows through independent ongoing-role evidence or hold. Avoid producing extra fragments from partial eligibility restoration."
+      },
+      "MMN104.5711333–104.9048": {
+        "joint_accepted": 5,
+        "observations": 5,
+        "old_composition": 0,
+        "recomputed_foreground": 0,
+        "explicit_all_competitor_torso_guard": 0,
+        "verdict": "Hold: accepted identity alone is not proof of the main role."
+      }
+    },
+    "required_positive_evidence": [
+      "Original detector-backed selected face, not a role reason string or repeated_same_pose_geometry stand-in.",
+      "Recompute simultaneous face and torso prominence against retained measured competitors; maintain veto for any plausible central foreground whose face/pose is missing.",
+      "Time-spanning positive role support on the same measured selected-body path, retaining original cut/handoff/group/duet and repeated-identity conflict rules.",
+      "Only bounded existing-original-name group eligibility changes; no new name/anchor/gallery and no relaxed identity matching.",
+      "Audit the full accumulated interval and exact eligible frames; do not silently bridge the two ANT rows that fail both criteria."
+    ],
+    "counterexample": {
+      "path": "/private/tmp/dance-episode-review-20261103/foreground-faceless-competitor-probe.json",
+      "description": "Add one observed central large body with missing face/pose to original NEON5892. foreground_subject still accepts its prior target because it skips size=None; explicit all-competitor torso guard correctly rejects.",
+      "implication": "A bare OR with foreground_subject or corroborated_foreground_subject text is insufficient."
+    },
+    "priority": "Within scene-eligibility work, investigate the fully supported NEON98 bounded interval first; keep remote ensemble work separate and measured."
+  },
+  "implementation_review": {
+    "bounded_foreground": "/private/tmp/dance-episode-review-20261103/bounded-foreground-implementation-independent-review.json",
+    "bounded_checks": 20,
+    "bounded_passed": true,
+    "product_related_tests": 120,
+    "updated_foreground_tests": 17,
+    "exclusive_followup": {
+      "status": "P2 corrected and independently verified",
+      "problem": "Whole-original-run exclusivity is evaluated on a remainder after center/context changes; mixed runs can lose only the foreground tail group export.",
+      "evidence": "/private/tmp/dance-episode-review-20261103/mixed-original-group-exclusive-probe.json",
+      "reproducer": "/private/tmp/dance-episode-review-20261103/probe_mixed_original_group.py",
+      "fixed_evidence": "/private/tmp/dance-episode-review-20261103/mixed-original-group-exclusive-fixed.json",
+      "preserved_whole_mixed_group": true,
+      "actual_neon_only4_group_exports_removed": true
+    },
+    "partial_presence": "/private/tmp/dance-episode-review-20261103/partial-presence-independent-review.json",
+    "partial_tests": 27,
+    "partial_checks": 19,
+    "partial_verdict": "Narrow actual evidence passed; recommend deferring integration for one group join with0.133467s new group time, no identity/unknown improvement, and approx2.31s extra dense source verification.",
+    "bounded_verdict": "No blocking finding in the reviewed bounded foreground scope after P2 correction; final actual-app output still requires validation.",
+    "source_snapshot": "/private/tmp/dance-episode-review-20261103/bounded-foreground-reviewed-source",
+    "nonsemantic_post_review_source_changes": {
+      "stage_prominence.py": {
+        "executed_sha256": "fd735c3c4a1966ecbca5a712d37c6635e350f236b5af2ed3b887f5822a8e27e3",
+        "current_sha256": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+        "only_removed_trailing_newline": true
+      }
+    }
+  },
+  "temporal_role_state_review": {
+    "concept": "Maintaining an independently established main role need not require re-establishing maximum foreground prominence on every frame. Positive temporal composition evidence must replace the per-frame center line; absent handoffs alone is insufficient.",
+    "proof": [
+      "Both original named main intervals have independent temporal support.",
+      "Within each shot, selected-body ownership and relevant competitor arrangement remain measurably consistent. Camera motion cannot be proved using background alone.",
+      "Every included sample remains near original face evidence in its own shot; no original unknown identity is silently created.",
+      "Supported rival takeover, duet/ensemble reconfiguration, missing relevant competitor observations, or native distant ensemble terminates or leaves the state unresolved.",
+      "A new shot needs independent role/identity support; stable track indices cannot transfer identity across cuts."
+    ],
+    "output_contract": "Main-part inclusion and exclusive group removal are separate decisions. Temporal role continuity may justify existing dual eligibility; only complete original-run exclusive foreground proof removes group exports.",
+    "actual_window_evidence": "/private/tmp/dance-episode-review-20261103/role-state-local-evidence.json",
+    "approval": "Conceptually supported; MMN104/ANT174 additional restoration remains unapproved pending an explicit temporal proof and real-negative evaluation."
+  },
+  "shot_member_gap_review": {
+    "scope": "cached-original-evidence independent replay and adversarial probes, not a new actual app run",
+    "report": "/private/tmp/dance-episode-review-20261103/shot-gaps-independent-review.json",
+    "checks_passed": 22,
+    "pytest_passed": 71,
+    "new_named_seconds": {
+      "MMN": 0,
+      "ANT": 0.46733333333334315,
+      "NEON": 0
+    },
+    "source_runtime_ANT_seconds": 0.19289812503848225,
+    "source_reads_ANT": 49,
+    "open_finding": null,
+    "probe": "/private/tmp/dance-episode-review-20261103/shot-unsampled-source-edge-independent-probe.json",
+    "fixed_prior_finding": "closed handoff bracket protects exact joins",
+    "joint_seed_provenance": "joint_video_match uses frozen original repeated dual-photo anchors with +/-2s query exclusion; no circular recovered-gallery finding",
+    "source_sha256": "5b03843400b5a2ab84f1daa78730fd0b7e96af71eb63288225452c77531823b9",
+    "fixed_finding_history": [
+      "Exact-start handoff previously allowed .4sec recovery; closed handoff brackets now reject",
+      "Unknown .91-1.5 had sourceframe19 with no sampled row: previously .59sec recovered, now0 with unobserved_new_shot_source"
+    ],
+    "final_module_test_passed": 46,
+    "budget_probe": "/private/tmp/dance-episode-review-20261103/shot-budget-independent-probe.json",
+    "final_review": "No remaining blocking findings in shot module; combined role-state integration and new actual app run pending",
+    "full_pipeline_test_note": "In-flight role_state import absent caused5 pipeline test failures; re-run when integration ready"
+  },
+  "temporal_role_state_prototype_review": {
+    "scope": "9,266 original poses; no app/model execution",
+    "report": "/private/tmp/dance-episode-review-20261103/role-state-independent-review.json",
+    "checks_passed": 16,
+    "pytest_passed": 28,
+    "only_candidate": [
+      "MMN",
+      104.57113333333334,
+      104.9048
+    ],
+    "group_export": "preserved",
+    "open_finding": "large cropped off-center body with no measured face or reliable torso ignored across all13 support observations",
+    "probe": "/private/tmp/dance-episode-review-20261103/role-offcenter-unmeasured-competitor-probe.json",
+    "integration_approval": "Final product d60ad0da independently approved after fixed counterexample and integration replay; new actual app pending"
+  },
+  "final_integrated_review": {
+    "related_pytest_passed": 208,
+    "role_core_checks_passed": 16,
+    "combined_scene_checks_passed": 20,
+    "shot_checks_passed": 22,
+    "original_pose_count": 9266,
+    "original_torso_helper_parity_count": 8696,
+    "source_manifest_review": "/private/tmp/dance-episode-review-20261103/final-integrated-reviewed-source/independent-manifest-review.json",
+    "source_hashes": {
+      "scene_context.py": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7",
+      "stage_prominence.py": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+      "observed_member_edges.py": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297",
+      "pipeline.py": "f225f2b8dc9fdad6fabeee0b2ece7c08ac7e57e3031546b7ae893338c393f6f1",
+      "role_state.py": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+    },
+    "changed_files": 14,
+    "person31_sdk25_unchanged": true,
+    "open_blocking_findings": [],
+    "fixed_role_counterexample": "large cropped off-center unmeasured body now rejected; all retained competitors require reliable torso; missing/repeated face must be demonstrably smaller and uncropped",
+    "actual_app_status": "Completed:109 actual-app checks pass; only3 approved transformations; SAM OFF retained; wall-time+8.161557% observed."
+  },
+  "final_actual_app_review": {
+    "report": "/private/tmp/dance-episode-review-20261103/final-app/final-app-independent-report.txt",
+    "json": "/private/tmp/dance-episode-review-20261103/final-app/final-app-independent-verification.json",
+    "checks_passed": 109,
+    "unapproved_output_changes": 0,
+    "clips": [
+      414,
+      409
+    ],
+    "subsecond": [
+      230,
+      226
+    ],
+    "unknown_seconds": [
+      38.60893333333358,
+      38.14160000000024
+    ],
+    "sam_off": true,
+    "all_final_thumbnails_byte_identical_at_same_original_start": 409,
+    "wall_seconds": [
+      1116.809,
+      1207.958
+    ],
+    "wall_increase_percent": 8.161556720979156,
+    "quality_scope_provenance": "pass",
+    "performance": "observed slower run, cause not isolated",
+    "new_diagnostic_query_images": "NEON4 from original approved frames5892/5896/5900/5904; byte reconstructed"
+  }
+}

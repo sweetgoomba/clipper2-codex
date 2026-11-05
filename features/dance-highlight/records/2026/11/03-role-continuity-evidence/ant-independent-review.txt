@@ -1,0 +1,33 @@
+ANT 통합 실제 앱 제한 독립 검토 — 2026-11-03 KST
+
+범위: baseline1793639190408, canonical1793645767403, final1793649573540. 저장 JSON, JPEG/코드 바이트만 읽었다. 테스트/영상 디코딩/모델/파이프라인 리플레이는 실행하지 않았다. audit_ant_json_only.py 및 ant-json-only-review.json에 재현 가능한 정적 비교를 저장했다.
+
+결론: 이전 독립 검토에서 찾은 ANT154 경계 지연 수정이 실제 앱에 정확히 적용됐다. canonical 대비 추가 이름·구간 변화는 이 경계와 단체86초대 연결뿐이다. 의도하지 않은 추가 변경을 찾지 못했다. 시작점 변경에 따른 카즈하 썸네일 바이트 변화1개는 있으며, 영상/썸네일 화면을 이번에 새로 열어 품질을 판정한 것은 아니다. 실제 wall은 증가했고 환경부하가 통제됐다고 말할 수 없다.
+
+ANT154 실제 적용
+- canonical 김채원153.553400–154.821333 / 카즈하154.821333–155.788967 → final 김채원153.553400–154.687867 / 카즈하154.687867–155.788967.
+- correction .133466667초, 기존 두 이름 유지. incoming audit가 B seed9308/9320, path9272..9320 step4, retained A seed9244/9256, path9244..9268 step4, 다른몸 geometry stop을 기록한다. source9244–9320/77읽기/.150338초, API .390474초. 앞서 독립 원본77프레임 재검증한 경로와 일치한다.
+- 경계는 최초 관측된 B몸9272 시간이며 실제 교대가 일어난 9268–9272 사이의 미관측 시점을 정확히 추정했다고 주장하지 않는다.
+
+전체 변경 분리
+- baseline126/short72 → canonical125/71 → final raw124/68 → final visible116/60.
+- baseline→canonical에서 이미 있던 변화는 98초대 홍은채/김채원 경계98.731967→98.798600, 153초대 미확인 .667533초 복원이다. 이 이전 변화와 최종 incoming 수정의 효과를 섞지 않았다.
+- canonical 대비 raw121개 유형/이름/시작/끝 동일. 변경은 김채원/카즈하 공유 경계와 단체86.152733–86.553133 +87.020267–87.687600 →86.152733–87.687600 하나뿐이다. group gap .467133초, 실제 앱33source읽기 기록이 이전 독립 경로와 일치한다.
+- named main67개 유지, named short24→23(카즈하 정상 경계교정 결과), unknown26개/short22 및14.349067초는 canonical과 같다. main/전체 시간 합집합은 baseline과 final 동일하다.
+- 단체31개 중8개 출력억제,23개 표시. 8개 모두 하나의 matched main에 완전포함되고 다른 matched 멤버와 양의 중첩이 없음을 확인했다. visible IDs가 정확히 raw에서8개를 뺀 집합이다. 이전 단체연결 전 예상 억제9개와 단순 합산하면 안 된다.
+- 사용자 ANT 확인4범위는 변경 영역 밖에 있으며 이번 수정으로 그 기존 미해결 문제들이 해결됐다고 주장할 수 없다.
+
+썸네일과 입력/실행 일치
+- canonical 대비 같은 시작점123개 JPEG 모두 동일. 새 시작154.687867 카즈하 한 개는 canonical154.821333 썸네일과 바이트가 다르다.
+- baseline 대비 같은 시작점122개 모두 동일. 새 시작 김채원98.798600, 카즈하154.687867 두 개는 각각 이전 동일이름/동일끝 구간의 썸네일과 바이트가 다르다. 이외 추가 바이트 변경 없음.
+- final frame records3310개는 canonical과 완전동일. config/setup, refs31개파일 바이트, 기록된 source SHA, 모델메타데이터 동일. 원본 동영상 전체를 다시 해시하지 않았다.
+- 실제 source/package64개 모듈의 현재 바이트와 매니페스트 SHA 모두 일치. runtime 대응47개 모듈도 일치.
+- SAM disabled_runtime_cost_v1, candidates0, recovered/corrected/conflict0, mask/joint stage0, 모델목록YuNet/AuraFace. identity padding 변경0.
+
+실행시간과 환경
+- 원본 job.startedAt/finishedAt에서431.777→520.223초, +88.446초(+20.484%). 속도 개선 아님.
+- incoming API .390474초(named_boundaries에포함), group .110181초, pose_observations .256042초. source decode 수치는 해당 API에 포함되므로 다시 더하지 않는다.
+- baseline 대비 main_selection+34.233692, YOLO+14.400240, face_extract+19.544370, segment_build+7.819517 등 새 후처리 외 단계도 느려졌다. native_scene/cluster_map 등의 내부단계 중복합산 금지.
+- app-final/system-load-during-ant.txt의 저장된 두번째 snapshot에서 ChromeRemoteDesktopHost299.3% CPU, WindowServer68.2%, Python108.8%와 다른 활성 프로세스를 확인했다. 열/성능 warning 기록 없음도 확인했다. 이 snapshot은 동시부하의 증거지만 baseline 환경과 통제비교 또는 wall 증가의 인과증명은 아니다.
+
+NEON 실행 중이므로 모든 계산성 검증 중지를 유지하고 본 제한검토를 부모 세션에 전달한다. 최종 전체 품질·실행시간 판정은 세 영상 완료 후 한다.

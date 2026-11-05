@@ -1,0 +1,14 @@
+--- benchmark-app.py
++++ final-app.py
+@@ -75,7 +75,10 @@
+                 "face_recognition": {"providers": session.get_providers() if session else []},
+                 "face_detection": {"device": "cpu"},
+                 "secondary_face": {"device": "cpu"},
+-                "body_tracking": {"device": "cpu"},
++                "body_tracking": {
++                    "device": "cpu", "enabled": False,
++                    "reason": "disabled_runtime_cost",
++                },
+             },
+         }
+ 

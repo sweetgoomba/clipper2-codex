@@ -1,0 +1,81 @@
+{
+  "MMN": {
+    "pid": "1793617663026",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617663026/json/dance_meta.json",
+    "evidence": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617663026/diagnostics/face_evidence.json",
+    "source": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617663026/diagnostics/source.mp4",
+    "fps": 59.94005994005994,
+    "start": 38.20473333333334,
+    "end": 39.3393,
+    "candidate": [
+      {
+        "start": 38.20473333333334,
+        "end": 39.3393,
+        "name": "사쿠라",
+        "seed_frames": [
+          2284,
+          2364
+        ],
+        "pose_link_frames": [
+          2320
+        ],
+        "reason": "isolated_visual_change"
+      }
+    ],
+    "meta_sha256": "4d1058a7e1c39b07590774a8e07f5bba3cec8ec6e3d9542273ea60199f286172",
+    "evidence_sha256": "bdeda5a51a2c76f3e581a7055969f419bac8748f4f1391f4a8295eade773e326"
+  },
+  "ANT": {
+    "pid": "1793617753764",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/json/dance_meta.json",
+    "evidence": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/diagnostics/face_evidence.json",
+    "source": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/diagnostics/source.mp4",
+    "fps": 59.94005994005994,
+    "start": 9.9098,
+    "end": 10.276933333333334,
+    "candidate": [
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "name": "김채원",
+        "seed_frames": [
+          588,
+          616
+        ],
+        "pose_link_frames": [
+          592,
+          596,
+          600,
+          604,
+          612
+        ],
+        "reason": "visual_cut"
+      }
+    ],
+    "meta_sha256": "825ca5957430869b454dad6755e5edb0e4807b98c3b58d3455cbb7d61c236feb",
+    "evidence_sha256": "663435b5366500769756dd45422fe166ec3e4f0894f1123ca7efd253e482ed37"
+  },
+  "NEON": {
+    "pid": "1793617837063",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617837063/json/dance_meta.json",
+    "evidence": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617837063/diagnostics/face_evidence.json",
+    "source": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617837063/diagnostics/source.mp4",
+    "fps": 59.94005994005994,
+    "start": 81.94853333333333,
+    "end": 82.84943333333334,
+    "candidate": [
+      {
+        "start": 81.94853333333333,
+        "end": 82.84943333333334,
+        "name": "시리",
+        "seed_frames": [
+          4908,
+          4984
+        ],
+        "reason": "conflicting_face_evidence"
+      }
+    ],
+    "meta_sha256": "a7c04fe2dbccb3a2c767af3697a165cc99e4bd72448d7174bcb8d6d61b58568d",
+    "evidence_sha256": "3112767da138e81b20e41f08ad8237aedd2fbc6ab2a4d858a478672e20f0dec2"
+  }
+}

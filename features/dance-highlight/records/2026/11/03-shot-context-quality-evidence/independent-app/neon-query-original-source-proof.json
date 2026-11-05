@@ -1,0 +1,62 @@
+{
+  "scope": "No model inference. JPEG92 source-ROI reconstruction exactly matches all5 diagnostic face queries;4 newly displayed crops belong to approved restored time.",
+  "range": [
+    98.23146666666666,
+    99.96653333333333
+  ],
+  "person_id": "오아",
+  "matches": {
+    "diagnostics/query/main_0051_0.jpg": [
+      {
+        "frame": 5892,
+        "time": 98.29820000000001,
+        "quality": 0.70416806292535,
+        "original_observation_identical": true,
+        "original_joint": "오아"
+      }
+    ],
+    "diagnostics/query/main_0051_1.jpg": [
+      {
+        "frame": 5888,
+        "time": 98.23146666666666,
+        "quality": 0.7005744109343908,
+        "original_observation_identical": true,
+        "original_joint": "오아"
+      }
+    ],
+    "diagnostics/query/main_0051_2.jpg": [
+      {
+        "frame": 5896,
+        "time": 98.36493333333334,
+        "quality": 0.6985794278345843,
+        "original_observation_identical": true,
+        "original_joint": "오아"
+      }
+    ],
+    "diagnostics/query/main_0051_3.jpg": [
+      {
+        "frame": 5904,
+        "time": 98.4984,
+        "quality": 0.6967438727541895,
+        "original_observation_identical": true,
+        "original_joint": "오아"
+      }
+    ],
+    "diagnostics/query/main_0051_4.jpg": [
+      {
+        "frame": 5900,
+        "time": 98.43166666666667,
+        "quality": 0.6956859435654955,
+        "original_observation_identical": true,
+        "original_joint": "오아"
+      }
+    ]
+  },
+  "newly_displayed_original_frames": [
+    5892,
+    5896,
+    5900,
+    5904
+  ],
+  "all_exact_source_bytes": true
+}

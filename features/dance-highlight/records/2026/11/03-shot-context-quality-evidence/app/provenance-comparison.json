@@ -1,0 +1,116 @@
+[
+  {
+    "title": "MMN",
+    "source_sha256_equal": true,
+    "config_sha256_equal": true,
+    "saved_reference_files_equal": true,
+    "reference_manifest_equal": true,
+    "reference_embeddings_equal": true,
+    "mask_reason": "disabled_runtime_cost",
+    "acceleration": {
+      "face_detection": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "mode": "source_frame_gpu_crops_cpu",
+        "source_size": [
+          1920,
+          1080
+        ],
+        "gpu_calls": 2276,
+        "cpu_calls": 3310,
+        "fallbacks": 0,
+        "setup_seconds": 0.1138003749656491,
+        "gpu_seconds": 35.49366625561379
+      },
+      "secondary_face": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "gpu_calls": 3922,
+        "cpu_calls": 0,
+        "fallbacks": 0,
+        "setup_seconds": 0.17778199998429045,
+        "gpu_seconds": 12.95174014638178
+      }
+    }
+  },
+  {
+    "title": "ANT",
+    "source_sha256_equal": true,
+    "config_sha256_equal": true,
+    "saved_reference_files_equal": true,
+    "reference_manifest_equal": true,
+    "reference_embeddings_equal": true,
+    "mask_reason": "disabled_runtime_cost",
+    "acceleration": {
+      "face_detection": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "mode": "source_frame_gpu_crops_cpu",
+        "source_size": [
+          1920,
+          1080
+        ],
+        "gpu_calls": 5374,
+        "cpu_calls": 7928,
+        "fallbacks": 0,
+        "setup_seconds": 0.1138003749656491,
+        "gpu_seconds": 80.89685570792062
+      },
+      "secondary_face": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "gpu_calls": 10439,
+        "cpu_calls": 0,
+        "fallbacks": 0,
+        "setup_seconds": 0.17778199998429045,
+        "gpu_seconds": 34.33203216420952
+      }
+    }
+  },
+  {
+    "title": "NEON",
+    "source_sha256_equal": true,
+    "config_sha256_equal": true,
+    "saved_reference_files_equal": true,
+    "reference_manifest_equal": true,
+    "reference_embeddings_equal": true,
+    "mask_reason": "disabled_runtime_cost",
+    "acceleration": {
+      "face_detection": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "mode": "source_frame_gpu_crops_cpu",
+        "source_size": [
+          1920,
+          1080
+        ],
+        "gpu_calls": 8701,
+        "cpu_calls": 12890,
+        "fallbacks": 0,
+        "setup_seconds": 0.1138003749656491,
+        "gpu_seconds": 128.60560839122627
+      },
+      "secondary_face": {
+        "providers": [
+          "CoreMLExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "gpu_calls": 16420,
+        "cpu_calls": 0,
+        "fallbacks": 0,
+        "setup_seconds": 0.17778199998429045,
+        "gpu_seconds": 51.87081304885214
+      }
+    }
+  }
+]

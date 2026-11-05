@@ -1,0 +1,21 @@
+identity_projection 최신본 독립 검토 — 2026-11-03
+SHA256 f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0
+
+결론: 제가 제기한 padding 신원 누출 반례는 이 버전에서 닫혔다. 현재 좁은 계약 안에서 추가 차단 결함을 찾지 못했다. ANT154의 몸 교대 경계 및 전체 앱 채택 승인과는 별개다.
+
+독립 검증
+- 기존 synthetic6경우를 다시 실행했다. 미확정 얼굴에서 멈추던 body A→B, 원래 이름 지지 전무, primary/joint accepted 이름 불일치, joint explicit conflict, 경로 중간의 다른 원래 확정 이름을 모두 거부한다. 정상 같은 몸의 이름 지지만 유지하며 원본 output 결정은 바뀌지 않는다.
+- 동결한 서비스/테스트/실제 NEON42 fixture로 scratch pytest를 직접 실행했다.
+명령: /Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python -m pytest -q --rootdir=. --confcutdir=. test_dance_identity_projection.py
+관측 결과: 16 passed in 0.02s, exit0.
+- cut inventory는 performance_parts에서 원래cut과scene_changes cut을합쳐전달한다. frozen_observations도전달되며, parent범위밖이라도경로의선택몸과같은원래유효얼굴에서다른direct/joint이름또는jointconflict가있으면거부한다.
+- tuple votedname, 부모consensus 및accurate플래그를독립anchor로사용하지않는다. 직접primary 또는acceptedjoint가해당이름과일치해야하고명시적다른결과는거부한다.
+
+증거
+source-manifest.json, identity_projection.py, test_dance_identity_projection.py, fixtures/dance_scene_review/neon42_identity_padding.json.
+추가독립6입력: ../canonical-app/identity-projection-v3-probes.json 및 review_identity_padding_v3.py.
+
+범위와 남은 일
+- only-padding의timeline_consensus 조각이대상이다. 내부유효얼굴존재/parent얼굴범위안의hole/별도recoveryreason은현재계약대상이아니다. 이를전체identity검증으로표현하면안된다.
+- 부모의전수투영MMN/ANT0,NEON42/93두거부와.014초는별도부모측측정이다. 이검토는독립6입력및전용16tests다.
+- 통합실행에서후속복구가reject이름을되살리지않고정상same-body group양옆연결을보존하는지확인해야한다. 신규모델추론이나실제앱전수실행은본검토에서하지않았다.

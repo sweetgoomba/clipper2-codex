@@ -1,0 +1,26 @@
+{
+  "desktop/clipper_python": {
+    "branch": "fix/dance-gpu-performance-20261102",
+    "head": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+    "stash": "c30bcf03b61f0c1d3b21f7bd9603054dfaa2cc58",
+    "dev": "469370b206c82a8a1d4a0e181e72fb6ce8c3910c"
+  },
+  "desktop/clipper_angular": {
+    "branch": "dev",
+    "head": "500cf9f455bcf4b0d857fa1de08e44fa9ff97e93",
+    "stash": "564058b4ec2f62a283e81ccfdf68951bdf133284",
+    "dev": "4d508c0d3b0c3009f48f171edd6bfac11de33d04"
+  },
+  "desktop/clipper_nestjs": {
+    "branch": "dev",
+    "head": "e4e1fcf5d37bdbbd2c0c00a9f558b052c2d55f7f",
+    "stash": "764bff051bc9f82aeab94ac8d8d0fd77c0c368f8",
+    "dev": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e"
+  },
+  "desktop/clipper_electron": {
+    "branch": "dev",
+    "head": "775ffd5e7df8bede6a9096316a7a367da8dba0da",
+    "stash": null,
+    "dev": "540c6e6544e8aa46ad97224958d7e543c44c1c0c"
+  }
+}

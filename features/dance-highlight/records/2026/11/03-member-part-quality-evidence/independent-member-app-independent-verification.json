@@ -1,0 +1,501 @@
+{
+  "checks": [
+    {
+      "name": "MMN exact reviewed output rows",
+      "passed": true
+    },
+    {
+      "name": "MMN completed without errors",
+      "passed": true
+    },
+    {
+      "name": "MMN original baseline hashes unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN audit result hashes current",
+      "passed": true
+    },
+    {
+      "name": "MMN settings and source preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN all8 reviewed modules recorded correctly",
+      "passed": true
+    },
+    {
+      "name": "MMN recorded module bytes match loaded paths",
+      "passed": true
+    },
+    {
+      "name": "MMN no output name or coverage changes outside scope",
+      "passed": true
+    },
+    {
+      "name": "MMN no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "MMN original recognition and references preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN source pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN original role selection unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN previous user windows retain clipped coverage",
+      "passed": true
+    },
+    {
+      "name": "MMN final clip diagnostic index alignment",
+      "passed": true
+    },
+    {
+      "name": "MMN person clip references align",
+      "passed": true
+    },
+    {
+      "name": "MMN person descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN SAM OFF retained",
+      "passed": true
+    },
+    {
+      "name": "MMN final thumbnails from unchanged original starts",
+      "passed": true
+    },
+    {
+      "name": "MMN unchanged query sequences identical",
+      "passed": true
+    },
+    {
+      "name": "MMN merged query bytes retain original owners",
+      "passed": true
+    },
+    {
+      "name": "MMN all other image paths and bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN exact approved unknown joins",
+      "passed": true
+    },
+    {
+      "name": "MMN exact approved named recovery",
+      "passed": true
+    },
+    {
+      "name": "MMN native observations and request inventory unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN continuity timing nested correctly",
+      "passed": true
+    },
+    {
+      "name": "ANT exact reviewed output rows",
+      "passed": true
+    },
+    {
+      "name": "ANT completed without errors",
+      "passed": true
+    },
+    {
+      "name": "ANT original baseline hashes unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT audit result hashes current",
+      "passed": true
+    },
+    {
+      "name": "ANT settings and source preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT all8 reviewed modules recorded correctly",
+      "passed": true
+    },
+    {
+      "name": "ANT recorded module bytes match loaded paths",
+      "passed": true
+    },
+    {
+      "name": "ANT no output name or coverage changes outside scope",
+      "passed": true
+    },
+    {
+      "name": "ANT no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "ANT original recognition and references preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT source pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT original role selection unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT previous user windows retain clipped coverage",
+      "passed": true
+    },
+    {
+      "name": "ANT final clip diagnostic index alignment",
+      "passed": true
+    },
+    {
+      "name": "ANT person clip references align",
+      "passed": true
+    },
+    {
+      "name": "ANT person descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT SAM OFF retained",
+      "passed": true
+    },
+    {
+      "name": "ANT final thumbnails from unchanged original starts",
+      "passed": true
+    },
+    {
+      "name": "ANT unchanged query sequences identical",
+      "passed": true
+    },
+    {
+      "name": "ANT merged query bytes retain original owners",
+      "passed": true
+    },
+    {
+      "name": "ANT all other image paths and bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT exact approved unknown joins",
+      "passed": true
+    },
+    {
+      "name": "ANT exact approved named recovery",
+      "passed": true
+    },
+    {
+      "name": "ANT native observations and request inventory unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT continuity timing nested correctly",
+      "passed": true
+    },
+    {
+      "name": "NEON exact reviewed output rows",
+      "passed": true
+    },
+    {
+      "name": "NEON completed without errors",
+      "passed": true
+    },
+    {
+      "name": "NEON original baseline hashes unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON audit result hashes current",
+      "passed": true
+    },
+    {
+      "name": "NEON settings and source preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON all8 reviewed modules recorded correctly",
+      "passed": true
+    },
+    {
+      "name": "NEON recorded module bytes match loaded paths",
+      "passed": true
+    },
+    {
+      "name": "NEON no output name or coverage changes outside scope",
+      "passed": true
+    },
+    {
+      "name": "NEON no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "NEON original recognition and references preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON source pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON original role selection unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON previous user windows retain clipped coverage",
+      "passed": true
+    },
+    {
+      "name": "NEON final clip diagnostic index alignment",
+      "passed": true
+    },
+    {
+      "name": "NEON person clip references align",
+      "passed": true
+    },
+    {
+      "name": "NEON person descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON SAM OFF retained",
+      "passed": true
+    },
+    {
+      "name": "NEON final thumbnails from unchanged original starts",
+      "passed": true
+    },
+    {
+      "name": "NEON unchanged query sequences identical",
+      "passed": true
+    },
+    {
+      "name": "NEON merged query bytes retain original owners",
+      "passed": true
+    },
+    {
+      "name": "NEON all other image paths and bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON exact approved unknown joins",
+      "passed": true
+    },
+    {
+      "name": "NEON exact approved named recovery",
+      "passed": true
+    },
+    {
+      "name": "NEON native observations and request inventory unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON continuity timing nested correctly",
+      "passed": true
+    },
+    {
+      "name": "ANT extra existing named join original-evidence replay",
+      "passed": true
+    },
+    {
+      "name": "all14 previous user windows inspected",
+      "passed": true
+    },
+    {
+      "name": "expected final clips414 short230",
+      "passed": true
+    },
+    {
+      "name": "unknown reduction is naming plus scene exclusion only",
+      "passed": true
+    }
+  ],
+  "count": 79,
+  "all_checks_passed": true,
+  "failures": [],
+  "totals": {
+    "main": [
+      305,
+      296
+    ],
+    "group": [
+      119,
+      118
+    ],
+    "total": [
+      424,
+      414
+    ],
+    "subsecond": [
+      240,
+      230
+    ],
+    "under_0_1s": [
+      23,
+      20
+    ],
+    "unknown_seconds": [
+      38.976066666666924,
+      38.60893333333358
+    ]
+  },
+  "short_categories": {
+    "named": [
+      73,
+      71
+    ],
+    "unknown": [
+      88,
+      80
+    ],
+    "group": [
+      79,
+      79
+    ]
+  },
+  "active_wall_seconds": [
+    1187.94,
+    1116.809
+  ],
+  "wall_change_percent": -5.987760324595525,
+  "per_video": [
+    {
+      "video": "MMN",
+      "before": {
+        "main": 57,
+        "group": 32,
+        "total": 89,
+        "subsecond": 42,
+        "under_0_1s": 2,
+        "unknown_seconds": 6.80720000000003,
+        "main_seconds": 135.00153333333333,
+        "names": {
+          "김채원": 8,
+          "카즈하": 6,
+          "홍은채": 8,
+          "사쿠라": 8,
+          "unknown": 16,
+          "허윤진": 11
+        }
+      },
+      "after": {
+        "main": 57,
+        "group": 32,
+        "total": 89,
+        "subsecond": 42,
+        "under_0_1s": 2,
+        "unknown_seconds": 6.80720000000003,
+        "main_seconds": 135.00153333333333,
+        "names": {
+          "김채원": 8,
+          "카즈하": 6,
+          "홍은채": 8,
+          "사쿠라": 8,
+          "unknown": 16,
+          "허윤진": 11
+        }
+      }
+    },
+    {
+      "video": "ANT",
+      "before": {
+        "main": 100,
+        "group": 32,
+        "total": 132,
+        "subsecond": 77,
+        "under_0_1s": 2,
+        "unknown_seconds": 15.817600000000084,
+        "main_seconds": 191.6247666666666,
+        "names": {
+          "unknown": 31,
+          "홍은채": 11,
+          "김채원": 20,
+          "허윤진": 11,
+          "카즈하": 16,
+          "사쿠라": 11
+        }
+      },
+      "after": {
+        "main": 96,
+        "group": 32,
+        "total": 128,
+        "subsecond": 73,
+        "under_0_1s": 1,
+        "unknown_seconds": 15.483933333333418,
+        "main_seconds": 191.6247666666666,
+        "names": {
+          "unknown": 28,
+          "홍은채": 11,
+          "김채원": 19,
+          "허윤진": 11,
+          "카즈하": 16,
+          "사쿠라": 11
+        }
+      }
+    },
+    {
+      "video": "NEON",
+      "before": {
+        "main": 148,
+        "group": 55,
+        "total": 203,
+        "subsecond": 121,
+        "under_0_1s": 19,
+        "unknown_seconds": 16.351266666666806,
+        "main_seconds": 176.8433333333333,
+        "names": {
+          "아이찡": 20,
+          "시리": 13,
+          "unknown": 49,
+          "메르시": 9,
+          "오아": 23,
+          "히메키": 5,
+          "아윤": 4,
+          "영": 16,
+          "보라": 3,
+          "라다": 6
+        }
+      },
+      "after": {
+        "main": 143,
+        "group": 54,
+        "total": 197,
+        "subsecond": 115,
+        "under_0_1s": 17,
+        "unknown_seconds": 16.317800000000137,
+        "main_seconds": 176.77659999999997,
+        "names": {
+          "아이찡": 20,
+          "시리": 13,
+          "unknown": 45,
+          "메르시": 8,
+          "오아": 23,
+          "히메키": 5,
+          "아윤": 4,
+          "영": 16,
+          "보라": 3,
+          "라다": 6
+        }
+      }
+    }
+  ],
+  "native": {
+    "MMN": {
+      "same_refinement": true
+    },
+    "ANT": {
+      "same_refinement": true
+    },
+    "NEON": {
+      "same_refinement": true
+    }
+  },
+  "scope": "Actual app outputs compared to reviewed original-source evidence. No claim of new ground-truth review for every scene or repeated performance benchmark."
+}

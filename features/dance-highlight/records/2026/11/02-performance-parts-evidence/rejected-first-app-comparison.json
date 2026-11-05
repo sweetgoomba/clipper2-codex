@@ -1,0 +1,655 @@
+[
+  {
+    "title": "MMN",
+    "project_id": "1793625050124",
+    "baseline_project_id": "1793617663026",
+    "job_id": "dance_1793625050124",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793625050124",
+    "submitted": "2026-11-02T13:10:51.296Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T13:10:51.383Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/BZDZBUyaJbA",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 0.087,
+    "finished": "2026-11-02T13:16:11.993Z",
+    "active_wall_seconds": 320.61,
+    "baseline_active_wall_seconds": 295.082,
+    "wall_reduction_percent": -8.651154594316157,
+    "baseline_pipeline_seconds": 285.7119767499971,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 16,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 6.80720000000003,
+      "subsecond_clips": 42,
+      "clip_count": 89
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 33,
+        "main:unknown": 17,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 6.540266666666696,
+      "subsecond_clips": 44,
+      "clip_count": 91
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": false,
+    "diagnostic_frame_count": 2324,
+    "identical_diagnostic_frames": false,
+    "thumbnail_count": 91,
+    "changed_thumbnails": [
+      "clips/dance/group/group_0012.jpg",
+      "clips/dance/group/group_0013.jpg",
+      "clips/dance/group/group_0014.jpg",
+      "clips/dance/group/group_0015.jpg",
+      "clips/dance/group/group_0016.jpg",
+      "clips/dance/group/group_0017.jpg",
+      "clips/dance/group/group_0018.jpg",
+      "clips/dance/group/group_0019.jpg",
+      "clips/dance/group/group_0020.jpg",
+      "clips/dance/group/group_0021.jpg",
+      "clips/dance/group/group_0022.jpg",
+      "clips/dance/group/group_0023.jpg",
+      "clips/dance/group/group_0024.jpg",
+      "clips/dance/group/group_0025.jpg",
+      "clips/dance/group/group_0026.jpg",
+      "clips/dance/group/group_0027.jpg",
+      "clips/dance/group/group_0028.jpg",
+      "clips/dance/group/group_0029.jpg",
+      "clips/dance/group/group_0030.jpg",
+      "clips/dance/group/group_0031.jpg",
+      "clips/dance/group/group_0032.jpg",
+      "clips/dance/main/main_0017.jpg",
+      "clips/dance/main/main_0018.jpg",
+      "clips/dance/main/main_0019.jpg",
+      "clips/dance/main/main_0020.jpg",
+      "clips/dance/main/main_0021.jpg",
+      "clips/dance/main/main_0022.jpg",
+      "clips/dance/main/main_0023.jpg",
+      "clips/dance/main/main_0024.jpg",
+      "clips/dance/main/main_0025.jpg",
+      "clips/dance/main/main_0026.jpg",
+      "clips/dance/main/main_0027.jpg",
+      "clips/dance/main/main_0028.jpg",
+      "clips/dance/main/main_0029.jpg",
+      "clips/dance/main/main_0030.jpg",
+      "clips/dance/main/main_0031.jpg",
+      "clips/dance/main/main_0032.jpg",
+      "clips/dance/main/main_0033.jpg",
+      "clips/dance/main/main_0034.jpg",
+      "clips/dance/main/main_0035.jpg",
+      "clips/dance/main/main_0036.jpg",
+      "clips/dance/main/main_0037.jpg",
+      "clips/dance/main/main_0038.jpg",
+      "clips/dance/main/main_0039.jpg",
+      "clips/dance/main/main_0040.jpg",
+      "clips/dance/main/main_0041.jpg",
+      "clips/dance/main/main_0042.jpg",
+      "clips/dance/main/main_0043.jpg",
+      "clips/dance/main/main_0044.jpg",
+      "clips/dance/main/main_0045.jpg",
+      "clips/dance/main/main_0046.jpg",
+      "clips/dance/main/main_0047.jpg",
+      "clips/dance/main/main_0048.jpg",
+      "clips/dance/main/main_0049.jpg",
+      "clips/dance/main/main_0050.jpg",
+      "clips/dance/main/main_0051.jpg",
+      "clips/dance/main/main_0052.jpg",
+      "clips/dance/main/main_0053.jpg",
+      "clips/dance/main/main_0054.jpg",
+      "clips/dance/main/main_0055.jpg",
+      "clips/dance/main/main_0056.jpg",
+      "clips/dance/main/main_0057.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.011918291973415762,
+        "yolo": 75.793678542017,
+        "ref_embs": 1.7778660000185482,
+        "main_selection": 92.6523916250444,
+        "native_scene": 10.491724207997322,
+        "segment_build": 28.595804500044324,
+        "face_extract": 49.63998429197818,
+        "secondary_faces": 16.314343707985245,
+        "body_continuity": 0.6555924999993294,
+        "context_faces": 0.0005945420125499368,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.004682250029873103,
+        "cluster_map": 37.90240466600517,
+        "clips_main": 6.861148625030182,
+        "clips_group": 4.114647375012282
+      },
+      "total_before_metadata_write_seconds": 310.76049608300673,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": -8.76705261639328,
+    "removed_or_changed_clips": [
+      {
+        "end": 50.2502,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 49.866483333333335
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 49.916533333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 49.866483333333335
+      },
+      {
+        "end": 50.2502,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 50.18346666666667
+      },
+      {
+        "end": 50.18346666666667,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 49.916533333333334
+      }
+    ]
+  },
+  {
+    "title": "ANT",
+    "project_id": "1793625132795",
+    "baseline_project_id": "1793617753764",
+    "job_id": "dance_1793625132795",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793625132795",
+    "submitted": "2026-11-02T13:12:14.035Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T13:16:12.142Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/p_XdZdg9oGc",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 238.107,
+    "finished": "2026-11-02T13:24:02.884Z",
+    "active_wall_seconds": 470.742,
+    "baseline_active_wall_seconds": 397.721,
+    "wall_reduction_percent": -18.35985527543178,
+    "baseline_pipeline_seconds": 394.5564360410208,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 33,
+        "main:김채원": 20,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 11,
+        "main:홍은채": 11
+      },
+      "unknown_seconds": 16.01780000000008,
+      "subsecond_clips": 79,
+      "clip_count": 134
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 33,
+        "main:unknown": 31,
+        "main:김채원": 20,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 11,
+        "main:홍은채": 11
+      },
+      "unknown_seconds": 15.817600000000084,
+      "subsecond_clips": 78,
+      "clip_count": 133
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": false,
+    "diagnostic_frame_count": 3310,
+    "identical_diagnostic_frames": false,
+    "thumbnail_count": 133,
+    "changed_thumbnails": [
+      "clips/dance/group/group_0014.jpg",
+      "clips/dance/group/group_0015.jpg",
+      "clips/dance/group/group_0016.jpg",
+      "clips/dance/group/group_0017.jpg",
+      "clips/dance/group/group_0018.jpg",
+      "clips/dance/group/group_0019.jpg",
+      "clips/dance/group/group_0020.jpg",
+      "clips/dance/group/group_0021.jpg",
+      "clips/dance/group/group_0022.jpg",
+      "clips/dance/group/group_0023.jpg",
+      "clips/dance/group/group_0024.jpg",
+      "clips/dance/group/group_0025.jpg",
+      "clips/dance/group/group_0026.jpg",
+      "clips/dance/group/group_0027.jpg",
+      "clips/dance/group/group_0028.jpg",
+      "clips/dance/group/group_0029.jpg",
+      "clips/dance/group/group_0030.jpg",
+      "clips/dance/group/group_0031.jpg",
+      "clips/dance/group/group_0032.jpg",
+      "clips/dance/main/main_0046.jpg",
+      "clips/dance/main/main_0061.jpg",
+      "clips/dance/main/main_0062.jpg",
+      "clips/dance/main/main_0063.jpg",
+      "clips/dance/main/main_0064.jpg",
+      "clips/dance/main/main_0065.jpg",
+      "clips/dance/main/main_0066.jpg",
+      "clips/dance/main/main_0067.jpg",
+      "clips/dance/main/main_0068.jpg",
+      "clips/dance/main/main_0069.jpg",
+      "clips/dance/main/main_0070.jpg",
+      "clips/dance/main/main_0071.jpg",
+      "clips/dance/main/main_0072.jpg",
+      "clips/dance/main/main_0073.jpg",
+      "clips/dance/main/main_0074.jpg",
+      "clips/dance/main/main_0075.jpg",
+      "clips/dance/main/main_0076.jpg",
+      "clips/dance/main/main_0077.jpg",
+      "clips/dance/main/main_0078.jpg",
+      "clips/dance/main/main_0079.jpg",
+      "clips/dance/main/main_0080.jpg",
+      "clips/dance/main/main_0081.jpg",
+      "clips/dance/main/main_0082.jpg",
+      "clips/dance/main/main_0083.jpg",
+      "clips/dance/main/main_0084.jpg",
+      "clips/dance/main/main_0085.jpg",
+      "clips/dance/main/main_0086.jpg",
+      "clips/dance/main/main_0087.jpg",
+      "clips/dance/main/main_0088.jpg",
+      "clips/dance/main/main_0089.jpg",
+      "clips/dance/main/main_0090.jpg",
+      "clips/dance/main/main_0091.jpg",
+      "clips/dance/main/main_0092.jpg",
+      "clips/dance/main/main_0093.jpg",
+      "clips/dance/main/main_0094.jpg",
+      "clips/dance/main/main_0095.jpg",
+      "clips/dance/main/main_0096.jpg",
+      "clips/dance/main/main_0097.jpg",
+      "clips/dance/main/main_0098.jpg",
+      "clips/dance/main/main_0099.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.021170332969632,
+        "yolo": 95.67637637496227,
+        "ref_embs": 0.3764845409896225,
+        "main_selection": 150.75794533302542,
+        "native_scene": 24.578920375031885,
+        "segment_build": 39.14896345802117,
+        "face_extract": 89.94362370896852,
+        "secondary_faces": 27.024546000000555,
+        "body_continuity": 0.957231666019652,
+        "context_faces": 0.0006100840400904417,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.3481789579964243,
+        "cluster_map": 57.46055891702417,
+        "clips_main": 10.97213179199025,
+        "clips_group": 3.4467095839791
+      },
+      "total_before_metadata_write_seconds": 466.3327282919781,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": -18.191641472424223,
+    "removed_or_changed_clips": [
+      {
+        "end": 99.8998,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.73196666666666
+      },
+      {
+        "end": 106.05595,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 99.8998
+      },
+      {
+        "end": 146.67986666666667,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.7780666666667
+      },
+      {
+        "end": 146.81333333333333,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 146.67986666666667
+      },
+      {
+        "end": 146.88006666666666,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 146.81333333333333
+      },
+      {
+        "end": 149.149,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 146.88006666666666
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 99.83306666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.73196666666666
+      },
+      {
+        "end": 106.05595,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 100.3002
+      },
+      {
+        "end": 146.61313333333334,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.7780666666667
+      },
+      {
+        "end": 100.3002,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 99.83306666666667
+      },
+      {
+        "end": 149.149,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 146.61313333333334
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "project_id": "1793625224514",
+    "baseline_project_id": "1793617837063",
+    "job_id": "dance_1793625224514",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793625224514",
+    "submitted": "2026-11-02T13:13:45.787Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T13:24:03.248Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/93j1fDGi_-8",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 617.461,
+    "finished": "2026-11-02T13:31:41.854Z",
+    "active_wall_seconds": 458.606,
+    "baseline_active_wall_seconds": 439.264,
+    "wall_reduction_percent": -4.403274568368909,
+    "baseline_pipeline_seconds": 435.73044779198244,
+    "baseline_quality": {
+      "counts": {
+        "group:": 56,
+        "main:unknown": 51,
+        "main:라다": 6,
+        "main:메르시": 9,
+        "main:보라": 3,
+        "main:시리": 13,
+        "main:아윤": 4,
+        "main:아이찡": 20,
+        "main:영": 16,
+        "main:오아": 23,
+        "main:히메키": 5
+      },
+      "unknown_seconds": 16.751666666666797,
+      "subsecond_clips": 124,
+      "clip_count": 206
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 56,
+        "main:unknown": 51,
+        "main:라다": 6,
+        "main:메르시": 9,
+        "main:보라": 3,
+        "main:시리": 13,
+        "main:아윤": 4,
+        "main:아이찡": 20,
+        "main:영": 16,
+        "main:오아": 23,
+        "main:히메키": 5
+      },
+      "unknown_seconds": 15.750666666666806,
+      "subsecond_clips": 125,
+      "clip_count": 206
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": false,
+    "diagnostic_frame_count": 3632,
+    "identical_diagnostic_frames": false,
+    "thumbnail_count": 206,
+    "changed_thumbnails": [
+      "clips/dance/group/group_0010.jpg",
+      "clips/dance/group/group_0029.jpg",
+      "clips/dance/main/main_0039.jpg",
+      "clips/dance/main/main_0040.jpg",
+      "clips/dance/main/main_0041.jpg",
+      "clips/dance/main/main_0042.jpg",
+      "clips/dance/main/main_0043.jpg",
+      "clips/dance/main/main_0044.jpg",
+      "clips/dance/main/main_0045.jpg",
+      "clips/dance/main/main_0046.jpg",
+      "clips/dance/main/main_0047.jpg",
+      "clips/dance/main/main_0048.jpg",
+      "clips/dance/main/main_0049.jpg",
+      "clips/dance/main/main_0050.jpg",
+      "clips/dance/main/main_0051.jpg",
+      "clips/dance/main/main_0052.jpg",
+      "clips/dance/main/main_0053.jpg",
+      "clips/dance/main/main_0054.jpg",
+      "clips/dance/main/main_0055.jpg",
+      "clips/dance/main/main_0056.jpg",
+      "clips/dance/main/main_0057.jpg",
+      "clips/dance/main/main_0058.jpg",
+      "clips/dance/main/main_0059.jpg",
+      "clips/dance/main/main_0060.jpg",
+      "clips/dance/main/main_0061.jpg",
+      "clips/dance/main/main_0062.jpg",
+      "clips/dance/main/main_0063.jpg",
+      "clips/dance/main/main_0064.jpg",
+      "clips/dance/main/main_0065.jpg",
+      "clips/dance/main/main_0066.jpg",
+      "clips/dance/main/main_0067.jpg",
+      "clips/dance/main/main_0068.jpg",
+      "clips/dance/main/main_0069.jpg",
+      "clips/dance/main/main_0070.jpg",
+      "clips/dance/main/main_0071.jpg",
+      "clips/dance/main/main_0072.jpg",
+      "clips/dance/main/main_0073.jpg",
+      "clips/dance/main/main_0074.jpg",
+      "clips/dance/main/main_0075.jpg",
+      "clips/dance/main/main_0076.jpg",
+      "clips/dance/main/main_0077.jpg",
+      "clips/dance/main/main_0078.jpg",
+      "clips/dance/main/main_0079.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.050660000008065253,
+        "yolo": 108.23277912498452,
+        "ref_embs": 2.3648540829890408,
+        "main_selection": 135.38701799995033,
+        "native_scene": 39.272403999988455,
+        "segment_build": 57.52329737500986,
+        "face_extract": 71.32551058399258,
+        "secondary_faces": 23.643462167005055,
+        "body_continuity": 0.903185167000629,
+        "context_faces": 0.000412292021792382,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.009740541980136186,
+        "cluster_map": 36.7060974999913,
+        "clips_main": 13.0394540829584,
+        "clips_group": 4.55475850001676
+      },
+      "total_before_metadata_write_seconds": 454.10915141698206,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": -4.217906671000793,
+    "removed_or_changed_clips": [
+      {
+        "end": 77.37740000000001,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 75.8758
+      },
+      {
+        "end": 143.84380000000002,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 143.67686666666668
+      },
+      {
+        "end": 144.07726666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 143.84380000000002
+      },
+      {
+        "end": 76.94353333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 76.4764
+      },
+      {
+        "end": 144.3442,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 144.07726666666667
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 76.40966666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 75.8758
+      },
+      {
+        "end": 77.37740000000001,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 77.077
+      },
+      {
+        "end": 143.74360000000001,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 143.67686666666668
+      },
+      {
+        "end": 77.077,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 76.40966666666667
+      },
+      {
+        "end": 144.3442,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 143.74360000000001
+      }
+    ]
+  }
+]

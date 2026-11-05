@@ -1,0 +1,9 @@
+[
+  "plugins/dance_highlight/dance_highlight/app.py",
+  "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+  "plugins/dance_highlight/dance_highlight/services/context_faces.py",
+  "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+  "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+  "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+  "plugins/dance_highlight/dance_highlight/services/pipeline.py"
+]

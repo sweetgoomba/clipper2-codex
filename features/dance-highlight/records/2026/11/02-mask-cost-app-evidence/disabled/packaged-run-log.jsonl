@@ -1,0 +1,681 @@
+{"v": 1, "ts": "2026-11-01T22:24:30.904Z", "level": "info", "src": "python.dance_highlight", "msg": "Starting dance_highlight v0.1.0 on 127.0.0.1:50611", "ctx": {"logger": "clipper_plugin"}}
+{"v": 1, "ts": "2026-11-01T22:24:30.928Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     Started server process [30819]"}
+{"v": 1, "ts": "2026-11-01T22:24:30.928Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     Waiting for application startup."}
+{"v": 1, "ts": "2026-11-01T22:24:30.928Z", "level": "info", "src": "python.dance_highlight", "msg": "{\"type\": \"model_loading\", \"name\": \"YOLO \\ud3ec\\uc988 \\ubaa8\\ub378 (yolov8s-pose.pt)\", \"current\": 0, \"total\": 2}"}
+{"v": 1, "ts": "2026-11-01T22:24:31.609Z", "level": "info", "src": "python.dance_highlight", "msg": "[YOLO] device=mps half=True"}
+{"v": 1, "ts": "2026-11-01T22:24:31.609Z", "level": "info", "src": "python.dance_highlight", "msg": "{\"type\": \"model_loading\", \"name\": \"\\uc5bc\\uad74 \\uc778\\uc2dd \\ubaa8\\ub378 (YuNet/AuraFace)\", \"current\": 1, \"total\": 2}"}
+{"v": 1, "ts": "2026-11-01T22:24:31.968Z", "level": "warn", "src": "python.dance_highlight", "msg": "2026-11-02 07:24:31.967 python[30819:10970989] 2026-11-02 07:24:31.967299 [W:onnxruntime:, coreml_execution_provider.cc:141 GetCapability] CoreMLExecutionProvider::GetCapability, number of partitions supported by CoreML: 2 number of nodes in the graph: 255 number of nodes supported by CoreML: 253"}
+{"v": 1, "ts": "2026-11-01T22:24:33.139Z", "level": "info", "src": "python.dance_highlight", "msg": "Dance AuraFace providers=['CoreMLExecutionProvider', 'CPUExecutionProvider']", "ctx": {"logger": "dance_highlight.services.face_runtime"}}
+{"v": 1, "ts": "2026-11-01T22:24:33.139Z", "level": "info", "src": "python.dance_highlight", "msg": "DancePipeline ready (device=mps)", "ctx": {"logger": "dance_highlight"}}
+{"v": 1, "ts": "2026-11-01T22:24:33.139Z", "level": "info", "src": "python.dance_highlight", "msg": "Models loaded. VRAM used: N/A MB", "ctx": {"logger": "clipper_plugin"}}
+{"v": 1, "ts": "2026-11-01T22:24:33.140Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     Application startup complete."}
+{"v": 1, "ts": "2026-11-01T22:24:33.141Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     Uvicorn running on http://127.0.0.1:50611 (Press CTRL+C to quit)"}
+{"v": 1, "ts": "2026-11-01T22:24:33.161Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50636 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:24:36.016Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50636 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:24:36.021Z", "level": "info", "src": "python.dance_highlight", "msg": "Starting dance highlight job dance_1793571868350: [local-path]", "trace": "348080ff", "ctx": {"logger": "dance_highlight"}}
+{"v": 1, "ts": "2026-11-01T22:24:36.022Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50646 - \"POST /jobs HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:24:36.022Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images start"}
+{"v": 1, "ts": "2026-11-01T22:24:36.024Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50647 - \"WebSocket /jobs/dance_1793571868350/events\" [accepted]"}
+{"v": 1, "ts": "2026-11-01T22:24:36.024Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection open"}
+{"v": 1, "ts": "2026-11-01T22:24:36.032Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images done, count=5"}
+{"v": 1, "ts": "2026-11-01T22:24:36.032Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] download_refs: 0.0s"}
+{"v": 1, "ts": "2026-11-01T22:24:36.032Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records start"}
+{"v": 1, "ts": "2026-11-01T22:24:40.811Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50677 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:24:40.943Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50677 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:25:16.748Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50762 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:25:17.085Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50762 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:25:40.866Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50811 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:25:41.066Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50811 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:25:47.084Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records done, frames=2324"}
+{"v": 1, "ts": "2026-11-01T22:25:47.084Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] yolo: 1m 11.1s  (frames=2324, video=2m 35.0s, fps=59.9)"}
+{"v": 1, "ts": "2026-11-01T22:25:47.498Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=허윤진 total_images=8 valid_face_embs=8"}
+{"v": 1, "ts": "2026-11-01T22:25:47.967Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=홍은채 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:25:48.241Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=카즈하 total_images=5 valid_face_embs=5"}
+{"v": 1, "ts": "2026-11-01T22:25:48.504Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=김채원 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:25:48.791Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=사쿠라 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:25:48.791Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] built_ref_embeddings=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']"}
+{"v": 1, "ts": "2026-11-01T22:25:48.791Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: build_reference_embeddings done, embs=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']"}
+{"v": 1, "ts": "2026-11-01T22:25:48.791Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] ref_embeddings: 1.7s"}
+{"v": 1, "ts": "2026-11-01T22:26:16.197Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50901 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:26:16.522Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50901 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:26:40.833Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50923 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:26:40.961Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50923 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:27:40.837Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50966 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:27:40.966Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:50966 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:28:40.906Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51008 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:28:41.024Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51008 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:29:37.354Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] main_selection: 3m 48.6s"}
+{"v": 1, "ts": "2026-11-01T22:29:40.869Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51051 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:29:40.991Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51051 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:30:22.649Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] segment_build: 45.3s  (main=3, group=32)"}
+{"v": 1, "ts": "2026-11-01T22:30:40.865Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51089 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:30:40.987Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51089 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:31:40.878Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51129 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:31:41.011Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51129 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:31:51.111Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] face_extract: 1m 28.5s  (segs=3, candidates/seg=12, selected/seg=5, owned_samples=2271)"}
+{"v": 1, "ts": "2026-11-01T22:32:40.881Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51169 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:32:41.006Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51169 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:33:40.891Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51214 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:33:41.011Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51214 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:34:08.211Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=0 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=1 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=2 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=3 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=4 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=5 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=6 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=7 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=8 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=9 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=10 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=11 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=12 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=13 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=14 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=15 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=16 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=17 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=18 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=19 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=20 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=21 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=22 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=23 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=24 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=25 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=26 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=27 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.212Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=28 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=29 status=matched reason=verified_camera_focal_context member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=30 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=31 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=32 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=33 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=34 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=35 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=36 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=37 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=38 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=39 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=40 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=41 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=42 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=43 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=44 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=45 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=46 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=47 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=48 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=49 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=50 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=51 status=matched reason=member_body_continuity member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=52 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=53 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=54 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=55 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=56 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:34:08.213Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] cluster_map: 2m 17.1s  (embs=2, clusters=39, persons=5)"}
+{"v": 1, "ts": "2026-11-01T22:34:27.161Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_main: 6.6s  (n=57)"}
+{"v": 1, "ts": "2026-11-01T22:34:31.024Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_group: 3.9s  (n=32)"}
+{"v": 1, "ts": "2026-11-01T22:34:31.741Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 9m 55.7s  | download_refs=0.0s  yolo=1m 11.1s  ref_embs=1.7s  main_selection=3m 48.6s  segment_build=45.3s  face_extract=1m 28.5s  cluster_map=2m 17.1s  clips_main=6.6s  clips_group=3.9s"}
+{"v": 1, "ts": "2026-11-01T22:34:31.766Z", "level": "info", "src": "python.dance_highlight", "msg": "job dance_1793571868350 memory peak 2358.39 MB", "trace": "348080ff", "ctx": {"logger": "clipper_plugin", "operation": "job.memory", "plugin": "dance_highlight", "jobId": "dance_1793571868350", "status": "completed", "peakRssMb": 2358.39, "elapsedSec": 595.7, "jobsSinceStart": 1}}
+{"v": 1, "ts": "2026-11-01T22:34:31.975Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection closed"}
+{"v": 1, "ts": "2026-11-01T22:34:32.141Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51250 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:34:34.818Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51250 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:34:34.825Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51265 - \"POST /jobs HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:34:34.825Z", "level": "info", "src": "python.dance_highlight", "msg": "Starting dance highlight job dance_1793571915955: [local-path]", "trace": "3853b437", "ctx": {"logger": "dance_highlight"}}
+{"v": 1, "ts": "2026-11-01T22:34:34.825Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images start"}
+{"v": 1, "ts": "2026-11-01T22:34:34.827Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51266 - \"WebSocket /jobs/dance_1793571915955/events\" [accepted]"}
+{"v": 1, "ts": "2026-11-01T22:34:34.828Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection open"}
+{"v": 1, "ts": "2026-11-01T22:34:34.849Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images done, count=5"}
+{"v": 1, "ts": "2026-11-01T22:34:34.849Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] download_refs: 0.0s"}
+{"v": 1, "ts": "2026-11-01T22:34:34.849Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records start"}
+{"v": 1, "ts": "2026-11-01T22:34:40.887Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51281 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:34:41.036Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51281 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:35:40.817Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51324 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:35:40.944Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51324 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:36:08.564Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records done, frames=3310"}
+{"v": 1, "ts": "2026-11-01T22:36:08.564Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] yolo: 1m 33.7s  (frames=3310, video=3m 40.8s, fps=59.9)"}
+{"v": 1, "ts": "2026-11-01T22:36:08.656Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=허윤진 total_images=8 valid_face_embs=8"}
+{"v": 1, "ts": "2026-11-01T22:36:08.767Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=홍은채 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:36:08.832Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=카즈하 total_images=5 valid_face_embs=5"}
+{"v": 1, "ts": "2026-11-01T22:36:08.897Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=김채원 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:36:08.965Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=사쿠라 total_images=6 valid_face_embs=6"}
+{"v": 1, "ts": "2026-11-01T22:36:08.965Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] built_ref_embeddings=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']"}
+{"v": 1, "ts": "2026-11-01T22:36:08.965Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: build_reference_embeddings done, embs=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']"}
+{"v": 1, "ts": "2026-11-01T22:36:08.965Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] ref_embeddings: 0.4s"}
+{"v": 1, "ts": "2026-11-01T22:36:40.842Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51365 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:36:40.977Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51365 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:37:40.842Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51409 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:37:40.976Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51409 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:38:40.835Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51448 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:38:40.975Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51448 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:39:40.832Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51488 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:39:40.970Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51488 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:39:54.228Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:39:54.228Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:05.725Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:05.725Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:06.033Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:06.033Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:13.904Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:13.904Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:40:40.802Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51527 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:40:40.920Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51527 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:41:11.760Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:41:11.760Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:41:23.746Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:41:23.746Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091e300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:41:40.806Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51567 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:41:40.923Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51567 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:41:45.972Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] main_selection: 5m 37.0s"}
+{"v": 1, "ts": "2026-11-01T22:41:48.129Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:41:48.129Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:07.952Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:07.979Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:08.490Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:08.915Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:08.950Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.466Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.466Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.487Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.488Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.508Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.508Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.531Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.531Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.553Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.553Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.596Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.596Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.640Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.640Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.684Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:32.684Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091dc00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:42:33.138Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] segment_build: 47.2s  (main=1, group=32)"}
+{"v": 1, "ts": "2026-11-01T22:42:40.840Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51616 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:42:40.975Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51616 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:43:40.815Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51656 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:43:40.944Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51656 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:44:40.824Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51696 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:44:40.951Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51696 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:45:02.862Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] face_extract: 2m 29.7s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=3098)"}
+{"v": 1, "ts": "2026-11-01T22:45:08.351Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:08.352Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:08.384Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:08.384Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:08.449Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:08.449Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:10.934Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:10.934Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091ca80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:45:40.812Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51736 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:45:40.934Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51736 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:46:40.808Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51779 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:46:40.932Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51779 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:46:58.247Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091f800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:46:58.250Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091f800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:24.019Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:24.046Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:24.461Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:24.876Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:24.905Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:40.957Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51819 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:47:41.131Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51819 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:47:45.967Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:45.967Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:45.987Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:45.988Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.008Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.008Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.029Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.030Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.052Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.052Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.094Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.094Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.136Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.137Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.179Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:46.180Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd54380] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.010Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.011Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.086Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.086Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.163Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.163Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.241Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:53.241Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.377Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.377Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.495Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.496Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.612Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.613Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.727Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:55.727Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.780Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.780Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.800Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.800Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.824Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.824Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.848Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.848Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.874Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.875Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.903Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.903Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.933Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.933Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.964Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.965Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.997Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:56.998Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.033Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.033Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.071Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.071Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.110Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.110Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.151Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.151Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.196Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.196Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.242Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.242Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b3091d180] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=0 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=1 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=2 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=3 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=4 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=5 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=6 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.557Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=7 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=8 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=9 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=10 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=11 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=12 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=13 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=14 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=15 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=16 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=17 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=18 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=19 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=20 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=21 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=22 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=23 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=24 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=25 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=26 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=27 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=28 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=29 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=30 status=matched reason=member_body_continuity member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=31 status=matched reason=member_body_continuity member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=32 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=33 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=34 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=35 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=36 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=37 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=38 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.558Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=39 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=40 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=41 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=42 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=43 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=44 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=45 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=46 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=47 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=48 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=49 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=50 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=51 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=52 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=53 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=54 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=55 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=56 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=57 status=matched reason=member_body_continuity member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=58 status=matched reason=member_body_continuity member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=59 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=60 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=61 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=62 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=63 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=64 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=65 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=66 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=67 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=68 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=69 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=70 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=71 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=72 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=73 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=74 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=75 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=76 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.559Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=77 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=78 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=79 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=80 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=81 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=82 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=83 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=84 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=85 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=86 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=87 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=88 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=89 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=90 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=91 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=92 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=93 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=94 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=95 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=96 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=97 status=matched reason=member_timeline_consensus member=홍은채"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=98 status=matched reason=member_timeline_consensus member=김채원"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=99 status=matched reason=member_timeline_consensus member=사쿠라"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=100 status=matched reason=member_timeline_consensus member=허윤진"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=101 status=matched reason=member_timeline_consensus member=카즈하"}
+{"v": 1, "ts": "2026-11-01T22:47:57.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] cluster_map: 2m 54.7s  (embs=0, clusters=59, persons=5)"}
+{"v": 1, "ts": "2026-11-01T22:48:22.505Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_main: 9.2s  (n=102)"}
+{"v": 1, "ts": "2026-11-01T22:48:25.236Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_group: 2.7s  (n=32)"}
+{"v": 1, "ts": "2026-11-01T22:48:26.305Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 13m 51.5s  | download_refs=0.0s  yolo=1m 33.7s  ref_embs=0.4s  main_selection=5m 37.0s  segment_build=47.2s  face_extract=2m 29.7s  cluster_map=2m 54.7s  clips_main=9.2s  clips_group=2.7s"}
+{"v": 1, "ts": "2026-11-01T22:48:26.318Z", "level": "info", "src": "python.dance_highlight", "msg": "job dance_1793571915955 memory peak 2376.14 MB", "trace": "3853b437", "ctx": {"logger": "clipper_plugin", "operation": "job.memory", "plugin": "dance_highlight", "jobId": "dance_1793571915955", "status": "completed", "peakRssMb": 2376.14, "elapsedSec": 831.5, "jobsSinceStart": 2}}
+{"v": 1, "ts": "2026-11-01T22:48:26.701Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection closed"}
+{"v": 1, "ts": "2026-11-01T22:48:26.957Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51836 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:48:29.685Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51836 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:48:29.692Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51853 - \"POST /jobs HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:48:29.692Z", "level": "info", "src": "python.dance_highlight", "msg": "Starting dance highlight job dance_1793571975392: [local-path]", "trace": "e9062e35", "ctx": {"logger": "dance_highlight"}}
+{"v": 1, "ts": "2026-11-01T22:48:29.692Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images start"}
+{"v": 1, "ts": "2026-11-01T22:48:29.694Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51854 - \"WebSocket /jobs/dance_1793571975392/events\" [accepted]"}
+{"v": 1, "ts": "2026-11-01T22:48:29.694Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection open"}
+{"v": 1, "ts": "2026-11-01T22:48:29.730Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: download_reference_images done, count=9"}
+{"v": 1, "ts": "2026-11-01T22:48:29.730Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] download_refs: 0.0s"}
+{"v": 1, "ts": "2026-11-01T22:48:29.730Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records start"}
+{"v": 1, "ts": "2026-11-01T22:48:40.896Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51869 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:48:41.027Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51869 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:49:40.841Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51923 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:49:40.971Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51923 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:50:15.253Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: analyze_video_to_records done, frames=3632"}
+{"v": 1, "ts": "2026-11-01T22:50:15.253Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] yolo: 1m 45.5s  (frames=3632, video=4m 2.3s, fps=59.9)"}
+{"v": 1, "ts": "2026-11-01T22:50:15.693Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=보라 total_images=5 valid_face_embs=5"}
+{"v": 1, "ts": "2026-11-01T22:50:16.225Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=히메키 total_images=7 valid_face_embs=7"}
+{"v": 1, "ts": "2026-11-01T22:50:16.762Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=아윤 total_images=5 valid_face_embs=5"}
+{"v": 1, "ts": "2026-11-01T22:50:17.073Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=라다 total_images=3 valid_face_embs=3"}
+{"v": 1, "ts": "2026-11-01T22:50:17.321Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=시리 total_images=3 valid_face_embs=3"}
+{"v": 1, "ts": "2026-11-01T22:50:17.560Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=아이찡 total_images=4 valid_face_embs=4"}
+{"v": 1, "ts": "2026-11-01T22:50:17.921Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=영 total_images=4 valid_face_embs=4"}
+{"v": 1, "ts": "2026-11-01T22:50:18.361Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=오아 total_images=4 valid_face_embs=4"}
+{"v": 1, "ts": "2026-11-01T22:50:18.748Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] member=메르시 total_images=5 valid_face_embs=5"}
+{"v": 1, "ts": "2026-11-01T22:50:18.748Z", "level": "info", "src": "python.dance_highlight", "msg": "[REF] built_ref_embeddings=['보라', '히메키', '아윤', '라다', '시리', '아이찡', '영', '오아', '메르시']"}
+{"v": 1, "ts": "2026-11-01T22:50:18.748Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE] step: build_reference_embeddings done, embs=['보라', '히메키', '아윤', '라다', '시리', '아이찡', '영', '오아', '메르시']"}
+{"v": 1, "ts": "2026-11-01T22:50:18.748Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] ref_embeddings: 3.5s"}
+{"v": 1, "ts": "2026-11-01T22:50:40.843Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51963 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:50:40.977Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:51963 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:51:40.842Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52007 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:51:40.980Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52007 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:52:40.827Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52048 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:52:40.960Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52048 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:53:40.819Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52087 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:53:40.953Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52087 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:54:29.747Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:29.748Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.122Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.122Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.309Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.309Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.519Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.519Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.894Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:30.894Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:31.449Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:31.449Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:37.461Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:40.847Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52128 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:54:40.968Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52128 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:54:43.187Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:43.187Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:58.671Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:54:58.671Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:04.033Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:29.917Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:29.917Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:30.194Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:30.194Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:40.797Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52171 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:55:40.916Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52171 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:55:43.981Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:55:43.981Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55880] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:56:05.933Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] main_selection: 5m 47.2s"}
+{"v": 1, "ts": "2026-11-01T22:56:32.230Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55c00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:56:32.231Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55c00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:56:36.677Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55c00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:56:40.819Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52214 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:56:40.949Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52214 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:56:41.648Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55c00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:56:41.649Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55c00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:06.887Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:06.939Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:06.991Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:07.042Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:07.094Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:07.163Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:07.235Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:07.307Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:18.530Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:18.530Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:18.590Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:18.590Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:19.027Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:19.028Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:19.089Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:19.090Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:57:25.785Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] segment_build: 1m 19.9s  (main=19, group=56)"}
+{"v": 1, "ts": "2026-11-01T22:57:40.812Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52254 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:57:40.935Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52254 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:58:40.819Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52297 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:58:40.946Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52297 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:59:40.816Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52337 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:59:40.948Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52337 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T22:59:47.001Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] face_extract: 2m 21.2s  (segs=19, candidates/seg=12, selected/seg=5, owned_samples=3327)"}
+{"v": 1, "ts": "2026-11-01T22:59:53.692Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56680] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:53.692Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56680] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:56.097Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56a00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:56.098Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56a00] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:56.691Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.067Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.067Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.092Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.093Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.141Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T22:59:58.141Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd55f80] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:00:40.818Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52380 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:00:40.941Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52380 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:01:28.565Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b2cd56300] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:01:40.806Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52423 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:01:40.927Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52423 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:02:26.821Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:26.871Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:26.921Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:26.971Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:27.026Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:27.095Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:27.165Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:27.236Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.318Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.319Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.378Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.378Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.814Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.814Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.874Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:38.874Z", "level": "warn", "src": "python.dance_highlight", "msg": "[h264 @ 0x7b23b23800] mmco: unref short failure"}
+{"v": 1, "ts": "2026-11-01T23:02:40.912Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52464 - \"GET /health HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:02:41.062Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     127.0.0.1:52464 - \"GET /runtime/accelerators HTTP/1.1\" 200 OK"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=0 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=1 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=2 status=matched reason=member_body_continuity member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=3 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=4 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=5 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=6 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=7 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=8 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=9 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=10 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=11 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=12 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=13 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=14 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=15 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=16 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=17 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=18 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=19 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=20 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=21 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=22 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.450Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=23 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=24 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=25 status=matched reason=member_timeline_consensus member=히메키"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=26 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=27 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=28 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=29 status=matched reason=member_timeline_consensus member=히메키"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=30 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=31 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=32 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=33 status=matched reason=member_timeline_consensus member=아윤"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=34 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=35 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=36 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=37 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=38 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=39 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=40 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=41 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=42 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=43 status=matched reason=member_timeline_consensus member=보라"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=44 status=matched reason=member_timeline_consensus member=보라"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=45 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=46 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.451Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=47 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=48 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=49 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=50 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=51 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=52 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=53 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=54 status=matched reason=member_timeline_consensus member=아윤"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=55 status=matched reason=member_timeline_consensus member=아윤"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=56 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=57 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=58 status=matched reason=member_body_continuity member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=59 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=60 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=61 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=62 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=63 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=64 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=65 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=66 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=67 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=68 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=69 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=70 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=71 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=72 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=73 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=74 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=75 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=76 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=77 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=78 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=79 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=80 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=81 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=82 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=83 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.452Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=84 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=85 status=matched reason=member_timeline_consensus member=아윤"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=86 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=87 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=88 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=89 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=90 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=91 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=92 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=93 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=94 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=95 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=96 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=97 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=98 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=99 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=100 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=101 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=102 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=103 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=104 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=105 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=106 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=107 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=108 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=109 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=110 status=matched reason=member_timeline_consensus member=히메키"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=111 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=112 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=113 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=114 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=115 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=116 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=117 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=118 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=119 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=120 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=121 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=122 status=matched reason=member_timeline_consensus member=메르시"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=123 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=124 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=125 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=126 status=matched reason=member_timeline_consensus member=히메키"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=127 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.453Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=128 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=129 status=matched reason=member_timeline_consensus member=히메키"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=130 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=131 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=132 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=133 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=134 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=135 status=matched reason=member_timeline_consensus member=보라"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=136 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=137 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=138 status=matched reason=member_body_continuity member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=139 status=matched reason=member_body_continuity member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=140 status=matched reason=member_body_continuity member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=141 status=matched reason=member_timeline_consensus member=영"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=142 status=matched reason=member_timeline_consensus member=라다"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=143 status=matched reason=member_timeline_consensus member=아이찡"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=144 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=145 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=146 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=147 status=unmatched reason=unresolved_face_interval member=-"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=148 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=149 status=matched reason=member_timeline_consensus member=시리"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=150 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[MATCH] segment=151 status=matched reason=member_timeline_consensus member=오아"}
+{"v": 1, "ts": "2026-11-01T23:02:47.454Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] cluster_map: 3m 0.4s  (embs=10, clusters=82, persons=9)"}
+{"v": 1, "ts": "2026-11-01T23:03:27.953Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_main: 13.7s  (n=152)"}
+{"v": 1, "ts": "2026-11-01T23:03:32.675Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] clips_group: 4.7s  (n=56)"}
+{"v": 1, "ts": "2026-11-01T23:03:33.943Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 15m 4.3s  | download_refs=0.0s  yolo=1m 45.5s  ref_embs=3.5s  main_selection=5m 47.2s  segment_build=1m 19.9s  face_extract=2m 21.2s  cluster_map=3m 0.4s  clips_main=13.7s  clips_group=4.7s"}
+{"v": 1, "ts": "2026-11-01T23:03:33.961Z", "level": "info", "src": "python.dance_highlight", "msg": "job dance_1793571975392 memory peak 2501.36 MB", "trace": "e9062e35", "ctx": {"logger": "clipper_plugin", "operation": "job.memory", "plugin": "dance_highlight", "jobId": "dance_1793571975392", "status": "completed", "peakRssMb": 2501.36, "elapsedSec": 904.3, "jobsSinceStart": 3}}
+{"v": 1, "ts": "2026-11-01T23:03:34.620Z", "level": "info", "src": "python.dance_highlight", "msg": "INFO:     connection closed"}

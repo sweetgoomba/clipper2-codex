@@ -1,0 +1,34 @@
+group_continuity 최종 독립 검토 — 2026-11-03
+SHA256 baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3
+
+결론: 제가 제기한 공유 머리/불완전 머리 관측 반례는 이 버전에서 모두 닫혔다. 검토한 함수 범위에서 새 차단 결함을 찾지 못했다. 전체 pipeline 통합 및 실제 앱 최종 결과의 승인과는 구분한다. ANT154 이름 경계 문제는 별도다.
+
+기하 계약 확인
+- 긍정적 witness는 직접 관측된 nose+양눈, torso, 유효한 bbox/영상 내부 좌표를 요구한다. 양끝은 full-body 관측이다.
+- 선택한 세 witness는 매샘플마다 head영역이각관측head크기보다멀리분리되고torso영역도독립이어야한다. duplicate탐지실패를독립성으로대체하지않는다.
+- 약한가설도matching competitor로보존하고공유head가설은positivewitness에서제외한다.
+- 모든source sample의reciprocalunique몸경로와cut/cadence/전경반증guard가유지된다. 기하통과후에만원본인접프레임cut을확인하며source실패시전체joinrollback한다.
+
+독립 테스트
+예전high-confidence5head공유와complementary2head관측반례를같은최신코드에재실행했다. 둘모두group2개유지,source읽기0,fewer_than_three_observed_members로거부했다.
+동결source/test/fixture의전용pytest를scratch에서직접실행했다.
+명령: /Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python -m pytest -q --rootdir=. --confcutdir=. test_dance_group_continuity.py
+관측 결과: 30 passed in 2.51s, exit0.
+
+실제 저장 관측+제한 원본 재생 독립 검증
+세canonical-only job의raw pose와metadata를직접읽고9266개타임스탬프를대조했다. source는각job의diagnostics/source.mp4를사용했다. 새모델추론없음.
+함수입력(record/group)의pickle이전후정확히같고main출력도정확히같음을assert했다. 부모reportedgroup_projection과출력range전체도정확히같았다.
+MMN: groups32→31,shortgroups21→19,join40.907533–41.307933(.400400초),source29frames,API .101129초.
+ANT: groups32→31,shortgroups25→23,join86.553133–87.020267(.467133초),source33frames,API .097695초.
+NEON: groups53→50,shortgroups32→30,joins52.852800–53.119733 /210.877333–210.944067 /221.754867–221.888333(합.467133초),source43frames,API .250355초.
+합: group117→112,shortgroup78→72,5joins,단체로표시되는시간+1.334667초. main불변이므로전체408→403,short224→218이다. source105frames,API합약.449초. 이는전체앱실행시간이아니라이미완료된결과에대한함수투영비용이다.
+ANT134.067267–134.467667은새조건의직접head증거부족으로보류되며6번째join을되살리기위해조건을완화하지않았다.
+
+자료
+source-manifest.json, 동결group_continuity.py/test/fixture.
+independent-source-replay.json 및 independent_replay.py.
+추가반례: ../canonical-app/group-continuity-v3-head-probes.json, review_group_head_v3.py.
+부모자료 product-report.md/product-source-tests.diff도읽었고현재source와계약을대조했다.
+
+한계
+함수는group output만바꾸며원래frame역할판정을수정하지않는다. 새group bridge를신원/메인근거로역류시키면안된다. 기존title/group-tail오류등을고쳤다고주장하지않는다. 최종pipeline에연결한뒤main/name/thumbnail및group진단/recipient인덱스의일관성은별도통합검증이필요하다. contained-card output정책과이단체연속성의감소효과를중복계산하면안된다.

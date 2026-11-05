@@ -1,0 +1,58 @@
+[
+  {
+    "path": "plugins/dance_highlight/dance_highlight/app.py",
+    "sha256": "55761e3f8dc69b375f9bc9e49e51a7cccea4d13c2a9ff6c30128633bd98b7533"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/context_faces.py",
+    "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+    "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+    "sha256": "7d91d54762a5d203f2673a56df71596873e7f4abae6c4f498be65cf0ec54bc50"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "sha256": "48b6b2a8cd46795dff3e6af5f76041b31c4f89e9b174fdde6ac7e4019c900d1c"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "426cd8beec4d824d0e7f82b34ca0135976c6db9d4086555f791c750a22c8b195"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/sampled_face_link.py",
+    "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+    "sha256": "137bbc56a12d92cc5fe43904f1167f93f7d697148991c8e8f659fd75f8587480"
+  },
+  {
+    "path": "plugins/dance_highlight/pyproject.toml",
+    "sha256": "1e6e3c8d2f3a4fb62ef454b619c9ddc954ba503280866e4785ca5793862b9428"
+  },
+  {
+    "path": "tests/test_dance_secondary_faces.py",
+    "sha256": "3ea51e229e4e9084a9496b8a3af1145e0e224447856eb166957d01931068a576"
+  },
+  {
+    "path": "uv.lock",
+    "sha256": "cd5b5192ca3623293a1b6ed0afa261276b4a192d0625a8553a6714ba834109c1"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+    "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+    "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+  },
+  {
+    "path": "tests/test_dance_opencv_acceleration.py",
+    "sha256": "01ca2c302cc533e0357cf83e37e4430bbcc606119fca09cbe199e297dabdc11d"
+  }
+]

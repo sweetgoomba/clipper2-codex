@@ -1,0 +1,51 @@
+[
+  {
+    "title": "MMN",
+    "unchanged_clip_thumbnails_compared": 89,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": []
+  },
+  {
+    "title": "ANT",
+    "unchanged_clip_thumbnails_compared": 130,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 60,
+        "seg_type": "main",
+        "start": 144.7780666666667,
+        "end": 146.61313333333334,
+        "person_id": "홍은채",
+        "clip_id": "main_0060",
+        "thumbnail_path": "clips/dance/main/main_0060.jpg"
+      },
+      {
+        "seg_id": 21,
+        "seg_type": "group",
+        "start": 146.61313333333334,
+        "end": 149.149,
+        "person_id": null,
+        "clip_id": "group_0021",
+        "thumbnail_path": "clips/dance/group/group_0021.jpg",
+        "person_ids": []
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "unchanged_clip_thumbnails_compared": 202,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 28,
+        "seg_type": "group",
+        "start": 142.4423,
+        "end": 144.3442,
+        "person_id": null,
+        "clip_id": "group_0028",
+        "thumbnail_path": "clips/dance/group/group_0028.jpg",
+        "person_ids": []
+      }
+    ]
+  }
+]

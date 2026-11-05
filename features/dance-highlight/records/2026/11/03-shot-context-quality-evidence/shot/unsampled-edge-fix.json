@@ -1,0 +1,62 @@
+{
+  "change": "Reject newly named source time in a shot with no original sampled main observation, including partial source-frame time",
+  "source_sha256": "5b03843400b5a2ab84f1daa78730fd0b7e96af71eb63288225452c77531823b9",
+  "test_sha256": "ca2cbdc3c73e0b997ae6f9c1fb46677886615ac153cf052767458f7e9ec019d9",
+  "new_tests": {
+    "starts": [
+      0.91,
+      0.95,
+      0.99
+    ],
+    "expected": "unchanged output, zero recovery and zero source reads"
+  },
+  "targeted": "40 passed",
+  "broader": "137 passed, 2 concurrent pipeline failures: scene_context imports currently missing role_state module",
+  "videos": [
+    {
+      "video": "MMN",
+      "recovered_seconds": 0.0,
+      "seconds": 0.011236208025366068,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    },
+    {
+      "video": "ANT",
+      "recovered_seconds": 0.46733333333334315,
+      "seconds": 0.20973470801254734,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 1,
+        "frames_reserved": 49,
+        "frames_read": 49,
+        "seeks": 1,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    },
+    {
+      "video": "NEON",
+      "recovered_seconds": 0.0,
+      "seconds": 0.031083332956768572,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    }
+  ]
+}

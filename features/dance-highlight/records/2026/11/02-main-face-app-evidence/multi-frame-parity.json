@@ -1,0 +1,37 @@
+[
+  {
+    "parallel": false,
+    "runtime": {
+      "reported_threads": 1
+    },
+    "frames": 30,
+    "faces": 75,
+    "detection_seconds": 2.1089674619724974,
+    "recognition_seconds": 1.0436007511452772,
+    "all_outputs_exact": true
+  },
+  {
+    "parallel": true,
+    "runtime": {
+      "backend": "GCD",
+      "requested_threads": -1,
+      "reported_threads": 10
+    },
+    "frames": 30,
+    "faces": 75,
+    "detection_seconds": 0.776573708106298,
+    "recognition_seconds": 0.4412182040978223,
+    "all_outputs_exact": true
+  },
+  {
+    "parallel": false,
+    "runtime": {
+      "reported_threads": 1
+    },
+    "frames": 30,
+    "faces": 75,
+    "detection_seconds": 1.9419759180163965,
+    "recognition_seconds": 0.9847066227230243,
+    "all_outputs_exact": true
+  }
+]

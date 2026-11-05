@@ -1,0 +1,17 @@
+{
+  "reviewed_segment_sha256": "6782f647e99ec66cd46dea0cd4d2f15d6cb72e7aa8bb44435df033e96220329c",
+  "checks": {
+    "initial_central_veto_counter_reproduced": true,
+    "first_fix_removes_central_veto_counter": true,
+    "first_fix_existing_group_counter_reproduced": true,
+    "final_fix_removes_both_counters": true,
+    "whole_three_cached_changes_preserved": true,
+    "changed_observation_counts": true,
+    "old_groups_preserved_in_three_videos": true,
+    "reviewed_ANT_eunchae_scope_preserved": true,
+    "tested_source_hash_matches": true,
+    "baseline_snapshot_hashes_match": true
+  },
+  "all_passed": true,
+  "scope": "Independent cached three-video classification replay and two synthetic reproductions; not a new actual-app run or whole dance unit suite."
+}

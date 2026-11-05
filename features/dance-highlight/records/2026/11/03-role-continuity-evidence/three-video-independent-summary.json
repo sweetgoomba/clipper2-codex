@@ -1,0 +1,90 @@
+{
+  "scope": "Synthesis of completed independent per-video audits; no rerun",
+  "per_video_reports": {
+    "mmn": "/private/tmp/dance-role-continuity-20261103-review/app-final/mmn-json-only-review.json",
+    "ant": "/private/tmp/dance-role-continuity-20261103-review/app-final/ant-json-only-review.json",
+    "neon": "/private/tmp/dance-role-continuity-20261103-review/app-final/neon-json-only-review.json"
+  },
+  "projects": {
+    "mmn": "1793649506337",
+    "ant": "1793649573540",
+    "neon": "1793649654322"
+  },
+  "counts": {
+    "baseline": {
+      "raw": {
+        "count": 409,
+        "short": 226
+      },
+      "visible": {
+        "count": 409,
+        "short": 226
+      },
+      "unknown_seconds": 38.14160000000024
+    },
+    "canonical": {
+      "raw": {
+        "count": 408,
+        "short": 224
+      },
+      "visible": {
+        "count": 408,
+        "short": 224
+      },
+      "unknown_seconds": 37.874566666666894
+    },
+    "final": {
+      "raw": {
+        "count": 400,
+        "short": 216
+      },
+      "visible": {
+        "count": 374,
+        "short": 195
+      },
+      "unknown_seconds": 36.80663333333355
+    }
+  },
+  "wall": {
+    "baseline": 1207.958,
+    "final": 1326.9299999999998,
+    "delta_seconds": 118.97199999999975,
+    "delta_percent": 9.8490179294313
+  },
+  "thumbs": {
+    "baseline": {
+      "same_start_equal": 394,
+      "unexpected_same_start_changes": 0,
+      "new_starts": 6
+    },
+    "canonical": {
+      "same_start_equal": 399,
+      "unexpected_same_start_changes": 0,
+      "new_starts": 1
+    }
+  },
+  "checks": {
+    "all_sam_off": true,
+    "all_canonical_frame_records_equal": true,
+    "frame_records": 9266,
+    "suppressed_groups": 26,
+    "package64_same": true,
+    "runtime_modules_match": true,
+    "NEON_canonical_main_union_equal": true
+  },
+  "unresolved": [
+    "NEON43.7770667–44.1107333 primary-role expansion lacks independent foreground/retention proof; unchanged since canonical",
+    "MMN45.3619833–46.4630833 preparation/main overlap existed at baseline",
+    "Existing user-case failures are not all resolved"
+  ],
+  "visual_check": {
+    "NEON_thumbnail_files": [
+      "main_0014.jpg",
+      "main_0015.jpg",
+      "main_0031.jpg",
+      "main_0099.jpg"
+    ],
+    "method": "Viewed existing final JPEG files only",
+    "finding": "All display valid full source frames; no blank/corrupt/misaligned crop. First two are multi-person formation views; this does not independently establish a main role. No visual identity identification claimed."
+  }
+}

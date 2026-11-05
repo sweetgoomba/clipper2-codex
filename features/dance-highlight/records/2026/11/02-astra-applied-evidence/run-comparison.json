@@ -1,0 +1,336 @@
+[
+  {
+    "title": "Made My Night",
+    "project_id": "1793617663026",
+    "baseline_project_id": "1793610108675",
+    "job_id": "dance_1793617663026",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617663026",
+    "submitted": "2026-11-02T11:07:44.027Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T11:07:44.125Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/BZDZBUyaJbA",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 0.098,
+    "finished": "2026-11-02T11:12:39.207Z",
+    "active_wall_seconds": 295.082,
+    "baseline_active_wall_seconds": 314.043,
+    "wall_reduction_percent": 6.0377082119327685,
+    "baseline_pipeline_seconds": 302.8401409999933,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 16,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 6.80720000000003,
+      "subsecond_clips": 42,
+      "clip_count": 89
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 16,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 6.80720000000003,
+      "subsecond_clips": 42,
+      "clip_count": 89
+    },
+    "identical_clips": true,
+    "identical_full_clip_rows": true,
+    "identical_person_cards": true,
+    "diagnostic_frame_count": 2324,
+    "identical_diagnostic_frames": true,
+    "thumbnail_count": 89,
+    "changed_thumbnails": [],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.01574441703269258,
+        "yolo": 65.95308104198193,
+        "ref_embs": 1.2925776250194758,
+        "main_selection": 88.55182495800545,
+        "native_scene": 10.847293042053934,
+        "segment_build": 26.71668666601181,
+        "face_extract": 44.36631433403818,
+        "secondary_faces": 15.777642958040815,
+        "body_continuity": 0.4578437079908326,
+        "context_faces": 0.0002710830303840339,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.019656082964502275,
+        "cluster_map": 35.69998641603161,
+        "clips_main": 6.641998082981445,
+        "clips_group": 3.8720730409841053
+      },
+      "total_before_metadata_write_seconds": 285.7119767499971,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": 5.655843440515563,
+    "removed_or_changed_clips": [],
+    "added_or_changed_clips": []
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "project_id": "1793617753764",
+    "baseline_project_id": "1793610363935",
+    "job_id": "dance_1793617753764",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764",
+    "submitted": "2026-11-02T11:09:15.009Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T11:12:39.352Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/p_XdZdg9oGc",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 204.343,
+    "finished": "2026-11-02T11:19:17.073Z",
+    "active_wall_seconds": 397.721,
+    "baseline_active_wall_seconds": 422.293,
+    "wall_reduction_percent": 5.818708811180862,
+    "baseline_pipeline_seconds": 418.62852191599086,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 33,
+        "main:김채원": 20,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 11,
+        "main:홍은채": 11
+      },
+      "unknown_seconds": 16.01780000000008,
+      "subsecond_clips": 79,
+      "clip_count": 134
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 33,
+        "main:김채원": 20,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 11,
+        "main:홍은채": 11
+      },
+      "unknown_seconds": 16.01780000000008,
+      "subsecond_clips": 79,
+      "clip_count": 134
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": true,
+    "diagnostic_frame_count": 3310,
+    "identical_diagnostic_frames": true,
+    "thumbnail_count": 134,
+    "changed_thumbnails": [
+      "clips/dance/main/main_0050.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.022432499972637743,
+        "yolo": 85.80518287501764,
+        "ref_embs": 0.39391104102833197,
+        "main_selection": 133.9665833329782,
+        "native_scene": 21.74923320801463,
+        "segment_build": 33.83568512497004,
+        "face_extract": 69.2434782909695,
+        "secondary_faces": 22.457254667009693,
+        "body_continuity": 0.6107631659833714,
+        "context_faces": 0.0003477499703876674,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.15266891702776775,
+        "cluster_map": 43.464539958979,
+        "clips_main": 9.168953166983556,
+        "clips_group": 2.689123040996492
+      },
+      "total_before_metadata_write_seconds": 394.5564360410208,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": 5.75022594370691,
+    "removed_or_changed_clips": [
+      {
+        "end": 117.31720000000001,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 110.97753333333334
+      },
+      {
+        "end": 119.68623333333333,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 117.31720000000001
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 117.60081666666667,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 110.97753333333334
+      },
+      {
+        "end": 119.68623333333333,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 117.60081666666667
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "project_id": "1793617837063",
+    "baseline_project_id": "1793610789306",
+    "job_id": "dance_1793617837063",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617837063",
+    "submitted": "2026-11-02T11:10:38.297Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T11:19:17.323Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/93j1fDGi_-8",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 519.026,
+    "finished": "2026-11-02T11:26:36.587Z",
+    "active_wall_seconds": 439.264,
+    "baseline_active_wall_seconds": 483.083,
+    "wall_reduction_percent": 9.070697995996547,
+    "baseline_pipeline_seconds": 479.6274472079822,
+    "baseline_quality": {
+      "counts": {
+        "group:": 56,
+        "main:unknown": 51,
+        "main:라다": 6,
+        "main:메르시": 9,
+        "main:보라": 3,
+        "main:시리": 13,
+        "main:아윤": 4,
+        "main:아이찡": 20,
+        "main:영": 16,
+        "main:오아": 23,
+        "main:히메키": 5
+      },
+      "unknown_seconds": 16.751666666666797,
+      "subsecond_clips": 124,
+      "clip_count": 206
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 56,
+        "main:unknown": 51,
+        "main:라다": 6,
+        "main:메르시": 9,
+        "main:보라": 3,
+        "main:시리": 13,
+        "main:아윤": 4,
+        "main:아이찡": 20,
+        "main:영": 16,
+        "main:오아": 23,
+        "main:히메키": 5
+      },
+      "unknown_seconds": 16.751666666666797,
+      "subsecond_clips": 124,
+      "clip_count": 206
+    },
+    "identical_clips": true,
+    "identical_full_clip_rows": true,
+    "identical_person_cards": true,
+    "diagnostic_frame_count": 3632,
+    "identical_diagnostic_frames": true,
+    "thumbnail_count": 206,
+    "changed_thumbnails": [],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.04178541695000604,
+        "yolo": 94.10301316698315,
+        "ref_embs": 2.2219874170259573,
+        "main_selection": 131.4103516250034,
+        "native_scene": 39.51813270803541,
+        "segment_build": 56.950724874972366,
+        "face_extract": 69.24796783301281,
+        "secondary_faces": 25.258377792022657,
+        "body_continuity": 0.958881750004366,
+        "context_faces": 0.0004326669732108712,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.009954584005754441,
+        "cluster_map": 38.21486645902041,
+        "clips_main": 13.611439166998025,
+        "clips_group": 4.685809791961219
+      },
+      "total_before_metadata_write_seconds": 435.73044779198244,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": 9.152311793566847,
+    "removed_or_changed_clips": [],
+    "added_or_changed_clips": []
+  }
+]

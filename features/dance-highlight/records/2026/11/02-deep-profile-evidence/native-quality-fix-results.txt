@@ -1,0 +1,46 @@
+Native distant-ensemble quality correction — final subagent evidence
+
+Product change is complete and ready for parent app verification. Only native_scene.py, test_dance_native_scene.py, and tests/fixtures/dance_native_upper_background.json were modified by this subagent. No identity threshold, face sampler, Person/shared code, SAM, or tracker change. Earlier diagnosis-report.txt describes the investigation before source visual review; this document supersedes its no-product-change status.
+
+Source evidence
+Viewed source contact sheets at NEON154.221,154.621,155.155,155.622,156.556,157.224,157.758,157.958. Through157.891 the view is a distant ensemble.157.958 is a real closeup and remains main.
+The oversized native detections9268/9296/9300 cover the gold stage sculpture. Every pose keypoint is below0.5confidence (actual maxima below0.25). Other false detections on theLEDcylinder and lowresolution sculpture can have confident torso predictions; those were NOT suppressed by a blanket no-head rule.
+Contact sheets: neon-native-contact-0.jpg, neon-native-contact-1.jpg. Individual source/detail crops are in this folder.
+
+Exact correction
+A wholly interior native box can cease vetoing a distant ensemble only when:
+- it has no confident joint at all;
+- its entire box is above at least two distinct, fully measured distant performers;
+- those complete performers satisfy the existingheight/6 extent ceiling;
+- no overlapping original detector body supplies a coherent observed head or reliable torso, regardless of that body's height.
+Existing three-person ensemble support, source cut, sampling cadence, temporal support, all-other-foreground guards, original observations, and identity geometry remain required/preserved. The exception itself does not classify a scene as group. Excluded original observation indices are audited as upper_unobserved_exclusions; native observations remain stored unchanged.
+
+Review correction
+The initial exception had a verified regression for a301px original foregroundperson (below existingH/3large-person veto) whose native pose failed. Added separate originalhead/originaltorso disagreement tests; both failed before repair. The candidate exclusion now checks original observed body evidence with no height floor. Existing globalH/3foreground behavior keeps its original default.
+
+Tests actually run
+Initial real saved-native regression:1failed /7negativecasespassed before product implementation.
+Initial direct native suite:41passed.
+Review disagreement regressions:2failed before repair.
+Final direct+related scene suites:159passed in2.55s:
+ tests/test_dance_native_scene.py
+ tests/test_dance_scene_eligibility.py
+ tests/test_dance_scene_context.py
+ tests/test_dance_scene_boundaries.py
+Final gitdiffcheck for changed source/test passed. Parent ran the full project suite separately; do not substitute this targeted result for its result.
+
+Current product cached replay (not yet an end-to-end app result)
+MMN and ANT: no scene or clip change.
+NEON: five sampled observations9284/9288/9292/9296/9300 become group, extending existing group output backward to154.8880667 from155.2217333. Four were no_person and one was main. This restores0.3336667sec of positively observed group footage. Only existing main interval removed by this group mask is unknown155.155–155.2217333,0.0667333sec; no named identity is changed.
+Projected counts: main151→150, mainunder1sec91→90, group56 unchanged, groupunder1sec34 unchanged; overall207→206, overallunder1sec125→124. Unknown16.8184→16.7516667sec.
+This is a small quality improvement, not a solution to all remaining short clips/unknowns. replay_native_production.py and native-production-replay.json reproduce it without inference. End-to-end app counts may only be claimed after parent app run.
+
+Reviewed intervals
+Viewed three sourceframes in each of all14 supplied review intervals (reviewed-cases-0.jpg through-3.jpg). This is sampled visual review, not every-source-frame verification. The narrow product change lies outside all14 and their cached scene/identity classifications stay unchanged. TheNEON150.617–152.619 and183.15–184.82 group cases are preserved. Remaining named-identity defects are not claimed fixed.
+
+MMN larger recovery investigation
+MMN38.205–39.339 contains a real edit from the closer Sakura-centered shot into a wide ensemble shot and back. The isolated difference peak atframe2298 is20.703125 withmedian1.893229. classify_transition returnedcutFalse/color_candidateFalse because similar background colors evade that trigger; the actual visual camera edit remains real. Therefore absence of a colorcut cannot excuse the body continuity veto. Existing bodypath proof cannot cross this shot change without independent identity evidence. Contact: mmn-sakura-gap-contact.jpg.
+
+Fullframe versus ROI face evidence conclusion
+The already saved /private/tmp/dance-main-face-20261102/full-face-probe.json is an earlier unknown-only fullframe probe with unchanged pose ownership and a0.9candidate threshold. In the targetMMN38.205–39.339 range it retained no fullframe face; inANT4.571–6.139 it retained onlyframe296/time4.9382667 withscore0.90469 and no acceptedname (oldROIscore0.90348). This argues against assuming easy recovery but does not prove that every alternative alignment is useless. The old probe does not save raw landmark rows/embeddings, so actual per-landmark differences cannot be reconstructed from it.
+A future targeted unknown-only diagnostic comparing rawYuNet15values, ownership, alignmentpixels, and unchanged primary/SFace/frozen-anchor distances is justified. Same-frameROIandfullframe observations must be treated as alternate measurements of ONE frame, not independent temporal votes. Require temporally independent original support before any output recovery and preserve all existing known names. Eight new diagnostic frames were authorized but NOT run: parent began actual app measurements before inference started. No additional ML process remains active.

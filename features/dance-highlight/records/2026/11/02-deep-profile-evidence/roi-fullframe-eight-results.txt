@@ -1,0 +1,56 @@
+Dance quality residual diagnosis — 2026-11-02
+
+Decision: no additional product change. In eight fixed source frames, fullframe YuNet produces no newly accepted name under the existing AuraFace, SFace, primary video, secondary video, or joint identity policies. The proposed native third-person rule produces zero additional scene changes on all three saved videos. These diagnostics do not solve the remaining short clips or unknown identity intervals.
+
+Scope and reproducibility
+- ANT source frames 280/296/320/344 = 4.671333/4.938267/5.338667/5.739067 seconds, inside reviewed ANT 4.571–6.139.
+- MMN source frames 2300/2320/2344/2356 = 38.371667/38.705333/39.105733/39.305933 seconds, inside reviewed MMN 38.205–39.339.
+- Both alternatives use the exact same original decoded frame and original main-body/pose context. ROI is the saved source ROI and matches the current unchanged ROI configuration. Fullframe passes the same unique pose ownership test. All 16 operational candidates have unique ownership. No rotation fallback was selected.
+- The historical detector threshold is .28. It is preserved for candidate detection/ownership; downstream valid observations require score >= .8, strong identity support requires >= .9. No threshold was changed.
+- ROI rerun scores and landmarks match the saved observations exactly. AuraFace/SFace embedding differences are at numerical precision. Raw detector rows, including all 15 YuNet values, source-coordinate rows, pose ownership counts, selected row, and 112x112 alignment PNGs are retained.
+- Primary photo vectors are the saved frozen reference embeddings. SFace photo gallery uses the exact historical 31 (member, source SHA256) pairs, with no added image. Secondary video gallery uses the exact historical anchor membership: ANT 724, MMN 692. Its vectors were regenerated from original source frames and saved original face geometry. New alternative faces never enter any gallery.
+- Primary video anchors are rederived from unchanged saved observations using the existing direct-reference/repeated-support function, not recovered names. Same-frame alternatives are compared separately, never counted as independent views or joint support.
+- Reconstructed frozen joint matching reproduces status/name for all six historical eligible queries. Maximum joint mean-distance difference is 1.78814e-7. MMN 2320 and 2344 had no historical joint query because their stored scores were below .8; rerun saved/ROI queries remain unavailable.
+
+Same-frame comparison
+Time       ROI size(px)   Full size(px)  Score ROI->Full  LM RMS(px)  Full joint result (never accepted)
+ANT4.6713  32.03x43.89    30.70x40.17     .8759->.8779      1.483      conflict; best Kim; mean .64280, margin .00656
+ANT4.9383  31.44x40.49    31.54x39.37     .9035->.9047      1.054      insufficient; best Kim; mean .60906, margin .03127
+ANT5.3387  24.73x31.45    25.82x33.51     .8588->.8463       .809      insufficient; best Kim; mean .71267, margin .05377
+ANT5.7391  21.46x27.27    21.09x27.38     .8567->.8483       .816      conflict; best Kim; mean .78182, margin .02068
+MMN38.3717 58.06x74.40    61.93x78.11     .8593->.8677      1.015      conflict; best Hong; mean .71434, margin .00121
+MMN38.7053 29.60x42.65    29.09x42.52     .7928->.8480      1.171      insufficient; best Huh; mean .79637, margin .07214
+MMN39.1057 29.48x39.67    29.91x41.78     .7025->.7221      1.510      unavailable; still below valid score .8
+MMN39.3059 35.83x45.33    37.09x48.22     .8353->.8584      1.260      insufficient; best Sakura; mean .77570, margin .01534
+
+Joint thresholds remain mean distance <= .5, both model distances <= .6, margin >= .08, agreement of both model winners, every roster member represented, two independent anchor instants with .15s separation, and a 2s exclusion around the query. The names above are rejected ranking leaders, not assigned names. User-reviewed expected identities are Hong for the ANT range and Sakura for the MMN range.
+
+What the images establish, separately from model conclusions
+- ANT's original detected face widths are 21–32 pixels. The source crops and aligned crops show limited facial detail, soft edges, and motion/turning across the four frames. Fullframe does not reveal a different or newly sharp face; it shifts the same landmarks by about .8–1.5 pixels RMS.
+- MMN has strong pink lighting in these source frames. At 38.705 and 39.106 the face is turned sideways, and the detector's inter-eye distance is only 5.9 and 2.82 pixels in fullframe. The aligned crop remains a side face with limited frontal detail. At 38.372 the face is larger (62x78 fullframe), yet dual-model agreement still fails, so small size alone does not explain the whole interval.
+- Source/pose audit does not show a wrong-body association for these eight frames. The comparison rules out ROI-vs-fullframe replacement as a sufficient fix for these examples. It does not prove a single optical cause for recognition failure or prove that every timestamp in the whole interval is unrecoverable.
+- Fullframe landmark changes produce substantial AuraFace vector changes (cosine distance .242–.626 from the same-frame saved vector) and SFace changes .030–.267. Because these are alternative alignments of the same pixels, they are not independent evidence. Their zero accepted matches do not justify lowering identity thresholds or choosing a rejected nearest member.
+
+Timing, separate from app benchmark
+- ANT model setup 1.444s; four-query ROI/fullframe diagnostics including images 1.214s; fixed photo gallery 1.753s; fixed 724-anchor source SFace gallery 10.677s; matching .628s.
+- MMN setup .727s; four-query diagnostics 1.090s. Its fixed-gallery regeneration and save took approximately 11.891s, estimated from output file modification times; the exact stage timer was lost when the first reporting pass met an absent historical match for a below-.8 query. All model outputs were already saved. The reporting edge case was fixed and matching was completed from saved vectors with no repeat inference (.402s).
+- Existing model files/configuration/services were used. App benchmarks had completed before this diagnostic began. Product source files were not modified.
+
+Native additional proposal, saved observations only
+- Proposed positive third member: retain the existing two distinct fully observed small people; require the third person's own >=2 confident head points plus all four torso points at >=.75, ordered head/shoulders/hips, positive torso width and independent torso region. Preserve H/6 size bounds, original foreground veto, source cuts, temporal support, and duplicate-body rejection. A stricter variant also requires unique original lowres body IoU >= .7 and coherent original head/torso.
+- On all saved MMN and ANT observations there are zero additional positive candidates. On NEON, only frame 9300 (155.155s) is a bounded full-two-plus-positive-third candidate. That frame is already made group by the current upper-decoration exception and existing bounded interpolation. Replaying the proposal therefore changes zero scenes on MMN/ANT/NEON. The stricter original-pose corroboration variant has zero candidates.
+- In the 154.154–157.958 NEON contact interval, other failures include missing confident head/torso for a third person, oversized partial boxes, observed decorative false positives, an original foreground veto, and short runs bounded by a real cut. A mere relaxation of leg completeness cannot solve them. The real closeup beginning 157.9578 remains foreground.
+- No product change is proposed or applied from this additional diagnosis. The previously tested narrow native upper-decoration exception remains the only quality change from this work.
+
+Files
+- compare_roi_fullframe_eight.py: complete read-only inference diagnostic; explicit --run required.
+- complete_saved_face_comparison.py: table completion from already saved vectors, no inference.
+- complete_face_ownership.py: ownership audit using exact historical detector threshold, no inference.
+- roi-fullframe-eight/summary.json: compact per-frame judgments and parity checks.
+- roi-fullframe-eight/ANT/comparison.json and MMN/comparison.json: raw detections, pose ownership, source pixels, saved/current embeddings, full ranking tables.
+- roi-fullframe-eight/{ANT,MMN}/frozen-gallery.json and frozen-sface-vectors.npz: exact frozen memberships, photo hashes and replay vectors.
+- roi-fullframe-eight/{ANT,MMN}/{frame}/: original PNG, detector input PNGs, alignment PNGs, per-frame comparison.json.
+- roi-fullframe-eight/ANT-aligned-contact.png and MMN-aligned-contact.png: visually inspected comparison sheets.
+- native-third-person-diagnostic.json: per-observation size/foreground/body/pose veto data.
+- native-third-person-replay.json: zero scene changes relative to current native implementation.
+- diagnose_native_third_person.py / replay_native_third_person.py: saved-data-only diagnostic/replay.

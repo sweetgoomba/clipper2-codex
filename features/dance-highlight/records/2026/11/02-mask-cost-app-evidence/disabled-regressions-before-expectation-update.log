@@ -1,0 +1,497 @@
+Command: .venv/bin/python -m pytest -q tests/test_dance_body_continuity.py tests/test_dance_camera_transitions.py tests/test_dance_cluster_member_mapping.py tests/test_dance_context_faces.py tests/test_dance_cut_face_link.py tests/test_dance_cut_recheck.py tests/test_dance_diagnostics.py tests/test_dance_evidence_scopes.py tests/test_dance_exact_reuse.py tests/test_dance_face_cluster_opencv.py tests/test_dance_face_evidence.py tests/test_dance_face_models.py tests/test_dance_face_recovery.py tests/test_dance_face_runtime.py tests/test_dance_focal_composition.py tests/test_dance_focal_output.py tests/test_dance_group_recipients.py tests/test_dance_identity_render.py tests/test_dance_incoming_context.py tests/test_dance_incoming_context_pipeline.py tests/test_dance_joint_identity.py tests/test_dance_joint_seed_pipeline.py tests/test_dance_joint_seeds.py tests/test_dance_main_face_link.py tests/test_dance_main_identity.py tests/test_dance_main_role_timeline.py tests/test_dance_main_selection.py tests/test_dance_mask_continuity.py tests/test_dance_mask_frame_cache.py tests/test_dance_mask_tracker.py tests/test_dance_member_timeline.py tests/test_dance_member_timeline_pipeline.py tests/test_dance_meta_no_montage.py tests/test_dance_native_scene.py tests/test_dance_observed_main.py tests/test_dance_observed_main_pipeline.py tests/test_dance_output_continuity.py tests/test_dance_person_thumbnails.py tests/test_dance_pipeline_helpers.py tests/test_dance_pose_face_rotation.py tests/test_dance_reference_matcher.py tests/test_dance_reference_validation.py tests/test_dance_reliability.py tests/test_dance_sampled_face_link.py tests/test_dance_scene_boundaries.py tests/test_dance_scene_context.py tests/test_dance_scene_cut_proof.py tests/test_dance_scene_eligibility.py tests/test_dance_secondary_faces.py tests/test_dance_shared_face_package.py tests/test_dance_stage_prominence.py tests/test_dance_temporal_support.py plugins/person_highlight/tests
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 18%]
+........................................................................ [ 24%]
+........................................................................ [ 30%]
+........................................................................ [ 37%]
+........................................................................ [ 43%]
+..................................FFFF.................................. [ 49%]
+........................................................................ [ 55%]
+........................................................................ [ 61%]
+........................................................................ [ 68%]
+........................................................................ [ 74%]
+........................................................................ [ 80%]
+........................................................................ [ 86%]
+........................................................................ [ 92%]
+........................................................................ [ 99%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+_ test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[False-False] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x121eae3d0>
+secondary = False, joint_correction = False
+
+    @pytest.mark.parametrize('secondary', [False, True])
+    @pytest.mark.parametrize('joint_correction', [False, True])
+    def test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member(tmp_path, monkeypatch, secondary, joint_correction):
+        from dance_highlight.services import pipeline as module
+        main = np.array([0., 0., 100., 200.]); other = main + [200., 0., 200., 0.]
+        head = np.array([[20., 20., .9], [40., 20., .9]])
+        records = [FrameRec(float(t), 1, main, False, person_bboxes=[main, other],
+                            person_head_keypoints=[head, head + [200., 0., 0.]]) for t in np.arange(.1, 10., .2)]
+        main_segment = Segment('main', 1, 0., 10., [(r.t, main, 1) for r in records])
+        monkeypatch.setattr(module, 'build_raw_main_segments', lambda _: [main_segment])
+        monkeypatch.setattr(module, 'build_raw_group_segments', lambda _: [])
+        class Face:
+            def batch_segment_embeddings(self, _video, segments, **_):
+                for done in range(21):
+                    _['on_progress'](done, 20)
+                results = []
+                for seg in segments:
+                    rows = []
+                    for t, box, tid in seg.bboxes:
+                        vector = np.eye(4)[2 if tid < 0 else (0 if t < 6 else (3 if secondary else 1))]
+                        rows.append(FaceObservation(round(t*30),t,tid,tuple(box),tuple(box),
+                                                    face_bbox=(20.,10.,40.,30.), embedding=vector,
+                                                    detector_score=.99,association='confirmed'))
+                    # Regression: the useful pose-owned faces survive even with no legacy average.
+                    results.append(SegmentFaceResult(seg, [], True, owned_observations=rows))
+                return results
+            def cluster_embeddings(self, _): return []
+        class Render:
+            def extract_clip(self, *_args, **_kwargs): raise AssertionError('analysis must retain source ranges')
+            def extract_thumbnail(self, _video, path, **_): path.write_bytes(b'preview')
+        config = DanceConfig(); pipe = DancePipeline(config, None, Face(), Render(), DanceMetaBuilder(config))
+        pipe.analyze_video_to_records = lambda *_a, **_k: (records, 30., 10.)
+        pipe._download_reference_images = lambda *_: {}
+        def references(_, sample_sink):
+            for i, name in enumerate(('A','B','C')):
+                sample_sink.append(ReferenceEmbeddingSample(name, name, str(i)*64, 100, 100, np.eye(4)[i]))
+            return {}
+        pipe._build_reference_embeddings = references
+        pipe._video_size = lambda _: (640,480)
+        if secondary or joint_correction:
+            from dance_highlight.services import secondary_faces
+            def recover(_video, _references, primary, _face, **kwargs):
+                names = {row.frame_index:'B' for seg, decision, evidence in zip(
+                    primary['segments'],primary['decisions'],primary['evidence'])
+                    if decision.reference_id is None for row,_ in evidence
+                    if seg.start <= row.time_seconds < seg.end}
+                joint = {row.frame_index:dict(name='A',status='accepted') for evidence in primary['evidence']
+                         for row,_ in evidence if 5.65 < row.time_seconds < 6.15} if joint_correction else {}
+                return names, {'version':'test-secondary','matches':[],'joint_matches':joint}
+            monkeypatch.setattr(secondary_faces,'recover_secondary_names',recover)
+        if joint_correction:
+            from dance_highlight.services import context_faces, mask_tracker
+            monkeypatch.setattr(context_faces,'collect_context_anchors',lambda *args,**kwargs:([],[],dict(reason='complete')))
+            class Tracker:
+                provenance={}
+                def __init__(self,*args,**kwargs):pass
+                def __call__(self,anchor,path,targets):
+                    return dict(accepted=True,reason='confirmed_visual_path',support_frames=targets,
+                        trace=[dict(frame=round(r.t*30),forward=(0,),reverse=(0,),cycle_iou=1.) for r in path])
+            monkeypatch.setattr(mask_tracker,'MaskTracker',Tracker)
+        from dance_highlight.services import mask_continuity
+        recover_mask=mask_continuity.recover_mask_names
+        inventory=[]
+        def checked_inventory(*args,**kwargs):
+            inventory.append(kwargs['cut_frames'])
+            return recover_mask(*args,**kwargs)
+        monkeypatch.setattr(mask_continuity,'recover_mask_names',checked_inventory)
+        from dance_highlight.services import scene_context
+        preserve_context=scene_context.preserve_main_context
+        context_calls=[]
+        def checked_final_context(rows,identity,joint,**kwargs):
+            names={d.reference_id for d in identity['decisions']}
+            assert names==({'A'} if joint_correction else {'A','B'})
+            context_calls.append(kwargs['cut_frames'])
+            return preserve_context(rows,identity,joint,**kwargs)
+        monkeypatch.setattr(scene_context,'preserve_main_context',checked_final_context)
+        source = tmp_path/'input.mp4';source.write_bytes(b'source')
+        progress = []
+        meta = pipe.run(tmp_path, source, 12, progress_cb=lambda p, msg: progress.append((p, msg)))
+>       assert inventory==[[]] if joint_correction else inventory==[None]
+E       assert False
+
+tests/test_dance_member_timeline_pipeline.py:93: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[DANCE] step: download_reference_images start
+[DANCE] step: download_reference_images done, count=0
+[DANCE][T] download_refs: 0.0s
+[DANCE] step: analyze_video_to_records start
+[DANCE] step: analyze_video_to_records done, frames=50
+[DANCE][T] yolo: 0.0s  (frames=50, video=10.0s, fps=30.0)
+[DANCE] step: build_reference_embeddings done, embs=[]
+[DANCE][T] ref_embeddings: 0.0s
+[DANCE][T] main_selection: 0.0s
+[DANCE][T] segment_build: 0.0s  (main=1, group=0)
+[DANCE][T] face_extract: 0.0s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=50)
+[MATCH] segment=0 status=matched reason=member_timeline_consensus member=A
+[MATCH] segment=1 status=matched reason=member_timeline_consensus member=B
+[DANCE][T] cluster_map: 0.0s  (embs=0, clusters=2, persons=2)
+[DANCE][T] clips_main: 0.0s  (n=2)
+[DANCE][T] clips_group: 0.0s  (n=0)
+[DANCE][T] TOTAL: 0.0s  | download_refs=0.0s  yolo=0.0s  ref_embs=0.0s  main_selection=0.0s  segment_build=0.0s  face_extract=0.0s  cluster_map=0.0s  clips_main=0.0s  clips_group=0.0s
+----------------------------- Captured stderr call -----------------------------
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7ae06a9900] moov atom not found
+OpenCV: Couldn't read video stream from file "/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on0/input.mp4"
+_ test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[False-True] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1223136d0>
+secondary = True, joint_correction = False
+
+    @pytest.mark.parametrize('secondary', [False, True])
+    @pytest.mark.parametrize('joint_correction', [False, True])
+    def test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member(tmp_path, monkeypatch, secondary, joint_correction):
+        from dance_highlight.services import pipeline as module
+        main = np.array([0., 0., 100., 200.]); other = main + [200., 0., 200., 0.]
+        head = np.array([[20., 20., .9], [40., 20., .9]])
+        records = [FrameRec(float(t), 1, main, False, person_bboxes=[main, other],
+                            person_head_keypoints=[head, head + [200., 0., 0.]]) for t in np.arange(.1, 10., .2)]
+        main_segment = Segment('main', 1, 0., 10., [(r.t, main, 1) for r in records])
+        monkeypatch.setattr(module, 'build_raw_main_segments', lambda _: [main_segment])
+        monkeypatch.setattr(module, 'build_raw_group_segments', lambda _: [])
+        class Face:
+            def batch_segment_embeddings(self, _video, segments, **_):
+                for done in range(21):
+                    _['on_progress'](done, 20)
+                results = []
+                for seg in segments:
+                    rows = []
+                    for t, box, tid in seg.bboxes:
+                        vector = np.eye(4)[2 if tid < 0 else (0 if t < 6 else (3 if secondary else 1))]
+                        rows.append(FaceObservation(round(t*30),t,tid,tuple(box),tuple(box),
+                                                    face_bbox=(20.,10.,40.,30.), embedding=vector,
+                                                    detector_score=.99,association='confirmed'))
+                    # Regression: the useful pose-owned faces survive even with no legacy average.
+                    results.append(SegmentFaceResult(seg, [], True, owned_observations=rows))
+                return results
+            def cluster_embeddings(self, _): return []
+        class Render:
+            def extract_clip(self, *_args, **_kwargs): raise AssertionError('analysis must retain source ranges')
+            def extract_thumbnail(self, _video, path, **_): path.write_bytes(b'preview')
+        config = DanceConfig(); pipe = DancePipeline(config, None, Face(), Render(), DanceMetaBuilder(config))
+        pipe.analyze_video_to_records = lambda *_a, **_k: (records, 30., 10.)
+        pipe._download_reference_images = lambda *_: {}
+        def references(_, sample_sink):
+            for i, name in enumerate(('A','B','C')):
+                sample_sink.append(ReferenceEmbeddingSample(name, name, str(i)*64, 100, 100, np.eye(4)[i]))
+            return {}
+        pipe._build_reference_embeddings = references
+        pipe._video_size = lambda _: (640,480)
+        if secondary or joint_correction:
+            from dance_highlight.services import secondary_faces
+            def recover(_video, _references, primary, _face, **kwargs):
+                names = {row.frame_index:'B' for seg, decision, evidence in zip(
+                    primary['segments'],primary['decisions'],primary['evidence'])
+                    if decision.reference_id is None for row,_ in evidence
+                    if seg.start <= row.time_seconds < seg.end}
+                joint = {row.frame_index:dict(name='A',status='accepted') for evidence in primary['evidence']
+                         for row,_ in evidence if 5.65 < row.time_seconds < 6.15} if joint_correction else {}
+                return names, {'version':'test-secondary','matches':[],'joint_matches':joint}
+            monkeypatch.setattr(secondary_faces,'recover_secondary_names',recover)
+        if joint_correction:
+            from dance_highlight.services import context_faces, mask_tracker
+            monkeypatch.setattr(context_faces,'collect_context_anchors',lambda *args,**kwargs:([],[],dict(reason='complete')))
+            class Tracker:
+                provenance={}
+                def __init__(self,*args,**kwargs):pass
+                def __call__(self,anchor,path,targets):
+                    return dict(accepted=True,reason='confirmed_visual_path',support_frames=targets,
+                        trace=[dict(frame=round(r.t*30),forward=(0,),reverse=(0,),cycle_iou=1.) for r in path])
+            monkeypatch.setattr(mask_tracker,'MaskTracker',Tracker)
+        from dance_highlight.services import mask_continuity
+        recover_mask=mask_continuity.recover_mask_names
+        inventory=[]
+        def checked_inventory(*args,**kwargs):
+            inventory.append(kwargs['cut_frames'])
+            return recover_mask(*args,**kwargs)
+        monkeypatch.setattr(mask_continuity,'recover_mask_names',checked_inventory)
+        from dance_highlight.services import scene_context
+        preserve_context=scene_context.preserve_main_context
+        context_calls=[]
+        def checked_final_context(rows,identity,joint,**kwargs):
+            names={d.reference_id for d in identity['decisions']}
+            assert names==({'A'} if joint_correction else {'A','B'})
+            context_calls.append(kwargs['cut_frames'])
+            return preserve_context(rows,identity,joint,**kwargs)
+        monkeypatch.setattr(scene_context,'preserve_main_context',checked_final_context)
+        source = tmp_path/'input.mp4';source.write_bytes(b'source')
+        progress = []
+        meta = pipe.run(tmp_path, source, 12, progress_cb=lambda p, msg: progress.append((p, msg)))
+>       assert inventory==[[]] if joint_correction else inventory==[None]
+E       assert False
+
+tests/test_dance_member_timeline_pipeline.py:93: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[DANCE] step: download_reference_images start
+[DANCE] step: download_reference_images done, count=0
+[DANCE][T] download_refs: 0.0s
+[DANCE] step: analyze_video_to_records start
+[DANCE] step: analyze_video_to_records done, frames=50
+[DANCE][T] yolo: 0.0s  (frames=50, video=10.0s, fps=30.0)
+[DANCE] step: build_reference_embeddings done, embs=[]
+[DANCE][T] ref_embeddings: 0.0s
+[DANCE][T] main_selection: 0.0s
+[DANCE][T] segment_build: 0.0s  (main=1, group=0)
+[DANCE][T] face_extract: 0.0s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=50)
+[MATCH] segment=0 status=matched reason=member_timeline_consensus member=A
+[MATCH] segment=1 status=matched reason=member_timeline_consensus member=B
+[DANCE][T] cluster_map: 0.0s  (embs=0, clusters=2, persons=2)
+[DANCE][T] clips_main: 0.0s  (n=2)
+[DANCE][T] clips_group: 0.0s  (n=0)
+[DANCE][T] TOTAL: 0.0s  | download_refs=0.0s  yolo=0.0s  ref_embs=0.0s  main_selection=0.0s  segment_build=0.0s  face_extract=0.0s  cluster_map=0.0s  clips_main=0.0s  clips_group=0.0s
+----------------------------- Captured stderr call -----------------------------
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7ae06aa080] moov atom not found
+OpenCV: Couldn't read video stream from file "/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on1/input.mp4"
+_ test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[True-False] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x122310f50>
+secondary = False, joint_correction = True
+
+    @pytest.mark.parametrize('secondary', [False, True])
+    @pytest.mark.parametrize('joint_correction', [False, True])
+    def test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member(tmp_path, monkeypatch, secondary, joint_correction):
+        from dance_highlight.services import pipeline as module
+        main = np.array([0., 0., 100., 200.]); other = main + [200., 0., 200., 0.]
+        head = np.array([[20., 20., .9], [40., 20., .9]])
+        records = [FrameRec(float(t), 1, main, False, person_bboxes=[main, other],
+                            person_head_keypoints=[head, head + [200., 0., 0.]]) for t in np.arange(.1, 10., .2)]
+        main_segment = Segment('main', 1, 0., 10., [(r.t, main, 1) for r in records])
+        monkeypatch.setattr(module, 'build_raw_main_segments', lambda _: [main_segment])
+        monkeypatch.setattr(module, 'build_raw_group_segments', lambda _: [])
+        class Face:
+            def batch_segment_embeddings(self, _video, segments, **_):
+                for done in range(21):
+                    _['on_progress'](done, 20)
+                results = []
+                for seg in segments:
+                    rows = []
+                    for t, box, tid in seg.bboxes:
+                        vector = np.eye(4)[2 if tid < 0 else (0 if t < 6 else (3 if secondary else 1))]
+                        rows.append(FaceObservation(round(t*30),t,tid,tuple(box),tuple(box),
+                                                    face_bbox=(20.,10.,40.,30.), embedding=vector,
+                                                    detector_score=.99,association='confirmed'))
+                    # Regression: the useful pose-owned faces survive even with no legacy average.
+                    results.append(SegmentFaceResult(seg, [], True, owned_observations=rows))
+                return results
+            def cluster_embeddings(self, _): return []
+        class Render:
+            def extract_clip(self, *_args, **_kwargs): raise AssertionError('analysis must retain source ranges')
+            def extract_thumbnail(self, _video, path, **_): path.write_bytes(b'preview')
+        config = DanceConfig(); pipe = DancePipeline(config, None, Face(), Render(), DanceMetaBuilder(config))
+        pipe.analyze_video_to_records = lambda *_a, **_k: (records, 30., 10.)
+        pipe._download_reference_images = lambda *_: {}
+        def references(_, sample_sink):
+            for i, name in enumerate(('A','B','C')):
+                sample_sink.append(ReferenceEmbeddingSample(name, name, str(i)*64, 100, 100, np.eye(4)[i]))
+            return {}
+        pipe._build_reference_embeddings = references
+        pipe._video_size = lambda _: (640,480)
+        if secondary or joint_correction:
+            from dance_highlight.services import secondary_faces
+            def recover(_video, _references, primary, _face, **kwargs):
+                names = {row.frame_index:'B' for seg, decision, evidence in zip(
+                    primary['segments'],primary['decisions'],primary['evidence'])
+                    if decision.reference_id is None for row,_ in evidence
+                    if seg.start <= row.time_seconds < seg.end}
+                joint = {row.frame_index:dict(name='A',status='accepted') for evidence in primary['evidence']
+                         for row,_ in evidence if 5.65 < row.time_seconds < 6.15} if joint_correction else {}
+                return names, {'version':'test-secondary','matches':[],'joint_matches':joint}
+            monkeypatch.setattr(secondary_faces,'recover_secondary_names',recover)
+        if joint_correction:
+            from dance_highlight.services import context_faces, mask_tracker
+            monkeypatch.setattr(context_faces,'collect_context_anchors',lambda *args,**kwargs:([],[],dict(reason='complete')))
+            class Tracker:
+                provenance={}
+                def __init__(self,*args,**kwargs):pass
+                def __call__(self,anchor,path,targets):
+                    return dict(accepted=True,reason='confirmed_visual_path',support_frames=targets,
+                        trace=[dict(frame=round(r.t*30),forward=(0,),reverse=(0,),cycle_iou=1.) for r in path])
+            monkeypatch.setattr(mask_tracker,'MaskTracker',Tracker)
+        from dance_highlight.services import mask_continuity
+        recover_mask=mask_continuity.recover_mask_names
+        inventory=[]
+        def checked_inventory(*args,**kwargs):
+            inventory.append(kwargs['cut_frames'])
+            return recover_mask(*args,**kwargs)
+        monkeypatch.setattr(mask_continuity,'recover_mask_names',checked_inventory)
+        from dance_highlight.services import scene_context
+        preserve_context=scene_context.preserve_main_context
+        context_calls=[]
+        def checked_final_context(rows,identity,joint,**kwargs):
+            names={d.reference_id for d in identity['decisions']}
+            assert names==({'A'} if joint_correction else {'A','B'})
+            context_calls.append(kwargs['cut_frames'])
+            return preserve_context(rows,identity,joint,**kwargs)
+        monkeypatch.setattr(scene_context,'preserve_main_context',checked_final_context)
+        source = tmp_path/'input.mp4';source.write_bytes(b'source')
+        progress = []
+>       meta = pipe.run(tmp_path, source, 12, progress_cb=lambda p, msg: progress.append((p, msg)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dance_member_timeline_pipeline.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+plugins/dance_highlight/dance_highlight/services/pipeline.py:1057: in run
+    context_recs, scene_context_refinement = preserve_main_context(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [FrameRec(t=0.1, main_id=1, main_bbox=array([  0.,   0., 100., 200.]), is_group=False, group_bboxes=[], person_bboxes=...composition', candidate_main_id=1, candidate_main_bbox=array([  0.,   0., 100., 200.]), person_pose_keypoints=[]), ...]
+identity = {'accurate_indices': [0, 1], 'anchors': [('A', FaceObservation(frame_index=3, time_seconds=0.1, track_id=1, body_bbox=...r_timeline_consensus', distance=None, closest_reference_id=None, closest_distance=None, decision_threshold=None)], ...}
+joint = {171: {'name': 'A', 'status': 'accepted'}, 177: {'name': 'A', 'status': 'accepted'}, 183: {'name': 'A', 'status': 'accepted'}}
+kwargs = {'camera_transitions': (), 'cut_frames': [], 'fps': 30.0, 'handoffs': (), ...}
+names = {'A', 'B'}, @py_assert2 = {'A'}, @py_assert1 = False
+@py_format4 = "{'A', 'B'} == {'A'}\n~\n~Extra items in the left set:\n~'B'\n~Use -v to get more diff"
+@py_format6 = "assert {'A', 'B'} == {'A'}\n~\n~Extra items in the left set:\n~'B'\n~Use -v to get more diff"
+
+    def checked_final_context(rows,identity,joint,**kwargs):
+        names={d.reference_id for d in identity['decisions']}
+>       assert names==({'A'} if joint_correction else {'A','B'})
+E       AssertionError: assert {'A', 'B'} == {'A'}
+E         
+E         Extra items in the left set:
+E         'B'
+E         Use -v to get more diff
+
+tests/test_dance_member_timeline_pipeline.py:86: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[DANCE] step: download_reference_images start
+[DANCE] step: download_reference_images done, count=0
+[DANCE][T] download_refs: 0.0s
+[DANCE] step: analyze_video_to_records start
+[DANCE] step: analyze_video_to_records done, frames=50
+[DANCE][T] yolo: 0.0s  (frames=50, video=10.0s, fps=30.0)
+[DANCE] step: build_reference_embeddings done, embs=[]
+[DANCE][T] ref_embeddings: 0.0s
+[DANCE][T] main_selection: 0.0s
+[DANCE][T] segment_build: 0.0s  (main=1, group=0)
+[DANCE][T] face_extract: 0.0s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=50)
+----------------------------- Captured stderr call -----------------------------
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7ae06a9400] moov atom not found
+OpenCV: Couldn't read video stream from file "/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on2/input.mp4"
+_ test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[True-True] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x122163e50>
+secondary = True, joint_correction = True
+
+    @pytest.mark.parametrize('secondary', [False, True])
+    @pytest.mark.parametrize('joint_correction', [False, True])
+    def test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member(tmp_path, monkeypatch, secondary, joint_correction):
+        from dance_highlight.services import pipeline as module
+        main = np.array([0., 0., 100., 200.]); other = main + [200., 0., 200., 0.]
+        head = np.array([[20., 20., .9], [40., 20., .9]])
+        records = [FrameRec(float(t), 1, main, False, person_bboxes=[main, other],
+                            person_head_keypoints=[head, head + [200., 0., 0.]]) for t in np.arange(.1, 10., .2)]
+        main_segment = Segment('main', 1, 0., 10., [(r.t, main, 1) for r in records])
+        monkeypatch.setattr(module, 'build_raw_main_segments', lambda _: [main_segment])
+        monkeypatch.setattr(module, 'build_raw_group_segments', lambda _: [])
+        class Face:
+            def batch_segment_embeddings(self, _video, segments, **_):
+                for done in range(21):
+                    _['on_progress'](done, 20)
+                results = []
+                for seg in segments:
+                    rows = []
+                    for t, box, tid in seg.bboxes:
+                        vector = np.eye(4)[2 if tid < 0 else (0 if t < 6 else (3 if secondary else 1))]
+                        rows.append(FaceObservation(round(t*30),t,tid,tuple(box),tuple(box),
+                                                    face_bbox=(20.,10.,40.,30.), embedding=vector,
+                                                    detector_score=.99,association='confirmed'))
+                    # Regression: the useful pose-owned faces survive even with no legacy average.
+                    results.append(SegmentFaceResult(seg, [], True, owned_observations=rows))
+                return results
+            def cluster_embeddings(self, _): return []
+        class Render:
+            def extract_clip(self, *_args, **_kwargs): raise AssertionError('analysis must retain source ranges')
+            def extract_thumbnail(self, _video, path, **_): path.write_bytes(b'preview')
+        config = DanceConfig(); pipe = DancePipeline(config, None, Face(), Render(), DanceMetaBuilder(config))
+        pipe.analyze_video_to_records = lambda *_a, **_k: (records, 30., 10.)
+        pipe._download_reference_images = lambda *_: {}
+        def references(_, sample_sink):
+            for i, name in enumerate(('A','B','C')):
+                sample_sink.append(ReferenceEmbeddingSample(name, name, str(i)*64, 100, 100, np.eye(4)[i]))
+            return {}
+        pipe._build_reference_embeddings = references
+        pipe._video_size = lambda _: (640,480)
+        if secondary or joint_correction:
+            from dance_highlight.services import secondary_faces
+            def recover(_video, _references, primary, _face, **kwargs):
+                names = {row.frame_index:'B' for seg, decision, evidence in zip(
+                    primary['segments'],primary['decisions'],primary['evidence'])
+                    if decision.reference_id is None for row,_ in evidence
+                    if seg.start <= row.time_seconds < seg.end}
+                joint = {row.frame_index:dict(name='A',status='accepted') for evidence in primary['evidence']
+                         for row,_ in evidence if 5.65 < row.time_seconds < 6.15} if joint_correction else {}
+                return names, {'version':'test-secondary','matches':[],'joint_matches':joint}
+            monkeypatch.setattr(secondary_faces,'recover_secondary_names',recover)
+        if joint_correction:
+            from dance_highlight.services import context_faces, mask_tracker
+            monkeypatch.setattr(context_faces,'collect_context_anchors',lambda *args,**kwargs:([],[],dict(reason='complete')))
+            class Tracker:
+                provenance={}
+                def __init__(self,*args,**kwargs):pass
+                def __call__(self,anchor,path,targets):
+                    return dict(accepted=True,reason='confirmed_visual_path',support_frames=targets,
+                        trace=[dict(frame=round(r.t*30),forward=(0,),reverse=(0,),cycle_iou=1.) for r in path])
+            monkeypatch.setattr(mask_tracker,'MaskTracker',Tracker)
+        from dance_highlight.services import mask_continuity
+        recover_mask=mask_continuity.recover_mask_names
+        inventory=[]
+        def checked_inventory(*args,**kwargs):
+            inventory.append(kwargs['cut_frames'])
+            return recover_mask(*args,**kwargs)
+        monkeypatch.setattr(mask_continuity,'recover_mask_names',checked_inventory)
+        from dance_highlight.services import scene_context
+        preserve_context=scene_context.preserve_main_context
+        context_calls=[]
+        def checked_final_context(rows,identity,joint,**kwargs):
+            names={d.reference_id for d in identity['decisions']}
+            assert names==({'A'} if joint_correction else {'A','B'})
+            context_calls.append(kwargs['cut_frames'])
+            return preserve_context(rows,identity,joint,**kwargs)
+        monkeypatch.setattr(scene_context,'preserve_main_context',checked_final_context)
+        source = tmp_path/'input.mp4';source.write_bytes(b'source')
+        progress = []
+>       meta = pipe.run(tmp_path, source, 12, progress_cb=lambda p, msg: progress.append((p, msg)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dance_member_timeline_pipeline.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+plugins/dance_highlight/dance_highlight/services/pipeline.py:1057: in run
+    context_recs, scene_context_refinement = preserve_main_context(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [FrameRec(t=0.1, main_id=1, main_bbox=array([  0.,   0., 100., 200.]), is_group=False, group_bboxes=[], person_bboxes=...composition', candidate_main_id=1, candidate_main_bbox=array([  0.,   0., 100., 200.]), person_pose_keypoints=[]), ...]
+identity = {'accurate_indices': [0, 1], 'anchors': [('A', FaceObservation(frame_index=3, time_seconds=0.1, track_id=1, body_bbox=...r_timeline_consensus', distance=None, closest_reference_id=None, closest_distance=None, decision_threshold=None)], ...}
+joint = {171: {'name': 'A', 'status': 'accepted'}, 177: {'name': 'A', 'status': 'accepted'}, 183: {'name': 'A', 'status': 'accepted'}}
+kwargs = {'camera_transitions': (), 'cut_frames': [], 'fps': 30.0, 'handoffs': (), ...}
+names = {'A', 'B'}, @py_assert2 = {'A'}, @py_assert1 = False
+@py_format4 = "{'A', 'B'} == {'A'}\n~\n~Extra items in the left set:\n~'B'\n~Use -v to get more diff"
+@py_format6 = "assert {'A', 'B'} == {'A'}\n~\n~Extra items in the left set:\n~'B'\n~Use -v to get more diff"
+
+    def checked_final_context(rows,identity,joint,**kwargs):
+        names={d.reference_id for d in identity['decisions']}
+>       assert names==({'A'} if joint_correction else {'A','B'})
+E       AssertionError: assert {'A', 'B'} == {'A'}
+E         
+E         Extra items in the left set:
+E         'B'
+E         Use -v to get more diff
+
+tests/test_dance_member_timeline_pipeline.py:86: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[DANCE] step: download_reference_images start
+[DANCE] step: download_reference_images done, count=0
+[DANCE][T] download_refs: 0.0s
+[DANCE] step: analyze_video_to_records start
+[DANCE] step: analyze_video_to_records done, frames=50
+[DANCE][T] yolo: 0.0s  (frames=50, video=10.0s, fps=30.0)
+[DANCE] step: build_reference_embeddings done, embs=[]
+[DANCE][T] ref_embeddings: 0.0s
+[DANCE][T] main_selection: 0.0s
+[DANCE][T] segment_build: 0.0s  (main=1, group=0)
+[DANCE][T] face_extract: 0.0s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=50)
+----------------------------- Captured stderr call -----------------------------
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7ae06ab200] moov atom not found
+OpenCV: Couldn't read video stream from file "/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-21/test_product_pipeline_names_on3/input.mp4"
+=========================== short test summary info ============================
+FAILED tests/test_dance_member_timeline_pipeline.py::test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[False-False]
+FAILED tests/test_dance_member_timeline_pipeline.py::test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[False-True]
+FAILED tests/test_dance_member_timeline_pipeline.py::test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[True-False]
+FAILED tests/test_dance_member_timeline_pipeline.py::test_product_pipeline_names_only_main_body_and_never_promotes_visible_supporting_member[True-True]
+4 failed, 1158 passed in 31.54s

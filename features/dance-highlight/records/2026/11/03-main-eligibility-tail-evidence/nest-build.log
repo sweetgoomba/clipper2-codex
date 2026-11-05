@@ -1,0 +1,12 @@
+
+> clipper-nestjs@0.0.1 build
+> tsc -p tsconfig.json && npm run copy-assets
+
+
+> clipper-nestjs@0.0.1 copy-assets
+> node scripts/copy-assets.mjs dist
+
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/projects/assets -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/modules/projects/assets
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/shortform/assets -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/modules/shortform/assets
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/template-builder/assets/backgrounds -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/modules/template-builder/assets/backgrounds
+copied 10 bundled font(s) /Users/jina/project/adlight/desktop/clipper_python/fonts -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/modules/template-builder/assets/fonts

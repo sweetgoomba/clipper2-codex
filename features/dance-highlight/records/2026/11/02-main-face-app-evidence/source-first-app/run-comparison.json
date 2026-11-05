@@ -1,0 +1,837 @@
+[
+  {
+    "title": "Made My Night",
+    "project_id": "1793596150755",
+    "baseline_project_id": "1793571868350",
+    "job_id": "dance_1793596150755",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793596150755",
+    "submitted": "2026-11-02T05:09:11.602Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T05:09:11.662Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/BZDZBUyaJbA",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 0.06,
+    "finished": "2026-11-02T05:16:30.879Z",
+    "active_wall_seconds": 439.217,
+    "baseline_active_wall_seconds": 603.0,
+    "wall_reduction_percent": 27.161359867330013,
+    "baseline_pipeline_seconds": 595.6633963339846,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 16,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 6.80720000000003,
+      "subsecond_clips": 42,
+      "clip_count": 89
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 17,
+        "main:김채원": 8,
+        "main:사쿠라": 8,
+        "main:카즈하": 6,
+        "main:허윤진": 11,
+        "main:홍은채": 8
+      },
+      "unknown_seconds": 7.107500000000023,
+      "subsecond_clips": 43,
+      "clip_count": 90
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": false,
+    "diagnostic_frame_count": 2324,
+    "identical_diagnostic_frames": true,
+    "thumbnail_count": 90,
+    "changed_thumbnails": [
+      "clips/dance/main/main_0031.jpg",
+      "clips/dance/main/main_0032.jpg",
+      "clips/dance/main/main_0033.jpg",
+      "clips/dance/main/main_0034.jpg",
+      "clips/dance/main/main_0035.jpg",
+      "clips/dance/main/main_0036.jpg",
+      "clips/dance/main/main_0037.jpg",
+      "clips/dance/main/main_0038.jpg",
+      "clips/dance/main/main_0039.jpg",
+      "clips/dance/main/main_0040.jpg",
+      "clips/dance/main/main_0041.jpg",
+      "clips/dance/main/main_0042.jpg",
+      "clips/dance/main/main_0043.jpg",
+      "clips/dance/main/main_0044.jpg",
+      "clips/dance/main/main_0045.jpg",
+      "clips/dance/main/main_0046.jpg",
+      "clips/dance/main/main_0047.jpg",
+      "clips/dance/main/main_0048.jpg",
+      "clips/dance/main/main_0049.jpg",
+      "clips/dance/main/main_0050.jpg",
+      "clips/dance/main/main_0051.jpg",
+      "clips/dance/main/main_0052.jpg",
+      "clips/dance/main/main_0053.jpg",
+      "clips/dance/main/main_0054.jpg",
+      "clips/dance/main/main_0055.jpg",
+      "clips/dance/main/main_0056.jpg",
+      "clips/dance/main/main_0057.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.021012832992710173,
+        "yolo": 71.25821624998935,
+        "ref_embs": 1.3182757920003496,
+        "main_selection": 132.11390954098897,
+        "native_scene": 11.205545125005301,
+        "segment_build": 45.50116262503434,
+        "face_extract": 43.330794667010196,
+        "secondary_faces": 52.80211816699011,
+        "body_continuity": 0.5394763749791309,
+        "context_faces": 0.00035687501076608896,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "cluster_map": 106.73329483298585,
+        "clips_main": 7.802498042001389,
+        "clips_group": 3.836876666988246
+      },
+      "total_before_metadata_write_seconds": 428.9783681249828,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": 27.983090657385723,
+    "removed_or_changed_clips": [
+      {
+        "end": 73.2732,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 72.072
+      },
+      {
+        "end": 79.8798,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 73.2732
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 73.23983333333334,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 72.072
+      },
+      {
+        "end": 73.54013333333333,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 73.23983333333334
+      },
+      {
+        "end": 79.8798,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 73.54013333333333
+      }
+    ]
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "project_id": "1793596212840",
+    "baseline_project_id": "1793571915955",
+    "job_id": "dance_1793596212840",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793596212840",
+    "submitted": "2026-11-02T05:10:13.816Z",
+    "status": "completed",
+    "progress": 1,
+    "message": "완료",
+    "error": null,
+    "started": "2026-11-02T05:16:31.046Z",
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/p_XdZdg9oGc",
+      "requestedQuality": "1080p"
+    },
+    "queue_seconds": 377.23,
+    "finished": "2026-11-02T05:26:27.652Z",
+    "active_wall_seconds": 596.606,
+    "baseline_active_wall_seconds": 834.592,
+    "wall_reduction_percent": 28.515250565545802,
+    "baseline_pipeline_seconds": 831.4028321249643,
+    "baseline_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 33,
+        "main:김채원": 20,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 11,
+        "main:홍은채": 11
+      },
+      "unknown_seconds": 16.01780000000008,
+      "subsecond_clips": 79,
+      "clip_count": 134
+    },
+    "new_quality": {
+      "counts": {
+        "group:": 32,
+        "main:unknown": 34,
+        "main:김채원": 18,
+        "main:사쿠라": 11,
+        "main:카즈하": 16,
+        "main:허윤진": 12,
+        "main:홍은채": 10
+      },
+      "unknown_seconds": 18.586733333333342,
+      "subsecond_clips": 81,
+      "clip_count": 133
+    },
+    "identical_clips": false,
+    "identical_full_clip_rows": false,
+    "identical_person_cards": false,
+    "diagnostic_frame_count": 3310,
+    "identical_diagnostic_frames": false,
+    "thumbnail_count": 133,
+    "changed_thumbnails": [
+      "clips/dance/main/main_0003.jpg",
+      "clips/dance/main/main_0005.jpg",
+      "clips/dance/main/main_0006.jpg",
+      "clips/dance/main/main_0007.jpg",
+      "clips/dance/main/main_0008.jpg",
+      "clips/dance/main/main_0009.jpg",
+      "clips/dance/main/main_0010.jpg",
+      "clips/dance/main/main_0011.jpg",
+      "clips/dance/main/main_0012.jpg",
+      "clips/dance/main/main_0013.jpg",
+      "clips/dance/main/main_0014.jpg",
+      "clips/dance/main/main_0015.jpg",
+      "clips/dance/main/main_0016.jpg",
+      "clips/dance/main/main_0017.jpg",
+      "clips/dance/main/main_0018.jpg",
+      "clips/dance/main/main_0019.jpg",
+      "clips/dance/main/main_0020.jpg",
+      "clips/dance/main/main_0021.jpg",
+      "clips/dance/main/main_0022.jpg",
+      "clips/dance/main/main_0023.jpg",
+      "clips/dance/main/main_0024.jpg",
+      "clips/dance/main/main_0025.jpg",
+      "clips/dance/main/main_0026.jpg",
+      "clips/dance/main/main_0027.jpg",
+      "clips/dance/main/main_0028.jpg",
+      "clips/dance/main/main_0029.jpg",
+      "clips/dance/main/main_0030.jpg",
+      "clips/dance/main/main_0031.jpg",
+      "clips/dance/main/main_0032.jpg",
+      "clips/dance/main/main_0033.jpg",
+      "clips/dance/main/main_0034.jpg",
+      "clips/dance/main/main_0035.jpg",
+      "clips/dance/main/main_0036.jpg",
+      "clips/dance/main/main_0037.jpg",
+      "clips/dance/main/main_0038.jpg",
+      "clips/dance/main/main_0039.jpg",
+      "clips/dance/main/main_0040.jpg",
+      "clips/dance/main/main_0041.jpg",
+      "clips/dance/main/main_0042.jpg",
+      "clips/dance/main/main_0043.jpg",
+      "clips/dance/main/main_0044.jpg",
+      "clips/dance/main/main_0045.jpg",
+      "clips/dance/main/main_0046.jpg",
+      "clips/dance/main/main_0047.jpg",
+      "clips/dance/main/main_0048.jpg",
+      "clips/dance/main/main_0049.jpg",
+      "clips/dance/main/main_0050.jpg",
+      "clips/dance/main/main_0051.jpg",
+      "clips/dance/main/main_0052.jpg",
+      "clips/dance/main/main_0053.jpg",
+      "clips/dance/main/main_0054.jpg",
+      "clips/dance/main/main_0060.jpg",
+      "clips/dance/main/main_0066.jpg",
+      "clips/dance/main/main_0079.jpg",
+      "clips/dance/main/main_0080.jpg",
+      "clips/dance/main/main_0084.jpg",
+      "clips/dance/main/main_0087.jpg",
+      "clips/dance/main/main_0088.jpg",
+      "clips/dance/main/main_0089.jpg",
+      "clips/dance/main/main_0090.jpg",
+      "clips/dance/main/main_0091.jpg",
+      "clips/dance/main/main_0092.jpg",
+      "clips/dance/main/main_0093.jpg",
+      "clips/dance/main/main_0094.jpg",
+      "clips/dance/main/main_0095.jpg",
+      "clips/dance/main/main_0096.jpg",
+      "clips/dance/main/main_0097.jpg",
+      "clips/dance/main/main_0098.jpg",
+      "clips/dance/main/main_0099.jpg",
+      "clips/dance/main/main_0100.jpg"
+    ],
+    "same_config": true,
+    "performance": {
+      "stage_seconds": {
+        "download_refs": 0.02386012504575774,
+        "yolo": 88.81133950001094,
+        "ref_embs": 0.3802183329826221,
+        "main_selection": 218.24044979200698,
+        "native_scene": 22.415862083027605,
+        "segment_build": 46.23973129095975,
+        "face_extract": 81.51789420802379,
+        "secondary_faces": 75.4291222920292,
+        "body_continuity": 0.6591478330083191,
+        "context_faces": 0.0005191250238567591,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "cluster_map": 127.11199062498054,
+        "clips_main": 10.100376792019233,
+        "clips_group": 2.917172707966529
+      },
+      "total_before_metadata_write_seconds": 592.4954290000023,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity"
+        ]
+      }
+    },
+    "pipeline_reduction_percent": 28.735456976294373,
+    "removed_or_changed_clips": [
+      {
+        "end": 4.571233333333334,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 3.7370666666666668
+      },
+      {
+        "end": 6.139466666666666,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 4.571233333333334
+      },
+      {
+        "end": 6.7066,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 6.4064000000000005
+      },
+      {
+        "end": 7.157150000000001,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 6.7066
+      },
+      {
+        "end": 7.590916666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 7.157150000000001
+      },
+      {
+        "end": 9.9098,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 8.975633333333334
+      },
+      {
+        "end": 10.276933333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 9.9098
+      },
+      {
+        "end": 36.903533333333336,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 32.66596666666667
+      },
+      {
+        "end": 64.43093333333333,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 62.5625
+      },
+      {
+        "end": 64.89826666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 64.43093333333333
+      },
+      {
+        "end": 69.20246666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 64.89826666666667
+      },
+      {
+        "end": 91.92526666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 91.15773333333334
+      },
+      {
+        "end": 96.6966,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 91.92526666666667
+      },
+      {
+        "end": 99.8998,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.73196666666666
+      },
+      {
+        "end": 106.05595,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 99.8998
+      },
+      {
+        "end": 109.10900000000001,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 106.05595
+      },
+      {
+        "end": 110.5104,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 109.10900000000001
+      },
+      {
+        "end": 133.80033333333333,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 127.76096666666666
+      },
+      {
+        "end": 144.7780666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.3442
+      },
+      {
+        "end": 146.67986666666667,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.7780666666667
+      },
+      {
+        "end": 148.38146666666665,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 148.21473333333333
+      },
+      {
+        "end": 148.8487,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 148.38146666666665
+      },
+      {
+        "end": 154.42093333333332,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 153.98706666666666
+      },
+      {
+        "end": 154.65460000000002,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 154.42093333333332
+      },
+      {
+        "end": 155.78896666666668,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 154.65460000000002
+      },
+      {
+        "end": 160.29346666666666,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 157.02353333333335
+      },
+      {
+        "end": 160.87738333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 160.29346666666666
+      },
+      {
+        "end": 161.5614,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 160.87738333333334
+      },
+      {
+        "end": 164.93133333333333,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 162.09526666666667
+      },
+      {
+        "end": 165.33183333333335,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 164.93133333333333
+      },
+      {
+        "end": 169.30246666666667,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 165.33183333333335
+      },
+      {
+        "end": 172.2053666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 171.80496666666667
+      },
+      {
+        "end": 173.13953333333333,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 172.2053666666667
+      },
+      {
+        "end": 182.6826,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 180.8806
+      },
+      {
+        "end": 189.25573333333332,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 182.6826
+      }
+    ],
+    "added_or_changed_clips": [
+      {
+        "end": 4.037366666666667,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 3.7370666666666668
+      },
+      {
+        "end": 6.139466666666666,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 4.037366666666667
+      },
+      {
+        "end": 7.107200000000001,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 6.4064000000000005
+      },
+      {
+        "end": 7.590916666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 7.107200000000001
+      },
+      {
+        "end": 10.276933333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 8.975633333333334
+      },
+      {
+        "end": 36.97026666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 32.66596666666667
+      },
+      {
+        "end": 69.20246666666667,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 62.5625
+      },
+      {
+        "end": 91.992,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 91.15773333333334
+      },
+      {
+        "end": 96.6966,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 91.992
+      },
+      {
+        "end": 99.13246666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.73196666666666
+      },
+      {
+        "end": 99.93316666666666,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 99.13246666666667
+      },
+      {
+        "end": 106.05595,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 99.93316666666666
+      },
+      {
+        "end": 109.0088,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 106.05595
+      },
+      {
+        "end": 109.94316666666667,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 109.0088
+      },
+      {
+        "end": 110.5104,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 109.94316666666667
+      },
+      {
+        "end": 128.66186666666667,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 127.76096666666666
+      },
+      {
+        "end": 128.96226666666666,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 128.66186666666667
+      },
+      {
+        "end": 133.80033333333333,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 128.96226666666666
+      },
+      {
+        "end": 144.84480000000002,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.3442
+      },
+      {
+        "end": 146.67986666666667,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 144.84480000000002
+      },
+      {
+        "end": 148.31473333333332,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 148.21473333333333
+      },
+      {
+        "end": 148.8487,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 148.31473333333332
+      },
+      {
+        "end": 154.65460000000002,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 153.98706666666666
+      },
+      {
+        "end": 154.9548,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 154.65460000000002
+      },
+      {
+        "end": 155.78896666666668,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 155.155
+      },
+      {
+        "end": 160.42693333333335,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 157.02353333333335
+      },
+      {
+        "end": 160.87738333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 160.42693333333335
+      },
+      {
+        "end": 161.5614,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 160.87738333333334
+      },
+      {
+        "end": 165.23173333333335,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 162.09526666666667
+      },
+      {
+        "end": 169.30246666666667,
+        "person_id": "허윤진",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 165.23173333333335
+      },
+      {
+        "end": 172.17200000000003,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 171.80496666666667
+      },
+      {
+        "end": 173.13953333333333,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 172.17200000000003
+      },
+      {
+        "end": 182.54903333333334,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 180.8806
+      },
+      {
+        "end": 189.25573333333332,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 182.54903333333334
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "project_id": "1793596259787",
+    "baseline_project_id": "1793571975392",
+    "job_id": "dance_1793596259787",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793596259787",
+    "submitted": "2026-11-02T05:11:00.841Z",
+    "status": "cancelled",
+    "progress": 0,
+    "message": "cancelled",
+    "error": "cancelled",
+    "started": null,
+    "same_reference_selections": true,
+    "same_reference_bytes": true,
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/93j1fDGi_-8",
+      "requestedQuality": "1080p"
+    }
+  }
+]

@@ -1,0 +1,111 @@
+{
+  "original_group_frames": [
+    30,
+    36,
+    42,
+    48,
+    54,
+    60
+  ],
+  "group_export_cleared_frames": [],
+  "changes": [
+    {
+      "frame": 30,
+      "time": 0.5,
+      "name": "a",
+      "seed_frame": 0,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    },
+    {
+      "frame": 36,
+      "time": 0.6,
+      "name": "a",
+      "seed_frame": 0,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    },
+    {
+      "frame": 42,
+      "time": 0.7,
+      "name": "a",
+      "seed_frame": 36,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    },
+    {
+      "frame": 48,
+      "time": 0.8,
+      "name": "a",
+      "seed_frame": 36,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    },
+    {
+      "frame": 54,
+      "time": 0.9,
+      "name": "a",
+      "seed_frame": 36,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    },
+    {
+      "frame": 60,
+      "time": 1.0,
+      "name": "a",
+      "seed_frame": 36,
+      "before": "group",
+      "after": "main",
+      "exclusive_foreground": false
+    }
+  ],
+  "paths": [
+    {
+      "seed_frame": 0,
+      "name": "a",
+      "frames": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36
+      ],
+      "direct_frames": [
+        6,
+        12,
+        18,
+        24,
+        30,
+        36
+      ]
+    },
+    {
+      "seed_frame": 36,
+      "name": "a",
+      "frames": [
+        42,
+        48,
+        54,
+        60
+      ],
+      "direct_frames": [
+        36,
+        66
+      ],
+      "reason": "bounded_same_main_body_path",
+      "foreground_frames": [
+        42,
+        48,
+        54,
+        60
+      ]
+    }
+  ],
+  "mixed_original_group_export_preserved": true
+}

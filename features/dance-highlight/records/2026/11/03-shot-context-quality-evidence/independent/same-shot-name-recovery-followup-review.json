@@ -1,0 +1,224 @@
+{
+  "date": "2026-11-03",
+  "title": "동일 샷 내 기존 main 이름 복원 — 후속 독립 설계 검토",
+  "scope": {
+    "mode": "저장된 JSON 및 코드 읽기 검토; 이번 요청으로 scratch 증거만 저장",
+    "product_changed": false,
+    "video_decoded": false,
+    "model_executed": false,
+    "hash_scan_executed": false,
+    "pytest_executed": false,
+    "new_actual_app_results_reviewed": false,
+    "baseline_ids": {
+      "MMN": "1793633624877",
+      "ANT": "1793633679903",
+      "NEON": "1793633791815"
+    }
+  },
+  "inputs": [
+    "/private/tmp/dance-fragment-priorities-20261103/remaining-fragments.json",
+    "/private/tmp/dance-fragment-priorities-20261103/role-gate-18-details.json",
+    "/private/tmp/dance-fragment-priorities-20261103/summary.md"
+  ],
+  "code_reviewed": [
+    "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+    "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py",
+    "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+    "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py"
+  ],
+  "repo_root": "/Users/jina/project/adlight/desktop/clipper_python",
+  "decision": {
+    "same_shot_two_sided_proof_logically_possible": true,
+    "gate_removal_alone_justified": false,
+    "new_safe_recovery_established": 0,
+    "implementation_approved": false,
+    "current_product_should_remain_unchanged": true,
+    "next_question": "fresh 실측 역할, incumbent 유지, 측정 공백을 분리하여 필요한 증거와 실패 의미를 명확히 할 것"
+  },
+  "independently_cross_checked_json": {
+    "clips": 18,
+    "unique_unknown_blocks": 17,
+    "candidate_attempts": 22,
+    "neighbor_partition": {
+      "same_named_both_sides": 3,
+      "different_named_both_sides": 7,
+      "one_named_side_missing": 7
+    },
+    "unknown_samples": 109,
+    "valid_owned_faces": 57,
+    "role_reasons": {
+      "measured_face_composition": 49,
+      "incomplete_incumbent_geometry": 37,
+      "awaiting_sustained_composition": 9,
+      "confirmed_near_tie_transition": 1,
+      "near_tie_keep_incumbent": 3,
+      "dominant_face": 7,
+      "corroborated_foreground_subject": 3
+    },
+    "selected_feature_sources": {
+      "detected": 60,
+      "missing": 37,
+      "repeated_same_pose_geometry": 12
+    },
+    "joint_statuses": {
+      "accepted": 0,
+      "conflict": 30,
+      "insufficient": 27,
+      "unavailable": 52
+    },
+    "all_fresh_selected_role_blocks": [
+      {
+        "video": "MMN",
+        "range": [
+          53.119733333333336,
+          53.42013333333333
+        ],
+        "other_blocker": "왼쪽 named 이웃 없음"
+      },
+      {
+        "video": "ANT",
+        "range": [
+          148.38146666666665,
+          148.8487
+        ],
+        "other_blocker": "양끝 카즈하/허윤진 불일치; group 중첩 0.467233초"
+      },
+      {
+        "video": "NEON",
+        "range": [
+          149.88306666666668,
+          150.28346666666667
+        ],
+        "other_blocker": "양끝 아윤/시리 불일치"
+      },
+      {
+        "video": "NEON",
+        "range": [
+          194.0938,
+          194.26073333333335
+        ],
+        "other_blocker": "오른쪽 named 이웃 없음; 기존 isolated_visual_change"
+      }
+    ],
+    "same_named_both_sides_blocks": [
+      {
+        "video": "ANT",
+        "range": [
+          9.9098,
+          10.276933333333334
+        ],
+        "name": "김채원",
+        "fresh_role_all_samples": false,
+        "selected_sources": {
+          "missing": 4,
+          "repeated_same_pose_geometry": 1
+        },
+        "prior_body_failure": "visual_cut"
+      },
+      {
+        "video": "ANT",
+        "range": [
+          160.29346666666666,
+          160.87738333333334
+        ],
+        "name": "카즈하",
+        "fresh_role_all_samples": false,
+        "selected_sources": {
+          "detected": 3,
+          "missing": 4,
+          "repeated_same_pose_geometry": 2
+        },
+        "group_overlap_seconds": 0.05005
+      },
+      {
+        "video": "NEON",
+        "range": [
+          161.19436666666667,
+          161.72823333333332
+        ],
+        "name": "아이찡",
+        "fresh_role_all_samples": false,
+        "selected_sources": {
+          "detected": 1,
+          "missing": 5,
+          "repeated_same_pose_geometry": 2
+        },
+        "prior_body_failure": "unconfirmed_body_continuity"
+      }
+    ],
+    "interpretation": "18개는 역할 gate에 막힌 조사 표본이며 복원 가능한 수가 아니다. 원래 scene_kind=main만으로 현재 실측 역할이 확인된 것은 아니다. 확정 타인 이름 충돌 감사가 없다는 것과 모든 모델의 경쟁 증거가 없다는 것은 다르다."
+  },
+  "parent_reported_supplement_not_independently_replayed_in_this_followup": {
+    "ANT9": "지지 창에 cut616 존재; fresh role0/5, unknown shot 원본 얼굴1개/pair0",
+    "ANT160": "오른쪽 원본 얼굴 없음, unknown shot direct0",
+    "NEON161": "같은 샷 원본 face pair21, 지지 최대0.333667초지만 fresh role1/8 및 torso2표본 미관측",
+    "direct_secondary_conflicts": [
+      {
+        "video": "ANT",
+        "unknown_start": 148.38146666666665,
+        "frame": 8908,
+        "direct_secondary_name": "홍은채",
+        "competing_proposal": "허윤진"
+      },
+      {
+        "video": "ANT",
+        "unknown_start": 164.93133333333333,
+        "frame": 9900,
+        "direct_secondary_name": "사쿠라",
+        "competing_proposals": [
+          "카즈하",
+          "허윤진"
+        ]
+      },
+      {
+        "video": "NEON",
+        "unknown_start": 149.88306666666668,
+        "frame": 8992,
+        "direct_secondary_name": "시리",
+        "competing_proposal": "아윤"
+      }
+    ]
+  },
+  "contract_analysis": [
+    "기존 main 시간의 신원 복원과 group→main 신규 역할 확립은 서로 다른 증명 문제다. 절대 foreground torso 조건이 모든 기존 main 이름 복원에 필수인 것은 아니다.",
+    "observed_member_edges는 한쪽 이웃만으로 연장할 수 있으므로 현재의 강한 역할 gate를 일괄 제거하는 것은 정당화되지 않는다.",
+    "대안은 양쪽의 독립 원본 신원 재확인과 전체 구간의 실측 selected main/body 경로를 함께 요구하는 별도의 충분조건이어야 한다.",
+    "source/body 고유 대응은 인물 경로의 증거이며 그 자체가 새 메인 역할의 정의는 아니다. 기존 main/fresh role/소유권 조건과 함께 사용해야 한다.",
+    "observed_member_edges.original_name은 primary와 joint만 읽는다. 향후 gate 완화 시 direct-secondary의 원래 다른 이름이 누락될 수 있으므로 새 경로는 모든 원본 신원 출처의 충돌을 유지해야 한다."
+  ],
+  "existing_path_overlap": {
+    "bridge_main_face_gaps": "이미 양쪽 동일 이름 unknown에 dense source/body 연속성을 검사한다. 더 이른 identity 단계의 output evidence 라벨에서 가까운 얼굴 한 개씩을 고르며 최종 scene 투영 전에 실행한다.",
+    "potential_distinction": "최종 투영 후 후보 생성, frozen original photo/joint/direct-secondary seed, 양쪽 각각 독립 face pair, 전표본 fresh-role, 확정 경계 및 전체/누적 union 충돌 검사, 영상별 bounded budget.",
+    "required_candidate_diagnosis": [
+      "기존 경로 미신청",
+      "앞 단계 이후 새로 생긴 투영 범위",
+      "원본 seed 부족",
+      "기존 source/body 증명 실패"
+    ],
+    "warning": "기존 source/body 실패를 무시하는 병렬 우회 경로를 추가하지 말 것."
+  },
+  "requirements_before_any_future_reproduction": [
+    "양쪽 matched 같은 이름과 각 측의 원본 owned 얼굴 최소2개, 최소0.15초 독립 간격 및 기존0.6초 지지 유효기간 유지.",
+    "unknown 전표본 main_eligible_composition, 현재 detected selected role, 원본 bbox/시간 소유권을 요구하고 missing/hold/awaiting을 대체 증거 없이 통과시키지 않음.",
+    "양쪽 face pair와 모든 새 source 시간을 포함하는 하나의 source/body 경로. raw/refined cut이 있으면 same-shot 경로를 사용할 수 없고 visual_cut/isolated change/몸 대응 실패를 무시하지 않음.",
+    "전체 원본 경쟁 body를 보존. group 중첩, closed handoff bracket, 원본 다른 이름, 반복 alien, identity boundary, 누적 union 충돌을 보호.",
+    "복원된 이름을 다시 seed로 쓰지 않고, 표본 사이에 새 source 시간만 존재하는 경계 반례도 계속 거부.",
+    "동일 helper와 영상별12paths/240frames 예산을 공유. 정확한 경로 캐시만 일반 재사용하며 median 기반 isolated-change 실패를 단조 실패로 간주하지 않음.",
+    "한쪽 이름 연장과 group→main 판정은 변경하지 않는 별도 증명 분기로 연구. 현재 필요조건 미달인18개에 cut 제거 실험을 먼저 실행하지 않음."
+  ],
+  "protected_regressions": [
+    "ANT82 중앙 인계: handoff 빈 목록만으로 안전하다고 판단 금지",
+    "NEON115.6 실제 컷 뒤 duet",
+    "ANT181 wide ensemble",
+    "NEON93 반복 identity 경계",
+    "서로 다른 이름의 양쪽 proposal 블록",
+    "ANT148.381/164.931 및 NEON149.883의 direct-secondary 경쟁 신원",
+    "컷 경계에서 sampled unknown은 없지만 새 source 시간은 있는 경우"
+  ],
+  "limitations": [
+    "저장 JSON의 조건/실패 의미에 대한 검토이며 새로운 장면 정답 판정이 아니다.",
+    "원본 face matcher, dense source/body proof를 이번 후속 검토에서 실행하지 않았다.",
+    "현재 실행 중인 새 세 영상의 품질/썸네일/SAM OFF/총 실행시간 결론을 포함하지 않는다."
+  ]
+}

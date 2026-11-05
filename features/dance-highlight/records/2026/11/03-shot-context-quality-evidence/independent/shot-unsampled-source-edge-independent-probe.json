@@ -1,0 +1,41 @@
+{
+  "scope": "Unknown begins between sampled frames before a cut; first shot has newly named source frame 19 but no unknown sampled row.",
+  "range": [
+    0.91,
+    1.5
+  ],
+  "cut_frames": [
+    20
+  ],
+  "recovered_seconds": 0.0,
+  "reasons": [
+    "unobserved_new_shot_source"
+  ],
+  "shots": [
+    [
+      {
+        "shot": 0,
+        "new_frames": [],
+        "new_source_frames": [
+          19
+        ],
+        "new_time": [
+          0.91,
+          1.0
+        ],
+        "seed_frames": [],
+        "source_frames": []
+      }
+    ]
+  ],
+  "source_budget": {
+    "path_limit": 12,
+    "frame_limit": 240,
+    "paths_used": 0,
+    "frames_reserved": 0,
+    "frames_read": 0,
+    "seeks": 0,
+    "exact_cache_hits": 0,
+    "superset_cache_hits": 0
+  }
+}

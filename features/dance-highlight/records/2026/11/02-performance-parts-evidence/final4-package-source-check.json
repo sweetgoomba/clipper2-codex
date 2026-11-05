@@ -1,0 +1,222 @@
+{
+  "plugins/dance_highlight/dance_highlight/__init__.py": {
+    "source": "5f7dea4133b77db96a2c77dfbb6438e32f122c0f899a0ba360da33bb12233224",
+    "packaged": "5f7dea4133b77db96a2c77dfbb6438e32f122c0f899a0ba360da33bb12233224"
+  },
+  "plugins/dance_highlight/dance_highlight/__main__.py": {
+    "source": "2dcad1574b35b004f6984310d0aae6d54616e69be249499eb51145828161b448",
+    "packaged": "2dcad1574b35b004f6984310d0aae6d54616e69be249499eb51145828161b448"
+  },
+  "plugins/dance_highlight/dance_highlight/app.py": {
+    "source": "55761e3f8dc69b375f9bc9e49e51a7cccea4d13c2a9ff6c30128633bd98b7533",
+    "packaged": "55761e3f8dc69b375f9bc9e49e51a7cccea4d13c2a9ff6c30128633bd98b7533"
+  },
+  "plugins/dance_highlight/dance_highlight/services/__init__.py": {
+    "source": "71bcc9e0efac22b18cf90da2b1299eeee74560e7209d91ec18e052bd3d2f683d",
+    "packaged": "71bcc9e0efac22b18cf90da2b1299eeee74560e7209d91ec18e052bd3d2f683d"
+  },
+  "plugins/dance_highlight/dance_highlight/services/artist_detector.py": {
+    "source": "768f8da7984d82bb7f5e7e77afbdbeb68c59580ec32bb0e04d8ea4cc15e5b117",
+    "packaged": "768f8da7984d82bb7f5e7e77afbdbeb68c59580ec32bb0e04d8ea4cc15e5b117"
+  },
+  "plugins/dance_highlight/dance_highlight/services/body_continuity.py": {
+    "source": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3",
+    "packaged": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3"
+  },
+  "plugins/dance_highlight/dance_highlight/services/camera_transitions.py": {
+    "source": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71",
+    "packaged": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+  },
+  "plugins/dance_highlight/dance_highlight/services/config.py": {
+    "source": "35c9c0a9695665bfe72f3f4e4abcae574ceea0fd9548738f758e7514f930ef45",
+    "packaged": "35c9c0a9695665bfe72f3f4e4abcae574ceea0fd9548738f758e7514f930ef45"
+  },
+  "plugins/dance_highlight/dance_highlight/services/context_faces.py": {
+    "source": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7",
+    "packaged": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+  },
+  "plugins/dance_highlight/dance_highlight/services/cut_face_link.py": {
+    "source": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5",
+    "packaged": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+  },
+  "plugins/dance_highlight/dance_highlight/services/dance_meta.py": {
+    "source": "a8a46018bc905239ab2813e2b26044e8c88aa20b4e49006880023acc4d8b924b",
+    "packaged": "a8a46018bc905239ab2813e2b26044e8c88aa20b4e49006880023acc4d8b924b"
+  },
+  "plugins/dance_highlight/dance_highlight/services/diagnostics.py": {
+    "source": "8db63226fa87d99895890919b004b1c5672c296c802283ffbf8c4a44f104d641",
+    "packaged": "8db63226fa87d99895890919b004b1c5672c296c802283ffbf8c4a44f104d641"
+  },
+  "plugins/dance_highlight/dance_highlight/services/face_cluster.py": {
+    "source": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d",
+    "packaged": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+  },
+  "plugins/dance_highlight/dance_highlight/services/face_evidence.py": {
+    "source": "f0375f68d9243d0d8375988f58cb3f4cf7d55c4db411f562dd03317b10866f46",
+    "packaged": "f0375f68d9243d0d8375988f58cb3f4cf7d55c4db411f562dd03317b10866f46"
+  },
+  "plugins/dance_highlight/dance_highlight/services/face_models.py": {
+    "source": "962e60028e30496a8a7d929f555413a66edb471a787e0a559358fa669507e143",
+    "packaged": "962e60028e30496a8a7d929f555413a66edb471a787e0a559358fa669507e143"
+  },
+  "plugins/dance_highlight/dance_highlight/services/face_recovery.py": {
+    "source": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf",
+    "packaged": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+  },
+  "plugins/dance_highlight/dance_highlight/services/face_runtime.py": {
+    "source": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c",
+    "packaged": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+  },
+  "plugins/dance_highlight/dance_highlight/services/ffmpeg_utils.py": {
+    "source": "83cccdf1e8ddc3cb0fa35ad2c26bdaef185704f2610862f666e2f4ec941bfdce",
+    "packaged": "83cccdf1e8ddc3cb0fa35ad2c26bdaef185704f2610862f666e2f4ec941bfdce"
+  },
+  "plugins/dance_highlight/dance_highlight/services/focal_composition.py": {
+    "source": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9",
+    "packaged": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+  },
+  "plugins/dance_highlight/dance_highlight/services/focal_output.py": {
+    "source": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad",
+    "packaged": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+  },
+  "plugins/dance_highlight/dance_highlight/services/group_resolver.py": {
+    "source": "3d274bccb5bf1e6f1d191709988bd109d5e778285f7dd9bbe8b9d6a5718ade6d",
+    "packaged": "3d274bccb5bf1e6f1d191709988bd109d5e778285f7dd9bbe8b9d6a5718ade6d"
+  },
+  "plugins/dance_highlight/dance_highlight/services/image_search_service.py": {
+    "source": "2fb085e091437f6f984c7f648a37273e4e29e3a6318efefb9ce02411af6bd0d3",
+    "packaged": "2fb085e091437f6f984c7f648a37273e4e29e3a6318efefb9ce02411af6bd0d3"
+  },
+  "plugins/dance_highlight/dance_highlight/services/incoming_context.py": {
+    "source": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3",
+    "packaged": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+  },
+  "plugins/dance_highlight/dance_highlight/services/joint_identity.py": {
+    "source": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac",
+    "packaged": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+  },
+  "plugins/dance_highlight/dance_highlight/services/main_face_link.py": {
+    "source": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41",
+    "packaged": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+  },
+  "plugins/dance_highlight/dance_highlight/services/main_identity.py": {
+    "source": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f",
+    "packaged": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+  },
+  "plugins/dance_highlight/dance_highlight/services/main_role_timeline.py": {
+    "source": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637",
+    "packaged": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+  },
+  "plugins/dance_highlight/dance_highlight/services/mask_continuity.py": {
+    "source": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9",
+    "packaged": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+  },
+  "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py": {
+    "source": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547",
+    "packaged": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+  },
+  "plugins/dance_highlight/dance_highlight/services/mask_tracker.py": {
+    "source": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f",
+    "packaged": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+  },
+  "plugins/dance_highlight/dance_highlight/services/member_coverage.py": {
+    "source": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136",
+    "packaged": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+  },
+  "plugins/dance_highlight/dance_highlight/services/member_timeline.py": {
+    "source": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6",
+    "packaged": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+  },
+  "plugins/dance_highlight/dance_highlight/services/named_boundaries.py": {
+    "source": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5",
+    "packaged": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+  },
+  "plugins/dance_highlight/dance_highlight/services/native_scene.py": {
+    "source": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d",
+    "packaged": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+  },
+  "plugins/dance_highlight/dance_highlight/services/observed_main.py": {
+    "source": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7",
+    "packaged": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+  },
+  "plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py": {
+    "source": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1",
+    "packaged": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+  },
+  "plugins/dance_highlight/dance_highlight/services/output_continuity.py": {
+    "source": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f",
+    "packaged": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+  },
+  "plugins/dance_highlight/dance_highlight/services/performance_parts.py": {
+    "source": "efac9af090367b1652e0de03f80c97d0e46487e483be445b4dc1bddbd61716d0",
+    "packaged": "efac9af090367b1652e0de03f80c97d0e46487e483be445b4dc1bddbd61716d0"
+  },
+  "plugins/dance_highlight/dance_highlight/services/person_thumbnails.py": {
+    "source": "15acd5cec9779b66e7346cc86a5e9ad28c875d1bb18d731203b6f98a2454669b",
+    "packaged": "15acd5cec9779b66e7346cc86a5e9ad28c875d1bb18d731203b6f98a2454669b"
+  },
+  "plugins/dance_highlight/dance_highlight/services/pipeline.py": {
+    "source": "15a5df668a57b90deface88d119baa6a784f9eaaeb061b8d3cc1451332ba0589",
+    "packaged": "15a5df668a57b90deface88d119baa6a784f9eaaeb061b8d3cc1451332ba0589"
+  },
+  "plugins/dance_highlight/dance_highlight/services/pose_engine.py": {
+    "source": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d",
+    "packaged": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+  },
+  "plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py": {
+    "source": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5",
+    "packaged": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+  },
+  "plugins/dance_highlight/dance_highlight/services/protocols.py": {
+    "source": "bcd5c09786c17899a4497b670e79b2352c6c24bb615b6160d841c5b2b098cd2e",
+    "packaged": "bcd5c09786c17899a4497b670e79b2352c6c24bb615b6160d841c5b2b098cd2e"
+  },
+  "plugins/dance_highlight/dance_highlight/services/reference_matcher.py": {
+    "source": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994",
+    "packaged": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+  },
+  "plugins/dance_highlight/dance_highlight/services/render.py": {
+    "source": "83d7ae0e62e0bd21668f17f68da1be368cd54e6c74bf7b77e1bb4763abcf57c7",
+    "packaged": "83d7ae0e62e0bd21668f17f68da1be368cd54e6c74bf7b77e1bb4763abcf57c7"
+  },
+  "plugins/dance_highlight/dance_highlight/services/sampled_face_link.py": {
+    "source": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee",
+    "packaged": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+  },
+  "plugins/dance_highlight/dance_highlight/services/scene_boundaries.py": {
+    "source": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9",
+    "packaged": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+  },
+  "plugins/dance_highlight/dance_highlight/services/scene_context.py": {
+    "source": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c",
+    "packaged": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c"
+  },
+  "plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py": {
+    "source": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682",
+    "packaged": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+  },
+  "plugins/dance_highlight/dance_highlight/services/secondary_faces.py": {
+    "source": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87",
+    "packaged": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+  },
+  "plugins/dance_highlight/dance_highlight/services/segment.py": {
+    "source": "f52481e26c55b9bc573c8188352e474034331e2bda00947375261d319da157af",
+    "packaged": "f52481e26c55b9bc573c8188352e474034331e2bda00947375261d319da157af"
+  },
+  "plugins/dance_highlight/dance_highlight/services/source_reader.py": {
+    "source": "e86c525fdf45db5c0275ff02d376ed80813f775e942883da80ffd358b6ad04de",
+    "packaged": "e86c525fdf45db5c0275ff02d376ed80813f775e942883da80ffd358b6ad04de"
+  },
+  "plugins/dance_highlight/dance_highlight/services/stage_prominence.py": {
+    "source": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a",
+    "packaged": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+  },
+  "plugins/dance_highlight/dance_highlight/services/temporal_support.py": {
+    "source": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27",
+    "packaged": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+  },
+  "plugins/dance_highlight/dance_highlight/services/track.py": {
+    "source": "798d0ca50b471e7a5f13962507488daad5463ca540d96c9e966cb48e604fbd9b",
+    "packaged": "798d0ca50b471e7a5f13962507488daad5463ca540d96c9e966cb48e604fbd9b"
+  }
+}

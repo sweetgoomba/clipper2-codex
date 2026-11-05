@@ -1,0 +1,758 @@
+--- before/plugins/dance_highlight/dance_highlight/services/face_evidence.py
++++ after/plugins/dance_highlight/dance_highlight/services/face_evidence.py
+@@ -95,6 +95,7 @@
+     from . import secondary_faces, segment, body_continuity, mask_continuity, mask_tracker, context_faces, camera_transitions, joint_identity, cut_face_link, sampled_face_link, pose_face_rotation, scene_boundaries
+     from . import observed_main, main_face_link, main_role_timeline, scene_cut_proof, scene_context, temporal_support, native_scene, output_continuity
+     from . import mask_frame_cache, stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries
++    from . import observed_member_edges, performance_parts
+     from clipper_face_core import auraface
+     from .face_models import sha256_file
+ 
+@@ -108,7 +109,7 @@
+                     main_identity, face_recovery, face_evidence, member_timeline, member_coverage, secondary_faces, segment, body_continuity, mask_continuity, mask_tracker, context_faces, camera_transitions, joint_identity, cut_face_link, sampled_face_link, pose_face_rotation, scene_boundaries, observed_main, main_face_link, main_role_timeline, scene_cut_proof, scene_context, temporal_support, native_scene, output_continuity)}
+     modules['mask_frame_cache'] = {'path': mask_frame_cache.__file__,
+                                  'sha256': sha256_file(Path(mask_frame_cache.__file__))}
+-    for module in (stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries):
++    for module in (stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries, observed_member_edges, performance_parts):
+         modules[module.__name__.rsplit('.', 1)[-1]] = {
+             'path': module.__file__, 'sha256': sha256_file(Path(module.__file__))}
+     session = getattr(getattr(face_service, '_recognizer', None), '_session', None)
+--- before/plugins/dance_highlight/dance_highlight/services/observed_member_edges.py
++++ after/plugins/dance_highlight/dance_highlight/services/observed_member_edges.py
+@@ -0,0 +1,204 @@
++"""Restore an unnamed output edge from an original, continuously selected main.
++
++Output labels propose a neighboring member; two original owned faces must
++independently establish that name. No restored label becomes recognition data.
++"""
++from collections import ChainMap
++from dataclasses import replace
++import cv2
++import numpy as np
++
++from .body_continuity import _check_source_chain
++from .member_timeline import _valid
++from .reference_matcher import SegmentReferenceDecision
++from .segment import Segment
++from .observed_main import retained_bodies
++
++VERSION = 'observed_main_member_edge_v1'
++
++
++def _unique_foreground_torso(record, video_size):
++    """Corroborate the selected front performer, including faceless rivals."""
++    width, height = video_size
++    boxes, poses = record.person_bboxes, record.person_pose_keypoints
++    if len(boxes) != len(poses) or any(np.asarray(p).shape != (17, 3) for p in poses):
++        return False
++    measured = []
++    selected = None
++    for i in retained_bodies(boxes, poses):
++        box, pose = np.asarray(boxes[i]), np.asarray(poses[i])
++        # A clipped body at the outer edge cannot compete for this central
++        # role. Any unobserved body reaching the central half remains a veto.
++        if box[2] < .25*width or box[0] > .75*width:
++            continue
++        torso = pose[[5, 6, 11, 12]]
++        if (not np.isfinite(torso).all() or (torso[:, 2] < .75).any()
++                or (torso[:, 0] < max(0., box[0])).any()
++                or (torso[:, 0] >= min(width, box[2])).any()
++                or (torso[:, 1] < max(0., box[1])).any()
++                or (torso[:, 1] >= min(height, box[3])).any()):
++            return False
++        length = float(np.linalg.norm(torso[:2, :2].mean(axis=0)-torso[2:, :2].mean(axis=0)))
++        if length < 4. or np.ptp(torso[:, 0]) <= 0:
++            return False
++        measured.append((i, length))
++        if np.allclose(box, record.main_bbox, atol=1e-3, rtol=0):
++            selected = (i, length)
++    return bool(selected and selected[1] >= .08*height
++        and all(selected[1] >= 1.08*length for i, length in measured if i != selected[0]))
++
++
++def recover_observed_member_edges(output, frame_records, observations, joint_matches, matcher,
++                                  *, video_path, fps, sample_step, handoffs, role_observations, video_size):
++    audit = dict(version=VERSION, recovered_seconds=0., candidates=[], recoveries=[])
++    if (handoffs is None or not observations or not role_observations
++            or not np.isfinite(fps) or fps <= 0 or sample_step < 1):
++        return output, audit
++    records = {round(r.t*fps): r for r in frame_records}
++    rows = sorted({o.frame_index: o for o in observations}.values(), key=lambda o:o.time_seconds)
++    joints = {int(f): m for f, m in joint_matches.items()}
++    roles = {r['frame']: r for r in role_observations}
++    names = {}
++    def original_name(row):
++        if row.frame_index not in names:
++            primary = matcher.match(row, Segment('main', None, row.time_seconds,
++                row.time_seconds+1/fps, []), VERSION).reference_id if _valid(row) else None
++            joint = joints.get(row.frame_index, {})
++            secondary = joint.get('name') if _valid(row) and joint.get('status') == 'accepted' else None
++            names[row.frame_index] = (primary, secondary)
++        return names[row.frame_index]
++
++    segments, decisions = output['segments'], output['decisions']
++    groups = []
++    cap = None
++    try:
++        i = 0
++        while i < len(segments):
++            if decisions[i].reference_id:
++                i += 1
++                continue
++            first = i
++            while (i+1 < len(segments) and not decisions[i+1].reference_id
++                   and abs(segments[i].end-segments[i+1].start) < 1e-6):
++                i += 1
++            last = i
++            i += 1
++            start, end = segments[first].start, segments[last].end
++            accepted = []
++            for neighbor, direction in ((first-1, 'left'), (last+1, 'right')):
++                if not 0 <= neighbor < len(segments):
++                    continue
++                span, name = segments[neighbor], decisions[neighbor].reference_id
++                if not name or abs((span.end-start) if direction == 'left' else (end-span.start)) > 1e-6:
++                    continue
++                edge = start if direction == 'left' else end
++                available = [o for o in rows if span.start <= o.time_seconds < span.end
++                    and abs(o.time_seconds-edge) <= .600001 and _valid(o) and o.detector_score >= .9
++                    and name in original_name(o) and all(n in (None, name) for n in original_name(o))]
++                pairs = [(a, b) for j, a in enumerate(available) for b in available[j+1:]
++                         if .15-1e-6 <= b.time_seconds-a.time_seconds <= .600001]
++                if not pairs:
++                    continue
++                a, b = min(pairs, key=lambda pair: abs(pair[0 if direction == 'right' else 1].time_seconds-edge))
++                lo, hi = (a.time_seconds, end) if direction == 'left' else (start, b.time_seconds+1/fps)
++                local = [o for o in rows if lo <= o.time_seconds < hi]
++                candidate = dict(start=start, end=end, name=name, direction=direction,
++                                 seed_frames=[a.frame_index, b.frame_index])
++                audit['candidates'].append(candidate)
++                failure = None
++                expected = sorted(f for f, r in records.items() if lo <= r.t < hi)
++                if (not local or [o.frame_index for o in local] != expected
++                        or any(b-a != sample_step for a, b in zip(expected, expected[1:]))):
++                    failure = 'missing_original_observation'
++                elif any(records[o.frame_index].scene_kind != 'main' for o in local):
++                    failure = 'non_main_path'
++                elif any(o.body_bbox is None or records[o.frame_index].main_bbox is None
++                         or not np.allclose(o.body_bbox, records[o.frame_index].main_bbox, atol=1e-3, rtol=0)
++                         for o in local):
++                    failure = 'unowned_main_path'
++                elif any(lo < h['time'] < hi for h in handoffs):
++                    failure = 'main_handoff'
++                elif any(n and n != name for o in local for n in original_name(o)):
++                    failure = 'conflicting_original_face'
++                if failure is None:
++                    unknown = [o for o in local if start <= o.time_seconds < end]
++                    actual_foreground = []
++                    for o in local:
++                        role = roles.get(o.frame_index, {})
++                        if role.get('reason') not in ('dominant_face', 'confirmed_dominant_face',
++                                'corroborated_foreground_subject', 'confirmed_corroborated_foreground_subject'):
++                            continue
++                        if role.get('box') is None or not np.allclose(role['box'], o.body_bbox, atol=1e-3, rtol=0):
++                            continue
++                        if any(f.get('source') == 'detected' and f.get('size') is not None
++                               and np.allclose(f['box'], o.body_bbox, atol=1e-3, rtol=0)
++                               for f in role.get('features', [])):
++                            actual_foreground.append(o.time_seconds)
++                    if (not unknown or not actual_foreground
++                            or any(not _unique_foreground_torso(records[o.frame_index], video_size)
++                                   or min(abs(t-o.time_seconds) for t in actual_foreground) > .600001
++                                   for o in unknown)):
++                        failure = 'unconfirmed_main_role'
++                if failure is None:
++                    step = float(np.median(np.diff([o.time_seconds for o in local])))
++                    tolerance = min(.1, step/2)+.5/fps+1e-6
++                    if (local[0].time_seconds-lo > tolerance or hi-local[-1].time_seconds > tolerance):
++                        failure = 'unobserved_output_edge'
++                if failure is None:
++                    alien = [o for o in local if _valid(o)
++                             and min(1.-float(o.embedding@s.embedding) for s in (a, b)) > .65]
++                    if any(.15 <= y.time_seconds-x.time_seconds <= .6
++                           and 1.-float(x.embedding@y.embedding) <= .6
++                           for j, x in enumerate(alien) for y in alien[j+1:]):
++                        failure = 'repeated_alien_face'
++                if failure is None:
++                    if cap is None:
++                        cap = cv2.VideoCapture(str(video_path))
++                    if not cap.isOpened() or abs(cap.get(cv2.CAP_PROP_FPS)-fps) > .01:
++                        failure = 'source_unavailable_or_fps_mismatch'
++                    else:
++                        failure = _check_source_chain(cap, local, records, audit=candidate)
++                candidate['reason'] = failure or 'original_selected_main_continuity'
++                if failure is None:
++                    accepted.append((neighbor, name, candidate))
++            if not accepted:
++                continue
++            if len({name for _, name, _ in accepted}) != 1:
++                for _, _, candidate in accepted:
++                    candidate['reason'] = 'competing_original_names'
++                continue
++            name = accepted[0][1]
++            group = (min(first, *(j for j, _, _ in accepted)), max(last, *(j for j, _, _ in accepted)), name)
++            if groups and group[0] <= groups[-1][1] and groups[-1][2] == name:
++                groups[-1] = (groups[-1][0], group[1], name)
++            else:
++                groups.append(group)
++            audit['recovered_seconds'] += end-start
++            audit['recoveries'].append(dict(start=start, end=end, name=name,
++                directions=[c['direction'] for _, _, c in accepted]))
++    finally:
++        if cap is not None:
++            cap.release()
++    if not groups:
++        return output, audit
++    keys = ('segments', 'decisions', 'labels', 'previews', 'evidence', 'preview_sources')
++    result = {**output, **{k: [] for k in keys}, 'accurate_indices': []}
++    ends = {a: (b, name) for a, b, name in groups}
++    i = 0
++    while i < len(segments):
++        last, name = ends.get(i, (i, decisions[i].reference_id))
++        indices = range(i, last+1)
++        for key in keys:
++            result[key].append(output[key][i])
++        if any(j in output['accurate_indices'] for j in indices):
++            result['accurate_indices'].append(len(result['segments'])-1)
++        if last != i:
++            result['segments'][-1] = replace(segments[i], end=segments[last].end,
++                bboxes=[r for j in indices for r in segments[j].bboxes])
++            result['decisions'][-1] = SegmentReferenceDecision(name, 'matched', VERSION)
++            result['evidence'][-1] = [r for j in indices for r in output['evidence'][j]]
++            result['previews'][-1] = [p for j in indices for p in output['previews'][j]][:5]
++            result['preview_sources'][-1] = tuple(ChainMap(*(output['preview_sources'][j][k] for j in indices)) for k in (0, 1))
++        i = last+1
++    result['labels'] = [i+1 if d.reference_id else None for i, d in enumerate(result['decisions'])]
++    return result, audit
+--- before/plugins/dance_highlight/dance_highlight/services/output_continuity.py
++++ after/plugins/dance_highlight/dance_highlight/services/output_continuity.py
+@@ -296,3 +296,96 @@
+             return result,dict(audit,joins=joins,bridges=bridges)
+         sources=[[old for i in group for old in sources[i]] for group in groups]
+         output=result
++
++
++def coalesce_unknown_output(output, frame_records, observations, joint_matches, *, fps,
++                            sample_step, handoffs, video_path):
++    """Join only a source-verified selected body; its identity stays unknown."""
++    import cv2
++    from .body_continuity import _check_source_chain
++    from .member_timeline import _identity_boundaries
++    audit = dict(version='unknown_selected_main_continuity_v1', candidates=[], joins=[])
++    if handoffs is None or not observations or not math.isfinite(fps) or fps <= 0 or sample_step < 1:
++        return output, audit
++    records = {round(r.t*fps): r for r in frame_records}
++    original = {o.frame_index: o for o in observations}
++    joints = {int(f): m for f, m in joint_matches.items()}
++    segments, decisions = output['segments'], output['decisions']
++    groups, cap = [], None
++    try:
++        for i, (segment, decision) in enumerate(zip(segments, decisions, strict=True)):
++            if not groups or decision.reference_id:
++                groups.append([i])
++                continue
++            group = groups[-1]
++            left = segments[group[0]]
++            if decisions[group[-1]].reference_id or abs(segments[group[-1]].end-segment.start) > 1e-6:
++                groups.append([i])
++                continue
++            lo, boundary, hi = left.start, segment.start, segment.end
++            candidate = dict(start=lo, boundary=boundary, end=hi)
++            audit['candidates'].append(candidate)
++            frames = sorted(f for f, r in records.items() if lo <= r.t < hi)
++            rows = [original[f] for f in frames if f in original]
++            failure = None
++            if (not rows or [o.frame_index for o in rows] != frames
++                    or any(b-a != sample_step for a, b in zip(frames, frames[1:]))):
++                failure = 'missing_original_observation'
++            elif rows[0].time_seconds >= boundary or rows[-1].time_seconds < boundary:
++                failure = 'missing_boundary_observation'
++            elif any(lo < h['time'] < hi for h in handoffs):
++                failure = 'main_handoff'
++            elif any(records[o.frame_index].scene_kind != 'main'
++                     or records[o.frame_index].main_bbox is None or o.body_bbox is None
++                     or not np.allclose(o.body_bbox, records[o.frame_index].main_bbox, atol=1e-3, rtol=0)
++                     for o in rows):
++                failure = 'unowned_main_path'
++            names = {n for j in [*group, i] for o, n in output['evidence'][j] if n and _valid(o)}
++            names.update(joints[f]['name'] for f in frames if f in joints
++                         and joints[f].get('status') == 'accepted' and joints[f].get('name'))
++            if failure is None and len(names) > 1:
++                failure = 'conflicting_original_names'
++            if failure is None:
++                # Unknown registered names do not erase a repeated change of
++                # observed face identity, even when the body path looks alike.
++                face_changes = [b for b in _identity_boundaries(
++                    replace(left, end=hi), rows, [None]*len(rows), [])
++                    if b['reason'] == 'repeated_face_change']
++                if face_changes:
++                    candidate['face_changes'] = face_changes
++                    failure = 'repeated_original_face_change'
++            if failure is None:
++                if cap is None:
++                    cap = cv2.VideoCapture(str(video_path))
++                if not cap.isOpened() or abs(cap.get(cv2.CAP_PROP_FPS)-fps) > .01:
++                    failure = 'source_unavailable_or_fps_mismatch'
++                else:
++                    failure = _check_source_chain(cap, rows, records, audit=candidate)
++            candidate['reason'] = failure or 'same_unidentified_main'
++            if failure:
++                groups.append([i])
++            else:
++                group.append(i)
++                audit['joins'].append(dict(candidate, source_indices=list(group)))
++    finally:
++        if cap is not None:
++            cap.release()
++    if not audit['joins']:
++        return output, audit
++    keys = ('segments', 'decisions', 'labels', 'evidence', 'previews', 'preview_sources')
++    result = {**output, **{key: [] for key in keys}, 'accurate_indices': []}
++    for group in groups:
++        first, last = group[0], group[-1]
++        for key in keys:
++            result[key].append(output[key][first])
++        if any(j in output['accurate_indices'] for j in group):
++            result['accurate_indices'].append(len(result['segments'])-1)
++        if first == last:
++            continue
++        result['segments'][-1] = replace(segments[first], end=segments[last].end,
++            bboxes=[row for j in group for row in segments[j].bboxes])
++        result['evidence'][-1] = [row for j in group for row in output['evidence'][j]]
++        result['previews'][-1] = [image for j in group for image in output['previews'][j]][:5]
++        result['preview_sources'][-1] = tuple(ChainMap(*(output['preview_sources'][j][k] for j in group)) for k in (0, 1))
++    result['labels'] = [i+1 if d.reference_id else None for i, d in enumerate(result['decisions'])]
++    return result, audit
+--- before/plugins/dance_highlight/dance_highlight/services/performance_parts.py
++++ after/plugins/dance_highlight/dance_highlight/services/performance_parts.py
+@@ -9,7 +9,7 @@
+ 
+ from .scene_boundaries import project_main_at_scene_cuts, split_unidentified_at_handoffs
+ 
+-VERSION = 'performance_parts_v1'
++VERSION = 'performance_parts_v2_observed_continuity'
+ 
+ 
+ def _project(identity, projected):
+@@ -52,7 +52,8 @@
+ 
+ def build_performance_parts(identity, *, eligibility, matcher, frame_records,
+                             frozen_observations, joint_matches, handoffs, fps, video_path,
+-                            scene_changes, cut_frames, group_segments, mask_refinement):
++                            scene_changes, cut_frames, group_segments, mask_refinement,
++                            role_observations=(), video_size=None, sample_step=4):
+     """Single output assembly point; no face/model service or new anchors.
+ 
+     ``identity`` is a frozen input. Its current names are not permission to fill
+@@ -67,11 +68,18 @@
+         projected, identity['decisions'], handoffs or [])
+     projection['unidentified_handoffs'] = handoff_audit
+     result = _project(identity, projected)
+-    continuity, named_seconds = {}, 0.
++    continuity, named_seconds, edge_seconds = {}, 0., 0.
+     if matcher is not None:
++        from .observed_member_edges import recover_observed_member_edges
+         from .member_timeline import recover_final_face_edges
+-        from .output_continuity import coalesce_named_output
++        from .output_continuity import coalesce_named_output, coalesce_unknown_output
+         from .named_boundaries import reconcile_named_boundaries
++        started = time.perf_counter()
++        result, observed_edges = recover_observed_member_edges(result, frame_records,
++            frozen_observations, joint_matches, matcher, video_path=video_path, fps=fps,
++            sample_step=sample_step, handoffs=handoffs, role_observations=role_observations,
++            video_size=video_size)
++        edge_seconds = time.perf_counter()-started
+         result = recover_final_face_edges(result, matcher, video_path=video_path,
+             handoffs=handoffs, joint_matches=joint_matches, frame_records=frame_records)
+         result, continuity = coalesce_named_output(result, matcher,
+@@ -80,6 +88,13 @@
+         continuity['face_edge_recoveries'] = result.get('edge_recoveries', [])
+         continuity['face_edge_joins'] = result.get('edge_recovery_joins', [])
+         continuity['face_edge_reason'] = result.get('edge_recovery_reason')
++        continuity['observed_member_edges'] = observed_edges
++        started = time.perf_counter()
++        result, unknown_joins = coalesce_unknown_output(result, frame_records,
++            frozen_observations, joint_matches, fps=fps, sample_step=sample_step,
++            handoffs=handoffs, video_path=video_path)
++        edge_seconds += time.perf_counter()-started
++        continuity['unknown_main_joins'] = unknown_joins
+         started = time.perf_counter()
+         result, boundaries = reconcile_named_boundaries(result, frame_records,
+             frozen_observations, joint_matches, matcher, video_path=video_path, fps=fps,
+@@ -88,4 +103,5 @@
+         continuity['named_boundaries'] = boundaries
+     return result, dict(version=VERSION, identity_spans=spans,
+                         parts=_part_inventory(result, spans), projection=projection,
+-                        continuity=continuity, named_boundary_seconds=named_seconds)
++                        continuity=continuity, named_boundary_seconds=named_seconds,
++                        observed_continuity_seconds=edge_seconds)
+--- before/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ after/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -1156,12 +1156,16 @@
+                     handoffs=main_role_refinement.get('handoffs')
+                     if main_role_refinement.get('reason') == 'complete' else None,
+                     fps=fps, video_path=input_video,
++                    sample_step=max(1, int(self.config.analyze_skip)),
++                    video_size=self._video_size(input_video),
++                    role_observations=main_role_refinement.get('role_observations', ()),
+                     scene_changes=scene_boundary_refinement.get('changes', []),
+                     cut_frames=main_role_refinement.get('cut_frames'),
+                     group_segments=raw_group, mask_refinement=mask_continuity_refinement)
+                 scene_boundary_refinement.update(part_audit['projection'])
+                 output_continuity_refinement = part_audit.pop('continuity')
+                 _timings['named_boundaries'] = part_audit.pop('named_boundary_seconds')
++                _timings['observed_part_continuity'] = part_audit.pop('observed_continuity_seconds')
+                 output_continuity_refinement['performance_parts'] = part_audit
+                 if matcher is not None:
+                     identity_refinement, preparation_context = _include_incoming_preparation(
+@@ -1527,7 +1531,7 @@
+             'total_before_metadata_write_seconds': time.perf_counter() - _t_total,
+             'nested_stages': {'segment_build': ['native_scene', 'group_context'], 'cluster_map': [
+                 'secondary_faces', 'body_continuity', 'context_faces', 'mask_continuity', 'joint_identity',
+-                'named_boundaries']},
++                'named_boundaries', 'observed_part_continuity']},
+         }
+ 
+         out_meta = json_root / self.config.meta_filename
+--- before/plugins/dance_highlight/dance_highlight/services/segment.py
++++ after/plugins/dance_highlight/dance_highlight/services/segment.py
+@@ -245,6 +245,70 @@
+     return visible, inside, head_visible, torso_visible, torso_reliable
+ 
+ 
++def _scene_scale_observations(rec, video_size):
++    """Use one complete measurement of a duplicated body for scene scale only.
++
++    The same observed head and torso can have an additional, stretched leg
++    prediction. It must not count as one person but two different scales.
++    Partial bodies retain their foreground veto, and source records stay intact.
++    """
++    if len(rec.person_bboxes) != len(rec.person_pose_keypoints):
++        return rec
++    complete = []
++    for index, (body, pose) in enumerate(zip(rec.person_bboxes, rec.person_pose_keypoints)):
++        body, pose = np.asarray(body), np.asarray(pose)
++        if (body.shape != (4,) or pose.shape != (17, 3) or not np.isfinite(body).all()
++                or (body[2:] <= body[:2]).any()):
++            continue
++        visible, inside, head, _, torso = _observed_body_joints(body, pose, video_size)
++        head_points = visible[:5] & inside[:5]
++        if (not head or not torso or not visible[[15, 16]].all()
++                or not pose[:5, 1][head_points].max() < pose[[5, 6], 1].mean()
++                < pose[[11, 12], 1].mean() < pose[[15, 16], 1].mean()):
++            continue
++        extent = float(body[3]-body[1])
++        if inside[[15, 16]].all():
++            extent = float(pose[[15, 16], 1].max()-pose[:5, 1][head_points].min())
++        xy = pose[[5, 6, 11, 12], :2]
++        rect = np.r_[xy.min(axis=0), xy.max(axis=0)]
++        complete.append(dict(index=index, box=body, pose_keypoints=pose, head=head_points,
++                             extent=extent, rect=rect, area=float(np.prod(body[2:]-body[:2]))))
++    excluded = set()
++    for a in complete:
++        for b in complete:
++            if a['extent'] <= b['extent'] or a['area'] <= b['area']:
++                continue
++            intersection = np.prod(np.maximum(0, np.minimum(a['box'][2:], b['box'][2:])
++                                              - np.maximum(a['box'][:2], b['box'][:2])))
++            if intersection/b['area'] < .9:
++                continue
++            # Same conservative head agreement used for nested pose duplicates.
++            common = a['head'] & b['head']
++            points = b['pose_keypoints'][:5, :2][b['head']]
++            span = float(np.linalg.norm(points.max(axis=0)-points.min(axis=0)))
++            if (common.sum() < 3 or span <= 0
++                    or np.linalg.norm(a['pose_keypoints'][:5, :2][common]
++                                      - b['pose_keypoints'][:5, :2][common], axis=1).max() > .3*span):
++                continue
++            left, right = a['rect'], b['rect']
++            area = min(np.prod(left[2:]-left[:2]), np.prod(right[2:]-right[:2]))
++            overlap = np.prod(np.maximum(0, np.minimum(left[2:], right[2:])
++                                         - np.maximum(left[:2], right[:2])))
++            if area <= 0 or overlap < .5*area:
++                continue
++            from .observed_main import strict_pose_corresponding
++            if strict_pose_corresponding(dict(features=[a]), a, dict(features=[b])) is not None:
++                excluded.add(a['index'])
++    if not excluded:
++        return rec
++    kept = [i for i in range(len(rec.person_bboxes)) if i not in excluded]
++    heads = ([rec.person_head_keypoints[i] for i in kept]
++             if len(rec.person_head_keypoints) == len(rec.person_bboxes) else rec.person_head_keypoints)
++    return replace(rec, person_bboxes=[rec.person_bboxes[i] for i in kept],
++                   person_pose_keypoints=[rec.person_pose_keypoints[i] for i in kept],
++                   person_head_keypoints=heads)
++
++
+ def distributed_full_body_ensemble(rec: FrameRec, video_size: Tuple[int, int], *, allow_compact=False) -> bool:
+     """A spread or distant formation of fully observed performers.
+ 
+@@ -252,8 +316,9 @@
+     person still vetoes group classification even if their feet are cropped.
+     """
+     width, height = video_size
+-    if len(rec.person_bboxes) != len(rec.person_pose_keypoints):
++    if len(rec.person_bboxes) < 3 or len(rec.person_bboxes) != len(rec.person_pose_keypoints):
+         return False
++    rec = _scene_scale_observations(rec, video_size)
+     trusted, complete, measured_torsos, person_extents, complete_extents = [], [], [], [], []
+     for body, pose in zip(rec.person_bboxes, rec.person_pose_keypoints, strict=True):
+         body, pose = np.asarray(body), np.asarray(pose)
+--- before/tests/test_dance_duplicate_scene_scale.py
++++ after/tests/test_dance_duplicate_scene_scale.py
+@@ -0,0 +1,78 @@
++"""Same-person duplicate geometry must not invent a foreground scale veto."""
++from dataclasses import replace
++import json
++from pathlib import Path
++
++import numpy as np
++import pytest
++
++from dance_highlight.services import segment
++from dance_highlight.services.segment import FrameRec
++
++
++def _actual():
++    row = json.loads((Path(__file__).parent / 'fixtures/dance_scene_review/neon185_duplicate.json').read_text())
++    return FrameRec(row['time_seconds'], row['candidate_main_id'], np.array(row['candidate_main_bbox']), False,
++        person_bboxes=[np.array(b) for b in row['body_boxes']],
++        person_head_keypoints=[np.array(p) for p in row['head_keypoints']],
++        person_pose_keypoints=[np.array(p) for p in row['pose_keypoints']])
++
++
++def _snapshot(record):
++    return [[value.copy() for value in getattr(record, key)] for key in (
++        'person_bboxes', 'person_head_keypoints', 'person_pose_keypoints')]
++
++
++def _assert_original_observations(record, frozen):
++    for key, expected in zip(('person_bboxes', 'person_head_keypoints', 'person_pose_keypoints'), frozen):
++        actual = getattr(record, key)
++        assert len(actual) == len(expected)
++        assert all(np.array_equal(a, b) for a, b in zip(actual, expected))
++
++
++def test_actual_same_head_torso_duplicate_does_not_veto_ensemble_or_delete_source_observations():
++    record = _actual()
++    frozen = _snapshot(record)
++    assert len(record.person_bboxes) == 5
++    assert segment.distributed_full_body_ensemble(record, (1920, 1080))
++    _assert_original_observations(record, frozen)
++    rows = [replace(record, t=record.t+i/10) for i in range(5)]
++    classified = segment.classify_main_scenes(rows, (1920, 1080))
++    assert all(r.scene_kind == 'group' for r in classified)
++    for original, result in zip(rows, classified):
++        _assert_original_observations(original, frozen)
++        _assert_original_observations(result, frozen)
++        assert len(result.group_bboxes) == 5
++        assert np.array_equal(result.candidate_main_bbox, original.main_bbox)
++
++
++@pytest.mark.parametrize('case', ['different_head', 'missing_head', 'different_torso',
++                                 'hidden_foreground_feet', 'partial_torso'])
++def test_overlapping_foreground_requires_same_complete_head_and_torso_evidence(case):
++    record = _actual()
++    points = record.person_pose_keypoints[3]
++    if case == 'different_head':
++        points[:5, 0] += 25
++    elif case == 'missing_head':
++        points[:5, 2] = .1
++    elif case == 'different_torso':
++        points[[5, 6, 11, 12], 0] += 70
++    elif case == 'hidden_foreground_feet':
++        points[[15, 16], 2] = .1
++    else:
++        points[[11, 12], 2] = .1
++    frozen = _snapshot(record)
++    assert not segment.distributed_full_body_ensemble(record, (1920, 1080))
++    _assert_original_observations(record, frozen)
++
++
++@pytest.mark.parametrize('order', [[0, 1, 2, 3, 4], [4, 3, 2, 1, 0], [3, 0, 4, 2, 1]])
++def test_same_body_scale_deduplication_does_not_depend_on_detection_order(order):
++    record = _actual()
++    record = replace(record,
++        person_bboxes=[record.person_bboxes[i] for i in order],
++        person_head_keypoints=[record.person_head_keypoints[i] for i in order],
++        person_pose_keypoints=[record.person_pose_keypoints[i] for i in order])
++    frozen = _snapshot(record)
++    assert segment.distributed_full_body_ensemble(record, (1920, 1080))
++    _assert_original_observations(record, frozen)
+--- before/tests/test_dance_observed_member_edges.py
++++ after/tests/test_dance_observed_member_edges.py
+@@ -0,0 +1,114 @@
++"""An original face run may name an observed main edge, never an unseen gap."""
++from dataclasses import replace
++import numpy as np
++import pytest
++
++from test_dance_body_continuity import example
++from dance_highlight.services.reference_matcher import SegmentReferenceDecision
++
++
++def recover(tmp_path, *, condition=None, assemble=False, direction='left'):
++    from dance_highlight.services.observed_member_edges import recover_observed_member_edges
++    path, output, records = example(tmp_path, cut=condition == 'cut', overlap=condition == 'competitor')
++    # A continuous main loses its face at t=2 and remains selected until t=4.
++    # There is no named clip on the other side to seed the old bridge.
++    for key in ('segments', 'decisions', 'labels', 'previews', 'evidence', 'preview_sources'):
++        output[key] = output[key][:2] if direction == 'left' else output[key][1:]
++    output['accurate_indices'] = [0, 1]
++    # Stop at the last observed source frame, not an extrapolated tail.
++    if direction == 'left':
++        output['segments'][-1] = replace(output['segments'][-1], end=3.85)
++    rows = [o for evidence in output['evidence'] for o, _ in evidence]
++    records = [replace(r, scene_kind='main') for r in records
++               if (r.t < 4. if direction == 'left' else r.t >= 2.)]
++    for record in records:
++        poses = []
++        for i, box in enumerate(record.person_bboxes):
++            pose = np.zeros((17, 3))
++            x = (box[0]+box[2])/2
++            pose[[5, 6, 11, 12]] = [[x-8, 30, .99], [x+8, 30, .99],
++                [x-8, 60 if i == 0 else 45, .99], [x+8, 60 if i == 0 else 45, .99]]
++            poses.append(pose)
++        record.person_pose_keypoints = poses
++    roles = [dict(frame=round(r.t*20), box=r.main_bbox.tolist(), reason='dominant_face',
++                  features=[dict(box=r.main_bbox.tolist(), source='detected', size=20.)]) for r in records]
++    if condition == 'borrowed_role':
++        for role in roles:
++            role['features'][0]['source'] = 'repeated_same_pose_geometry'
++    if condition == 'missing_role':
++        roles = []
++    if condition in ('duet', 'unobserved_rival', 'collapsed_rival'):
++        for record in records:
++            # A second foreground body reaches the central half, even when
++            # face detection fails. It must remain a competitor for the role.
++            record.person_bboxes[1] = np.array([75., 10., 115., 90.])
++            pose = record.person_pose_keypoints[0].copy()
++            pose[:, 0] += 45.
++            if condition == 'unobserved_rival':
++                pose[11, 2] = .1
++            if condition == 'collapsed_rival':
++                pose[[5, 6, 11, 12]] = [95., 40., .99]
++            record.person_pose_keypoints[1] = pose
++    if condition == 'single_face':
++        rows = [replace(o, embedding=None, association='unassigned', failure='no_detection')
++                if o.time_seconds < 1.8 else o for o in rows]
++    if condition in ('missing', 'both_missing'):
++        rows = [o for o in rows if o.time_seconds != 2.6]
++        if condition == 'both_missing':
++            records = [r for r in records if r.t != 2.6]
++    if condition == 'group':
++        records[13] = replace(records[13], scene_kind='group', is_group=True, main_bbox=None)
++    if condition == 'conflicting_face':
++        rows = [replace(o, embedding=np.array([0., 1.]), detector_score=.99,
++                        association='confirmed', failure=None) if o.time_seconds == 2.6 else o for o in rows]
++    class Matcher:
++        def match(self, row, *args):
++            return SegmentReferenceDecision('A' if row.embedding[0] else 'B', 'matched', 'original')
++    handoffs = [{'frame': 52, 'time': 2.6, 'previous_time': 2.4}] if condition == 'handoff' else []
++    if assemble:
++        from dance_highlight.services.performance_parts import build_performance_parts
++        return output, build_performance_parts(output, eligibility=output['segments'],
++            matcher=Matcher(), frame_records=records, frozen_observations=rows, joint_matches={},
++            fps=20., sample_step=4, handoffs=handoffs, video_path=path,
++            role_observations=roles, video_size=(160, 100), scene_changes=[], cut_frames=[],
++            group_segments=[], mask_refinement={})
++    return output, recover_observed_member_edges(output, records, rows, {}, Matcher(),
++        video_path=path, fps=20., sample_step=4, handoffs=handoffs,
++        role_observations=roles, video_size=(160, 100))
++
++
++def test_original_face_pair_keeps_one_main_through_one_sided_face_loss(tmp_path):
++    before, (after, audit) = recover(tmp_path)
++    assert [(s.start, s.end, d.reference_id) for s, d in zip(after['segments'], after['decisions'])] == [(0., 3.85, 'A')]
++    assert audit['recovered_seconds'] == pytest.approx(1.85)
++    assert after['anchors'] == before['anchors'] == []
++    assert after['fallback_names'] == before['fallback_names'] == {}
++    assert all(n is None for o, n in after['evidence'][0] if o.time_seconds >= 2.)
++    assert len(before['segments']) == 2
++
++
++def test_right_original_face_pair_restores_only_the_observed_main_prefix(tmp_path):
++    before, (after, audit) = recover(tmp_path, direction='right')
++    assert [(s.start, s.end, d.reference_id) for s, d in zip(after['segments'], after['decisions'])] == [(2., 6., 'A')]
++    assert audit['recovered_seconds'] == pytest.approx(2.)
++    assert audit['recoveries'][0]['directions'] == ['right']
++    assert all(n is None for o, n in after['evidence'][0] if o.time_seconds < 4.)
++    assert after['anchors'] == before['anchors']
++
++
++@pytest.mark.parametrize('condition', ['single_face', 'missing', 'both_missing', 'group',
++    'conflicting_face', 'handoff', 'cut', 'competitor', 'borrowed_role', 'missing_role',
++    'duet', 'unobserved_rival', 'collapsed_rival'])
++def test_one_sided_name_never_crosses_missing_or_opposing_evidence(tmp_path, condition):
++    before, (after, audit) = recover(tmp_path, condition=condition)
++    assert after is before
++    assert audit['recovered_seconds'] == 0.
++
++
++def test_performance_parts_records_recovery_separately_from_original_identity(tmp_path):
++    before, (after, audit) = recover(tmp_path, assemble=True)
++    assert [(s.start, s.end, d.reference_id) for s, d in zip(after['segments'], after['decisions'])] == [(0., 3.85, 'A')]
++    assert [span['name'] for span in audit['identity_spans']] == ['A', None]
++    assert audit['parts'][0]['newly_named_seconds'] == pytest.approx(1.85)
++    assert audit['continuity']['observed_member_edges']['recovered_seconds'] == pytest.approx(1.85)
++    assert after['anchors'] == before['anchors']
+--- before/tests/test_dance_unknown_continuity.py
++++ after/tests/test_dance_unknown_continuity.py
+@@ -0,0 +1,57 @@
++"""Unknown identity does not require one clip per face inference scope."""
++from dataclasses import replace
++import numpy as np
++import pytest
++from test_dance_body_continuity import example
++from dance_highlight.services.reference_matcher import SegmentReferenceDecision
++
++
++def run(tmp_path, condition=None):
++    from dance_highlight.services.output_continuity import coalesce_unknown_output
++    path, output, records = example(tmp_path, cut=condition == 'cut', overlap=condition == 'competitor')
++    output['decisions'] = [SegmentReferenceDecision(None, 'unmatched', 'no_consensus') for _ in range(3)]
++    output['labels'] = [None]*3
++    if condition == 'named_middle':
++        output['decisions'][1] = SegmentReferenceDecision('B', 'matched', 'original')
++    records = [replace(r, scene_kind='main') for r in records]
++    if condition == 'unnamed_face_change':
++        output['evidence'] = [[(replace(o,
++            embedding=np.array([1., 0.]) if o.time_seconds < 2. else np.array([0., 1.]),
++            detector_score=.99, association='confirmed', failure=None), None)
++            for o, _ in evidence] for evidence in output['evidence']]
++    rows = [o for evidence in output['evidence'] for o, _ in evidence]
++    if condition == 'missing':
++        records = [r for r in records if r.t != 2.6]
++        rows = [o for o in rows if o.time_seconds != 2.6]
++    handoffs = [dict(time=2., previous_time=1.8), dict(time=4., previous_time=3.8)] if condition == 'handoff' else []
++    joints = {0: dict(status='accepted', name='A'), 40: dict(status='accepted', name='B'),
++              80: dict(status='accepted', name='C')} if condition == 'conflicting_faces' else {}
++    result = coalesce_unknown_output(output, records, rows, joints,
++        fps=20., sample_step=4, handoffs=handoffs, video_path=path)
++    return output, result
++
++
++def test_continuous_unidentified_main_is_one_part_without_borrowing_a_name(tmp_path):
++    original, (result, audit) = run(tmp_path)
++    assert [(s.start, s.end) for s in result['segments']] == [(0., 6.)]
++    assert [d.reference_id for d in result['decisions']] == [None]
++    assert len(audit['joins']) == 2
++    assert result['evidence'][0] == sum(original['evidence'], [])
++    assert result['anchors'] == original['anchors']
++    assert len(original['segments']) == 3
++
++
++@pytest.mark.parametrize('condition', ['cut', 'competitor', 'missing', 'handoff', 'conflicting_faces', 'named_middle'])
++def test_unknown_identity_does_not_authorize_erasing_a_performer_boundary(tmp_path, condition):
++    original, (result, audit) = run(tmp_path, condition)
++    assert len(result['segments']) >= 2
++    if condition in ('handoff', 'conflicting_faces', 'named_middle', 'competitor'):
++        assert result is original
++        assert not audit['joins']
++
++
++def test_repeated_different_faces_keep_the_boundary_even_without_registered_names(tmp_path):
++    _, (result, audit) = run(tmp_path, 'unnamed_face_change')
++    assert [(s.start, s.end) for s in result['segments']] == [(0., 2.), (2., 6.)]
++    assert audit['candidates'][0]['reason'] == 'repeated_original_face_change'
++    assert all(d.reference_id is None for d in result['decisions'])

@@ -1,0 +1,1145 @@
+{
+  "main": [
+    {
+      "seg_id": 0,
+      "seg_type": "main",
+      "start": 0.0,
+      "end": 3.1031,
+      "person_id": "홍은채",
+      "clip_id": "main_0000",
+      "thumbnail_path": "clips/dance/main/main_0000.jpg"
+    },
+    {
+      "seg_id": 1,
+      "seg_type": "main",
+      "start": 3.7370666666666668,
+      "end": 6.139466666666666,
+      "person_id": "홍은채",
+      "clip_id": "main_0001",
+      "thumbnail_path": "clips/dance/main/main_0001.jpg"
+    },
+    {
+      "seg_id": 2,
+      "seg_type": "main",
+      "start": 6.4064000000000005,
+      "end": 6.7066,
+      "person_id": "홍은채",
+      "clip_id": "main_0002",
+      "thumbnail_path": "clips/dance/main/main_0002.jpg"
+    },
+    {
+      "seg_id": 3,
+      "seg_type": "main",
+      "start": 6.7066,
+      "end": 7.157150000000001,
+      "person_id": "unknown",
+      "clip_id": "main_0003",
+      "thumbnail_path": "clips/dance/main/main_0003.jpg"
+    },
+    {
+      "seg_id": 4,
+      "seg_type": "main",
+      "start": 7.157150000000001,
+      "end": 7.590916666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0004",
+      "thumbnail_path": "clips/dance/main/main_0004.jpg"
+    },
+    {
+      "seg_id": 5,
+      "seg_type": "main",
+      "start": 7.590916666666667,
+      "end": 8.975633333333334,
+      "person_id": "홍은채",
+      "clip_id": "main_0005",
+      "thumbnail_path": "clips/dance/main/main_0005.jpg"
+    },
+    {
+      "seg_id": 6,
+      "seg_type": "main",
+      "start": 8.975633333333334,
+      "end": 17.150466666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0006",
+      "thumbnail_path": "clips/dance/main/main_0006.jpg"
+    },
+    {
+      "seg_id": 7,
+      "seg_type": "main",
+      "start": 17.6176,
+      "end": 18.25146666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0007",
+      "thumbnail_path": "clips/dance/main/main_0007.jpg"
+    },
+    {
+      "seg_id": 8,
+      "seg_type": "main",
+      "start": 18.25146666666667,
+      "end": 18.9189,
+      "person_id": "unknown",
+      "clip_id": "main_0008",
+      "thumbnail_path": "clips/dance/main/main_0008.jpg"
+    },
+    {
+      "seg_id": 9,
+      "seg_type": "main",
+      "start": 18.9189,
+      "end": 19.7198,
+      "person_id": "unknown",
+      "clip_id": "main_0009",
+      "thumbnail_path": "clips/dance/main/main_0009.jpg"
+    },
+    {
+      "seg_id": 10,
+      "seg_type": "main",
+      "start": 19.7198,
+      "end": 25.592233333333333,
+      "person_id": "허윤진",
+      "clip_id": "main_0010",
+      "thumbnail_path": "clips/dance/main/main_0010.jpg"
+    },
+    {
+      "seg_id": 11,
+      "seg_type": "main",
+      "start": 25.592233333333333,
+      "end": 27.861166666666666,
+      "person_id": "카즈하",
+      "clip_id": "main_0011",
+      "thumbnail_path": "clips/dance/main/main_0011.jpg"
+    },
+    {
+      "seg_id": 12,
+      "seg_type": "main",
+      "start": 27.861166666666666,
+      "end": 28.2282,
+      "person_id": "unknown",
+      "clip_id": "main_0012",
+      "thumbnail_path": "clips/dance/main/main_0012.jpg"
+    },
+    {
+      "seg_id": 13,
+      "seg_type": "main",
+      "start": 28.2282,
+      "end": 28.294933333333333,
+      "person_id": "unknown",
+      "clip_id": "main_0013",
+      "thumbnail_path": "clips/dance/main/main_0013.jpg"
+    },
+    {
+      "seg_id": 14,
+      "seg_type": "main",
+      "start": 28.294933333333333,
+      "end": 28.661966666666668,
+      "person_id": "unknown",
+      "clip_id": "main_0014",
+      "thumbnail_path": "clips/dance/main/main_0014.jpg"
+    },
+    {
+      "seg_id": 15,
+      "seg_type": "main",
+      "start": 28.661966666666668,
+      "end": 32.66596666666667,
+      "person_id": "홍은채",
+      "clip_id": "main_0015",
+      "thumbnail_path": "clips/dance/main/main_0015.jpg"
+    },
+    {
+      "seg_id": 16,
+      "seg_type": "main",
+      "start": 32.66596666666667,
+      "end": 36.903533333333336,
+      "person_id": "김채원",
+      "clip_id": "main_0016",
+      "thumbnail_path": "clips/dance/main/main_0016.jpg"
+    },
+    {
+      "seg_id": 17,
+      "seg_type": "main",
+      "start": 38.60523333333333,
+      "end": 42.125416666666666,
+      "person_id": "카즈하",
+      "clip_id": "main_0017",
+      "thumbnail_path": "clips/dance/main/main_0017.jpg"
+    },
+    {
+      "seg_id": 18,
+      "seg_type": "main",
+      "start": 43.443400000000004,
+      "end": 44.96158333333334,
+      "person_id": "사쿠라",
+      "clip_id": "main_0018",
+      "thumbnail_path": "clips/dance/main/main_0018.jpg"
+    },
+    {
+      "seg_id": 19,
+      "seg_type": "main",
+      "start": 46.446400000000004,
+      "end": 46.513133333333336,
+      "person_id": "unknown",
+      "clip_id": "main_0019",
+      "thumbnail_path": "clips/dance/main/main_0019.jpg"
+    },
+    {
+      "seg_id": 20,
+      "seg_type": "main",
+      "start": 47.48076666666667,
+      "end": 53.720333333333336,
+      "person_id": "김채원",
+      "clip_id": "main_0020",
+      "thumbnail_path": "clips/dance/main/main_0020.jpg"
+    },
+    {
+      "seg_id": 21,
+      "seg_type": "main",
+      "start": 53.720333333333336,
+      "end": 62.5625,
+      "person_id": "허윤진",
+      "clip_id": "main_0021",
+      "thumbnail_path": "clips/dance/main/main_0021.jpg"
+    },
+    {
+      "seg_id": 22,
+      "seg_type": "main",
+      "start": 62.5625,
+      "end": 69.20246666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0022",
+      "thumbnail_path": "clips/dance/main/main_0022.jpg"
+    },
+    {
+      "seg_id": 23,
+      "seg_type": "main",
+      "start": 69.6696,
+      "end": 72.23883333333333,
+      "person_id": "김채원",
+      "clip_id": "main_0023",
+      "thumbnail_path": "clips/dance/main/main_0023.jpg"
+    },
+    {
+      "seg_id": 24,
+      "seg_type": "main",
+      "start": 72.23883333333333,
+      "end": 73.44003333333333,
+      "person_id": "허윤진",
+      "clip_id": "main_0024",
+      "thumbnail_path": "clips/dance/main/main_0024.jpg"
+    },
+    {
+      "seg_id": 25,
+      "seg_type": "main",
+      "start": 73.44003333333333,
+      "end": 73.80706666666667,
+      "person_id": "unknown",
+      "clip_id": "main_0025",
+      "thumbnail_path": "clips/dance/main/main_0025.jpg"
+    },
+    {
+      "seg_id": 26,
+      "seg_type": "main",
+      "start": 74.34093333333334,
+      "end": 75.14173333333333,
+      "person_id": "허윤진",
+      "clip_id": "main_0026",
+      "thumbnail_path": "clips/dance/main/main_0026.jpg"
+    },
+    {
+      "seg_id": 27,
+      "seg_type": "main",
+      "start": 75.14173333333333,
+      "end": 75.37530000000001,
+      "person_id": "unknown",
+      "clip_id": "main_0027",
+      "thumbnail_path": "clips/dance/main/main_0027.jpg"
+    },
+    {
+      "seg_id": 28,
+      "seg_type": "main",
+      "start": 75.37530000000001,
+      "end": 82.5825,
+      "person_id": "카즈하",
+      "clip_id": "main_0028",
+      "thumbnail_path": "clips/dance/main/main_0028.jpg"
+    },
+    {
+      "seg_id": 29,
+      "seg_type": "main",
+      "start": 82.5825,
+      "end": 82.68260000000001,
+      "person_id": "unknown",
+      "clip_id": "main_0029",
+      "thumbnail_path": "clips/dance/main/main_0029.jpg"
+    },
+    {
+      "seg_id": 30,
+      "seg_type": "main",
+      "start": 84.15073333333333,
+      "end": 87.48740000000001,
+      "person_id": "김채원",
+      "clip_id": "main_0030",
+      "thumbnail_path": "clips/dance/main/main_0030.jpg"
+    },
+    {
+      "seg_id": 31,
+      "seg_type": "main",
+      "start": 87.6876,
+      "end": 88.2882,
+      "person_id": "김채원",
+      "clip_id": "main_0031",
+      "thumbnail_path": "clips/dance/main/main_0031.jpg"
+    },
+    {
+      "seg_id": 32,
+      "seg_type": "main",
+      "start": 88.2882,
+      "end": 91.15773333333334,
+      "person_id": "허윤진",
+      "clip_id": "main_0032",
+      "thumbnail_path": "clips/dance/main/main_0032.jpg"
+    },
+    {
+      "seg_id": 33,
+      "seg_type": "main",
+      "start": 91.15773333333334,
+      "end": 91.92526666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0033",
+      "thumbnail_path": "clips/dance/main/main_0033.jpg"
+    },
+    {
+      "seg_id": 34,
+      "seg_type": "main",
+      "start": 91.92526666666667,
+      "end": 96.6966,
+      "person_id": "사쿠라",
+      "clip_id": "main_0034",
+      "thumbnail_path": "clips/dance/main/main_0034.jpg"
+    },
+    {
+      "seg_id": 35,
+      "seg_type": "main",
+      "start": 97.2972,
+      "end": 97.4974,
+      "person_id": "김채원",
+      "clip_id": "main_0035",
+      "thumbnail_path": "clips/dance/main/main_0035.jpg"
+    },
+    {
+      "seg_id": 36,
+      "seg_type": "main",
+      "start": 97.4974,
+      "end": 98.73196666666666,
+      "person_id": "홍은채",
+      "clip_id": "main_0036",
+      "thumbnail_path": "clips/dance/main/main_0036.jpg"
+    },
+    {
+      "seg_id": 37,
+      "seg_type": "main",
+      "start": 98.73196666666666,
+      "end": 99.8998,
+      "person_id": "김채원",
+      "clip_id": "main_0037",
+      "thumbnail_path": "clips/dance/main/main_0037.jpg"
+    },
+    {
+      "seg_id": 38,
+      "seg_type": "main",
+      "start": 99.8998,
+      "end": 106.05595,
+      "person_id": "카즈하",
+      "clip_id": "main_0038",
+      "thumbnail_path": "clips/dance/main/main_0038.jpg"
+    },
+    {
+      "seg_id": 39,
+      "seg_type": "main",
+      "start": 106.05595,
+      "end": 109.10900000000001,
+      "person_id": "김채원",
+      "clip_id": "main_0039",
+      "thumbnail_path": "clips/dance/main/main_0039.jpg"
+    },
+    {
+      "seg_id": 40,
+      "seg_type": "main",
+      "start": 109.10900000000001,
+      "end": 110.5104,
+      "person_id": "사쿠라",
+      "clip_id": "main_0040",
+      "thumbnail_path": "clips/dance/main/main_0040.jpg"
+    },
+    {
+      "seg_id": 41,
+      "seg_type": "main",
+      "start": 110.97753333333334,
+      "end": 117.6175,
+      "person_id": "사쿠라",
+      "clip_id": "main_0041",
+      "thumbnail_path": "clips/dance/main/main_0041.jpg"
+    },
+    {
+      "seg_id": 42,
+      "seg_type": "main",
+      "start": 117.6175,
+      "end": 119.68623333333333,
+      "person_id": "홍은채",
+      "clip_id": "main_0042",
+      "thumbnail_path": "clips/dance/main/main_0042.jpg"
+    },
+    {
+      "seg_id": 43,
+      "seg_type": "main",
+      "start": 119.68623333333333,
+      "end": 119.78633333333333,
+      "person_id": "unknown",
+      "clip_id": "main_0043",
+      "thumbnail_path": "clips/dance/main/main_0043.jpg"
+    },
+    {
+      "seg_id": 44,
+      "seg_type": "main",
+      "start": 119.78633333333333,
+      "end": 120.35356666666667,
+      "person_id": "unknown",
+      "clip_id": "main_0044",
+      "thumbnail_path": "clips/dance/main/main_0044.jpg"
+    },
+    {
+      "seg_id": 45,
+      "seg_type": "main",
+      "start": 120.35356666666667,
+      "end": 127.76096666666666,
+      "person_id": "홍은채",
+      "clip_id": "main_0045",
+      "thumbnail_path": "clips/dance/main/main_0045.jpg"
+    },
+    {
+      "seg_id": 46,
+      "seg_type": "main",
+      "start": 127.76096666666666,
+      "end": 133.80033333333333,
+      "person_id": "허윤진",
+      "clip_id": "main_0046",
+      "thumbnail_path": "clips/dance/main/main_0046.jpg"
+    },
+    {
+      "seg_id": 47,
+      "seg_type": "main",
+      "start": 134.06726666666668,
+      "end": 134.96816666666666,
+      "person_id": "허윤진",
+      "clip_id": "main_0047",
+      "thumbnail_path": "clips/dance/main/main_0047.jpg"
+    },
+    {
+      "seg_id": 48,
+      "seg_type": "main",
+      "start": 134.96816666666666,
+      "end": 135.10163333333333,
+      "person_id": "unknown",
+      "clip_id": "main_0048",
+      "thumbnail_path": "clips/dance/main/main_0048.jpg"
+    },
+    {
+      "seg_id": 49,
+      "seg_type": "main",
+      "start": 135.10163333333333,
+      "end": 136.3362,
+      "person_id": "허윤진",
+      "clip_id": "main_0049",
+      "thumbnail_path": "clips/dance/main/main_0049.jpg"
+    },
+    {
+      "seg_id": 50,
+      "seg_type": "main",
+      "start": 137.137,
+      "end": 140.07326666666668,
+      "person_id": "카즈하",
+      "clip_id": "main_0050",
+      "thumbnail_path": "clips/dance/main/main_0050.jpg"
+    },
+    {
+      "seg_id": 51,
+      "seg_type": "main",
+      "start": 139.6395,
+      "end": 144.3442,
+      "person_id": "카즈하",
+      "clip_id": "main_0051",
+      "thumbnail_path": "clips/dance/main/main_0051.jpg"
+    },
+    {
+      "seg_id": 52,
+      "seg_type": "main",
+      "start": 144.3442,
+      "end": 144.7780666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0052",
+      "thumbnail_path": "clips/dance/main/main_0052.jpg"
+    },
+    {
+      "seg_id": 53,
+      "seg_type": "main",
+      "start": 144.7780666666667,
+      "end": 146.67986666666667,
+      "person_id": "홍은채",
+      "clip_id": "main_0053",
+      "thumbnail_path": "clips/dance/main/main_0053.jpg"
+    },
+    {
+      "seg_id": 54,
+      "seg_type": "main",
+      "start": 146.67986666666667,
+      "end": 146.81333333333333,
+      "person_id": "unknown",
+      "clip_id": "main_0054",
+      "thumbnail_path": "clips/dance/main/main_0054.jpg"
+    },
+    {
+      "seg_id": 55,
+      "seg_type": "main",
+      "start": 146.81333333333333,
+      "end": 146.88006666666666,
+      "person_id": "unknown",
+      "clip_id": "main_0055",
+      "thumbnail_path": "clips/dance/main/main_0055.jpg"
+    },
+    {
+      "seg_id": 56,
+      "seg_type": "main",
+      "start": 147.34720000000002,
+      "end": 147.51413333333335,
+      "person_id": "허윤진",
+      "clip_id": "main_0056",
+      "thumbnail_path": "clips/dance/main/main_0056.jpg"
+    },
+    {
+      "seg_id": 57,
+      "seg_type": "main",
+      "start": 147.51413333333335,
+      "end": 147.88106666666667,
+      "person_id": "카즈하",
+      "clip_id": "main_0057",
+      "thumbnail_path": "clips/dance/main/main_0057.jpg"
+    },
+    {
+      "seg_id": 58,
+      "seg_type": "main",
+      "start": 148.21473333333333,
+      "end": 148.38146666666665,
+      "person_id": "카즈하",
+      "clip_id": "main_0058",
+      "thumbnail_path": "clips/dance/main/main_0058.jpg"
+    },
+    {
+      "seg_id": 59,
+      "seg_type": "main",
+      "start": 148.38146666666665,
+      "end": 148.58176666666668,
+      "person_id": "unknown",
+      "clip_id": "main_0059",
+      "thumbnail_path": "clips/dance/main/main_0059.jpg"
+    },
+    {
+      "seg_id": 60,
+      "seg_type": "main",
+      "start": 148.58176666666668,
+      "end": 149.51603333333333,
+      "person_id": "허윤진",
+      "clip_id": "main_0060",
+      "thumbnail_path": "clips/dance/main/main_0060.jpg"
+    },
+    {
+      "seg_id": 61,
+      "seg_type": "main",
+      "start": 149.51603333333333,
+      "end": 149.91643333333334,
+      "person_id": "사쿠라",
+      "clip_id": "main_0061",
+      "thumbnail_path": "clips/dance/main/main_0061.jpg"
+    },
+    {
+      "seg_id": 62,
+      "seg_type": "main",
+      "start": 149.91643333333334,
+      "end": 150.38356666666667,
+      "person_id": "카즈하",
+      "clip_id": "main_0062",
+      "thumbnail_path": "clips/dance/main/main_0062.jpg"
+    },
+    {
+      "seg_id": 63,
+      "seg_type": "main",
+      "start": 150.38356666666667,
+      "end": 151.0508,
+      "person_id": "홍은채",
+      "clip_id": "main_0063",
+      "thumbnail_path": "clips/dance/main/main_0063.jpg"
+    },
+    {
+      "seg_id": 64,
+      "seg_type": "main",
+      "start": 151.0508,
+      "end": 151.98516666666666,
+      "person_id": "unknown",
+      "clip_id": "main_0064",
+      "thumbnail_path": "clips/dance/main/main_0064.jpg"
+    },
+    {
+      "seg_id": 65,
+      "seg_type": "main",
+      "start": 151.98516666666666,
+      "end": 152.2521,
+      "person_id": "김채원",
+      "clip_id": "main_0065",
+      "thumbnail_path": "clips/dance/main/main_0065.jpg"
+    },
+    {
+      "seg_id": 66,
+      "seg_type": "main",
+      "start": 152.2521,
+      "end": 152.58586666666667,
+      "person_id": "unknown",
+      "clip_id": "main_0066",
+      "thumbnail_path": "clips/dance/main/main_0066.jpg"
+    },
+    {
+      "seg_id": 67,
+      "seg_type": "main",
+      "start": 152.58586666666667,
+      "end": 152.98616666666666,
+      "person_id": "카즈하",
+      "clip_id": "main_0067",
+      "thumbnail_path": "clips/dance/main/main_0067.jpg"
+    },
+    {
+      "seg_id": 68,
+      "seg_type": "main",
+      "start": 152.98616666666666,
+      "end": 153.5534,
+      "person_id": "사쿠라",
+      "clip_id": "main_0068",
+      "thumbnail_path": "clips/dance/main/main_0068.jpg"
+    },
+    {
+      "seg_id": 69,
+      "seg_type": "main",
+      "start": 153.5534,
+      "end": 153.98706666666666,
+      "person_id": "김채원",
+      "clip_id": "main_0069",
+      "thumbnail_path": "clips/dance/main/main_0069.jpg"
+    },
+    {
+      "seg_id": 70,
+      "seg_type": "main",
+      "start": 153.98706666666666,
+      "end": 154.42093333333332,
+      "person_id": "unknown",
+      "clip_id": "main_0070",
+      "thumbnail_path": "clips/dance/main/main_0070.jpg"
+    },
+    {
+      "seg_id": 71,
+      "seg_type": "main",
+      "start": 154.42093333333332,
+      "end": 155.78896666666668,
+      "person_id": "카즈하",
+      "clip_id": "main_0071",
+      "thumbnail_path": "clips/dance/main/main_0071.jpg"
+    },
+    {
+      "seg_id": 72,
+      "seg_type": "main",
+      "start": 155.78896666666668,
+      "end": 155.88906666666668,
+      "person_id": "unknown",
+      "clip_id": "main_0072",
+      "thumbnail_path": "clips/dance/main/main_0072.jpg"
+    },
+    {
+      "seg_id": 73,
+      "seg_type": "main",
+      "start": 156.156,
+      "end": 156.7566,
+      "person_id": "카즈하",
+      "clip_id": "main_0073",
+      "thumbnail_path": "clips/dance/main/main_0073.jpg"
+    },
+    {
+      "seg_id": 74,
+      "seg_type": "main",
+      "start": 157.02353333333335,
+      "end": 160.29346666666666,
+      "person_id": "카즈하",
+      "clip_id": "main_0074",
+      "thumbnail_path": "clips/dance/main/main_0074.jpg"
+    },
+    {
+      "seg_id": 75,
+      "seg_type": "main",
+      "start": 160.29346666666666,
+      "end": 160.87738333333334,
+      "person_id": "unknown",
+      "clip_id": "main_0075",
+      "thumbnail_path": "clips/dance/main/main_0075.jpg"
+    },
+    {
+      "seg_id": 76,
+      "seg_type": "main",
+      "start": 160.87738333333334,
+      "end": 161.5614,
+      "person_id": "카즈하",
+      "clip_id": "main_0076",
+      "thumbnail_path": "clips/dance/main/main_0076.jpg"
+    },
+    {
+      "seg_id": 77,
+      "seg_type": "main",
+      "start": 162.09526666666667,
+      "end": 164.93133333333333,
+      "person_id": "카즈하",
+      "clip_id": "main_0077",
+      "thumbnail_path": "clips/dance/main/main_0077.jpg"
+    },
+    {
+      "seg_id": 78,
+      "seg_type": "main",
+      "start": 164.93133333333333,
+      "end": 165.33183333333335,
+      "person_id": "unknown",
+      "clip_id": "main_0078",
+      "thumbnail_path": "clips/dance/main/main_0078.jpg"
+    },
+    {
+      "seg_id": 79,
+      "seg_type": "main",
+      "start": 165.33183333333335,
+      "end": 169.30246666666667,
+      "person_id": "허윤진",
+      "clip_id": "main_0079",
+      "thumbnail_path": "clips/dance/main/main_0079.jpg"
+    },
+    {
+      "seg_id": 80,
+      "seg_type": "main",
+      "start": 169.70286666666667,
+      "end": 171.80496666666667,
+      "person_id": "허윤진",
+      "clip_id": "main_0080",
+      "thumbnail_path": "clips/dance/main/main_0080.jpg"
+    },
+    {
+      "seg_id": 81,
+      "seg_type": "main",
+      "start": 171.80496666666667,
+      "end": 172.2053666666667,
+      "person_id": "unknown",
+      "clip_id": "main_0081",
+      "thumbnail_path": "clips/dance/main/main_0081.jpg"
+    },
+    {
+      "seg_id": 82,
+      "seg_type": "main",
+      "start": 172.2053666666667,
+      "end": 173.13953333333333,
+      "person_id": "사쿠라",
+      "clip_id": "main_0082",
+      "thumbnail_path": "clips/dance/main/main_0082.jpg"
+    },
+    {
+      "seg_id": 83,
+      "seg_type": "main",
+      "start": 173.13953333333333,
+      "end": 173.43993333333333,
+      "person_id": "unknown",
+      "clip_id": "main_0083",
+      "thumbnail_path": "clips/dance/main/main_0083.jpg"
+    },
+    {
+      "seg_id": 84,
+      "seg_type": "main",
+      "start": 174.0739,
+      "end": 174.50766666666667,
+      "person_id": "사쿠라",
+      "clip_id": "main_0084",
+      "thumbnail_path": "clips/dance/main/main_0084.jpg"
+    },
+    {
+      "seg_id": 85,
+      "seg_type": "main",
+      "start": 175.24173333333334,
+      "end": 189.25573333333332,
+      "person_id": "사쿠라",
+      "clip_id": "main_0085",
+      "thumbnail_path": "clips/dance/main/main_0085.jpg"
+    },
+    {
+      "seg_id": 86,
+      "seg_type": "main",
+      "start": 189.25573333333332,
+      "end": 192.192,
+      "person_id": "홍은채",
+      "clip_id": "main_0086",
+      "thumbnail_path": "clips/dance/main/main_0086.jpg"
+    },
+    {
+      "seg_id": 87,
+      "seg_type": "main",
+      "start": 192.192,
+      "end": 195.91238333333334,
+      "person_id": "김채원",
+      "clip_id": "main_0087",
+      "thumbnail_path": "clips/dance/main/main_0087.jpg"
+    },
+    {
+      "seg_id": 88,
+      "seg_type": "main",
+      "start": 195.91238333333334,
+      "end": 198.86533333333333,
+      "person_id": "사쿠라",
+      "clip_id": "main_0088",
+      "thumbnail_path": "clips/dance/main/main_0088.jpg"
+    },
+    {
+      "seg_id": 89,
+      "seg_type": "main",
+      "start": 198.86533333333333,
+      "end": 202.05185,
+      "person_id": "허윤진",
+      "clip_id": "main_0089",
+      "thumbnail_path": "clips/dance/main/main_0089.jpg"
+    },
+    {
+      "seg_id": 90,
+      "seg_type": "main",
+      "start": 202.05185,
+      "end": 206.73986666666667,
+      "person_id": "카즈하",
+      "clip_id": "main_0090",
+      "thumbnail_path": "clips/dance/main/main_0090.jpg"
+    }
+  ],
+  "group": [
+    {
+      "seg_id": 0,
+      "seg_type": "group",
+      "start": 3.1031,
+      "end": 3.7370666666666668,
+      "person_id": null,
+      "clip_id": "group_0000",
+      "thumbnail_path": "clips/dance/group/group_0000.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 1,
+      "seg_type": "group",
+      "start": 5.6056,
+      "end": 6.4064000000000005,
+      "person_id": null,
+      "clip_id": "group_0001",
+      "thumbnail_path": "clips/dance/group/group_0001.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 2,
+      "seg_type": "group",
+      "start": 10.8108,
+      "end": 11.277933333333333,
+      "person_id": null,
+      "clip_id": "group_0002",
+      "thumbnail_path": "clips/dance/group/group_0002.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 3,
+      "seg_type": "group",
+      "start": 17.150466666666667,
+      "end": 17.6176,
+      "person_id": null,
+      "clip_id": "group_0003",
+      "thumbnail_path": "clips/dance/group/group_0003.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 4,
+      "seg_type": "group",
+      "start": 36.56986666666667,
+      "end": 38.77206666666667,
+      "person_id": null,
+      "clip_id": "group_0004",
+      "thumbnail_path": "clips/dance/group/group_0004.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 5,
+      "seg_type": "group",
+      "start": 42.125416666666666,
+      "end": 43.57686666666667,
+      "person_id": null,
+      "clip_id": "group_0005",
+      "thumbnail_path": "clips/dance/group/group_0005.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 6,
+      "seg_type": "group",
+      "start": 44.96158333333334,
+      "end": 47.48076666666667,
+      "person_id": null,
+      "clip_id": "group_0006",
+      "thumbnail_path": "clips/dance/group/group_0006.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 7,
+      "seg_type": "group",
+      "start": 49.2492,
+      "end": 49.6496,
+      "person_id": null,
+      "clip_id": "group_0007",
+      "thumbnail_path": "clips/dance/group/group_0007.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 8,
+      "seg_type": "group",
+      "start": 69.20246666666667,
+      "end": 69.6696,
+      "person_id": null,
+      "clip_id": "group_0008",
+      "thumbnail_path": "clips/dance/group/group_0008.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 9,
+      "seg_type": "group",
+      "start": 73.80706666666667,
+      "end": 74.34093333333334,
+      "person_id": null,
+      "clip_id": "group_0009",
+      "thumbnail_path": "clips/dance/group/group_0009.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 10,
+      "seg_type": "group",
+      "start": 82.68260000000001,
+      "end": 84.15073333333333,
+      "person_id": null,
+      "clip_id": "group_0010",
+      "thumbnail_path": "clips/dance/group/group_0010.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 11,
+      "seg_type": "group",
+      "start": 86.15273333333333,
+      "end": 86.55313333333334,
+      "person_id": null,
+      "clip_id": "group_0011",
+      "thumbnail_path": "clips/dance/group/group_0011.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 12,
+      "seg_type": "group",
+      "start": 87.02026666666667,
+      "end": 87.6876,
+      "person_id": null,
+      "clip_id": "group_0012",
+      "thumbnail_path": "clips/dance/group/group_0012.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 13,
+      "seg_type": "group",
+      "start": 96.6966,
+      "end": 97.2972,
+      "person_id": null,
+      "clip_id": "group_0013",
+      "thumbnail_path": "clips/dance/group/group_0013.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 14,
+      "seg_type": "group",
+      "start": 100.56713333333333,
+      "end": 100.96753333333334,
+      "person_id": null,
+      "clip_id": "group_0014",
+      "thumbnail_path": "clips/dance/group/group_0014.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 15,
+      "seg_type": "group",
+      "start": 108.50840000000001,
+      "end": 109.04226666666666,
+      "person_id": null,
+      "clip_id": "group_0015",
+      "thumbnail_path": "clips/dance/group/group_0015.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 16,
+      "seg_type": "group",
+      "start": 110.5104,
+      "end": 110.97753333333334,
+      "person_id": null,
+      "clip_id": "group_0016",
+      "thumbnail_path": "clips/dance/group/group_0016.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 17,
+      "seg_type": "group",
+      "start": 133.80033333333333,
+      "end": 134.06726666666668,
+      "person_id": null,
+      "clip_id": "group_0017",
+      "thumbnail_path": "clips/dance/group/group_0017.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 18,
+      "seg_type": "group",
+      "start": 134.46766666666667,
+      "end": 135.135,
+      "person_id": null,
+      "clip_id": "group_0018",
+      "thumbnail_path": "clips/dance/group/group_0018.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 19,
+      "seg_type": "group",
+      "start": 136.3362,
+      "end": 137.137,
+      "person_id": null,
+      "clip_id": "group_0019",
+      "thumbnail_path": "clips/dance/group/group_0019.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 20,
+      "seg_type": "group",
+      "start": 140.07326666666668,
+      "end": 140.97416666666666,
+      "person_id": null,
+      "clip_id": "group_0020",
+      "thumbnail_path": "clips/dance/group/group_0020.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 21,
+      "seg_type": "group",
+      "start": 146.88006666666666,
+      "end": 149.149,
+      "person_id": null,
+      "clip_id": "group_0021",
+      "thumbnail_path": "clips/dance/group/group_0021.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 22,
+      "seg_type": "group",
+      "start": 154.9548,
+      "end": 155.3552,
+      "person_id": null,
+      "clip_id": "group_0022",
+      "thumbnail_path": "clips/dance/group/group_0022.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 23,
+      "seg_type": "group",
+      "start": 155.88906666666668,
+      "end": 156.156,
+      "person_id": null,
+      "clip_id": "group_0023",
+      "thumbnail_path": "clips/dance/group/group_0023.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 24,
+      "seg_type": "group",
+      "start": 156.7566,
+      "end": 157.02353333333335,
+      "person_id": null,
+      "clip_id": "group_0024",
+      "thumbnail_path": "clips/dance/group/group_0024.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 25,
+      "seg_type": "group",
+      "start": 160.82733333333334,
+      "end": 162.09526666666667,
+      "person_id": null,
+      "clip_id": "group_0025",
+      "thumbnail_path": "clips/dance/group/group_0025.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 26,
+      "seg_type": "group",
+      "start": 165.69886666666667,
+      "end": 166.3662,
+      "person_id": null,
+      "clip_id": "group_0026",
+      "thumbnail_path": "clips/dance/group/group_0026.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 27,
+      "seg_type": "group",
+      "start": 169.30246666666667,
+      "end": 169.70286666666667,
+      "person_id": null,
+      "clip_id": "group_0027",
+      "thumbnail_path": "clips/dance/group/group_0027.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 28,
+      "seg_type": "group",
+      "start": 173.43993333333333,
+      "end": 174.0739,
+      "person_id": null,
+      "clip_id": "group_0028",
+      "thumbnail_path": "clips/dance/group/group_0028.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 29,
+      "seg_type": "group",
+      "start": 174.50766666666667,
+      "end": 175.24173333333334,
+      "person_id": null,
+      "clip_id": "group_0029",
+      "thumbnail_path": "clips/dance/group/group_0029.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 30,
+      "seg_type": "group",
+      "start": 183.71686666666668,
+      "end": 184.05053333333333,
+      "person_id": null,
+      "clip_id": "group_0030",
+      "thumbnail_path": "clips/dance/group/group_0030.jpg",
+      "person_ids": []
+    },
+    {
+      "seg_id": 31,
+      "seg_type": "group",
+      "start": 186.25273333333334,
+      "end": 189.38920000000002,
+      "person_id": null,
+      "clip_id": "group_0031",
+      "thumbnail_path": "clips/dance/group/group_0031.jpg",
+      "person_ids": []
+    }
+  ]
+}

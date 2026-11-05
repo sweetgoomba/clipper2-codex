@@ -1,0 +1,497 @@
+{
+  "scope": "Diagnostic viewer routing, not a claim that all displayed group boxes are unchanged.",
+  "all_checks_passed": true,
+  "videos": {
+    "MMN": {
+      "checks": {
+        "same_raw_viewer_bodies_and_faces": true,
+        "no_unexplained_viewer_fields_or_scopes": true,
+        "changed_frame_count_expected": true
+      },
+      "changes": []
+    },
+    "ANT": {
+      "checks": {
+        "same_raw_viewer_bodies_and_faces": true,
+        "no_unexplained_viewer_fields_or_scopes": true,
+        "changed_frame_count_expected": true
+      },
+      "changes": [
+        {
+          "index": 2197,
+          "time": 146.613,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            6
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2198,
+          "time": 146.68,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            5
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2199,
+          "time": 146.747,
+          "fields": [
+            "group",
+            "group_bodies",
+            "group_faces",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            5
+          ],
+          "group_face_count_before_after": [
+            0,
+            7
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2200,
+          "time": 146.813,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            5
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        }
+      ]
+    },
+    "NEON": {
+      "checks": {
+        "same_raw_viewer_bodies_and_faces": true,
+        "no_unexplained_viewer_fields_or_scopes": true,
+        "changed_frame_count_expected": true
+      },
+      "changes": [
+        {
+          "index": 2153,
+          "time": 143.677,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            2
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_group_observation_bridge"
+          ]
+        },
+        {
+          "index": 2154,
+          "time": 143.744,
+          "fields": [
+            "group",
+            "group_bodies",
+            "group_faces",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            4
+          ],
+          "group_face_count_before_after": [
+            0,
+            3
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2155,
+          "time": 143.81,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            6
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2156,
+          "time": 143.877,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            5
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2157,
+          "time": 143.944,
+          "fields": [
+            "group",
+            "group_bodies",
+            "group_faces",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            4
+          ],
+          "group_face_count_before_after": [
+            0,
+            7
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 2158,
+          "time": 144.011,
+          "fields": [
+            "group",
+            "group_bodies",
+            "main_body",
+            "main_track_id"
+          ],
+          "in_expected_output_scope": true,
+          "group_before_after": [
+            false,
+            true
+          ],
+          "group_body_count_before_after": [
+            0,
+            6
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "main_eligible_composition",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3435,
+          "time": 229.229,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            7,
+            6
+          ],
+          "group_face_count_before_after": [
+            2,
+            2
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3436,
+          "time": 229.296,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            7,
+            6
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3437,
+          "time": 229.362,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            9,
+            8
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3438,
+          "time": 229.429,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            8,
+            5
+          ],
+          "group_face_count_before_after": [
+            2,
+            2
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3439,
+          "time": 229.496,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            9,
+            7
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3440,
+          "time": 229.563,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            10,
+            5
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3441,
+          "time": 229.629,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            10,
+            8
+          ],
+          "group_face_count_before_after": [
+            5,
+            5
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        },
+        {
+          "index": 3442,
+          "time": 229.696,
+          "fields": [
+            "group_bodies"
+          ],
+          "in_expected_output_scope": false,
+          "group_before_after": [
+            true,
+            true
+          ],
+          "group_body_count_before_after": [
+            9,
+            9
+          ],
+          "group_face_count_before_after": [
+            0,
+            0
+          ],
+          "scene_reason_before_after": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ]
+        }
+      ]
+    }
+  }
+}

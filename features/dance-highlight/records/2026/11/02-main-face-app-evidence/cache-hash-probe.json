@@ -1,0 +1,22 @@
+[
+  {
+    "method": "blake2b-copy",
+    "kind": "source",
+    "ms": 4.9316604250634555
+  },
+  {
+    "method": "blake2b-copy",
+    "kind": "roi",
+    "ms": 0.6788359372876585
+  },
+  {
+    "method": "sha256-buffer",
+    "kind": "source",
+    "ms": 1.9325775996549055
+  },
+  {
+    "method": "sha256-buffer",
+    "kind": "roi",
+    "ms": 0.30712812513229437
+  }
+]

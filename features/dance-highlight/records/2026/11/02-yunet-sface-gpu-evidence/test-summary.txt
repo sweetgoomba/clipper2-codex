@@ -1,0 +1,12 @@
+SKIPPED [2] tests/e2e/test_plugin_smoke.py:144: job completed too fast to catch 409 race; duplicate logic is in routes.py
+SKIPPED [1] tests/e2e/test_real_pipeline.py:75: CLIPPER_E2E_DIALOG_VIDEO 미설정
+SKIPPED [1] tests/e2e/test_real_pipeline.py:114: CLIPPER_E2E_DANCE_VIDEO 미설정
+SKIPPED [1] tests/test_overseas_dub_real_video.py:65: 영상 없음: /Users/jina/Movies/shortform/2026-10-16-commerce-dub-xhs-sweater/source/source.mp4
+SKIPPED [1] tests/test_overseas_dub_real_video.py:87: 영상 없음: /Users/jina/Movies/shortform/2026-10-16-commerce-dub-batch/source/7IMvZm9rNas.mp4
+FAILED tests/test_annotation_layer_renderer.py::test_counter_formats_value_and_matches_goldens
+FAILED tests/test_annotation_layer_renderer.py::test_chip_tones_and_badge_goldens
+FAILED tests/test_annotation_layer_renderer.py::test_arrow_goldens - Assertio...
+FAILED tests/test_annotation_layer_renderer.py::test_arrow_target_above_golden
+FAILED tests/test_annotation_layer_renderer.py::test_layer_without_area_or_zone_tops_is_byte_identical_to_before
+FAILED tests/test_clipper_video_render_ranking_transitions.py::test_real_render_list_holds_still_through_transitions_and_switches_at_handoff[fadeblack]
+6 failed, 2528 passed, 6 skipped, 25 warnings in 182.09s (0:03:02)

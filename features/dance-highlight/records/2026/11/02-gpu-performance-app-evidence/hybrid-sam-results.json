@@ -1,0 +1,86 @@
+[
+  {
+    "name": "ANTIFRAGILE",
+    "cpu": {
+      "seconds": [
+        4.239128458022606,
+        0.11824879102641717
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "hybrid": {
+      "seconds": [
+        3.6418257500045,
+        0.13112745800754055
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "min_iou": 0.24378965843121372,
+    "mean_iou": 0.5380405193270067,
+    "owner_differences": 2
+  },
+  {
+    "name": "NEON",
+    "cpu": {
+      "seconds": [
+        4.3069446249864995,
+        0.10054008400766179
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "hybrid": {
+      "seconds": [
+        3.682513415988069,
+        0.0912565829930827
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "min_iou": 0.6140870719323426,
+    "mean_iou": 0.7944648353749746,
+    "owner_differences": 4
+  },
+  {
+    "name": "Made My Night",
+    "cpu": {
+      "seconds": [
+        6.649650250037666,
+        0.2500649999710731
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "hybrid": {
+      "seconds": [
+        6.573009458021261,
+        0.19986095803324133
+      ],
+      "cache": {
+        "hits": 1,
+        "misses": 1,
+        "max_bytes": 134217728
+      }
+    },
+    "min_iou": 0.8581538800462631,
+    "mean_iou": 0.9402527318246363,
+    "owner_differences": 0
+  }
+]

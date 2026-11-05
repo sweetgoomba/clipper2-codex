@@ -1,0 +1,47 @@
+{
+  "original_consensus": "A",
+  "last_original_primary": "B",
+  "last_joint": "A",
+  "after": [
+    [
+      0.0,
+      0.26666666666666666,
+      "A"
+    ]
+  ],
+  "audit": {
+    "version": "single_observation_boundary_v1",
+    "joins": [
+      {
+        "source_indices": [
+          0,
+          1
+        ],
+        "boundary": 0.23333333333333334,
+        "canonical_time": 0.26666666666666666,
+        "observation_frames": [
+          12,
+          16
+        ],
+        "event_uncertainty": [
+          0.2,
+          0.26666666666666666
+        ],
+        "event": "main_handoff",
+        "support_frames": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "name": "A",
+        "newly_named_seconds": 0.033333333333333326,
+        "unknown_delta_seconds": -0.033333333333333326,
+        "reason": "existing_observation_boundary_policy"
+      }
+    ],
+    "rejected": []
+  },
+  "models_called": false,
+  "video_read": false
+}

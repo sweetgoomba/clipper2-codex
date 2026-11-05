@@ -1,0 +1,53 @@
+         2898029 function calls (2897994 primitive calls) in 15.970 seconds
+
+   Ordered by: cumulative time
+   List reduced from 585 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.003    0.003   15.970   15.970 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:241(refine_main_roles)
+        1    0.015    0.015   11.320   11.320 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:194(collect_geometry)
+      343    0.002    0.000   10.242    0.030 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py:66(detect)
+      343    0.008    0.000   10.240    0.030 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py:70(_detect)
+      300    8.456    0.028    8.456    0.028 {method 'detect' of 'cv2.FaceDetectorYN' objects}
+     2169    0.001    0.000    4.317    0.002 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:263(corresponding)
+        1    0.002    0.002    3.732    3.732 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_role_timeline.py:6(choose_roles)
+       84    0.001    0.000    3.544    0.042 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_face_link.py:117(get)
+       43    0.005    0.000    3.173    0.074 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/cut_face_link.py:120(_faces)
+      120    0.001    0.000    2.170    0.018 /Users/jina/project/adlight/desktop/clipper_python/clipper_face_core/clipper_face_core/auraface.py:43(feature)
+      120    0.000    0.000    2.167    0.018 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py:154(run)
+      120    0.002    0.000    2.167    0.018 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py:159(_run)
+      120    0.001    0.000    2.146    0.018 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:372(run)
+      120    2.144    0.018    2.144    0.018 {built-in method onnxruntime.capi.onnxruntime_pybind11_state.run}
+      343    1.698    0.005    1.773    0.005 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_runtime.py:52(_key)
+     1240    1.019    0.001    1.019    0.001 {method 'read' of 'cv2.VideoCapture' objects}
+     2823    0.002    0.000    0.837    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:122(strict_pose_corresponding)
+     5223    0.004    0.000    0.835    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:146(nearest)
+     5223    0.005    0.000    0.827    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:147(<listcomp>)
+    22205    0.146    0.000    0.822    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:123(cost)
+      120    0.730    0.006    0.730    0.006 {method 'feature' of 'cv2.FaceRecognizerSF' objects}
+   128095    0.227    0.000    0.424    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py:115(_mean)
+    19791    0.101    0.000    0.410    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:135(<listcomp>)
+   108284    0.018    0.000    0.374    0.000 {method 'mean' of 'numpy.ndarray' objects}
+        4    0.320    0.080    0.320    0.080 {method 'set' of 'cv2.VideoCapture' objects}
+      300    0.020    0.000    0.216    0.001 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:60(measured_features)
+   303168    0.188    0.000    0.188    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        1    0.001    0.001    0.154    0.154 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:164(confirmed_main_handoffs)
+        1    0.000    0.000    0.153    0.153 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py:154(camera_focal_evidence)
+       10    0.007    0.001    0.141    0.014 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py:86(_tracks)
+     1287    0.024    0.000    0.132    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py:48(select_pose_face)
+     6291    0.035    0.000    0.124    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/focal_composition.py:33(_distance)
+    68753    0.070    0.000    0.124    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/linalg/_linalg.py:2598(norm)
+    94053    0.015    0.000    0.086    0.000 {method 'all' of 'numpy.ndarray' objects}
+   128095    0.073    0.000    0.085    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py:73(_count_reduce_items)
+    19811    0.015    0.000    0.083    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3699(mean)
+     4045    0.046    0.000    0.083    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/face_evidence.py:73(<listcomp>)
+        1    0.000    0.000    0.080    0.080 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_role_timeline.py:95(extend_near_ties)
+      463    0.075    0.000    0.075    0.000 {method 'tobytes' of 'numpy.ndarray' objects}
+    94053    0.014    0.000    0.071    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py:64(_all)
+        1    0.004    0.004    0.070    0.070 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/main_face_link.py:111(__init__)
+        1    0.000    0.000    0.066    0.066 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/cut_face_link.py:101(__init__)
+     1196    0.003    0.000    0.063    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/body_continuity.py:36(_color_cut)
+    30557    0.016    0.000    0.045    0.000 /Users/jina/project/adlight/desktop/clipper_python/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:66(_wrapreduction)
+      300    0.019    0.000    0.043    0.000 /Users/jina/project/adlight/desktop/clipper_python/plugins/dance_highlight/dance_highlight/services/observed_main.py:21(retained_bodies)
+
+

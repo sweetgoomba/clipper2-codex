@@ -1,0 +1,36 @@
+{
+  "fixture_path": "/private/tmp/dance-identity-assembly-20261103/coincident-fixture.json",
+  "fixture_sha256": "6854cc4ace7f30b11441b0f484cf50e04764dc7806cbd5949d18e0440f2e93c3",
+  "source_files": {
+    "MMN": {
+      "project_id": "1793649506337",
+      "face_evidence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649506337/diagnostics/face_evidence.json",
+        "sha256": "bcfb86378e111ec7c294a8dfe116adca9a59549cbc0df038fc161ba3b8b63a04"
+      },
+      "dance_meta": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649506337/json/dance_meta.json",
+        "sha256": "52825cca89b046e9ef7a04c7c8d4c1f80ea7aa43f24e07995a0bf3ef26c3f194"
+      }
+    },
+    "NEON": {
+      "project_id": "1793649654322",
+      "face_evidence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649654322/diagnostics/face_evidence.json",
+        "sha256": "bc10f298a99688928c1576db01d85b3d41b53fea2fbb9e7ce031cbddcfe7814a"
+      },
+      "dance_meta": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649654322/json/dance_meta.json",
+        "sha256": "ca9f801732247cc8590f21cba9fe9fcd12de04c4f28d03409fdde92ecab8d620"
+      }
+    }
+  },
+  "case_ids": [
+    "mmn-88255",
+    "neon-34334",
+    "neon-42609",
+    "neon-189956",
+    "neon-221855"
+  ],
+  "extraction_script": "/private/tmp/dance-identity-assembly-20261103/extract_fixture.py"
+}

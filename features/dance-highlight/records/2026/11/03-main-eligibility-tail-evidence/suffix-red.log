@@ -1,0 +1,20 @@
+F.......                                                                 [100%]
+=================================== FAILURES ===================================
+___ test_expired_unknown_prefix_does_not_discard_a_separately_proved_suffix ____
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-341/test_expired_unknown_prefix_do0')
+
+    def test_expired_unknown_prefix_does_not_discard_a_separately_proved_suffix(tmp_path):
+        args=expired_prefix_fixture(tmp_path); original=copy.deepcopy(args['output'])
+        result,audit=run(args)
+>       assert [(s.start,s.end,d.reference_id) for s,d in zip(result['segments'],result['decisions'])]==[
+            (0.,1.1,'A'), (1.1,1.2,None), (1.2,3.,'A')]
+E       AssertionError: assert [(0.0, 1.1, '....5, 3.0, 'A')] == [(0.0, 1.1, '....2, 3.0, 'A')]
+E         
+E         At index 1 diff: (1.1, 1.5, None) != (1.1, 1.2, None)
+E         Use -v to get more diff
+
+tests/test_dance_shot_member_gaps.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_dance_shot_member_gaps.py::test_expired_unknown_prefix_does_not_discard_a_separately_proved_suffix
+1 failed, 7 passed, 40 deselected in 0.87s

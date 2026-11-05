@@ -1,0 +1,38 @@
+최소 경계 조립 + projected identity guard 독립 코드 리뷰
+2026-11-03 KST. 제품 소스 변경 없음. 전체추론/영상읽기/benchmark/전체pytest 없음. 원본 JSON·코드·테스트 읽기와 동결소스의 두 작은 synthetic 순수함수 반례를 실행했다.
+
+최종 코드 판정: 두 독립 차단 반례 모두 수정본에서 닫혔다. part_boundary_events79f306d2...와identity_projectione478409...의검토범위에서새차단결함을찾지못했다. 아래에발견과수정의근거를보존한다. 실제5fixture/전체Dance통과수치는부모실행자료이며본검토는새앱실행결과검토가아니다.
+
+P1 — named boundary 접합이 원래 primary의 반대 양성을 무시함 (최종 수정 확인됨)
+대상 part_boundary_events.py SHA4be3c85735c439e0712a06dc53eb4e1884e77219303331d29b2a03557b52140a, 이름검증블록.
+코드는원래joint accepted A pair와마지막L accepted A만검사한다. frozen_observations에는원래primary reference결정이들어있지않고, 함수에도primary matcher/원래primary판정map 입력이없다. 이름support경로의원래photo positive B를veto할수없다. 기존identity consensus A와마지막독립primary B가동시에가능한것은실제_assign_piece의single alien처리에도일치한다.
+독립재현:4개원래face의primary A/A/A/B,마지막L은B;동일원래joint는A accepted. 실제_assign_piece는세A와한B로원래part의A consensus를만든다. _path조건을충족하는원래pose와정확handoff를주면새helper는관측없는unknown[14/60,16/60)을A로붙여 .033333초를새로이름붙인다. 출력evidence에마지막B tuple이있어도검사하지않는다.
+재현스크립트 independent_primary_probe.py, 결과 independent-source-review/primary-contradiction-counterexample.json. frozen source로실제_assign_piece/coalesce_boundary_events를호출했다. fake frozen matcher는벡터에대해A/B만반환하며모델추론이나영상I/O를하지않는다.
+요구수정: 원래cached primary판정또는동일원래reference matcher결과를named support전체경로에서확인해다른positive이름을거부한다. tuple/parent consensus를새양성anchor로쓰면안되지만원래독립primary를아예무시해도안된다. primary증거를얻을수없다면named접합만보류하고unknown→unknown경계정리는계속가능하다. weak insufficient best를전부반대positive로승격하는새과잉veto는필요없다.
+
+P1 — projection 거부 후 recover_final_face_edges가 원래 이름을 복원 (수정 확인됨)
+초기guard SHA76caa818bddfd837fc09c385a0bb2bf56009a14ab423a4ca07f9ffa32183a8e0는decision/label만unknown으로바꾸고output evidence/fallback의거부된A vote를남겼다. recover_final_face_edges는이를frozen_names/hits로재사용했고,coalesce_named는primary pooled판정이성공하면joint반대를다시검사하는fallback에들어가지않았다.
+독립반례: clippedpart[20/60,22/60)의원래owned frame20 joint B accepted,부모A,인접Aclip. guard[A,A]→[A,None]으로거부후 recover가[0,22/60) A로복원·병합했다. source/실행결과 independent_guard_probe.py 및 independent-source-review/guard-recovery-counterexample.json.
+부모수정 e478409aec1ff084217a946a1c7319c0b602b8cd926da00f718e46ff019fddb0는해당출력파생tuple/fallback에서거부된부모이름vote만제거하고원래identity/FaceObservation은보존한다. 같은독립반례를다시실행해[A,None]유지,edge_recoveries=[]를확인했다. 독립다른이름을삭제하지않는방향도맞다. v2스크립트 independent_guard_probe_v2.py 및 independent-source-review-v2/guard-recovery-counterexample.json. 최초동결본/RED결과를덮어쓰지않고별도보존했다.
+현재실제NEON187은왼쪽group/오른쪽Merci라Young인접조건이없다. 따라서최초반례가그실제구간에서도반드시발생한다고주장하지않았다. 일반guard계약이실패하는것을반례로입증하고수정한것이다.
+
+통합 순서와 helper의 확인된 장점
+- 최초identity_padding직후위치에서부모가performance_parts return직전으로옮겼다. 모든기존continuity/named/incoming보정후,preparation전단일pass라새경계가후속동일단계의이름씨앗으로사용되는노출을줄인다. 이전matcher=None integration1개는그순서를충분히검증하지못하므로실제matcher경로의integration회귀로유지할필요가있다.
+- eligibility는읽기만하고unknown tail의원래중간관측/evidence/bbox가없음을확인한다. 정확midpoint와동일L/R event,sourcecut/정밀경계/cadence/pose경로를검사한다. group 범위를연장하지않는다.
+- event_uncertainty, newly_named_seconds, unknown_delta_seconds 및existing_observation_boundary_policy를기록한수정은필요한의미구분을충족한다. .066733초를새얼굴인식회복으로보고하면안된다.
+- guard의projected local 얼굴이전부parent와다른jointaccepted일때unknown을유지하는변경은NEON187의내부반대양성증거를보존한다. 이는모든interior identity leakage를해결하는포괄적재판정은아니다.
+
+실제 replay 자료의 위치와 한계
+부모 replay-results.json을읽었다. MMN/ANT/NEON은main_union_unchanged/group_unchanged/observations_unchanged=true를기록하고있다. 보고된4경계정리및14범위불변은부모실행결과이며독립전체replay로재측정하지않았다. synthetic 두반례는그실제5fixture에없는계약누락을다룬다. 함수3~16ms를앱wall비용이나새실앱검증으로해석하지않는다.
+
+최소 후속 확인
+반대primary 반례를거부하게수정한뒤그동일반례와실제5fixture를확인한다. guard후속복원닫힘을유지하고일반identity/role 정책은넓히지않는다. 원래named A/B/실제handoff/cut/eligibility와unknown delta,입력불변을확인한다. 새로운변경이없으면이범위를넘겨불필요한테스트를확대하지않는다.
+
+최종 재확인 — primary 검사 추가 후
+part_boundary_events SHA79f306d2acded8fd9d69e3173ee5c254e7427c63618b5600ac2fd4ceb7c605dd는matcher=None이면named접합을거부하고지원경로의모든valid원래얼굴을원래reference갤러리와비교해반대positive를거부한다. pure기존embedding비교이며모델추론/영상읽기를추가하지않는다. unknown→unknown에는새named검사를강제하지않는다.
+같은독립반례를다시실행해original_consensusA/last_primaryB/last_jointA에서joins=[],conflicting_original_primary(frame12),unknown그대로를확인했다. 스크립트 independent_primary_probe_v3.py, 결과 independent-source-review-v3/primary-contradiction-counterexample.json. 최신identity_projection SHA는e478409...로앞서독립복원반례를닫은것과동일하다. performance_parts SHAcd2554a18ca8fe2c8e8431464414343f562433ade907c4d9a7f994454512bbbe는return직전matcher전달을확인했다. v3manifest에동결SHA를저장했다.
+관련integration은이제matcher가있는실제조립경로를호출하도록갱신된것을읽었다. 위독립반례외추가전체테스트/리플레이/벤치는실행하지않았다. 현재코드기준검토차단항목은없으며부모의변경후전체검사결과와필요한실앱검증은별도다.
+
+수치 정정 주의
+최신replay-results.json에는NEON187의영→unknown .033467초도포함돼있다. MMNunknown5.639266667 +ANT14.349066667 +NEON16.785033333 =36.773366667초다. boundary정렬만반영했던36.7399초를이최종guard포함결과로사용하면안된다. 기준36.806633333대비순감소.033266667초이며, boundary정규화−.066733333과반대부모보류+.033466667을구별한다. visible370/short191은부모replay자료의합계이고새실앱측정치가아니다.
+문서상경미한표현: helper docstring의'No new face match'는이제기존embedding에대한matcher.match를수행하므로'No new face inference'처럼뜻을정확히하는편이좋다. 동작차단항목은아니다.

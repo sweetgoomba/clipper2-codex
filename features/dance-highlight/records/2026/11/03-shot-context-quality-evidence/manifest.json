@@ -1,0 +1,434 @@
+[
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/before-manifest.json",
+    "stored": "implementation/before-manifest.json",
+    "sha256": "5e34edf8837d783a081c16d9fa0ab5d033fbf549eb66667b6e0e9d93cdde82ba",
+    "bytes": 21526
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/final-source-manifest.json",
+    "stored": "implementation/final-source-manifest.json",
+    "sha256": "d712ed718953473cd8517f63664d491372b09f632c23aa0e6e1728342a89397f",
+    "bytes": 22521
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/final-changed-files.json",
+    "stored": "implementation/final-changed-files.json",
+    "sha256": "b2732e5e042818b7bb79bca01fc65a3e51a2275fa14656318c7544a2c5e098f7",
+    "bytes": 889
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/final-task.patch",
+    "stored": "implementation/final-task.patch",
+    "sha256": "56c8571cf1df8495f6d72a1b7a0f7e72be1f90a177c81c687338479922fb230c",
+    "bytes": 433660
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/build.log",
+    "stored": "implementation/build.log",
+    "sha256": "5ba9e3b9578b6c375a3b1075627e9c8ede0cdcdaddec90bc326e4876f4f8b3aa",
+    "bytes": 5455
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/packaged-source-check.json",
+    "stored": "implementation/packaged-source-check.json",
+    "sha256": "e99d4f4a622d355ca4daca4d1e0024ba9ac1e4036204204d85a00f0cd4a04af5",
+    "bytes": 6204
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/dance-final.log",
+    "stored": "implementation/dance-final.log",
+    "sha256": "1569903882301029b7123d61611e34d087a3ea1c2f85276ee46810603342f6ad",
+    "bytes": 1301
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/role-final.log",
+    "stored": "implementation/role-final.log",
+    "sha256": "aec63473537427ceb89ee4792fb30b990dff919aa682a5d9569d5b92d367486b",
+    "bytes": 99
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/full-suite-final.log",
+    "stored": "implementation/full-suite-final.log",
+    "sha256": "d3c01c47a6d0537de9e1c4d7cdc9b567c865037980ffde0ec31257094631432c",
+    "bytes": 24017
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/scene-final-replay.log",
+    "stored": "implementation/scene-final-replay.log",
+    "sha256": "865868d11b4d883e29e99184d766324c51f202c203ce510d9084b7ffa4703c2a",
+    "bytes": 372
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/MMN-product-foreground-context-replay.json",
+    "stored": "implementation/MMN-product-foreground-context-replay.json",
+    "sha256": "65132fa5869b2ab209e0f2e0f09dc84a665bd42f8900a355ea9f628437304626",
+    "bytes": 86498
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/ANT-product-foreground-context-replay.json",
+    "stored": "implementation/ANT-product-foreground-context-replay.json",
+    "sha256": "985626a8bd4d33a3fd90113649d88aa98b2fa5ff3f0246cf94a960b1d06cbbe8",
+    "bytes": 9750
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/NEON-product-foreground-context-replay.json",
+    "stored": "implementation/NEON-product-foreground-context-replay.json",
+    "sha256": "5e708128986cba5f0b641dc7a9f1127ae0034a5dff2c151e04600d80e94e081b",
+    "bytes": 27343
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/scene-role-plan.txt",
+    "stored": "implementation/scene-role-plan.txt",
+    "sha256": "06df243283e23d6343fecd987d998eb06efc1827cb12c172e186f75cbc917bdb",
+    "bytes": 1114
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/run-manifest.json",
+    "stored": "app/run-manifest.json",
+    "sha256": "b760db30d1dfdb3a35ee9be1bbfc1342df170d31d96c7e3f266882e0b27002b7",
+    "bytes": 1011
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/baseline-timings.json",
+    "stored": "app/baseline-timings.json",
+    "sha256": "7b964ee4d92ef358191388a2485ad0465c1b8186576d2165a21a4acca964e485",
+    "bytes": 321
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/expected-time-changes.json",
+    "stored": "app/expected-time-changes.json",
+    "sha256": "30a34173ee98947fc598373e51d2727c23e26c253f7902aca46f862911eccd55",
+    "bytes": 441
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/run-comparison.json",
+    "stored": "app/run-comparison.json",
+    "sha256": "130f275db5f48769e8b97cadad24a728325844220301ee9e6df180ff0ebfd0cd",
+    "bytes": 20543
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/provenance-comparison.json",
+    "stored": "app/provenance-comparison.json",
+    "sha256": "44b80d9153c6061d3acd9ac4349a797857a2f77d94e52f7243086a8e7518e2ef",
+    "bytes": 3014
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/output-audit.json",
+    "stored": "app/output-audit.json",
+    "sha256": "7d59d795107380269ec1c2ae32086ef49b3fc2a9db578f5a71d16699740347ce",
+    "bytes": 5822
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/semantic-artifact-audit.json",
+    "stored": "app/semantic-artifact-audit.json",
+    "sha256": "bf14fcf7ed54764f9956a61ccf5688b62d1d168734d4c21e831e5f3c2f4d9146",
+    "bytes": 1231
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/packaged-run-log.jsonl",
+    "stored": "app/packaged-run-log.jsonl",
+    "sha256": "f04ade8c5cafb6a966bc1ced551c2bd50da034ad9fc76903b2c05ab92f32b936",
+    "bytes": 97975
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/runtime-source-audit.json",
+    "stored": "app/runtime-source-audit.json",
+    "sha256": "9c089564061857c0c44d2fc3d548986c09930c3eb1310d0d96e5c0bc580b9adc",
+    "bytes": 4444
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/performance-deltas.json",
+    "stored": "app/performance-deltas.json",
+    "sha256": "78c8a1a6da9212c6338feea569d53bac1c6747aec5937fe8bb0717f2651a3ac4",
+    "bytes": 1771
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/audit_runtime.py",
+    "stored": "app/audit_runtime.py",
+    "sha256": "9e24b172c8e02136d62f6b837dd75038f2a407885f0ca762a7bdf88a4877d1e0",
+    "bytes": 1375
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/compare_ranges_only.py",
+    "stored": "app/compare_ranges_only.py",
+    "sha256": "408095c749b1d8df6416ecf0f96332561d41d33ea4f513aa8723aa9fabe265e3",
+    "bytes": 1062
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/compact_results.py",
+    "stored": "app/compact_results.py",
+    "sha256": "c3ab0ca16c1a7b8d90d5ad55b4e76ad22582fc44f9c5e285641937f378447bce",
+    "bytes": 964
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/compare_runs.py",
+    "stored": "app/compare_runs.py",
+    "sha256": "b579f26210036679b464d6f8a062f0c40d7e586e6a41493938b313e9f04d0ec7",
+    "bytes": 5978
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/audit_outputs.py",
+    "stored": "app/audit_outputs.py",
+    "sha256": "1f072040339531b01299e2f4bc4018dd380d3b2a97959e2487efacc63203dee3",
+    "bytes": 3055
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/check_provenance.py",
+    "stored": "app/check_provenance.py",
+    "sha256": "fd13096ff4500ade3dedb0d15b7e4386de89c3adf68c37300cb478bea90c740c",
+    "bytes": 1782
+  },
+  {
+    "source": "/private/tmp/dance-continuity-next-20261103/app/semantic_artifact_audit.py",
+    "stored": "app/semantic_artifact_audit.py",
+    "sha256": "a1732af76d1467844680d869b532960a362177e2e31b218f0951ff380dfe9eee",
+    "bytes": 1849
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/independent-episode-proof-review.json",
+    "stored": "independent/independent-episode-proof-review.json",
+    "sha256": "0a3f7e3e6555b11658efe116a283f698978e8f5e04b1d3787e9976432d9ee904",
+    "bytes": 23317
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/combined-scene-context-independent-review.json",
+    "stored": "independent/combined-scene-context-independent-review.json",
+    "sha256": "e8e9c6ca04e0a043183eac86f97b8de3a2b0f6c1c2b43c4deb7d650f92ee42db",
+    "bytes": 5295
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/role-state-independent-review.json",
+    "stored": "independent/role-state-independent-review.json",
+    "sha256": "b170d77eca33002e2bc41235d53b29df60b49b2b0267b19ccf5419eb3fdaf6a3",
+    "bytes": 37807
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/shot-gaps-independent-review.json",
+    "stored": "independent/shot-gaps-independent-review.json",
+    "sha256": "2160a15b7753469bc32372573f37dab1a943adb9b3b7503c42a3b634c6caa690",
+    "bytes": 9748
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-related-tests.log",
+    "stored": "independent/final-related-tests.log",
+    "sha256": "dfac950d56b349b3f1b3e4abb5e58a072921858cac5cfaff9590fdb2e2752fcd",
+    "bytes": 260
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/same-shot-name-recovery-followup-review.txt",
+    "stored": "independent/same-shot-name-recovery-followup-review.txt",
+    "sha256": "08d060bef4677cfcb0a55bf471f93cc772168f7e41a5dc1a2a2dd27b26bf54f6",
+    "bytes": 5434
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/same-shot-name-recovery-followup-review.json",
+    "stored": "independent/same-shot-name-recovery-followup-review.json",
+    "sha256": "91fdf3726c953524fec6fc12f995ce01b1f435e8dd15c1a348c30d5881700be1",
+    "bytes": 9893
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/shot-unsampled-source-edge-independent-probe.json",
+    "stored": "independent/shot-unsampled-source-edge-independent-probe.json",
+    "sha256": "f2a8c726f6bb20b38c275fc21df6b735f6a010f03dd304abc1536f4459eadbec",
+    "bytes": 763
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/role-offcenter-unmeasured-competitor-probe.json",
+    "stored": "independent/role-offcenter-unmeasured-competitor-probe.json",
+    "sha256": "d49a7267f67a30d6fbad60039a238adabb59f5ec43a77a9ad83c25fd22007c9b",
+    "bytes": 3687
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/mixed-original-group-exclusive-fixed.json",
+    "stored": "independent/mixed-original-group-exclusive-fixed.json",
+    "sha256": "76ef6ccb19419e1f1ac0d40ec850b595b63df3475e8dd0b6c1ec51216e7b6773",
+    "bytes": 1845
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/bounded-foreground-implementation-independent-review.json",
+    "stored": "independent/bounded-foreground-implementation-independent-review.json",
+    "sha256": "af78c75bf6f43b675778b59b0e1f6e4fbe4dd42ebe80cddecd4b099de60390e1",
+    "bytes": 4806
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-integrated-reviewed-source/independent-manifest-review.json",
+    "stored": "independent/final-integrated-reviewed-source/independent-manifest-review.json",
+    "sha256": "ebc662ada1b5706013291ab046de3cad2b24ee7cfc6b78edc301602f0679ddc8",
+    "bytes": 3015
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/final-app-independent-report.txt",
+    "stored": "independent-app/final-app-independent-report.txt",
+    "sha256": "ef0674252fc9332e3fcd7e27bd08866135102a253f4591b8eaf3e6d74dcc5e22",
+    "bytes": 9394
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/final-app-independent-verification.json",
+    "stored": "independent-app/final-app-independent-verification.json",
+    "sha256": "335bceb18507d31e9514f31451ea45cb68d67f07b0868910a377de3a6b31b15d",
+    "bytes": 33261
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/neon-query-original-source-proof.json",
+    "stored": "independent-app/neon-query-original-source-proof.json",
+    "sha256": "63ebbc25e10f39b817c8077ae320f98ea4cf5e99d77f39ebc5f7f1c337902c75",
+    "bytes": 1614
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/verification-harness-correction.json",
+    "stored": "independent-app/verification-harness-correction.json",
+    "sha256": "7084794f6229bd66a2d97ec3239e4eb965d030e1033b027bfa768531de9e3794",
+    "bytes": 437
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/verify_final_app.py",
+    "stored": "independent-app/verify_final_app.py",
+    "sha256": "8e90da5e04a577446b33c3eb51b89b232fa0a84ee3d59d81a52eb5db8941c274",
+    "bytes": 13716
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/prove_neon_query_sources.py",
+    "stored": "independent-app/prove_neon_query_sources.py",
+    "sha256": "b161fca1a47c5d003dafb9fc8b6cc9eb69faf73325504f54dc6bd6a391903aae",
+    "bytes": 2904
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/MMN-approved-change-source-contact.jpg",
+    "stored": "independent-app/MMN-approved-change-source-contact.jpg",
+    "sha256": "f2dc4d70623b834b02a313b88537945a23b90965f946b0e0a4bd3ae27221872e",
+    "bytes": 255529
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/ANT-approved-change-source-contact.jpg",
+    "stored": "independent-app/ANT-approved-change-source-contact.jpg",
+    "sha256": "0ce7251682c84498a012a0f615fbc60159c4f45aaf987de5a2c8a6e34b1557c6",
+    "bytes": 508002
+  },
+  {
+    "source": "/private/tmp/dance-episode-review-20261103/final-app/NEON-approved-change-source-contact.jpg",
+    "stored": "independent-app/NEON-approved-change-source-contact.jpg",
+    "sha256": "98a71edfd74da8b88f4287f7049323a9d7895fa6ff81ee5d8eed8ac662c818a2",
+    "bytes": 420061
+  },
+  {
+    "source": "/private/tmp/dance-shot-gap-20261103/REPORT.txt",
+    "stored": "shot/REPORT.txt",
+    "sha256": "e11be7e7db377ec02d75dd2a5bd480a4e33a45ec93d565ea1727ab1e31dbe110",
+    "bytes": 5448
+  },
+  {
+    "source": "/private/tmp/dance-shot-gap-20261103/product-summary.json",
+    "stored": "shot/product-summary.json",
+    "sha256": "c2e47bc5d9d48a8ce349a8371e70d07a68040b284bc8b7336cc24a10aba1f1a5",
+    "bytes": 1662
+  },
+  {
+    "source": "/private/tmp/dance-shot-gap-20261103/product-replay.json",
+    "stored": "shot/product-replay.json",
+    "sha256": "600725e576799c1d12ed96fc6d6d321619be3afbbcd22464f829969426cabe2c",
+    "bytes": 40899
+  },
+  {
+    "source": "/private/tmp/dance-shot-gap-20261103/protected-cases.json",
+    "stored": "shot/protected-cases.json",
+    "sha256": "7349cf1ee01b7ba49b37098509e00e92b59f5c1b82a3a8f927b8231563027ce6",
+    "bytes": 87242
+  },
+  {
+    "source": "/private/tmp/dance-shot-gap-20261103/unsampled-edge-fix.json",
+    "stored": "shot/unsampled-edge-fix.json",
+    "sha256": "170f5ed74c1c4f7ea23016c8843c56a63724389fb09046ff979fafe9ddc11ee5",
+    "bytes": 1716
+  },
+  {
+    "source": "/private/tmp/dance-role-state-20261103/role-state-report.txt",
+    "stored": "role/role-state-report.txt",
+    "sha256": "7010b8f5fd21004111a7a1840172aba4b586168fcb5bf8b3d809c4b532271076",
+    "bytes": 10621
+  },
+  {
+    "source": "/private/tmp/dance-role-state-20261103/product-p2-handoff.txt",
+    "stored": "role/product-p2-handoff.txt",
+    "sha256": "33dd83b3a105e0edd13702e38e54b9ffd942ec3dd28bd3d99c625fae39e84dbf",
+    "bytes": 3186
+  },
+  {
+    "source": "/private/tmp/dance-role-state-20261103/product-equivalence.json",
+    "stored": "role/product-equivalence.json",
+    "sha256": "f94ccd6c2221c63df788823fde9150bfea0cd4f9547ac00f297c2331e0cfcd80",
+    "bytes": 1555
+  },
+  {
+    "source": "/private/tmp/dance-role-state-20261103/final-audit.json",
+    "stored": "role/final-audit.json",
+    "sha256": "d1d05be383c9bb10edf200e1498dacdef9f4aef941fafeb70ca7d122eb214533",
+    "bytes": 32715
+  },
+  {
+    "source": "/private/tmp/dance-role-state-20261103/feature-replay.json",
+    "stored": "role/feature-replay.json",
+    "sha256": "5724f13afc707fdb6bcfc0bd227c2121f09f9b4ba33a4a00935b65758e56806a",
+    "bytes": 104918
+  },
+  {
+    "source": "/private/tmp/dance-foreground-proof-20261103/REPORT.txt",
+    "stored": "rejected-foreground/REPORT.txt",
+    "sha256": "c12e8b02b189627726692fd5c6538b102397a8173c4e812997a505d54073c4aa",
+    "bytes": 4183
+  },
+  {
+    "source": "/private/tmp/dance-foreground-proof-20261103/summary.json",
+    "stored": "rejected-foreground/summary.json",
+    "sha256": "f2c16319ae413572286b7ccb109a5a7aedc298985b39f973bb37a4d9f518dc63",
+    "bytes": 2163
+  },
+  {
+    "source": "/private/tmp/dance-partial-presence-20261103/partial-presence-report.txt",
+    "stored": "rejected-partial/partial-presence-report.txt",
+    "sha256": "6087c0bb29ac2254e64edd572499c77ad5773dab49513c4a0dca8a46a05fe653",
+    "bytes": 9734
+  },
+  {
+    "source": "/private/tmp/dance-partial-presence-20261103/final-replay.json",
+    "stored": "rejected-partial/final-replay.json",
+    "sha256": "1b26adff3e2b8322b1883541eb306d286bd5508109983eb25f76475846260de9",
+    "bytes": 7821
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/summary.md",
+    "stored": "remaining/summary.md",
+    "sha256": "abc3e25b0a8259725419ec2583b324e4462cb3a6c836e540721bc034fc7f9a72",
+    "bytes": 10809
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/remaining-fragments.json",
+    "stored": "remaining/remaining-fragments.json",
+    "sha256": "9e0e2f9117e0ba692535b9a5f26b1bacf89f5c0f4725710b5f508e03b138dd83",
+    "bytes": 562773
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/audit_saved_json.py",
+    "stored": "remaining/audit_saved_json.py",
+    "sha256": "f74d95ccb27ce3e1f7eba442a2168f5da49300701b71c1321f21cb561abc8c6b",
+    "bytes": 10302
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/role-gate-18-summary.md",
+    "stored": "remaining/role-gate-18-summary.md",
+    "sha256": "67aeb329bd76088ba746dd6edd3968959710401b3046b61f0b81c2589560c66d",
+    "bytes": 10951
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/role-gate-18-details.json",
+    "stored": "remaining/role-gate-18-details.json",
+    "sha256": "bf9aea7e33c4966ce292909e3cb998edbc82bd90ff3fc9339899a73aa075898e",
+    "bytes": 734891
+  },
+  {
+    "source": "/private/tmp/dance-fragment-priorities-20261103/audit_role_gates.py",
+    "stored": "remaining/audit_role_gates.py",
+    "sha256": "ede9a4e8bd3032225745eca35d21412e2362578e94782a8e2ca1271d8a757f78",
+    "bytes": 10994
+  }
+]

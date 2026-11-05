@@ -1,0 +1,17 @@
+[
+  {
+    "title": "MMN",
+    "active_wall_seconds": 288.679,
+    "pipeline_seconds": 279.9718022500165
+  },
+  {
+    "title": "ANT",
+    "active_wall_seconds": 389.9,
+    "pipeline_seconds": 386.4106880000327
+  },
+  {
+    "title": "NEON",
+    "active_wall_seconds": 438.23,
+    "pipeline_seconds": 434.3173715000157
+  }
+]

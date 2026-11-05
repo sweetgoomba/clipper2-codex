@@ -1,0 +1,250 @@
+{
+  "date": "2026-11-03",
+  "scope": "독립 원인 추적과 후보 검증. 제품 소스·Person/shared·앱 결과·설정 수정, 커밋, 모델/SAM 추론 없음. 부모가 제품 구현을 담당한다.",
+  "baseline_projects": {
+    "MMN": "1793628067111",
+    "ANT": "1793628143826",
+    "NEON": "1793628225716"
+  },
+  "baseline_output": {
+    "total": 424,
+    "short": 240,
+    "named_short": 73,
+    "unknown_short": 88,
+    "group_short": 79,
+    "unknown_seconds": 38.976066666666924
+  },
+  "original_user_cases": [
+    {
+      "case": "MMN 카즈하89–93",
+      "finding": "이미88.855433–96.346250 한 main. 기존 focal context와동명병합 결과. 추가병합 성과로 집계금지; 겹치는group 출력과 개인파트는 별개."
+    },
+    {
+      "case": "MMN 사쿠라45–48",
+      "finding": "performance_parts는46.463083–47.981267; 별도 preparation45.361983–46.463083을 추가한 최종클립45.361983–47.981267. 허윤진과의 준비구간 겹침은의도된 동작이며이름anchor로 재사용금지."
+    },
+    {
+      "case": "MMN 사쿠라38.204733–39.339300",
+      "finding": "원래동명양끝 얼굴과21관측body 연결은통과. _check_source_chain의isolated_visual_change가연속줌에서 거절. 단순luma/SIFT문턱완화불가; 새주역/전경 원본증명이필요."
+    },
+    {
+      "case": "ANT 김채원9.9098–10.276933",
+      "finding": "8관측body 연결은통과. visual_cut는615→616 조명/연무변화에서발생. 실제각도cut568은seed588→616 밖. 컷거절오탐검증과주역/몸증명을분리."
+    },
+    {
+      "case": "ANT 홍은채4.571233–6.139467",
+      "finding": "body후보진입전 왼쪽0.6초원래이름얼굴근거없음. primary 마지막support184=3.069733. 오른쪽원래support372/376/388/396이지만실제cut368을건너야함. 기존이름clip끝4.571을새얼굴anchor로해석금지."
+    }
+  ],
+  "structural_inventory": "fragment-pattern-inventory.json",
+  "structural_findings": [
+    "named short73 중직접인접동명미병합0; unknown접촉33.",
+    "unknown 연속블록: 동명양끝14(short14), 이명양끝19(short29), 한쪽이름28(short27), 양쪽없음16(short18). 유형수는안전복원가능량이아님.",
+    "group short79 중이미단일named main전체중복22/부분중복9/정확한동명양끝17/그외31. 기존중복group제거를member복원으로집계금지.",
+    "group-gap-group 1초미만틈28 중named main포함19,unknown포함8,main없음1. 단순군무병합금지."
+  ],
+  "upstream_cases": [
+    {
+      "case": "NEON154–159",
+      "finding": "154.22–157.89 원경군무의 no_person↔main누락. native25관측복구뒤구멍잔류, scene_context0. projection전identity이미짧은조각.157.94근접전환보호."
+    },
+    {
+      "case": "NEON185.251733–185.318467",
+      "finding": "원경군무 중one-sample main섬을 identity185.2852가unknown2프레임+Merci2프레임으로나눔. cuts/handoff/native/context0. 길이제거가아닌상류role증명문제."
+    },
+    {
+      "case": "MMN50.6506–50.683967",
+      "finding": "원래김채원identity0.4003초의앞부분이group에잘려2프레임잔류. 실제원경은50.75까지지속하고cut3047=50.8341. projection계산오류아님."
+    }
+  ],
+  "positive_and_negative_edges": [
+    {
+      "case": "NEON194.0938–194.260733",
+      "finding": "같은전경중심줌의잠재양성.11616→11640 기존source/bodyguard그대로통과. 초안은endpoint범위가마지막실측보다멀어unobserved_output_edge로보류; 임계치완화해자동승인하지않음."
+    },
+    {
+      "case": "ANT82.182–82.6826",
+      "finding": "카메라연속·내부cut0·handoff0라도다른몸이전경으로들어오는교대반례.4936/4952 bodyguard실패. 이름연장금지."
+    },
+    {
+      "case": "NEON115.6155–115.9158",
+      "finding": "원경/duet전환반례. 기존sourcecut6930,body6932거절. source연속예외로덮지않음."
+    }
+  ],
+  "initial_proposal": {
+    "sha256": "11836261447af7d4577b480ab60bad535d1f3e871e891cbd3a4617718d9f52bc",
+    "independent_replay": "initial-edge-proposal-independent-review.json",
+    "result": "부모와동일4복원2.969833초재현·입력불변12조건통과. 제품품질승인과다름.",
+    "quality": "초안미승인. ANT48은명확전경양성. ANT180.88–182.68은원경군무; ANT149는전경경합; NEON37.8은동등duet. 개인main양성근거없음.",
+    "role_reason_counterexample": "ANT180.88에는dominant_face한관측이있지만repeated_same_pose_geometry·경쟁관측누락. NEON37.8도dominant_face한관측인데동등전경상대size=None. reason문자열만으로통과시키지않음.",
+    "P2_missing_both": "ANT48 양성의f2892 observation만빠지면거절하지만record도같이빠지면0.333667초복원. expected=주어진records로만만들어4frame cadence의8frame구멍을검증하지않음. 새계약의missing fail-closed 보완필요. 정상실제4복원에서발생했다는주장은아님."
+  },
+  "proposal_contract": [
+    "오직원래owned face/원래matcher두독립시각을anchor로사용. output/preparation/focal/새복원label은face근거아님.",
+    "anchor부터unknown까지전체source구간의몸소유·모든경쟁자·역방향유일성·완전sample inventory·실제cut·handoff를확인.",
+    "같은몸연속성과개인main역할은별도. missing competitor/reason이름/no_person부재를양성으로취급하지않음.",
+    "다른이름이동일성분을주장하거나원래반대얼굴/반복alien이있으면보류. 조각수감소만으로승인하지않음.",
+    "추가복원범위와기존관측변경을분리하고,새2–4프레임잔여/썸네일/기존사용자구간/SAM/실행시간을실제앱에서다시평가. 이전71개는기준보존검사이며새복원의정답시험아님."
+  ],
+  "revised_proposal": {
+    "sha256": "968a7e8db069eb1846679cd66afc95bfd0d65681aa32a98867ea788b3d0f3e42",
+    "independent_result": "ANT48.081367–48.415033만0.333667초 재현. 기존3곳은 역할근거 부족으로 거절. 이전record+observation 동시누락 반례 및 borrowed/reason-only/wrong-body/role없음/handoff없음 모두 거절.",
+    "checks": "revised-edge-proposal-independent-review.json",
+    "remaining_issue": "중앙 경쟁 torso의 네 관절이 한 점으로 붕괴하면 길이0을 작은 경쟁자로 취급해 통과한다. probe_role_geometry.py로 재현. 보완 대기.",
+    "quality_verdict": "추가 발견 경로를 보완한 뒤 함수 검토 판정. 아직 pipeline/실제 앱 결과 검증 아님."
+  },
+  "final_proposal": {
+    "sha256": "167fcd64e8926535640730bda97c8d7115fde202ff9c41a2a7eeb4e3355c3a1d",
+    "replay_checks": 22,
+    "replay": "final-edge-proposal-independent-review.json",
+    "geometry": "final-role-geometry-experiments.json",
+    "geometry_checks": 5,
+    "result": "collapsed torso fail-closed 교정 확인. ANT48.081367–48.415033 김채원0.333667초만 복원. 함수 수준 승인 가능. 실제 앱 재실행/썸네일/실행시간은 미검증."
+  },
+  "unknown_join_proposal": {
+    "review": "unknown-join-independent-review.json",
+    "replay": "unknown-join-independent-replay.json",
+    "source_contacts": "unknown-join-source-contact-manifest.json",
+    "result": "19쌍 중 부모와 동일6쌍 통과·13쌍 거절. 6쌍 원본 선택몸 연속 직접 확인. 이름/분류 변경 없이 기존 unknown 시간의 내부 조각만 연결: 클립6·short7 감소 가능. 미확인시간/새이름 개선0. 제품 구현/실제 앱 결과 검증은 별도."
+  },
+  "final_input_integrity": [
+    {
+      "video": "MMN",
+      "kind": "metadata",
+      "unchanged": true
+    },
+    {
+      "video": "MMN",
+      "kind": "evidence",
+      "unchanged": true
+    },
+    {
+      "video": "ANT",
+      "kind": "metadata",
+      "unchanged": true
+    },
+    {
+      "video": "ANT",
+      "kind": "evidence",
+      "unchanged": true
+    },
+    {
+      "video": "NEON",
+      "kind": "metadata",
+      "unchanged": true
+    },
+    {
+      "video": "NEON",
+      "kind": "evidence",
+      "unchanged": true
+    }
+  ],
+  "unknown_product_v1": {
+    "source_sha256": "06d45b4a606c7bc928fb3e7003f0f28d65e135bc5976169aa90b71b45de33b24",
+    "checks": 21,
+    "all_replay_checks_passed": true,
+    "review": "unknown-implementation-review-v1.json",
+    "blocking_finding": "P2: 원래 이름없는 반복얼굴변화 경계를 몸외관만으로 삭제. 1.9초 기존 repeated_face_change를 지워0–4병합 반례재현. 실제NEON93에서도원래94.5945 반복얼굴경계있음. 코드보완 대기. 시각상같은몸6쌍 확인은이원래인식모순을 무시할승인이아님."
+  },
+  "scene_scale_v1": {
+    "source_sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726",
+    "checks": 34,
+    "all_checks_passed": true,
+    "review": "scene-scale-independent-review-v1.json",
+    "result": "세 영상9266관측 중NEON11104=185.251733 한관측만main→group. 실제fixture원본일치, 수정전False/수정후True, 원본좌표불변·기존group역전0·부분몸/상반머리/상반몸통/화면밖발 반례유지. 함수범위 승인 가능. 실제앱 출력과속도는후속검증 필요."
+  },
+  "unknown_product_v2": {
+    "source_sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6",
+    "checks": 28,
+    "all_passed": true,
+    "review": "unknown-implementation-review-v2.json",
+    "result": "P2 원래 반복얼굴경계 삭제 반례 해소. 누적3조각에서 앞동일얼굴은연결하되 뒤다른얼굴경계유지; 모두같은얼굴은하나로연결. 실제최종5쌍만연결,NEON93 repeated_original_face_change로보류. 이름범위/미확인시간/증거/preview매핑/입력불변. 함수범위승인 가능, 실제앱재실행전."
+  },
+  "integration_static_review": {
+    "report": "integration-readonly-review.json",
+    "modules": "integration-static-module-audit.json",
+    "result": "현재patch변경서비스6개 runtime.modules기록누락0. 배열정렬·previews materialization·원본관측/갤러리불변·준비context분리·nested timing 연결 정적검토상새차단결함없음. camera동결본과새앱출력은후속검증."
+  },
+  "camera_experiment_v1": {
+    "review": "camera-foreground-insert-independent-review.json",
+    "result": "P2 보완필요. ANT588–616에서 비관측f590의선택head+torso만noise/좌우반전한두반례도원본과같이예외승인. 관측sample588/592·원래얼굴/pose/경쟁자자료는불변. 전역camera+보간pose는실제선택머리/몸통픽셀양성증거가아님. isolated_outlier예외에국소실측양성근거가추가되지않으면미승인.",
+    "scope": "수정전실험정책3파일을동결해원본범위의작은합성반례를재생. 향후제품코드별도검토."
+  },
+  "final_actual_app_review": {
+    "verdict": "pass within reviewed scope",
+    "verification": "/private/tmp/dance-member-part-review-20261102/member-app-independent-verification.json",
+    "checks": 79,
+    "all_checks_passed": true,
+    "additional_module_and_scope_verification": "/private/tmp/dance-member-part-review-20261102/final-all-module-provenance-review.json",
+    "additional_checks": 16,
+    "additional_checks_passed": true,
+    "totals": {
+      "main": [
+        305,
+        296
+      ],
+      "group": [
+        119,
+        118
+      ],
+      "total": [
+        424,
+        414
+      ],
+      "subsecond": [
+        240,
+        230
+      ],
+      "under_0_1s": [
+        23,
+        20
+      ],
+      "unknown_seconds": [
+        38.976066666666924,
+        38.60893333333358
+      ]
+    },
+    "short_categories": {
+      "named": [
+        73,
+        71
+      ],
+      "unknown": [
+        88,
+        80
+      ],
+      "group": [
+        79,
+        79
+      ]
+    },
+    "active_wall_seconds": [
+      1187.94,
+      1116.809
+    ],
+    "wall_change_percent": -5.987760324595525,
+    "all414_final_thumbnails_same_original_bytes": true,
+    "SAM_OFF_all3": true,
+    "all14_original_user_windows_coverage_preserved": true,
+    "ANT_extra_named_union_original_evidence_replay": "/private/tmp/dance-member-part-review-20261102/ANT-extra-named-union-independent-review.json",
+    "changed_thumbnail_spotchecks": [
+      "ANT47.48076666666667 main",
+      "NEON183.14963333333333 group"
+    ],
+    "limits": [
+      "One run per condition, no performance guarantee.",
+      "No exhaustive new ground truth assessment for every frame.",
+      "ANT9.9 and MMN38 source-camera continuity gaps remain held; camera exception excluded.",
+      "NEON93 unknown join remains held on original repeated-face conflict."
+    ],
+    "approved_changes": [
+      "ANT48.08136666666667–48.415033333333334 unknown to 김채원; existing original-evidence named coalesce creates47.48076666666667–53.720333333333336.",
+      "Five reviewed unknown-only joins, no new identity.",
+      "NEON185.25173333333333–185.31846666666667 main to group from duplicate-scale correction."
+    ],
+    "unknown_reduction_decomposition": {
+      "named_recovery_seconds": 0.3336666666666659,
+      "scene_exclusion_seconds": 0.0334666666666667
+    }
+  }
+}

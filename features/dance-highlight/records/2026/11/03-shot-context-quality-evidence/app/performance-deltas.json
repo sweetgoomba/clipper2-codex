@@ -1,0 +1,53 @@
+[
+  {
+    "title": "MMN",
+    "wall_delta": 26.27800000000002,
+    "pipeline_delta": 25.587005416979082,
+    "stage_deltas": {
+      "yolo": 7.730031458020676,
+      "main_selection": 11.824556582956575,
+      "segment_build": 0.6426207080367021,
+      "face_extract": -0.5037176669575274,
+      "secondary_faces": 1.6312344169709831,
+      "cluster_map": 4.333295541990083,
+      "clips_main": 0.45695770799648017,
+      "clips_group": 0.13789941696450114
+    },
+    "new_shot_seconds": 0.008009583048988134,
+    "note": "secondary_faces is nested in cluster_map; do not sum all entries"
+  },
+  {
+    "title": "ANT",
+    "wall_delta": 41.87700000000001,
+    "pipeline_delta": 41.87921812495915,
+    "stage_deltas": {
+      "yolo": 13.23756337503437,
+      "main_selection": 14.043966834025923,
+      "segment_build": 2.610054374963511,
+      "face_extract": 0.9933712500496767,
+      "secondary_faces": 5.4434179160161875,
+      "cluster_map": 7.655335290997755,
+      "clips_main": 0.86214383400511,
+      "clips_group": 0.4029219169751741
+    },
+    "new_shot_seconds": 0.18835104099707678,
+    "note": "secondary_faces is nested in cluster_map; do not sum all entries"
+  },
+  {
+    "title": "NEON",
+    "wall_delta": 22.99399999999997,
+    "pipeline_delta": 22.765131249965634,
+    "stage_deltas": {
+      "yolo": 9.807398292061407,
+      "main_selection": 7.700550250010565,
+      "segment_build": 1.0689640829805285,
+      "face_extract": -0.15333445800933987,
+      "secondary_faces": 1.2392917079851031,
+      "cluster_map": 2.160911417042371,
+      "clips_main": 0.40287399996304885,
+      "clips_group": 0.10310637397924438
+    },
+    "new_shot_seconds": 0.02014654199592769,
+    "note": "secondary_faces is nested in cluster_map; do not sum all entries"
+  }
+]

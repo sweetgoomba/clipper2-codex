@@ -1,0 +1,1068 @@
+{
+  "scope": "Independent original cached evidence prototype replay; no app or model execution",
+  "prototype_sha256": "ed8f8725187b1d02d794779c0cdeefd63f909d988f058cc00d3831000e76adbc",
+  "checks": [
+    {
+      "name": "MMN no original data mutated",
+      "passed": true
+    },
+    {
+      "name": "MMN preserve original group eligibility",
+      "passed": true
+    },
+    {
+      "name": "MMN protected actual cases unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN only expected group interval nominated",
+      "passed": true
+    },
+    {
+      "name": "MMN no name created from unknown",
+      "passed": true
+    },
+    {
+      "name": "ANT no original data mutated",
+      "passed": true
+    },
+    {
+      "name": "ANT preserve original group eligibility",
+      "passed": true
+    },
+    {
+      "name": "ANT protected actual cases unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT only expected group interval nominated",
+      "passed": true
+    },
+    {
+      "name": "ANT no name created from unknown",
+      "passed": true
+    },
+    {
+      "name": "NEON no original data mutated",
+      "passed": true
+    },
+    {
+      "name": "NEON preserve original group eligibility",
+      "passed": true
+    },
+    {
+      "name": "NEON protected actual cases unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON only expected group interval nominated",
+      "passed": true
+    },
+    {
+      "name": "NEON no name created from unknown",
+      "passed": true
+    },
+    {
+      "name": "prototype unchanged during replay",
+      "passed": true
+    }
+  ],
+  "videos": [
+    {
+      "title": "MMN",
+      "pose_count": 2324,
+      "seconds": 0.02574149996507913,
+      "candidate_count": 14,
+      "accepted": [
+        {
+          "start": 104.57113333333334,
+          "end": 104.90480000000001,
+          "frames": [
+            6268,
+            6272,
+            6276,
+            6280,
+            6284
+          ],
+          "name": "허윤진",
+          "left": 104.30420000000001,
+          "right": 105.105,
+          "proof_frames": [
+            6252,
+            6256,
+            6260,
+            6264,
+            6268,
+            6272,
+            6276,
+            6280,
+            6284,
+            6288,
+            6292,
+            6296,
+            6300
+          ],
+          "reason": "accepted",
+          "sample_proofs": [
+            {
+              "frame": 6252,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 1.6059631082525225,
+              "torso_ratio": 1.2990272143243375,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 673.96875,
+                  "face": 44.84592819213867,
+                  "source": "detected",
+                  "face_score": 0.02046615767313061,
+                  "torso_length": 141.61166364833795,
+                  "torso_score": 0.06462675104334833,
+                  "body_height": 475.5
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1302.0,
+                  "face": 46.52579879760742,
+                  "source": "detected",
+                  "face_score": 0.01785272712108714,
+                  "torso_length": 124.70371135214862,
+                  "torso_score": 0.0478508996576586,
+                  "body_height": 453.0
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 843.1875,
+                  "face": 32.4273681640625,
+                  "source": "detected",
+                  "face_score": 0.02316294628525308,
+                  "torso_length": 99.62956780619898,
+                  "torso_score": 0.07116563748998544,
+                  "body_height": 361.5
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 1021.3125,
+                  "face": 45.843544006347656,
+                  "source": "detected",
+                  "face_score": 0.03719883721255125,
+                  "torso_length": 125.56355773571407,
+                  "torso_score": 0.10188606586333881,
+                  "body_height": 460.5
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1050.1875,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 103.1837900605032,
+                  "torso_score": 0.07843258766240149,
+                  "body_height": 355.5
+                }
+              ]
+            },
+            {
+              "frame": 6256,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 1.6089399969041893,
+              "torso_ratio": 1.485218731223001,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 1323.0,
+                  "face": 47.07523727416992,
+                  "source": "detected",
+                  "face_score": 0.016856793179383704,
+                  "torso_length": 127.63448789414247,
+                  "torso_score": 0.045703607449869205,
+                  "body_height": 465.75
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 661.125,
+                  "face": 47.656700134277344,
+                  "source": "detected",
+                  "face_score": 0.020927864074658527,
+                  "torso_length": 142.04334725709614,
+                  "torso_score": 0.06237661977707776,
+                  "body_height": 483.0
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 842.8125,
+                  "face": 33.29474639892578,
+                  "source": "detected",
+                  "face_score": 0.023761367210068718,
+                  "torso_length": 98.37676697904847,
+                  "torso_score": 0.07020826820906352,
+                  "body_height": 364.5
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 1014.5625,
+                  "face": 46.41523361206055,
+                  "source": "detected",
+                  "face_score": 0.03823061408540727,
+                  "torso_length": 130.3630747182652,
+                  "torso_score": 0.10737553196858417,
+                  "body_height": 466.5
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1073.8125,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 100.49580215113465,
+                  "torso_score": 0.07229610676951667,
+                  "body_height": 364.5
+                }
+              ]
+            },
+            {
+              "frame": 6260,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 1.5824578980378399,
+              "torso_ratio": 1.5271841127687846,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 646.03125,
+                  "face": 48.151756286621094,
+                  "source": "detected",
+                  "face_score": 0.020190773795865122,
+                  "torso_length": 144.98127573069564,
+                  "torso_score": 0.06079288417830292,
+                  "body_height": 490.5
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1348.3125,
+                  "face": 50.7667350769043,
+                  "source": "detected",
+                  "face_score": 0.016669800607740193,
+                  "torso_length": 131.68481546860292,
+                  "torso_score": 0.04324011803404969,
+                  "body_height": 480.0
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 843.375,
+                  "face": 33.9516716003418,
+                  "source": "detected",
+                  "face_score": 0.02426254680862433,
+                  "torso_length": 102.16960852548081,
+                  "torso_score": 0.07301245542335376,
+                  "body_height": 375.0
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 1009.3125,
+                  "face": 46.07825469970703,
+                  "source": "detected",
+                  "face_score": 0.03839445882382036,
+                  "torso_length": 133.81839664728463,
+                  "torso_score": 0.11150346195678494,
+                  "body_height": 475.5
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1085.4375,
+                  "face": 33.096839904785156,
+                  "source": "detected",
+                  "face_score": 0.02315997255065708,
+                  "torso_length": 103.15840368094109,
+                  "torso_score": 0.07218652307874185,
+                  "body_height": 381.0
+                }
+              ]
+            },
+            {
+              "frame": 6264,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 1.5312269150266713,
+              "torso_ratio": 1.6231331670280418,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 1371.75,
+                  "face": 54.60731887817383,
+                  "source": "detected",
+                  "face_score": 0.016490807157762223,
+                  "torso_length": 134.98176960241705,
+                  "torso_score": 0.040763003532419365,
+                  "body_height": 501.0
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 627.0,
+                  "face": 50.33246994018555,
+                  "source": "detected",
+                  "face_score": 0.019880033089710328,
+                  "torso_length": 153.08832468953992,
+                  "torso_score": 0.06046595694773394,
+                  "body_height": 519.75
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 837.5625,
+                  "face": 34.02172088623047,
+                  "source": "detected",
+                  "face_score": 0.023978637642224687,
+                  "torso_length": 106.56138195894421,
+                  "torso_score": 0.07510486530628088,
+                  "body_height": 384.0
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 1005.1875,
+                  "face": 46.72529602050781,
+                  "source": "detected",
+                  "face_score": 0.03928710433772465,
+                  "torso_length": 144.98539797165782,
+                  "torso_score": 0.12190519788379818,
+                  "body_height": 489.75
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1084.875,
+                  "face": 36.61623764038086,
+                  "source": "detected",
+                  "face_score": 0.02565727127193316,
+                  "torso_length": 104.48057908649818,
+                  "torso_score": 0.07321032233291642,
+                  "body_height": 394.5
+                }
+              ]
+            },
+            {
+              "frame": 6268,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 1.5062776166198466,
+              "torso_ratio": 1.5145021630772046,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 613.21875,
+                  "face": 52.6142463684082,
+                  "source": "detected",
+                  "face_score": 0.0198777847548569,
+                  "torso_length": 153.974150630877,
+                  "torso_score": 0.05817179253355681,
+                  "body_height": 558.0
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1390.875,
+                  "face": 57.20174026489258,
+                  "source": "detected",
+                  "face_score": 0.016090131113959447,
+                  "torso_length": 148.959634318328,
+                  "torso_score": 0.04190047428225481,
+                  "body_height": 534.75
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 834.5625,
+                  "face": 33.82122039794922,
+                  "source": "detected",
+                  "face_score": 0.023666867842962177,
+                  "torso_length": 111.77343504272382,
+                  "torso_score": 0.07821501070583675,
+                  "body_height": 399.0
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 996.9375,
+                  "face": 46.77382278442383,
+                  "source": "detected",
+                  "face_score": 0.04004044172717477,
+                  "torso_length": 138.3770325053981,
+                  "torso_score": 0.11845680289909648,
+                  "body_height": 519.75
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1095.0,
+                  "face": 38.87336730957031,
+                  "source": "detected",
+                  "face_score": 0.026582378497416223,
+                  "torso_length": 114.1875,
+                  "torso_score": 0.07808367411295573,
+                  "body_height": 414.0
+                }
+              ]
+            },
+            {
+              "frame": 6272,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 0,
+              "face_ratio": 1.7410883479839956,
+              "torso_ratio": 1.6344242345678055,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": true,
+                  "central": true,
+                  "x": 998.625,
+                  "face": 52.416526794433594,
+                  "source": "detected",
+                  "face_score": 0.04470693197779474,
+                  "torso_length": 158.79833171746483,
+                  "torso_score": 0.13544175183758853,
+                  "body_height": 558.0
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 592.03125,
+                  "face": 54.738319396972656,
+                  "source": "detected",
+                  "face_score": 0.019275892711160245,
+                  "torso_length": 172.27342456832974,
+                  "torso_score": 0.06066543667299614,
+                  "body_height": 606.75
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 1412.625,
+                  "face": 59.86992645263672,
+                  "source": "detected",
+                  "face_score": 0.015484622841380772,
+                  "torso_length": 144.25806953165565,
+                  "torso_score": 0.037310581971242644,
+                  "body_height": 564.0
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 832.125,
+                  "face": 34.500850677490234,
+                  "source": "detected",
+                  "face_score": 0.024001629186953154,
+                  "torso_length": 119.11785130701443,
+                  "torso_score": 0.08286817398629903,
+                  "body_height": 428.25
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1096.875,
+                  "face": 37.72147750854492,
+                  "source": "detected",
+                  "face_score": 0.02567757806751211,
+                  "torso_length": 115.56086058869586,
+                  "torso_score": 0.07866401889064242,
+                  "body_height": 436.5
+                }
+              ]
+            },
+            {
+              "frame": 6276,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 3,
+              "face_ratio": 2.0215347932072967,
+              "torso_ratio": 1.4956859993265912,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 578.8125,
+                  "face": 55.36191177368164,
+                  "source": "detected",
+                  "face_score": 0.018634625124726877,
+                  "torso_length": 176.11081605412542,
+                  "torso_score": 0.05927828235040226,
+                  "body_height": 649.6875
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1436.4375,
+                  "face": 60.997249603271484,
+                  "source": "detected",
+                  "face_score": 0.01433010127627454,
+                  "torso_length": 148.77342252566484,
+                  "torso_score": 0.03495138265867676,
+                  "body_height": 594.75
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 831.375,
+                  "face": 34.660579681396484,
+                  "source": "detected",
+                  "face_score": 0.02406930343142691,
+                  "torso_length": 127.38965813597272,
+                  "torso_score": 0.08846304256550541,
+                  "body_height": 447.75
+                },
+                {
+                  "index": 3,
+                  "selected": true,
+                  "central": true,
+                  "x": 1001.0625,
+                  "face": 57.350738525390625,
+                  "source": "detected",
+                  "face_score": 0.04865693433489327,
+                  "torso_length": 155.95401966605414,
+                  "torso_score": 0.13231293422305873,
+                  "body_height": 590.25
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1118.8125,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 124.15275369479325,
+                  "torso_score": 0.08006790492327089,
+                  "body_height": 444.75
+                }
+              ]
+            },
+            {
+              "frame": 6280,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 2,
+              "face_ratio": 1.9894487670430425,
+              "torso_ratio": 1.5235299288148088,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 565.875,
+                  "face": 57.0914421081543,
+                  "source": "detected",
+                  "face_score": 0.018367320602851882,
+                  "torso_length": 180.93633419313545,
+                  "torso_score": 0.05821039959954708,
+                  "body_height": 676.6875
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1459.5,
+                  "face": 64.15534210205078,
+                  "source": "detected",
+                  "face_score": 0.013668657854492604,
+                  "torso_length": 151.68101036797586,
+                  "torso_score": 0.03231649564654622,
+                  "body_height": 626.25
+                },
+                {
+                  "index": 2,
+                  "selected": true,
+                  "central": true,
+                  "x": 997.125,
+                  "face": 62.61056137084961,
+                  "source": "detected",
+                  "face_score": 0.05357561178763205,
+                  "torso_length": 158.50571756249047,
+                  "torso_score": 0.1356327208112494,
+                  "body_height": 610.5
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 827.625,
+                  "face": 39.13212203979492,
+                  "source": "detected",
+                  "face_score": 0.026929877599845185,
+                  "torso_length": 129.36372233454787,
+                  "torso_score": 0.08902530777111903,
+                  "body_height": 464.25
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 1128.1875,
+                  "face": 41.13988494873047,
+                  "source": "repeated_same_pose_geometry",
+                  "face_score": 0.025914423881348438,
+                  "torso_length": 123.43439869521785,
+                  "torso_score": 0.07775255894161044,
+                  "body_height": 456.0
+                }
+              ]
+            },
+            {
+              "frame": 6284,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 4,
+              "face_ratio": 2.2017231808186004,
+              "torso_ratio": 1.4601925132100004,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 542.4375,
+                  "face": 60.745094299316406,
+                  "source": "detected",
+                  "face_score": 0.01795743902483055,
+                  "torso_length": 183.11609406671496,
+                  "torso_score": 0.05413270209879605,
+                  "body_height": 713.8125
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1484.25,
+                  "face": 67.02395629882812,
+                  "source": "detected",
+                  "face_score": 0.012786115695636166,
+                  "torso_length": 155.74298991046115,
+                  "torso_score": 0.029710986902966058,
+                  "body_height": 659.25
+                },
+                {
+                  "index": 2,
+                  "selected": false,
+                  "central": true,
+                  "x": 1134.1875,
+                  "face": 38.52246856689453,
+                  "source": "detected",
+                  "face_score": 0.02389933152433029,
+                  "torso_length": 111.58707712477283,
+                  "torso_score": 0.06922859954846726,
+                  "body_height": 474.75
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 825.1875,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 131.25053571319242,
+                  "torso_score": 0.08979251675684248,
+                  "body_height": 476.25
+                },
+                {
+                  "index": 4,
+                  "selected": true,
+                  "central": true,
+                  "x": 1002.75,
+                  "face": 62.24998474121094,
+                  "source": "detected",
+                  "face_score": 0.05261971222318674,
+                  "torso_length": 155.1104445226046,
+                  "torso_score": 0.1311143607106249,
+                  "body_height": 637.5
+                },
+                {
+                  "index": 5,
+                  "selected": false,
+                  "central": true,
+                  "x": 822.75,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 131.4375,
+                  "torso_score": 0.08938998211754692,
+                  "body_height": 479.25
+                }
+              ]
+            },
+            {
+              "frame": 6288,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 2,
+              "face_ratio": 1.8097186057273318,
+              "torso_ratio": 1.5903298579778855,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 522.1875,
+                  "face": 61.555660247802734,
+                  "source": "detected",
+                  "face_score": 0.016863771753152696,
+                  "torso_length": 181.3093975949675,
+                  "torso_score": 0.04967147270347548,
+                  "body_height": 750.75
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1508.4375,
+                  "face": 69.65990447998047,
+                  "source": "detected",
+                  "face_score": 0.011854636626143205,
+                  "torso_length": 169.3162375002764,
+                  "torso_score": 0.02881402846379701,
+                  "body_height": 700.5
+                },
+                {
+                  "index": 2,
+                  "selected": true,
+                  "central": true,
+                  "x": 994.875,
+                  "face": 61.310550689697266,
+                  "source": "detected",
+                  "face_score": 0.05271932363672735,
+                  "torso_length": 167.80328186972386,
+                  "torso_score": 0.14428961124437484,
+                  "body_height": 674.8125
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 1128.9375,
+                  "face": 42.09961700439453,
+                  "source": "detected",
+                  "face_score": 0.0264687552555635,
+                  "torso_length": 115.67579965143963,
+                  "torso_score": 0.07272737017170372,
+                  "body_height": 491.25
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 817.3125,
+                  "face": 43.4058952331543,
+                  "source": "detected",
+                  "face_score": 0.02913122707026559,
+                  "torso_length": 135.18789008265497,
+                  "torso_score": 0.09072936065467575,
+                  "body_height": 498.0
+                }
+              ]
+            },
+            {
+              "frame": 6292,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 2,
+              "face_ratio": 1.7536699287288098,
+              "torso_ratio": 1.4853968376079607,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 490.03125,
+                  "face": 66.3698501586914,
+                  "source": "detected",
+                  "face_score": 0.016012242863234254,
+                  "torso_length": 211.1770306668081,
+                  "torso_score": 0.050948102098898426,
+                  "body_height": 780.75
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1531.5,
+                  "face": 73.56761932373047,
+                  "source": "detected",
+                  "face_score": 0.011155846426177217,
+                  "torso_length": 174.99536824227664,
+                  "torso_score": 0.02653642283587456,
+                  "body_height": 736.3125
+                },
+                {
+                  "index": 2,
+                  "selected": true,
+                  "central": true,
+                  "x": 994.5,
+                  "face": 63.18947982788086,
+                  "source": "detected",
+                  "face_score": 0.05437902354192921,
+                  "torso_length": 172.59056725745472,
+                  "torso_score": 0.14852640891446306,
+                  "body_height": 700.5
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 1134.0,
+                  "face": 42.797569274902344,
+                  "source": "detected",
+                  "face_score": 0.02656427540243776,
+                  "torso_length": 132.88552404231245,
+                  "torso_score": 0.08248149877351431,
+                  "body_height": 520.5
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 816.0,
+                  "face": 46.35210418701172,
+                  "source": "detected",
+                  "face_score": 0.031008699328811076,
+                  "torso_length": 149.4676098900695,
+                  "torso_score": 0.09999106309775481,
+                  "body_height": 515.25
+                }
+              ]
+            },
+            {
+              "frame": 6296,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 2,
+              "face_ratio": 2.184589669820219,
+              "torso_ratio": 1.652213297781717,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 456.65625,
+                  "face": 69.89411926269531,
+                  "source": "detected",
+                  "face_score": 0.014643781059381312,
+                  "torso_length": 211.4143776153836,
+                  "torso_score": 0.04429422519753282,
+                  "body_height": 786.0
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1550.0625,
+                  "face": 78.89491271972656,
+                  "source": "detected",
+                  "face_score": 0.010847745637418551,
+                  "torso_length": 199.31567495119396,
+                  "torso_score": 0.027405135120712784,
+                  "body_height": 753.0
+                },
+                {
+                  "index": 2,
+                  "selected": true,
+                  "central": true,
+                  "x": 987.9375,
+                  "face": 66.96452331542969,
+                  "source": "detected",
+                  "face_score": 0.05844786214081008,
+                  "torso_length": 188.89654906853116,
+                  "torso_score": 0.16487236692220802,
+                  "body_height": 738.0
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 1142.625,
+                  "face": 44.06602096557617,
+                  "source": "detected",
+                  "face_score": 0.02675461801740555,
+                  "torso_length": 147.08810338110285,
+                  "torso_score": 0.08930431962396289,
+                  "body_height": 534.0
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 798.1875,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 152.04203777245291,
+                  "torso_score": 0.09732116623533187,
+                  "body_height": 538.5
+                },
+                {
+                  "index": 5,
+                  "selected": false,
+                  "central": true,
+                  "x": 800.25,
+                  "face": null,
+                  "source": "missing",
+                  "face_score": null,
+                  "torso_length": 155.09457800000618,
+                  "torso_score": 0.09978879067464703,
+                  "body_height": 539.25
+                }
+              ]
+            },
+            {
+              "frame": 6300,
+              "accepted": true,
+              "reason": "same_original_role_with_observed_competitor_dominance",
+              "selected": 2,
+              "face_ratio": 2.126382606383242,
+              "torso_ratio": 1.975159413420397,
+              "details": [
+                {
+                  "index": 0,
+                  "selected": false,
+                  "central": true,
+                  "x": 444.28125,
+                  "face": 73.27142333984375,
+                  "source": "detected",
+                  "face_score": 0.014530627738179409,
+                  "torso_length": 214.99939135088266,
+                  "torso_score": 0.042637033337879854,
+                  "body_height": 783.75
+                },
+                {
+                  "index": 1,
+                  "selected": false,
+                  "central": true,
+                  "x": 1566.375,
+                  "face": 78.64244842529297,
+                  "source": "detected",
+                  "face_score": 0.009880450018387315,
+                  "torso_length": 203.27213901565557,
+                  "torso_score": 0.02553862767361291,
+                  "body_height": 748.5
+                },
+                {
+                  "index": 2,
+                  "selected": true,
+                  "central": true,
+                  "x": 976.3125,
+                  "face": 68.35631561279297,
+                  "source": "detected",
+                  "face_score": 0.06116019052928459,
+                  "torso_length": 204.75309063601458,
+                  "torso_score": 0.18319796674961344,
+                  "body_height": 761.8125
+                },
+                {
+                  "index": 3,
+                  "selected": false,
+                  "central": true,
+                  "x": 1141.125,
+                  "face": 43.500030517578125,
+                  "source": "detected",
+                  "face_score": 0.026512999803142586,
+                  "torso_length": 150.92818294225236,
+                  "torso_score": 0.09198979488116903,
+                  "body_height": 553.5
+                },
+                {
+                  "index": 4,
+                  "selected": false,
+                  "central": true,
+                  "x": 784.875,
+                  "face": 46.472137451171875,
+                  "source": "detected",
+                  "face_score": 0.028762552113474903,
+                  "torso_length": 149.85930902016065,
+                  "torso_score": 0.0927509777210176,
+                  "body_height": 549.0
+                }
+              ]
+            }
+          ],
+          "main_role_frames": [
+            6268,
+            6272,
+            6276,
+            6280,
+            6284
+          ],
+          "group_export_policy": "preserve_original_dual_eligibility"
+        }
+      ]
+    },
+    {
+      "title": "ANT",
+      "pose_count": 3310,
+      "seconds": 0.0016799160512164235,
+      "candidate_count": 24,
+      "accepted": []
+    },
+    {
+      "title": "NEON",
+      "pose_count": 3632,
+      "seconds": 0.0020335419685579836,
+      "candidate_count": 50,
+      "accepted": []
+    }
+  ]
+}

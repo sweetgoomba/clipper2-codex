@@ -1,0 +1,26 @@
+[
+  {
+    "title": "MMN",
+    "main_selection_semantics_identical": true,
+    "module_count": 39,
+    "all_runtime_module_hashes_equal_frozen": true,
+    "mask_seconds": 0.0,
+    "joint_seconds": 0.0
+  },
+  {
+    "title": "ANT",
+    "main_selection_semantics_identical": true,
+    "module_count": 39,
+    "all_runtime_module_hashes_equal_frozen": true,
+    "mask_seconds": 0.0,
+    "joint_seconds": 0.0
+  },
+  {
+    "title": "NEON",
+    "main_selection_semantics_identical": true,
+    "module_count": 39,
+    "all_runtime_module_hashes_equal_frozen": true,
+    "mask_seconds": 0.0,
+    "joint_seconds": 0.0
+  }
+]

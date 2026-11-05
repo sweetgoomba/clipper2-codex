@@ -1,0 +1,260 @@
+[
+  {
+    "title": "Made My Night",
+    "start": 1.9,
+    "end": 2.3,
+    "user_feedback": "text intro; no main expected",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "Made My Night",
+    "start": 2.3,
+    "end": 4.37,
+    "user_feedback": "group",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "Made My Night",
+    "start": 10.91,
+    "end": 11.31,
+    "user_feedback": "카즈하 or group",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "Made My Night",
+    "start": 34.73,
+    "end": 35.44,
+    "user_feedback": "사쿠라 or group",
+    "identical_clip_rows": false,
+    "classification_changed_seconds": 0.10480000000000445,
+    "differences": [
+      {
+        "start": 34.73,
+        "end": 34.734700000000004,
+        "before": [
+          [
+            "main",
+            "사쿠라"
+          ]
+        ],
+        "after": [
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      },
+      {
+        "start": 34.734700000000004,
+        "end": 34.8348,
+        "before": [
+          [
+            "main",
+            "사쿠라"
+          ]
+        ],
+        "after": [
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Made My Night",
+    "start": 37.738,
+    "end": 39.339,
+    "user_feedback": "사쿠라",
+    "identical_clip_rows": false,
+    "classification_changed_seconds": 1.1342666666666616,
+    "differences": [
+      {
+        "start": 38.20473333333334,
+        "end": 38.705333333333336,
+        "before": [
+          [
+            "main",
+            "사쿠라"
+          ]
+        ],
+        "after": [
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      },
+      {
+        "start": 38.705333333333336,
+        "end": 39.339,
+        "before": [
+          [
+            "group",
+            ""
+          ],
+          [
+            "main",
+            "사쿠라"
+          ]
+        ],
+        "after": [
+          [
+            "group",
+            ""
+          ],
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Made My Night",
+    "start": 45.0,
+    "end": 48.0,
+    "user_feedback": "사쿠라, approximate boundary",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "Made My Night",
+    "start": 89.0,
+    "end": 93.0,
+    "user_feedback": "카즈하, continuous through camera change",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 4.571,
+    "end": 6.139,
+    "user_feedback": "홍은채",
+    "identical_clip_rows": false,
+    "classification_changed_seconds": 1.5677666666666665,
+    "differences": [
+      {
+        "start": 4.571233333333334,
+        "end": 5.6056,
+        "before": [
+          [
+            "main",
+            "홍은채"
+          ]
+        ],
+        "after": [
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      },
+      {
+        "start": 5.6056,
+        "end": 6.139,
+        "before": [
+          [
+            "group",
+            ""
+          ],
+          [
+            "main",
+            "홍은채"
+          ]
+        ],
+        "after": [
+          [
+            "group",
+            ""
+          ],
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 8.375,
+    "end": 9.0,
+    "user_feedback": "홍은채",
+    "identical_clip_rows": false,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 9.4,
+    "end": 10.277,
+    "user_feedback": "김채원",
+    "identical_clip_rows": false,
+    "classification_changed_seconds": 0.3671333333333333,
+    "differences": [
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "before": [
+          [
+            "main",
+            "김채원"
+          ]
+        ],
+        "after": [
+          [
+            "main",
+            "unknown"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 32.633,
+    "end": 33.433,
+    "user_feedback": "transition; either adjacent main acceptable",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "NEON",
+    "start": 78.378,
+    "end": 79.68,
+    "user_feedback": "시리",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "NEON",
+    "start": 150.617,
+    "end": 152.619,
+    "user_feedback": "group",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  },
+  {
+    "title": "NEON",
+    "start": 183.15,
+    "end": 184.82,
+    "user_feedback": "group",
+    "identical_clip_rows": true,
+    "classification_changed_seconds": 0,
+    "differences": []
+  }
+]

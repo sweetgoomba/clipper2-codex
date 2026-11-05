@@ -1,0 +1,140 @@
+{
+  "checks": [
+    {
+      "title": "Made My Night",
+      "project_id": "1793617663026",
+      "frozen_original_face_segments_identical": true,
+      "pose_heads_identical": true,
+      "diagnostic_frames_identical": true,
+      "person_cards_identical": true,
+      "all_group_rows_identical": true,
+      "main_coverage_seconds_before": 135.00153333333333,
+      "main_coverage_seconds_after": 135.00153333333333,
+      "coverage_conserved": true,
+      "quality_counts_identical": true,
+      "compiled_modules_match_source": {
+        "pipeline": true,
+        "observed_main": true,
+        "face_evidence": true,
+        "named_boundaries": true
+      },
+      "shared_auraface_module_unchanged": true,
+      "sam_mask_seconds": 0.0,
+      "sam_joint_seconds": 0.0,
+      "lightweight_pose_appearance_seconds": 0.4578437079908326,
+      "named_boundary_seconds": 0.019656082964502275,
+      "correction": {
+        "version": "original_face_run_boundary_v1",
+        "corrected_seconds": 0.0,
+        "corrections": [],
+        "candidates": []
+      },
+      "role_observation_count": 2324,
+      "frame_count": 2324,
+      "changed_thumbnails": []
+    },
+    {
+      "title": "ANTIFRAGILE",
+      "project_id": "1793617753764",
+      "frozen_original_face_segments_identical": true,
+      "pose_heads_identical": true,
+      "diagnostic_frames_identical": true,
+      "person_cards_identical": true,
+      "all_group_rows_identical": true,
+      "main_coverage_seconds_before": 191.89169999999993,
+      "main_coverage_seconds_after": 191.89169999999993,
+      "coverage_conserved": true,
+      "quality_counts_identical": true,
+      "compiled_modules_match_source": {
+        "pipeline": true,
+        "observed_main": true,
+        "face_evidence": true,
+        "named_boundaries": true
+      },
+      "shared_auraface_module_unchanged": true,
+      "sam_mask_seconds": 0.0,
+      "sam_joint_seconds": 0.0,
+      "lightweight_pose_appearance_seconds": 0.6107631659833714,
+      "named_boundary_seconds": 0.15266891702776775,
+      "correction": {
+        "version": "original_face_run_boundary_v1",
+        "corrected_seconds": 0.28361666666665997,
+        "corrections": [
+          {
+            "index": 49,
+            "before": 117.31720000000001,
+            "after": 117.60081666666667,
+            "name": "사쿠라",
+            "next_name": "홍은채",
+            "seed_frames": [
+              7028,
+              7048
+            ],
+            "reason": "original_face_run_proved"
+          }
+        ],
+        "candidates": [
+          {
+            "index": 49,
+            "before": 117.31720000000001,
+            "after": 117.60081666666667,
+            "name": "사쿠라",
+            "next_name": "홍은채",
+            "seed_frames": [
+              7028,
+              7048
+            ],
+            "reason": "original_face_run_proved"
+          }
+        ]
+      },
+      "role_observation_count": 3310,
+      "frame_count": 3310,
+      "changed_thumbnails": [
+        "clips/dance/main/main_0050.jpg"
+      ]
+    },
+    {
+      "title": "NEON",
+      "project_id": "1793617837063",
+      "frozen_original_face_segments_identical": true,
+      "pose_heads_identical": true,
+      "diagnostic_frames_identical": true,
+      "person_cards_identical": true,
+      "all_group_rows_identical": true,
+      "main_coverage_seconds_before": 177.2437333333333,
+      "main_coverage_seconds_after": 177.2437333333333,
+      "coverage_conserved": true,
+      "quality_counts_identical": true,
+      "compiled_modules_match_source": {
+        "pipeline": true,
+        "observed_main": true,
+        "face_evidence": true,
+        "named_boundaries": true
+      },
+      "shared_auraface_module_unchanged": true,
+      "sam_mask_seconds": 0.0,
+      "sam_joint_seconds": 0.0,
+      "lightweight_pose_appearance_seconds": 0.958881750004366,
+      "named_boundary_seconds": 0.009954584005754441,
+      "correction": {
+        "version": "original_face_run_boundary_v1",
+        "corrected_seconds": 0.0,
+        "corrections": [],
+        "candidates": []
+      },
+      "role_observation_count": 3632,
+      "frame_count": 3632,
+      "changed_thumbnails": []
+    }
+  ],
+  "reviewed_cases": 14,
+  "reviewed_cases_unchanged": true,
+  "baseline_wall_seconds": 1219.419,
+  "new_wall_seconds": 1132.067,
+  "observed_wall_reduction_percent": 7.163411427901323,
+  "subsecond_clips_before": 245,
+  "subsecond_clips_after": 245,
+  "unknown_seconds_before": 39.57666666666691,
+  "unknown_seconds_after": 39.57666666666691
+}

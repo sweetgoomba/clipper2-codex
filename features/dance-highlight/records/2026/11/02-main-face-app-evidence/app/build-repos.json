@@ -1,0 +1,26 @@
+[
+  {
+    "repo": "clipper_python",
+    "head": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+    "branch": "fix/dance-gpu-performance-20261102",
+    "status": "M plugins/dance_highlight/dance_highlight/app.py\n M plugins/dance_highlight/dance_highlight/services/body_continuity.py\n M plugins/dance_highlight/dance_highlight/services/context_faces.py\n M plugins/dance_highlight/dance_highlight/services/face_cluster.py\n M plugins/dance_highlight/dance_highlight/services/face_evidence.py\n M plugins/dance_highlight/dance_highlight/services/joint_identity.py\n M plugins/dance_highlight/dance_highlight/services/mask_continuity.py\n M plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py\n M plugins/dance_highlight/dance_highlight/services/mask_tracker.py\n M plugins/dance_highlight/dance_highlight/services/member_timeline.py\n M plugins/dance_highlight/dance_highlight/services/pipeline.py\n M plugins/dance_highlight/pyproject.toml\n M tests/test_dance_body_continuity.py\n M tests/test_dance_context_faces.py\n M tests/test_dance_face_cluster_opencv.py\n M tests/test_dance_joint_seed_pipeline.py\n M tests/test_dance_mask_continuity.py\n M tests/test_dance_mask_tracker.py\n M tests/test_dance_member_timeline.py\n M tests/test_dance_member_timeline_pipeline.py\n M tests/test_dance_output_continuity.py\n M uv.lock\n?? plugins/dance_highlight/dance_highlight/services/face_runtime.py\n?? tests/test_dance_exact_reuse.py\n?? tests/test_dance_face_runtime.py"
+  },
+  {
+    "repo": "clipper_angular",
+    "head": "7217bda17e0330971aa4aa6a5f57f1950324e0c0",
+    "branch": "dev",
+    "status": ""
+  },
+  {
+    "repo": "clipper_nestjs",
+    "head": "e4e1fcf5d37bdbbd2c0c00a9f558b052c2d55f7f",
+    "branch": "dev",
+    "status": ""
+  },
+  {
+    "repo": "clipper_electron",
+    "head": "775ffd5e7df8bede6a9096316a7a367da8dba0da",
+    "branch": "dev",
+    "status": ""
+  }
+]

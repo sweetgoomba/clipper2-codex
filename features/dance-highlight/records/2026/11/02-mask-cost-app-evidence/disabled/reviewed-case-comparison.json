@@ -1,0 +1,564 @@
+[
+  {
+    "title": "Made My Night",
+    "start": 1.9,
+    "end": 2.3,
+    "user_feedback": "text intro; no main expected",
+    "before": [
+      {
+        "start": 1.9,
+        "end": 2.3,
+        "kind": "group",
+        "name": null,
+        "clip_start": 0.0,
+        "clip_end": 4.371033333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 1.9,
+        "end": 2.3,
+        "kind": "group",
+        "name": null,
+        "clip_start": 0.0,
+        "clip_end": 4.371033333333333
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "Made My Night",
+    "start": 2.3,
+    "end": 4.37,
+    "user_feedback": "group",
+    "before": [
+      {
+        "start": 2.3,
+        "end": 4.37,
+        "kind": "group",
+        "name": null,
+        "clip_start": 0.0,
+        "clip_end": 4.371033333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 2.3,
+        "end": 4.37,
+        "kind": "group",
+        "name": null,
+        "clip_start": 0.0,
+        "clip_end": 4.371033333333333
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "Made My Night",
+    "start": 10.91,
+    "end": 11.31,
+    "user_feedback": "카즈하 or group",
+    "before": [
+      {
+        "start": 10.91,
+        "end": 11.31,
+        "kind": "group",
+        "name": null,
+        "clip_start": 10.3103,
+        "clip_end": 14.681333333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 10.91,
+        "end": 11.31,
+        "kind": "group",
+        "name": null,
+        "clip_start": 10.3103,
+        "clip_end": 14.681333333333333
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "Made My Night",
+    "start": 34.73,
+    "end": 35.44,
+    "user_feedback": "사쿠라 or group",
+    "before": [
+      {
+        "start": 34.73,
+        "end": 34.8348,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 32.515816666666666,
+        "clip_end": 34.8348
+      },
+      {
+        "start": 34.8348,
+        "end": 35.44,
+        "kind": "group",
+        "name": null,
+        "clip_start": 34.8348,
+        "clip_end": 35.568866666666665
+      },
+      {
+        "start": 35.4354,
+        "end": 35.44,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 35.4354,
+        "clip_end": 42.97626666666667
+      }
+    ],
+    "after": [
+      {
+        "start": 34.73,
+        "end": 34.734700000000004,
+        "kind": "main",
+        "name": "unknown",
+        "clip_start": 34.4344,
+        "clip_end": 34.734700000000004
+      },
+      {
+        "start": 34.734700000000004,
+        "end": 34.8348,
+        "kind": "main",
+        "name": "unknown",
+        "clip_start": 34.734700000000004,
+        "clip_end": 34.8348
+      },
+      {
+        "start": 34.8348,
+        "end": 35.44,
+        "kind": "group",
+        "name": null,
+        "clip_start": 34.8348,
+        "clip_end": 35.568866666666665
+      },
+      {
+        "start": 35.4354,
+        "end": 35.44,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 35.4354,
+        "clip_end": 38.20473333333334
+      }
+    ],
+    "identical": false
+  },
+  {
+    "title": "Made My Night",
+    "start": 37.738,
+    "end": 39.339,
+    "user_feedback": "사쿠라",
+    "before": [
+      {
+        "start": 37.738,
+        "end": 39.339,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 35.4354,
+        "clip_end": 42.97626666666667
+      },
+      {
+        "start": 38.705333333333336,
+        "end": 39.339,
+        "kind": "group",
+        "name": null,
+        "clip_start": 38.705333333333336,
+        "clip_end": 39.50613333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 37.738,
+        "end": 38.20473333333334,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 35.4354,
+        "clip_end": 38.20473333333334
+      },
+      {
+        "start": 38.20473333333334,
+        "end": 39.339,
+        "kind": "main",
+        "name": "unknown",
+        "clip_start": 38.20473333333334,
+        "clip_end": 39.3393
+      },
+      {
+        "start": 38.705333333333336,
+        "end": 39.339,
+        "kind": "group",
+        "name": null,
+        "clip_start": 38.705333333333336,
+        "clip_end": 39.50613333333333
+      }
+    ],
+    "identical": false
+  },
+  {
+    "title": "Made My Night",
+    "start": 45.0,
+    "end": 48.0,
+    "user_feedback": "사쿠라, approximate boundary",
+    "before": [
+      {
+        "start": 45.0,
+        "end": 46.46308333333334,
+        "kind": "main",
+        "name": "허윤진",
+        "clip_start": 43.143100000000004,
+        "clip_end": 46.46308333333334
+      },
+      {
+        "start": 45.361983333333335,
+        "end": 47.98126666666667,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 45.361983333333335,
+        "clip_end": 47.98126666666667
+      },
+      {
+        "start": 47.98126666666667,
+        "end": 48.0,
+        "kind": "main",
+        "name": "허윤진",
+        "clip_start": 47.98126666666667,
+        "clip_end": 49.866483333333335
+      }
+    ],
+    "after": [
+      {
+        "start": 45.0,
+        "end": 46.46308333333334,
+        "kind": "main",
+        "name": "허윤진",
+        "clip_start": 43.143100000000004,
+        "clip_end": 46.46308333333334
+      },
+      {
+        "start": 45.361983333333335,
+        "end": 47.98126666666667,
+        "kind": "main",
+        "name": "사쿠라",
+        "clip_start": 45.361983333333335,
+        "clip_end": 47.98126666666667
+      },
+      {
+        "start": 47.98126666666667,
+        "end": 48.0,
+        "kind": "main",
+        "name": "허윤진",
+        "clip_start": 47.98126666666667,
+        "clip_end": 49.866483333333335
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "Made My Night",
+    "start": 89.0,
+    "end": 93.0,
+    "user_feedback": "카즈하, continuous through camera change",
+    "before": [
+      {
+        "start": 89.0,
+        "end": 93.0,
+        "kind": "main",
+        "name": "카즈하",
+        "clip_start": 88.85543333333334,
+        "clip_end": 96.34625
+      },
+      {
+        "start": 90.8908,
+        "end": 91.8918,
+        "kind": "group",
+        "name": null,
+        "clip_start": 90.8908,
+        "clip_end": 91.8918
+      }
+    ],
+    "after": [
+      {
+        "start": 89.0,
+        "end": 93.0,
+        "kind": "main",
+        "name": "카즈하",
+        "clip_start": 88.85543333333334,
+        "clip_end": 96.34625
+      },
+      {
+        "start": 90.8908,
+        "end": 91.8918,
+        "kind": "group",
+        "name": null,
+        "clip_start": 90.8908,
+        "clip_end": 91.8918
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 4.571,
+    "end": 6.139,
+    "user_feedback": "홍은채",
+    "before": [
+      {
+        "start": 4.571,
+        "end": 6.139,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 3.7370666666666668,
+        "clip_end": 6.139466666666666
+      },
+      {
+        "start": 5.6056,
+        "end": 6.139,
+        "kind": "group",
+        "name": null,
+        "clip_start": 5.6056,
+        "clip_end": 6.4064000000000005
+      }
+    ],
+    "after": [
+      {
+        "start": 4.571,
+        "end": 4.571233333333334,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 3.7370666666666668,
+        "clip_end": 4.571233333333334
+      },
+      {
+        "start": 4.571233333333334,
+        "end": 6.139,
+        "kind": "main",
+        "name": "unknown",
+        "clip_start": 4.571233333333334,
+        "clip_end": 6.139466666666666
+      },
+      {
+        "start": 5.6056,
+        "end": 6.139,
+        "kind": "group",
+        "name": null,
+        "clip_start": 5.6056,
+        "clip_end": 6.4064000000000005
+      }
+    ],
+    "identical": false
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 8.375,
+    "end": 9.0,
+    "user_feedback": "홍은채",
+    "before": [
+      {
+        "start": 8.375,
+        "end": 8.975633333333334,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 7.590916666666667,
+        "clip_end": 8.975633333333334
+      },
+      {
+        "start": 8.975633333333334,
+        "end": 9.0,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 8.975633333333334,
+        "clip_end": 17.150466666666667
+      }
+    ],
+    "after": [
+      {
+        "start": 8.375,
+        "end": 8.975633333333334,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 7.590916666666667,
+        "clip_end": 8.975633333333334
+      },
+      {
+        "start": 8.975633333333334,
+        "end": 9.0,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 8.975633333333334,
+        "clip_end": 9.9098
+      }
+    ],
+    "identical": false
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 9.4,
+    "end": 10.277,
+    "user_feedback": "김채원",
+    "before": [
+      {
+        "start": 9.4,
+        "end": 10.277,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 8.975633333333334,
+        "clip_end": 17.150466666666667
+      }
+    ],
+    "after": [
+      {
+        "start": 9.4,
+        "end": 9.9098,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 8.975633333333334,
+        "clip_end": 9.9098
+      },
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "kind": "main",
+        "name": "unknown",
+        "clip_start": 9.9098,
+        "clip_end": 10.276933333333334
+      },
+      {
+        "start": 10.276933333333334,
+        "end": 10.277,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 10.276933333333334,
+        "clip_end": 17.150466666666667
+      }
+    ],
+    "identical": false
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "start": 32.633,
+    "end": 33.433,
+    "user_feedback": "transition; either adjacent main acceptable",
+    "before": [
+      {
+        "start": 32.633,
+        "end": 32.66596666666667,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 28.661966666666668,
+        "clip_end": 32.66596666666667
+      },
+      {
+        "start": 32.66596666666667,
+        "end": 33.433,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 32.66596666666667,
+        "clip_end": 36.903533333333336
+      }
+    ],
+    "after": [
+      {
+        "start": 32.633,
+        "end": 32.66596666666667,
+        "kind": "main",
+        "name": "홍은채",
+        "clip_start": 28.661966666666668,
+        "clip_end": 32.66596666666667
+      },
+      {
+        "start": 32.66596666666667,
+        "end": 33.433,
+        "kind": "main",
+        "name": "김채원",
+        "clip_start": 32.66596666666667,
+        "clip_end": 36.903533333333336
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "NEON",
+    "start": 78.378,
+    "end": 79.68,
+    "user_feedback": "시리",
+    "before": [
+      {
+        "start": 78.378,
+        "end": 79.68,
+        "kind": "main",
+        "name": "시리",
+        "clip_start": 77.37740000000001,
+        "clip_end": 81.94853333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 78.378,
+        "end": 79.68,
+        "kind": "main",
+        "name": "시리",
+        "clip_start": 77.37740000000001,
+        "clip_end": 81.94853333333333
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "NEON",
+    "start": 150.617,
+    "end": 152.619,
+    "user_feedback": "group",
+    "before": [
+      {
+        "start": 150.617,
+        "end": 152.619,
+        "kind": "group",
+        "name": null,
+        "clip_start": 150.5504,
+        "clip_end": 152.61913333333334
+      }
+    ],
+    "after": [
+      {
+        "start": 150.617,
+        "end": 152.619,
+        "kind": "group",
+        "name": null,
+        "clip_start": 150.5504,
+        "clip_end": 152.61913333333334
+      }
+    ],
+    "identical": true
+  },
+  {
+    "title": "NEON",
+    "start": 183.15,
+    "end": 184.82,
+    "user_feedback": "group",
+    "before": [
+      {
+        "start": 183.15,
+        "end": 184.82,
+        "kind": "group",
+        "name": null,
+        "clip_start": 183.14963333333333,
+        "clip_end": 185.25173333333333
+      }
+    ],
+    "after": [
+      {
+        "start": 183.15,
+        "end": 184.82,
+        "kind": "group",
+        "name": null,
+        "clip_start": 183.14963333333333,
+        "clip_end": 185.25173333333333
+      }
+    ],
+    "identical": true
+  }
+]

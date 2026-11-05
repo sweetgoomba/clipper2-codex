@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Made My Night",
+    "project_id": "1793236627928",
+    "job_id": "dance_highlight_retry_1793236834792",
+    "started": "2026-10-29T01:20:36.931Z",
+    "plugin_started": "2026-10-29T01:20:57.287Z",
+    "completed": "2026-10-29T01:38:36.797Z",
+    "active_wall_seconds": 1079.866,
+    "pipeline_seconds": 1058.4
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "project_id": "1793237055448",
+    "job_id": "dance_1793237055448",
+    "started": "2026-10-29T01:38:44.087Z",
+    "plugin_started": "2026-10-29T01:38:56.112Z",
+    "completed": "2026-10-29T02:03:56.437Z",
+    "active_wall_seconds": 1512.35,
+    "pipeline_seconds": 1498.3
+  },
+  {
+    "title": "NEON",
+    "project_id": "1793237089917",
+    "job_id": "dance_1793237089917",
+    "started": "2026-10-29T02:04:02.151Z",
+    "plugin_started": "2026-10-29T02:04:14.196Z",
+    "completed": "2026-10-29T02:48:31.953Z",
+    "active_wall_seconds": 2669.802,
+    "pipeline_seconds": 2656.6
+  }
+]

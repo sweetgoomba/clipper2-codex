@@ -1,0 +1,184 @@
+{
+  "MMN": {
+    "pid": "1793674437287",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793674437287/json/dance_meta.json",
+    "meta_sha256": "dfbf5d3de0cf4f4527f4a77877c6c68556992afb9f293be11228b0d34755e143",
+    "startedAt": "2026-11-03T02:53:59.009Z",
+    "finishedAt": "2026-11-03T02:59:07.603Z",
+    "params_source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/BZDZBUyaJbA",
+      "requestedQuality": "1080p"
+    },
+    "selected_images": {
+      "허윤진": [
+        "dance-asset:acf3344b-8da0-4c85-983d-8361d7d42aca:dacda9578c565a2aeb5d12be6f2ba7b7",
+        "dance-asset:41ec38c6-098a-411a-a13c-001470de7eb2:00f6ad9e845742920c73fdbff2365554",
+        "dance-asset:6a86a488-a5cb-4129-bf05-82742d513199:847550a864f901db659ae515c85e6d8d",
+        "dance-asset:4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2:4f4dbf85ac07e4b35ddf8e86f1b45032",
+        "dance-asset:45420a1b-0666-4f74-92ed-f69f05194d3d:bfac300caf192323ee0c0b00aba8a83d",
+        "dance-asset:10d77536-9576-4186-966d-da2fa18f082b:57d575510256d43c95a7d4d1288b81cc",
+        "dance-asset:e4736b85-86e6-4cd1-80ef-b6b83792f3e7:4d9170c324166c0c97448b09655ad59a",
+        "dance-asset:782997da-79b7-4eb5-a5f2-88689f09d46c:cf411a0ed880da8ea4678a566341721b"
+      ],
+      "홍은채": [
+        "dance-asset:eca625c2-a5e6-4a02-9e81-58efdc4f06fb:dd88fcef07de1ca78f9aca7c09881323",
+        "dance-asset:40a115f8-670d-4001-b311-a12e71120ade:af5d3962a353be531223cfea0c0ecf8d",
+        "dance-asset:751eeea6-a217-4f85-998c-81adf3990720:d0cb6f3ab5a0e9ba3bbc0f0d3a560aaa",
+        "dance-asset:c8006503-1e65-4f71-bc9d-2f5040975d63:10687edafae46d2a322a63cf78ba5f92",
+        "dance-asset:00273f0d-b929-412b-9314-9d4c98b137ee:299057be61e258717f7ba5535a7b6b86",
+        "dance-asset:e01960a6-3239-4fc6-82b9-3f6513cdaa71:8865e561bb15b4e7507796f07d0c7504"
+      ],
+      "카즈하": [
+        "dance-asset:f734d783-0970-4a51-9e4c-6fe485bca7ea:a3a38c5738c26f36fb5584913e06ff4a",
+        "dance-asset:fd12ee85-9561-45c0-a51c-385dadba4196:815800151e9a385089e38b49f207937d",
+        "dance-asset:bbbb8289-9586-4ebb-87ef-c5b36b953c3f:f3f52df81a3a4746fb3b7751d6496524",
+        "dance-asset:858d432e-e73e-433a-ba90-5871a0683ee5:941aa8d82400f9296360c02a384c24fa",
+        "dance-asset:12e1c164-a348-405d-956a-8015b631f0ce:1b15250b8961bff041bf6bf742fd1472"
+      ],
+      "김채원": [
+        "dance-asset:93b52129-8de1-4c08-8b5b-c5b3a72b7b89:5dda323d34c85f74085d29f5923e74dc",
+        "dance-asset:0b47c9d5-bbbc-4402-8095-2848e1fd4899:3e09b6fa8e97c70b55f54c0e8364d585",
+        "dance-asset:f87f9245-9ab5-4422-8fea-7a9e9537c3d2:a6ae3860a57095c781b3312613058051",
+        "dance-asset:94bfa131-b5ba-48cb-adbd-bc9a99a78db8:444d3ed74823cebceaf12ea9c36cbf9c",
+        "dance-asset:04b4674c-3ad1-4bee-8dd8-fde48a498652:f57612a1023428093d57f023c97db0d1",
+        "dance-asset:5ece3942-a5d8-4399-982f-41388de37344:1b36d739f4e95372eea961daf8665daa"
+      ],
+      "사쿠라": [
+        "dance-asset:bc1e6635-0831-4bdc-819b-8e0557f29b0c:6d97bf8a439241f752a29a247e79c825",
+        "dance-asset:924036b1-bf13-42d8-a5d3-97ad967672da:8d88cd13393e09f92753c3005a19fa49",
+        "dance-asset:98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae:400bdbc518c3f82a581c985dd74bb9b0",
+        "dance-asset:cf2daf1b-82a2-49e5-86da-a2840d1383eb:f0babe9a9503e46b1b2baabff9f02a89",
+        "dance-asset:1c4893ca-d993-487e-a220-e919482e405a:05401007dc9efd54fb1b4668ba1c9ac2",
+        "dance-asset:c6d893d0-def1-49b9-934a-54c2ea1db318:e6f233091f36c5eedb7a744c56a0c778"
+      ]
+    }
+  },
+  "ANT": {
+    "pid": "1793674460357",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793674460357/json/dance_meta.json",
+    "meta_sha256": "0b82e088df8482a31d335bfbf5d407dfe141e6f0f9e2c83aff070b00672abe80",
+    "startedAt": "2026-11-03T02:59:07.778Z",
+    "finishedAt": "2026-11-03T03:05:49.432Z",
+    "params_source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/p_XdZdg9oGc",
+      "requestedQuality": "1080p"
+    },
+    "selected_images": {
+      "허윤진": [
+        "dance-asset:acf3344b-8da0-4c85-983d-8361d7d42aca:dacda9578c565a2aeb5d12be6f2ba7b7",
+        "dance-asset:41ec38c6-098a-411a-a13c-001470de7eb2:00f6ad9e845742920c73fdbff2365554",
+        "dance-asset:6a86a488-a5cb-4129-bf05-82742d513199:847550a864f901db659ae515c85e6d8d",
+        "dance-asset:4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2:4f4dbf85ac07e4b35ddf8e86f1b45032",
+        "dance-asset:45420a1b-0666-4f74-92ed-f69f05194d3d:bfac300caf192323ee0c0b00aba8a83d",
+        "dance-asset:10d77536-9576-4186-966d-da2fa18f082b:57d575510256d43c95a7d4d1288b81cc",
+        "dance-asset:e4736b85-86e6-4cd1-80ef-b6b83792f3e7:4d9170c324166c0c97448b09655ad59a",
+        "dance-asset:782997da-79b7-4eb5-a5f2-88689f09d46c:cf411a0ed880da8ea4678a566341721b"
+      ],
+      "홍은채": [
+        "dance-asset:eca625c2-a5e6-4a02-9e81-58efdc4f06fb:dd88fcef07de1ca78f9aca7c09881323",
+        "dance-asset:40a115f8-670d-4001-b311-a12e71120ade:af5d3962a353be531223cfea0c0ecf8d",
+        "dance-asset:751eeea6-a217-4f85-998c-81adf3990720:d0cb6f3ab5a0e9ba3bbc0f0d3a560aaa",
+        "dance-asset:c8006503-1e65-4f71-bc9d-2f5040975d63:10687edafae46d2a322a63cf78ba5f92",
+        "dance-asset:00273f0d-b929-412b-9314-9d4c98b137ee:299057be61e258717f7ba5535a7b6b86",
+        "dance-asset:e01960a6-3239-4fc6-82b9-3f6513cdaa71:8865e561bb15b4e7507796f07d0c7504"
+      ],
+      "카즈하": [
+        "dance-asset:f734d783-0970-4a51-9e4c-6fe485bca7ea:a3a38c5738c26f36fb5584913e06ff4a",
+        "dance-asset:fd12ee85-9561-45c0-a51c-385dadba4196:815800151e9a385089e38b49f207937d",
+        "dance-asset:bbbb8289-9586-4ebb-87ef-c5b36b953c3f:f3f52df81a3a4746fb3b7751d6496524",
+        "dance-asset:858d432e-e73e-433a-ba90-5871a0683ee5:941aa8d82400f9296360c02a384c24fa",
+        "dance-asset:12e1c164-a348-405d-956a-8015b631f0ce:1b15250b8961bff041bf6bf742fd1472"
+      ],
+      "김채원": [
+        "dance-asset:93b52129-8de1-4c08-8b5b-c5b3a72b7b89:5dda323d34c85f74085d29f5923e74dc",
+        "dance-asset:0b47c9d5-bbbc-4402-8095-2848e1fd4899:3e09b6fa8e97c70b55f54c0e8364d585",
+        "dance-asset:f87f9245-9ab5-4422-8fea-7a9e9537c3d2:a6ae3860a57095c781b3312613058051",
+        "dance-asset:94bfa131-b5ba-48cb-adbd-bc9a99a78db8:444d3ed74823cebceaf12ea9c36cbf9c",
+        "dance-asset:04b4674c-3ad1-4bee-8dd8-fde48a498652:f57612a1023428093d57f023c97db0d1",
+        "dance-asset:5ece3942-a5d8-4399-982f-41388de37344:1b36d739f4e95372eea961daf8665daa"
+      ],
+      "사쿠라": [
+        "dance-asset:bc1e6635-0831-4bdc-819b-8e0557f29b0c:6d97bf8a439241f752a29a247e79c825",
+        "dance-asset:924036b1-bf13-42d8-a5d3-97ad967672da:8d88cd13393e09f92753c3005a19fa49",
+        "dance-asset:98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae:400bdbc518c3f82a581c985dd74bb9b0",
+        "dance-asset:cf2daf1b-82a2-49e5-86da-a2840d1383eb:f0babe9a9503e46b1b2baabff9f02a89",
+        "dance-asset:1c4893ca-d993-487e-a220-e919482e405a:05401007dc9efd54fb1b4668ba1c9ac2",
+        "dance-asset:c6d893d0-def1-49b9-934a-54c2ea1db318:e6f233091f36c5eedb7a744c56a0c778"
+      ]
+    }
+  },
+  "NEON": {
+    "pid": "1793674513908",
+    "meta": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793674513908/json/dance_meta.json",
+    "meta_sha256": "d839883b0daa837f932557c9d8cb140f3c6fe1d68de3d6424490de72dac1e918",
+    "startedAt": "2026-11-03T03:05:49.973Z",
+    "finishedAt": "2026-11-03T03:13:06.662Z",
+    "params_source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/93j1fDGi_-8",
+      "requestedQuality": "1080p"
+    },
+    "selected_images": {
+      "보라": [
+        "dance-asset:76889073-f5cd-44e5-afde-3e4579545277:e19771ca60b9bff3d21702debc126d38",
+        "dance-asset:7df35f93-15eb-45aa-b1d5-5859222363a5:0f8ba0df5b229b3042537f37d57eacc0",
+        "dance-asset:0773c80d-1d88-4330-b803-d94a18cf4dd8:d2bf6e3e43d5922f062a283ff60ca3c7",
+        "dance-asset:033788eb-504e-48ec-bc1b-ed1c38c24054:2e899c32bf36d805e943e211aba60d4b",
+        "dance-asset:38f60b69-e905-4398-89fc-762de39a62ec:9b6441f10dccd98090d47e21496b6fdb"
+      ],
+      "히메키": [
+        "dance-asset:fe28c489-ec67-43aa-ae57-9d928f884919:284d65ce3674fe5945debc49f831d2ae",
+        "dance-asset:bc5321da-bcda-4f4e-bc6f-36ac57c06643:8fb34f2afd175251d907cd99d5ba012b",
+        "dance-asset:a7fa4a45-9d56-4166-9c45-5dae966b77ea:85b7dcf245bb1dcdaa9d71f284004276",
+        "dance-asset:77cb5b24-9e39-4d72-8d90-8f3b71f12102:52a6dd3ca3b02d6b5bab82b47c9ea730",
+        "dance-asset:8f2e303b-aaf9-4172-b104-0e646d3f9b05:86ecdcd1e2b7c5d43c09827b6a5b018d",
+        "dance-asset:85d9c502-b888-4c2f-bef2-89cf1c6f41e3:6007d4ae60b01b5cdf195a808d5569a2",
+        "dance-asset:1f0fa988-b036-4eb8-9e95-d5aa9aa777cb:97457f896f3540b224baeab198c31a6c"
+      ],
+      "아윤": [
+        "dance-asset:01dc995e-d260-4eec-9cd3-a481ce69ab9d:71fbefe716883938710733b0e8cc9529",
+        "dance-asset:108b719f-9f85-4096-8b15-bbd2d6670c9e:d420f23699baf6c6f41e9529afa9370d",
+        "dance-asset:556f281b-9d7d-4fb0-ac86-21c998fa9d13:a2ba824de35377524ded5867bf6df52d",
+        "dance-asset:3afac97b-9592-4005-a4fe-a32c1d536cd6:aa2554939e7addb2249c9d346bea8ef1",
+        "dance-asset:496dc9ca-5443-4ef4-9884-cdb0d757db7f:a83703cdc448debce2fdbfda19247de1"
+      ],
+      "라다": [
+        "dance-asset:05dac683-f231-47aa-8ae9-f9268a766540:b55f37dd8f8070bf061e8760a4928d80",
+        "dance-asset:fe713102-e47f-4bb0-bd42-3a3b5c40a620:6e5f57ef3ab9e341e1635b70b0220fde",
+        "dance-asset:24a08a26-7150-4364-b3b3-84cde131354a:3838aa4bb23b2d692e445676aaed7e2e"
+      ],
+      "시리": [
+        "dance-asset:841b81b4-bc3d-4b89-b762-4b9d53fdb245:38e8bf21f6e5113c10f2c26fd124ccbb",
+        "dance-asset:b219341e-ca06-46b2-aeb0-2da4d6945060:5d974a0bf4c507619c97121ec74290d0",
+        "dance-asset:62a15573-ce41-4c40-98e0-ddc005e95c17:14b356dd0a0f6a51220f49072b364af3"
+      ],
+      "아이찡": [
+        "dance-asset:7b0174b0-ac53-462c-ad0b-6e0fee9afc7d:1dab6768a448767bf4cb883409b58efb",
+        "dance-asset:2507070a-d289-4a8a-8cd5-019fd1607ca3:c6b694e16b43769bd0c160dd9a6cecc9",
+        "dance-asset:b9b5cce4-2e62-4b66-8353-3b6c9087f15f:8507d91dcb036ac75aecb35d04a93154",
+        "dance-asset:feb19612-6002-4118-adec-404f55bd952b:a6a119535f6a3a808ca03086dc031147"
+      ],
+      "영": [
+        "dance-asset:ec0faa03-5347-45c3-bd8d-d044e72c9439:516c8893f8ed5a62d5f61f96a9049947",
+        "dance-asset:98bfea9f-05bb-48a4-a275-ab332795fa98:a744ab0611cb4328c18d046406a790ae",
+        "dance-asset:85ba75c3-9b23-439f-a210-ce437d06951b:fbb3f1b51495e942ec80ea39ea03705b",
+        "dance-asset:83b061dd-a513-4748-83fa-f0c3322732ca:71d0e11415a8b9b140ec33a566a48249"
+      ],
+      "오아": [
+        "dance-asset:41985b97-43d8-4e1d-82f1-00543eec8fa0:d14fc2ee09697daf445ec7f3b8767233",
+        "dance-asset:3b790696-b058-402e-95b8-b49bf8522435:cb58e6ddb0fed5b1c43a5f2187212aec",
+        "dance-asset:daae22af-6f99-447d-9359-69f0a3ade24d:9606e52ae561cbcff1d4f63319214b23",
+        "dance-asset:9ce9f98f-ce03-4f14-94d5-ed662cfcf513:537814274023cc6df201570281d6afbc"
+      ],
+      "메르시": [
+        "dance-asset:d0693add-13d3-4907-93e9-b9acfab3d41d:2e16598045914ca1f58ab8ceffdee8d6",
+        "dance-asset:c8a0e5a3-40dc-420d-a64c-c82b4b6b7860:796ef54f6dd27c3cbcdf2aa2e204047f",
+        "dance-asset:4e7f873b-e202-4561-9d1d-4de53a74277f:1a312042f1e9d08a40c0830457632f62",
+        "dance-asset:289760af-9efe-4b26-9eb5-c07ff9d30e41:0b92bd6b4427b94aaf261f10db3f7bb5",
+        "dance-asset:ef142b3c-8108-473e-9c32-f95bb08325cc:3d1639d9d59b688039b3dedf1ffdfaf1"
+      ]
+    }
+  }
+}

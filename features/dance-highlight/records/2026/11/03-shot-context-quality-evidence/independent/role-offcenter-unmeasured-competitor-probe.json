@@ -1,0 +1,171 @@
+{
+  "scope": "Sustained large cropped off-center body without measured face or reliable torso is added without dropping original bodies.",
+  "source_sha256": "ed8f8725187b1d02d794779c0cdeefd63f909d988f058cc00d3831000e76adbc",
+  "accepted_ranges": [
+    [
+      104.57113333333334,
+      104.90480000000001
+    ]
+  ],
+  "sample_new_competitor": [
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 6,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 6,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    },
+    {
+      "index": 5,
+      "selected": false,
+      "central": false,
+      "x": 239.5,
+      "face": null,
+      "source": "missing",
+      "face_score": null,
+      "torso_length": null,
+      "torso_score": null,
+      "body_height": 1080.0
+    }
+  ],
+  "reasons": [
+    "accepted"
+  ]
+}

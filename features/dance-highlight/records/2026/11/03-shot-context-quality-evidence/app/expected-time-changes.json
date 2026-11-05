@@ -1,0 +1,26 @@
+{
+  "MMN": [
+    {
+      "start": 104.57113333333334,
+      "end": 104.9048,
+      "before": "group only",
+      "after": "허윤진 main + group"
+    }
+  ],
+  "ANT": [
+    {
+      "start": 64.43093333333333,
+      "end": 64.89826666666667,
+      "before": "unknown",
+      "after": "김채원"
+    }
+  ],
+  "NEON": [
+    {
+      "start": 98.2982,
+      "end": 98.53176666666667,
+      "before": "group",
+      "after": "오아"
+    }
+  ]
+}

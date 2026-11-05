@@ -1,0 +1,72 @@
+[
+  {
+    "path": "plugins/dance_highlight/dance_highlight/app.py",
+    "source_sha256": "c272f98f52ff37e9b3a478ebe659ff9d714dde55126c3c203996dc6388d1227f",
+    "packaged_sha256": "c272f98f52ff37e9b3a478ebe659ff9d714dde55126c3c203996dc6388d1227f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+    "source_sha256": "43f833b93e6384f2fc65c4045b6395aea109fb6a5e3227f1de72b79c1a78469a",
+    "packaged_sha256": "43f833b93e6384f2fc65c4045b6395aea109fb6a5e3227f1de72b79c1a78469a"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "source_sha256": "cadb7fb328f3bb5761be83686e5774ad4f12f3ad0e63e492ca3883c4d5512a08",
+    "packaged_sha256": "cadb7fb328f3bb5761be83686e5774ad4f12f3ad0e63e492ca3883c4d5512a08"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+    "source_sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac",
+    "packaged_sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+    "source_sha256": "675eec01ae3a234de16c8b4253383a226d46dac04719e94dc880e09e221a993d",
+    "packaged_sha256": "675eec01ae3a234de16c8b4253383a226d46dac04719e94dc880e09e221a993d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py",
+    "source_sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547",
+    "packaged_sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+    "source_sha256": "80822857b255a035b29e86d69dd3a5ef26f8a6676a5997396115c30e816b571d",
+    "packaged_sha256": "80822857b255a035b29e86d69dd3a5ef26f8a6676a5997396115c30e816b571d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "source_sha256": "cea9c9768e47a7a677c0a7fed00c5a56b95c32a025b275e672e3e12a21d46e43",
+    "packaged_sha256": "cea9c9768e47a7a677c0a7fed00c5a56b95c32a025b275e672e3e12a21d46e43"
+  },
+  {
+    "path": "plugins/dance_highlight/pyproject.toml",
+    "source_sha256": "e1ae5cbe5cb45e346ebecd3468d7f94b815d5a1de339a3a7c066dea0eb8ee80a",
+    "packaged_sha256": "e1ae5cbe5cb45e346ebecd3468d7f94b815d5a1de339a3a7c066dea0eb8ee80a"
+  },
+  {
+    "path": "tests/test_dance_face_cluster_opencv.py",
+    "source_sha256": "06e5438ffb9c1418c7a9cb38ecd79e0d3e6177015ba6723912a17110ca472bbd",
+    "packaged_sha256": null
+  },
+  {
+    "path": "uv.lock",
+    "source_sha256": "e165b4cc2f2c25c8acdf9bc2a439fdca3a76271a2a2d95f10ac496c6e023c105",
+    "packaged_sha256": "e165b4cc2f2c25c8acdf9bc2a439fdca3a76271a2a2d95f10ac496c6e023c105"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+    "source_sha256": "8d9a141bf49debeca25676cd06285874a652617ad0e60204e004d50e4a367837",
+    "packaged_sha256": "8d9a141bf49debeca25676cd06285874a652617ad0e60204e004d50e4a367837"
+  },
+  {
+    "path": "tests/test_dance_exact_reuse.py",
+    "source_sha256": "b3e193f1b6d24663d038f738dc1682519057ac273400e117acfd47f2d30f91d0",
+    "packaged_sha256": null
+  },
+  {
+    "path": "tests/test_dance_face_runtime.py",
+    "source_sha256": "ea0d4a0d6ee1e99a5467d725d75185c7b14b2482677840716e6eb7d9e6fd72f4",
+    "packaged_sha256": null
+  }
+]

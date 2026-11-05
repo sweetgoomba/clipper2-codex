@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Made My Night",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 5004,
+      "inferences": 4846,
+      "cache_hits": 158,
+      "fallbacks": 0,
+      "inference_seconds": 67.45842519699363,
+      "setup_seconds": 1.4900187499588355
+    },
+    "mask_reason": null,
+    "mask_recovered_seconds": 3.387016666666689,
+    "mask_attempts": 40,
+    "mask_model_initialized": true,
+    "joint_reason": null,
+    "joint_model_initialized": false
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 12979,
+      "inferences": 12566,
+      "cache_hits": 413,
+      "fallbacks": 0,
+      "inference_seconds": 178.10840961051872,
+      "setup_seconds": 1.4900187499588355
+    },
+    "mask_reason": null,
+    "mask_recovered_seconds": 9.243666666666728,
+    "mask_attempts": 86,
+    "mask_model_initialized": true,
+    "joint_reason": null,
+    "joint_model_initialized": true
+  },
+  {
+    "title": "NEON",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 21640,
+      "inferences": 20892,
+      "cache_hits": 748,
+      "fallbacks": 0,
+      "inference_seconds": 293.4239895689534,
+      "setup_seconds": 1.4900187499588355
+    },
+    "mask_reason": null,
+    "mask_recovered_seconds": 8.642766666666759,
+    "mask_attempts": 146,
+    "mask_model_initialized": true,
+    "joint_reason": null,
+    "joint_model_initialized": true
+  }
+]

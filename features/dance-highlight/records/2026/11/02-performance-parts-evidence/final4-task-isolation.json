@@ -1,0 +1,17 @@
+{
+  "changed_existing_files": [
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "plugins/dance_highlight/dance_highlight/services/segment.py",
+    "tests/test_dance_scene_eligibility.py",
+    "tests/test_dance_output_continuity.py"
+  ],
+  "added_files": [
+    "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+    "tests/fixtures/dance_scene_review/compact_formation_roles.json",
+    "tests/fixtures/dance_scene_review/compact_group_gap.json",
+    "tests/test_dance_compact_group_context.py",
+    "tests/test_dance_performance_parts.py"
+  ],
+  "person_shared_sdk_git_status": "",
+  "person_sdk_snapshot_unchanged": true
+}

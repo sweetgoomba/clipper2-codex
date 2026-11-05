@@ -1,0 +1,383 @@
+{
+  "proposed_segment_sha256": "6782f647e99ec66cd46dea0cd4d2f15d6cb72e7aa8bb44435df033e96220329c",
+  "actual": {
+    "MMN": {
+      "changed_observations": 4,
+      "changes": [
+        {
+          "start": 49.916533333333334,
+          "end": 50.18346666666667,
+          "frames": [
+            2992,
+            2996,
+            3000,
+            3004
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [
+              {
+                "start": 49.916533333333334,
+                "end": 50.18346666666667,
+                "name": "unknown"
+              }
+            ],
+            "group": []
+          }
+        }
+      ],
+      "old_group_demotions": 0,
+      "named_seconds_in_changed_scopes": 0,
+      "unknown_seconds_in_changed_scopes": 0.26693333333333413
+    },
+    "ANT": {
+      "changed_observations": 11,
+      "changes": [
+        {
+          "start": 99.83306666666667,
+          "end": 100.3002,
+          "frames": [
+            5984,
+            5988,
+            5992,
+            5996,
+            6000,
+            6004,
+            6008
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [
+              {
+                "start": 99.83306666666667,
+                "end": 99.8998,
+                "name": "김채원"
+              },
+              {
+                "start": 99.8998,
+                "end": 100.3002,
+                "name": "카즈하"
+              }
+            ],
+            "group": []
+          }
+        },
+        {
+          "start": 146.61313333333334,
+          "end": 146.88006666666666,
+          "frames": [
+            8788,
+            8792,
+            8796,
+            8800
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [
+              {
+                "start": 146.61313333333334,
+                "end": 146.67986666666667,
+                "name": "홍은채"
+              },
+              {
+                "start": 146.67986666666667,
+                "end": 146.81333333333333,
+                "name": "unknown"
+              },
+              {
+                "start": 146.81333333333333,
+                "end": 146.88006666666666,
+                "name": "unknown"
+              }
+            ],
+            "group": []
+          }
+        }
+      ],
+      "old_group_demotions": 0,
+      "named_seconds_in_changed_scopes": 0.5338666666666683,
+      "unknown_seconds_in_changed_scopes": 0.20019999999999527,
+      "reviewed_eunchae_unchanged": true
+    },
+    "NEON": {
+      "changed_observations": 23,
+      "changes": [
+        {
+          "start": 76.40966666666667,
+          "end": 77.077,
+          "frames": [
+            4580,
+            4584,
+            4588,
+            4592,
+            4596,
+            4600,
+            4604,
+            4608,
+            4612,
+            4616
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [
+              {
+                "start": 76.40966666666667,
+                "end": 77.077,
+                "name": "unknown"
+              }
+            ],
+            "group": [
+              {
+                "start": 76.4764,
+                "end": 76.94353333333333,
+                "name": null
+              }
+            ]
+          }
+        },
+        {
+          "start": 143.74360000000001,
+          "end": 144.07726666666667,
+          "frames": [
+            8616,
+            8620,
+            8624,
+            8628,
+            8632
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [
+              {
+                "start": 143.74360000000001,
+                "end": 143.84380000000002,
+                "name": "unknown"
+              },
+              {
+                "start": 143.84380000000002,
+                "end": 144.07726666666667,
+                "name": "unknown"
+              }
+            ],
+            "group": []
+          }
+        },
+        {
+          "start": 229.229,
+          "end": 229.76286666666667,
+          "frames": [
+            13740,
+            13744,
+            13748,
+            13752,
+            13756,
+            13760,
+            13764,
+            13768
+          ],
+          "before": "main",
+          "after": "group",
+          "current_app_intersections": {
+            "main": [],
+            "group": [
+              {
+                "start": 229.229,
+                "end": 229.76286666666667,
+                "name": null
+              }
+            ]
+          }
+        }
+      ],
+      "old_group_demotions": 0,
+      "named_seconds_in_changed_scopes": 0,
+      "unknown_seconds_in_changed_scopes": 1.0009999999999906
+    }
+  },
+  "veto_bypass_counterexample": {
+    "description": "0.2s measured central torso inside a short single-body interval between NEW compact-group candidates; old bounded dropout fill can bypass the new veto.",
+    "protected_times": [
+      0.8,
+      0.9,
+      1.0
+    ],
+    "before": [
+      {
+        "t": 0.0,
+        "scene": "main"
+      },
+      {
+        "t": 0.1,
+        "scene": "main"
+      },
+      {
+        "t": 0.2,
+        "scene": "main"
+      },
+      {
+        "t": 0.3,
+        "scene": "main"
+      },
+      {
+        "t": 0.4,
+        "scene": "main"
+      },
+      {
+        "t": 0.5,
+        "scene": "main"
+      },
+      {
+        "t": 0.6,
+        "scene": "main"
+      },
+      {
+        "t": 0.7,
+        "scene": "main"
+      },
+      {
+        "t": 0.8,
+        "scene": "main"
+      },
+      {
+        "t": 0.9,
+        "scene": "main"
+      },
+      {
+        "t": 1.0,
+        "scene": "main"
+      },
+      {
+        "t": 1.1,
+        "scene": "main"
+      },
+      {
+        "t": 1.2,
+        "scene": "main"
+      },
+      {
+        "t": 1.3,
+        "scene": "main"
+      },
+      {
+        "t": 1.4,
+        "scene": "main"
+      },
+      {
+        "t": 1.5,
+        "scene": "main"
+      },
+      {
+        "t": 1.6,
+        "scene": "main"
+      },
+      {
+        "t": 1.7,
+        "scene": "main"
+      },
+      {
+        "t": 1.8,
+        "scene": "main"
+      },
+      {
+        "t": 1.9,
+        "scene": "main"
+      },
+      {
+        "t": 2.0,
+        "scene": "main"
+      }
+    ],
+    "after": [
+      {
+        "t": 0.0,
+        "scene": "group"
+      },
+      {
+        "t": 0.1,
+        "scene": "group"
+      },
+      {
+        "t": 0.2,
+        "scene": "group"
+      },
+      {
+        "t": 0.3,
+        "scene": "group"
+      },
+      {
+        "t": 0.4,
+        "scene": "group"
+      },
+      {
+        "t": 0.5,
+        "scene": "group"
+      },
+      {
+        "t": 0.6,
+        "scene": "group"
+      },
+      {
+        "t": 0.7,
+        "scene": "group"
+      },
+      {
+        "t": 0.8,
+        "scene": "main"
+      },
+      {
+        "t": 0.9,
+        "scene": "main"
+      },
+      {
+        "t": 1.0,
+        "scene": "main"
+      },
+      {
+        "t": 1.1,
+        "scene": "group"
+      },
+      {
+        "t": 1.2,
+        "scene": "group"
+      },
+      {
+        "t": 1.3,
+        "scene": "group"
+      },
+      {
+        "t": 1.4,
+        "scene": "group"
+      },
+      {
+        "t": 1.5,
+        "scene": "group"
+      },
+      {
+        "t": 1.6,
+        "scene": "group"
+      },
+      {
+        "t": 1.7,
+        "scene": "group"
+      },
+      {
+        "t": 1.8,
+        "scene": "group"
+      },
+      {
+        "t": 1.9,
+        "scene": "group"
+      },
+      {
+        "t": 2.0,
+        "scene": "group"
+      }
+    ],
+    "central_interval_changed_to_group": false
+  }
+}

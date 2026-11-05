@@ -1,0 +1,240 @@
+{
+  "checks": [
+    {
+      "check": "MMN: baseline JSON hashes match frozen independent review",
+      "passed": true
+    },
+    {
+      "check": "MMN: both jobs/projects completed without error",
+      "passed": true
+    },
+    {
+      "check": "MMN: source hash and input settings preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: exact reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "MMN: no unexpected output coverage change",
+      "passed": true
+    },
+    {
+      "check": "MMN: no new or renamed main coverage",
+      "passed": true
+    },
+    {
+      "check": "MMN: existing group coverage preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: expected scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "MMN: raw identity and reference evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: pose measurement differences limited to scene labels",
+      "passed": true
+    },
+    {
+      "check": "MMN: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: SAM disabled in both runs",
+      "passed": true
+    },
+    {
+      "check": "MMN: person clip references and counts valid",
+      "passed": true
+    },
+    {
+      "check": "ANT: baseline JSON hashes match frozen independent review",
+      "passed": true
+    },
+    {
+      "check": "ANT: both jobs/projects completed without error",
+      "passed": true
+    },
+    {
+      "check": "ANT: source hash and input settings preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: exact reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "ANT: no unexpected output coverage change",
+      "passed": true
+    },
+    {
+      "check": "ANT: no new or renamed main coverage",
+      "passed": true
+    },
+    {
+      "check": "ANT: existing group coverage preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: expected scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "ANT: raw identity and reference evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: pose measurement differences limited to scene labels",
+      "passed": true
+    },
+    {
+      "check": "ANT: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: SAM disabled in both runs",
+      "passed": true
+    },
+    {
+      "check": "ANT: person clip references and counts valid",
+      "passed": true
+    },
+    {
+      "check": "NEON: baseline JSON hashes match frozen independent review",
+      "passed": true
+    },
+    {
+      "check": "NEON: both jobs/projects completed without error",
+      "passed": true
+    },
+    {
+      "check": "NEON: source hash and input settings preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: exact reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "NEON: no unexpected output coverage change",
+      "passed": true
+    },
+    {
+      "check": "NEON: no new or renamed main coverage",
+      "passed": true
+    },
+    {
+      "check": "NEON: existing group coverage preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: expected scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "NEON: raw identity and reference evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: pose measurement differences limited to scene labels",
+      "passed": true
+    },
+    {
+      "check": "NEON: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: SAM disabled in both runs",
+      "passed": true
+    },
+    {
+      "check": "NEON: person clip references and counts valid",
+      "passed": true
+    },
+    {
+      "check": "total main removed is exactly expected 2.002 seconds",
+      "passed": true
+    },
+    {
+      "check": "named/unknown removal split matches frozen expectation",
+      "passed": true
+    },
+    {
+      "check": "three newly tiny residuals reproduced",
+      "passed": true
+    }
+  ],
+  "count": 42,
+  "all_checks_passed": true,
+  "quality_pass": false,
+  "quality_finding": "P2: Three newly tiny unknown residuals of 3/4/4 source frames; do not equate expected coverage change with no quality regression.",
+  "main_removed_seconds": {
+    "named": 0.5338666666666683,
+    "unknown": 1.46813333333332
+  },
+  "totals": {
+    "main": [
+      309,
+      308
+    ],
+    "group": [
+      120,
+      122
+    ],
+    "total": [
+      429,
+      430
+    ],
+    "subsecond": [
+      245,
+      247
+    ],
+    "under_0_1s": [
+      24,
+      26
+    ],
+    "unknown_seconds": [
+      39.57666666666691,
+      38.10853333333358
+    ]
+  },
+  "tiny_residuals": [
+    {
+      "video": "MMN",
+      "clip_id": "main_0016",
+      "start": 49.866483333333335,
+      "end": 49.916533333333334,
+      "person_id": "unknown",
+      "thumbnail_path": "clips/dance/main/main_0016.jpg",
+      "duration": 0.05004999999999882
+    },
+    {
+      "video": "MMN",
+      "clip_id": "main_0017",
+      "start": 50.18346666666667,
+      "end": 50.2502,
+      "person_id": "unknown",
+      "thumbnail_path": "clips/dance/main/main_0017.jpg",
+      "duration": 0.06673333333333176
+    },
+    {
+      "video": "NEON",
+      "clip_id": "main_0079",
+      "start": 143.67686666666668,
+      "end": 143.74360000000001,
+      "person_id": "unknown",
+      "thumbnail_path": "clips/dance/main/main_0079.jpg",
+      "duration": 0.06673333333333176
+    }
+  ],
+  "active_wall_seconds": [
+    1132.067,
+    1249.958
+  ],
+  "wall_change_percent": 10.413782929808924
+}

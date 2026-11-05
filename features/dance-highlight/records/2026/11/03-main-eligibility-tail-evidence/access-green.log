@@ -1,0 +1,18 @@
+✔ access proxy forwards the caller bearer token (1.045417ms)
+✔ access proxy accepts a promotion plan from the Web API (0.08925ms)
+✔ access proxy rejects malformed provider responses (0.137459ms)
+✔ credit proxies forward summary, grants, and ledger with paging (0.396334ms)
+✔ credit proxies reject malformed summary and page responses (0.197416ms)
+✔ credit summary remains compatible when an older Web API omits currentBenefit (0.077458ms)
+✔ credit summary accepts every valid Web API currentBenefit variant (0.113042ms)
+✔ credit summary rejects currentBenefit variants outside the Web API contract (0.121792ms)
+✔ access and credit controllers obtain auth context from request headers (0.151583ms)
+✔ access proxy accepts the current free plan source without changing entitlements (0.108292ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 252.51975

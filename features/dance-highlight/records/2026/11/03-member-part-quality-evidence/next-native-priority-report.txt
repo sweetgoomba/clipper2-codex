@@ -1,0 +1,72 @@
+Next Dance scene priority — saved-observation diagnosis, 2026-11-03
+
+Status: analysis/proposal only. No product changes, no new inference. Source contact decoding and small saved-pose diagnostics finished before the root's app measurement stop notice; afterward only this report was written. The solved NEON185 duplicate is excluded from this diagnosis and is not counted again.
+
+Short-group inventory: 79 is not a recall target
+Assigned saved baseline: MMN21, ANT25, NEON33 subsecond group exports.
+Exclusive categories against the authoritative strict scene_group_ranges:
+                  no strict group     mixed strict/main     strict scene only
+MMN                     13                    2                    6
+ANT                      9                    3                   13
+NEON                     5                    1                   27
+Total                   27                    6                   46
+
+31/79 overlap already named main output; 33/79 overlap any main output. Deleting these group alternatives cannot be reported as member-name recovery. The 46 strict scene groups still require source review: short duration alone does not establish a defect. Raw cut candidates and boundary audit entries are incomplete truth labels, especially for same-stage edits and no_person boundaries; the absence of an audited edge is not proof of continuity.
+
+The strongest reviewed same-shot fragmentation case is NEON154.120633–157.924433. It exports four strict group islands:
+154.888067–155.488667,156.022533–156.556400,156.689867–156.956800,157.357200–157.624133.
+There is 1.067733s of missing strict group coverage between their first and last edges, before also considering the shot prefix/tail. The envelope contains .200200s unknown main and no named main. Source contact confirms a continuous very distant ensemble. The actual closeup begins at source frame9466 /157.924433 and must remain a hard boundary.
+
+A necessary counterexample exists immediately afterward: the raw cut-inventory block157.924433–181.197683 contains two short group islands around159.426–165.499 but also2.769333s named main and1.768533s unknown main between them. The source images show actual close framing there. A whole-shot group hold or majority vote would erase real main evidence. Same-shot location alone is insufficient.
+
+Exact missing-proof breakdown within reviewed NEON154.120633–157.924433
+57 sampled pose instants: group25, no_person22, main10.
+The first failing requirement for the32 non-group instants is:
+-17: fewer than three complete native bodies.
+-7: native scale veto from one or more large boxes.
+-7: three complete small bodies exist, but the connected time/run or every-raw-box correspondence requirement fails.
+-1: original lowres reliable-torso foreground veto.
+No original joint accepted face occurs in this shot. Only frame9404 has a valid owned face observation (confirmed association, score>=.8, no failure), and it is already a group. There is no independent identity basis for naming the empty intervals. These intervals need scene evidence, not weaker identity thresholds.
+
+What the source pixels show about the seven large native boxes
+-9248/154.287467,186px: real overlapping performers, no coherent head in this particular native body row.
+-9260/154.487667,186px: real performer overlap/back view, reliable torso but no confident head.
+-9264/154.554400,317.875px: upper gold stage decoration; only joint10 crosses the ordinary visible-point confidence threshold.
+-9276/154.754600,195.75px and9280/154.821333,213px: real overlapping/partial performers; reliable torso, no confident head.
+-9320/155.488667,251px and9332/155.688867,260px: LED decoration/reflection; a false reliable torso is predicted despite no coherent head.
+Separately, lowres frame9412/157.023533 has a413.8px gold-decoration body with reliable torso and no coherent head, triggering the original foreground veto.
+The raw geometry alone cannot distinguish the four real partial-person boxes from the false torso on the LED/gold decoration. Ignoring headless boxes or all above-floor boxes would remove real people. Raising H/6 would also admit unrelated genuine foreground. The existing narrow all-joints-unobserved upper exception remains correctly insufficient for these mixed cases.
+
+Single next priority: bracketed physical-body presence for the native group count
+Investigate an evidence contract for a partial torso to establish a distinct ensemble participant, while preserving its partial status and all current size/foreground vetoes. The contract should carry original source indices and measured extent bounds, never synthesize missing head/feet coordinates, name a member, or promote the result to a new anchor.
+
+A concrete safe candidate design:
+1. Freeze original native complete-person observations and the original confirmed native-group episodes before any recovery.
+2. Require the current partial body to have all four torso joints confidently observed inside its body, with coherent shoulder/hip order. It supplies positive current-person evidence; an unobserved rectangle supplies none.
+3. Find mutually unique torso correspondences to original full-body observations on both sides within the existing .6s support neighborhood, with independent source-time separation>=.15s. Reuse the existing .3 normalized correspondence-cost/.08 ambiguity margin, rather than widening it. Retain one-to-one physical-body ownership and connected-component duplicate handling.
+4. Verify source continuity and compatible measured scale across every intervening step. Raw color cut candidates alone are not a complete camera guarantee; a new same-background edit or a new foreground entrant must veto. This continuity check is part of the required proof, not an optional later safeguard.
+5. Count the current full bodies and these separately owned, bracket-supported partial bodies as distinct observed participants. Still require three actual participants. Keep every original H/6 size bound, original foreground veto, cut boundary, and temporal support requirement; do not repair an oversized body or discard decoration using the participant proof.
+6. Apply only within/adjacent to an original proved group episode, and require the entire recovered interval to pass its proofs. No partial island insertion inside a main interval, no arbitrary minimum clip length, and no propagation through recovered results.
+
+Why this is the next useful narrow investigation
+The largest first-failure class is missing complete bodies, and in several source frames the torso is directly observed even when the head/feet confidence drops. The current full-body-count predicate conflates absence of complete joints with absence of that ensemble participant. A bracketed, uniquely owned physical-body proof addresses that distinction without raising scale thresholds or assuming every detection is human.
+
+Saved-data feasibility probe already completed (not a scene patch)
+A diagnostic used only reliable torso points, the above existing correspondence threshold/margin, reciprocal matches, original full-body anchors on both sides, and>=.15s source separation. It found16 partial body observations with bracketing matches in the reviewed shot. Relevant currently missing scene observations include:
+-frame9348/155.9558: an additional distinct-body candidate alongside two full bodies.
+-frames9384/156.5564 and9388/156.623133: bracketing candidates alongside one/two full bodies, within the small gap between existing group islands.
+Other candidates are already group observations and cannot be counted as new recovery. The oversized real partial-person boxes9260/9276/9280 do not have the required bilateral support (one/zero/zero matches); the two LED false torsos have zero matches. This is useful negative evidence: the conservative correspondence test does not magically resolve the large-box vetoes.
+
+Limits and required validation before any product proposal
+-This probe does NOT establish a production-ready bridge: full source-continuity/scale-path verification and distinct-current-person accounting still need explicit tests. No scene replay or clip-reduction claim was made from these16 partial observations.
+-The suggested first fixture is the156.5564–156.689867 group dropout, not the entire3.8s shot. If proofs do not yield a real scene improvement there while protecting counterexamples, reject the candidate.
+-The separate seven large native boxes and original false foreground veto remain blocked. A complete solution of the whole154–157 flicker needs independent evidence that distinguishes real partial people from decoration; the current stored torso-confidence values do not contain that fact. A partial-count fix must not quietly disable those vetoes.
+-Counterexamples: a true closeup inserted between group frames; camera cut at9466 even with similar background; a new headless/occluded foreground body; two dancers crossing/ambiguous torso ownership; duplicated detections of one person; static torso-like stage art; missing one anchor side; support across a sampling gap; and the immediately following real main shot.
+-Any newly accepted group duration, removed unknown-main duration, removed named-main duration and group/main overlaps must be reported separately. No member-name recovery should be claimed from scene reclassification.
+
+Evidence files
+short-group-patterns.json / .txt: all79 clip rows, strict-scene overlap, named overlap, face/cut inventory summaries.
+native-missing-proof.json: all57 original observations, scale/foreground blockers and independent-face inventory.
+native-vetoes-contact.jpg: inspected source images for seven large native boxes and the original foreground false positive.
+torso-owned-scale-diagnostic.json: all bracketing/negative correspondence details.
+probe_torso_owned_scale.py: diagnostic only, no product writes or source-frame inference.

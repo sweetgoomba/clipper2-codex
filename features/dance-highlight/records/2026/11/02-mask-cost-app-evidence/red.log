@@ -1,0 +1,139 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+__________ test_reverse_failure_stops_inference_and_closes_source[3] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f6b8b10>
+bad_frame = 3
+
+    @pytest.mark.parametrize('bad_frame', [None, 3, 1])
+    def test_reverse_failure_stops_inference_and_closes_source(monkeypatch, bad_frame):
+        from dance_highlight.services import mask_tracker as module
+        from dance_highlight.services.face_evidence import FaceObservation
+        from dance_highlight.services.segment import FrameRec
+        image = np.zeros((100, 100, 3), np.uint8)
+        mask = np.zeros((100, 100), bool); mask[:, :50] = True
+        box = np.array([0., 0., 50., 100.])
+        head = np.array([[20., 20., .9], [30., 20., .9]])
+        records = [FrameRec(i/10., 1, box, False, person_bboxes=[box],
+                           person_head_keypoints=[head]) for i in range(5)]
+        anchor = FaceObservation(0, 0., 1, tuple(box), tuple(box), face_bbox=(10., 10., 40., 30.))
+        tracker = module.MaskTracker.__new__(module.MaskTracker)
+        tracker.source = 'unused'; tracker.fps = 10.; tracker.on_progress = None
+        tracker._cuts = lambda *args: set()
+        closed, inferred = [], []
+        class Capture:
+            def __init__(self, *args): pass
+            def isOpened(self): return True
+            def get(self, prop): return 10.
+            def release(self): closed.append('capture')
+        monkeypatch.setattr(module.cv2, 'VideoCapture', Capture)
+        def masks(cap, rows, **kwargs):
+            reverse = 'masks' in kwargs
+            try:
+                for record in rows:
+                    frame = round(record.t*10)
+                    if reverse: inferred.append(frame)
+                    current = ~mask if reverse and frame == bad_frame else mask
+                    yield frame, image, current
+            finally:
+                closed.append('reverse' if reverse else 'forward')
+        tracker._masks = masks
+        result = tracker(anchor, records, [1, 2, 3, 4])
+        assert result['accepted'] is (bad_frame is None)
+        if bad_frame is None:
+            assert result['support_frames'] == [1, 2, 3, 4]
+            assert inferred == [4, 3, 2, 1, 0]
+        else:
+            assert result['reason'] == 'inconsistent_visual_path'
+>           assert inferred == list(range(4, bad_frame-1, -1))
+E           assert [4, 3, 2, 1, 0] == [4, 3]
+E             
+E             Left contains 3 more items, first extra item: 2
+E             Use -v to get more diff
+
+tests/test_dance_mask_tracker.py:47: AssertionError
+__________ test_reverse_failure_stops_inference_and_closes_source[1] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f6a34d0>
+bad_frame = 1
+
+    @pytest.mark.parametrize('bad_frame', [None, 3, 1])
+    def test_reverse_failure_stops_inference_and_closes_source(monkeypatch, bad_frame):
+        from dance_highlight.services import mask_tracker as module
+        from dance_highlight.services.face_evidence import FaceObservation
+        from dance_highlight.services.segment import FrameRec
+        image = np.zeros((100, 100, 3), np.uint8)
+        mask = np.zeros((100, 100), bool); mask[:, :50] = True
+        box = np.array([0., 0., 50., 100.])
+        head = np.array([[20., 20., .9], [30., 20., .9]])
+        records = [FrameRec(i/10., 1, box, False, person_bboxes=[box],
+                           person_head_keypoints=[head]) for i in range(5)]
+        anchor = FaceObservation(0, 0., 1, tuple(box), tuple(box), face_bbox=(10., 10., 40., 30.))
+        tracker = module.MaskTracker.__new__(module.MaskTracker)
+        tracker.source = 'unused'; tracker.fps = 10.; tracker.on_progress = None
+        tracker._cuts = lambda *args: set()
+        closed, inferred = [], []
+        class Capture:
+            def __init__(self, *args): pass
+            def isOpened(self): return True
+            def get(self, prop): return 10.
+            def release(self): closed.append('capture')
+        monkeypatch.setattr(module.cv2, 'VideoCapture', Capture)
+        def masks(cap, rows, **kwargs):
+            reverse = 'masks' in kwargs
+            try:
+                for record in rows:
+                    frame = round(record.t*10)
+                    if reverse: inferred.append(frame)
+                    current = ~mask if reverse and frame == bad_frame else mask
+                    yield frame, image, current
+            finally:
+                closed.append('reverse' if reverse else 'forward')
+        tracker._masks = masks
+        result = tracker(anchor, records, [1, 2, 3, 4])
+        assert result['accepted'] is (bad_frame is None)
+        if bad_frame is None:
+            assert result['support_frames'] == [1, 2, 3, 4]
+            assert inferred == [4, 3, 2, 1, 0]
+        else:
+            assert result['reason'] == 'inconsistent_visual_path'
+>           assert inferred == list(range(4, bad_frame-1, -1))
+E           assert [4, 3, 2, 1, 0] == [4, 3, 2, 1]
+E             
+E             Left contains one more item: 0
+E             Use -v to get more diff
+
+tests/test_dance_mask_tracker.py:47: AssertionError
+_ test_group_only_unknowns_skip_tracking_but_mixed_main_remains_eligible[False] _
+
+mixed = False
+
+    @pytest.mark.parametrize('mixed', [False, True])
+    def test_group_only_unknowns_skip_tracking_but_mixed_main_remains_eligible(mixed):
+        from dance_highlight.services.mask_continuity import recover_mask_names
+        original, records, anchors = recovery_example()
+        records = [replace(r, scene_kind='group', main_bbox=None)
+                   if 2 <= r.t < (3 if mixed else 4) else r for r in records]
+        calls = []
+        def verify(anchor, path, targets):
+            calls.append(anchor.frame_index)
+            return dict(accepted=False, reason='unconfirmed_main_ownership', frame=targets[0])
+        result, audit = recover_mask_names(original, records, 'unused', 10., anchors,
+                                           verify_track=verify, cut_frames=[])
+        assert result is original
+        assert audit['recovered_seconds'] == 0
+        if mixed:
+            assert calls
+        else:
+>           assert calls == []
+E           assert [18, 42, 42] == []
+E             
+E             Left contains 3 more items, first extra item: 18
+E             Use -v to get more diff
+
+tests/test_dance_mask_continuity.py:138: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_dance_mask_tracker.py::test_reverse_failure_stops_inference_and_closes_source[3]
+FAILED tests/test_dance_mask_tracker.py::test_reverse_failure_stops_inference_and_closes_source[1]
+FAILED tests/test_dance_mask_continuity.py::test_group_only_unknowns_skip_tracking_but_mixed_main_remains_eligible[False]
+3 failed, 2 passed in 1.18s

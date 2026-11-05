@@ -1,0 +1,41 @@
+NEON 통합 실제 앱 독립 검토 — 2026-11-03 KST
+
+대상: baseline1793639268565, canonical1793645871567, final1793649654322. 저장 JSON/코드/JPEG 바이트와 최종 기존 JPEG4개만 열었다. 새 영상 decode/full inference/pytest/replay/rebenchmark 없음. MMN/ANT의 검토는 반복하지 않았다. 수치는 neon-json-only-review.json과 audit_neon_json_only.py에 보존했다.
+
+판정
+최종 보정 후보는 실제 앱에 의도대로 반영됐으며 canonical 대비 추가로 예상 밖의 이름/구간/동일시작점 썸네일 변경을 발견하지 못했다. 그러나 NEON43.777067–44.110733의 main 역할 확장 주의점은 해결되지 않았다. 따라서 baseline 대비 '품질 퇴행 전혀 없음/모든 역할 오류 해결' 판정은 할 수 없다. 실행시간 역시 증가했다.
+
+Identity padding과 추가 변화
+- Oa42.609233–42.642600은 unknown으로 바뀌었다. 원래 support2560와 path2552/2556/2560 사이 selected_body_discontinuity 때문에 거부된 audit가 있다. .033367초 fragment 자체는 unknown으로 남아, 이름 전파 문제의 차단과 단편화 해결을 구별해야 한다.
+- Oa93.026267–93.059533도 unknown으로 바뀌고 뒤unknown과 합쳐93.026267–94.594500이 됐다. support5560/path5560..5576 step4, selected_body_discontinuity로 거부됐다. 이전 rounded scratch의 unobserved_selected_pose 진단과 혼동하지 않는다.
+- 합계 .066633초의 무근거 이름 전파를 차단했다. incoming_identity_boundary correction0/source read0.
+- group연결3개: 52.852800–53.119733,210.877333–210.944067,221.754867–221.888333. gap합계 .467133초, 실제source43읽기/3seek audit가 이전 독립 관측경로와 일치한다.
+- canonical 대비 원시186개 이름/유형/시작/끝 동일. 위 두padding 보정과3group연결 외 raw차이 없음. canonical의 이전 이름변화(70초경계,165초unknown,201초unknown,203초Bora 등)는 이번최종수정에서추가확대되지 않았다.
+- canonical raw195/short112 → final raw191/109. named96→94/short37→35, unknown46→47/short43→44/16.718300→16.784933초, group53→50/short32→30. 이름 없는 시간이 늘어난 것은 padding의 이름을 보류했기 때문이며 인식 향상으로 세지 않는다.
+- group50중1개가하나의matched main에완전포함되고다른matched멤버양의중첩없어출력억제됨을독립확인했다. visible190/108, raw에서그1개만제외한ID집합과정확히같다.
+- final main시간합집합은canonical과같다. baseline보다는43.777067–44.110733 main확장때문에다르다. 전체main+group시간합집합은baseline과같으므로전체coverage불변으로역할확장을정당화하면안된다.
+
+43.777 역할 주의점 — 미해결
+현재main은Oa43.777067–45.045000이고group42.642600–44.110733도원시결과에남아있다. scene_context seed2644로2624/2628/2632/2636/2640을group→main으로확장했으며5개모두exclusive_foreground=false,role_retention=false이다. 이름/몸연결이있어도이5개샘플의개인주역우위가별도로증명된것은아니다.
+최종main_0015.jpg도여러사람이함께춤추는formation화면이다. 이한장으로사람이름이나실제파트정답을새로단정하지않으며, 역할경고가해결됐다는양성근거도얻지못했다. 이는새final변경이만든추가차이는아니지만canonical에서남겨둔baseline대비역할확장우려다. 다음설계의role-eligibility과제로계속남겨야한다.
+
+썸네일
+- canonical 대비같은시작점191개전부JPEG바이트동일; 신규시작0/예상외변경0.
+- baseline대비같은시작점187개전부동일; 새시작4개42.609233/43.777067/70.036633/165.865800은이미canonical에도있던시작이다.
+- 실제최종JPEG main_0014/0015/0031/0099 네개를열었다. 모두정상full source frame이며빈이미지/파일손상/잘못된crop없음. 첫두개는여러사람formation,70초는군무와우측전신인물,165초는전경인물을포함한무대프레임이다. 일부동작blur와조명은원본장면의특성이다. 이미canonical과바이트가같으므로이번최종본의추가렌더링열화는없다. 이것을생체시각식별또는전체영상의역할정답판정으로해석하지않는다.
+
+사용자 확인범위
+원시JSON을직접잘라baseline/canonical/final을비교했다.78.378–79.680은시리main,150.617–152.619는group,183.15–184.82는group이며세범위모두전체시간동일하다. 새역할확장으로이정답범위를침범하지않았다.
+부모세션의14범위canonical/최종raw투영자료도대조했다. 바뀐것은MMN37.738–39.339의사쿠라복원한범위뿐이며다른13범위는동일하다. MMN범위안의accepted coverage .466733→1.601000초,unknown1.134267→0(사용자끝39.339와실제clip39.3393차이로전체회복1.134567초와.0003초차이). 기존실패범위를통과로재분류하지않는다.
+
+동일성/SAM/시간
+- final3632 frame records가canonical과완전히같다. config/setup,refs40파일바이트,기록sourceSHA,모델메타데이터같다.64개실제source/package파일SHA일치,대응runtime47모듈SHA일치.
+- SAM disabled_runtime_cost_v1,candidates0,recovered/corrected/conflict0,mask/joint stage0,모델YuNet/AuraFace.
+- 실제job시작/종료에서461.224→473.277초,+12.053초(+2.613%). normalization .672083초,group .231054초,incoming .170711초(named_boundaries.180761안에포함). 새로더하는중첩시간은합산하지않는다.
+- YOLO+9.933676초,face_extract+2.966827,main_selection+2.849785,segment_build−2.197202등혼재. 전체wall변화의인과는한번의이비교로확정하지않는다.
+
+세 영상 합산 결론
+상세는three-video-independent-summary.json. baseline409/short226→최종raw400/216→중복단체26개출력억제후374/195. unknown38.141600→36.806633초(−1.334967). canonical408/224→finalraw400/216이며MMN복원·ANT교정·NEONpadding보류·group5연결의결과다. 표시감소35개전부를인식정확도개선으로보고하면안된다.
+전체원시400개중baseline과같은시작394개의썸네일바이트동일/신규시작6개,canonical과같은시작399개동일/신규시작1개(ANT교정)다. 예상외동일시작점바이트변경0. clip ID나단체화면순번은병합/출력억제로달라질수있고,여기서이름보존은멤버표기를뜻한다. liveUI의단체순번문구까지불변이라고보증하지않는다.
+모든9266 frame records는canonical과같고세영상SAM OFF확인. job wall합계1207.958→1326.930초,+118.972초(+9.849%). 이는작업별wall의합이며큐전체elapsed와구별한다. ANT부하snapshot은동시부하증거지만환경통제/인과증명은아니다.
+최종결론은'의도한보정의실앱작동및지정범위보존확인,NEON43.777역할주의점과기존MMN45중첩/기타사용자실패남음,관측wall증가'이다. 구조설계제안next-role-assembly-design.txt는이번앱성과와별개다.

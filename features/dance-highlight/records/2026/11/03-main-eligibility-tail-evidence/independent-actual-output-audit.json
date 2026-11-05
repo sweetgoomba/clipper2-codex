@@ -1,0 +1,570 @@
+{
+  "MMN": {
+    "status": "completed",
+    "before_id": "1793674437287",
+    "after_id": "1793689166971",
+    "before": {
+      "visible_clips": 67,
+      "subsecond": 26,
+      "unknown_seconds": 5.6392666666667,
+      "wall_seconds": 308.594
+    },
+    "after": {
+      "visible_clips": 68,
+      "subsecond": 22,
+      "unknown_seconds": 10.744666666666703,
+      "wall_seconds": 335.439
+    },
+    "same_source": true,
+    "same_selected_images": true,
+    "changed_label_seconds": 13.54666666666666,
+    "changed_intervals": [
+      {
+        "start": 34.4344,
+        "end": 34.467666666666666,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "사쿠라"
+        ]
+      },
+      {
+        "start": 40.17346666666667,
+        "end": 41.30793333333333,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "group",
+          "사쿠라"
+        ]
+      },
+      {
+        "start": 41.30793333333333,
+        "end": 41.641600000000004,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "group"
+        ]
+      },
+      {
+        "start": 41.641600000000004,
+        "end": 41.708333333333336,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "group",
+          "사쿠라"
+        ]
+      },
+      {
+        "start": 50.650600000000004,
+        "end": 50.68396666666667,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "group"
+        ]
+      },
+      {
+        "start": 50.68396666666667,
+        "end": 50.83411666666667,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "group"
+        ]
+      },
+      {
+        "start": 52.452400000000004,
+        "end": 52.48576666666666,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 73.2732,
+        "end": 73.30656666666667,
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "허윤진"
+        ]
+      },
+      {
+        "start": 97.79780000000001,
+        "end": 97.84775,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "홍은채"
+        ]
+      },
+      {
+        "start": 102.93616666666667,
+        "end": 103.25315,
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "홍은채"
+        ]
+      },
+      {
+        "start": 111.86175,
+        "end": 112.24546666666667,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "김채원"
+        ]
+      },
+      {
+        "start": 112.24546666666667,
+        "end": 112.57913333333333,
+        "before": [
+          "group",
+          "unknown"
+        ],
+        "after": [
+          "group",
+          "김채원"
+        ]
+      },
+      {
+        "start": 117.3172,
+        "end": 118.18473333333334,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "group",
+          "김채원"
+        ]
+      },
+      {
+        "start": 118.18473333333334,
+        "end": 118.50171666666667,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "group"
+        ]
+      },
+      {
+        "start": 118.50171666666667,
+        "end": 118.5184,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "group"
+        ]
+      },
+      {
+        "start": 127.7276,
+        "end": 131.29773333333333,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "group",
+          "홍은채"
+        ]
+      },
+      {
+        "start": 131.29773333333333,
+        "end": 131.99853333333334,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "group",
+          "unknown"
+        ]
+      },
+      {
+        "start": 131.99853333333334,
+        "end": 134.16736666666668,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 134.16736666666668,
+        "end": 137.17036666666667,
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "unknown"
+        ]
+      }
+    ],
+    "thumbnail_common_count": 56,
+    "thumbnail_different": [],
+    "thumbnail_new_starts_count": 12,
+    "protected_short_windows": [
+      {
+        "range": [
+          26.1428,
+          26.393
+        ],
+        "changed_overlaps": []
+      },
+      {
+        "range": [
+          88.4217,
+          88.8554
+        ],
+        "changed_overlaps": []
+      }
+    ],
+    "mask_and_joint_stage_seconds": [
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 1.5148480830248445
+      },
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 1.5345002500107512
+      }
+    ]
+  },
+  "ANT": {
+    "status": "completed",
+    "before_id": "1793674460357",
+    "after_id": "1793689269286",
+    "before": {
+      "visible_clips": 116,
+      "subsecond": 60,
+      "unknown_seconds": 14.349066666666722,
+      "wall_seconds": 401.654
+    },
+    "after": {
+      "visible_clips": 120,
+      "subsecond": 63,
+      "unknown_seconds": 16.051266666666685,
+      "wall_seconds": 481.546
+    },
+    "same_source": true,
+    "same_selected_images": true,
+    "changed_label_seconds": 3.537066666666618,
+    "changed_intervals": [
+      {
+        "start": 64.3643,
+        "end": 64.89826666666667,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 73.44003333333333,
+        "end": 73.80706666666667,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "허윤진"
+        ]
+      },
+      {
+        "start": 98.73196666666666,
+        "end": 98.7986,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "김채원"
+        ]
+      },
+      {
+        "start": 99.7997,
+        "end": 99.8998,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "카즈하"
+        ]
+      },
+      {
+        "start": 108.50840000000001,
+        "end": 109.02558333333333,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "group",
+          "김채원"
+        ]
+      },
+      {
+        "start": 109.02558333333333,
+        "end": 109.04226666666666,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "group",
+          "사쿠라"
+        ]
+      },
+      {
+        "start": 109.04226666666666,
+        "end": 109.10900000000001,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "사쿠라"
+        ]
+      },
+      {
+        "start": 110.0098,
+        "end": 110.5104,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 128.29483333333334,
+        "end": 128.96226666666666,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 155.78896666666668,
+        "end": 155.88906666666668,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "카즈하"
+        ]
+      },
+      {
+        "start": 165.33183333333335,
+        "end": 165.53203333333335,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 169.20226666666667,
+        "end": 169.30246666666667,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 171.80496666666667,
+        "end": 171.8716,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "허윤진"
+        ]
+      },
+      {
+        "start": 172.2053666666667,
+        "end": 172.40566666666666,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 180.84733333333332,
+        "end": 180.8806,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      }
+    ],
+    "thumbnail_common_count": 106,
+    "thumbnail_different": [],
+    "thumbnail_new_starts_count": 14,
+    "protected_short_windows": [
+      {
+        "range": [
+          82.182,
+          82.6826
+        ],
+        "changed_overlaps": []
+      }
+    ],
+    "mask_and_joint_stage_seconds": [
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 0.6116511249565519
+      },
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 1.0068183750263415
+      }
+    ]
+  },
+  "NEON": {
+    "status": "completed",
+    "before_id": "1793674513908",
+    "after_id": "1793689401232",
+    "before": {
+      "visible_clips": 187,
+      "subsecond": 105,
+      "unknown_seconds": 16.78503333333347,
+      "wall_seconds": 436.689
+    },
+    "after": {
+      "visible_clips": 185,
+      "subsecond": 103,
+      "unknown_seconds": 17.018600000000145,
+      "wall_seconds": 592.916
+    },
+    "same_source": true,
+    "same_selected_images": true,
+    "changed_label_seconds": 1.5350666666666584,
+    "changed_intervals": [
+      {
+        "start": 55.6556,
+        "end": 55.9559,
+        "before": [
+          "오아"
+        ],
+        "after": [
+          "메르시"
+        ]
+      },
+      {
+        "start": 65.3653,
+        "end": 65.43213333333334,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "아이찡"
+        ]
+      },
+      {
+        "start": 116.64986666666667,
+        "end": 116.78333333333333,
+        "before": [
+          "영"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 116.78333333333333,
+        "end": 117.05026666666667,
+        "before": [
+          "group",
+          "영"
+        ],
+        "after": [
+          "group",
+          "unknown"
+        ]
+      },
+      {
+        "start": 117.05026666666667,
+        "end": 117.117,
+        "before": [
+          "group",
+          "영"
+        ],
+        "after": [
+          "group",
+          "시리"
+        ]
+      },
+      {
+        "start": 120.68713333333334,
+        "end": 120.98753333333333,
+        "before": [
+          "시리"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 149.88306666666668,
+        "end": 150.28346666666667,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "시리"
+        ]
+      }
+    ],
+    "thumbnail_common_count": 181,
+    "thumbnail_different": [],
+    "thumbnail_new_starts_count": 4,
+    "protected_short_windows": [
+      {
+        "range": [
+          115.6155,
+          115.9158
+        ],
+        "changed_overlaps": []
+      }
+    ],
+    "mask_and_joint_stage_seconds": [
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 0.9391031669802032
+      },
+      {
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "body_continuity": 2.131373915995937
+      }
+    ]
+  }
+}

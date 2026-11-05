@@ -1,0 +1,182 @@
+{
+  "MMN": {
+    "observations": 2324,
+    "seconds": 0.3235968750086613,
+    "changes": [],
+    "group_export_cleared_frames": [],
+    "audit_paths": []
+  },
+  "ANT": {
+    "observations": 3310,
+    "seconds": 0.4840117080020718,
+    "changes": [],
+    "group_export_cleared_frames": [],
+    "audit_paths": []
+  },
+  "NEON": {
+    "observations": 3632,
+    "seconds": 0.7584167079767212,
+    "changes": [
+      {
+        "frame": 5892,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5896,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5900,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5904,
+        "before": "group",
+        "after": "main"
+      }
+    ],
+    "group_export_cleared_frames": [
+      5892,
+      5896,
+      5900,
+      5904
+    ],
+    "audit_paths": [
+      {
+        "seed_frame": 5888,
+        "name": "오아",
+        "frames": [
+          5892,
+          5896,
+          5900,
+          5904
+        ],
+        "direct_frames": [
+          5888,
+          5908
+        ],
+        "reason": "bounded_same_main_body_path",
+        "foreground_frames": [
+          5892,
+          5896,
+          5900,
+          5904
+        ]
+      }
+    ]
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "MMN exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "MMN only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "MMN all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "MMN no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "ANT exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "ANT only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "ANT all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "ANT no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "NEON exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "NEON only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "NEON all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "NEON no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "factored torso helper identical on every recorded candidate",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative single_positive",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative repeated_face_proxy",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative faceless_central_rival",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative contrary_identity",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative unknown_middle",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative handoff",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative unverified_cut",
+        "passed": true
+      }
+    ],
+    "count": 20,
+    "all_checks_passed": true,
+    "failures": [],
+    "helper_parity_candidates": 8696,
+    "helper_parity_diffs": []
+  },
+  "source_hashes": {
+    "scene_context.py": "9ea76d0ed6c48b7c2cb3f1961456783cda2b4995bf78ba6f4b5688bece87c934",
+    "stage_prominence.py": "fd735c3c4a1966ecbca5a712d37c6635e350f236b5af2ed3b887f5822a8e27e3",
+    "observed_member_edges.py": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297",
+    "pipeline.py": "5c215afd1bd69ebd89c388e074676ee023a84fe0b50e3e42ae0618406215a3ff"
+  },
+  "current_source_hashes": {
+    "scene_context.py": "9ea76d0ed6c48b7c2cb3f1961456783cda2b4995bf78ba6f4b5688bece87c934",
+    "stage_prominence.py": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+    "observed_member_edges.py": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297",
+    "pipeline.py": "5c215afd1bd69ebd89c388e074676ee023a84fe0b50e3e42ae0618406215a3ff"
+  },
+  "nonsemantic_post_review_source_changes": {
+    "stage_prominence.py": {
+      "executed_sha256": "fd735c3c4a1966ecbca5a712d37c6635e350f236b5af2ed3b887f5822a8e27e3",
+      "current_sha256": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+      "only_removed_trailing_newline": true
+    }
+  },
+  "exclusive_group_P2_fixed": true,
+  "mixed_group_fixed_evidence": "/private/tmp/dance-episode-review-20261103/mixed-original-group-exclusive-fixed.json",
+  "product_tests_passed": 120
+}

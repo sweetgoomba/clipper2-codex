@@ -1,0 +1,235 @@
+{
+  "MMN": {
+    "observations": 2324,
+    "seconds": 0.36903562501538545,
+    "changes": [
+      {
+        "frame": 6268,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 6272,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 6276,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 6280,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 6284,
+        "before": "group",
+        "after": "main"
+      }
+    ],
+    "group_export_cleared_frames": [],
+    "audit_paths": [],
+    "role_state_accepted": [
+      {
+        "start": 104.57113333333334,
+        "end": 104.90480000000001,
+        "frames": [
+          6268,
+          6272,
+          6276,
+          6280,
+          6284
+        ],
+        "name": "허윤진",
+        "left": 104.30420000000001,
+        "right": 105.105,
+        "proof_frames": [
+          6252,
+          6256,
+          6260,
+          6264,
+          6268,
+          6272,
+          6276,
+          6280,
+          6284,
+          6288,
+          6292,
+          6296,
+          6300
+        ],
+        "reason": "accepted",
+        "main_role_frames": [
+          6268,
+          6272,
+          6276,
+          6280,
+          6284
+        ],
+        "group_export_policy": "preserve_original_dual_eligibility"
+      }
+    ]
+  },
+  "ANT": {
+    "observations": 3310,
+    "seconds": 0.5685963750001974,
+    "changes": [],
+    "group_export_cleared_frames": [],
+    "audit_paths": [],
+    "role_state_accepted": []
+  },
+  "NEON": {
+    "observations": 3632,
+    "seconds": 1.2504444160149433,
+    "changes": [
+      {
+        "frame": 5892,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5896,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5900,
+        "before": "group",
+        "after": "main"
+      },
+      {
+        "frame": 5904,
+        "before": "group",
+        "after": "main"
+      }
+    ],
+    "group_export_cleared_frames": [
+      5892,
+      5896,
+      5900,
+      5904
+    ],
+    "audit_paths": [
+      {
+        "seed_frame": 5888,
+        "name": "오아",
+        "frames": [
+          5892,
+          5896,
+          5900,
+          5904
+        ],
+        "direct_frames": [
+          5888,
+          5908
+        ],
+        "reason": "bounded_same_main_body_path",
+        "foreground_frames": [
+          5892,
+          5896,
+          5900,
+          5904
+        ]
+      }
+    ],
+    "role_state_accepted": []
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "MMN exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "MMN only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "MMN all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "MMN no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "ANT exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "ANT only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "ANT all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "ANT no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "NEON exclusive group export changes only approved4 frames",
+        "passed": true
+      },
+      {
+        "name": "NEON only expected eligibility changes",
+        "passed": true
+      },
+      {
+        "name": "NEON all original inputs immutable",
+        "passed": true
+      },
+      {
+        "name": "NEON no role inventory gives no additional changes",
+        "passed": true
+      },
+      {
+        "name": "factored torso helper identical on every recorded candidate",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative single_positive",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative repeated_face_proxy",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative faceless_central_rival",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative contrary_identity",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative unknown_middle",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative handoff",
+        "passed": true
+      },
+      {
+        "name": "real NEON negative unverified_cut",
+        "passed": true
+      }
+    ],
+    "count": 20,
+    "all_checks_passed": true,
+    "failures": [],
+    "helper_parity_candidates": 8696,
+    "helper_parity_diffs": []
+  },
+  "source_hashes": {
+    "scene_context.py": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7",
+    "stage_prominence.py": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+    "observed_member_edges.py": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297",
+    "pipeline.py": "f225f2b8dc9fdad6fabeee0b2ece7c08ac7e57e3031546b7ae893338c393f6f1",
+    "role_state.py": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+  }
+}

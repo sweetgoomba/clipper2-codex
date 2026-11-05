@@ -1,0 +1,234 @@
+[
+  {
+    "title": "MMN",
+    "main_changes": [],
+    "main_changes_outside_expected": [],
+    "group_changes": [],
+    "before": {
+      "named": {
+        "count": 41,
+        "short": 7,
+        "seconds": 128.19433333333328,
+        "longest": 10.660650000000018
+      },
+      "unknown": {
+        "count": 16,
+        "short": 14,
+        "seconds": 6.80720000000003,
+        "longest": 1.2346666666666692
+      },
+      "group": {
+        "count": 32,
+        "short": 21,
+        "seconds": 33.51681666666667,
+        "longest": 4.371033333333333
+      }
+    },
+    "after": {
+      "named": {
+        "count": 41,
+        "short": 7,
+        "seconds": 128.19433333333328,
+        "longest": 10.660650000000018
+      },
+      "unknown": {
+        "count": 16,
+        "short": 14,
+        "seconds": 6.80720000000003,
+        "longest": 1.2346666666666692
+      },
+      "group": {
+        "count": 32,
+        "short": 21,
+        "seconds": 33.51681666666667,
+        "longest": 4.371033333333333
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": true,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v2_observed_continuity",
+    "identity_span_count": 72,
+    "part_count": 57,
+    "newly_named_seconds": 9.999999999621423e-05
+  },
+  {
+    "title": "ANT",
+    "main_changes": [
+      {
+        "start": 48.08136666666667,
+        "end": 48.415033333333334,
+        "before": [
+          "unknown"
+        ],
+        "after": [
+          "김채원"
+        ]
+      }
+    ],
+    "main_changes_outside_expected": [],
+    "group_changes": [],
+    "before": {
+      "named": {
+        "count": 69,
+        "short": 25,
+        "seconds": 175.80716666666652,
+        "longest": 8.842166666666664
+      },
+      "unknown": {
+        "count": 31,
+        "short": 27,
+        "seconds": 15.817600000000084,
+        "longest": 1.802000000000021
+      },
+      "group": {
+        "count": 32,
+        "short": 25,
+        "seconds": 27.761066666666657,
+        "longest": 3.136466666666678
+      }
+    },
+    "after": {
+      "named": {
+        "count": 68,
+        "short": 24,
+        "seconds": 176.1408333333332,
+        "longest": 8.842166666666664
+      },
+      "unknown": {
+        "count": 28,
+        "short": 24,
+        "seconds": 15.483933333333418,
+        "longest": 1.802000000000021
+      },
+      "group": {
+        "count": 32,
+        "short": 25,
+        "seconds": 27.761066666666657,
+        "longest": 3.136466666666678
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": true,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v2_observed_continuity",
+    "identity_span_count": 97,
+    "part_count": 96,
+    "newly_named_seconds": 0.3336666666666659
+  },
+  {
+    "title": "NEON",
+    "main_changes": [
+      {
+        "start": 185.25173333333333,
+        "end": 185.2852,
+        "before": [
+          "unknown"
+        ],
+        "after": []
+      },
+      {
+        "start": 185.2852,
+        "end": 185.31846666666667,
+        "before": [
+          "메르시"
+        ],
+        "after": []
+      }
+    ],
+    "main_changes_outside_expected": [],
+    "group_changes": [
+      {
+        "start": 185.25173333333333,
+        "end": 185.31846666666667,
+        "before": [],
+        "after": [
+          "group"
+        ]
+      }
+    ],
+    "before": {
+      "named": {
+        "count": 99,
+        "short": 41,
+        "seconds": 160.4920666666665,
+        "longest": 8.274933333333337
+      },
+      "unknown": {
+        "count": 49,
+        "short": 47,
+        "seconds": 16.351266666666806,
+        "longest": 1.5349666666666621
+      },
+      "group": {
+        "count": 55,
+        "short": 33,
+        "seconds": 50.717333333333414,
+        "longest": 2.4024
+      }
+    },
+    "after": {
+      "named": {
+        "count": 98,
+        "short": 40,
+        "seconds": 160.45879999999983,
+        "longest": 8.274933333333337
+      },
+      "unknown": {
+        "count": 45,
+        "short": 42,
+        "seconds": 16.317800000000137,
+        "longest": 1.5349666666666621
+      },
+      "group": {
+        "count": 54,
+        "short": 33,
+        "seconds": 50.784066666666746,
+        "longest": 4.571233333333339
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": false,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v2_observed_continuity",
+    "identity_span_count": 149,
+    "part_count": 143,
+    "newly_named_seconds": 0.1669333333333327
+  }
+]

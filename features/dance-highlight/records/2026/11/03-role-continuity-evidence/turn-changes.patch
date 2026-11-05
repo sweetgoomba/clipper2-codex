@@ -1,0 +1,2491 @@
+--- before/plugins/dance_highlight/dance_highlight/services/body_continuity.py
++++ after/plugins/dance_highlight/dance_highlight/services/body_continuity.py
+@@ -137,8 +137,15 @@
+         previous_record = record
+     # Similar stage colors can hide an editorial cut. Reject an isolated
+     # structural jump, while repeated lighting flicker does not become a cut.
+-    if differences and max(differences) > max(6.,3.*float(np.median(differences))):
+-        return 'isolated_visual_change'
++    limit = max(6.,3.*float(np.median(differences))) if differences else 6.
++    jumps = [first+i+1 for i,difference in enumerate(differences) if difference > limit]
++    if jumps:
++        from .bounded_face_path import prove_source_face_paths
++        proof = prove_source_face_paths(cap, rows, records, jumps)
++        if audit is not None:
++            audit['source_face_path'] = proof
++        if not proof['accepted']:
++            return 'isolated_visual_change'
+     return None
+ 
+ 
+--- before/plugins/dance_highlight/dance_highlight/services/bounded_face_path.py
++++ after/plugins/dance_highlight/dance_highlight/services/bounded_face_path.py
+@@ -0,0 +1,177 @@
++"""Original face pixels across a suspected jump, after the body/identity guards.
++
++This is neither face recognition nor a persistent tracker. Each independent
++window starts at two original, exclusively owned detections and reads at most
++five consecutive source frames. It cannot create names or gallery evidence.
++"""
++import time
++
++import cv2
++import numpy as np
++
++from .face_evidence import select_pose_face
++
++
++_PIXEL_ERROR = 2.  # Native source pixels, independent of face or video size.
++_MIN_POINTS = 6  # Redundant spatial support, beyond a three-point affine fit.
++_LK = dict(winSize=(41, 41), maxLevel=3,
++           criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, .01))
++
++
++def _inside(points, box):
++    return ((points[:, 0] >= box[0]) & (points[:, 0] <= box[2])
++            & (points[:, 1] >= box[1]) & (points[:, 1] <= box[3]))
++
++
++def _observed_face(row):
++    if (row.association != 'confirmed' or row.failure
++            or row.detector_score < .8 or row.face_bbox is None):
++        return None
++    try:
++        face = np.asarray(row.face_bbox, dtype=np.float64)
++    except (TypeError, ValueError):
++        return None
++    if (face.shape != (4,) or not np.isfinite(face).all()
++            or face[0] >= face[2] or face[1] >= face[3]):
++        return None
++    return face
++
++
++def _owned_face(row, record, shape):
++    face = _observed_face(row)
++    if face is None or record is None:
++        return None
++    height, width = shape
++    if (not 0 <= face[0] < face[2] <= width
++            or not 0 <= face[1] < face[3] <= height):
++        return None
++    owner, failure = select_pose_face([face], np.asarray(row.body_bbox), record)
++    return face if owner == 0 and failure is None else None
++
++
++def _direction(images, first_face, last_face):
++    mask = np.zeros(images[0].shape, np.uint8)
++    x, y = np.ceil(first_face[:2]).astype(int)
++    xx, yy = np.floor(first_face[2:]).astype(int)
++    mask[y:yy, x:xx] = 255
++    points = cv2.goodFeaturesToTrack(images[0], 300, .01, 4, mask=mask, blockSize=5)
++    report = dict(initial_points=0 if points is None else len(points), survived=0)
++    if points is None or len(points) < _MIN_POINTS:
++        return report, None
++    alive = np.ones(len(points), dtype=bool)
++    path = [points[:, 0].copy()]
++    height, width = images[0].shape
++    for before, after in zip(images, images[1:]):
++        target, status, _ = cv2.calcOpticalFlowPyrLK(before, after, points, None, **_LK)
++        if target is None or status is None:
++            return report, None
++        returned, reverse_status, _ = cv2.calcOpticalFlowPyrLK(after, before, target, None, **_LK)
++        if returned is None or reverse_status is None:
++            return report, None
++        error = np.linalg.norm(points[:, 0] - returned[:, 0], axis=1)
++        alive &= (status[:, 0].astype(bool) & reverse_status[:, 0].astype(bool)
++                  & np.isfinite(target[:, 0]).all(axis=1) & (error <= _PIXEL_ERROR)
++                  & _inside(target[:, 0], (0, 0, width-1, height-1)))
++        path.append(target[:, 0].copy())
++        points = target
++    alive &= _inside(points[:, 0], last_face)
++    if alive.sum() < _MIN_POINTS:
++        return report, None
++    path = [p[alive] for p in path]
++    points = path[-1][:, None].copy()
++    alive = np.ones(len(points), dtype=bool)
++    for before, after in zip(images[::-1], images[-2::-1]):
++        points, status, _ = cv2.calcOpticalFlowPyrLK(before, after, points, None, **_LK)
++        if points is None or status is None:
++            return report, None
++        alive &= status[:, 0].astype(bool)
++    error = np.linalg.norm(points[:, 0] - path[0], axis=1)
++    alive &= np.isfinite(error) & (error <= _PIXEL_ERROR)
++    report['survived'] = int(alive.sum())
++    if alive.sum() < _MIN_POINTS:
++        return report, None
++    path = [p[alive] for p in path]
++    # A line, single corner, or support smaller than the measurement error
++    # cannot establish a face's spatial correspondence.
++    minimum_spread = min(float(np.linalg.eigvalsh(np.cov(p.T))[0]) for p in path)
++    report.update(roundtrip_median=float(np.median(error[alive])),
++                  roundtrip_max=float(error[alive].max()), minimum_spatial_variance=minimum_spread)
++    if minimum_spread <= _PIXEL_ERROR**2:
++        return report, None
++    return report, path
++
++
++def _window(images, left, right, records):
++    gray = [cv2.cvtColor(im, cv2.COLOR_BGR2GRAY) if im.ndim == 3 else im for im in images]
++    report = dict(frames=[left.frame_index, right.frame_index], accepted=False, directions=[])
++    if any(im.shape != gray[0].shape for im in gray):
++        report['reason'] = 'source_size_changed'
++        return report
++    first = _owned_face(left, records.get(left.frame_index), gray[0].shape)
++    last = _owned_face(right, records.get(right.frame_index), gray[-1].shape)
++    if first is None or last is None:
++        report['reason'] = 'original_owned_face_missing'
++        return report
++    forward, a = _direction(gray, first, last)
++    reverse, b = _direction(gray[::-1], last, first)
++    report['directions'] = [forward, reverse]
++    if a is None or b is None:
++        report['reason'] = 'unconfirmed_reciprocal_face_pixels'
++        return report
++    # Independently seeded paths must occupy the same observed face interior
++    # throughout the window, not merely return to the right endpoint later.
++    intersections = [float(cv2.intersectConvexConvex(cv2.convexHull(x), cv2.convexHull(y))[0])
++                     for x, y in zip(a, b[::-1], strict=True)]
++    report['minimum_path_intersection_area'] = min(intersections)
++    report['accepted'] = min(intersections) > _PIXEL_ERROR**2
++    report['reason'] = 'bounded_owned_face_pixels' if report['accepted'] else 'disagreeing_face_paths'
++    return report
++
++
++def prove_source_face_paths(cap, rows, records, jump_frames):
++    """Cover every jump edge; a single unproven window preserves the veto."""
++    started = time.perf_counter()
++    audit = dict(version='bounded_owned_face_pixels_v1', accepted=False, windows=[],
++                 decoded_frames=0, seconds=0.)
++    jumps = set(jump_frames)
++    windows = [(a, b) for a, b in zip(rows, rows[1:])
++               if any(a.frame_index < f <= b.frame_index for f in jumps)]
++    covered = {f for a, b in windows for f in jumps if a.frame_index < f <= b.frame_index}
++    try:
++        if not jumps or covered != jumps or any(not 1 <= b.frame_index-a.frame_index <= 4 for a, b in windows):
++            audit['reason'] = 'unbounded_original_face_window'
++            return audit
++        missing = sorted({row.frame_index for window in windows for row in window
++                          if _observed_face(row) is None})
++        if missing:
++            audit.update(reason='original_owned_face_missing', unavailable_face_frames=missing)
++            return audit
++        for left, right in windows:
++            first, last = left.frame_index, right.frame_index
++            if (not cap.set(cv2.CAP_PROP_POS_FRAMES, first)
++                    or abs(float(cap.get(cv2.CAP_PROP_POS_FRAMES))-first) > .1):
++                audit['reason'] = 'source_seek_failed'
++                return audit
++            images = []
++            for frame in range(first, last+1):
++                ok, image = cap.read()
++                audit['decoded_frames'] += 1
++                if (not ok or not isinstance(image, np.ndarray) or image.dtype != np.uint8
++                        or image.ndim not in (2, 3)
++                        or abs(float(cap.get(cv2.CAP_PROP_POS_FRAMES))-(frame+1)) > .1):
++                    audit['reason'] = 'source_frame_unavailable'
++                    return audit
++                images.append(image)
++            result = _window(images, left, right, records)
++            result['jump_frames'] = sorted(f for f in jumps if first < f <= last)
++            audit['windows'].append(result)
++            if not result['accepted']:
++                audit['reason'] = result['reason']
++                return audit
++        audit.update(accepted=True, reason='all_jump_windows_have_owned_face_paths')
++        return audit
++    except (cv2.error, np.linalg.LinAlgError) as error:
++        audit.update(reason='source_pixel_proof_unavailable', error_type=type(error).__name__)
++        return audit
++    finally:
++        audit['seconds'] = float(time.perf_counter()-started)
+--- before/plugins/dance_highlight/dance_highlight/services/face_evidence.py
++++ after/plugins/dance_highlight/dance_highlight/services/face_evidence.py
+@@ -95,7 +95,7 @@
+     from . import secondary_faces, segment, body_continuity, mask_continuity, mask_tracker, context_faces, camera_transitions, joint_identity, cut_face_link, sampled_face_link, pose_face_rotation, scene_boundaries
+     from . import observed_main, main_face_link, main_role_timeline, scene_cut_proof, scene_context, temporal_support, native_scene, output_continuity
+     from . import mask_frame_cache, stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries
+-    from . import observed_member_edges, performance_parts, shot_member_gaps, role_state
++    from . import observed_member_edges, performance_parts, shot_member_gaps, role_state, pose_observations, group_output, identity_projection, group_continuity, bounded_face_path, incoming_identity_boundary
+     from clipper_face_core import auraface
+     from .face_models import sha256_file
+ 
+@@ -109,7 +109,7 @@
+                     main_identity, face_recovery, face_evidence, member_timeline, member_coverage, secondary_faces, segment, body_continuity, mask_continuity, mask_tracker, context_faces, camera_transitions, joint_identity, cut_face_link, sampled_face_link, pose_face_rotation, scene_boundaries, observed_main, main_face_link, main_role_timeline, scene_cut_proof, scene_context, temporal_support, native_scene, output_continuity)}
+     modules['mask_frame_cache'] = {'path': mask_frame_cache.__file__,
+                                  'sha256': sha256_file(Path(mask_frame_cache.__file__))}
+-    for module in (stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries, observed_member_edges, performance_parts, shot_member_gaps, role_state):
++    for module in (stage_prominence, focal_composition, focal_output, incoming_context, face_runtime, opencv_acceleration, named_boundaries, observed_member_edges, performance_parts, shot_member_gaps, role_state, pose_observations, group_output, identity_projection, group_continuity, bounded_face_path, incoming_identity_boundary):
+         modules[module.__name__.rsplit('.', 1)[-1]] = {
+             'path': module.__file__, 'sha256': sha256_file(Path(module.__file__))}
+     session = getattr(getattr(face_service, '_recognizer', None), '_session', None)
+--- before/plugins/dance_highlight/dance_highlight/services/group_continuity.py
++++ after/plugins/dance_highlight/dance_highlight/services/group_continuity.py
+@@ -0,0 +1,236 @@
++"""Continue observed ensemble membership independently of the selected main.
++
++Only gaps between original exported groups can be joined. Three distinct
++physical bodies must remain directly observed and reciprocally matched through
++all samples. Original source frames veto intervening edits. This changes group
++output only; it never mutates frame records or supplies identity evidence.
++"""
++from bisect import bisect_left
++from dataclasses import replace
++from itertools import combinations
++import math
++import time
++
++import cv2
++import numpy as np
++
++from .body_continuity import _color_cut
++from .observed_main import strict_pose_corresponding
++from .scene_cut_proof import spatial_cut_candidate
++from .source_reader import SourceFrameReader
++
++VERSION = 'observed_group_membership_v1'
++
++
++def _shared_head(a, b):
++    common = a['head_visible'] & b['head_visible']
++    scale = min(a['head_span'], b['head_span'])
++    return bool(common.sum() >= 2 and scale > 0
++                and np.linalg.norm(a['pose_keypoints'][:5, :2][common]
++                                   - b['pose_keypoints'][:5, :2][common], axis=1).max() <= .3 * scale)
++
++
++def _members(record, video_size):
++    width, height = video_size
++    if len(record.person_bboxes) != len(record.person_pose_keypoints):
++        return None, 'missing_pose_inventory'
++    features = []
++    for index, (box, pose) in enumerate(zip(record.person_bboxes, record.person_pose_keypoints)):
++        try:
++            box, pose = np.asarray(box, dtype=float), np.asarray(pose, dtype=float)
++        except (TypeError, ValueError):
++            return None, 'malformed_geometry'
++        if (box.shape != (4,) or pose.shape != (17, 3)
++                or not np.isfinite(box).all() or not np.isfinite(pose).all()
++                or (box[2:] <= box[:2]).any()):
++            return None, 'malformed_geometry'
++        visible = ((pose[:, 2] >= .5)
++                   & (pose[:, 0] >= max(0, box[0])) & (pose[:, 0] < min(width, box[2]))
++                   & (pose[:, 1] >= max(0, box[1])) & (pose[:, 1] < min(height, box[3])))
++        # An observed large partial body is contrary framing evidence even
++        # when its head/torso cannot qualify as one of the group witnesses.
++        if visible.any() and box[3] - box[1] > 2 * height / 3:
++            return None, 'observed_large_foreground'
++        head = np.flatnonzero(visible[:5])
++        head_xy = pose[:5, :2][visible[:5]]
++        head_span = float(np.linalg.norm(np.ptp(head_xy, axis=0))) if len(head_xy) >= 2 else 0.
++        torso = [5, 6, 11, 12]
++        length = float(np.linalg.norm(pose[[5, 6], :2].mean(axis=0)
++                                      - pose[[11, 12], :2].mean(axis=0)))
++        # Positive membership needs a complete directly observed facial core.
++        # Complementary two-point hypotheses cannot prove distinct heads.
++        reliable = bool(visible[:3].all() and head_span > 0 and visible[torso].all()
++                        and (pose[torso, 2] >= .75).all() and length >= 4
++                        and pose[head, 1].max() < pose[[5, 6], 1].mean()
++                        < pose[[11, 12], 1].mean())
++        full = bool(reliable and visible[[15, 16]].all()
++                    and pose[[11, 12], 1].mean() < pose[[15, 16], 1].mean())
++        xy = pose[torso, :2]
++        # Retain all observations as matching competitors. A weak observation
++        # can make ownership ambiguous but cannot become a positive witness.
++        features.append(dict(index=index, pose_keypoints=pose, reliable=reliable,
++                             full=full, length=length, head_visible=visible[:5], head_span=head_span,
++                             torso_rect=np.r_[xy.min(axis=0), xy.max(axis=0)]))
++    # A shared observed head is one owner even when detector hypotheses
++    # attach disjoint torsos or legs to it. Partial competing bodies count
++    # as ambiguity too; they need not qualify as positive group witnesses.
++    for a, b in combinations(features, 2):
++        if _shared_head(a, b):
++            a['reliable'] = a['full'] = b['reliable'] = b['full'] = False
++    reliable = [f for f in features if f['reliable']]
++    if len(reliable) < 3:
++        return None, 'fewer_than_three_observed_members'
++    lengths = [f['length'] for f in reliable]
++    if max(lengths) > 1.4 * float(np.median(lengths)):
++        return None, 'observed_size_dominance'
++    return dict(features=features), None
++
++
++def _independent(members):
++    for a, b in combinations(members, 2):
++        left_head = a['pose_keypoints'][:5, :2][a['head_visible']]
++        right_head = b['pose_keypoints'][:5, :2][b['head_visible']]
++        # Prove spatial separation of observed head regions, rather than
++        # treating failure to detect duplicate ownership as independence.
++        separation = np.linalg.norm(left_head[:, None] - right_head[None, :], axis=2).min()
++        if separation <= max(a['head_span'], b['head_span']):
++            return False
++        left, right = a['torso_rect'], b['torso_rect']
++        area = min(float(np.prod(left[2:] - left[:2])), float(np.prod(right[2:] - right[:2])))
++        overlap = float(np.prod(np.maximum(0, np.minimum(left[2:], right[2:])
++                                            - np.maximum(left[:2], right[:2]))))
++        if area <= 0 or overlap >= .5 * area:
++            return False
++    return True
++
++
++def _observed_paths(records, video_size):
++    measured = []
++    for record in records:
++        row, reason = _members(record, video_size)
++        if row is None:
++            return None, reason
++        measured.append(row)
++    paths = []
++    for anchor in measured[0]['features']:
++        if not anchor['full']:
++            continue
++        path = [anchor]
++        for previous, current in zip(measured, measured[1:]):
++            found = strict_pose_corresponding(previous, path[-1], current)
++            if (found is None or not found['reliable']
++                    or not 1 / 1.4 <= found['length'] / path[-1]['length'] <= 1.4):
++                break
++            path.append(found)
++        if len(path) == len(records) and path[-1]['full']:
++            paths.append(path)
++    for witnesses in combinations(paths, 3):
++        if all(_independent([path[i] for path in witnesses]) for i in range(len(records))):
++            return [[person['index'] for person in path] for path in witnesses], None
++    return None, 'fewer_than_three_reciprocal_paths'
++
++
++def stabilize_group_segments(records, groups, *, video_size, fps, sample_step,
++                             cut_frames, source_path, exclusive_foreground_frames=()):
++    """Return group segments and proof audit; keep every input record unchanged.
++
++    Call after final scene/context classification and before presentation-only
++    group-card filtering. Source reads are restricted to gaps already supported
++    by three observed paths. Any source error rolls back all proposed joins.
++    A main handoff/name is not evidence that group membership disappeared.
++    """
++    started = time.perf_counter()
++    audit = dict(version=VERSION, reason='complete', bridges=[], rejected=[],
++                 source_reads=dict(reads=0, seeks=0, grabs=0, cache_hits=0, decode_seconds=0.))
++    def finish(result, reason='complete'):
++        audit.update(reason=reason, seconds=time.perf_counter() - started)
++        return result, audit
++    if cut_frames is None:
++        return finish(groups, 'missing_cut_inventory')
++    if (not math.isfinite(fps) or fps <= 0 or sample_step < 1
++            or len(video_size) != 2 or min(video_size) <= 0):
++        return finish(groups, 'invalid_source_cadence')
++    if len(groups) < 2 or len(records) < 3:
++        return finish(groups)
++    times = [r.t for r in records]
++    if any(not math.isfinite(t) for t in times) or any(b <= a for a, b in zip(times, times[1:])):
++        return finish(groups, 'invalid_observation_times')
++    if any(g.seg_type != 'group' or not math.isfinite(g.start) or not math.isfinite(g.end)
++           or g.end <= g.start for g in groups):
++        return finish(groups, 'invalid_group_segments')
++    ordered = sorted(groups, key=lambda g: (g.start, g.end))
++    frames = [round(t * fps) for t in times]
++    cuts = sorted(set(cut_frames))
++    exclusive = set(exclusive_foreground_frames)
++    joins = set()
++    reader = None
++    try:
++        for index, (left, right) in enumerate(zip(ordered, ordered[1:])):
++            if right.start <= left.end:
++                continue
++            lower = bisect_left(times, left.end - 1e-8) - 1
++            upper = bisect_left(times, right.start - 1e-8)
++            report = dict(start=left.end, end=right.start)
++            def reject(reason, **details):
++                audit['rejected'].append(dict(report, reason=reason, **details))
++            if lower < 0 or upper >= len(records) or upper - lower < 2:
++                reject('unbounded_observations')
++                continue
++            first, last = frames[lower], frames[upper]
++            cut_hits = [cut for cut in cuts if first < cut <= last]
++            if cut_hits:
++                reject('source_cut_inventory', cut_frames=cut_hits)
++                continue
++            if any(frames[i] - frames[i - 1] != sample_step for i in range(lower + 1, upper + 1)):
++                reject('missing_source_sample')
++                continue
++            if exclusive.intersection(frames[lower:upper + 1]):
++                reject('existing_exclusive_foreground_proof')
++                continue
++            if not records[lower].is_group or not records[upper].is_group:
++                reject('unconfirmed_group_anchor')
++                continue
++            paths, reason = _observed_paths(records[lower:upper + 1], video_size)
++            if paths is None:
++                reject(reason)
++                continue
++            if reader is None:
++                reader = SourceFrameReader(source_path, fps)
++            previous = reader.get(first)
++            if previous.shape[:2] != (video_size[1], video_size[0]):
++                raise ValueError('source_size_mismatch')
++            transition = None
++            for frame in range(first + 1, last + 1):
++                current = reader.get(frame)
++                if current.shape != previous.shape:
++                    raise ValueError('source_size_mismatch')
++                color = bool(_color_cut(cv2.resize(previous, (64, 36)), cv2.resize(current, (64, 36)))[0])
++                spatial = bool(spatial_cut_candidate(previous, current))
++                if color or spatial:
++                    transition = dict(frame=frame, color_candidate=color, spatial_candidate=spatial)
++                    break
++                previous = current
++            if transition:
++                reject('source_transition', **transition)
++                continue
++            joins.add(index)
++            audit['bridges'].append(dict(report, frames=frames[lower:upper + 1], paths=paths,
++                                         anchor_frames=[first, last],
++                                         source_frames_checked=[first, last]))
++    except (OSError, ValueError, RuntimeError, cv2.error) as error:
++        audit.update(bridges=[], error_type=type(error).__name__)
++        return finish(groups, 'source_unavailable')
++    finally:
++        if reader is not None:
++            audit['source_reads'] = dict(reader.stats)
++            reader.close()
++    if not joins:
++        return finish(groups)
++    result = [ordered[0]]
++    for index, segment in enumerate(ordered[1:]):
++        if index in joins:
++            result[-1] = replace(result[-1], end=segment.end,
++                                 bboxes=[*result[-1].bboxes, *segment.bboxes])
++        else:
++            result.append(segment)
++    return finish(result)
+--- before/plugins/dance_highlight/dance_highlight/services/group_output.py
++++ after/plugins/dance_highlight/dance_highlight/services/group_output.py
+@@ -0,0 +1,66 @@
++"""Project automatic source-range outputs without changing scene judgments.
++
++The pipeline supplies clips from one source, all displayed/exported without a
++person crop. A group entirely contained in one confirmed named main would replay
++the same source frames. Keep its evidence, but omit that redundant output card.
++This is an output policy, never identity or main/group classification evidence.
++"""
++from __future__ import annotations
++
++import math
++from typing import AbstractSet, Any, Sequence
++
++from .dance_meta import DanceClipItem
++
++
++def _valid_range(item: DanceClipItem) -> bool:
++    return (math.isfinite(item.start) and math.isfinite(item.end)
++            and 0 <= item.start < item.end)
++
++
++def project_group_outputs(
++    main_items: Sequence[DanceClipItem],
++    group_items: Sequence[DanceClipItem],
++    *,
++    matched_main_ids: AbstractSet[str],
++    source_ranges: bool,
++) -> tuple[list[DanceClipItem], dict[str, Any]]:
++    """Return original item objects; preserve all input lists and identifiers.
++
++    No gap tolerance or union of multiple mains is allowed. Exact source-time
++    containment also guarantees containment under identical export rounding.
++    Caller must restrict this to newly generated automatic source-range results.
++    """
++    named = [item for item in main_items
++             if item.seg_type == 'main' and item.clip_id in matched_main_ids
++             and item.person_id and item.person_id != 'unknown' and _valid_range(item)]
++    kept: list[DanceClipItem] = []
++    suppressed: list[dict[str, Any]] = []
++    for group in group_items:
++        covers = []
++        if (source_ranges and group.seg_type == 'group' and group.clip_id
++                and not group.person_id and not group.person_ids and _valid_range(group)):
++            covers = [main for main in named
++                      if main.start <= group.start and group.end <= main.end]
++        if len(covers) != 1:
++            kept.append(group)
++            continue
++        main = covers[0]
++        if any(other.person_id != main.person_id
++               and other.start < group.end and group.start < other.end
++               for other in named):
++            kept.append(group)
++            continue
++        suppressed.append({
++            'group_clip_id': group.clip_id,
++            'group_start': group.start, 'group_end': group.end,
++            'covering_main_clip_id': main.clip_id, 'person_id': main.person_id,
++            'main_start': main.start, 'main_end': main.end,
++            'reason': 'single_named_main_contains_source_range',
++        })
++    return kept, {
++        'version': 'contained_group_output_v1',
++        'classification_changed': False,
++        'input_group_count': len(group_items), 'output_group_count': len(kept),
++        'suppressed': suppressed,
++    }
+--- before/plugins/dance_highlight/dance_highlight/services/identity_projection.py
++++ after/plugins/dance_highlight/dance_highlight/services/identity_projection.py
+@@ -0,0 +1,133 @@
++"""Validate identity-only padding after projecting it onto main output ranges."""
++import math
++
++import numpy as np
++
++from .member_timeline import _valid
++from .observed_main import strict_pose_corresponding
++from .reference_matcher import SegmentReferenceDecision
++
++
++def _body(record):
++    box = record.main_bbox if record.main_bbox is not None else record.candidate_main_bbox
++    boxes, poses = record.person_bboxes, record.person_pose_keypoints
++    if box is None or len(boxes) != len(poses):
++        return None, None
++    if any(np.asarray(p).shape != (17, 3) for p in poses):
++        return None, None
++    features = [dict(index=i, pose_keypoints=np.asarray(p)) for i,p in enumerate(poses)]
++    selected = [f for f,b in zip(features, boxes)
++                if np.allclose(b, box, atol=1e-3, rtol=0)]
++    return dict(features=features), selected[0] if len(selected) == 1 else None
++
++
++def _path(records, part, support, *, fps, sample_step, cut_frames, handoffs):
++    before = [r for r in records if r.t <= part.start]
++    if not before or part.start-before[-1].t >= sample_step/fps+1e-6:
++        return 'unobserved_output_body', []
++    owner = before[-1]
++    through_end = [r for r in records if r.t < part.end]
++    if not through_end or part.end-through_end[-1].t > sample_step/fps+1e-6:
++        return 'unobserved_output_body', []
++    lo = min(round(owner.t*fps), support.frame_index)
++    hi = max(round(through_end[-1].t*fps), support.frame_index)
++    local = [r for r in records if lo <= round(r.t*fps) <= hi]
++    frames = [round(r.t*fps) for r in local]
++    if (not frames or frames[0] != lo or frames[-1] != hi
++            or any(b-a != sample_step for a,b in zip(frames, frames[1:]))):
++        return 'missing_original_observation', frames
++    if cut_frames is None or any(lo < cut and (cut/fps < part.end or cut <= support.frame_index)
++                                for cut in cut_frames):
++        return 'source_cut_or_missing_inventory', frames
++    if handoffs is None or any(lo/fps < h['time'] and
++                              (h['time'] < part.end or h['time'] <= support.time_seconds)
++                              for h in handoffs):
++        return 'main_handoff_or_missing_inventory', frames
++    bodies = [_body(r) for r in local]
++    if any(selected is None for _,selected in bodies):
++        return 'unobserved_selected_pose', frames
++    anchor = next(r for r in local if round(r.t*fps) == support.frame_index)
++    anchor_box = anchor.main_bbox if anchor.main_bbox is not None else anchor.candidate_main_bbox
++    if not np.allclose(anchor_box, support.body_bbox, atol=1e-3, rtol=0):
++        return 'support_not_selected_body', frames
++    for (left, a), (right, b) in zip(bodies, bodies[1:]):
++        linked = strict_pose_corresponding(left, a, right)
++        if linked is None or linked['index'] != b['index']:
++            return 'selected_body_discontinuity', frames
++    return None, frames
++
++
++def validate_identity_padding(output, identity, projected, *, frame_records, fps,
++                              sample_step, cut_frames, handoffs, matcher, joint_matches,
++                              frozen_observations):
++    """Do not turn a face outside a part into a name for a different body.
++
++    Only timeline-consensus parts wholly outside their parent's actual face
++    observations are candidates. Direct observed parts and separately proven
++    recovery decisions retain their existing validation contracts.
++    """
++    audit = dict(version='observed_identity_padding_v1', rejected=[], verified=[])
++    if not frame_records or not math.isfinite(fps) or fps <= 0 or sample_step < 1:
++        return output, audit
++    result = dict(output)
++    result['decisions'] = list(output['decisions'])
++    result['labels'] = list(output['labels'])
++    result['accurate_indices'] = list(output['accurate_indices'])
++    records = sorted(frame_records, key=lambda r:r.t)
++    records_by_frame = {round(r.t*fps): r for r in records}
++    joints = {int(f): match for f,match in joint_matches.items()}
++    for index, (parent, part) in enumerate(projected):
++        decision = output['decisions'][index]
++        if decision.reason != 'member_timeline_consensus' or not decision.reference_id:
++            continue
++        observed = sorted((r for r,_ in identity['evidence'][parent] if _valid(r)),
++                          key=lambda r:r.time_seconds)
++        if not observed or not (part.end <= observed[0].time_seconds
++                                or part.start > observed[-1].time_seconds):
++            continue
++        # A parent's consensus, window-voted evidence name, or restored label
++        # cannot certify its own padding. Use only original face-model results.
++        named = []
++        for row in observed:
++            primary = matcher.match(row, identity['segments'][parent], 'identity-padding').reference_id if matcher else None
++            joint = joints.get(row.frame_index, {})
++            secondary = joint.get('name') if joint.get('status') == 'accepted' else None
++            if joint.get('status') != 'conflict' and decision.reference_id in (primary, secondary) and all(
++                    name in (None, decision.reference_id) for name in (primary, secondary)):
++                named.append(row)
++        support = (named[0] if part.end <= observed[0].time_seconds else named[-1]) if named else None
++        failure, frames = ('no_named_source_support', []) if support is None else _path(
++            records, part, support, fps=fps, sample_step=sample_step,
++            cut_frames=cut_frames, handoffs=handoffs)
++        conflicts = []
++        if failure is None:
++            frame_set = set(frames)
++            for row in frozen_observations:
++                if row.frame_index not in frame_set or not _valid(row):
++                    continue
++                record = records_by_frame[row.frame_index]
++                selected_box = record.main_bbox if record.main_bbox is not None else record.candidate_main_bbox
++                if not np.allclose(row.body_bbox, selected_box, atol=1e-3, rtol=0):
++                    continue  # A different person's face is not an identity vote for this path.
++                primary = matcher.match(row, identity['segments'][parent], 'identity-padding-conflict').reference_id if matcher else None
++                joint = joints.get(row.frame_index, {})
++                secondary = joint.get('name') if joint.get('status') == 'accepted' else None
++                if joint.get('status') == 'conflict' or any(
++                        name is not None and name != decision.reference_id for name in (primary, secondary)):
++                    conflicts.append(dict(frame=row.frame_index, primary=primary,
++                        secondary=secondary, joint_status=joint.get('status')))
++            if conflicts:
++                failure = 'conflicting_original_face'
++        candidate = dict(parent_span=parent, start=part.start, end=part.end,
++            name=decision.reference_id, support_frame=support.frame_index if support else None,
++            source_frames=frames)
++        if conflicts:
++            candidate['conflicting_faces'] = conflicts
++        if failure is None:
++            audit['verified'].append(dict(candidate, reason='same_observed_selected_body'))
++            continue
++        audit['rejected'].append(dict(candidate, reason=failure))
++        result['decisions'][index] = SegmentReferenceDecision(None, 'unmatched', 'unsupported_identity_padding')
++        result['labels'][index] = None
++        result['accurate_indices'] = [i for i in result['accurate_indices'] if i != index]
++    return result, audit
+--- before/plugins/dance_highlight/dance_highlight/services/incoming_identity_boundary.py
++++ after/plugins/dance_highlight/dance_highlight/services/incoming_identity_boundary.py
+@@ -0,0 +1,280 @@
++"""Move a late existing named boundary to the first observed incoming body.
++
++Original independent joint faces anchor one selected-body path. Output names,
++main eligibility, group membership and evidence identities never supply votes
++and never change. Source pixels are read only after the observed path passes.
++"""
++from collections import ChainMap
++from dataclasses import replace
++import math
++import time
++
++import cv2
++import numpy as np
++
++from .body_continuity import _color_cut
++from .member_timeline import _valid
++from .observed_main import strict_pose_corresponding
++from .scene_cut_proof import spatial_cut_candidate
++from .segment import Segment
++from .source_reader import SourceFrameReader
++
++VERSION = 'original_incoming_selected_body_v1'
++
++
++def _model_ranks(joint):
++    ranks = joint.get('model_candidates')
++    if not isinstance(ranks, (list, tuple)) or len(ranks) != 2:
++        return None
++    try:
++        if not math.isfinite(joint['margin']):
++            return None
++        for rows in ranks:
++            if (len(rows) < 2 or len({r['name'] for r in rows}) != len(rows)
++                    or any(not r['name'] or not math.isfinite(r['distance']) for r in rows)
++                    or any(a['distance'] > b['distance'] for a, b in zip(rows, rows[1:]))):
++                return None
++        if {r['name'] for r in ranks[0]} != {r['name'] for r in ranks[1]}:
++            return None
++        values = [next(r['distance'] for r in rows if r['name'] == joint['best']) for rows in ranks]
++        if not np.allclose(values, [joint['primary'], joint['secondary']], atol=1e-6, rtol=0):
++            return None
++        if not np.isclose(np.mean(values), joint['distance'], atol=1e-6, rtol=0):
++            return None
++    except (KeyError, TypeError, ValueError, StopIteration):
++        return None
++    return ranks
++
++
++def _body(record):
++    if record.scene_kind != 'main' or record.main_bbox is None:
++        return None
++    boxes, poses = record.person_bboxes, record.person_pose_keypoints
++    if len(boxes) != len(poses):
++        return None
++    if any(np.asarray(p).shape != (17, 3) or not np.isfinite(p).all() for p in poses):
++        return None
++    features = [dict(index=i, pose_keypoints=np.asarray(p)) for i, p in enumerate(poses)]
++    selected = [f for f, box in zip(features, boxes)
++                if np.allclose(box, record.main_bbox, atol=1e-3, rtol=0)]
++    return dict(features=features, selected=selected[0]) if len(selected) == 1 else None
++
++
++def _owns(row, record):
++    return (row.body_bbox is not None and record.main_bbox is not None
++            and np.allclose(row.body_bbox, record.main_bbox, atol=1e-3, rtol=0))
++
++
++def reconcile_incoming_identity_boundary(output, frame_records, observations, joint_matches,
++                                        matcher, *, fps, sample_step, cut_frames, source_path,
++                                        video_size, handoffs=()):
++    """Return output and audit; failures return the original object unchanged.
++
++Only two adjacent, already different named main parts can be corrected. The
++incoming part needs two original accepted joint faces separated by at least
++.15s, each with the same primary-video winner and no positive photo conflict.
++Every intervening sampled selected body must reciprocally match. The boundary
++can move only to the first such observed incoming sample, never a midpoint.
++"""
++    started = time.perf_counter()
++    audit = dict(version=VERSION, corrections=[], candidates=[], corrected_seconds=0.,
++                 source_reads=dict(reads=0, seeks=0, grabs=0, cache_hits=0, decode_seconds=0.))
++    def finish(result, reason='complete'):
++        audit.update(reason=reason, seconds=time.perf_counter() - started)
++        return result, audit
++    keys = ('segments', 'decisions', 'labels', 'previews', 'evidence', 'preview_sources')
++    count = len(output['segments'])
++    if any(len(output[k]) != count for k in keys):
++        return finish(output, 'misaligned_output_arrays')
++    if (not math.isfinite(fps) or fps <= 0 or not isinstance(sample_step, int) or sample_step < 1
++            or cut_frames is None or handoffs is None or matcher is None):
++        return finish(output, 'missing_source_context')
++    records = {round(r.t * fps): r for r in frame_records}
++    rows = {o.frame_index: o for o in observations}
++    if len(records) != len(frame_records) or len(rows) != len(observations):
++        return finish(output, 'duplicate_original_observation')
++    joints = {int(f): j for f, j in joint_matches.items()}
++    photo = {}
++    bodies = {}
++    def measured(frame):
++        if frame not in bodies:
++            bodies[frame] = _body(records[frame]) if frame in records else None
++        return bodies[frame]
++    def primary(row):
++        if row.frame_index not in photo:
++            scope = Segment('main', None, row.time_seconds, row.time_seconds + 1 / fps, [])
++            photo[row.frame_index] = matcher.match(row, scope, VERSION).reference_id
++        return photo[row.frame_index]
++    def anchor(row, name):
++        frame = row.frame_index
++        joint = joints.get(frame, {})
++        ranks = _model_ranks(joint)
++        if (not _valid(row) or row.detector_score < .9 or frame not in records
++                or abs(row.time_seconds - frame / fps) > 1e-6
++                or not _owns(row, records[frame]) or measured(frame) is None
++                or joint.get('status') != 'accepted' or joint.get('name') != name or ranks is None):
++            return False
++        return (all(r[0]['name'] == name for r in ranks)
++                and max(joint['primary'], joint['secondary']) <= .6
++                and joint['distance'] <= .5 and joint.get('margin', 0) >= .08
++                and primary(row) in (None, name))
++    def conflict(frame, name, *, strict_joint=True):
++        joint = joints.get(frame, {})
++        if strict_joint and joint.get('status') == 'conflict':
++            return 'original_joint_conflict'
++        if joint.get('status') == 'accepted' and joint.get('name') != name:
++            return 'opposite_original_joint'
++        if joint:
++            ranks = _model_ranks(joint)
++            if ranks is None:
++                return 'invalid_original_model_ranks'
++            for candidates, threshold in zip(ranks, (.6, .637)):
++                a, b = candidates[:2]
++                if (a['name'] != name and a['distance'] <= threshold
++                        and b['distance'] - a['distance'] >= .08):
++                    return 'opposite_reliable_original_model'
++        row = rows.get(frame)
++        if row is not None and _valid(row):
++            if not _owns(row, records[frame]):
++                return 'unowned_original_face'
++            if primary(row) not in (None, name):
++                return 'opposite_original_photo'
++        return None
++
++    def retained_outgoing(left, start, name):
++        seeds = [o for o in sorted(rows.values(), key=lambda o: o.frame_index)
++                 if left.start <= o.time_seconds < start / fps and anchor(o, name)]
++        pair = next(((a, b) for b in reversed(seeds) for a in reversed(seeds)
++                     if b.time_seconds - a.time_seconds >= .15 - 1e-6), None)
++        if pair is None:
++            return None, 'no_independent_retained_outgoing_anchors'
++        a, b = pair
++        path = list(range(a.frame_index, start, sample_step))
++        if (not path or path[-1] != start - sample_step
++                or any(a.frame_index < cut < start for cut in cut_frames)):
++            return None, 'retained_outgoing_source_discontinuity'
++        previous = None
++        for frame in path:
++            current = measured(frame)
++            if current is None:
++                return None, 'unobserved_retained_outgoing_body'
++            if previous is not None:
++                linked = strict_pose_corresponding(previous, previous['selected'], current)
++                if linked is None or linked['index'] != current['selected']['index']:
++                    return None, 'retained_outgoing_body_discontinuity'
++            # This protects the existing outgoing name, without extending it.
++            # Weak rejected model disagreement is not a contrary identity;
++            # accepted joint/photo or reliable opposing model evidence is.
++            if conflict(frame, name, strict_joint=False):
++                return None, 'conflicting_retained_outgoing_identity'
++            previous = current
++        return dict(seed_frames=[a.frame_index, b.frame_index], path_frames=path), None
++
++    reader = None
++    try:
++        for index in range(count - 1):
++            left, right = output['segments'][index:index + 2]
++            old, name = (d.reference_id for d in output['decisions'][index:index + 2])
++            if (left.seg_type != 'main' or right.seg_type != 'main' or not old or not name
++                    or old == name or abs(left.end - right.start) > 1e-6):
++                continue
++            seeds = [o for o in sorted(rows.values(), key=lambda o: o.frame_index)
++                     if right.start <= o.time_seconds < right.end and anchor(o, name)]
++            pair = next(((a, b) for i, a in enumerate(seeds) for b in seeds[i + 1:]
++                         if b.time_seconds - a.time_seconds >= .15 - 1e-6), None)
++            if pair is None:
++                continue
++            first, last = pair
++            reverse = []
++            previous = None
++            stop = 'existing_left_start'
++            for frame in range(last.frame_index, math.ceil(left.start * fps) - 1, -sample_step):
++                current = measured(frame)
++                if current is None:
++                    stop = 'missing_or_ineligible_selected_body'
++                    break
++                if previous is not None:
++                    if any(frame < cut <= frame + sample_step for cut in cut_frames):
++                        stop = 'source_cut_inventory'
++                        break
++                    linked = strict_pose_corresponding(previous, previous['selected'], current)
++                    if linked is None or linked['index'] != current['selected']['index']:
++                        stop = 'unproven_or_different_selected_body'
++                        break
++                reverse.append(frame)
++                previous = current
++            if not reverse or first.frame_index not in reverse or reverse[-1] / fps >= right.start - 1e-8:
++                continue
++            start = reverse[-1]
++            if start / fps <= left.start:
++                continue
++            path = list(reversed(reverse))
++            candidate = dict(index=index, name=name, previous_name=old, before=right.start,
++                             after=start / fps, seed_frames=[first.frame_index, last.frame_index],
++                             path_frames=path, geometry_stop=stop)
++            audit['candidates'].append(candidate)
++            failure = next((reason for f in path if (reason := conflict(f, name))), None)
++            outgoing = None
++            if failure is None:
++                outgoing, failure = retained_outgoing(left, start, old)
++            source_first = outgoing['path_frames'][0] if outgoing else start
++            if outgoing:
++                candidate['retained_outgoing'] = outgoing
++            if failure is None and any(source_first < cut <= last.frame_index for cut in cut_frames):
++                failure = 'source_cut_inventory'
++            if failure is None and any(start < h['frame'] <= last.frame_index for h in handoffs):
++                failure = 'main_handoff_inside_incoming_path'
++            if failure is not None:
++                candidate['reason'] = failure
++                continue
++            if reader is None:
++                reader = SourceFrameReader(source_path, fps)
++            previous_image = reader.get(source_first)
++            if previous_image.shape[:2] != (video_size[1], video_size[0]):
++                raise ValueError('source_size_mismatch')
++            for source_frame in range(source_first + 1, last.frame_index + 1):
++                current_image = reader.get(source_frame)
++                if current_image.shape != previous_image.shape:
++                    raise ValueError('source_size_mismatch')
++                color = _color_cut(cv2.resize(previous_image, (64, 36)), cv2.resize(current_image, (64, 36)))[0]
++                if color or spatial_cut_candidate(previous_image, current_image):
++                    failure = 'source_transition'
++                    candidate['source_transition_frame'] = source_frame
++                    break
++                previous_image = current_image
++            candidate['reason'] = failure or 'original_incoming_selected_body'
++            candidate['source_frames_checked'] = [source_first, last.frame_index]
++            if failure is None:
++                audit['corrections'].append(candidate)
++    except (OSError, ValueError, RuntimeError, cv2.error) as error:
++        audit.update(corrections=[], error_type=type(error).__name__)
++        return finish(output, 'source_unavailable')
++    finally:
++        if reader is not None:
++            audit['source_reads'] = dict(reader.stats)
++            reader.close()
++    if not audit['corrections']:
++        return finish(output)
++    # Every candidate has passed before any output object is copied or changed.
++    result = {**output, **{key: list(output[key]) for key in keys}}
++    for change in audit['corrections']:
++        i, boundary = change['index'], change['after']
++        left, right = result['segments'][i:i + 2]
++        if not left.start < boundary < right.end:
++            audit.update(corrections=[])
++            return finish(output, 'overlapping_boundary_corrections')
++        boxes = left.bboxes + right.bboxes
++        result['segments'][i] = replace(left, end=boundary, bboxes=[b for b in boxes if left.start <= b[0] < boundary])
++        result['segments'][i + 1] = replace(right, start=boundary, bboxes=[b for b in boxes if boundary <= b[0] < right.end])
++        sources = tuple(ChainMap(result['preview_sources'][i][k], result['preview_sources'][i + 1][k]) for k in (0, 1))
++        evidence = result['evidence'][i] + result['evidence'][i + 1]
++        for j in (i, i + 1):
++            part = result['segments'][j]
++            kept = [(o, n) for o, n in evidence if part.start <= o.time_seconds < part.end]
++            result['evidence'][j] = kept  # Preserve original evidence identity, including None.
++            result['preview_sources'][j] = sources
++            result['previews'][j] = [sources[0].get(o.frame_index) or sources[1][o.frame_index]
++                for o, _ in sorted(kept, key=lambda entry: entry[0].quality, reverse=True)
++                if o.frame_index in sources[0] or o.frame_index in sources[1]][:5]
++    audit['corrected_seconds'] = sum(c['before'] - c['after'] for c in audit['corrections'])
++    return finish(result)
+--- before/plugins/dance_highlight/dance_highlight/services/performance_parts.py
++++ after/plugins/dance_highlight/dance_highlight/services/performance_parts.py
+@@ -9,7 +9,7 @@
+ 
+ from .scene_boundaries import project_main_at_scene_cuts, split_unidentified_at_handoffs
+ 
+-VERSION = 'performance_parts_v3_independent_shots'
++VERSION = 'performance_parts_v4_observed_padding'
+ 
+ 
+ def _project(identity, projected):
+@@ -69,6 +69,14 @@
+         projected, identity['decisions'], handoffs or [])
+     projection['unidentified_handoffs'] = handoff_audit
+     result = _project(identity, projected)
++    from .identity_projection import validate_identity_padding
++    verified_cuts = None if cut_frames is None else sorted(set(cut_frames) |
++        {round(change['cut_time']*fps) for change in scene_changes})
++    result, padding_audit = validate_identity_padding(result, identity, projected,
++        frame_records=frame_records, fps=fps, sample_step=sample_step,
++        cut_frames=verified_cuts, handoffs=handoffs, matcher=matcher, joint_matches=joint_matches,
++        frozen_observations=frozen_observations)
++    projection['identity_padding'] = padding_audit
+     continuity, named_seconds, edge_seconds, shot_seconds = {}, 0., 0., 0.
+     if matcher is not None:
+         from .shot_member_gaps import recover_shot_member_gaps
+@@ -77,8 +85,6 @@
+         from .output_continuity import coalesce_named_output, coalesce_unknown_output
+         from .named_boundaries import reconcile_named_boundaries
+         started = time.perf_counter()
+-        verified_cuts = None if cut_frames is None else sorted(set(cut_frames) |
+-            {round(change['cut_time']*fps) for change in scene_changes})
+         result, shot_gaps = recover_shot_member_gaps(result, frame_records,
+             frozen_observations, joint_matches, secondary_matches, matcher,
+             video_path=video_path, fps=fps, sample_step=sample_step,
+@@ -111,8 +117,14 @@
+         result, boundaries = reconcile_named_boundaries(result, frame_records,
+             frozen_observations, joint_matches, matcher, video_path=video_path, fps=fps,
+             group_segments=group_segments, handoffs=handoffs)
++        from .incoming_identity_boundary import reconcile_incoming_identity_boundary
++        result, incoming_boundary = reconcile_incoming_identity_boundary(result, frame_records,
++            frozen_observations, joint_matches, matcher, fps=fps, sample_step=sample_step,
++            cut_frames=verified_cuts, source_path=video_path, video_size=video_size,
++            handoffs=handoffs)
+         named_seconds = time.perf_counter()-started
+         continuity['named_boundaries'] = boundaries
++        continuity['incoming_identity_boundary'] = incoming_boundary
+     return result, dict(version=VERSION, identity_spans=spans,
+                         parts=_part_inventory(result, spans), projection=projection,
+                         continuity=continuity, named_boundary_seconds=named_seconds,
+--- before/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ after/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -32,6 +32,7 @@
+     smooth_group_segments,
+ )
+ from .dance_meta import DanceClipItem
++from .group_output import project_group_outputs
+ from .diagnostics import coverage_gaps, frame_diagnostics
+ from .person_thumbnails import persist_person_thumbnails, release_person_thumbnails
+ from .reference_matcher import (
+@@ -701,6 +702,13 @@
+         _progress(20, "영상 프레임을 분석하고 있습니다")
+ 
+         main_role_refinement = {}
++        pose_observation_refinement = {}
++        if reference_samples:
++            from .pose_observations import canonicalize_pose_observations
++            observation_started = time.perf_counter()
++            recs, pose_observation_refinement = canonicalize_pose_observations(
++                recs, fps=fps, video_size=self._video_size(input_video))
++            _timings['pose_observations'] = time.perf_counter() - observation_started
+         main_started = time.perf_counter()
+         if reference_samples:
+             from .observed_main import refine_main_roles
+@@ -712,6 +720,7 @@
+                 recs, input_video, fps, self.face, self.config,
+                 on_progress=lambda done,total:_progress(21+int(8*done/max(1,total)),
+                     "메인 인물의 구도와 연속성을 확인하고 있습니다"))
++            main_role_refinement['pose_observation_refinement'] = pose_observation_refinement
+         _timings['main_selection'] = time.perf_counter() - main_started
+         print(f"[DANCE][T] main_selection: {_fmt(_timings['main_selection'])}", flush=True)
+ 
+@@ -1232,6 +1241,23 @@
+             f" persons={len(set(p for p in person_ids if p != 'unknown'))})",
+             flush=True,
+         )
++        # Group composition has its own observed continuity. Do this after
++        # final member assembly so a group join cannot supply identity evidence.
++        from .group_continuity import stabilize_group_segments
++        original_group_ranges = [{"start": s.start, "end": s.end} for s in group_segs]
++        group_segs, group_continuity_refinement = stabilize_group_segments(
++            recs, group_segs, video_size=self._video_size(input_video), fps=fps,
++            sample_step=max(1, int(self.config.analyze_skip)),
++            cut_frames=main_role_refinement.get('cut_frames')
++            if main_role_refinement.get('reason') == 'complete' else None,
++            source_path=input_video,
++            exclusive_foreground_frames=[c['frame'] for c in scene_context_refinement.get('changes', [])
++                                         if c.get('exclusive_foreground')],
++        )
++        group_continuity_refinement['input_groups'] = original_group_ranges
++        _timings['group_continuity'] = group_continuity_refinement['seconds']
++        print(f"[DANCE][T] group_continuity: {_fmt(_timings['group_continuity'])}"
++              f"  (joins={len(group_continuity_refinement['bridges'])})", flush=True)
+         _progress(70, "함께 등장 멤버를 확인하고 있습니다")
+         group_face_samples = self._collect_group_face_samples(str(input_video), group_segs, recs)
+         group_face_matches: list[tuple[int, float, SegmentReferenceDecision]] = []
+@@ -1411,11 +1437,19 @@
+ 
+         _progress(95, "결과를 정리하고 있습니다")
+ 
++        # Both lists replay the same uncropped source. Deduplicate only final
++        # automatic output cards; retain all group observations and diagnostics.
++        output_group_items, group_output_projection = project_group_outputs(
++            main_items, group_items,
++            matched_main_ids={item.clip_id for item, decision in zip(main_items, reference_decisions, strict=True)
++                              if item.clip_id and decision.status == "matched" and decision.reference_id},
++            source_ranges=True,
++        )
+         meta = self.meta_builder.build(
+             project_id=project_id,
+             input_video_rel=input_rel,
+             main_items=main_items,
+-            group_items=group_items,
++            group_items=output_group_items,
+             persons=persons,
+             stats=stats,
+             dance_setup=dance_setup,
+@@ -1502,6 +1536,8 @@
+             "identity_refinement": identity_refinement["audit"],
+             "merged_main_runs": identity_refinement.get("merged_main_runs", []),
+             "output_named_continuity": output_continuity_refinement,
++            "group_output_projection": group_output_projection,
++            "group_continuity": group_continuity_refinement,
+             "raw_main_runs": [{"start": float(s.start), "end": float(s.end), "track_id": s.label}
+                               for s in raw_main],
+             "visible_member_refinement": identity_refinement.get("visible_audit", []),
+--- before/plugins/dance_highlight/dance_highlight/services/pose_observations.py
++++ after/plugins/dance_highlight/dance_highlight/services/pose_observations.py
+@@ -0,0 +1,179 @@
++"""Canonical views of duplicate full-body observations, isolated to Dance.
++
++Nested detector boxes can predict the same visible head, torso and legs twice.
++Those hypotheses are not two independent people. Preserve the raw hypotheses
++in the audit and use one original observation consistently in later stages.
++"""
++from dataclasses import replace
++
++import numpy as np
++
++from .observed_main import strict_pose_corresponding
++
++
++def _same_full_body(a, pa, b, pb, video_size=None):
++    areas = [float(np.prod(box[2:]-box[:2])) for box in (a, b)]
++    if min(areas) <= 0:
++        return False
++    intersection = float(np.prod(np.maximum(0, np.minimum(a[2:], b[2:])-np.maximum(a[:2], b[:2]))))
++    if intersection < .9*min(areas):
++        return False
++    # Both eyes and the nose must be directly well observed in BOTH poses.
++    # An uncertain ear cannot veto (or supply) this stronger frontal proof.
++    if any((p[:3, 2] < .75).any() or (p[[5,6,11,12], 2] < .75).any()
++           or (p[13:17, 2] < .5).any() for p in (pa, pb)):
++        return False
++    anatomy = [0,1,2,5,6,11,12,13,14,15,16]
++    for box, pose in ((a, pa), (b, pb)):
++        if not ((pose[anatomy,:2] >= box[:2]) & (pose[anatomy,:2] < box[2:])).all():
++            return False
++        if video_size is not None and not ((pose[anatomy,:2] >= 0)
++                & (pose[anatomy,:2] < video_size)).all():
++            return False
++        if not (pose[:3,1].max() < pose[[5,6],1].mean() < pose[[11,12],1].mean()
++                < pose[[13,14],1].mean() < pose[[15,16],1].mean()):
++            return False
++    # Bound corresponding frontal-landmark displacement by the smaller
++    # directly observed eye separation. Ears do not supply matching tolerance.
++    eye_distances = [float(np.linalg.norm(p[1,:2]-p[2,:2])) for p in (pa,pb)]
++    if min(eye_distances) < 4:
++        return False
++    if np.linalg.norm(pa[:3,:2]-pb[:3,:2], axis=1).max() >= min(eye_distances):
++        return False
++    left = dict(index=0, pose_keypoints=pa)
++    right = dict(index=1, pose_keypoints=pb)
++    if strict_pose_corresponding(dict(features=[left]), left, dict(features=[right])) is None:
++        return False
++    lengths = [float(np.linalg.norm(p[[5,6],:2].mean(axis=0)-p[[11,12],:2].mean(axis=0))) for p in (pa,pb)]
++    if min(lengths) < 4:
++        return False
++    if np.linalg.norm(pa[[5,6,11,12],:2]-pb[[5,6,11,12],:2], axis=1).max() > .3*min(lengths):
++        return False
++    # A shared head cannot erase another person's independently observed legs.
++    return bool(np.linalg.norm(pa[13:17,:2]-pb[13:17,:2], axis=1).max() <= .3*np.mean(lengths))
++
++
++def _foreign_leg_chain(group, boxes, poses, video_size):
++    """A shared head cannot authorize borrowing another person's whole leg."""
++    if len(group) < 2:
++        return None
++    for i in group:
++        pose = poses[i]
++        for other, outside in enumerate(poses):
++            if other in group or (outside[:3,2] < .75).any():
++                continue
++            eye_scale = min(np.linalg.norm(p[1,:2]-p[2,:2]) for p in (pose,outside))
++            if eye_scale < 4 or np.linalg.norm(pose[:3,:2]-outside[:3,:2], axis=1).max() < eye_scale:
++                continue  # No independently observed different head.
++            for member in group:
++                if member == i:
++                    continue
++                for chain in ([13,15], [14,16]):
++                    # Only this disputed chain must be visible. Missing joints
++                    # on the other side cannot erase positive ownership evidence.
++                    points = [0,1,2,*chain]
++                    xy = outside[points,:2]
++                    box = boxes[other]
++                    if ((outside[chain,2] < .5).any()
++                            or not ((xy >= box[:2]) & (xy < box[2:])).all()
++                            or video_size is not None and not ((xy >= 0) & (xy < video_size)).all()
++                            or not outside[:3,1].max() < outside[chain[0],1] < outside[chain[1],1]):
++                        continue
++                    internal = np.linalg.norm(pose[chain,:2]-poses[member][chain,:2], axis=1)
++                    external = np.linalg.norm(pose[chain,:2]-outside[chain,:2], axis=1)
++                    if (external < internal).all():
++                        return dict(component=group, observation=i, paired_with=member,
++                            outside_owner=other, joints=chain,
++                            internal_distances=internal.tolist(), external_distances=external.tolist())
++    return None
++
++
++def canonicalize_pose_observations(records, *, fps, video_size=None):
++    audit = dict(version='canonical_full_body_observations_v1', changes=[], deferred=[],
++                 reason='complete', raw_body_count=0, canonical_body_count=0)
++    result = []
++    for record in records:
++        boxes = [np.asarray(b) for b in record.person_bboxes]
++        poses = [np.asarray(p) for p in record.person_pose_keypoints]
++        audit['raw_body_count'] += len(boxes)
++        valid = (len(poses) == len(boxes) and len(record.person_head_keypoints) == len(boxes)
++                 and all(b.shape == (4,) and np.isfinite(b).all() and (b[2:] > b[:2]).all() for b in boxes)
++                 and all(p.shape == (17,3) and np.isfinite(p).all() for p in poses))
++        if not valid or len(boxes) < 2:
++            result.append(record)
++            audit['canonical_body_count'] += len(boxes)
++            continue
++        pairs = {}
++        def same(i, j):
++            key = tuple(sorted((i,j)))
++            if key not in pairs:
++                pairs[key] = _same_full_body(boxes[i], poses[i], boxes[j], poses[j], video_size)
++            return pairs[key]
++
++        # Prefer a complete enclosing observation, never the current main or
++        # its name. Coordinates break ties independently of detector ordering.
++        order = sorted(range(len(boxes)), key=lambda i: (
++            -float(np.prod(boxes[i][2:]-boxes[i][:2])), tuple(boxes[i]), tuple(poses[i].ravel())))
++        # A~B and A~C cannot erase B or C when B and C disagree. Defer the
++        # entire ambiguous component, rather than choosing an arbitrary pair.
++        groups = []
++        deferred = None
++        pending = set(order)
++        for i in order:
++            if i not in pending:
++                continue
++            component, frontier = {i}, [i]
++            pending.remove(i)
++            while frontier:
++                current = frontier.pop()
++                neighbors = {j for j in pending if same(current, j)}
++                component.update(neighbors)
++                pending.difference_update(neighbors)
++                frontier.extend(neighbors)
++            group = [j for j in order if j in component]
++            if not all(same(a, b) for k,a in enumerate(group) for b in group[k+1:]):
++                deferred = dict(reason='non_transitive_body_hypotheses', component=group)
++                break
++            foreign = _foreign_leg_chain(group, boxes, poses, video_size)
++            if foreign is not None:
++                deferred = dict(reason='foreign_leg_chain', **foreign)
++                break
++            groups.append(group)
++        if deferred is not None:
++            # Preserve witnesses too: replacing an outside witness in another
++            # component could otherwise authorize a merge on a second pass.
++            audit['deferred'].append(dict(frame=round(record.t*fps), time=record.t, **deferred))
++            audit['canonical_body_count'] += len(boxes)
++            result.append(record)
++            continue
++        aliases = {i: g[0] for g in groups for i in g}
++        kept = sorted(g[0] for g in groups)
++        audit['canonical_body_count'] += len(kept)
++        if len(kept) == len(boxes):
++            result.append(record)
++            continue
++
++        def canonical_box(box):
++            if box is None:
++                return None
++            owners = [i for i,b in enumerate(boxes) if np.array_equal(box, b)]
++            return boxes[aliases[owners[0]]] if len(owners) == 1 else box
++
++        group_boxes = []
++        for box in record.group_bboxes:
++            canonical = canonical_box(box)
++            if not any(np.array_equal(canonical, old) for old in group_boxes):
++                group_boxes.append(canonical)
++        result.append(replace(record,
++            person_bboxes=[record.person_bboxes[i] for i in kept],
++            person_head_keypoints=[record.person_head_keypoints[i] for i in kept],
++            person_pose_keypoints=[record.person_pose_keypoints[i] for i in kept],
++            main_bbox=canonical_box(record.main_bbox),
++            candidate_main_bbox=canonical_box(record.candidate_main_bbox), group_bboxes=group_boxes))
++        audit['changes'].append(dict(frame=round(record.t*fps), time=record.t,
++            canonical_to_raw=kept,
++            equivalence_groups=[dict(representative=g[0], raw_members=g) for g in groups if len(g)>1],
++            raw_observations=[dict(index=i, box=boxes[i].tolist(),
++                head_keypoints=np.asarray(record.person_head_keypoints[i]).tolist(),
++                pose_keypoints=poses[i].tolist()) for i in range(len(boxes))]))
++    return result, audit
+--- before/plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py
++++ after/plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py
+@@ -34,7 +34,7 @@
+         self.cache, self.failed_transitions = {}, []
+         self.audit = dict(path_limit=MAX_SOURCE_PATHS, frame_limit=MAX_SOURCE_FRAMES,
+                           paths_used=0, frames_reserved=0, frames_read=0, seeks=0,
+-                          exact_cache_hits=0, superset_cache_hits=0)
++                          exact_cache_hits=0, superset_cache_hits=0, read_budget_exhausted=False)
+ 
+     def get(self, prop):
+         return self.cap.get(prop)
+@@ -44,6 +44,11 @@
+         return self.cap.set(prop, value)
+ 
+     def read(self):
++        # Pixel validation may revisit a frame after the first source scan.
++        # Bound actual decoder reads, including those additional windows.
++        if self.audit['frames_read'] >= MAX_SOURCE_FRAMES:
++            self.audit['read_budget_exhausted'] = True
++            return False, None
+         self.last_frame = round(float(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
+         self.audit['frames_read'] += 1
+         return self.cap.read()
+@@ -60,7 +65,7 @@
+         count = frames[-1]-frames[0]+1
+         if self.audit['paths_used'] >= MAX_SOURCE_PATHS:
+             return 'source_path_budget_exhausted'
+-        if self.audit['frames_reserved']+count > MAX_SOURCE_FRAMES:
++        if max(self.audit['frames_reserved'], self.audit['frames_read'])+count > MAX_SOURCE_FRAMES:
+             return 'source_frame_budget_exhausted'
+         self.audit['paths_used'] += 1
+         self.audit['frames_reserved'] += count
+@@ -74,6 +79,8 @@
+                 failure = _check_source_chain(self, [rows[f] for f in frames], records)
+             except (cv2.error, ValueError, RuntimeError, IndexError):
+                 failure = 'source_or_body_proof_error'
++            if self.audit['read_budget_exhausted']:
++                failure = 'source_frame_budget_exhausted'
+         self.cache[key] = failure
+         # These failures describe a particular measured point/transition and
+         # persist in every containing path. A median-based isolated-change
+--- before/tests/test_dance_bounded_face_path.py
++++ after/tests/test_dance_bounded_face_path.py
+@@ -0,0 +1,198 @@
++"""A source jump needs original, uniquely owned pixels in both directions."""
++import json
++from dataclasses import replace
++from pathlib import Path
++
++import cv2
++import numpy as np
++import pytest
++
++from dance_highlight.services.face_evidence import FaceObservation
++from dance_highlight.services.segment import FrameRec
++
++
++FIXTURE = Path(__file__).parent / 'fixtures/dance_face_path'
++
++
++class SourceFrames:
++    def __init__(self, images):
++        self.images = images
++        self.position = min(images)
++        self.read_frames = []
++        self.seek_frames = []
++
++    def set(self, prop, value):
++        assert prop == cv2.CAP_PROP_POS_FRAMES
++        self.position = int(value)
++        self.seek_frames.append(self.position)
++        return True
++
++    def get(self, prop):
++        assert prop == cv2.CAP_PROP_POS_FRAMES
++        return self.position
++
++    def read(self):
++        frame = self.position
++        self.position += 1
++        self.read_frames.append(frame)
++        return frame in self.images, self.images.get(frame)
++
++
++def actual_window():
++    data = json.loads((FIXTURE / 'mmn38.json').read_text())
++    images = {f: cv2.imread(str(FIXTURE / f'mmn38-{f}.png')) for f in data['source_frames']}
++    rows, records = [], {}
++    for endpoint in data['endpoints']:
++        row = FaceObservation(**endpoint['observation'])
++        rows.append(row)
++        records[row.frame_index] = FrameRec(
++            row.time_seconds, row.track_id, np.asarray(row.body_bbox), False,
++            person_bboxes=[np.asarray(b) for b in endpoint['body_boxes']],
++            person_head_keypoints=[np.asarray(h) for h in endpoint['head_keypoints']])
++    return images, rows, records
++
++
++def prove(images, rows, records, jumps=(2298,)):
++    from dance_highlight.services.bounded_face_path import prove_source_face_paths
++    cap = SourceFrames(images)
++    result = prove_source_face_paths(cap, rows, records, jumps)
++    json.dumps(result)  # Audit must use ordinary JSON values.
++    return result, cap
++
++
++def test_original_zoom_has_two_independent_owned_face_paths():
++    images, rows, records = actual_window()
++    result, cap = prove(images, rows, records)
++    assert result['accepted']
++    assert cap.read_frames == [2296, 2297, 2298, 2299, 2300]
++    assert result['windows'][0]['frames'] == [2296, 2300]
++    assert all(d['survived'] >= 6 for d in result['windows'][0]['directions'])
++    assert result['seconds'] >= 0
++
++
++@pytest.mark.parametrize('case', ['other_face', 'flash', 'no_person', 'occlusion_then_other'])
++def test_unsampled_other_person_or_missing_pixels_never_bridge(case):
++    images, rows, records = actual_window()
++    images = {f: im.copy() for f, im in images.items()}
++    if case in ('flash', 'no_person'):
++        images[2298][:] = 255 if case == 'flash' else 0
++    else:
++        donor = cv2.imread(str(FIXTURE / 'mmn38-other-face.png'))
++        for frame in ([2298] if case == 'other_face' else [2298, 2299, 2300]):
++            images[frame][110:280, 190:320] = cv2.resize(donor, (130, 170))
++        if case == 'occlusion_then_other':
++            images[2298][110:280, 190:320] = 127
++    result, _ = prove(images, rows, records)
++    assert not result['accepted']
++
++
++@pytest.mark.parametrize('case', ['unowned', 'failure', 'low_score', 'missing_face',
++                                 'outside_image', 'missing_head', 'competing_head'])
++def test_endpoint_face_must_have_original_exclusive_owner(case):
++    images, rows, records = actual_window()
++    if case == 'unowned':
++        rows[0] = replace(rows[0], association='ambiguous')
++    elif case == 'failure':
++        rows[0] = replace(rows[0], failure='no_detection')
++    elif case == 'low_score':
++        rows[0] = replace(rows[0], detector_score=.79)
++    elif case == 'missing_face':
++        rows[0] = replace(rows[0], face_bbox=None)
++    elif case == 'outside_image':
++        rows[0] = replace(rows[0], face_bbox=(-10., 10., 20., 40.))
++    else:
++        record = records[2296]
++        if case == 'missing_head':
++            record.person_head_keypoints = []
++        else:
++            # The original selected head is body index 1 in this source frame.
++            record.person_head_keypoints[4] = record.person_head_keypoints[1].copy()
++    result, _ = prove(images, rows, records)
++    assert not result['accepted']
++
++
++@pytest.mark.parametrize('endpoint', [0, 1])
++@pytest.mark.parametrize('change', [dict(face_bbox=None), dict(association='ambiguous'),
++                                  dict(failure='no_detection'), dict(detector_score=.79),
++                                  dict(face_bbox=(1., 2., 3.)),
++                                  dict(face_bbox=(1., 2., float('nan'), 4.))])
++def test_missing_endpoint_evidence_does_not_spend_source_reads(endpoint, change):
++    images, rows, records = actual_window()
++    rows[endpoint] = replace(rows[endpoint], **change)
++    result, cap = prove(images, rows, records)
++    assert not result['accepted']
++    assert cap.seek_frames == []
++    assert cap.read_frames == []
++    assert result['decoded_frames'] == 0
++
++
++def test_second_jump_cannot_borrow_a_successful_first_window():
++    images, rows, records = actual_window()
++    rows.append(replace(rows[0], frame_index=2304, time_seconds=2304/59.94005994))
++    records[2304] = records[2296]
++    images.update({2300+i: images[2300-i].copy() for i in range(1, 5)})
++    images[2302][:] = 0
++    result, cap = prove(images, rows, records, (2298, 2302))
++    assert not result['accepted']
++    assert result['windows'][0]['accepted']
++    assert 2302 in cap.read_frames
++
++
++@pytest.mark.parametrize('case', ['uncovered_jump', 'too_many_frames', 'missing_source'])
++def test_only_complete_adjacent_original_windows_are_allowed(case):
++    images, rows, records = actual_window()
++    jumps = (2296,) if case == 'uncovered_jump' else (2298,)
++    if case == 'too_many_frames':
++        rows[-1] = replace(rows[-1], frame_index=2304)
++        records[2304] = records.pop(2300)
++    elif case == 'missing_source':
++        del images[2298]
++    result, _ = prove(images, rows, records, jumps)
++    assert not result['accepted']
++
++
++def test_featureless_face_is_not_positive_continuity():
++    images, rows, records = actual_window()
++    result, _ = prove({f: np.zeros_like(im) for f, im in images.items()}, rows, records)
++    assert not result['accepted']
++
++
++@pytest.mark.parametrize('case', ['opencv_error', 'missing_flow'])
++def test_unavailable_optical_flow_preserves_unconfirmed_result(monkeypatch, case):
++    from dance_highlight.services import bounded_face_path
++    images, rows, records = actual_window()
++    def unavailable(*args, **kwargs):
++        if case == 'opencv_error':
++            raise cv2.error('optical flow unavailable')
++        return None, None, None
++    monkeypatch.setattr(bounded_face_path.cv2, 'calcOpticalFlowPyrLK', unavailable)
++    result, _ = prove(images, rows, records)
++    assert not result['accepted']
++    assert result['reason'] in ('source_pixel_proof_unavailable', 'unconfirmed_reciprocal_face_pixels')
++    assert result['seconds'] >= 0
++
++
++def test_pixel_verifier_does_not_hide_programming_errors(monkeypatch):
++    from dance_highlight.services import bounded_face_path
++    images, rows, records = actual_window()
++    def broken(*args, **kwargs):
++        raise RuntimeError('programming error')
++    monkeypatch.setattr(bounded_face_path.cv2, 'calcOpticalFlowPyrLK', broken)
++    with pytest.raises(RuntimeError, match='programming error'):
++        prove(images, rows, records)
++
++
++@pytest.mark.parametrize('condition', ['cut', 'overlap', 'conflict', 'different_name'])
++def test_existing_cut_body_and_name_guards_reject_before_the_pixel_exception(tmp_path, monkeypatch, condition):
++    from dance_highlight.services import bounded_face_path, body_continuity
++    from dance_highlight.services.reference_matcher import SegmentReferenceDecision
++    from test_dance_body_continuity import example
++    path, output, records = example(tmp_path, **{condition: True} if condition != 'different_name' else {})
++    if condition == 'different_name':
++        output['decisions'][-1] = SegmentReferenceDecision('B', 'matched', 'test')
++    def must_not_run(*args, **kwargs):
++        raise AssertionError('Earlier cut/body/identity failure must not request a pixel exception')
++    monkeypatch.setattr(bounded_face_path, 'prove_source_face_paths', must_not_run)
++    result, audit = body_continuity.bridge_main_face_gaps(output, records, path)
++    assert result is output
++    assert audit['recovered_seconds'] == 0.
+--- before/tests/test_dance_evidence_scopes.py
++++ after/tests/test_dance_evidence_scopes.py
+@@ -68,8 +68,19 @@
+ def test_named_main_is_not_discarded_before_face_analysis_due_to_group_overlap(tmp_path):
+     meta = _run(tmp_path,group=True)
+     assert [(c['start'],c['end'],c['person_id']) for c in meta['lists']['main']] == [(20.,24.,'a')]
+-    assert meta['lists']['group']
+-    assert all(not c.get('person_ids') for c in meta['lists']['group'])
++    assert meta['lists']['group'] == []
++    assert meta['stats']['smoothed_group_segments'] == 1
++    raw_groups = [c for c in meta['diagnostics']['clips'] if c['seg_type'] == 'group']
++    assert [(c['start'], c['end']) for c in raw_groups] == [(20.,24.)]
++    assert meta['diagnostics']['clips'][0]['group_overlap_ratio'] == 1.
++    assert meta['diagnostics']['group_output_projection']['classification_changed'] is False
++
++
++def test_group_overlapping_only_unknown_is_preserved_in_outputs_and_diagnostics(tmp_path):
++    meta = _run(tmp_path, group=True, faces=False)
++    assert [(c['start'],c['end'],c['person_id']) for c in meta['lists']['main']] == [(20.,24.,'unknown')]
++    assert [(c['start'],c['end']) for c in meta['lists']['group']] == [(20.,24.)]
++    assert not meta['diagnostics']['group_output_projection']['suppressed']
+ 
+ 
+ def test_registered_main_without_detected_face_stays_visible_as_unknown(tmp_path):
+--- before/tests/test_dance_group_continuity.py
++++ after/tests/test_dance_group_continuity.py
+@@ -0,0 +1,242 @@
++"""Group membership may continue while the selected main stays unchanged."""
++import copy
++import importlib
++import importlib.util
++import json
++from pathlib import Path
++import pickle
++
++import cv2
++import numpy as np
++import pytest
++
++from dance_highlight.services.segment import FrameRec, Segment
++
++FIXTURE = Path(__file__).parent/'fixtures/dance_scene_review/group_continuity.json'
++
++
++def service():
++    name = 'dance_highlight.services.group_continuity'
++    assert importlib.util.find_spec(name) is not None, 'Missing group-only continuity API'
++    return importlib.import_module(name)
++
++
++def records(rows):
++    output = []
++    for row in rows:
++        p, d = row['pose'], row['output']
++        output.append(FrameRec(row['time'], d['main_track_id'],
++            None if d['main_body'] is None else np.array(d['main_body']), d['group'],
++            person_bboxes=[np.array(b) for b in p['body_boxes']],
++            group_bboxes=[np.array(b) for b in d['group_bodies']],
++            person_head_keypoints=[np.array(k) for k in p['head_keypoints']],
++            person_pose_keypoints=[np.array(k) for k in p['pose_keypoints']],
++            scene_kind=p['scene_kind'], scene_reason=p['scene_reason'],
++            candidate_main_id=p['candidate_main_id'],
++            candidate_main_bbox=None if p['candidate_main_bbox'] is None else np.array(p['candidate_main_bbox'])))
++    return output
++
++
++def case(title='MMN'):
++    data = next(v for v in json.loads(FIXTURE.read_text())['videos'] if v['title']==title)
++    return data, records(data['rows']), [Segment('group',None,g['start'],g['end'],[]) for g in data['groups']]
++
++
++class ObservedSource:
++    """Replace external video I/O only. Real geometry and pixel gates still run."""
++    image = np.zeros((1080,1920,3), np.uint8)
++    def __init__(self, source, fps):
++        self.stats = dict(reads=0,seeks=0,grabs=0,cache_hits=0,decode_seconds=0.)
++    def get(self, frame):
++        self.stats['reads'] += 1
++        return self.image
++    def close(self):
++        pass
++
++
++def run(monkeypatch, data, recs, groups, reader=ObservedSource, **changes):
++    module = service()
++    monkeypatch.setattr(module,'SourceFrameReader',reader)
++    kwargs = dict(video_size=(1920,1080),fps=data['fps'],sample_step=4,
++                  cut_frames=data['cut_frames'],source_path='external-source.mp4',
++                  exclusive_foreground_frames=data.get('exclusive_foreground_frames',()))
++    kwargs.update(changes)
++    return module.stabilize_group_segments(recs,groups,**kwargs)
++
++
++@pytest.mark.parametrize('title,count,short,reads', [('MMN',31,19,29),('ANT',31,23,33),('NEON',50,30,43)])
++def test_recorded_whole_video_projection_preserves_main_and_only_joins_five_proven_gaps(monkeypatch,title,count,short,reads):
++    data,recs,groups = case(title)
++    frozen = pickle.dumps((recs,groups))
++    result,audit = run(monkeypatch,data,recs,groups)
++    assert len(result)==count
++    assert sum(g.end-g.start<1 for g in result)==short
++    assert [(b['start'],b['end']) for b in audit['bridges']]==[(b['start'],b['end']) for b in data['expected_bridges']]
++    assert all(len(b['paths'])>=3 and len(b['frames'])==len(b['paths'][0]) for b in audit['bridges'])
++    assert pickle.dumps((recs,groups))==frozen
++    assert audit['source_reads']['reads']==reads
++    assert audit['seconds']>=0
++
++
++def positive():
++    data,recs,groups = case()
++    recs=[r for r in recs if 2448<=round(r.t*data['fps'])<=2476]
++    groups=[g for g in groups if abs(g.end-40.90753333333333)<1e-8 or abs(g.start-41.30793333333333)<1e-8]
++    return data,recs,groups
++
++
++@pytest.mark.parametrize('veto',['cut','missing_inventory','missing_sample','empty','weak_torso',
++    'duplicate','stranger','malformed','exclusive','unconfirmed_anchor'])
++def test_counterevidence_cannot_be_filled_from_group_endpoints(monkeypatch,veto):
++    data,recs,groups=positive();kwargs={}
++    if veto=='cut':kwargs['cut_frames']=[2460]
++    if veto=='missing_inventory':kwargs['cut_frames']=None
++    if veto=='missing_sample':recs.pop(3)
++    if veto=='empty':recs[3].person_bboxes=[];recs[3].person_pose_keypoints=[]
++    if veto=='weak_torso':
++        for pose in recs[3].person_pose_keypoints:pose[[5,6,11,12],2]=.1
++    if veto=='duplicate':
++        for r in recs:
++            r.person_bboxes=[r.person_bboxes[0].copy() for _ in range(3)]
++            r.person_pose_keypoints=[r.person_pose_keypoints[0].copy() for _ in range(3)]
++    if veto=='stranger':
++        for box,pose in zip(recs[3].person_bboxes,recs[3].person_pose_keypoints):
++            box[[1,3]]+=100;pose[:,1]+=100
++    if veto=='malformed':recs[3].person_pose_keypoints[0]=np.empty((0,3))
++    if veto=='exclusive':kwargs['exclusive_foreground_frames']=[2460]
++    if veto=='unconfirmed_anchor':recs[0].is_group=False
++    result,audit=run(monkeypatch,data,recs,groups,**kwargs)
++    assert [(g.start,g.end) for g in result]==[(g.start,g.end) for g in groups]
++    assert not audit['bridges']
++    assert audit['source_reads']['reads']==0
++
++
++@pytest.mark.parametrize('name',['title','closeup','two_people','native_unobserved'])
++def test_original_title_closeup_and_unobserved_people_are_not_new_group_membership(monkeypatch,name):
++    window=next(r for r in json.loads(FIXTURE.read_text())['negative_windows'] if r['name']==name)
++    recs=records(window['rows']);recs[0].is_group=recs[-1].is_group=True
++    groups=[Segment('group',None,recs[0].t,recs[1].t,[]),Segment('group',None,recs[-1].t,recs[-1].t+.2,[])]
++    # Geometry must veto the real one-person closeup even without a cut vote.
++    data=dict(fps=60000/1001,cut_frames=[])
++    result,audit=run(monkeypatch,data,recs,groups)
++    assert [(g.start,g.end) for g in result]==[(g.start,g.end) for g in groups]
++    assert not audit['bridges']
++
++
++@pytest.mark.parametrize('failure',['open','decode','dimensions'])
++def test_unavailable_source_never_authorizes_a_group_bridge(monkeypatch,failure):
++    class Unavailable(ObservedSource):
++        def __init__(self,*args):
++            if failure=='open':raise OSError('missing source')
++            super().__init__(*args)
++        def get(self,frame):
++            if failure=='decode':raise ValueError('incomplete source')
++            return np.zeros((100,100,3),np.uint8)
++    data,recs,groups=positive()
++    result,audit=run(monkeypatch,data,recs,groups,reader=Unavailable)
++    assert result==groups
++    assert not audit['bridges']
++    assert audit['reason']=='source_unavailable'
++
++
++def test_source_pixels_reject_a_real_cut_even_when_pose_and_inventory_are_stale(monkeypatch):
++    # Original adjacent source frames at the reviewed MMN group->closeup cut.
++    root=FIXTURE.parent/'group_continuity_source'
++    before=cv2.imread(str(root/'3576.png'));after=cv2.imread(str(root/'3577.png'))
++    assert before is not None and after is not None
++    class CutSource(ObservedSource):
++        def get(self,frame):
++            self.stats['reads']+=1
++            return before if frame<2460 else after
++    data,recs,groups=positive()
++    result,audit=run(monkeypatch,data,recs,groups,reader=CutSource,cut_frames=[])
++    assert result==groups
++    assert not audit['bridges']
++    assert any(r['reason']=='source_transition' for r in audit['rejected'])
++
++
++def test_fully_observed_group_has_no_artificial_duration_limit(monkeypatch):
++    data,recs,_=positive()
++    prototype=recs[0]
++    recs=[copy.deepcopy(prototype) for _ in range(100)]
++    for i,r in enumerate(recs):
++        r.t=i*4/data['fps']
++        r.is_group=i in (0,99)
++        # A simultaneous main handoff is independent of group membership.
++        r.main_id=1 if i<50 else 2
++    groups=[Segment('group',None,0,recs[1].t,[]),
++            Segment('group',None,recs[-1].t,recs[-1].t+.2,[])]
++    frozen=pickle.dumps(recs)
++    result,audit=run(monkeypatch,data,recs,groups,cut_frames=[],exclusive_foreground_frames=[])
++    assert len(result)==1 and result[0].end==groups[-1].end
++    assert audit['bridges'][0]['end']-audit['bridges'][0]['start']>6
++    assert pickle.dumps(recs)==frozen
++
++
++def test_later_source_failure_rolls_back_earlier_proposed_join(monkeypatch):
++    class PartialSource(ObservedSource):
++        def get(self,frame):
++            if frame>=12636:raise OSError('later window became unavailable')
++            return super().get(frame)
++    data,recs,groups=case('NEON')
++    result,audit=run(monkeypatch,data,recs,groups,reader=PartialSource)
++    assert result==groups and not audit['bridges']
++    assert audit['reason']=='source_unavailable'
++
++
++def shared_head_scene(*, shared=True, partial_competitor=False, jitter=0.):
++    poses=[]
++    for i in range(3):
++        p=np.zeros((17,3));p[:,2]=.99
++        p[:5,:2]=np.array([[480,200],[470,190],[490,190],[460,200],[500,200]])
++        if not shared:p[:5,0]+=100*i
++        else:p[:5,0]+=jitter*i
++        p[[5,6,11,12],:2]=[[460+100*i,320],[500+100*i,320],[470+100*i,480],[490+100*i,480]]
++        p[[13,14,15,16],:2]=[[470+100*i,550],[490+100*i,550],[470+100*i,620],[490+100*i,620]]
++        poses.append(p)
++    if partial_competitor:
++        p=poses[0].copy();p[5:,2]=0.;poses.append(p)
++    boxes=[np.array([450.,150.,810.,660.]) for _ in poses]
++    recs=[FrameRec(i/15,1,boxes[0],i in (0,3),person_bboxes=copy.deepcopy(boxes),
++                   person_pose_keypoints=copy.deepcopy(poses),scene_kind='main') for i in range(4)]
++    groups=[Segment('group',None,0,1/15,[]),Segment('group',None,3/15,.3,[])]
++    return dict(fps=60,cut_frames=[]),recs,groups
++
++
++@pytest.mark.parametrize('case',['same_head','jittered_head','partial_head_competitor'])
++def test_shared_observed_head_cannot_supply_independent_group_members(monkeypatch,case):
++    data,recs,groups=shared_head_scene(shared=case!='partial_head_competitor',
++        partial_competitor=case=='partial_head_competitor',jitter=1. if case=='jittered_head' else 0.)
++    result,audit=run(monkeypatch,data,recs,groups)
++    assert result==groups
++    assert not audit['bridges']
++    assert audit['source_reads']['reads']==0
++
++
++def test_independently_observed_heads_and_torsos_can_share_detector_box_extent(monkeypatch):
++    data,recs,groups=shared_head_scene(shared=False)
++    result,audit=run(monkeypatch,data,recs,groups)
++    assert len(result)==1 and len(audit['bridges'])==1
++
++
++@pytest.mark.parametrize('case',['complementary_partial_heads','disjoint_partial_heads_with_third_person'])
++def test_partial_head_hypotheses_do_not_prove_three_independent_heads(monkeypatch,case):
++    data,recs,groups=shared_head_scene()
++    for row in recs:
++        visible=([0,1],[0,2],[3,4]) if case=='complementary_partial_heads' else ([0,1],[3,4],[0,1,2,3,4])
++        for i,(pose,indices) in enumerate(zip(row.person_pose_keypoints,visible)):
++            pose[:5,2]=.1;pose[list(indices),2]=.99
++            if case=='disjoint_partial_heads_with_third_person' and i==2:pose[:5,0]+=200
++    result,audit=run(monkeypatch,data,recs,groups)
++    assert result==groups
++    assert not audit['bridges']
++    assert audit['source_reads']['reads']==0
++
++
++def test_actual_ant134_turning_heads_are_withheld_without_complete_head_proof(monkeypatch):
++    data,recs,groups=case('ANT')
++    result,audit=run(monkeypatch,data,recs,groups)
++    withheld=data['withheld_after_independent_head_review'][0]
++    rejected=next(r for r in audit['rejected'] if r['start']==withheld['start'])
++    assert rejected['reason']=='fewer_than_three_observed_members'
++    assert all(b['start']!=withheld['start'] for b in audit['bridges'])
+--- before/tests/test_dance_group_output.py
++++ after/tests/test_dance_group_output.py
+@@ -0,0 +1,77 @@
++"""Output deduplication must preserve the underlying group/main decisions."""
++from copy import deepcopy
++
++import pytest
++
++from dance_highlight.services.dance_meta import DanceClipItem
++
++
++def clip(kind, start, end, person=None, index=0, **kwargs):
++    return DanceClipItem(index, kind, start, end, None, person,
++        clip_id=f'{kind}_{index:04d}', thumbnail_path=f'{kind}_{index:04d}.jpg', **kwargs)
++
++
++def project(mains, groups, *, source_ranges=True):
++    from dance_highlight.services.group_output import project_group_outputs
++    return project_group_outputs(mains, groups, matched_main_ids={
++        item.clip_id for item in mains if item.person_id in {'a', 'b'}
++    }, source_ranges=source_ranges)
++
++
++@pytest.mark.parametrize('start,end', [(3., 3.4), (2., 8.), (2., 2.01)])
++def test_single_named_main_contains_the_entire_group_output(start, end):
++    mains = [clip('main', 2., 8., 'a')]
++    groups = [clip('group', start, end, person_ids=())]
++    before = deepcopy((mains, groups))
++    output, audit = project(mains, groups)
++    assert output == []
++    assert (mains, groups) == before
++    assert audit['input_group_count'] == 1 and audit['output_group_count'] == 0
++    assert audit['suppressed'] == [{
++        'group_clip_id': 'group_0000', 'group_start': start, 'group_end': end,
++        'covering_main_clip_id': 'main_0000', 'person_id': 'a',
++        'main_start': 2., 'main_end': 8.,
++        'reason': 'single_named_main_contains_source_range',
++    }]
++
++
++@pytest.mark.parametrize('mains,groups,source_ranges', [
++    ([clip('main', 3., 6., 'a')], [clip('group', 2.99, 5.)], True),
++    ([clip('main', 3., 6., 'a')], [clip('group', 4., 6.01)], True),
++    ([clip('main', 3., 4.5, 'a'), clip('main', 4.5, 6., 'a', 1)], [clip('group', 3., 6.)], True),
++    ([clip('main', 3., 6., 'unknown')], [clip('group', 3., 6.)], True),
++    ([clip('main', 3., 6., 'person_1')], [clip('group', 3., 6.)], True),
++    ([clip('main', 3., 6., 'a'), clip('main', 5.9, 8., 'b', 1)], [clip('group', 3., 6.)], True),
++    ([clip('main', 3., 6., 'a')], [clip('group', 3., 6., person_ids=('a',))], True),
++    ([clip('main', 3., 6., 'a')], [clip('group', 3., 6., 'a')], True),
++    ([clip('main', 3., 6., 'a')], [clip('group', 3., 6.)], False),
++    ([clip('main', 3., 6., 'a')], [clip('group', 4., 4.)], True),
++    ([clip('main', 3., 6., 'a')], [clip('group', float('nan'), 4.)], True),
++    ([clip('main', 3., float('inf'), 'a')], [clip('group', 3., 6.)], True),
++])
++def test_preserve_nonredundant_or_ambiguous_outputs(mains, groups, source_ranges):
++    output, audit = project(mains, groups, source_ranges=source_ranges)
++    assert output == groups
++    assert audit['suppressed'] == []
++
++
++def test_registered_name_is_not_sufficient_without_a_matched_decision():
++    from dance_highlight.services.group_output import project_group_outputs
++    group = clip('group', 3., 6.)
++    output, audit = project_group_outputs([clip('main', 2., 8., 'a')], [group],
++        matched_main_ids=set(), source_ranges=True)
++    assert output == [group] and not audit['suppressed']
++
++
++def test_preserved_clip_ids_and_thumbnails_are_not_renumbered():
++    groups = [clip('group', 3., 4., index=0), clip('group', 8., 9., index=1)]
++    output, audit = project([clip('main', 2., 6., 'a')], groups)
++    assert output == [groups[1]] and output[0] is groups[1]
++    assert output[0].clip_id == 'group_0001'
++    assert output[0].thumbnail_path == 'group_0001.jpg'
++
++
++def test_boundary_touching_other_member_does_not_overlap():
++    groups = [clip('group', 3., 6.)]
++    output, _ = project([clip('main', 2., 6., 'a'), clip('main', 6., 8., 'b', 1)], groups)
++    assert not output
+--- before/tests/test_dance_identity_projection.py
++++ after/tests/test_dance_identity_projection.py
+@@ -0,0 +1,150 @@
++"""A name padded from a later face must still belong to the projected main."""
++import json
++from dataclasses import replace
++from pathlib import Path
++
++import numpy as np
++import pytest
++
++from dance_highlight.services.face_evidence import FaceObservation
++from dance_highlight.services.performance_parts import _project
++from dance_highlight.services.reference_matcher import SegmentReferenceDecision
++from dance_highlight.services.segment import FrameRec, Segment
++from test_dance_output_continuity import output_parts
++
++
++def apply_guard(records, rows, *, start=.025, end=.055, fps=60., cuts=(), names=None,
++                independent_names=None, primary_name=None, joint_status='accepted'):
++    from dance_highlight.services.identity_projection import validate_identity_padding
++    parent = output_parts([(start, rows[-1].time_seconds+.1, 'B', 'B')])
++    parent['decisions'][0] = SegmentReferenceDecision('B', 'matched', 'member_timeline_consensus')
++    parent['evidence'][0] = list(zip(rows, names or ['B']*len(rows)))
++    projected = [(0, Segment('main', 0, start, end, []))]
++    output = _project(parent, projected)
++    from types import SimpleNamespace
++    matcher = SimpleNamespace(match=lambda *_: SimpleNamespace(reference_id=primary_name))
++    raw_names = independent_names if independent_names is not None else [name for _,name in parent['evidence'][0]]
++    result, audit = validate_identity_padding(output, parent, projected,
++        frame_records=records, fps=fps, sample_step=4, cut_frames=cuts, handoffs=[], matcher=matcher,
++        joint_matches={r.frame_index:{'status':joint_status,'name':name}
++                       for r,name in zip(rows,raw_names) if name}, frozen_observations=rows)
++    assert parent['decisions'][0].reference_id == 'B'
++    return result, audit
++
++
++def test_real_neon_padding_before_different_main_does_not_create_two_frame_name():
++    data = json.loads((Path(__file__).parent/'fixtures/dance_scene_review/neon42_identity_padding.json').read_text())
++    records = [FrameRec(r['time_seconds'], 0, np.asarray(r['candidate_main_bbox']), False,
++        person_bboxes=[np.asarray(b) for b in r['body_boxes']],
++        person_pose_keypoints=[np.asarray(p) for p in r['pose_keypoints']],
++        candidate_main_bbox=np.asarray(r['candidate_main_bbox']), scene_kind=r['scene_kind'])
++        for r in data['pose_heads']]
++    import dataclasses
++    fields = {f.name for f in dataclasses.fields(FaceObservation)}
++    rows = [FaceObservation(**{k:(np.asarray(v) if k == 'embedding' else v)
++        for k,v in r.items() if k in fields}) for r in data['owned_observations'] if r['frame_index'] >= 2556]
++    result, audit = apply_guard(records, rows, start=data['part'][0], end=data['part'][1], fps=data['fps'],
++                               names=[None if r.frame_index == 2556 else 'B' for r in rows])
++    assert result['decisions'][0].reference_id is None
++    assert result['labels'] == [None] and result['accurate_indices'] == []
++    assert audit['rejected'][0]['support_frame'] == 2560
++    assert audit['rejected'][0]['reason'] == 'selected_body_discontinuity'
++
++
++def stable_records():
++    pose=np.array([[50,20],[45,18],[55,18],[40,20],[60,20],[35,50],[65,50],
++        [30,80],[70,80],[25,110],[75,110],[40,120],[60,120],[40,160],
++        [60,160],[40,200],[60,200]],dtype=float)
++    pose=np.c_[pose,np.ones(17)]
++    box=np.array([10.,0.,90.,210.])
++    records=[FrameRec(t,0,box.copy(),False,person_bboxes=[box.copy()],
++        person_pose_keypoints=[pose.copy()],candidate_main_bbox=box.copy(),scene_kind='main')
++        for t in [0.,4/60,8/60,12/60]]
++    rows=[FaceObservation(f,f/60,0,tuple(box),tuple(box),face_bbox=(35,10,65,30),
++        embedding=np.array([0.,1.]),detector_score=.99,association='confirmed') for f in [8,12]]
++    return records, rows
++
++
++def test_unobserved_short_piece_keeps_name_when_same_body_connects_to_face():
++    records, rows = stable_records()
++    result, audit = apply_guard(records, rows)
++    assert result['decisions'][0].reference_id == 'B'
++    assert not audit['rejected'] and audit['verified'][0]['support_frame'] == 8
++
++
++@pytest.mark.parametrize('kind', ['cut', 'cut_at_anchor', 'missing_record', 'ambiguous_pose', 'no_pose', 'handoff'])
++def test_padding_cannot_cross_missing_or_conflicting_source_evidence(kind):
++    records, rows = stable_records()
++    cuts=[]
++    if kind == 'cut': cuts=[3]
++    elif kind == 'cut_at_anchor': cuts=[8]
++    elif kind == 'missing_record': records.pop(1)
++    elif kind == 'ambiguous_pose':
++        records[1].person_bboxes.append(records[1].main_bbox.copy()+1)
++        records[1].person_pose_keypoints.append(records[1].person_pose_keypoints[0].copy())
++    elif kind == 'no_pose': records[1].person_pose_keypoints=[]
++    else:
++        records[1].candidate_main_bbox = records[1].main_bbox = np.array([200.,0.,280.,210.])
++        records[1].person_bboxes[0]=records[1].main_bbox
++        records[1].person_pose_keypoints[0][:,0]+=190
++    result, audit=apply_guard(records,rows,cuts=cuts)
++    assert result['decisions'][0].reference_id is None and audit['rejected']
++
++
++def test_direct_face_inside_piece_is_not_rejected_for_short_duration():
++    records, rows=stable_records()
++    rows.insert(0,replace(rows[0],frame_index=2,time_seconds=2/60))
++    result,audit=apply_guard(records,rows,cuts=[1])
++    assert result['decisions'][0].reference_id == 'B' and not audit['rejected']
++
++
++def test_suffix_padding_checks_the_whole_part_not_only_its_start():
++    records, rows=stable_records()
++    rows=[replace(rows[0],frame_index=0,time_seconds=0.)]
++    records[-1].person_pose_keypoints[0][:,0]+=190
++    result,audit=apply_guard(records,rows,start=.14,end=.23)
++    assert result['decisions'][0].reference_id is None and audit['rejected']
++
++
++def test_an_unnamed_face_on_a_different_body_is_not_the_named_support():
++    records, rows=stable_records()
++    records[-1].person_pose_keypoints[0][:,0]+=190
++    result,audit=apply_guard(records,rows,names=[None,'B'])
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['support_frame'] == 12
++
++
++def test_parent_consensus_without_a_named_original_face_is_not_an_anchor():
++    records, rows=stable_records()
++    result,audit=apply_guard(records,rows,names=[None,None])
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['reason'] == 'no_named_source_support'
++
++
++def test_window_voted_evidence_name_is_not_an_independent_anchor():
++    records,rows=stable_records()
++    result,audit=apply_guard(records,rows,names=['B','B'],independent_names=[None,None])
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['reason'] == 'no_named_source_support'
++
++
++def test_conflicting_original_face_models_cannot_supply_a_padding_anchor():
++    records,rows=stable_records()
++    result,audit=apply_guard(records,rows,primary_name='A')
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['reason'] == 'no_named_source_support'
++
++
++def test_joint_conflict_is_not_silently_treated_as_missing_second_model():
++    records,rows=stable_records()
++    result,audit=apply_guard(records,rows,primary_name='B',joint_status='conflict')
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['reason'] == 'no_named_source_support'
++
++
++def test_positive_other_identity_on_same_pose_path_vetoes_distant_name():
++    records,rows=stable_records()
++    result,audit=apply_guard(records,rows,independent_names=['A','B'])
++    assert result['decisions'][0].reference_id is None
++    assert audit['rejected'][0]['reason'] == 'conflicting_original_face'
++    assert audit['rejected'][0]['conflicting_faces'][0]['frame'] == 8
+--- before/tests/test_dance_incoming_identity_boundary.py
++++ after/tests/test_dance_incoming_identity_boundary.py
+@@ -0,0 +1,209 @@
++"""An existing named boundary can move only over observed incoming-body frames."""
++import copy
++from dataclasses import fields,replace
++import importlib
++import json
++from pathlib import Path
++import pickle
++from types import SimpleNamespace
++
++import cv2
++import numpy as np
++import pytest
++from dance_highlight.services.face_evidence import FaceObservation
++from dance_highlight.services.reference_matcher import SegmentReferenceDecision
++from dance_highlight.services.segment import FrameRec,Segment
++
++FIXTURE=Path(__file__).parent/'fixtures/dance_scene_review/incoming_identity_boundary_ant154.json'
++
++
++def example():
++    d=json.loads(FIXTURE.read_text());records=[];observations=[];joint={};photo={}
++    names={f.name for f in fields(FaceObservation)}
++    for r in d['rows']:
++        records.append(FrameRec(r['time'],1,np.array(r['selected_box']),True,
++            person_bboxes=[np.array(b) for b in r['body_boxes']],
++            person_pose_keypoints=[np.array(p) for p in r['pose_keypoints']],scene_kind=r['scene_kind']))
++        observations.append(FaceObservation(**{k:np.array(v) if k=='embedding' and v is not None else v
++                                                for k,v in r['face'].items() if k in names}))
++        if r['joint']:joint[r['frame']]=r['joint']
++        photo[r['frame']]=r['photo']['name']
++    parts=[Segment('main',i,s['start'],s['end'],[(r.t,r.main_bbox,r.main_id) for r in records if s['start']<=r.t<s['end']]) for i,s in enumerate(d['segments'])]
++    evidence=[[(o,joint.get(o.frame_index,{}).get('name')) for o in observations if s.start<=o.time_seconds<s.end] for s in parts]
++    images={o.frame_index:str(o.frame_index).encode() for o in observations}
++    output=dict(segments=parts,decisions=[SegmentReferenceDecision(s['name'],'matched','member_timeline_consensus') for s in d['segments']],
++        labels=[1,2],evidence=evidence,previews=[[b'old-A'],[b'old-B']],preview_sources=[(images,{}) for _ in parts],
++        accurate_indices=[0,1],anchors=[],fallback_names={})
++    class OriginalPhotoMatcher:
++        # Frozen original photo decisions from the real matcher replay. No
++        # parent output label is available to this source evidence fixture.
++        def match(self,o,*args):return SimpleNamespace(reference_id=photo.get(o.frame_index))
++    return d,output,records,observations,joint,OriginalPhotoMatcher(),photo
++
++
++class ObservedSource:
++    image=np.zeros((1080,1920,3),np.uint8)
++    def __init__(self,*args):self.stats=dict(reads=0,seeks=0,grabs=0,cache_hits=0,decode_seconds=0.)
++    def get(self,frame):self.stats['reads']+=1;return self.image
++    def close(self):pass
++
++
++def run(monkeypatch,data,reader=ObservedSource,**kw):
++    module=importlib.import_module('dance_highlight.services.incoming_identity_boundary')
++    monkeypatch.setattr(module,'SourceFrameReader',reader)
++    d,out,records,obs,joint,matcher,_=data
++    kwargs=dict(fps=d['fps'],sample_step=4,cut_frames=d['cut_frames'],source_path='original-source.mp4',video_size=(1920,1080))
++    kwargs.update(kw)
++    return module.reconcile_incoming_identity_boundary(out,records,obs,joint,matcher,**kwargs)
++
++
++def test_original_ant154_incoming_body_moves_existing_boundary_to_first_observed_B(monkeypatch):
++    data=example();frozen=pickle.dumps(data[1:5]);out=data[1]
++    result,audit=run(monkeypatch,data)
++    assert result['segments'][0].end==pytest.approx(9272/data[0]['fps'])
++    assert result['segments'][1].start==result['segments'][0].end
++    assert audit['corrected_seconds']==pytest.approx(.13346666666666)
++    assert audit['corrections'][0]['seed_frames']==[9308,9320]
++    assert audit['corrections'][0]['path_frames']==list(range(9272,9321,4))
++    assert audit['corrections'][0]['source_frames_checked']==[9244,9320]
++    assert audit['source_reads']['reads']==77
++    assert pickle.dumps(data[1:5])==frozen
++    assert result['decisions']==out['decisions'] and result['labels']==out['labels']
++    assert result['anchors']==[] and result['fallback_names']=={}
++    assert len(result['segments'])==2
++    original_evidence={o.frame_index:n for entries in out['evidence'] for o,n in entries}
++    assert {o.frame_index:n for entries in result['evidence'] for o,n in entries}==original_evidence
++    for i,s in enumerate(result['segments']):
++        assert all(s.start<=o.time_seconds<s.end for o,n in result['evidence'][i])
++        assert all(s.start<=t<s.end for t,*_ in s.bboxes)
++        assert all(s.start<=int(image)/data[0]['fps']<s.end for image in result['previews'][i])
++    # Group output/membership is independent: every original source row here
++    # deliberately remains group=True while scene_kind remains main-eligible.
++    assert all(r.is_group for r in data[2])
++
++
++@pytest.mark.parametrize('case',['unknown_left','same_name','nonadjacent','single_anchor','too_close_pair',
++    'weak_anchor','unowned_anchor','primary_disagrees','bad_ranks','missing_ranks','joint_conflict',
++    'joint_other_name','photo_other_name','positive_model_other_name','missing_sample','missing_body',
++    'genuine_group','missing_pose','ambiguous_pose','cut','missing_cut_inventory','duplicate_face','duplicate_record'])
++def test_original_counterevidence_prevents_boundary_relabeling(monkeypatch,case):
++    data=list(example());d,out,records,obs,joint,matcher,photo=data;kw={}
++    index={round(r.t*d['fps']):i for i,r in enumerate(records)}
++    if case=='unknown_left':out['decisions'][0]=SegmentReferenceDecision(None,'unmatched','unknown')
++    if case=='same_name':out['decisions'][0]=out['decisions'][1]
++    if case=='nonadjacent':out['segments'][0]=replace(out['segments'][0],end=154.7)
++    if case=='single_anchor':joint.pop(9320);joint.pop(9312)
++    if case=='too_close_pair':joint.pop(9320) # 9308/9312 only .0667s apart
++    if case=='weak_anchor':data[3]=[replace(o,detector_score=.5) if o.frame_index==9320 else o for o in obs]
++    if case=='unowned_anchor':data[3]=[replace(o,body_bbox=(0,0,10,10)) if o.frame_index==9320 else o for o in obs]
++    if case=='primary_disagrees':joint[9308]['model_candidates'][0][0]['name']='김채원'
++    if case=='bad_ranks':joint[9308]['primary']=.1
++    if case=='missing_ranks':joint[9308].pop('model_candidates')
++    if case=='joint_conflict':joint[9284]['status']='conflict'
++    if case=='joint_other_name':joint[9284].update(status='accepted',name='김채원')
++    if case=='photo_other_name':photo[9284]='김채원'
++    if case=='positive_model_other_name':
++        j=joint[9284];ranks=j['model_candidates'][0]
++        next(r for r in ranks if r['name']=='김채원')['distance']=.2
++        ranks.sort(key=lambda r:r['distance'])
++    if case=='missing_sample':records.pop(index[9284])
++    if case=='missing_body':records[index[9284]].main_bbox=None
++    if case=='genuine_group':records[index[9284]].scene_kind='group'
++    if case=='missing_pose':records[index[9284]].person_pose_keypoints=[]
++    if case=='ambiguous_pose':
++        r=records[index[9284]];i=next(i for i,b in enumerate(r.person_bboxes) if np.array_equal(b,r.main_bbox))
++        r.person_bboxes.append(r.person_bboxes[i].copy());r.person_pose_keypoints.append(r.person_pose_keypoints[i].copy())
++    if case=='cut':kw['cut_frames']=[9282]
++    if case=='missing_cut_inventory':kw['cut_frames']=None
++    if case=='duplicate_face':obs.append(obs[-1])
++    if case=='duplicate_record':records.append(records[-1])
++    frozen=pickle.dumps(data[1:5]);result,audit=run(monkeypatch,data,**kw)
++    assert result is out and not audit['corrections']
++    assert pickle.dumps(data[1:5])==frozen
++    assert audit['source_reads']['reads']==0
++
++
++def test_unknown_or_conflicting_joint_outside_the_B_path_does_not_vote(monkeypatch):
++    data=example();assert data[4][9264]['status']=='conflict'
++    result,audit=run(monkeypatch,data)
++    assert result is not data[1] and len(audit['corrections'])==1
++
++
++@pytest.mark.parametrize('failure',['open','read','size','actual_cut'])
++def test_source_failure_or_actual_cut_returns_original_even_after_geometry_passes(monkeypatch,failure):
++    pixels=FIXTURE.parent/'group_continuity_source'
++    class Source(ObservedSource):
++        def __init__(self,*args):
++            if failure=='open':raise OSError('unavailable')
++            super().__init__(*args)
++        def get(self,frame):
++            if failure=='read':raise ValueError('missing source frame')
++            if failure=='size':return np.zeros((100,100,3),np.uint8)
++            if failure=='actual_cut':return cv2.imread(str(pixels/('3576.png' if frame<9282 else '3577.png')))
++            return super().get(frame)
++    data=example();result,audit=run(monkeypatch,data,reader=Source)
++    assert result is data[1] and not audit['corrections']
++
++
++def test_repeated_run_is_idempotent(monkeypatch):
++    data=list(example());data[1],_=run(monkeypatch,data)
++    result,audit=run(monkeypatch,data)
++    assert result is data[1] and not audit['corrections']
++
++
++@pytest.mark.parametrize('margin',[float('nan'),None,'invalid'])
++def test_malformed_original_joint_margin_never_becomes_an_anchor(monkeypatch,margin):
++    data=example();data[4][9308]['margin']=margin
++    result,audit=run(monkeypatch,data)
++    assert result is data[1] and not audit['corrections']
++
++
++@pytest.mark.parametrize('condition',['boundary_source_cut','handoff_inside_path','misaligned_arrays'])
++def test_boundary_context_cannot_be_repaired_by_an_incoming_name(monkeypatch,condition):
++    data=example();kwargs={}
++    if condition=='boundary_source_cut':kwargs['cut_frames']=[9270]
++    if condition=='handoff_inside_path':kwargs['handoffs']=[dict(frame=9284)]
++    if condition=='misaligned_arrays':data[1]['labels'].pop()
++    result,audit=run(monkeypatch,data,**kwargs)
++    assert result is data[1] and not audit['corrections']
++
++
++def test_source_failure_on_later_candidate_rolls_back_every_boundary(monkeypatch):
++    data=list(example());d,out,records,obs,joints,matcher,photo=data
++    offset=12000;seconds=offset/d['fps'];original_count=len(out['segments'])
++    out['segments'] += [replace(s,start=s.start+seconds,end=s.end+seconds,
++        bboxes=[(t+seconds,*rest) for t,*rest in s.bboxes]) for s in out['segments']]
++    for key in ('decisions','labels','previews','preview_sources'):
++        out[key] += list(out[key])
++    out['evidence'] += [[(replace(o,frame_index=o.frame_index+offset,time_seconds=o.time_seconds+seconds),n) for o,n in entries] for entries in out['evidence']]
++    out['accurate_indices'] += [i+original_count for i in out['accurate_indices']]
++    records += [replace(r,t=r.t+seconds) for r in records]
++    obs += [replace(o,frame_index=o.frame_index+offset,time_seconds=o.time_seconds+seconds) for o in obs]
++    joints.update({f+offset:copy.deepcopy(j) for f,j in list(joints.items())})
++    class FailsLater(ObservedSource):
++        def get(self,frame):
++            if frame>offset:raise OSError('second original source window unavailable')
++            return super().get(frame)
++    result,audit=run(monkeypatch,data,reader=FailsLater)
++    assert result is out and not audit['corrections'] and audit['corrected_seconds']==0
++    assert audit['reason']=='source_unavailable'
++
++
++def test_left_start_between_samples_cannot_leave_an_unobserved_named_fragment(monkeypatch):
++    data=example();out=data[1];out['segments'][0]=replace(out['segments'][0],start=9270/data[0]['fps'])
++    result,audit=run(monkeypatch,data)
++    assert result is out and not audit['corrections']
++    assert audit['source_reads']['reads']==0
++
++
++@pytest.mark.parametrize('case',['no_A_pair','A_selected_path_break','opposite_A_face'])
++def test_retained_outgoing_name_needs_its_own_original_anchors_and_selected_path(monkeypatch,case):
++    data=list(example());d,out,records,obs,joint,matcher,photo=data
++    if case=='no_A_pair':
++        for f in [9244,9248,9252,9256]:joint[f]['status']='insufficient'
++    if case=='A_selected_path_break':
++        row=next(r for r in records if round(r.t*d['fps'])==9260);row.person_pose_keypoints=[]
++    if case=='opposite_A_face':joint[9264].update(status='accepted',name='카즈하')
++    result,audit=run(monkeypatch,data)
++    assert result is out and not audit['corrections']
++    assert audit['source_reads']['reads']==0
+--- before/tests/test_dance_pose_observations.py
++++ after/tests/test_dance_pose_observations.py
+@@ -0,0 +1,196 @@
++"""Duplicate full-body observations must not become two face owners."""
++import copy
++import json
++from pathlib import Path
++
++import numpy as np
++import pytest
++
++from dance_highlight.services.segment import FrameRec
++
++
++def fixture(name='neon53_duplicate_observations.json'):
++    data = json.loads((Path(__file__).parent /
++        'fixtures/dance_scene_review'/name).read_text())
++    records = [FrameRec(p['time_seconds'], 1, np.asarray(p['candidate_main_bbox']), False,
++        person_bboxes=[np.asarray(b) for b in p['body_boxes']],
++        person_head_keypoints=[np.asarray(k) for k in p['head_keypoints']],
++        person_pose_keypoints=[np.asarray(k) for k in p['pose_keypoints']]) for p in data['pose_heads']]
++    return data, records
++
++
++def normalize(records, fps):
++    from dance_highlight.services.pose_observations import canonicalize_pose_observations
++    return canonicalize_pose_observations(records, fps=fps)
++
++
++def test_same_source_head_torso_and_legs_have_one_face_owner():
++    from dance_highlight.services.face_evidence import select_pose_face
++
++    data, records = fixture()
++    original_counts = [len(r.person_bboxes) for r in records]
++    result, audit = normalize(records, data['fps'])
++    assert [len(r.person_bboxes) for r in result] == [n - (0 < i < 6) for i,n in enumerate(original_counts)]
++    assert len(audit['changes']) == 5
++    assert [len(r.person_bboxes) for r in records] == original_counts
++    for i in range(1, 6):
++        record = result[i]
++        own = next(j for j,b in enumerate(record.person_bboxes) if np.array_equal(b, record.main_bbox))
++        head = record.person_head_keypoints[own][:3,:2]
++        face = np.r_[head.min(0)-2, head.max(0)+2]
++        index, failure = select_pose_face([face], record.main_bbox, record)
++        assert index == 0 and failure is None
++
++
++def test_reordering_detector_candidates_cannot_change_the_canonical_observations():
++    data, records = fixture()
++    reordered = copy.deepcopy(records)
++    for r in reordered:
++        r.person_bboxes.reverse()
++        r.person_head_keypoints.reverse()
++        r.person_pose_keypoints.reverse()
++    a, _ = normalize(records, data['fps'])
++    b, _ = normalize(reordered, data['fps'])
++    for x,y in zip(a,b):
++        assert sorted(tuple(v) for v in x.person_bboxes) == sorted(tuple(v) for v in y.person_bboxes)
++        assert np.array_equal(x.main_bbox, y.main_bbox)
++
++
++@pytest.mark.parametrize('different', ['head', 'torso', 'hips', 'legs', 'low_face_confidence', 'low_torso_confidence', 'low_leg_confidence'])
++def test_overlapping_boxes_do_not_merge_distinct_or_unobserved_people(different):
++    data, records = fixture()
++    record = records[1]
++    first, second = 5, 7
++    r = FrameRec(record.t, 1, record.person_bboxes[first], False,
++        person_bboxes=[record.person_bboxes[first].copy(), record.person_bboxes[second].copy()],
++        person_pose_keypoints=[record.person_pose_keypoints[first].copy(), record.person_pose_keypoints[second].copy()])
++    pose = r.person_pose_keypoints[1]
++    if different == 'head':
++        pose[:5,0] += 70
++    elif different == 'torso':
++        pose[[5,6,11,12],0] += 150
++    elif different == 'legs':
++        pose[13:17,0] += 150
++    elif different == 'hips':
++        pose[[11,12],1] += 150
++    elif different == 'low_leg_confidence':
++        pose[13:17,2] = .4
++    elif different == 'low_face_confidence':
++        pose[:3,2] = .4
++    else:
++        pose[[5,6,11,12],2] = .4
++    r.person_head_keypoints = [p[:5] for p in r.person_pose_keypoints]
++    result, audit = normalize([r], data['fps'])
++    assert len(result[0].person_bboxes) == 2
++    assert not audit['changes']
++
++
++def test_role_and_identity_stages_receive_the_same_canonical_observations(tmp_path, monkeypatch):
++    from dance_highlight.services import observed_main, native_scene
++    from dance_highlight.services.pipeline import DancePipeline
++    from dance_highlight.services.config import DanceConfig
++    from dance_highlight.services.reference_matcher import ReferenceEmbeddingSample
++
++    data, records = fixture()
++    expected, _ = normalize(records, data['fps'])
++    expected_counts = [len(r.person_bboxes) for r in expected]
++    seen = []
++
++    def refine(rows, *args, **kwargs):
++        assert [len(r.person_bboxes) for r in rows] == expected_counts
++        seen.append('role')
++        return rows, dict(reason='complete', cut_frames=[], handoffs=[])
++
++    monkeypatch.setattr(observed_main, 'refine_main_roles', refine)
++    monkeypatch.setattr(native_scene, 'refine_native_scenes', lambda rows, *a, **k: (rows, {}))
++
++    class ReachedFace(Exception):
++        pass
++
++    class Face:
++        def batch_segment_embeddings(self, source, segments, **kwargs):
++            assert [len(r.person_bboxes) for r in kwargs['frame_records']] == expected_counts
++            seen.append('identity')
++            raise ReachedFace
++
++    pipe = DancePipeline(DanceConfig(), None, Face(), None, None)
++    pipe.analyze_video_to_records = lambda *a, **k: (records, data['fps'], records[-1].t+.1)
++    pipe._download_reference_images = lambda *a: {}
++
++    def refs(paths, sample_sink):
++        sample_sink.append(ReferenceEmbeddingSample('A', 'A', 'a'*64, 100, 100, np.array([1.,0.])))
++        return {}
++
++    pipe._build_reference_embeddings = refs
++    pipe._video_size = lambda *a: (1920,1080)
++    source = tmp_path/'source.mp4'
++    source.write_bytes(b'source')
++    with pytest.raises(ReachedFace):
++        pipe.run(tmp_path, source, 1)
++    assert seen == ['role', 'identity']
++
++
++def test_uncertain_ears_cannot_expand_head_match_tolerance():
++    from dance_highlight.services.pose_observations import _same_full_body
++    _, records = fixture()
++    r = records[1]
++    a,b = [r.person_bboxes[i].copy() for i in (5,7)]
++    pa,pb = [r.person_pose_keypoints[i].copy() for i in (5,7)]
++    pb[:3,0] += 15
++    pa[3:5,2] = pb[3:5,2] = .6
++    assert not _same_full_body(a,pa,b,pb)
++    pa[3:5,0] = [a[0]+1,a[2]-1]
++    pb[3:5,0] = [b[0]+1,b[2]-1]
++    assert not _same_full_body(a,pa,b,pb)
++
++
++@pytest.mark.parametrize('invalid_legs', [[0.,0.], [975.,440.]])
++def test_matching_but_anatomically_impossible_legs_are_not_full_body_evidence(invalid_legs):
++    from dance_highlight.services.pose_observations import _same_full_body
++    _, records = fixture()
++    r = records[1]
++    a,b = [r.person_bboxes[i].copy() for i in (5,7)]
++    pa,pb = [r.person_pose_keypoints[i].copy() for i in (5,7)]
++    pa[13:17,:2] = pb[13:17,:2] = invalid_legs
++    assert not _same_full_body(a,pa,b,pb)
++
++
++def test_non_transitive_duplicate_component_is_preserved_and_idempotent():
++    data, records = fixture()
++    source = records[1]
++    box, pose = source.person_bboxes[5], source.person_pose_keypoints[5]
++    boxes = [box+np.array([dx,0,dx,0]) for dx in (0,-10,10)]
++    poses = [pose+np.array([dx,0,0]) for dx in (0,-10,10)]
++    record = FrameRec(source.t, 1, box, False, person_bboxes=boxes,
++        person_pose_keypoints=poses, person_head_keypoints=[p[:5] for p in poses])
++    first, audit = normalize([record], data['fps'])
++    second, _ = normalize(first, data['fps'])
++    assert len(first[0].person_bboxes) == len(second[0].person_bboxes) == 3
++    assert not audit['changes']
++
++
++@pytest.mark.parametrize('mirrored', [False, True])
++def test_shared_head_cannot_hide_a_leg_chain_owned_by_another_person(mirrored):
++    data, records = fixture('mmn_hybrid_observation.json')
++    r = records[0]
++    if mirrored:
++        for b in r.person_bboxes:
++            b[0],b[2] = 1920-b[2],1920-b[0]
++        for p in r.person_pose_keypoints:
++            p[:,0] = 1920-p[:,0]
++        r.person_bboxes.reverse()
++        r.person_pose_keypoints.reverse()
++        r.person_head_keypoints = [p[:5] for p in r.person_pose_keypoints]
++    out, audit = normalize(records, data['fps'])
++    assert len(out[0].person_bboxes) == len(r.person_bboxes)
++    assert not audit['changes']
++
++
++@pytest.mark.parametrize('unrelated_joints', [[14,16], [12], [6]])
++def test_missing_other_side_of_foreign_person_cannot_authorize_hybrid_merge(unrelated_joints):
++    data, records = fixture('mmn_hybrid_observation.json')
++    r = records[0]
++    r.person_pose_keypoints[3][unrelated_joints,2] = .1
++    out, audit = normalize(records, data['fps'])
++    assert len(out[0].person_bboxes) == len(r.person_bboxes)
++    assert not audit['changes']
+--- before/tests/test_dance_reference_matcher.py
++++ after/tests/test_dance_reference_matcher.py
+@@ -194,7 +194,8 @@
+     from dance_highlight.services.segment import Segment
+ 
+     segments = [Segment("main", 1, 0.0, 1.0, []), Segment("main", 2, 2.0, 5.0 if with_refinement else 3.0, [])]
+-    group_segments = [Segment("group", None, 3.0, 4.0, [])]
++    group_start = 3.1 if with_refinement else 3.0
++    group_segments = [Segment("group", None, group_start, 4.0, [])]
+     monkeypatch.setattr(pipeline_module, "build_raw_main_segments", lambda _: segments)
+     monkeypatch.setattr(pipeline_module, "build_raw_group_segments", lambda _: group_segments)
+     monkeypatch.setattr(pipeline_module, "smooth_main_segments", lambda rows, **_: rows)
+@@ -310,11 +311,18 @@
+         assert result["stats"]["identity_split_parent_count"]==1
+     else:
+         assert person_ids == ["a", "a"]
+-    # A face identified in a group is not evidence that A is the main performer.
+-    # Keep group clips in the shared bucket until the user explicitly assigns one.
+-    assert [tuple(clip["person_ids"]) for clip in result["lists"]["group"]] == [()]
++    # A group face never becomes main evidence. Only the *output card* is
++    # redundant when the already-established named main contains its whole range.
++    assert [tuple(clip["person_ids"]) for clip in result["lists"]["group"]] == ([] if with_refinement else [()])
+     assert result["stats"]["reference_matching"] == "shared_reference_v1"
+     diagnostics = result["diagnostics"]
++    original_group = [clip for clip in diagnostics['clips'] if clip['seg_type'] == 'group']
++    assert [(clip['clip_id'], clip['start'], clip['end']) for clip in original_group] == [('group_0000', group_start, 4.)]
++    assert (tmp_path / original_group[0]['thumbnail_path']).is_file()
++    projection = diagnostics['group_output_projection']
++    assert projection['classification_changed'] is False
++    assert len(projection['suppressed']) == int(with_refinement)
++    assert result['stats']['smoothed_group_segments'] == 1
+     assert diagnostics["schema_version"] == "dance_diagnostics_v1"
+     import json
+     evidence = json.loads((tmp_path / diagnostics["face_evidence_path"]).read_text())
+--- before/tests/test_dance_shot_member_gaps.py
++++ after/tests/test_dance_shot_member_gaps.py
+@@ -238,6 +238,34 @@
+     finally:source.close()
+ 
+ 
++def test_source_budget_counts_extra_reads_from_pixel_validation(monkeypatch):
++    from dance_highlight.services import shot_member_gaps as module
++    calls=[]
++    class Source:
++        def __init__(self): self.position=0
++        def isOpened(self): return True
++        def get(self,prop): return 20. if prop==cv2.CAP_PROP_FPS else self.position
++        def read(self):
++            calls.append(self.position)
++            self.position+=1
++            return True,np.zeros((2,2,3),np.uint8)
++        def release(self): pass
++    def additional_pixel_reads(source,*_args):
++        for _ in range(3):
++            ok,_=source.read()
++            if not ok: return 'source_frame_unavailable'
++        return None
++    monkeypatch.setattr(module,'MAX_SOURCE_FRAMES',2)
++    monkeypatch.setattr(module.cv2,'VideoCapture',lambda _:Source())
++    monkeypatch.setattr(module,'_check_source_chain',additional_pixel_reads)
++    source=module._BoundedSource('unused',20.)
++    try:
++        assert source.check([0,1],{0:None,1:None},{},1)=='source_frame_budget_exhausted'
++        assert calls==[0,1]
++        assert source.audit['frames_read']==2
++    finally: source.close()
++
++
+ @pytest.mark.parametrize('start',[.91,.95,.99])
+ def test_new_time_before_cut_without_a_sampled_row_is_not_named_shot_evidence(tmp_path,start):
+     args=fixture(tmp_path)

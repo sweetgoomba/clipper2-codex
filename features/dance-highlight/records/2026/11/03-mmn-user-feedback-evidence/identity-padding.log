@@ -1,0 +1,36 @@
+MMN before {'seconds': 7.21940695802914, 'short': 27, 'clips': 65}
+target [{'start': 50.650600000000004, 'end': 50.68396666666667, 'name': '김채원', 'reason': 'member_timeline_consensus'}, {'start': 50.68396666666667, 'end': 52.48576666666666, 'name': '허윤진', 'reason': 'member_timeline_consensus'}]
+MMN after {'seconds': 3.530950209009461, 'short': 26, 'clips': 64}
+target [{'start': 50.650600000000004, 'end': 50.83411666666667, 'name': '김채원', 'reason': 'member_timeline_consensus'}, {'start': 50.83411666666667, 'end': 52.452400000000004, 'name': '허윤진', 'reason': 'member_timeline_consensus'}]
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+ANT before {'seconds': 12.078397665987723, 'short': 57, 'clips': 105}
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+ANT after {'seconds': 6.7905030839610845, 'short': 62, 'clips': 111}
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54ad80] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+NEON before {'seconds': 10.697779166977853, 'short': 93, 'clips': 155}
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+[h264 @ 0x753e54b480] mmco: unref short failure
+NEON after {'seconds': 8.634781708009541, 'short': 92, 'clips': 154}

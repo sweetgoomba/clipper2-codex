@@ -1,0 +1,9 @@
+{
+  "scope": "Review harness count correction only",
+  "initial_expected_dance_package_python_files": 84,
+  "final_source_manifest_dance_package_python_files": 58,
+  "installed_dance_package_python_files": 58,
+  "file_byte_mismatches": [],
+  "reason": "84 was a broader packaged-product count reported upstream; the dance_highlight package itself has58 Python files. The verifier scope and count now agree.",
+  "product_changed": false
+}

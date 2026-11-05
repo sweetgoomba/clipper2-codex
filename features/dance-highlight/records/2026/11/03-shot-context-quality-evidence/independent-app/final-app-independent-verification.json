@@ -1,0 +1,1135 @@
+{
+  "scope": "Independent completed packaged-app comparison with original saved evidence, runtime/asset byte verification and targeted source-ROI proof; no new model inference or repeated performance benchmark.",
+  "checks": [
+    {
+      "name": "MMN exact approved output transformation",
+      "passed": true
+    },
+    {
+      "name": "MMN all outputs completed without error",
+      "passed": true
+    },
+    {
+      "name": "MMN 414 baseline metadata and evidence unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN metadata and evidence audit hashes current",
+      "passed": true
+    },
+    {
+      "name": "MMN config/setup/source metadata equal",
+      "passed": true
+    },
+    {
+      "name": "MMN source video bytes match both recorded input hashes",
+      "passed": true
+    },
+    {
+      "name": "MMN job reference selections and requested source identical",
+      "passed": true
+    },
+    {
+      "name": "MMN current original reference files match recorded recognition gallery",
+      "passed": true
+    },
+    {
+      "name": "MMN raw face observations/embeddings/identity/references identical",
+      "passed": true
+    },
+    {
+      "name": "MMN original role/cut/handoff/camera inventory identical",
+      "passed": true
+    },
+    {
+      "name": "MMN native observations unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN original pose geometry and ownership unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN pose scene labels change only at approved frames",
+      "passed": true
+    },
+    {
+      "name": "MMN original secondary identity and mask records otherwise identical",
+      "passed": true
+    },
+    {
+      "name": "MMN accepted preparation changes unchanged except output indices",
+      "passed": true
+    },
+    {
+      "name": "MMN no output name/coverage change outside approved times",
+      "passed": true
+    },
+    {
+      "name": "MMN four protected source episodes preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN all prior user windows preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "MMN clip diagnostics and person links consistent",
+      "passed": true
+    },
+    {
+      "name": "MMN person names/descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN SAM OFF policies/runtime/candidates/recovery/models",
+      "passed": true
+    },
+    {
+      "name": "MMN all final thumbnails exact original same-start bytes",
+      "passed": true
+    },
+    {
+      "name": "MMN unchanged diagnostic face-query sequences exact",
+      "passed": true
+    },
+    {
+      "name": "MMN changed face-query bytes traced to original owners",
+      "passed": true
+    },
+    {
+      "name": "MMN other image assets unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN all41 Dance runtime modules match reviewed source",
+      "passed": true
+    },
+    {
+      "name": "MMN all42 runtime module file bytes match recorded hashes",
+      "passed": true
+    },
+    {
+      "name": "MMN shared AuraFace unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN model files/runtime config/recognition providers unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN all58 installed Dance Python files equal freeze",
+      "passed": true
+    },
+    {
+      "name": "MMN actual shot stage recovery and bounded source work",
+      "passed": true
+    },
+    {
+      "name": "MMN shot timing correctly nested",
+      "passed": true
+    },
+    {
+      "name": "ANT exact approved output transformation",
+      "passed": true
+    },
+    {
+      "name": "ANT all outputs completed without error",
+      "passed": true
+    },
+    {
+      "name": "ANT 414 baseline metadata and evidence unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT metadata and evidence audit hashes current",
+      "passed": true
+    },
+    {
+      "name": "ANT config/setup/source metadata equal",
+      "passed": true
+    },
+    {
+      "name": "ANT source video bytes match both recorded input hashes",
+      "passed": true
+    },
+    {
+      "name": "ANT job reference selections and requested source identical",
+      "passed": true
+    },
+    {
+      "name": "ANT current original reference files match recorded recognition gallery",
+      "passed": true
+    },
+    {
+      "name": "ANT raw face observations/embeddings/identity/references identical",
+      "passed": true
+    },
+    {
+      "name": "ANT original role/cut/handoff/camera inventory identical",
+      "passed": true
+    },
+    {
+      "name": "ANT native observations unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT original pose geometry and ownership unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT pose scene labels change only at approved frames",
+      "passed": true
+    },
+    {
+      "name": "ANT original secondary identity and mask records otherwise identical",
+      "passed": true
+    },
+    {
+      "name": "ANT accepted preparation changes unchanged except output indices",
+      "passed": true
+    },
+    {
+      "name": "ANT no output name/coverage change outside approved times",
+      "passed": true
+    },
+    {
+      "name": "ANT four protected source episodes preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT all prior user windows preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "ANT clip diagnostics and person links consistent",
+      "passed": true
+    },
+    {
+      "name": "ANT person names/descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT SAM OFF policies/runtime/candidates/recovery/models",
+      "passed": true
+    },
+    {
+      "name": "ANT all final thumbnails exact original same-start bytes",
+      "passed": true
+    },
+    {
+      "name": "ANT unchanged diagnostic face-query sequences exact",
+      "passed": true
+    },
+    {
+      "name": "ANT changed face-query bytes traced to original owners",
+      "passed": true
+    },
+    {
+      "name": "ANT other image assets unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT all41 Dance runtime modules match reviewed source",
+      "passed": true
+    },
+    {
+      "name": "ANT all42 runtime module file bytes match recorded hashes",
+      "passed": true
+    },
+    {
+      "name": "ANT shared AuraFace unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT model files/runtime config/recognition providers unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT all58 installed Dance Python files equal freeze",
+      "passed": true
+    },
+    {
+      "name": "ANT actual shot stage recovery and bounded source work",
+      "passed": true
+    },
+    {
+      "name": "ANT shot timing correctly nested",
+      "passed": true
+    },
+    {
+      "name": "NEON exact approved output transformation",
+      "passed": true
+    },
+    {
+      "name": "NEON all outputs completed without error",
+      "passed": true
+    },
+    {
+      "name": "NEON 414 baseline metadata and evidence unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON metadata and evidence audit hashes current",
+      "passed": true
+    },
+    {
+      "name": "NEON config/setup/source metadata equal",
+      "passed": true
+    },
+    {
+      "name": "NEON source video bytes match both recorded input hashes",
+      "passed": true
+    },
+    {
+      "name": "NEON job reference selections and requested source identical",
+      "passed": true
+    },
+    {
+      "name": "NEON current original reference files match recorded recognition gallery",
+      "passed": true
+    },
+    {
+      "name": "NEON raw face observations/embeddings/identity/references identical",
+      "passed": true
+    },
+    {
+      "name": "NEON original role/cut/handoff/camera inventory identical",
+      "passed": true
+    },
+    {
+      "name": "NEON native observations unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON original pose geometry and ownership unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON pose scene labels change only at approved frames",
+      "passed": true
+    },
+    {
+      "name": "NEON deferred5906 remains a hard source cut",
+      "passed": true
+    },
+    {
+      "name": "NEON deferred5906 remains a hard source cut",
+      "passed": true
+    },
+    {
+      "name": "NEON original secondary identity and mask records otherwise identical",
+      "passed": true
+    },
+    {
+      "name": "NEON accepted preparation changes unchanged except output indices",
+      "passed": true
+    },
+    {
+      "name": "NEON no output name/coverage change outside approved times",
+      "passed": true
+    },
+    {
+      "name": "NEON four protected source episodes preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON all prior user windows preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON no new tiny fragments",
+      "passed": true
+    },
+    {
+      "name": "NEON clip diagnostics and person links consistent",
+      "passed": true
+    },
+    {
+      "name": "NEON person names/descriptors unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON SAM OFF policies/runtime/candidates/recovery/models",
+      "passed": true
+    },
+    {
+      "name": "NEON all final thumbnails exact original same-start bytes",
+      "passed": true
+    },
+    {
+      "name": "NEON unchanged diagnostic face-query sequences exact",
+      "passed": true
+    },
+    {
+      "name": "NEON changed face-query bytes traced to original owners",
+      "passed": true
+    },
+    {
+      "name": "NEON other image assets unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON all41 Dance runtime modules match reviewed source",
+      "passed": true
+    },
+    {
+      "name": "NEON all42 runtime module file bytes match recorded hashes",
+      "passed": true
+    },
+    {
+      "name": "NEON shared AuraFace unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON model files/runtime config/recognition providers unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON all58 installed Dance Python files equal freeze",
+      "passed": true
+    },
+    {
+      "name": "NEON actual shot stage recovery and bounded source work",
+      "passed": true
+    },
+    {
+      "name": "NEON shot timing correctly nested",
+      "passed": true
+    },
+    {
+      "name": "all181 reviewed source/test files still match final freeze",
+      "passed": true
+    },
+    {
+      "name": "Person31 and SDK25 files unchanged from start",
+      "passed": true
+    },
+    {
+      "name": "all14 user windows included",
+      "passed": true
+    },
+    {
+      "name": "expected409 outputs and226 subsecond",
+      "passed": true
+    },
+    {
+      "name": "unknown drops only approved ANT0.467333sec",
+      "passed": true
+    },
+    {
+      "name": "MMN current baseline source bytes match new original source",
+      "passed": true
+    },
+    {
+      "name": "ANT current baseline source bytes match new original source",
+      "passed": true
+    },
+    {
+      "name": "NEON current baseline source bytes match new original source",
+      "passed": true
+    }
+  ],
+  "check_count": 109,
+  "all_checks_passed": true,
+  "failures": [],
+  "videos": {
+    "MMN": {
+      "ids": [
+        "1793633624877",
+        "1793639096353"
+      ],
+      "metrics": [
+        {
+          "main": 57,
+          "group": 32,
+          "total": 89,
+          "subsecond": 42,
+          "under_0_1s": 2,
+          "unknown_seconds": 6.80720000000003,
+          "main_seconds": 135.00153333333333,
+          "names": {
+            "김채원": 8,
+            "카즈하": 6,
+            "홍은채": 8,
+            "사쿠라": 8,
+            "unknown": 16,
+            "허윤진": 11
+          }
+        },
+        {
+          "main": 56,
+          "group": 32,
+          "total": 88,
+          "subsecond": 41,
+          "under_0_1s": 2,
+          "unknown_seconds": 6.80720000000003,
+          "main_seconds": 135.3352,
+          "names": {
+            "김채원": 8,
+            "카즈하": 6,
+            "홍은채": 8,
+            "사쿠라": 8,
+            "unknown": 16,
+            "허윤진": 10
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 104.57113333333334,
+            "end": 104.9048,
+            "before": [],
+            "after": [
+              "허윤진"
+            ],
+            "expected_scope": true
+          }
+        ],
+        "group": []
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0043",
+              "start": 104.02058333333333,
+              "end": 104.57113333333334,
+              "person_id": "허윤진",
+              "thumbnail_path": "clips/dance/main/main_0043.jpg"
+            },
+            {
+              "clip_id": "main_0044",
+              "start": 104.90480000000001,
+              "end": 106.70660000000001,
+              "person_id": "허윤진",
+              "thumbnail_path": "clips/dance/main/main_0044.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0043",
+              "start": 104.02058333333333,
+              "end": 106.70660000000001,
+              "person_id": "허윤진",
+              "thumbnail_path": "clips/dance/main/main_0043.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 55,
+          "unchanged_rows_with_reindexed_ids": 12
+        },
+        "group": {
+          "removed_or_changed": [],
+          "added_or_changed": [],
+          "unchanged_semantic_rows": 32,
+          "unchanged_rows_with_reindexed_ids": 0
+        }
+      },
+      "active_wall_seconds": [
+        288.679,
+        314.957
+      ],
+      "wall_change_seconds": 26.27800000000002,
+      "wall_change_percent": 9.102844335750104,
+      "pipeline_seconds": [
+        279.9718022500165,
+        305.55880766699556
+      ],
+      "stage_seconds": [
+        {
+          "download_refs": 0.010649624979123473,
+          "yolo": 65.38743558397982,
+          "ref_embs": 1.6690373330493458,
+          "main_selection": 84.07014495803742,
+          "native_scene": 10.903464958013501,
+          "group_context": 0.0003804159932769835,
+          "segment_build": 27.073170208954252,
+          "face_extract": 44.48662970896112,
+          "secondary_faces": 15.506787708029151,
+          "body_continuity": 0.5211697079939768,
+          "context_faces": 0.0002632499672472477,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.004654084041249007,
+          "observed_part_continuity": 0.2729418329545297,
+          "cluster_map": 34.646872790995985,
+          "clips_main": 6.56045362498844,
+          "clips_group": 3.8882299580145627
+        },
+        {
+          "download_refs": 0.014906249998603016,
+          "yolo": 73.1174670420005,
+          "ref_embs": 1.4767883750027977,
+          "main_selection": 95.89470154099399,
+          "native_scene": 11.241465084021911,
+          "group_context": 0.0004080419894307852,
+          "segment_build": 27.715790916990954,
+          "face_extract": 43.98291204200359,
+          "secondary_faces": 17.138022125000134,
+          "body_continuity": 0.5181013330002315,
+          "context_faces": 0.0003368750330992043,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.005465249996632338,
+          "observed_part_continuity": 0.2917973329895176,
+          "shot_member_gaps": 0.008009583048988134,
+          "cluster_map": 38.98016833298607,
+          "clips_main": 7.017411332984921,
+          "clips_group": 4.026129374979064
+        }
+      ],
+      "stage_delta_seconds": {
+        "named_boundaries": 0.0008111659553833306,
+        "mask_continuity": 0.0,
+        "shot_member_gaps": 0.008009583048988134,
+        "context_faces": 7.36250658519566e-05,
+        "clips_group": 0.13789941696450114,
+        "yolo": 7.730031458020676,
+        "cluster_map": 4.333295541990083,
+        "face_extract": -0.5037176669575274,
+        "secondary_faces": 1.6312344169709831,
+        "download_refs": 0.004256625019479543,
+        "observed_part_continuity": 0.018855500034987926,
+        "ref_embs": -0.19224895804654807,
+        "native_scene": 0.33800012600841,
+        "clips_main": 0.45695770799648017,
+        "main_selection": 11.824556582956575,
+        "group_context": 2.762599615380168e-05,
+        "joint_identity": 0.0,
+        "body_continuity": -0.0030683749937452376,
+        "segment_build": 0.6426207080367021
+      },
+      "shot_source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "shot_seconds": 0.008009583048988134,
+      "thumbnails_checked": 88,
+      "original_pose_count": 2324,
+      "raw_recognition_and_geometry_preserved": true,
+      "deferred_structure_frames": [],
+      "preparation_accepted_counts": [
+        1,
+        1
+      ]
+    },
+    "ANT": {
+      "ids": [
+        "1793633679903",
+        "1793639190408"
+      ],
+      "metrics": [
+        {
+          "main": 96,
+          "group": 32,
+          "total": 128,
+          "subsecond": 73,
+          "under_0_1s": 1,
+          "unknown_seconds": 15.483933333333418,
+          "main_seconds": 191.6247666666666,
+          "names": {
+            "unknown": 28,
+            "홍은채": 11,
+            "김채원": 19,
+            "허윤진": 11,
+            "카즈하": 16,
+            "사쿠라": 11
+          }
+        },
+        {
+          "main": 94,
+          "group": 32,
+          "total": 126,
+          "subsecond": 72,
+          "under_0_1s": 1,
+          "unknown_seconds": 15.016600000000075,
+          "main_seconds": 191.6247666666666,
+          "names": {
+            "unknown": 27,
+            "홍은채": 11,
+            "김채원": 18,
+            "허윤진": 11,
+            "카즈하": 16,
+            "사쿠라": 11
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 64.43093333333333,
+            "end": 64.89826666666667,
+            "before": [
+              "unknown"
+            ],
+            "after": [
+              "김채원"
+            ],
+            "expected_scope": true
+          }
+        ],
+        "group": []
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0025",
+              "start": 62.5625,
+              "end": 64.43093333333333,
+              "person_id": "김채원",
+              "thumbnail_path": "clips/dance/main/main_0025.jpg"
+            },
+            {
+              "clip_id": "main_0026",
+              "start": 64.43093333333333,
+              "end": 64.89826666666667,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0026.jpg"
+            },
+            {
+              "clip_id": "main_0027",
+              "start": 64.89826666666667,
+              "end": 69.20246666666667,
+              "person_id": "김채원",
+              "thumbnail_path": "clips/dance/main/main_0027.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0025",
+              "start": 62.5625,
+              "end": 69.20246666666667,
+              "person_id": "김채원",
+              "thumbnail_path": "clips/dance/main/main_0025.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 93,
+          "unchanged_rows_with_reindexed_ids": 68
+        },
+        "group": {
+          "removed_or_changed": [],
+          "added_or_changed": [],
+          "unchanged_semantic_rows": 32,
+          "unchanged_rows_with_reindexed_ids": 0
+        }
+      },
+      "active_wall_seconds": [
+        389.9,
+        431.777
+      ],
+      "wall_change_seconds": 41.87700000000001,
+      "wall_change_percent": 10.740446268273928,
+      "pipeline_seconds": [
+        386.4106880000327,
+        428.28990612499183
+      ],
+      "stage_seconds": [
+        {
+          "download_refs": 0.02090495900483802,
+          "yolo": 84.41101462498773,
+          "ref_embs": 0.3565512090572156,
+          "main_selection": 128.36612883297494,
+          "native_scene": 21.596191000018734,
+          "group_context": 0.000626583001576364,
+          "segment_build": 34.769396500021685,
+          "face_extract": 67.9272698329878,
+          "secondary_faces": 21.95262225001352,
+          "body_continuity": 0.584318750014063,
+          "context_faces": 0.00037091702688485384,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.1516450839699246,
+          "observed_part_continuity": 0.5189419590169564,
+          "cluster_map": 43.29697591700824,
+          "clips_main": 8.798897749977186,
+          "clips_group": 2.715327750018332
+        },
+        {
+          "download_refs": 0.025194458954501897,
+          "yolo": 97.6485780000221,
+          "ref_embs": 0.3938318329746835,
+          "main_selection": 142.41009566700086,
+          "native_scene": 23.832617709005717,
+          "group_context": 0.0005658339941874146,
+          "segment_build": 37.379450874985196,
+          "face_extract": 68.92064108303748,
+          "secondary_faces": 27.396040166029707,
+          "body_continuity": 0.6489979579928331,
+          "context_faces": 0.00038425001548603177,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.15648091700859368,
+          "observed_part_continuity": 0.5730857489397749,
+          "shot_member_gaps": 0.18835104099707678,
+          "cluster_map": 50.952311208005995,
+          "clips_main": 9.661041583982296,
+          "clips_group": 3.1182496669935063
+        }
+      ],
+      "stage_delta_seconds": {
+        "named_boundaries": 0.0048358330386690795,
+        "mask_continuity": 0.0,
+        "shot_member_gaps": 0.18835104099707678,
+        "context_faces": 1.333298860117793e-05,
+        "clips_group": 0.4029219169751741,
+        "yolo": 13.23756337503437,
+        "cluster_map": 7.655335290997755,
+        "face_extract": 0.9933712500496767,
+        "secondary_faces": 5.4434179160161875,
+        "download_refs": 0.0042894999496638775,
+        "observed_part_continuity": 0.05414378992281854,
+        "ref_embs": 0.03728062391746789,
+        "native_scene": 2.2364267089869827,
+        "clips_main": 0.86214383400511,
+        "main_selection": 14.043966834025923,
+        "group_context": -6.0749007388949394e-05,
+        "joint_identity": 0.0,
+        "body_continuity": 0.06467920797877014,
+        "segment_build": 2.610054374963511
+      },
+      "shot_source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 1,
+        "frames_reserved": 49,
+        "frames_read": 49,
+        "seeks": 1,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "shot_seconds": 0.18835104099707678,
+      "thumbnails_checked": 126,
+      "original_pose_count": 3310,
+      "raw_recognition_and_geometry_preserved": true,
+      "deferred_structure_frames": [],
+      "preparation_accepted_counts": [
+        1,
+        1
+      ]
+    },
+    "NEON": {
+      "ids": [
+        "1793633791815",
+        "1793639268565"
+      ],
+      "metrics": [
+        {
+          "main": 143,
+          "group": 54,
+          "total": 197,
+          "subsecond": 115,
+          "under_0_1s": 17,
+          "unknown_seconds": 16.317800000000137,
+          "main_seconds": 176.77659999999997,
+          "names": {
+            "아이찡": 20,
+            "시리": 13,
+            "unknown": 45,
+            "메르시": 8,
+            "오아": 23,
+            "히메키": 5,
+            "아윤": 4,
+            "영": 16,
+            "보라": 3,
+            "라다": 6
+          }
+        },
+        {
+          "main": 142,
+          "group": 53,
+          "total": 195,
+          "subsecond": 113,
+          "under_0_1s": 16,
+          "unknown_seconds": 16.317800000000137,
+          "main_seconds": 177.01016666666663,
+          "names": {
+            "아이찡": 20,
+            "시리": 13,
+            "unknown": 45,
+            "메르시": 8,
+            "오아": 22,
+            "히메키": 5,
+            "아윤": 4,
+            "영": 16,
+            "보라": 3,
+            "라다": 6
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 98.29820000000001,
+            "end": 98.53176666666667,
+            "before": [],
+            "after": [
+              "오아"
+            ],
+            "expected_scope": true
+          }
+        ],
+        "group": [
+          {
+            "start": 98.29820000000001,
+            "end": 98.53176666666667,
+            "before": [
+              "None"
+            ],
+            "after": [],
+            "expected_scope": true
+          }
+        ]
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0051",
+              "start": 98.23146666666666,
+              "end": 98.29820000000001,
+              "person_id": "오아",
+              "thumbnail_path": "clips/dance/main/main_0051.jpg"
+            },
+            {
+              "clip_id": "main_0052",
+              "start": 98.53176666666667,
+              "end": 99.96653333333333,
+              "person_id": "오아",
+              "thumbnail_path": "clips/dance/main/main_0052.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0051",
+              "start": 98.23146666666666,
+              "end": 99.96653333333333,
+              "person_id": "오아",
+              "thumbnail_path": "clips/dance/main/main_0051.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 141,
+          "unchanged_rows_with_reindexed_ids": 90
+        },
+        "group": {
+          "removed_or_changed": [
+            {
+              "clip_id": "group_0018",
+              "start": 98.29820000000001,
+              "end": 98.53176666666667,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0018.jpg"
+            }
+          ],
+          "added_or_changed": [],
+          "unchanged_semantic_rows": 53,
+          "unchanged_rows_with_reindexed_ids": 35
+        }
+      },
+      "active_wall_seconds": [
+        438.23,
+        461.224
+      ],
+      "wall_change_seconds": 22.99399999999997,
+      "wall_change_percent": 5.24701640690961,
+      "pipeline_seconds": [
+        434.3173715000157,
+        457.08250274998136
+      ],
+      "stage_seconds": [
+        {
+          "download_refs": 0.0391092500067316,
+          "yolo": 93.39453762496123,
+          "ref_embs": 2.191190249985084,
+          "main_selection": 131.81151174998377,
+          "native_scene": 40.7544170000474,
+          "group_context": 0.001356624998152256,
+          "segment_build": 58.58367437502602,
+          "face_extract": 69.03342912497465,
+          "secondary_faces": 24.50227579200873,
+          "body_continuity": 0.9165872089797631,
+          "context_faces": 0.0003612919826991856,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.014668417046777904,
+          "observed_part_continuity": 0.6366336250212044,
+          "cluster_map": 37.718314124969766,
+          "clips_main": 12.548996083030943,
+          "clips_group": 4.492526167014148
+        },
+        {
+          "download_refs": 0.048783958016429096,
+          "yolo": 103.20193591702264,
+          "ref_embs": 2.3121299170306884,
+          "main_selection": 139.51206199999433,
+          "native_scene": 40.921159417019226,
+          "group_context": 0.0014686249778605998,
+          "segment_build": 59.65263845800655,
+          "face_extract": 68.8800946669653,
+          "secondary_faces": 25.741567499993835,
+          "body_continuity": 0.9919032080215402,
+          "context_faces": 0.0005701250047422945,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.009970790997613221,
+          "observed_part_continuity": 0.5969937910558656,
+          "shot_member_gaps": 0.02014654199592769,
+          "cluster_map": 39.879225542012136,
+          "clips_main": 12.951870082993992,
+          "clips_group": 4.5956325409933925
+        }
+      ],
+      "stage_delta_seconds": {
+        "named_boundaries": -0.004697626049164683,
+        "mask_continuity": 0.0,
+        "shot_member_gaps": 0.02014654199592769,
+        "context_faces": 0.00020883302204310894,
+        "clips_group": 0.10310637397924438,
+        "yolo": 9.807398292061407,
+        "cluster_map": 2.160911417042371,
+        "face_extract": -0.15333445800933987,
+        "secondary_faces": 1.2392917079851031,
+        "download_refs": 0.009674708009697497,
+        "observed_part_continuity": -0.03963983396533877,
+        "ref_embs": 0.12093966704560444,
+        "native_scene": 0.1667424169718288,
+        "clips_main": 0.40287399996304885,
+        "main_selection": 7.700550250010565,
+        "group_context": 0.00011199997970834374,
+        "joint_identity": 0.0,
+        "body_continuity": 0.0753159990417771,
+        "segment_build": 1.0689640829805285
+      },
+      "shot_source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "shot_seconds": 0.02014654199592769,
+      "thumbnails_checked": 195,
+      "original_pose_count": 3632,
+      "raw_recognition_and_geometry_preserved": true,
+      "deferred_structure_frames": [
+        5906
+      ],
+      "preparation_accepted_counts": [
+        0,
+        0
+      ]
+    }
+  },
+  "totals": {
+    "total": [
+      414,
+      409
+    ],
+    "main": [
+      296,
+      292
+    ],
+    "group": [
+      118,
+      117
+    ],
+    "subsecond": [
+      230,
+      226
+    ],
+    "under_0_1s": [
+      20,
+      19
+    ],
+    "unknown_seconds": [
+      38.60893333333358,
+      38.14160000000024
+    ],
+    "main_seconds": [
+      503.40289999999993,
+      503.97013333333325
+    ]
+  },
+  "short_categories": {
+    "named": [
+      71,
+      69
+    ],
+    "unknown": [
+      80,
+      79
+    ],
+    "group": [
+      79,
+      78
+    ]
+  },
+  "active_wall_seconds": [
+    1116.809,
+    1207.958
+  ],
+  "wall_change_seconds": 91.14900000000011,
+  "wall_change_percent": 8.161556720979156,
+  "diagnostic_query_exception_proof": "/private/tmp/dance-episode-review-20261103/final-app/neon-query-original-source-proof.json",
+  "source_freeze": "/private/tmp/dance-continuity-next-20261103/final-source-manifest.json",
+  "limitations": [
+    "Single actual run per video/version; wall-time increase is observed, cause is not isolated experimentally.",
+    "Review establishes no unapproved output or source-evidence changes in these3 videos, not exhaustive identity ground truth for every scene."
+  ],
+  "outcome": {
+    "quality_scope_and_provenance": "pass",
+    "unapproved_output_changes": 0,
+    "wall_time_regression_observed": true,
+    "performance_improvement_claim_supported": false,
+    "performance_cause": "not isolated by this single-run comparison"
+  },
+  "baseline_current_source_verification": {
+    "MMN": {
+      "old_new_same_inode": true,
+      "baseline_current_source_bytes_equal_new": true,
+      "source_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363"
+    },
+    "ANT": {
+      "old_new_same_inode": true,
+      "baseline_current_source_bytes_equal_new": true,
+      "source_sha256": "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2"
+    },
+    "NEON": {
+      "old_new_same_inode": true,
+      "baseline_current_source_bytes_equal_new": true,
+      "source_sha256": "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f"
+    }
+  },
+  "visual_review": {
+    "contact_sheets": [
+      "/private/tmp/dance-episode-review-20261103/final-app/MMN-approved-change-source-contact.jpg",
+      "/private/tmp/dance-episode-review-20261103/final-app/ANT-approved-change-source-contact.jpg",
+      "/private/tmp/dance-episode-review-20261103/final-app/NEON-approved-change-source-contact.jpg"
+    ],
+    "sampled_frames_per_video": 6,
+    "observations": [
+      "MMN sampled selected body remains continuous within the ensemble; retaining its group output is consistent with the source composition.",
+      "ANT samples show the camera cut and continued selected source body in the new shot; identity support is established independently per shot, not by a cross-cut pose transfer.",
+      "NEON samples retain the selected foreground body through the approved4 frames and the original cut5906 remains intact."
+    ],
+    "limitation": "Targeted source-composition review; identities are taken from unchanged original owned face evidence, not inferred visually."
+  }
+}

@@ -1,0 +1,424 @@
+[
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 1.9,
+    "end": 2.3,
+    "accepted_labels": [],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.0,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 1.9,
+        "end": 2.3,
+        "names": [],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 2.3,
+    "end": 4.37,
+    "accepted_labels": [
+      "group"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 2.0700000000000003,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 2.3,
+        "end": 4.37,
+        "names": [],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 10.91,
+    "end": 11.31,
+    "accepted_labels": [
+      "카즈하",
+      "group"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.40000000000000036,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 10.91,
+        "end": 11.31,
+        "names": [],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 34.73,
+    "end": 35.44,
+    "accepted_labels": [
+      "사쿠라",
+      "group"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.6051999999999964,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.10480000000000445,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 34.73,
+        "end": 34.734700000000004,
+        "names": [
+          "unknown"
+        ],
+        "group": false
+      },
+      {
+        "start": 34.734700000000004,
+        "end": 34.8348,
+        "names": [
+          "unknown"
+        ],
+        "group": false
+      },
+      {
+        "start": 34.8348,
+        "end": 35.4354,
+        "names": [],
+        "group": true
+      },
+      {
+        "start": 35.4354,
+        "end": 35.44,
+        "names": [
+          "사쿠라"
+        ],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 37.738,
+    "end": 39.339,
+    "accepted_labels": [
+      "사쿠라"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 1.600999999999999,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 37.738,
+        "end": 39.339,
+        "names": [
+          "사쿠라"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 45.0,
+    "end": 48.0,
+    "accepted_labels": [
+      "사쿠라"
+    ],
+    "approximate_boundary": true,
+    "accepted_coverage_seconds": 2.6192833333333354,
+    "wrong_named_main_seconds": 1.481816666666667,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 45.0,
+        "end": 45.361983333333335,
+        "names": [
+          "허윤진"
+        ],
+        "group": false
+      },
+      {
+        "start": 45.361983333333335,
+        "end": 46.46308333333334,
+        "names": [
+          "사쿠라",
+          "허윤진"
+        ],
+        "group": false
+      },
+      {
+        "start": 46.46308333333334,
+        "end": 47.98126666666667,
+        "names": [
+          "사쿠라"
+        ],
+        "group": false
+      },
+      {
+        "start": 47.98126666666667,
+        "end": 48.0,
+        "names": [
+          "허윤진"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "MMN",
+    "project_id": "1793674437287",
+    "start": 89.0,
+    "end": 93.0,
+    "accepted_labels": [
+      "카즈하"
+    ],
+    "approximate_boundary": true,
+    "accepted_coverage_seconds": 4.0,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 89.0,
+        "end": 93.0,
+        "names": [
+          "카즈하"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "ANT",
+    "project_id": "1793674460357",
+    "start": 4.571,
+    "end": 6.139,
+    "accepted_labels": [
+      "홍은채"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.00023333333333397377,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 1.5677666666666665,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 4.571,
+        "end": 4.571233333333334,
+        "names": [
+          "홍은채"
+        ],
+        "group": false
+      },
+      {
+        "start": 4.571233333333334,
+        "end": 5.6056,
+        "names": [
+          "unknown"
+        ],
+        "group": false
+      },
+      {
+        "start": 5.6056,
+        "end": 6.139,
+        "names": [
+          "unknown"
+        ],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "ANT",
+    "project_id": "1793674460357",
+    "start": 8.375,
+    "end": 9.0,
+    "accepted_labels": [
+      "홍은채"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.6006333333333345,
+    "wrong_named_main_seconds": 0.024366666666665537,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 8.375,
+        "end": 8.975633333333334,
+        "names": [
+          "홍은채"
+        ],
+        "group": false
+      },
+      {
+        "start": 8.975633333333334,
+        "end": 9.0,
+        "names": [
+          "김채원"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "ANT",
+    "project_id": "1793674460357",
+    "start": 9.4,
+    "end": 10.277,
+    "accepted_labels": [
+      "김채원"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 0.5098666666666656,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.3671333333333333,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 9.4,
+        "end": 9.9098,
+        "names": [
+          "김채원"
+        ],
+        "group": false
+      },
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "names": [
+          "unknown"
+        ],
+        "group": false
+      },
+      {
+        "start": 10.276933333333334,
+        "end": 10.277,
+        "names": [
+          "김채원"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "ANT",
+    "project_id": "1793674460357",
+    "start": 32.633,
+    "end": 33.433,
+    "accepted_labels": [
+      "홍은채",
+      "김채원"
+    ],
+    "approximate_boundary": true,
+    "accepted_coverage_seconds": 0.7999999999999972,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 32.633,
+        "end": 32.66596666666667,
+        "names": [
+          "홍은채"
+        ],
+        "group": false
+      },
+      {
+        "start": 32.66596666666667,
+        "end": 33.433,
+        "names": [
+          "김채원"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "NEON",
+    "project_id": "1793674513908",
+    "start": 78.378,
+    "end": 79.68,
+    "accepted_labels": [
+      "시리"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 1.3020000000000067,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 78.378,
+        "end": 79.68,
+        "names": [
+          "시리"
+        ],
+        "group": false
+      }
+    ]
+  },
+  {
+    "video": "NEON",
+    "project_id": "1793674513908",
+    "start": 150.617,
+    "end": 152.619,
+    "accepted_labels": [
+      "group"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 2.0020000000000095,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 150.617,
+        "end": 152.619,
+        "names": [],
+        "group": true
+      }
+    ]
+  },
+  {
+    "video": "NEON",
+    "project_id": "1793674513908",
+    "start": 183.15,
+    "end": 184.82,
+    "accepted_labels": [
+      "group"
+    ],
+    "approximate_boundary": false,
+    "accepted_coverage_seconds": 1.6699999999999875,
+    "wrong_named_main_seconds": 0.0,
+    "unknown_seconds": 0.0,
+    "no_clip_seconds": 0.0,
+    "ranges": [
+      {
+        "start": 183.15,
+        "end": 184.82,
+        "names": [],
+        "group": true
+      }
+    ]
+  }
+]

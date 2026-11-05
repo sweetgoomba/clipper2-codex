@@ -1,0 +1,162 @@
+<!--
+  헤더는 공유 <app-page>가 그린다 — 베리에이션(③ 결과물)·랭킹·소재 관리와 같은 규격
+  (← │ 아이콘 제목 … 우측 액션). 예전엔 이 화면만 뒤로가기를 패널 밖 알약으로, 액션을
+  패널 안 제목 옆으로 따로 그려서 화면을 옮길 때마다 헤더가 들썩였다.
+  액션이 폭에 안 들어가면 page-header가 알아서 ⋯ 메뉴로 접는다(잘리지 않는다).
+-->
+<app-page
+  [title]="pageTitle()"
+  [subtitle]="pageSubtitle()"
+  [subtitleAction]="sourceUrlAction()"
+  [badge]="artistBadge()"
+  [icon]="pageIcon()"
+  backLabel="뒤로"
+  scroll="fit"
+  (back)="goBack()"
+  (subtitleActionClick)="copySourceUrl()"
+>
+  <!--
+    액션은 결과를 실제로 불러온 뒤에만 그린다 — 로딩·에러 화면에서 [전체 다운로드]와
+    [프로젝트 삭제]는 가리킬 대상이 없다.
+  -->
+  @if (detail()) {
+    <ng-template appPageActions>
+      <button
+        data-testid="project-zip"
+        matButton="tonal"
+        type="button"
+        [matTooltip]="detail()?.category === 'dance' ? '모든 인물의 전체 클립을 인물별 폴더로 묶어 다운로드합니다.' : ''"
+        [disabled]="zipCount() === 0 || zipping() || editing()"
+        (click)="downloadAllZip()"
+      >
+        <!--
+          아이콘·스피너는 블록의 **단일 루트 노드**여야 Material의 아이콘 슬롯
+          (`<ng-content select="mat-icon, [matButtonIcon]">`)으로 투영된다. 라벨까지 같은
+          블록에 두면 루트가 둘이라 전부 기본 슬롯(`.mdc-button__label`)으로 들어가고,
+          거기는 인라인 포매팅이라 아이콘이 글자 baseline에 걸려 위로 솟는다.
+          그래서 라벨은 블록 밖에 둔다.
+        -->
+        @if (zipping()) {
+          <mat-progress-spinner matButtonIcon mode="indeterminate" diameter="18" />
+        } @else {
+          <mat-icon class="material-symbols-outlined">download</mat-icon>
+        }
+        <span data-testid="project-zip-label">
+          @if (zipping()) {
+            ZIP 준비 중…
+          } @else {
+            {{ detail()?.category === 'dance' ? '모든 클립 다운로드' : '전체 다운로드' }}
+          }
+        </span>
+      </button>
+      <button
+        data-testid="project-delete"
+        matButton="tonal"
+        class="danger"
+        type="button"
+        (click)="confirmDelete()"
+      >
+        <mat-icon class="material-symbols-outlined">delete</mat-icon>
+        프로젝트 삭제
+      </button>
+    </ng-template>
+  }
+
+  @if (loading()) {
+    <app-page-loading message="프로젝트 결과를 불러오는 중…" />
+  } @else {
+    @if (error(); as message) {
+      <app-state-panel
+        class="state-panel"
+        variant="error"
+        icon="error"
+        heading="결과를 불러오지 못했어요"
+        [message]="message"
+      />
+    } @else {
+      @if (detail(); as project) {
+        <!--
+          헤더 바로 아래가 곧 작업 영역(열 카드)이다 — 메타 줄(상태·클립 수·날짜)과 입력 소스 줄은 두지 않는다.
+          완료된 결과만 여기 오므로 상태는 늘 "완료"였고, 클립 수는 열 제목이, 영상 제목은 헤더 부제가 말한다
+          (모듈 작업 화면 공통 규칙, spec 2026-09-19-workspace-layout-unify).
+        -->
+        <section class="detail-panel">
+          <section class="result-section">
+            @if (project.category === 'dance') {
+              @if (danceStep() === 'map') {
+                <app-dance-diagnostic-timeline [project]="project" (viewResults)="danceStep.set('result')" />
+              } @else {
+                <button data-testid="dance-return-to-map" matButton="tonal" type="button" (click)="danceStep.set('map')">← 판정 지도</button>
+                <app-dance-result-detail
+                [project]="project"
+                [persons]="visiblePersons()"
+                [selectedPerson]="selectedPerson()"
+                [selectedPersonClips]="selectedPersonClips()"
+                [restore]="shortformRestore()"
+                (selectPerson)="selectPerson($event)"
+                (openClip)="selectClip($event.clip)"
+                (assignPerson)="assignDancePerson($event)"
+                (downloadPersonZip)="downloadAllZip($event)"
+                (deleteClip)="hideDanceClip($event)"
+                [busy]="editing() || zipping()" [restoring]="restoring()"
+                (deleteClips)="hideDanceClips($event)" (moveClips)="moveDanceClips($event)"
+                (trimClip)="saveDanceRange($event)" (restoreTrim)="restoreDanceRange($event)"
+                (downloadSelectedZip)="downloadSelectedDanceZip($event)"
+
+              />
+              }
+            } @else if (project.category === 'person') {
+              <app-person-result-detail
+                [project]="project" [persons]="visiblePersons()"
+                [selectedPerson]="selectedPerson()" [selectedPersonClips]="selectedPersonClips()"
+                [selectedClip]="selectedClip()" [busy]="editing() || zipping()" [restoring]="restoring()"
+                [editOutcome]="personEditOutcome()"
+                [restore]="shortformRestore()"
+                (selectPerson)="selectPerson($event)" (selectClip)="selectClip($event)"
+                (downloadPersonZip)="downloadAllZip($event)"
+                (downloadSelectedZip)="downloadSelectedPersonZip($event)"
+                (downloadClip)="downloadPersonClip($event)"
+                (edit)="onPersonEdit($event)" />
+            } @else if (project.category === 'dialog') {
+              <app-dialog-result-detail
+                [project]="project"
+                [selectedClip]="selectedClip()"
+                [trimming]="trimmingClipId()"
+                [restoreSeek]="restoreSeek()"
+                [restore]="shortformRestore()" [restoring]="restoring()"
+                (selectClip)="selectClip($event)"
+                (trimClip)="onTrimSave($event)"
+                (downloadClip)="downloadFile($event.videoUrl!, $event.title)"
+              />
+            } @else {
+              <app-state-panel
+                class="state-panel"
+                variant="empty"
+                icon="construction"
+                heading="이 프로젝트 유형의 상세 화면은 아직 준비되지 않았습니다."
+              />
+            }
+          </section>
+        </section>
+      } @else {
+        <app-state-panel
+          class="state-panel"
+          variant="empty"
+          icon="inbox"
+          heading="프로젝트 결과가 없습니다."
+        />
+      }
+    }
+  }
+
+  <app-projects-clip-overlay
+    [clip]="overlayClip()"
+    [nativeFrame]="detail()?.category === 'dance'"
+    [canNavigate]="canNavigateOverlay()"
+    [clipIndex]="overlayClipIndex()"
+    [clipCount]="overlayClipCount()"
+    (close)="closeClipOverlay()"
+    (previous)="showPreviousOverlayClip()"
+    (next)="showNextOverlayClip()"
+  />
+</app-page>

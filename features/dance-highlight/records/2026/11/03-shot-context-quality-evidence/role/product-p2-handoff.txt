@@ -1,0 +1,26 @@
+제품 이식 최종 확인 — 2026-11-03
+
+독립 P2를 먼저 실패 테스트로 고정했다. 왼쪽/오른쪽 중앙 half 밖의 큰 cropped 미측정 몸 2개, 실제 torso가 있지만 큰 bbox인 얼굴 미측정/missing·detected-sizeNone·repeated 3개, handoff previous_time~time 닫힌 구간의 왼쪽/오른쪽/오른쪽 걸침 3개가 기존 코드에서 실패했다. p2-before-tests.log: 8 failed,32 passed. 수정 후 p2-after-tests.log:40 passed.
+
+수정은 중앙 폭을 늘리지 않았다. 모든 retained body가 위치와 무관하게 신뢰 torso를 가져야 한다. 모든 원래 얼굴 미측정 또는 반복 기하 몸은 frame clipping/cropped foreground가 없어야 하며 target보다 실제 torso 길이와 전체 bbox 높이가 모두 작아야 한다. 얼굴 source 문구가 detected여도 size=None이면 미측정으로 다룬다. 다른 얼굴/torso 경쟁자 비교, 기존 foreground override, 원래 selected-body 연속성, 원래 final/direct/owned 이름, native/duet/컷 보호는 유지했다.
+
+handoff는 이전 관측부터 현재 관측까지 닫힌 불확실성 구간이 proof와 조금이라도 겹치면 거부한다. source cut 및 identity point는 첫 proof 관측에서 새 shot/part를 시작할 수 있지만 그 뒤부터 마지막 proof 관측까지 포함해 교차하면 거부한다. 4개 point-boundary 검증을 포함했다.
+
+제품 파일은 새 role_state.py, 새 test_dance_role_state.py, 새 mmn104_role_state.json 세 개만 이식했다. API는 유지했다. fixture에는 owned_names가 original finalname==directname이며 confirmed source ownership을 검증한 adapter 결과임을 명시했다. scene_context/pipeline/face_evidence 통합은 부모가 담당한다.
+
+읽기 쉬운 포맷과 불필요한 조건식 정리 후, 수정된 scratch prototype과 제품 모듈의 세 영상 전체 audit가 version 이름 외 정확히 동일함을 확인했다. 추가로 JSON default 변환에 의존하던 numpy.bool_를 native bool로 바꿨다. json.dumps(no default) 회귀는 수정 전1실패, 수정 후통과했다.
+
+제품 모듈 tests:38 passed in0.88s. 세 영상 모두 일반 json.dumps 성공. 원래 MMN104.571133–104.904800 허윤진 group5관측의 main eligibility만 유지되며 group export는 보존한다. ANT/NEON 추가 수락0. 함수 시간은 MMN0.017692/ANT0.001623/NEON0.002081초, 합계0.021396초다. 앱 전체 성능 결과가 아니다.
+
+버전 bounded_original_role_state_v1
+
+plugins/dance_highlight/dance_highlight/services/role_state.py
+SHA256 d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0
+
+tests/test_dance_role_state.py
+SHA256 f77ad67bfe83facb2e20ccec861b258675faa02dcfff138ad3d502ee4f760b2c
+
+tests/fixtures/dance_scene_review/mmn104_role_state.json
+SHA256 bbcef6f7c411300246d6cb8b2de72555bda57333f094399ad98e6f5f4f30eeee
+
+증거: product-equivalence.json(전체 audit 동등성/시간/파일 hash), product-tests.log, p2-before-tests.log, p2-after-tests.log, product-json-before.log. 이 문서의 P2 수정 내용을 이전 role-state-report.txt의 실험 규칙보다 우선한다. 모든 제품 작업은 끝났고 더 편집하지 않는다.

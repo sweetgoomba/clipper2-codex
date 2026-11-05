@@ -1,0 +1,381 @@
+{
+  "product_hashes_unchanged": {
+    "plugins/dance_highlight/dance_highlight/services/native_scene.py": true,
+    "tests/test_dance_native_scene.py": true,
+    "tests/fixtures/dance_native_upper_background.json": true
+  },
+  "files": {
+    "roi-fullframe-eight/summary.json": {
+      "bytes": 170406,
+      "sha256": "5fca5663abce85ec0934921cf9fc40a511a46a7bdbbd13c381529f5e2e5b5539"
+    },
+    "roi-fullframe-eight/ANT-aligned-contact.png": {
+      "bytes": 690145,
+      "sha256": "c4b4fcdc6d12f61565685af59bd5549ae7780ac0fbe82ae0e00ea6f849504e8f"
+    },
+    "roi-fullframe-eight/MMN-aligned-contact.png": {
+      "bytes": 494146,
+      "sha256": "fa0b45ed3178d9caf19549af6385fda2a878de8ef5d99683d2a39b1abd1a64d9"
+    },
+    "roi-fullframe-eight/ANT/frozen-sface-vectors.npz": {
+      "bytes": 518585,
+      "sha256": "068a07e30b2f8d92ab56a3030c75bc2adee1fb27986c73432c241b58521de3f8"
+    },
+    "roi-fullframe-eight/ANT/comparison.json": {
+      "bytes": 686840,
+      "sha256": "189bcbf5b073dbe6c3e3c0b5c0465aa318e9ebea735dd282a30bf2a1a291de8f"
+    },
+    "roi-fullframe-eight/ANT/frozen-gallery.json": {
+      "bytes": 209864,
+      "sha256": "d846d6d6f9b9accc487938597f62f8add3aea00bf6585129a3793a2b1cc8913a"
+    },
+    "roi-fullframe-eight/MMN/frozen-sface-vectors.npz": {
+      "bytes": 495047,
+      "sha256": "0077dc58cd9a6b9ccb325fe381b8735c4df674e3ba0a1c7df83075fc7a421002"
+    },
+    "roi-fullframe-eight/MMN/comparison.json": {
+      "bytes": 641956,
+      "sha256": "3bdf6579a03a3d5f0554b6edcd4dd221e5949ee12a255b51b5788ec3b5015793"
+    },
+    "roi-fullframe-eight/MMN/frozen-gallery.json": {
+      "bytes": 206048,
+      "sha256": "2dd193eb8792b717c69ff0b84876636f0b3f1eebd384139f9e171997583633c2"
+    },
+    "roi-fullframe-eight/MMN/2300/comparison.json": {
+      "bytes": 127259,
+      "sha256": "921cad6daeb8df30b2e579e1e457ab0b577added6ee65e7228baaa312c768b3e"
+    },
+    "roi-fullframe-eight/MMN/2300/saved-sface-aligned.png": {
+      "bytes": 13818,
+      "sha256": "c6a5a8cec6c30685e492ec0964e11a7aa348a087b0025235cb9086d77a4a673b"
+    },
+    "roi-fullframe-eight/MMN/2300/source.png": {
+      "bytes": 1051168,
+      "sha256": "6fd2e38fff343a3ac3370badfca4417931764302b17505e63301cbbc08c1f7ff"
+    },
+    "roi-fullframe-eight/MMN/2356/comparison.json": {
+      "bytes": 128769,
+      "sha256": "856faceea58ed439cf0cb6ede36bb16e790dc4b2ea91f006fe9b9975be7effea"
+    },
+    "roi-fullframe-eight/MMN/2356/saved-sface-aligned.png": {
+      "bytes": 14525,
+      "sha256": "f22b828dede20b0483738ad3393b0ff6f74491392ffba02ad3779e65d07270db"
+    },
+    "roi-fullframe-eight/MMN/2356/source.png": {
+      "bytes": 821079,
+      "sha256": "859879e8e42a0ad17876ca6b6d5ab93033ed5bab4738e3495ace24ecbf9b69aa"
+    },
+    "roi-fullframe-eight/MMN/2344/comparison.json": {
+      "bytes": 118569,
+      "sha256": "81f340cf3ec761cc3bb5d074581d7070b3dd65eb0d8754eec70108a7b87dcc48"
+    },
+    "roi-fullframe-eight/MMN/2344/saved-sface-aligned.png": {
+      "bytes": 10926,
+      "sha256": "c282d44559cee5e18b6ad06b790ef95c8008ba27e2d651a63cfa263e738eca17"
+    },
+    "roi-fullframe-eight/MMN/2344/source.png": {
+      "bytes": 787018,
+      "sha256": "9811041be28f0b4e1793a66d65b9843186625e9db82a9fce039eb2e0377f5db0"
+    },
+    "roi-fullframe-eight/MMN/2320/comparison.json": {
+      "bytes": 120748,
+      "sha256": "e4fb8586419f751a0a0d5f371ef038954f349a0340133b3b08e319791cadc381"
+    },
+    "roi-fullframe-eight/MMN/2320/saved-sface-aligned.png": {
+      "bytes": 11160,
+      "sha256": "72cb28032a065f8a4fd09687c538c617d1ef2f717ac72c2751cb3d3c02cc94e2"
+    },
+    "roi-fullframe-eight/MMN/2320/source.png": {
+      "bytes": 814117,
+      "sha256": "1c5a7c3eb7c27783777197f548a3a6ae6d062620e8a63837d44bb71407215e60"
+    },
+    "roi-fullframe-eight/MMN/2320/roi/detector-input-0.png": {
+      "bytes": 181578,
+      "sha256": "2ed125d13432f3f80ff9e5a93f55254061b51151ede81bd37932f27725b54de5"
+    },
+    "roi-fullframe-eight/MMN/2320/roi/auraface-aligned-0.png": {
+      "bytes": 11160,
+      "sha256": "65f5e64cd6d05db939dd658b0f9e2e46d518e39c595171b37edf3fdaa6864c1e"
+    },
+    "roi-fullframe-eight/MMN/2320/roi/sface-aligned.png": {
+      "bytes": 11160,
+      "sha256": "72cb28032a065f8a4fd09687c538c617d1ef2f717ac72c2751cb3d3c02cc94e2"
+    },
+    "roi-fullframe-eight/MMN/2320/fullframe/detector-input-0.png": {
+      "bytes": 814117,
+      "sha256": "1c5a7c3eb7c27783777197f548a3a6ae6d062620e8a63837d44bb71407215e60"
+    },
+    "roi-fullframe-eight/MMN/2320/fullframe/auraface-aligned-0.png": {
+      "bytes": 10646,
+      "sha256": "d72d8b830b387e0ec5bb3412cf2eed059d94ef80405395b7f44f064907b6b70b"
+    },
+    "roi-fullframe-eight/MMN/2320/fullframe/sface-aligned.png": {
+      "bytes": 10647,
+      "sha256": "91f7b71f65eaf963170895679d55566a38c6e0eef855a05bf7fbfca15e7a576f"
+    },
+    "roi-fullframe-eight/MMN/2344/roi/detector-input-0.png": {
+      "bytes": 167960,
+      "sha256": "01c86d4db451d84e249ecc4132c20eaec589a3fb2347419567d2797d66ddde0e"
+    },
+    "roi-fullframe-eight/MMN/2344/roi/auraface-aligned-0.png": {
+      "bytes": 10928,
+      "sha256": "d7bd07267ef545e287a234da6882ba6cfea21d94f66d5967a963df0675da4d96"
+    },
+    "roi-fullframe-eight/MMN/2344/roi/sface-aligned.png": {
+      "bytes": 10926,
+      "sha256": "c282d44559cee5e18b6ad06b790ef95c8008ba27e2d651a63cfa263e738eca17"
+    },
+    "roi-fullframe-eight/MMN/2344/fullframe/detector-input-0.png": {
+      "bytes": 787018,
+      "sha256": "9811041be28f0b4e1793a66d65b9843186625e9db82a9fce039eb2e0377f5db0"
+    },
+    "roi-fullframe-eight/MMN/2344/fullframe/auraface-aligned-0.png": {
+      "bytes": 10325,
+      "sha256": "c0b509bcf8d804afcfedcd204a1b21369efa1a79aef5452408d3e12df534237d"
+    },
+    "roi-fullframe-eight/MMN/2344/fullframe/sface-aligned.png": {
+      "bytes": 11584,
+      "sha256": "a1a170081ae1a321af2137cdab00df5c8b78ea9c9a5486508aed5fa50d8bf195"
+    },
+    "roi-fullframe-eight/MMN/2356/roi/detector-input-0.png": {
+      "bytes": 191513,
+      "sha256": "235bb9a0dcb9d21097942497e565721f35633a9f551f2827735859242731d981"
+    },
+    "roi-fullframe-eight/MMN/2356/roi/auraface-aligned-0.png": {
+      "bytes": 14531,
+      "sha256": "f4e665f0d3defe391701f8bf2fcc9600f58f87b4a17490e4fd2ecc2c8b5f85d9"
+    },
+    "roi-fullframe-eight/MMN/2356/roi/sface-aligned.png": {
+      "bytes": 14525,
+      "sha256": "f22b828dede20b0483738ad3393b0ff6f74491392ffba02ad3779e65d07270db"
+    },
+    "roi-fullframe-eight/MMN/2356/fullframe/detector-input-0.png": {
+      "bytes": 821079,
+      "sha256": "859879e8e42a0ad17876ca6b6d5ab93033ed5bab4738e3495ace24ecbf9b69aa"
+    },
+    "roi-fullframe-eight/MMN/2356/fullframe/auraface-aligned-0.png": {
+      "bytes": 14696,
+      "sha256": "1c06c283683c57b6cde0c24b7eedcb08920adf4a2cc045f0ef4152f7e08504db"
+    },
+    "roi-fullframe-eight/MMN/2356/fullframe/sface-aligned.png": {
+      "bytes": 14695,
+      "sha256": "08eb40355fb1a988d4948a0a57bb7a5aecf84da248b388c93f4284b85a2ef54b"
+    },
+    "roi-fullframe-eight/MMN/2300/roi/detector-input-1.png": {
+      "bytes": 207586,
+      "sha256": "397317eb6e090f1fa80a57ecf3499ff92cbd92eaece05efd4d9eb5a9632dfe98"
+    },
+    "roi-fullframe-eight/MMN/2300/roi/detector-input-0.png": {
+      "bytes": 276480,
+      "sha256": "2dcbe595f71764266affd7f17b5ad2cce2d4f9610e99f2ede4edd7b0b7b8f484"
+    },
+    "roi-fullframe-eight/MMN/2300/roi/auraface-aligned-0.png": {
+      "bytes": 14092,
+      "sha256": "1cb6e42b23ef8fb867304f2a16728dfb16c4e1010c6ce19bddcabd09a18549ac"
+    },
+    "roi-fullframe-eight/MMN/2300/roi/sface-aligned.png": {
+      "bytes": 13818,
+      "sha256": "c6a5a8cec6c30685e492ec0964e11a7aa348a087b0025235cb9086d77a4a673b"
+    },
+    "roi-fullframe-eight/MMN/2300/fullframe/detector-input-1.png": {
+      "bytes": 1094725,
+      "sha256": "26888be0335968e0beb219e8172b18792bfe64b3493d21fba315afafe20325ed"
+    },
+    "roi-fullframe-eight/MMN/2300/fullframe/detector-input-0.png": {
+      "bytes": 1051168,
+      "sha256": "6fd2e38fff343a3ac3370badfca4417931764302b17505e63301cbbc08c1f7ff"
+    },
+    "roi-fullframe-eight/MMN/2300/fullframe/auraface-aligned-0.png": {
+      "bytes": 13481,
+      "sha256": "bc0cef5422871dad8618abf346449f1c7c12e31499c285538bc9c11392ee9748"
+    },
+    "roi-fullframe-eight/MMN/2300/fullframe/sface-aligned.png": {
+      "bytes": 13368,
+      "sha256": "8c95ee8acef97ab4c51c9915f9c6776910e26bc8c30bcce9fc6cebef53abeac1"
+    },
+    "roi-fullframe-eight/ANT/280/comparison.json": {
+      "bytes": 128780,
+      "sha256": "c87480c0d5820b8429f723347f407383412df8aef0f54d20ac5ff4425f08a858"
+    },
+    "roi-fullframe-eight/ANT/280/saved-sface-aligned.png": {
+      "bytes": 18668,
+      "sha256": "0a430d1c7a4141fb569574904da066b68887d6d06a38a2d11acd90ba8e26f77a"
+    },
+    "roi-fullframe-eight/ANT/280/source.png": {
+      "bytes": 2166911,
+      "sha256": "12db089bb324de1fd637fb653dd43238a27af8f63657a3489c0c1fd8b6848f59"
+    },
+    "roi-fullframe-eight/ANT/296/comparison.json": {
+      "bytes": 129064,
+      "sha256": "4c709002f23f852446fc12866402176546c051e223b3033c295f434ffc779319"
+    },
+    "roi-fullframe-eight/ANT/296/saved-sface-aligned.png": {
+      "bytes": 21155,
+      "sha256": "1bf3cbf46415daea36c6371b33520a2544d58ba65e3dfda7a250e8cf401b52c3"
+    },
+    "roi-fullframe-eight/ANT/296/source.png": {
+      "bytes": 2072801,
+      "sha256": "900bbb132a864e5eeaf1deba9cc2be3336a9bcf0c772ce9f81c01f869f7c9560"
+    },
+    "roi-fullframe-eight/ANT/320/comparison.json": {
+      "bytes": 132307,
+      "sha256": "e9334cb19e04851b422568e7fe881b7f910f3f0acbcb5acac189a9033fb24949"
+    },
+    "roi-fullframe-eight/ANT/320/saved-sface-aligned.png": {
+      "bytes": 16109,
+      "sha256": "d33c2cdc60126383cfcdc5a3b5592d63f6309fdf73b827f529bcbed91684f714"
+    },
+    "roi-fullframe-eight/ANT/320/source.png": {
+      "bytes": 2292372,
+      "sha256": "369841c28d5c973ee9cf3835a64bf3581160bb0b52cd5482d0d03777a8db14df"
+    },
+    "roi-fullframe-eight/ANT/344/comparison.json": {
+      "bytes": 130323,
+      "sha256": "23a65ef3ee337f8479ac9e222dcc1e4e50e3167a28081d2ac7e59ee0297729fa"
+    },
+    "roi-fullframe-eight/ANT/344/saved-sface-aligned.png": {
+      "bytes": 17537,
+      "sha256": "7464f9fb639e7d15f4945ac3e3178e733e0771fff84ba420b71aee41513a026f"
+    },
+    "roi-fullframe-eight/ANT/344/source.png": {
+      "bytes": 2101139,
+      "sha256": "df2ed054ab8e46a9ab568d4d42402c245539c818d6fd4bb7b4f7183d91a6febb"
+    },
+    "roi-fullframe-eight/ANT/344/roi/detector-input-0.png": {
+      "bytes": 96802,
+      "sha256": "91799cdd09895a4ed434f9849bf90e44872141e46a586d7ad35cae5bf99b2be7"
+    },
+    "roi-fullframe-eight/ANT/344/roi/auraface-aligned-0.png": {
+      "bytes": 17531,
+      "sha256": "120d33a368bb3c88bd85acda46e5cd6981a7f03c608af669f385ac5510c6e861"
+    },
+    "roi-fullframe-eight/ANT/344/roi/sface-aligned.png": {
+      "bytes": 17537,
+      "sha256": "7464f9fb639e7d15f4945ac3e3178e733e0771fff84ba420b71aee41513a026f"
+    },
+    "roi-fullframe-eight/ANT/344/fullframe/detector-input-0.png": {
+      "bytes": 2101139,
+      "sha256": "df2ed054ab8e46a9ab568d4d42402c245539c818d6fd4bb7b4f7183d91a6febb"
+    },
+    "roi-fullframe-eight/ANT/344/fullframe/auraface-aligned-0.png": {
+      "bytes": 17188,
+      "sha256": "3408fdd0f75918df0a99df5d68f4aca4dc381bc0b20f11cfaa0917bce959068b"
+    },
+    "roi-fullframe-eight/ANT/344/fullframe/sface-aligned.png": {
+      "bytes": 17526,
+      "sha256": "fdf9785e8f7b9c7324bda836c12ead7750e119ac156e4b62229f27fcd1f2302b"
+    },
+    "roi-fullframe-eight/ANT/320/roi/detector-input-0.png": {
+      "bytes": 130806,
+      "sha256": "73cdf0c199f578fe1fc3c5f74427b1bc82c9d30b2ad4e967ba99f5d66c0059aa"
+    },
+    "roi-fullframe-eight/ANT/320/roi/auraface-aligned-0.png": {
+      "bytes": 16114,
+      "sha256": "73ef2f92460461e18c7bb6689da9463e1cf743feae9448ce508367a9ea6bbcf7"
+    },
+    "roi-fullframe-eight/ANT/320/roi/sface-aligned.png": {
+      "bytes": 16109,
+      "sha256": "d33c2cdc60126383cfcdc5a3b5592d63f6309fdf73b827f529bcbed91684f714"
+    },
+    "roi-fullframe-eight/ANT/320/fullframe/detector-input-0.png": {
+      "bytes": 2292372,
+      "sha256": "369841c28d5c973ee9cf3835a64bf3581160bb0b52cd5482d0d03777a8db14df"
+    },
+    "roi-fullframe-eight/ANT/320/fullframe/auraface-aligned-0.png": {
+      "bytes": 16218,
+      "sha256": "220195d394aef5a130b0d09d5760672399bf7e466ebc59a9bf5f8d05115b3c33"
+    },
+    "roi-fullframe-eight/ANT/320/fullframe/sface-aligned.png": {
+      "bytes": 16219,
+      "sha256": "237f1ee24614d5780a0d1c820b65bb9effafb30376cb3952a11b0c0a93ec2ea2"
+    },
+    "roi-fullframe-eight/ANT/296/roi/detector-input-0.png": {
+      "bytes": 214241,
+      "sha256": "71f9624f22812cf952f479e19eba4d426334e2c3ff68e138edf7da82160b7094"
+    },
+    "roi-fullframe-eight/ANT/296/roi/auraface-aligned-0.png": {
+      "bytes": 21151,
+      "sha256": "3e038048c3333310c2b307329d74b93c95f468cf012af101f5c154fb26f5cc72"
+    },
+    "roi-fullframe-eight/ANT/296/roi/sface-aligned.png": {
+      "bytes": 21155,
+      "sha256": "1bf3cbf46415daea36c6371b33520a2544d58ba65e3dfda7a250e8cf401b52c3"
+    },
+    "roi-fullframe-eight/ANT/296/fullframe/detector-input-0.png": {
+      "bytes": 2072801,
+      "sha256": "900bbb132a864e5eeaf1deba9cc2be3336a9bcf0c772ce9f81c01f869f7c9560"
+    },
+    "roi-fullframe-eight/ANT/296/fullframe/auraface-aligned-0.png": {
+      "bytes": 21595,
+      "sha256": "b0731e66a0261817ba9c51a36ab57a481a543a9b9bdc21604a2bb715afba4b0b"
+    },
+    "roi-fullframe-eight/ANT/296/fullframe/sface-aligned.png": {
+      "bytes": 21592,
+      "sha256": "85ff04a8a72c51486bd10d84860f0d8c019d28bef200efd2e974307c5b59f075"
+    },
+    "roi-fullframe-eight/ANT/280/roi/detector-input-0.png": {
+      "bytes": 248857,
+      "sha256": "2f22dd641c38c24810b82994fa041da98463db082714a7e96ee8af15bd0e09e5"
+    },
+    "roi-fullframe-eight/ANT/280/roi/auraface-aligned-0.png": {
+      "bytes": 18667,
+      "sha256": "fd4772da0ee0bb1e3a05b0ff78a61b66d790866d27a3ae32944cb1771ff645df"
+    },
+    "roi-fullframe-eight/ANT/280/roi/sface-aligned.png": {
+      "bytes": 18668,
+      "sha256": "0a430d1c7a4141fb569574904da066b68887d6d06a38a2d11acd90ba8e26f77a"
+    },
+    "roi-fullframe-eight/ANT/280/fullframe/detector-input-0.png": {
+      "bytes": 2166911,
+      "sha256": "12db089bb324de1fd637fb653dd43238a27af8f63657a3489c0c1fd8b6848f59"
+    },
+    "roi-fullframe-eight/ANT/280/fullframe/auraface-aligned-0.png": {
+      "bytes": 18211,
+      "sha256": "a1379bfc2f676fe1f9ec0df7bf0cdda6fa03b340b269ce607d99c2824dce6413"
+    },
+    "roi-fullframe-eight/ANT/280/fullframe/sface-aligned.png": {
+      "bytes": 18210,
+      "sha256": "a9e35df5929ad5c248d00d393b24649fddd9d2fd9da62282ed14404284cffa2f"
+    },
+    "roi-fullframe-eight-results.txt": {
+      "bytes": 8952,
+      "sha256": "95a28143131cfa51b87ef377ce640c6163231659a8107d84667d95a76a12e660"
+    },
+    "compare_roi_fullframe_eight.py": {
+      "bytes": 18853,
+      "sha256": "10045828120130f35fe691b896838cfc99586efe93208ae110519da64972f6c8"
+    },
+    "complete_saved_face_comparison.py": {
+      "bytes": 5537,
+      "sha256": "9afd2be214f81ebea54f6e3053b2267ee6ee15fa4226fb592cbf4aab3d37dc53"
+    },
+    "complete_face_ownership.py": {
+      "bytes": 2267,
+      "sha256": "3b9344a737fb52e450399f50994a579cf5ffa51ad80277e3e523e1dd69725f1e"
+    },
+    "face_comparison_contacts.py": {
+      "bytes": 1354,
+      "sha256": "f6fb20e0c759c130ffe72c1c11d4229550ff7bc0bc925651a8a7c745ae63d0ca"
+    },
+    "native-third-person-diagnostic.json": {
+      "bytes": 132121,
+      "sha256": "efaa824425a0038b8d67c7a65e46f6215a23fe4166516ca01b381fb28872208f"
+    },
+    "native-third-person-replay.json": {
+      "bytes": 307,
+      "sha256": "534699bde4a6f0ebce2dadd65a72cf04d5ed9c91792808ae29e516be0fc28b07"
+    },
+    "diagnose_native_third_person.py": {
+      "bytes": 4547,
+      "sha256": "ea0ec13f7d5f5ff3daad75d21e111df7df4a2ecf60e035c1fcf287125380ed03"
+    },
+    "replay_native_third_person.py": {
+      "bytes": 2865,
+      "sha256": "b2dcba7add736661c53d362802453c41eb3fc50c57aff48bd96a6b5dfc47e447"
+    },
+    "roi-fullframe-eight-run.log": {
+      "bytes": 3639,
+      "sha256": "926436a18aa71092f76e1478fdb434a785618fd97529cea952da5f40e0719551"
+    }
+  }
+}

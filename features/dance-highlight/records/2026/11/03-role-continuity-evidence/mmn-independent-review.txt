@@ -1,0 +1,31 @@
+MMN 통합 실제 앱 제한 독립 검토 — 2026-11-03 KST
+
+범위: baseline1793639096353, canonical1793645653627, final1793649506337의 저장 JSON, JPEG 바이트, Python 소스/패키지 바이트만 읽었다. 테스트/영상 디코딩/모델/파이프라인 리플레이는 실행하지 않았다. 비교 프로그램과 전체 수치는 같은 폴더 audit_mmn_json_only.py 및 mmn-json-only-review.json에 있다.
+
+결론: MMN에서 의도한 사쿠라 복원과 단체 연속성 연결 외에 이름·구간 변경을 발견하지 못했다. 원래 45초대의 서로 다른 main 중첩은 그대로 남아 있으며 이번 수정이 만든 퇴행으로 분류하면 안 된다. 실제 실행시간은 증가했다. ANT/NEON 완료 전 세 영상 통합 채택 판정은 보류한다.
+
+변경을 단계별로 분리
+- 원시 결과 baseline88/1초미만41 → final85/39. baseline과 canonical의 이름·시작·끝·유형은 동일했다.
+- 이름 있는 main40→39, unknown16→15: 사쿠라35.435400–38.204733 / unknown38.204733–39.339300 / 사쿠라39.339300–42.976267 세 구간이 사쿠라35.435400–42.976267 하나가 됐다. unknown6.807200→5.672633초, 복원1.134567초. source_face_path는 7 windows/35추가읽기/accepted, 1.225426초로 기록돼 있다. 이 기록을 읽었으며 이번 제한 검토에서 픽셀을 새로 디코딩해 재검증한 것은 아니다.
+- 단체32→31, 단체1초미만21→19: 40.173467–40.907533과41.307933–41.708333이 하나로 연결됐다. 중간 .400400초를 group으로 연결한 실제 앱 audit는 원본29읽기 및 이전 독립 검토의 경로와 일치한다.
+- 위 변경 외 원시83개 구간의 이름/시작/끝/유형이 동일하다. main 시간 합집합과 전체 시간 합집합도 동일하다. 이름 있는 1초미만 main6개, unknown 1초미만14개는 그대로다.
+- 출력 단계는 원시단체31개 중17개를 숨겨14개를 표시한다. 각17개 모두 한 matched main에 완전히 포함되고, 다른 matched 멤버와 양의 시간 중첩이 없음을 원시 결과에서 독립 확인했다. final visible IDs는 정확히 raw IDs에서 해당17개를 뺀 집합이다. 최종표시68개/1초미만27개. 표시개수 감소 전체를 인식 정확도 향상으로 계산하면 안 된다.
+
+이름·썸네일·기존 문제
+- final 원시85개 모두 (유형, 시작시각)으로 짝지은 baseline 및 canonical JPEG와 바이트가 동일하다. 따라서 표시68개도 같은 시작점 썸네일이 모두 동일하다. 번호형 clip ID는 앞 구간 병합 때문에 달라질 수 있으므로 이름/시간으로 비교했다.
+- 허윤진43.143100–46.463083과 사쿠라45.361983–47.981267은 baseline/final 모두 동일하다. 서로 다른 main의 중첩45.361983–46.463083, 1.101100초는 남은 기존 문제다. 이번 검토는 preparation_context의 인과를 추가 추론하지 않았다.
+- MMN 사용자 확인 범위 중37.738–39.339의 미확인 구간은 이번 사쿠라 복원으로 개선됐다. 그 외 원시 변경은 위40초대 group연결뿐이므로, 기존 intro 무인 오분류와 다른 미해결 항목까지 해결됐다고 해석할 수 없다.
+
+실행 조건과 SAM
+- config/dance_setup 동일, refs31개 파일의 바이트 해시 동일. 저장된 source video SHA 및 모델 메타데이터도 동일하다. 원본 영상 전체를 다시 읽어 해시하지 않았다.
+- final metadata 2324 frame records가 canonical records와 완전히 동일하다.
+- source/package manifest64개 Dance Python 모듈을 현재 실제 파일 바이트와 모두 대조해 일치했다. runtime evidence와 source manifest에서 대응되는47개 모듈 SHA도 모두 일치했다.
+- mask version disabled_runtime_cost_v1, candidate0, recovered/corrected/conflict0, mask/joint stage0. 모델 목록YuNet/AuraFace. SAM OFF 기록을 확인했다.
+- Incoming correction0, identity-padding rejection/verification0으로 MMN에 이 두 수정의 이름·경계 변화는 없다.
+
+실행시간
+- 원래 job.startedAt/finishedAt: baseline314.957초 → final333.430초, +18.473초(+5.865%). 이 단일 실행에서는 속도 개선이 아니다.
+- body_continuity .518101→1.735538초(+1.217436), group_continuity .070402초, incoming_identity_boundary .196691초. incoming 비용은 named_boundaries에 포함된다.
+- YOLO+6.021266, main_selection+3.736443, face_extract+4.065935초 등도 변했다. cluster_map/body_continuity/named_boundaries 등은 중첩 단계이므로 합산하면 중복 계산이다. 한 번의 비교로 wall 증가 전체를 새 로직의 인과로 단정하지 않는다.
+
+추가 실행을 중지한 채 부모 세션에 전달한다. 세 영상 완료 후 ANT154 경계/NEON padding·역할 주의점, 전체 의도 외 변경과 runtime을 이어서 검토한다.

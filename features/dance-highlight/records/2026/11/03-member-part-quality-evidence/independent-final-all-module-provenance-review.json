@@ -1,0 +1,480 @@
+{
+  "MMN": {
+    "module_count": 40,
+    "all_loaded_match": true,
+    "all_manifest_match": false,
+    "failures": [],
+    "module_names": [
+      "auraface",
+      "body_continuity",
+      "camera_transitions",
+      "context_faces",
+      "cut_face_link",
+      "face_cluster",
+      "face_evidence",
+      "face_recovery",
+      "face_runtime",
+      "focal_composition",
+      "focal_output",
+      "incoming_context",
+      "joint_identity",
+      "main_face_link",
+      "main_identity",
+      "main_role_timeline",
+      "mask_continuity",
+      "mask_frame_cache",
+      "mask_tracker",
+      "member_coverage",
+      "member_timeline",
+      "named_boundaries",
+      "native_scene",
+      "observed_main",
+      "observed_member_edges",
+      "opencv_acceleration",
+      "output_continuity",
+      "performance_parts",
+      "pipeline",
+      "pose_engine",
+      "pose_face_rotation",
+      "reference_matcher",
+      "sampled_face_link",
+      "scene_boundaries",
+      "scene_context",
+      "scene_cut_proof",
+      "secondary_faces",
+      "segment",
+      "stage_prominence",
+      "temporal_support"
+    ],
+    "runtime_changed_fields": [
+      "/recognizer_stats/inference_seconds",
+      "/recognizer_stats/setup_seconds",
+      "/modules/performance_parts",
+      "/modules/segment/sha256",
+      "/modules/output_continuity/sha256",
+      "/modules/observed_member_edges",
+      "/modules/face_evidence/sha256",
+      "/modules/pipeline/sha256",
+      "/opencv_face_acceleration/secondary_face/gpu_seconds",
+      "/opencv_face_acceleration/secondary_face/setup_seconds",
+      "/opencv_face_acceleration/face_detection/gpu_seconds",
+      "/opencv_face_acceleration/face_detection/setup_seconds",
+      "/detector_stats/detection_seconds"
+    ],
+    "main_role_changed_fields": [
+      "/preparation_context/elapsed_seconds"
+    ],
+    "scene_boundary_changed_fields": [
+      "/source_reads/decode_seconds"
+    ],
+    "manifest_coverage": {
+      "repository_modules_matched": 39,
+      "external_modules": [
+        {
+          "name": "auraface",
+          "unchanged_from_baseline": true
+        }
+      ],
+      "explanation": "clipper_face_core/auraface.py is an installed dependency outside the task source manifest; its original recorded hash and installed bytes are unchanged."
+    },
+    "provenance_valid": true,
+    "scene_group_changes": {
+      "removed": [],
+      "added": [],
+      "seconds": [
+        17.917900000000014,
+        17.917900000000014
+      ]
+    },
+    "request_counters": {
+      "recognizer_stats": [
+        {
+          "requests": 4623,
+          "inferences": 4585,
+          "cache_hits": 38,
+          "fallbacks": 0
+        },
+        {
+          "requests": 4623,
+          "inferences": 4585,
+          "cache_hits": 38,
+          "fallbacks": 0
+        }
+      ],
+      "detector_stats": [
+        {
+          "requests": 6565,
+          "cache_hits": 979
+        },
+        {
+          "requests": 6565,
+          "cache_hits": 979
+        }
+      ]
+    }
+  },
+  "ANT": {
+    "module_count": 40,
+    "all_loaded_match": true,
+    "all_manifest_match": false,
+    "failures": [],
+    "module_names": [
+      "auraface",
+      "body_continuity",
+      "camera_transitions",
+      "context_faces",
+      "cut_face_link",
+      "face_cluster",
+      "face_evidence",
+      "face_recovery",
+      "face_runtime",
+      "focal_composition",
+      "focal_output",
+      "incoming_context",
+      "joint_identity",
+      "main_face_link",
+      "main_identity",
+      "main_role_timeline",
+      "mask_continuity",
+      "mask_frame_cache",
+      "mask_tracker",
+      "member_coverage",
+      "member_timeline",
+      "named_boundaries",
+      "native_scene",
+      "observed_main",
+      "observed_member_edges",
+      "opencv_acceleration",
+      "output_continuity",
+      "performance_parts",
+      "pipeline",
+      "pose_engine",
+      "pose_face_rotation",
+      "reference_matcher",
+      "sampled_face_link",
+      "scene_boundaries",
+      "scene_context",
+      "scene_cut_proof",
+      "secondary_faces",
+      "segment",
+      "stage_prominence",
+      "temporal_support"
+    ],
+    "runtime_changed_fields": [
+      "/recognizer_stats/inference_seconds",
+      "/recognizer_stats/setup_seconds",
+      "/modules/performance_parts",
+      "/modules/segment/sha256",
+      "/modules/output_continuity/sha256",
+      "/modules/observed_member_edges",
+      "/modules/face_evidence/sha256",
+      "/modules/pipeline/sha256",
+      "/opencv_face_acceleration/secondary_face/gpu_seconds",
+      "/opencv_face_acceleration/secondary_face/setup_seconds",
+      "/opencv_face_acceleration/face_detection/gpu_seconds",
+      "/opencv_face_acceleration/face_detection/setup_seconds",
+      "/detector_stats/detection_seconds"
+    ],
+    "main_role_changed_fields": [
+      "/preparation_context/accepted/0/source_index",
+      "/preparation_context/elapsed_seconds",
+      "/preparation_context/rejected/3/source_index",
+      "/preparation_context/rejected/4/source_index",
+      "/preparation_context/rejected/5/source_index",
+      "/preparation_context/rejected/6/source_index",
+      "/preparation_context/rejected/7/source_index",
+      "/preparation_context/rejected/8/source_index",
+      "/preparation_context/rejected/9/source_index",
+      "/preparation_context/rejected/10/source_index",
+      "/preparation_context/rejected/11/source_index",
+      "/preparation_context/rejected/12/source_index",
+      "/preparation_context/rejected/13/source_index",
+      "/preparation_context/rejected/14/source_index",
+      "/preparation_context/rejected/15/source_index",
+      "/preparation_context/rejected/16/source_index",
+      "/preparation_context/rejected/17/source_index",
+      "/preparation_context/rejected/18/source_index",
+      "/preparation_context/rejected/19/source_index",
+      "/preparation_context/rejected/20/source_index",
+      "/preparation_context/rejected/21/source_index"
+    ],
+    "scene_boundary_changed_fields": [
+      "/source_reads/decode_seconds"
+    ],
+    "manifest_coverage": {
+      "repository_modules_matched": 39,
+      "external_modules": [
+        {
+          "name": "auraface",
+          "unchanged_from_baseline": true
+        }
+      ],
+      "explanation": "clipper_face_core/auraface.py is an installed dependency outside the task source manifest; its original recorded hash and installed bytes are unchanged."
+    },
+    "provenance_valid": true,
+    "scene_group_changes": {
+      "removed": [],
+      "added": [],
+      "seconds": [
+        16.449766666666722,
+        16.449766666666722
+      ]
+    },
+    "request_counters": {
+      "recognizer_stats": [
+        {
+          "requests": 11945,
+          "inferences": 11860,
+          "cache_hits": 85,
+          "fallbacks": 0
+        },
+        {
+          "requests": 11945,
+          "inferences": 11860,
+          "cache_hits": 85,
+          "fallbacks": 0
+        }
+      ],
+      "detector_stats": [
+        {
+          "requests": 15602,
+          "cache_hits": 2300
+        },
+        {
+          "requests": 15602,
+          "cache_hits": 2300
+        }
+      ]
+    }
+  },
+  "NEON": {
+    "module_count": 40,
+    "all_loaded_match": true,
+    "all_manifest_match": false,
+    "failures": [],
+    "module_names": [
+      "auraface",
+      "body_continuity",
+      "camera_transitions",
+      "context_faces",
+      "cut_face_link",
+      "face_cluster",
+      "face_evidence",
+      "face_recovery",
+      "face_runtime",
+      "focal_composition",
+      "focal_output",
+      "incoming_context",
+      "joint_identity",
+      "main_face_link",
+      "main_identity",
+      "main_role_timeline",
+      "mask_continuity",
+      "mask_frame_cache",
+      "mask_tracker",
+      "member_coverage",
+      "member_timeline",
+      "named_boundaries",
+      "native_scene",
+      "observed_main",
+      "observed_member_edges",
+      "opencv_acceleration",
+      "output_continuity",
+      "performance_parts",
+      "pipeline",
+      "pose_engine",
+      "pose_face_rotation",
+      "reference_matcher",
+      "sampled_face_link",
+      "scene_boundaries",
+      "scene_context",
+      "scene_cut_proof",
+      "secondary_faces",
+      "segment",
+      "stage_prominence",
+      "temporal_support"
+    ],
+    "runtime_changed_fields": [
+      "/recognizer_stats/requests",
+      "/recognizer_stats/inference_seconds",
+      "/recognizer_stats/inferences",
+      "/recognizer_stats/setup_seconds",
+      "/modules/performance_parts",
+      "/modules/segment/sha256",
+      "/modules/output_continuity/sha256",
+      "/modules/observed_member_edges",
+      "/modules/face_evidence/sha256",
+      "/modules/pipeline/sha256",
+      "/opencv_face_acceleration/secondary_face/gpu_seconds",
+      "/opencv_face_acceleration/secondary_face/setup_seconds",
+      "/opencv_face_acceleration/face_detection/cpu_calls",
+      "/opencv_face_acceleration/face_detection/gpu_seconds",
+      "/opencv_face_acceleration/face_detection/setup_seconds",
+      "/detector_stats/requests",
+      "/detector_stats/cache_hits",
+      "/detector_stats/detection_seconds"
+    ],
+    "main_role_changed_fields": [
+      "/preparation_context/elapsed_seconds",
+      "/preparation_context/rejected/0/source_index",
+      "/preparation_context/rejected/1/source_index",
+      "/preparation_context/rejected/2/source_index",
+      "/preparation_context/rejected/3/source_index",
+      "/preparation_context/rejected/4/source_index",
+      "/preparation_context/rejected/5/source_index",
+      "/preparation_context/rejected/6/source_index",
+      "/preparation_context/rejected/7/source_index",
+      "/preparation_context/rejected/8/source_index",
+      "/preparation_context/rejected/9/source_index",
+      "/preparation_context/rejected/10/source_index",
+      "/preparation_context/rejected/11/source_index",
+      "/preparation_context/rejected/12/source_index",
+      "/preparation_context/rejected/13/source_index",
+      "/preparation_context/rejected/14/source_index",
+      "/preparation_context/rejected/15/source_index",
+      "/preparation_context/rejected/16/source_index",
+      "/preparation_context/rejected/17/source_index",
+      "/preparation_context/rejected/18/source_index",
+      "/preparation_context/rejected/19/source_index",
+      "/preparation_context/rejected/20/source_index",
+      "/preparation_context/rejected/21/source_index",
+      "/preparation_context/rejected/22/source_index",
+      "/preparation_context/rejected/23/source_index",
+      "/preparation_context/rejected/24/source_index",
+      "/preparation_context/rejected/25/source_index",
+      "/preparation_context/rejected/26/source_index",
+      "/preparation_context/rejected/27/source_index",
+      "/preparation_context/rejected/28/source_index",
+      "/preparation_context/rejected/29/source_index",
+      "/preparation_context/rejected/30/source_index",
+      "/preparation_context/rejected/31/source_index",
+      "/preparation_context/rejected/32/source_index"
+    ],
+    "scene_boundary_changed_fields": [
+      "/scene_group_ranges/length",
+      "/source_reads/decode_seconds",
+      "/scene_group_seconds"
+    ],
+    "manifest_coverage": {
+      "repository_modules_matched": 39,
+      "external_modules": [
+        {
+          "name": "auraface",
+          "unchanged_from_baseline": true
+        }
+      ],
+      "explanation": "clipper_face_core/auraface.py is an installed dependency outside the task source manifest; its original recorded hash and installed bytes are unchanged."
+    },
+    "provenance_valid": true,
+    "scene_group_changes": {
+      "removed": [],
+      "added": [
+        {
+          "start": 185.25173333333333,
+          "end": 185.31846666666667
+        }
+      ],
+      "seconds": [
+        46.446400000000054,
+        46.513133333333386
+      ]
+    },
+    "request_counters": {
+      "recognizer_stats": [
+        {
+          "requests": 19389,
+          "inferences": 19289,
+          "cache_hits": 100,
+          "fallbacks": 0
+        },
+        {
+          "requests": 19363,
+          "inferences": 19263,
+          "cache_hits": 100,
+          "fallbacks": 0
+        }
+      ],
+      "detector_stats": [
+        {
+          "requests": 25080,
+          "cache_hits": 3486
+        },
+        {
+          "requests": 25075,
+          "cache_hits": 3482
+        }
+      ]
+    }
+  },
+  "verification": {
+    "count": 16,
+    "all_checks_passed": true,
+    "checks": [
+      {
+        "name": "MMN all40 installed bytes and repository-or-baseline provenance",
+        "passed": true
+      },
+      {
+        "name": "MMN preparation changes only timing or shifted stage indices",
+        "passed": true
+      },
+      {
+        "name": "MMN camera and body policy unchanged",
+        "passed": true
+      },
+      {
+        "name": "MMN exact reviewed source scene group change",
+        "passed": true
+      },
+      {
+        "name": "MMN inference requests do not increase",
+        "passed": true
+      },
+      {
+        "name": "ANT all40 installed bytes and repository-or-baseline provenance",
+        "passed": true
+      },
+      {
+        "name": "ANT preparation changes only timing or shifted stage indices",
+        "passed": true
+      },
+      {
+        "name": "ANT camera and body policy unchanged",
+        "passed": true
+      },
+      {
+        "name": "ANT exact reviewed source scene group change",
+        "passed": true
+      },
+      {
+        "name": "ANT inference requests do not increase",
+        "passed": true
+      },
+      {
+        "name": "NEON all40 installed bytes and repository-or-baseline provenance",
+        "passed": true
+      },
+      {
+        "name": "NEON preparation changes only timing or shifted stage indices",
+        "passed": true
+      },
+      {
+        "name": "NEON camera and body policy unchanged",
+        "passed": true
+      },
+      {
+        "name": "NEON exact reviewed source scene group change",
+        "passed": true
+      },
+      {
+        "name": "NEON inference requests do not increase",
+        "passed": true
+      },
+      {
+        "name": "same40 modules used by all3 final app runs",
+        "passed": true
+      }
+    ],
+    "failures": []
+  }
+}

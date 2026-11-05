@@ -1,0 +1,19 @@
+{
+  "before": {
+    "app_job_wall_seconds": 1146.937,
+    "visible_clip_count": 370,
+    "visible_subsecond_count": 191,
+    "named_subsecond_count": 63,
+    "unknown_count": 85,
+    "unknown_seconds": 36.77336666666689
+  },
+  "after": {
+    "app_job_wall_seconds": 1385.015,
+    "visible_clip_count": 368,
+    "visible_subsecond_count": 185,
+    "named_subsecond_count": 61,
+    "unknown_count": 81,
+    "unknown_seconds": 36.32311666666685
+  },
+  "wall_increase_percent": 20.757722525300014
+}

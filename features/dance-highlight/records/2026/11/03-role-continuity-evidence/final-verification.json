@@ -1,0 +1,46 @@
+{
+  "source_frozen": true,
+  "changed_existing_files": [
+    "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+    "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+    "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "tests/test_dance_evidence_scopes.py",
+    "tests/test_dance_shot_member_gaps.py",
+    "tests/test_dance_reference_matcher.py"
+  ],
+  "non_dance_existing_changes": [],
+  "runs": [
+    {
+      "title": "MMN",
+      "same_recorded_video_sha256": true,
+      "runtime_module_hashes_verified": 47,
+      "sam_off": true,
+      "all_source_union_unchanged": true,
+      "dedup_source_union_unchanged": true,
+      "raw_count": 85,
+      "group_suppressed": 17
+    },
+    {
+      "title": "ANT",
+      "same_recorded_video_sha256": true,
+      "runtime_module_hashes_verified": 47,
+      "sam_off": true,
+      "all_source_union_unchanged": true,
+      "dedup_source_union_unchanged": true,
+      "raw_count": 124,
+      "group_suppressed": 8
+    },
+    {
+      "title": "NEON",
+      "same_recorded_video_sha256": true,
+      "runtime_module_hashes_verified": 47,
+      "sam_off": true,
+      "all_source_union_unchanged": true,
+      "dedup_source_union_unchanged": true,
+      "raw_count": 191,
+      "group_suppressed": 1
+    }
+  ]
+}

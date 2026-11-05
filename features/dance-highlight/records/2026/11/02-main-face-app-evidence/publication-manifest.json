@@ -1,0 +1,122 @@
+[
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/regressions-final-output.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/regressions-final-output.log",
+    "sha256": "1d47aa02989593a1aba3708c42d6923ff046d4f38cc0a0246278a5d5de76805a",
+    "bytes": 1382
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/final-edge-verified.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/final-edge-verified.log",
+    "sha256": "2eaed593b93a15205dab7c0b98d9aadee88e7df2d197d0263cd8833589aeaf39",
+    "bytes": 179
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/build-final-output.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/build-final-output.log",
+    "sha256": "0db461f18f11685a010e4fe41ddf6bc519e227f557491d1c24b56cd50df970ee",
+    "bytes": 5454
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/multi-frame-parity.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/multi-frame-parity.json",
+    "sha256": "bdf9a222002a5aceb9338534e98a0dfc2b3c427f9111783163bba51d683ed80d",
+    "bytes": 779
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/cache-hash-probe.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/cache-hash-probe.json",
+    "sha256": "382da319e5f3994cc061c235067981e29cb2f4ce52c47bc28debab428f310a2c",
+    "bytes": 359
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/main-real-parallel-profile-audit.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/main-real-parallel-profile-audit.json",
+    "sha256": "c4839ff350a1f659fa96e2b6fbf35941510793dd1489cd68c3e997e528bbeca5",
+    "bytes": 132
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/main-real-parallel-profile.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/main-real-parallel-profile.txt",
+    "sha256": "5a3288f24b66892b24d0e071704851f1b855d7083f6e9a6a5973922c4e73421e",
+    "bytes": 7511
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/final-edge-replay.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/final-edge-replay.json",
+    "sha256": "0f5500d9e0c3453b57e116f1e370576ca7a55a6df124058c7975043b31081c66",
+    "bytes": 1520
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/current-turn-product-changes.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/current-turn-product-changes.json",
+    "sha256": "9187b4b2434bcac9ab3a3e0f079efdd5c313b9c11d4328cf69ad6469094ba7eb",
+    "bytes": 478
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/run-manifest.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/run-manifest.json",
+    "sha256": "5ebfa30209f5a500a54e89214dbe7ef0ff2ae8a595e9bdc7a0c43571ca178eef",
+    "bytes": 1029
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/source-hashes.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/source-hashes.json",
+    "sha256": "a8c39869f46a01f596f3544c1a5f63d3db768bd1520bda358d63f79bc625c88a",
+    "bytes": 12977
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/build-repos.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/build-repos.json",
+    "sha256": "ed0cab117ee7cba8abc21d3b637e9314a8df26480c2f83c6f285dd9856440f29",
+    "bytes": 1890
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/runtime-accelerators.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/runtime-accelerators.json",
+    "sha256": "3c6091efb2aaf9c58d96453af52987880fee7129a1cb183083e6ed5245d3436d",
+    "bytes": 1117
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/run-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/run-comparison.json",
+    "sha256": "55472ff4ef19326315a2d64520d736efb3fc56232e4043caf81313895f5de9ee",
+    "bytes": 10621
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/identity-coverage-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/identity-coverage-comparison.json",
+    "sha256": "98000a8c309cbc481c270a8c4f65ccaa08e1c440caa8629abb532232ee448b47",
+    "bytes": 668
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/reviewed-case-analysis.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/reviewed-case-analysis.json",
+    "sha256": "3f28efb1b9485bad4e240367708806bca25d48c7f2feb6e9f6594ffbde16d12f",
+    "bytes": 2975
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/runtime-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/runtime-comparison.json",
+    "sha256": "8d392add60ce4a2e082727a0f44a072d904455c5afbff6ca84ecb506b28954c7",
+    "bytes": 1967
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/app/packaged-run-log.jsonl",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/app/packaged-run-log.jsonl",
+    "sha256": "56628c06c426b7cbadd56c7431de1d73fcda219c4ba6fabd3afbd15fad2cd1ec",
+    "bytes": 113858
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/roi-fallback-app/run-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/roi-fallback-app/run-comparison.json",
+    "sha256": "5fe4549305c9f2c98ec33dc00b7e34a5788f4d18c7b8e463b5e0c7b95878865d",
+    "bytes": 15058
+  },
+  {
+    "original_path": "/private/tmp/dance-main-face-20261102/source-first-app/run-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-main-face-app-evidence/source-first-app/run-comparison.json",
+    "sha256": "8b7651ecbcf84a166f6e1c1472c1a803a93fbb94304dacb4ff5321c4c5f20293",
+    "bytes": 23358
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "left_frame": 8608,
+  "gap_frame": 8612,
+  "right_frame": 8616,
+  "native_left_accepted_run": {
+    "first_frame": 8596,
+    "last_frame": 8608
+  },
+  "matches": [
+    {
+      "gap_box": [
+        1117.5,
+        611.25,
+        1189.5,
+        819.0
+      ],
+      "gap_head_max": 0.8505859375,
+      "gap_torso_min": 0.97607421875,
+      "native_left_box": [
+        1106.0,
+        631.0,
+        1208.0,
+        832.0
+      ],
+      "native_left_iou": 0.6174055829228243,
+      "native_left_full": true,
+      "native_left_extent": 179.1389398987088,
+      "compact_right_box": [
+        1112.25,
+        596.25,
+        1187.25,
+        813.0
+      ],
+      "compact_right_iou": 0.8209023789991796
+    },
+    {
+      "gap_box": [
+        239.625,
+        354.0,
+        453.0,
+        753.0
+      ],
+      "gap_head_max": 0.1668701171875,
+      "gap_torso_min": 0.5595703125,
+      "native_left_box": [
+        955.0,
+        641.0,
+        1055.0,
+        835.0
+      ],
+      "native_left_iou": 0.0,
+      "native_left_full": true,
+      "native_left_extent": 170.03632271899454,
+      "compact_right_box": [
+        218.625,
+        336.0,
+        444.375,
+        747.0
+      ],
+      "compact_right_iou": 0.8256969696969697
+    },
+    {
+      "gap_box": [
+        738.0,
+        636.0,
+        811.5,
+        810.0
+      ],
+      "gap_head_max": 0.289794921875,
+      "gap_torso_min": 0.8583984375,
+      "native_left_box": [
+        741.5,
+        643.5,
+        798.5,
+        826.5
+      ],
+      "native_left_iou": 0.6912487708947886,
+      "native_left_full": true,
+      "native_left_extent": 164.67409111297832,
+      "compact_right_box": [
+        738.0,
+        614.25,
+        811.5,
+        805.5
+      ],
+      "compact_right_iou": 0.8659003831417624
+    }
+  ],
+  "note": "Read-only saved native/regular pose evidence; IoU and frozen native geometry only; no new inference or video decode."
+}

@@ -1,0 +1,332 @@
+{
+  "results": [
+    {
+      "title": "MMN",
+      "old_wall_seconds": 295.082,
+      "new_wall_seconds": 302.607,
+      "role_content_same_except_timing_and_output_index": true,
+      "native_requested_frames_same": true,
+      "native_observations_same": true,
+      "native_observation_count": 135,
+      "new_group_context": {
+        "version": "compact_group_gap_v1",
+        "bridges": [],
+        "reason": "complete"
+      },
+      "stages": {
+        "download_refs": {
+          "before": 0.01574441703269258,
+          "after": 0.014613000035751611,
+          "delta": -0.0011314169969409704
+        },
+        "yolo": {
+          "before": 65.95308104198193,
+          "after": 76.5468382500112,
+          "delta": 10.593757208029274
+        },
+        "ref_embs": {
+          "before": 1.2925776250194758,
+          "after": 1.3682841670233756,
+          "delta": 0.07570654200389981
+        },
+        "main_selection": {
+          "before": 88.55182495800545,
+          "after": 85.80986370804021,
+          "delta": -2.741961249965243
+        },
+        "native_scene": {
+          "before": 10.847293042053934,
+          "after": 11.021446208003908,
+          "delta": 0.1741531659499742
+        },
+        "group_context": {
+          "before": null,
+          "after": 0.00046841701259836555,
+          "delta": 0.00046841701259836555
+        },
+        "segment_build": {
+          "before": 26.71668666601181,
+          "after": 26.771601416985504,
+          "delta": 0.054914750973694026
+        },
+        "face_extract": {
+          "before": 44.36631433403818,
+          "after": 44.398366625013296,
+          "delta": 0.03205229097511619
+        },
+        "secondary_faces": {
+          "before": 15.777642958040815,
+          "after": 15.247433791984804,
+          "delta": -0.5302091660560109
+        },
+        "body_continuity": {
+          "before": 0.4578437079908326,
+          "after": 0.45565149997128174,
+          "delta": -0.0021922080195508897
+        },
+        "context_faces": {
+          "before": 0.0002710830303840339,
+          "after": 0.00025987497065216303,
+          "delta": -1.120805973187089e-05
+        },
+        "mask_continuity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "joint_identity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "named_boundaries": {
+          "before": 0.019656082964502275,
+          "after": 0.004869500000495464,
+          "delta": -0.014786582964006811
+        },
+        "cluster_map": {
+          "before": 35.69998641603161,
+          "after": 34.56332179100718,
+          "delta": -1.136664625024423
+        },
+        "clips_main": {
+          "before": 6.641998082981445,
+          "after": 6.768648875004146,
+          "delta": 0.12665079202270135
+        },
+        "clips_group": {
+          "before": 3.8720730409841053,
+          "after": 3.987930083007086,
+          "delta": 0.11585704202298075
+        }
+      }
+    },
+    {
+      "title": "ANT",
+      "old_wall_seconds": 397.721,
+      "new_wall_seconds": 421.038,
+      "role_content_same_except_timing_and_output_index": true,
+      "native_requested_frames_same": true,
+      "native_observations_same": true,
+      "native_observation_count": 299,
+      "new_group_context": {
+        "version": "compact_group_gap_v1",
+        "bridges": [],
+        "reason": "complete"
+      },
+      "stages": {
+        "download_refs": {
+          "before": 0.022432499972637743,
+          "after": 0.021438000025227666,
+          "delta": -0.0009944999474100769
+        },
+        "yolo": {
+          "before": 85.80518287501764,
+          "after": 90.15093666600296,
+          "delta": 4.345753790985327
+        },
+        "ref_embs": {
+          "before": 0.39391104102833197,
+          "after": 0.35333579196594656,
+          "delta": -0.04057524906238541
+        },
+        "main_selection": {
+          "before": 133.9665833329782,
+          "after": 133.46205108298454,
+          "delta": -0.5045322499936447
+        },
+        "native_scene": {
+          "before": 21.74923320801463,
+          "after": 21.74075295799412,
+          "delta": -0.008480250020511448
+        },
+        "group_context": {
+          "before": null,
+          "after": 0.0005211660172790289,
+          "delta": 0.0005211660172790289
+        },
+        "segment_build": {
+          "before": 33.83568512497004,
+          "after": 34.79102220898494,
+          "delta": 0.9553370840149
+        },
+        "face_extract": {
+          "before": 69.2434782909695,
+          "after": 87.07101712498115,
+          "delta": 17.827538834011648
+        },
+        "secondary_faces": {
+          "before": 22.457254667009693,
+          "after": 22.503803458006587,
+          "delta": 0.04654879099689424
+        },
+        "body_continuity": {
+          "before": 0.6107631659833714,
+          "after": 0.5856088750297204,
+          "delta": -0.02515429095365107
+        },
+        "context_faces": {
+          "before": 0.0003477499703876674,
+          "after": 0.00034624995896592736,
+          "delta": -1.500011421740055e-06
+        },
+        "mask_continuity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "joint_identity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "named_boundaries": {
+          "before": 0.15266891702776775,
+          "after": 0.14830883295508102,
+          "delta": -0.004360084072686732
+        },
+        "cluster_map": {
+          "before": 43.464539958979,
+          "after": 44.347325708018616,
+          "delta": 0.8827857490396127
+        },
+        "clips_main": {
+          "before": 9.168953166983556,
+          "after": 8.919302624999546,
+          "delta": -0.2496505419840105
+        },
+        "clips_group": {
+          "before": 2.689123040996492,
+          "after": 2.886835750017781,
+          "delta": 0.1977127090212889
+        }
+      }
+    },
+    {
+      "title": "NEON",
+      "old_wall_seconds": 439.264,
+      "new_wall_seconds": 464.295,
+      "role_content_same_except_timing_and_output_index": true,
+      "native_requested_frames_same": true,
+      "native_observations_same": true,
+      "native_observation_count": 541,
+      "new_group_context": {
+        "version": "compact_group_gap_v1",
+        "bridges": [
+          {
+            "start": 143.67686666666668,
+            "end": 143.74360000000001,
+            "frames": [
+              8612
+            ],
+            "left_anchor_frame": 8608,
+            "right_anchor_frame": 8616,
+            "anchor_sources": [
+              "native_distant_ensemble",
+              "compact_distant_ensemble"
+            ],
+            "observed_body_counts": [
+              2
+            ],
+            "unobserved_box_counts": [
+              1
+            ],
+            "reason": "bidirectional_observed_ensemble"
+          }
+        ],
+        "reason": "complete"
+      },
+      "stages": {
+        "download_refs": {
+          "before": 0.04178541695000604,
+          "after": 0.043501082982402295,
+          "delta": 0.001715666032396257
+        },
+        "yolo": {
+          "before": 94.10301316698315,
+          "after": 94.76692625001306,
+          "delta": 0.6639130830299109
+        },
+        "ref_embs": {
+          "before": 2.2219874170259573,
+          "after": 2.2983882919652387,
+          "delta": 0.0764008749392815
+        },
+        "main_selection": {
+          "before": 131.4103516250034,
+          "after": 136.14411929098424,
+          "delta": 4.733767665980849
+        },
+        "native_scene": {
+          "before": 39.51813270803541,
+          "after": 44.88489379105158,
+          "delta": 5.366761083016172
+        },
+        "group_context": {
+          "before": null,
+          "after": 0.0015446670004166663,
+          "delta": 0.0015446670004166663
+        },
+        "segment_build": {
+          "before": 56.950724874972366,
+          "after": 65.1614193340065,
+          "delta": 8.21069445903413
+        },
+        "face_extract": {
+          "before": 69.24796783301281,
+          "after": 77.96523462503683,
+          "delta": 8.71726679202402
+        },
+        "secondary_faces": {
+          "before": 25.258377792022657,
+          "after": 24.625553583027795,
+          "delta": -0.6328242089948617
+        },
+        "body_continuity": {
+          "before": 0.958881750004366,
+          "after": 0.9145880839787424,
+          "delta": -0.04429366602562368
+        },
+        "context_faces": {
+          "before": 0.0004326669732108712,
+          "after": 0.0003519160090945661,
+          "delta": -8.075096411630511e-05
+        },
+        "mask_continuity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "joint_identity": {
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0
+        },
+        "named_boundaries": {
+          "before": 0.009954584005754441,
+          "after": 0.010342583002056926,
+          "delta": 0.00038799899630248547
+        },
+        "cluster_map": {
+          "before": 38.21486645902041,
+          "after": 38.02220883400878,
+          "delta": -0.19265762501163408
+        },
+        "clips_main": {
+          "before": 13.611439166998025,
+          "after": 15.89727691700682,
+          "delta": 2.2858377500087954
+        },
+        "clips_group": {
+          "before": 4.685809791961219,
+          "after": 5.130144708964508,
+          "delta": 0.44433491700328887
+        }
+      }
+    }
+  ],
+  "total_before_seconds": 1132.067,
+  "total_after_seconds": 1187.94,
+  "total_increase_percent": 4.935485267214745,
+  "caveat": "One actual app execution per video per version; stage timings do not establish causality."
+}

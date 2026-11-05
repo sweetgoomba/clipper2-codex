@@ -1,0 +1,16 @@
+.........FF                                                              [100%]
+=================================== FAILURES ===================================
+_________ test_faceless_front_row_peer_prevents_a_false_solo_override __________
+tests/test_dance_stage_prominence.py:65: in test_faceless_front_row_peer_prevents_a_false_solo_override
+    assert foreground_subject(features, DATA['width'], DATA['height']) is None
+E   AssertionError: assert {'box': [1104.0, 276.75, 1360.5, 1062.75], 'cropped_foreground': False, 'head_keypoints': [[1244.25, 351.375, 0.987304...75], [1234.5, 338.625, 0.9228515625], [1294.5, 344.625, 0.908203125], [1225.5, 348.0, 0.50341796875]], 'index': 4, ...} is None
+E    +  where {'box': [1104.0, 276.75, 1360.5, 1062.75], 'cropped_foreground': False, 'head_keypoints': [[1244.25, 351.375, 0.987304...75], [1234.5, 338.625, 0.9228515625], [1294.5, 344.625, 0.908203125], [1225.5, 348.0, 0.50341796875]], 'index': 4, ...} = <function foreground_subject at 0x10c8e8680>([{'box': [213.0, 293.0625, 395.25, 848.25], 'cropped_foreground': False, 'head_keypoints': [[347.25, 355.125, 0.963378...], [1234.5, 338.625, 0.9228515625], [1294.5, 344.625, 0.908203125], [1225.5, 348.0, 0.50341796875]], 'index': 99, ...}], 1920, 1080)
+___ test_reviewed_mmn_center_subject_survives_two_kneeling_front_performers ____
+tests/test_dance_stage_prominence.py:77: in test_reviewed_mmn_center_subject_survives_two_kneeling_front_performers
+    assert all(r['box'] == r['expected_box'] for r in rows)
+E   assert False
+E    +  where False = all(<generator object test_reviewed_mmn_center_subject_survives_two_kneeling_front_performers.<locals>.<genexpr> at 0x10d27d1c0>)
+=========================== short test summary info ============================
+FAILED tests/test_dance_stage_prominence.py::test_faceless_front_row_peer_prevents_a_false_solo_override
+FAILED tests/test_dance_stage_prominence.py::test_reviewed_mmn_center_subject_survives_two_kneeling_front_performers
+2 failed, 9 passed in 0.61s

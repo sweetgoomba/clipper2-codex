@@ -1,0 +1,108 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_____ test_uniform_zoom_does_not_leave_a_solo_sliver_before_the_camera_cut _____
+tests/test_dance_ensemble_continuity.py:31: in test_uniform_zoom_does_not_leave_a_solo_sliver_before_the_camera_cut
+    before=inputs();result,audit=apply(before)
+                                 ^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+________ test_missing_original_proofs_never_extend_a_group[cut_frames] _________
+tests/test_dance_ensemble_continuity.py:42: in test_missing_original_proofs_never_extend_a_group
+    before=inputs();out,audit=apply(before,**{missing:None})
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+_________ test_missing_original_proofs_never_extend_a_group[handoffs] __________
+tests/test_dance_ensemble_continuity.py:42: in test_missing_original_proofs_never_extend_a_group
+    before=inputs();out,audit=apply(before,**{missing:None})
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+______ test_missing_original_proofs_never_extend_a_group[camera_episodes] ______
+tests/test_dance_ensemble_continuity.py:42: in test_missing_original_proofs_never_extend_a_group
+    before=inputs();out,audit=apply(before,**{missing:None})
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+_____ test_missing_original_proofs_never_extend_a_group[role_observations] _____
+tests/test_dance_ensemble_continuity.py:42: in test_missing_original_proofs_never_extend_a_group
+    before=inputs();out,audit=apply(before,**{missing:None})
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+_____________ test_an_unestablished_group_does_not_swallow_a_main ______________
+tests/test_dance_ensemble_continuity.py:49: in test_an_unestablished_group_does_not_swallow_a_main
+    result,audit=apply(records)
+                 ^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+______ test_new_subject_or_unobserved_formation_is_not_a_group_tail[cut] _______
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+____ test_new_subject_or_unobserved_formation_is_not_a_group_tail[handoff] _____
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+_____ test_new_subject_or_unobserved_formation_is_not_a_group_tail[focal] ______
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+____ test_new_subject_or_unobserved_formation_is_not_a_group_tail[dominant] ____
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+__ test_new_subject_or_unobserved_formation_is_not_a_group_tail[missing_body] __
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+__ test_new_subject_or_unobserved_formation_is_not_a_group_tail[missing_pose] __
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+__ test_new_subject_or_unobserved_formation_is_not_a_group_tail[sampling_gap] __
+tests/test_dance_ensemble_continuity.py:67: in test_new_subject_or_unobserved_formation_is_not_a_group_tail
+    result,audit=apply(records,**args)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_dance_ensemble_continuity.py:23: in apply
+    from dance_highlight.services.ensemble_continuity import continue_observed_ensemble
+E   ModuleNotFoundError: No module named 'dance_highlight.services.ensemble_continuity'
+=========================== short test summary info ============================
+FAILED tests/test_dance_ensemble_continuity.py::test_uniform_zoom_does_not_leave_a_solo_sliver_before_the_camera_cut
+FAILED tests/test_dance_ensemble_continuity.py::test_missing_original_proofs_never_extend_a_group[cut_frames]
+FAILED tests/test_dance_ensemble_continuity.py::test_missing_original_proofs_never_extend_a_group[handoffs]
+FAILED tests/test_dance_ensemble_continuity.py::test_missing_original_proofs_never_extend_a_group[camera_episodes]
+FAILED tests/test_dance_ensemble_continuity.py::test_missing_original_proofs_never_extend_a_group[role_observations]
+FAILED tests/test_dance_ensemble_continuity.py::test_an_unestablished_group_does_not_swallow_a_main
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[cut]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[handoff]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[focal]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[dominant]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[missing_body]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[missing_pose]
+FAILED tests/test_dance_ensemble_continuity.py::test_new_subject_or_unobserved_formation_is_not_a_group_tail[sampling_gap]
+13 failed in 2.53s

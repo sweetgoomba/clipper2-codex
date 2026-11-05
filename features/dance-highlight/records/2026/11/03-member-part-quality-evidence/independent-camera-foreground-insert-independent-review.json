@@ -1,0 +1,444 @@
+{
+  "source_range": [
+    588,
+    616
+  ],
+  "modified_unsampled_frame": 590,
+  "policy_hashes": {
+    "local_structure_probe.py": "ffc12ed4cbfdec3064c2a6bf9249b3bf36491bd79b569a5eacd1b880a86f02de",
+    "camera_motion_probe.py": "cbb0f6cb319e3d5645c52b6afe36dcc5295c73104e73e256e5b1ec40576a7592",
+    "streaming_source_proof.py": "3dc2a071f069ffb10e64129d662708b8cb77627603b5a01054cb18fa1b5b1f0f"
+  },
+  "results": [
+    {
+      "variant": "baseline",
+      "changed_frames": [],
+      "all_sampled_source_frames_unchanged": true,
+      "accepted": true,
+      "raw_frames": [
+        616
+      ],
+      "outlier_frames": [
+        589,
+        590,
+        591,
+        616
+      ],
+      "failed_frames": [],
+      "camera_episodes": [
+        [
+          589,
+          590,
+          591,
+          592
+        ]
+      ],
+      "outlier_threshold": 15.626302083333332,
+      "changed_pair_reports": [
+        {
+          "frame": 590,
+          "raw_cut": false,
+          "luma": 17.53559027777778,
+          "camera": {
+            "frame": 590,
+            "accepted": true,
+            "corners": 400,
+            "cycle_matches": 348,
+            "inliers": 280,
+            "ratio": 0.8045977011494253,
+            "reason": "positive_camera_motion",
+            "scale": 1.0696978128040777,
+            "shift": [
+              -0.13939036709211905,
+              1.4002128262719111
+            ],
+            "cells": 9,
+            "extent": [
+              0.8859375,
+              0.6944444444444444
+            ],
+            "p90_residual": 1.1517488516093262,
+            "p90_flow": 16.789440155029297,
+            "affine": [
+              [
+                1.069697774313813,
+                0.00028695975753629827,
+                -22.494330903868804
+              ],
+              [
+                -0.00028695975753629827,
+                1.069697774313813,
+                -11.053559427802812
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.5292522703340137,
+                "normalized_residual": 0.04669472581172561,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 1.0592395588655599,
+                "normalized_residual": 0.011073396237732087,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.0065634159836918116
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        },
+        {
+          "frame": 591,
+          "raw_cut": false,
+          "luma": 16.83376736111111,
+          "camera": {
+            "frame": 591,
+            "accepted": true,
+            "corners": 399,
+            "cycle_matches": 350,
+            "inliers": 277,
+            "ratio": 0.7914285714285715,
+            "reason": "positive_camera_motion",
+            "scale": 1.061460385392924,
+            "shift": [
+              -0.04204268036852454,
+              1.1285822676704242
+            ],
+            "cells": 9,
+            "extent": [
+              0.86875,
+              0.6944444444444444
+            ],
+            "p90_residual": 1.3127093888180452,
+            "p90_flow": 14.002530097961426,
+            "affine": [
+              [
+                1.0614603186342884,
+                -0.00037646153856620327,
+                -19.64158156639888
+              ],
+              [
+                0.00037646153856620327,
+                1.0614603186342884,
+                -10.054742778842677
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.3091597394596994,
+                "normalized_residual": 0.03687773913970984,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 0.7051416244240241,
+                "normalized_residual": 0.006858520359139444,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.006614124984480441
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        }
+      ],
+      "seconds": 0.3169559169909917
+    },
+    {
+      "variant": "unsampled_foreground_noise",
+      "changed_frames": [
+        {
+          "frame": 590,
+          "selected_pixels": 45693
+        }
+      ],
+      "all_sampled_source_frames_unchanged": true,
+      "accepted": true,
+      "raw_frames": [
+        616
+      ],
+      "outlier_frames": [
+        589,
+        590,
+        591,
+        616
+      ],
+      "failed_frames": [],
+      "camera_episodes": [
+        [
+          589,
+          590,
+          591,
+          592
+        ]
+      ],
+      "outlier_threshold": 15.626302083333332,
+      "changed_pair_reports": [
+        {
+          "frame": 590,
+          "raw_cut": false,
+          "luma": 17.98654513888889,
+          "camera": {
+            "frame": 590,
+            "accepted": true,
+            "corners": 400,
+            "cycle_matches": 326,
+            "inliers": 243,
+            "ratio": 0.745398773006135,
+            "reason": "positive_camera_motion",
+            "scale": 1.0708023324983456,
+            "shift": [
+              -0.04793861661590881,
+              1.527262670280038
+            ],
+            "cells": 9,
+            "extent": [
+              0.878125,
+              0.6861111111111111
+            ],
+            "p90_residual": 0.9424207324950923,
+            "p90_flow": 18.157007217407227,
+            "affine": [
+              [
+                1.0708022082814364,
+                0.0005157746568172891,
+                -22.797484704902597
+              ],
+              [
+                -0.0005157746568172891,
+                1.0708022082814364,
+                -11.052086930196978
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.5987523139596886,
+                "normalized_residual": 0.04881686454838744,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 1.2530357610767004,
+                "normalized_residual": 0.013099361108936431,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.007000792014878243
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        },
+        {
+          "frame": 591,
+          "raw_cut": false,
+          "luma": 17.27951388888889,
+          "camera": {
+            "frame": 591,
+            "accepted": true,
+            "corners": 400,
+            "cycle_matches": 241,
+            "inliers": 177,
+            "ratio": 0.7344398340248963,
+            "reason": "positive_camera_motion",
+            "scale": 1.0636229451080024,
+            "shift": [
+              -0.026169943551110464,
+              1.481587731930233
+            ],
+            "cells": 9,
+            "extent": [
+              0.8890625,
+              0.6916666666666667
+            ],
+            "p90_residual": 1.0455724181173445,
+            "p90_flow": 15.671493530273438,
+            "affine": [
+              [
+                1.0636229418692251,
+                8.300407156995945e-05,
+                -20.400452074585683
+              ],
+              [
+                -8.300407156995945e-05,
+                1.0636229418692251,
+                -9.943980501627879
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.5965063351405737,
+                "normalized_residual": 0.04497200944057954,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 1.0860732901869015,
+                "normalized_residual": 0.010563630786012416,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.008461957972031087
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        }
+      ],
+      "seconds": 0.28840325004421175
+    },
+    {
+      "variant": "unsampled_foreground_mirror",
+      "changed_frames": [
+        {
+          "frame": 590,
+          "selected_pixels": 45693
+        }
+      ],
+      "all_sampled_source_frames_unchanged": true,
+      "accepted": true,
+      "raw_frames": [
+        616
+      ],
+      "outlier_frames": [
+        589,
+        590,
+        591,
+        616
+      ],
+      "failed_frames": [],
+      "camera_episodes": [
+        [
+          589,
+          590,
+          591,
+          592
+        ]
+      ],
+      "outlier_threshold": 15.626302083333332,
+      "changed_pair_reports": [
+        {
+          "frame": 590,
+          "raw_cut": false,
+          "luma": 17.690104166666668,
+          "camera": {
+            "frame": 590,
+            "accepted": true,
+            "corners": 400,
+            "cycle_matches": 330,
+            "inliers": 256,
+            "ratio": 0.7757575757575758,
+            "reason": "positive_camera_motion",
+            "scale": 1.070085712765828,
+            "shift": [
+              -0.07897136462906929,
+              1.4697072660895572
+            ],
+            "cells": 9,
+            "extent": [
+              0.8859375,
+              0.6944444444444444
+            ],
+            "p90_residual": 1.067733584991085,
+            "p90_flow": 18.151138305664062,
+            "affine": [
+              [
+                1.0700856409549133,
+                0.00039203018088724846,
+                -22.576941902760993
+              ],
+              [
+                -0.00039203018088724846,
+                1.0700856409549133,
+                -11.020258447910914
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.5673818912503827,
+                "normalized_residual": 0.04785898904581321,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 1.154677687457041,
+                "normalized_residual": 0.012071115974722416,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.007010875036939979
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        },
+        {
+          "frame": 591,
+          "raw_cut": false,
+          "luma": 17.028211805555557,
+          "camera": {
+            "frame": 591,
+            "accepted": true,
+            "corners": 400,
+            "cycle_matches": 329,
+            "inliers": 243,
+            "ratio": 0.7386018237082067,
+            "reason": "positive_camera_motion",
+            "scale": 1.0628277106949735,
+            "shift": [
+              0.04061972731693686,
+              1.3068130789457655
+            ],
+            "cells": 9,
+            "extent": [
+              0.8875,
+              0.6944444444444444
+            ],
+            "p90_residual": 1.1498974341029198,
+            "p90_flow": 14.2172269821167,
+            "affine": [
+              [
+                1.062827708640441,
+                6.608500698508422e-05,
+                -20.076142338881503
+              ],
+              [
+                -6.608500698508422e-05,
+                1.062827708640441,
+                -9.981027274098379
+              ]
+            ],
+            "selected": {
+              "head": {
+                "residual": 1.428852981129568,
+                "normalized_residual": 0.040249379750128676,
+                "accepted": true
+              },
+              "torso": {
+                "residual": 0.9182213185892046,
+                "normalized_residual": 0.008931028022752143,
+                "accepted": true
+              }
+            },
+            "source_positive": true,
+            "camera_motion": true,
+            "seconds": 0.006848249991890043
+          },
+          "isolated_outlier": true,
+          "camera_resolved": true,
+          "resolved": true
+        }
+      ],
+      "seconds": 0.29110470798332244
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "source_sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726",
+  "baseline_source_sha256": "f52481e26c55b9bc573c8188352e474034331e2bda00947375261d319da157af",
+  "fixture_sha256": "947c424ec23dde59f3896522d86201d6860bf10d39be51d3e8e194f4a60a41bf",
+  "checks": [
+    {
+      "name": "MMN expected scene changes only",
+      "passed": true
+    },
+    {
+      "name": "MMN inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "MMN all body/head/pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN candidate selected body preserved",
+      "passed": true
+    },
+    {
+      "name": "MMN no original group reversals",
+      "passed": true
+    },
+    {
+      "name": "ANT expected scene changes only",
+      "passed": true
+    },
+    {
+      "name": "ANT inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "ANT all body/head/pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT candidate selected body preserved",
+      "passed": true
+    },
+    {
+      "name": "ANT no original group reversals",
+      "passed": true
+    },
+    {
+      "name": "NEON expected scene changes only",
+      "passed": true
+    },
+    {
+      "name": "NEON inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "NEON all body/head/pose geometry preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON candidate selected body preserved",
+      "passed": true
+    },
+    {
+      "name": "NEON no original group reversals",
+      "passed": true
+    },
+    {
+      "name": "fixture matches original recorded measurement",
+      "passed": true
+    },
+    {
+      "name": "actual baseline does not classify group",
+      "passed": true
+    },
+    {
+      "name": "actual corrected classifies group",
+      "passed": true
+    },
+    {
+      "name": "only duplicate stretched body3 removed for local scale",
+      "passed": true
+    },
+    {
+      "name": "different_head preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "different_head input immutable",
+      "passed": true
+    },
+    {
+      "name": "missing_head preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "missing_head input immutable",
+      "passed": true
+    },
+    {
+      "name": "different_torso preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "different_torso input immutable",
+      "passed": true
+    },
+    {
+      "name": "hidden_foreground_feet preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "hidden_foreground_feet input immutable",
+      "passed": true
+    },
+    {
+      "name": "partial_torso preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "partial_torso input immutable",
+      "passed": true
+    },
+    {
+      "name": "feet_outside_frame preserves foreground veto",
+      "passed": true
+    },
+    {
+      "name": "feet_outside_frame input immutable",
+      "passed": true
+    },
+    {
+      "name": "order [0, 1, 2, 3, 4]",
+      "passed": true
+    },
+    {
+      "name": "order [4, 3, 2, 1, 0]",
+      "passed": true
+    },
+    {
+      "name": "order [3, 0, 4, 2, 1]",
+      "passed": true
+    }
+  ],
+  "all_checks_passed": true,
+  "replays": {
+    "MMN": {
+      "observations": 2324,
+      "changes": []
+    },
+    "ANT": {
+      "observations": 3310,
+      "changes": []
+    },
+    "NEON": {
+      "observations": 3632,
+      "changes": [
+        {
+          "frame": 11104,
+          "time": 185.25173333333333,
+          "before": "main",
+          "after": "group"
+        }
+      ]
+    }
+  },
+  "local_kept_body_indices": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "negative_variants": {
+    "different_head": false,
+    "missing_head": false,
+    "different_torso": false,
+    "hidden_foreground_feet": false,
+    "partial_torso": false,
+    "feet_outside_frame": false
+  },
+  "scope": "Scene classification only. No change to stored recognition inputs, output labels, application artifacts, or models. New actual app outcome remains to be checked."
+}

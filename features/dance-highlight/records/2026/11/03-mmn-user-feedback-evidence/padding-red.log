@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_named_padding_stops_at_a_source_cut_even_near_the_scope_edge _______
+tests/test_dance_member_timeline.py:732: in test_named_padding_stops_at_a_source_cut_even_near_the_scope_edge
+    ranges=_named_ranges(segment,rows,['B']*3,cut_times=(.834,))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: _named_ranges() got an unexpected keyword argument 'cut_times'
+=========================== short test summary info ============================
+FAILED tests/test_dance_member_timeline.py::test_named_padding_stops_at_a_source_cut_even_near_the_scope_edge
+1 failed, 77 deselected in 1.20s

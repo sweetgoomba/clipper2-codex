@@ -1,0 +1,3465 @@
+[
+  {
+    "start": 82.1821,
+    "end": 82.6826,
+    "name": "카즈하",
+    "union": [
+      75.37530000000001,
+      87.48740000000001
+    ],
+    "original_span_ids": [],
+    "frames": [
+      {
+        "frame": 4892,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9121776223182678,
+        "primary_reason": "distance_exceeded",
+        "time": 81.61486666666667,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4896,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8939218521118164,
+        "primary_reason": "distance_exceeded",
+        "time": 81.6816,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4900,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9132071137428284,
+        "primary_reason": "distance_exceeded",
+        "time": 81.74833333333333,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4904,
+        "owned": true,
+        "valid": true,
+        "primary": "카즈하",
+        "joint": "카즈하",
+        "secondary": null,
+        "detector_score": 0.9264255166053772,
+        "primary_reason": "accepted",
+        "time": 81.81506666666667,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4908,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "카즈하",
+        "secondary": null,
+        "detector_score": 0.917935848236084,
+        "primary_reason": "distance_exceeded",
+        "time": 81.8818,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 4912,
+        "owned": true,
+        "valid": true,
+        "primary": "카즈하",
+        "joint": "카즈하",
+        "secondary": null,
+        "detector_score": 0.9244704246520996,
+        "primary_reason": "accepted",
+        "time": 81.94853333333333,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4916,
+        "owned": true,
+        "valid": true,
+        "primary": "카즈하",
+        "joint": "카즈하",
+        "secondary": null,
+        "detector_score": 0.9201292991638184,
+        "primary_reason": "accepted",
+        "time": 82.01526666666666,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4920,
+        "owned": true,
+        "valid": true,
+        "primary": "카즈하",
+        "joint": "카즈하",
+        "secondary": null,
+        "detector_score": 0.9190309643745422,
+        "primary_reason": "accepted",
+        "time": 82.08200000000001,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4924,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9133550524711609,
+        "primary_reason": "distance_exceeded",
+        "time": 82.14873333333334,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4928,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9157031178474426,
+        "primary_reason": "distance_exceeded",
+        "time": 82.21546666666667,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4932,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8571985363960266,
+        "primary_reason": "distance_exceeded",
+        "time": 82.2822,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4936,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8331289291381836,
+        "primary_reason": "distance_exceeded",
+        "time": 82.34893333333333,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4940,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8093368411064148,
+        "primary_reason": "distance_exceeded",
+        "time": 82.41566666666667,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4944,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "카즈하",
+        "detector_score": 0.8772768378257751,
+        "primary_reason": "distance_exceeded",
+        "time": 82.4824,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4948,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "카즈하",
+        "detector_score": 0.9205237030982971,
+        "primary_reason": "distance_exceeded",
+        "time": 82.54913333333333,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4952,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9209309220314026,
+        "primary_reason": "distance_exceeded",
+        "time": 82.61586666666666,
+        "shot": 59,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "confirmed_near_tie_transition",
+        "role_owned": true
+      },
+      {
+        "frame": 4956,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9007483124732971,
+        "primary_reason": "distance_exceeded",
+        "time": 82.68260000000001,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4960,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8938592672348022,
+        "primary_reason": "distance_exceeded",
+        "time": 82.74933333333334,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4964,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8792825937271118,
+        "primary_reason": "distance_exceeded",
+        "time": 82.81606666666667,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4968,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8939434885978699,
+        "primary_reason": "distance_exceeded",
+        "time": 82.8828,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4972,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "김채원",
+        "detector_score": 0.8864275813102722,
+        "primary_reason": "distance_exceeded",
+        "time": 82.94953333333333,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4976,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "김채원",
+        "detector_score": 0.8924345970153809,
+        "primary_reason": "distance_exceeded",
+        "time": 83.01626666666667,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4980,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.885819673538208,
+        "primary_reason": "distance_exceeded",
+        "time": 83.083,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4984,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8851987719535828,
+        "primary_reason": "distance_exceeded",
+        "time": 83.14973333333333,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 4988,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.880534827709198,
+        "primary_reason": "distance_exceeded",
+        "time": 83.21646666666666,
+        "shot": 59,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      }
+    ],
+    "unknown_frames": [
+      4928,
+      4932,
+      4936,
+      4940,
+      4944,
+      4948,
+      4952
+    ],
+    "cuts": [],
+    "shots": [
+      {
+        "shot": 59,
+        "unknown_frames": [
+          4928,
+          4932,
+          4936,
+          4940,
+          4944,
+          4948,
+          4952
+        ],
+        "direct_frames": [
+          4904,
+          4908,
+          4912,
+          4916,
+          4920,
+          4944,
+          4948
+        ],
+        "independent_pairs": [
+          [
+            4904,
+            4916
+          ],
+          [
+            4904,
+            4920
+          ],
+          [
+            4908,
+            4920
+          ],
+          [
+            4912,
+            4944
+          ],
+          [
+            4916,
+            4944
+          ],
+          [
+            4916,
+            4948
+          ],
+          [
+            4920,
+            4944
+          ],
+          [
+            4920,
+            4948
+          ]
+        ],
+        "failures": [
+          "no_original_pair_with_body_source_path"
+        ],
+        "selected_seed_pair": [
+          4920,
+          4944
+        ],
+        "new_source_interval": [
+          4926,
+          4955
+        ],
+        "attempts": [
+          {
+            "seed_pair": [
+              4920,
+              4944
+            ],
+            "chain_frames": [
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4920,
+              4948
+            ],
+            "chain_frames": [
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4916,
+              4944
+            ],
+            "chain_frames": [
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4916,
+              4948
+            ],
+            "chain_frames": [
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4912,
+              4944
+            ],
+            "chain_frames": [
+              4912,
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4908,
+              4920
+            ],
+            "chain_frames": [
+              4908,
+              4912,
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4904,
+              4916
+            ],
+            "chain_frames": [
+              4904,
+              4908,
+              4912,
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          },
+          {
+            "seed_pair": [
+              4904,
+              4920
+            ],
+            "chain_frames": [
+              4904,
+              4908,
+              4912,
+              4916,
+              4920,
+              4924,
+              4928,
+              4932,
+              4936,
+              4940,
+              4944,
+              4948,
+              4952,
+              4956
+            ],
+            "failure": "ineligible_or_unowned_support_path"
+          }
+        ]
+      }
+    ],
+    "failures": [
+      "missing_original_two_sided_faces",
+      "competing_original_face",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "competing_original_face_in_union",
+      "recomputed_repeated_identity_boundary",
+      "different_original_neighbor_names"
+    ],
+    "overlapping_groups": [],
+    "handoffs": [],
+    "identity_boundaries": [
+      {
+        "time": 81.51476666666667,
+        "left_time": 81.48140000000001,
+        "right_time": 81.54813333333334,
+        "reason": "repeated_face_change",
+        "strength": 0.7391639947891235
+      },
+      {
+        "time": 83.45003333333334,
+        "left_time": 83.34993333333334,
+        "right_time": 83.55013333333333,
+        "reason": "repeated_face_change",
+        "strength": 0.7219691872596741
+      }
+    ],
+    "accepted": false,
+    "video": "ANT",
+    "nearby": [
+      {
+        "range": [
+          75.37530000000001,
+          82.182
+        ],
+        "name": "카즈하",
+        "source_spans": [
+          37
+        ],
+        "newly_named_seconds": 0
+      },
+      {
+        "range": [
+          82.182,
+          82.68260000000001
+        ],
+        "name": null,
+        "source_spans": [
+          38
+        ],
+        "newly_named_seconds": 0.0
+      }
+    ],
+    "right_original_name": "김채원"
+  },
+  {
+    "start": 115.6155,
+    "end": 115.9158,
+    "name": "영",
+    "union": [
+      114.34756666666667,
+      117.117
+    ],
+    "original_span_ids": [],
+    "frames": [
+      {
+        "frame": 6896,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9385757446289062,
+        "primary_reason": "accepted",
+        "time": 115.04826666666666,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6900,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9329268932342529,
+        "primary_reason": "accepted",
+        "time": 115.11500000000001,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6904,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 115.18173333333334,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6908,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9038377404212952,
+        "primary_reason": "distance_exceeded",
+        "time": 115.24846666666667,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6912,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9301261901855469,
+        "primary_reason": "accepted",
+        "time": 115.3152,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6916,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9266479015350342,
+        "primary_reason": "accepted",
+        "time": 115.38193333333334,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6920,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9282032251358032,
+        "primary_reason": "accepted",
+        "time": 115.44866666666667,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6924,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9340714812278748,
+        "primary_reason": "accepted",
+        "time": 115.5154,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6928,
+        "owned": true,
+        "valid": true,
+        "primary": "영",
+        "joint": "영",
+        "secondary": null,
+        "detector_score": 0.9335352182388306,
+        "primary_reason": "accepted",
+        "time": 115.58213333333333,
+        "shot": 29,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6932,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9135008454322815,
+        "primary_reason": "distance_exceeded",
+        "time": 115.64886666666666,
+        "shot": 30,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6936,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "영",
+        "detector_score": 0.9062005281448364,
+        "primary_reason": "distance_exceeded",
+        "time": 115.71560000000001,
+        "shot": 30,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6940,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8819507956504822,
+        "primary_reason": "distance_exceeded",
+        "time": 115.78233333333334,
+        "shot": 30,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6944,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8957110047340393,
+        "primary_reason": "distance_exceeded",
+        "time": 115.84906666666667,
+        "shot": 30,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6948,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8889767527580261,
+        "primary_reason": "distance_exceeded",
+        "time": 115.9158,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6952,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8738325834274292,
+        "primary_reason": "distance_exceeded",
+        "time": 115.98253333333334,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6956,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8960206508636475,
+        "primary_reason": "distance_exceeded",
+        "time": 116.04926666666667,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6960,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8070909976959229,
+        "primary_reason": "distance_exceeded",
+        "time": 116.116,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6964,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 116.18273333333333,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6968,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8273123502731323,
+        "primary_reason": "distance_exceeded",
+        "time": 116.24946666666666,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6972,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8389121890068054,
+        "primary_reason": "distance_exceeded",
+        "time": 116.31620000000001,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6976,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8842892646789551,
+        "primary_reason": "distance_exceeded",
+        "time": 116.38293333333334,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 6980,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8946011066436768,
+        "primary_reason": "distance_exceeded",
+        "time": 116.44966666666667,
+        "shot": 30,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      }
+    ],
+    "unknown_frames": [
+      6932,
+      6936,
+      6940,
+      6944
+    ],
+    "cuts": [
+      6930
+    ],
+    "shots": [
+      {
+        "shot": 29,
+        "unknown_frames": [],
+        "direct_frames": [
+          6896,
+          6900,
+          6908,
+          6912,
+          6916,
+          6920,
+          6924,
+          6928
+        ],
+        "independent_pairs": [
+          [
+            6896,
+            6908
+          ],
+          [
+            6896,
+            6912
+          ],
+          [
+            6896,
+            6916
+          ],
+          [
+            6896,
+            6920
+          ],
+          [
+            6896,
+            6924
+          ],
+          [
+            6896,
+            6928
+          ],
+          [
+            6900,
+            6912
+          ],
+          [
+            6900,
+            6916
+          ],
+          [
+            6900,
+            6920
+          ],
+          [
+            6900,
+            6924
+          ],
+          [
+            6900,
+            6928
+          ],
+          [
+            6908,
+            6920
+          ],
+          [
+            6908,
+            6924
+          ],
+          [
+            6908,
+            6928
+          ],
+          [
+            6912,
+            6924
+          ],
+          [
+            6912,
+            6928
+          ],
+          [
+            6916,
+            6928
+          ]
+        ],
+        "failures": [],
+        "selected_seed_pair": [
+          6916,
+          6928
+        ],
+        "new_source_interval": null,
+        "chain_frames": [
+          6916,
+          6920,
+          6924,
+          6928
+        ],
+        "source_chain": null,
+        "attempts": [
+          {
+            "seed_pair": [
+              6916,
+              6928
+            ],
+            "chain_frames": [
+              6916,
+              6920,
+              6924,
+              6928
+            ],
+            "failure": null
+          }
+        ]
+      },
+      {
+        "shot": 30,
+        "unknown_frames": [
+          6932,
+          6936,
+          6940,
+          6944
+        ],
+        "direct_frames": [
+          6936
+        ],
+        "independent_pairs": [],
+        "failures": [
+          "no_two_independent_original_faces"
+        ],
+        "new_source_interval": [
+          6930,
+          6947
+        ],
+        "attempts": []
+      }
+    ],
+    "failures": [
+      "missing_original_two_sided_faces",
+      "recomputed_repeated_identity_boundary"
+    ],
+    "overlapping_groups": [],
+    "handoffs": [],
+    "identity_boundaries": [
+      {
+        "time": 116.64986666666667,
+        "left_time": 116.44966666666667,
+        "right_time": 116.85006666666666,
+        "reason": "repeated_face_change",
+        "strength": 0.6759130954742432
+      }
+    ],
+    "accepted": false,
+    "video": "NEON",
+    "nearby": [
+      {
+        "range": [
+          114.34756666666667,
+          115.6155
+        ],
+        "name": "영",
+        "source_spans": [
+          47
+        ],
+        "newly_named_seconds": 0
+      },
+      {
+        "range": [
+          115.6155,
+          115.9158
+        ],
+        "name": null,
+        "source_spans": [
+          48
+        ],
+        "newly_named_seconds": 0.0
+      }
+    ],
+    "right_original_name": "영"
+  },
+  {
+    "start": 180.8806,
+    "end": 182.6826,
+    "name": "사쿠라",
+    "union": [
+      175.24173333333334,
+      189.25573333333332
+    ],
+    "original_span_ids": [],
+    "frames": [
+      {
+        "frame": 10808,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.630303680896759,
+        "time": 180.31346666666667,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10812,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8737963438034058,
+        "primary_reason": "distance_exceeded",
+        "time": 180.3802,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10816,
+        "owned": true,
+        "valid": true,
+        "primary": "사쿠라",
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9238024950027466,
+        "primary_reason": "accepted",
+        "time": 180.44693333333333,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10820,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9029883146286011,
+        "primary_reason": "distance_exceeded",
+        "time": 180.51366666666667,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10824,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9028472900390625,
+        "primary_reason": "distance_exceeded",
+        "time": 180.5804,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10828,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9172288179397583,
+        "primary_reason": "distance_exceeded",
+        "time": 180.64713333333333,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10832,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9069202542304993,
+        "primary_reason": "distance_exceeded",
+        "time": 180.71386666666666,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10836,
+        "owned": true,
+        "valid": true,
+        "primary": "사쿠라",
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9151806235313416,
+        "primary_reason": "accepted",
+        "time": 180.7806,
+        "shot": 121,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10840,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9205512404441833,
+        "primary_reason": "distance_exceeded",
+        "time": 180.84733333333332,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10844,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9149558544158936,
+        "primary_reason": "distance_exceeded",
+        "time": 180.91406666666666,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10848,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": "사쿠라",
+        "detector_score": 0.9162204265594482,
+        "primary_reason": "distance_exceeded",
+        "time": 180.98080000000002,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10852,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9067234396934509,
+        "primary_reason": "distance_exceeded",
+        "time": 181.04753333333335,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10856,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 181.11426666666668,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "dominant_face",
+        "role_owned": true
+      },
+      {
+        "frame": 10860,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8137461543083191,
+        "primary_reason": "distance_exceeded",
+        "time": 181.181,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10864,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8893096446990967,
+        "primary_reason": "distance_exceeded",
+        "time": 181.24773333333334,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10868,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9031253457069397,
+        "primary_reason": "distance_exceeded",
+        "time": 181.31446666666668,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10872,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8889560103416443,
+        "primary_reason": "distance_exceeded",
+        "time": 181.3812,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10876,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8491132259368896,
+        "primary_reason": "distance_exceeded",
+        "time": 181.44793333333334,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10880,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.866886556148529,
+        "primary_reason": "distance_exceeded",
+        "time": 181.51466666666667,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10884,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8844529986381531,
+        "primary_reason": "distance_exceeded",
+        "time": 181.5814,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10888,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8888160586357117,
+        "primary_reason": "distance_exceeded",
+        "time": 181.64813333333333,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10892,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9153683185577393,
+        "primary_reason": "distance_exceeded",
+        "time": 181.71486666666667,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10896,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9208714365959167,
+        "primary_reason": "distance_exceeded",
+        "time": 181.7816,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10900,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.907707929611206,
+        "primary_reason": "distance_exceeded",
+        "time": 181.84833333333333,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10904,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9099096059799194,
+        "primary_reason": "distance_exceeded",
+        "time": 181.91506666666666,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10908,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9127918481826782,
+        "primary_reason": "distance_exceeded",
+        "time": 181.9818,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10912,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.91600102186203,
+        "primary_reason": "distance_exceeded",
+        "time": 182.04853333333332,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10916,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9173411130905151,
+        "primary_reason": "distance_exceeded",
+        "time": 182.11526666666666,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10920,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.6804753541946411,
+        "time": 182.18200000000002,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10924,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.4942021369934082,
+        "time": 182.24873333333335,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10928,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.898901104927063,
+        "primary_reason": "distance_exceeded",
+        "time": 182.31546666666668,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10932,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9106106758117676,
+        "primary_reason": "distance_exceeded",
+        "time": 182.3822,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10936,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.906262993812561,
+        "primary_reason": "distance_exceeded",
+        "time": 182.44893333333334,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10940,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8986626267433167,
+        "primary_reason": "distance_exceeded",
+        "time": 182.51566666666668,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10944,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8948004245758057,
+        "primary_reason": "distance_exceeded",
+        "time": 182.5824,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10948,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9005587100982666,
+        "primary_reason": "distance_exceeded",
+        "time": 182.64913333333334,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10952,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9170212745666504,
+        "primary_reason": "distance_exceeded",
+        "time": 182.71586666666667,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10956,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9206710457801819,
+        "primary_reason": "distance_exceeded",
+        "time": 182.7826,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10960,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9151369333267212,
+        "primary_reason": "insufficient_margin",
+        "time": 182.84933333333333,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10964,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9110682606697083,
+        "primary_reason": "distance_exceeded",
+        "time": 182.91606666666667,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10968,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9151775240898132,
+        "primary_reason": "distance_exceeded",
+        "time": 182.9828,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10972,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9062119126319885,
+        "primary_reason": "distance_exceeded",
+        "time": 183.04953333333333,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10976,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9138904809951782,
+        "primary_reason": "distance_exceeded",
+        "time": 183.11626666666666,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10980,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "사쿠라",
+        "secondary": null,
+        "detector_score": 0.9075707197189331,
+        "primary_reason": "distance_exceeded",
+        "time": 183.183,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 10984,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9166305065155029,
+        "primary_reason": "distance_exceeded",
+        "time": 183.24973333333332,
+        "shot": 122,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      }
+    ],
+    "unknown_frames": [
+      10844,
+      10848,
+      10852,
+      10856,
+      10860,
+      10864,
+      10868,
+      10872,
+      10876,
+      10880,
+      10884,
+      10888,
+      10892,
+      10896,
+      10900,
+      10904,
+      10908,
+      10912,
+      10916,
+      10920,
+      10924,
+      10928,
+      10932,
+      10936,
+      10940,
+      10944,
+      10948
+    ],
+    "cuts": [
+      10840
+    ],
+    "shots": [
+      {
+        "shot": 121,
+        "unknown_frames": [],
+        "direct_frames": [
+          10816,
+          10824,
+          10836
+        ],
+        "independent_pairs": [
+          [
+            10816,
+            10836
+          ],
+          [
+            10824,
+            10836
+          ]
+        ],
+        "failures": [],
+        "selected_seed_pair": [
+          10824,
+          10836
+        ],
+        "new_source_interval": null,
+        "chain_frames": [
+          10824,
+          10828,
+          10832,
+          10836
+        ],
+        "source_chain": null,
+        "attempts": [
+          {
+            "seed_pair": [
+              10824,
+              10836
+            ],
+            "chain_frames": [
+              10824,
+              10828,
+              10832,
+              10836
+            ],
+            "failure": null
+          }
+        ]
+      },
+      {
+        "shot": 122,
+        "unknown_frames": [
+          10844,
+          10848,
+          10852,
+          10856,
+          10860,
+          10864,
+          10868,
+          10872,
+          10876,
+          10880,
+          10884,
+          10888,
+          10892,
+          10896,
+          10900,
+          10904,
+          10908,
+          10912,
+          10916,
+          10920,
+          10924,
+          10928,
+          10932,
+          10936,
+          10940,
+          10944,
+          10948
+        ],
+        "direct_frames": [
+          10848,
+          10956,
+          10964,
+          10968,
+          10972,
+          10980
+        ],
+        "independent_pairs": [
+          [
+            10956,
+            10968
+          ],
+          [
+            10956,
+            10972
+          ],
+          [
+            10956,
+            10980
+          ],
+          [
+            10964,
+            10980
+          ],
+          [
+            10968,
+            10980
+          ]
+        ],
+        "failures": [
+          "original_support_expired"
+        ],
+        "selected_seed_pair": [
+          10956,
+          10968
+        ],
+        "new_source_interval": [
+          10842,
+          10950
+        ],
+        "expired_frames": [
+          10884,
+          10885,
+          10886,
+          10887,
+          10888,
+          10889,
+          10890,
+          10891,
+          10892,
+          10893,
+          10894,
+          10895,
+          10896,
+          10897,
+          10898,
+          10899,
+          10900,
+          10901,
+          10902,
+          10903,
+          10904,
+          10905,
+          10906,
+          10907,
+          10908,
+          10909,
+          10910,
+          10911,
+          10912,
+          10913,
+          10914,
+          10915,
+          10916,
+          10917,
+          10918,
+          10919,
+          10920
+        ],
+        "chain_frames": [
+          10840,
+          10844,
+          10848,
+          10852,
+          10856,
+          10860,
+          10864,
+          10868,
+          10872,
+          10876,
+          10880,
+          10884,
+          10888,
+          10892,
+          10896,
+          10900,
+          10904,
+          10908,
+          10912,
+          10916,
+          10920,
+          10924,
+          10928,
+          10932,
+          10936,
+          10940,
+          10944,
+          10948,
+          10952,
+          10956,
+          10960,
+          10964,
+          10968
+        ],
+        "source_chain": null,
+        "attempts": [
+          {
+            "seed_pair": [
+              10956,
+              10968
+            ],
+            "chain_frames": [
+              10840,
+              10844,
+              10848,
+              10852,
+              10856,
+              10860,
+              10864,
+              10868,
+              10872,
+              10876,
+              10880,
+              10884,
+              10888,
+              10892,
+              10896,
+              10900,
+              10904,
+              10908,
+              10912,
+              10916,
+              10920,
+              10924,
+              10928,
+              10932,
+              10936,
+              10940,
+              10944,
+              10948,
+              10952,
+              10956,
+              10960,
+              10964,
+              10968
+            ],
+            "failure": null
+          }
+        ]
+      }
+    ],
+    "failures": [],
+    "overlapping_groups": [],
+    "handoffs": [],
+    "identity_boundaries": [],
+    "accepted": false,
+    "video": "ANT",
+    "nearby": [
+      {
+        "range": [
+          175.24173333333334,
+          180.8806
+        ],
+        "name": "사쿠라",
+        "source_spans": [
+          89
+        ],
+        "newly_named_seconds": 0
+      },
+      {
+        "range": [
+          180.8806,
+          182.6826
+        ],
+        "name": null,
+        "source_spans": [
+          90
+        ],
+        "newly_named_seconds": 0.0
+      },
+      {
+        "range": [
+          182.6826,
+          189.25573333333332
+        ],
+        "name": "사쿠라",
+        "source_spans": [
+          91
+        ],
+        "newly_named_seconds": 0
+      }
+    ],
+    "right_original_name": "사쿠라"
+  },
+  {
+    "start": 93.05953333333333,
+    "end": 94.92816666666667,
+    "name": "오아",
+    "union": [
+      93.02626666666667,
+      96.76333333333334
+    ],
+    "original_span_ids": [],
+    "frames": [
+      {
+        "frame": 5544,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9203292727470398,
+        "primary_reason": "distance_exceeded",
+        "time": 92.4924,
+        "shot": 21,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5548,
+        "owned": true,
+        "valid": true,
+        "primary": "메르시",
+        "joint": "메르시",
+        "secondary": null,
+        "detector_score": 0.937103807926178,
+        "primary_reason": "accepted",
+        "time": 92.55913333333334,
+        "shot": 21,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5552,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9028610587120056,
+        "primary_reason": "distance_exceeded",
+        "time": 92.62586666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5556,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 92.6926,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5560,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": "오아",
+        "detector_score": 0.8993371725082397,
+        "primary_reason": "accepted",
+        "time": 92.75933333333333,
+        "shot": 22,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5564,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8838252425193787,
+        "primary_reason": "distance_exceeded",
+        "time": 92.82606666666666,
+        "shot": 22,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5568,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8862683773040771,
+        "primary_reason": "distance_exceeded",
+        "time": 92.89280000000001,
+        "shot": 22,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5572,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8707855343818665,
+        "primary_reason": "distance_exceeded",
+        "time": 92.95953333333334,
+        "shot": 22,
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5576,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 93.02626666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5580,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.3698424994945526,
+        "time": 93.093,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5584,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.7486430406570435,
+        "time": 93.15973333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5588,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9117130637168884,
+        "primary_reason": "distance_exceeded",
+        "time": 93.22646666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5592,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9175432324409485,
+        "primary_reason": "distance_exceeded",
+        "time": 93.2932,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5596,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9159666895866394,
+        "primary_reason": "distance_exceeded",
+        "time": 93.35993333333333,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5600,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9053205847740173,
+        "primary_reason": "distance_exceeded",
+        "time": 93.42666666666666,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5604,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8960960507392883,
+        "primary_reason": "distance_exceeded",
+        "time": 93.49340000000001,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5608,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.9040086269378662,
+        "primary_reason": "distance_exceeded",
+        "time": 93.56013333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5612,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8680720329284668,
+        "primary_reason": "distance_exceeded",
+        "time": 93.62686666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5616,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8657110929489136,
+        "primary_reason": "distance_exceeded",
+        "time": 93.6936,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5620,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8826703429222107,
+        "primary_reason": "distance_exceeded",
+        "time": 93.76033333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5624,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 93.82706666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5628,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8551055788993835,
+        "primary_reason": "distance_exceeded",
+        "time": 93.8938,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5632,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8780142664909363,
+        "primary_reason": "distance_exceeded",
+        "time": 93.96053333333333,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5636,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8687747120857239,
+        "primary_reason": "distance_exceeded",
+        "time": 94.02726666666666,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5640,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8590030074119568,
+        "primary_reason": "distance_exceeded",
+        "time": 94.09400000000001,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5644,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.7792633175849915,
+        "time": 94.16073333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5648,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.813155472278595,
+        "primary_reason": "distance_exceeded",
+        "time": 94.22746666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5652,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 94.2942,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "incomplete_incumbent_geometry",
+        "role_owned": true
+      },
+      {
+        "frame": 5656,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 94.36093333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "incomplete_incumbent_geometry",
+        "role_owned": true
+      },
+      {
+        "frame": 5660,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 94.42766666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "incomplete_incumbent_geometry",
+        "role_owned": true
+      },
+      {
+        "frame": 5664,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.7587937116622925,
+        "time": 94.4944,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5668,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8153626918792725,
+        "primary_reason": "distance_exceeded",
+        "time": 94.56113333333333,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5672,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8566132187843323,
+        "primary_reason": "distance_exceeded",
+        "time": 94.62786666666666,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "near_tie_keep_incumbent",
+        "role_owned": true
+      },
+      {
+        "frame": 5676,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8642134070396423,
+        "primary_reason": "distance_exceeded",
+        "time": 94.69460000000001,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "near_tie_keep_incumbent",
+        "role_owned": true
+      },
+      {
+        "frame": 5680,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 94.76133333333334,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "incomplete_incumbent_geometry",
+        "role_owned": true
+      },
+      {
+        "frame": 5684,
+        "owned": true,
+        "valid": true,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.8699918389320374,
+        "primary_reason": "distance_exceeded",
+        "time": 94.82806666666667,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5688,
+        "owned": true,
+        "valid": false,
+        "primary": null,
+        "joint": null,
+        "secondary": null,
+        "detector_score": 0.0,
+        "time": 94.8948,
+        "shot": 22,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "incomplete_incumbent_geometry",
+        "role_owned": true
+      },
+      {
+        "frame": 5692,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9175608158111572,
+        "primary_reason": "accepted",
+        "time": 94.96153333333334,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5696,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9205335378646851,
+        "primary_reason": "accepted",
+        "time": 95.02826666666667,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5700,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9203400611877441,
+        "primary_reason": "accepted",
+        "time": 95.095,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5704,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9209612011909485,
+        "primary_reason": "accepted",
+        "time": 95.16173333333333,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5708,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9198679327964783,
+        "primary_reason": "accepted",
+        "time": 95.22846666666666,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5712,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9058313965797424,
+        "primary_reason": "accepted",
+        "time": 95.29520000000001,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5716,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9181715846061707,
+        "primary_reason": "accepted",
+        "time": 95.36193333333334,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5720,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9199230074882507,
+        "primary_reason": "accepted",
+        "time": 95.42866666666667,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      },
+      {
+        "frame": 5724,
+        "owned": true,
+        "valid": true,
+        "primary": "오아",
+        "joint": "오아",
+        "secondary": null,
+        "detector_score": 0.9205268025398254,
+        "primary_reason": "accepted",
+        "time": 95.4954,
+        "shot": 23,
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "role_owned": true
+      }
+    ],
+    "unknown_frames": [
+      5580,
+      5584,
+      5588,
+      5592,
+      5596,
+      5600,
+      5604,
+      5608,
+      5612,
+      5616,
+      5620,
+      5624,
+      5628,
+      5632,
+      5636,
+      5640,
+      5644,
+      5648,
+      5652,
+      5656,
+      5660,
+      5664,
+      5668,
+      5672,
+      5676,
+      5680,
+      5684,
+      5688
+    ],
+    "cuts": [
+      5543,
+      5550,
+      5690
+    ],
+    "shots": [
+      {
+        "shot": 22,
+        "unknown_frames": [
+          5580,
+          5584,
+          5588,
+          5592,
+          5596,
+          5600,
+          5604,
+          5608,
+          5612,
+          5616,
+          5620,
+          5624,
+          5628,
+          5632,
+          5636,
+          5640,
+          5644,
+          5648,
+          5652,
+          5656,
+          5660,
+          5664,
+          5668,
+          5672,
+          5676,
+          5680,
+          5684,
+          5688
+        ],
+        "direct_frames": [
+          5552,
+          5560
+        ],
+        "independent_pairs": [],
+        "failures": [
+          "no_two_independent_original_faces",
+          "original_support_expired"
+        ],
+        "new_source_interval": [
+          5578,
+          5689
+        ],
+        "expired_frames": [
+          5596,
+          5597,
+          5598,
+          5599,
+          5600,
+          5601,
+          5602,
+          5603,
+          5604,
+          5605,
+          5606,
+          5607,
+          5608,
+          5609,
+          5610,
+          5611,
+          5612,
+          5613,
+          5614,
+          5615,
+          5616,
+          5617,
+          5618,
+          5619,
+          5620,
+          5621,
+          5622,
+          5623,
+          5624,
+          5625,
+          5626,
+          5627,
+          5628,
+          5629,
+          5630,
+          5631,
+          5632,
+          5633,
+          5634,
+          5635,
+          5636,
+          5637,
+          5638,
+          5639,
+          5640,
+          5641,
+          5642,
+          5643,
+          5644,
+          5645,
+          5646,
+          5647,
+          5648,
+          5649,
+          5650,
+          5651,
+          5652,
+          5653,
+          5654,
+          5655,
+          5656,
+          5657,
+          5658,
+          5659,
+          5660,
+          5661,
+          5662,
+          5663,
+          5664,
+          5665,
+          5666,
+          5667,
+          5668,
+          5669,
+          5670,
+          5671,
+          5672,
+          5673,
+          5674,
+          5675,
+          5676,
+          5677,
+          5678,
+          5679,
+          5680,
+          5681,
+          5682,
+          5683,
+          5684,
+          5685,
+          5686,
+          5687,
+          5688,
+          5689
+        ],
+        "attempts": []
+      },
+      {
+        "shot": 23,
+        "unknown_frames": [],
+        "direct_frames": [
+          5692,
+          5696,
+          5700,
+          5704,
+          5708,
+          5712,
+          5716,
+          5720,
+          5724
+        ],
+        "independent_pairs": [
+          [
+            5692,
+            5704
+          ],
+          [
+            5692,
+            5708
+          ],
+          [
+            5692,
+            5712
+          ],
+          [
+            5692,
+            5716
+          ],
+          [
+            5692,
+            5720
+          ],
+          [
+            5692,
+            5724
+          ],
+          [
+            5696,
+            5708
+          ],
+          [
+            5696,
+            5712
+          ],
+          [
+            5696,
+            5716
+          ],
+          [
+            5696,
+            5720
+          ],
+          [
+            5696,
+            5724
+          ],
+          [
+            5700,
+            5712
+          ],
+          [
+            5700,
+            5716
+          ],
+          [
+            5700,
+            5720
+          ],
+          [
+            5700,
+            5724
+          ],
+          [
+            5704,
+            5716
+          ],
+          [
+            5704,
+            5720
+          ],
+          [
+            5704,
+            5724
+          ],
+          [
+            5708,
+            5720
+          ],
+          [
+            5708,
+            5724
+          ],
+          [
+            5712,
+            5724
+          ]
+        ],
+        "failures": [],
+        "selected_seed_pair": [
+          5692,
+          5704
+        ],
+        "new_source_interval": null,
+        "chain_frames": [
+          5692,
+          5696,
+          5700,
+          5704
+        ],
+        "source_chain": null,
+        "attempts": [
+          {
+            "seed_pair": [
+              5692,
+              5704
+            ],
+            "chain_frames": [
+              5692,
+              5696,
+              5700,
+              5704
+            ],
+            "failure": null
+          }
+        ]
+      }
+    ],
+    "failures": [
+      "separate_group_overlap",
+      "competing_original_face",
+      "recomputed_repeated_identity_boundary"
+    ],
+    "overlapping_groups": [
+      {
+        "start": 93.8938,
+        "end": 95.095
+      }
+    ],
+    "handoffs": [],
+    "identity_boundaries": [
+      {
+        "time": 94.5945,
+        "left_time": 94.56113333333333,
+        "right_time": 94.62786666666666,
+        "reason": "repeated_face_change",
+        "strength": 0.7071760892868042
+      },
+      {
+        "time": 94.8948,
+        "left_time": 94.82806666666667,
+        "right_time": 94.96153333333334,
+        "reason": "repeated_face_change",
+        "strength": 0.7916623502969742
+      }
+    ],
+    "accepted": false,
+    "video": "NEON",
+    "nearby": [
+      {
+        "range": [
+          93.02626666666667,
+          93.05953333333333
+        ],
+        "name": "오아",
+        "source_spans": [
+          39
+        ],
+        "newly_named_seconds": 0
+      },
+      {
+        "range": [
+          93.05953333333333,
+          94.5945
+        ],
+        "name": null,
+        "source_spans": [
+          40
+        ],
+        "newly_named_seconds": 0.0
+      },
+      {
+        "range": [
+          94.5945,
+          94.92816666666667
+        ],
+        "name": null,
+        "source_spans": [
+          41
+        ],
+        "newly_named_seconds": 0.0
+      },
+      {
+        "range": [
+          94.92816666666667,
+          96.76333333333334
+        ],
+        "name": "오아",
+        "source_spans": [
+          42
+        ],
+        "newly_named_seconds": 0
+      }
+    ],
+    "right_original_name": "오아"
+  }
+]

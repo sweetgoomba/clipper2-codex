@@ -1,0 +1,12 @@
+[
+  "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+  "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py",
+  "plugins/dance_highlight/dance_highlight/services/output_continuity.py",
+  "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+  "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+  "plugins/dance_highlight/dance_highlight/services/segment.py",
+  "tests/test_dance_duplicate_scene_scale.py",
+  "tests/test_dance_observed_member_edges.py",
+  "tests/test_dance_unknown_continuity.py",
+  "tests/fixtures/dance_scene_review/neon185_duplicate.json"
+]

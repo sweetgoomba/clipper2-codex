@@ -1,0 +1,137 @@
+{
+  "internal_hole": {
+    "pass": true,
+    "reasons": [
+      "same_shot_support_expired"
+    ],
+    "source_checks": 0
+  },
+  "unsupported_tail": {
+    "pass": true,
+    "reasons": [
+      "same_shot_support_expired"
+    ],
+    "source_checks": 0
+  },
+  "multiple_unknown_fragments": {
+    "pass": true,
+    "parts": [
+      [
+        0,
+        1.1,
+        "A"
+      ],
+      [
+        1.1,
+        1.15,
+        null
+      ],
+      [
+        1.15,
+        1.2,
+        null
+      ],
+      [
+        1.2,
+        3,
+        "A"
+      ]
+    ],
+    "recovered": 0.30000000000000004
+  },
+  "subsample_prefix_kept": {
+    "pass": true,
+    "parts": [
+      [
+        0,
+        1.15,
+        "A"
+      ],
+      [
+        1.15,
+        1.2,
+        null
+      ],
+      [
+        1.2,
+        3,
+        "A"
+      ]
+    ]
+  },
+  "shared_neighbor": {
+    "pass": true,
+    "parts": [
+      [
+        0,
+        1.1,
+        "A"
+      ],
+      [
+        1.1,
+        1.2,
+        null
+      ],
+      [
+        1.2,
+        4.1,
+        "A"
+      ],
+      [
+        4.1,
+        4.2,
+        null
+      ],
+      [
+        4.2,
+        6,
+        "A"
+      ]
+    ],
+    "recovered": 0.5999999999999999,
+    "reasons": [
+      "independent_shot_main_identity",
+      "independent_shot_main_identity"
+    ]
+  },
+  "no_seed_reuse": {
+    "pass": true,
+    "parts": [
+      [
+        0,
+        1.1,
+        "A"
+      ],
+      [
+        1.1,
+        1.2,
+        null
+      ],
+      [
+        1.2,
+        4.1,
+        "A"
+      ],
+      [
+        4.1,
+        4.5,
+        null
+      ],
+      [
+        4.5,
+        6,
+        "A"
+      ]
+    ],
+    "recovered": 0.30000000000000004,
+    "reasons": [
+      "independent_shot_main_identity",
+      "missing_original_two_sided_faces"
+    ]
+  },
+  "sha_before": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64",
+  "sha_after": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64",
+  "source_reads": 0,
+  "model_calls": 0,
+  "scope": "synthetic structure and failure guards; source proof mocked to isolate projection"
+}

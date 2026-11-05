@@ -1,0 +1,292 @@
+{
+  "checks": [
+    {
+      "check": "MMN: parent snapshots equal live app records",
+      "passed": true
+    },
+    {
+      "check": "MMN: baseline unchanged since independent review",
+      "passed": true
+    },
+    {
+      "check": "MMN: input, identity, group, union, unknown, frames and raw evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: counts, durations and fragmentation unchanged",
+      "passed": true
+    },
+    {
+      "check": "MMN: all prior feedback ranges unchanged",
+      "passed": true
+    },
+    {
+      "check": "MMN: no image additions or removals",
+      "passed": true
+    },
+    {
+      "check": "MMN: only expected clip changes",
+      "passed": true
+    },
+    {
+      "check": "MMN: only expected thumbnail changes",
+      "passed": true
+    },
+    {
+      "check": "MMN: only timing and additive evidence changes",
+      "passed": true
+    },
+    {
+      "check": "MMN: SAM OFF 0",
+      "passed": true
+    },
+    {
+      "check": "MMN: SAM OFF 1",
+      "passed": true
+    },
+    {
+      "check": "MMN: joint no candidates or changes 1793610108675",
+      "passed": true
+    },
+    {
+      "check": "MMN: joint no candidates or changes 1793617663026",
+      "passed": true
+    },
+    {
+      "check": "MMN: loaded source pipeline",
+      "passed": true
+    },
+    {
+      "check": "MMN: reviewed source pipeline",
+      "passed": true
+    },
+    {
+      "check": "MMN: loaded source observed_main",
+      "passed": true
+    },
+    {
+      "check": "MMN: reviewed source observed_main",
+      "passed": true
+    },
+    {
+      "check": "MMN: loaded source face_evidence",
+      "passed": true
+    },
+    {
+      "check": "MMN: loaded source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "MMN: reviewed source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "MMN: completed jobs with matching finish time",
+      "passed": true
+    },
+    {
+      "check": "MMN: no other metadata change",
+      "passed": true
+    },
+    {
+      "check": "ANT: parent snapshots equal live app records",
+      "passed": true
+    },
+    {
+      "check": "ANT: baseline unchanged since independent review",
+      "passed": true
+    },
+    {
+      "check": "ANT: input, identity, group, union, unknown, frames and raw evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: counts, durations and fragmentation unchanged",
+      "passed": true
+    },
+    {
+      "check": "ANT: all prior feedback ranges unchanged",
+      "passed": true
+    },
+    {
+      "check": "ANT: no image additions or removals",
+      "passed": true
+    },
+    {
+      "check": "ANT: only expected clip changes",
+      "passed": true
+    },
+    {
+      "check": "ANT: only expected thumbnail changes",
+      "passed": true
+    },
+    {
+      "check": "ANT: only timing and additive evidence changes",
+      "passed": true
+    },
+    {
+      "check": "ANT: SAM OFF 0",
+      "passed": true
+    },
+    {
+      "check": "ANT: SAM OFF 1",
+      "passed": true
+    },
+    {
+      "check": "ANT: joint no candidates or changes 1793610363935",
+      "passed": true
+    },
+    {
+      "check": "ANT: joint no candidates or changes 1793617753764",
+      "passed": true
+    },
+    {
+      "check": "ANT: loaded source pipeline",
+      "passed": true
+    },
+    {
+      "check": "ANT: reviewed source pipeline",
+      "passed": true
+    },
+    {
+      "check": "ANT: loaded source observed_main",
+      "passed": true
+    },
+    {
+      "check": "ANT: reviewed source observed_main",
+      "passed": true
+    },
+    {
+      "check": "ANT: loaded source face_evidence",
+      "passed": true
+    },
+    {
+      "check": "ANT: loaded source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "ANT: reviewed source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "ANT: completed jobs with matching finish time",
+      "passed": true
+    },
+    {
+      "check": "ANT: no other metadata change",
+      "passed": true
+    },
+    {
+      "check": "NEON: parent snapshots equal live app records",
+      "passed": true
+    },
+    {
+      "check": "NEON: baseline unchanged since independent review",
+      "passed": true
+    },
+    {
+      "check": "NEON: input, identity, group, union, unknown, frames and raw evidence preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: counts, durations and fragmentation unchanged",
+      "passed": true
+    },
+    {
+      "check": "NEON: all prior feedback ranges unchanged",
+      "passed": true
+    },
+    {
+      "check": "NEON: no image additions or removals",
+      "passed": true
+    },
+    {
+      "check": "NEON: only expected clip changes",
+      "passed": true
+    },
+    {
+      "check": "NEON: only expected thumbnail changes",
+      "passed": true
+    },
+    {
+      "check": "NEON: only timing and additive evidence changes",
+      "passed": true
+    },
+    {
+      "check": "NEON: SAM OFF 0",
+      "passed": true
+    },
+    {
+      "check": "NEON: SAM OFF 1",
+      "passed": true
+    },
+    {
+      "check": "NEON: joint no candidates or changes 1793610789306",
+      "passed": true
+    },
+    {
+      "check": "NEON: joint no candidates or changes 1793617837063",
+      "passed": true
+    },
+    {
+      "check": "NEON: loaded source pipeline",
+      "passed": true
+    },
+    {
+      "check": "NEON: reviewed source pipeline",
+      "passed": true
+    },
+    {
+      "check": "NEON: loaded source observed_main",
+      "passed": true
+    },
+    {
+      "check": "NEON: reviewed source observed_main",
+      "passed": true
+    },
+    {
+      "check": "NEON: loaded source face_evidence",
+      "passed": true
+    },
+    {
+      "check": "NEON: loaded source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "NEON: reviewed source named_boundaries",
+      "passed": true
+    },
+    {
+      "check": "NEON: completed jobs with matching finish time",
+      "passed": true
+    },
+    {
+      "check": "NEON: no other metadata change",
+      "passed": true
+    },
+    {
+      "check": "ANT: four existing body samples reassigned without changing evidence",
+      "passed": true
+    },
+    {
+      "check": "ANT: 17 source-frame boundary correction",
+      "passed": true
+    },
+    {
+      "check": "ANT: thumbnail byte-perfect reproduction at saved start",
+      "passed": true
+    },
+    {
+      "check": "total: 429 clips, 1776 images, 9266 observed frames, 14 user ranges",
+      "passed": true
+    }
+  ],
+  "count": 70,
+  "totals": {
+    "before_wall": 1219.419,
+    "after_wall": 1132.067,
+    "observed_reduction_seconds": 87.35200000000009,
+    "observed_reduction_percent": 7.163411427901323
+  },
+  "conclusion": "Only ANT 49/50 boundary and its dependent thumbnail/body-sample assignment changed; SAM remains OFF."
+}

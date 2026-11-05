@@ -1,0 +1,57 @@
+{
+  "videos": {
+    "MMN": {
+      "frames": 48,
+      "native_faces": 169,
+      "gpu_faces": 169,
+      "cpu_median": 0.03108302049804479,
+      "gpu_median": 0.0143632709805388
+    },
+    "ANT": {
+      "frames": 48,
+      "native_faces": 232,
+      "gpu_faces": 232,
+      "cpu_median": 0.03215710399672389,
+      "gpu_median": 0.014521187520585954
+    },
+    "NEON": {
+      "frames": 48,
+      "native_faces": 227,
+      "gpu_faces": 227,
+      "cpu_median": 0.030961500509874895,
+      "gpu_median": 0.014416708523640409
+    }
+  },
+  "mismatches": [],
+  "max_face_abs_error": 0.00018310546875,
+  "max_embedding_cosine_distance": 9.179115295410156e-06,
+  "max_alignment_pixel_error": 6,
+  "faces_compared": 628,
+  "yunet": {
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "mode": "source_frame_gpu_crops_cpu",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "gpu_calls": 144,
+    "cpu_calls": 0,
+    "fallbacks": 0,
+    "setup_seconds": 0.10926683299476281,
+    "gpu_seconds": 2.387911500467453
+  },
+  "sface": {
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "gpu_calls": 628,
+    "cpu_calls": 0,
+    "fallbacks": 0,
+    "setup_seconds": 0.604903583007399,
+    "gpu_seconds": 2.227782715810463
+  }
+}

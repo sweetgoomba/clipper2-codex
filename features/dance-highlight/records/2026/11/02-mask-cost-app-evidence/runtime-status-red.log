@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_runtime_exposes_per_model_devices_instead_of_only_yolo __________
+
+    def test_runtime_exposes_per_model_devices_instead_of_only_yolo():
+        from dance_highlight.app import DanceHighlightPlugin
+        plugin=DanceHighlightPlugin()
+        plugin._device='mps'
+        plugin._pipeline=SimpleNamespace(face=SimpleNamespace(_recognizer=SimpleNamespace(
+            _session=SimpleNamespace(get_providers=lambda:['CPUExecutionProvider']))))
+        info=plugin.get_runtime_accelerators()
+        assert info['models']['pose']['device']=='mps'
+        assert info['models']['face_recognition']['providers']==['CPUExecutionProvider']
+        assert info['models']['body_tracking']['device']=='cpu'
+>       assert info['models']['body_tracking']['enabled'] is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'enabled'
+
+tests/test_dance_face_runtime.py:116: KeyError
+----------------------------- Captured stderr call -----------------------------
+2026-11-02 08:03:57.078 Python[58714:11090633] 2026-11-02 08:03:57.078328 [W:onnxruntime:Default, telemetry_1ds.cc:600 operator()] Failed to persist telemetry device ID; using an in-memory identifier
+=========================== short test summary info ============================
+FAILED tests/test_dance_face_runtime.py::test_runtime_exposes_per_model_devices_instead_of_only_yolo
+1 failed in 1.18s

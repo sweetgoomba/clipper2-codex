@@ -1,0 +1,18 @@
+ 1115 299.3  1.6 04-18:59:38 /Library/PrivilegedHelperTools/ChromeRemoteDesktopHost.app/Contents/MacOS/remoting_me2me_host
+82475 108.8  3.8       12:40 /Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/bin/python
+  452  68.2  0.3 04-18:59:57 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+ 1290  26.4  2.4 04-18:59:25 /System/Library/Frameworks/Virtualization.framework/Versions/A/XPCServices/com.apple.Virtualization.VirtualMachine.xpc/Contents/MacOS/com.apple.Virtualization.VirtualMachine
+29742  22.8  0.2 04-18:38:56 /Users/jina/.codex/computer-use/Codex Computer Use.app/Contents/MacOS/SkyComputerUseService
+  780  16.6  0.1 04-18:59:49 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+ 5876  15.0  0.1       00:00 /Users/jina/Library/Application Support/Clipper Studio Dev/clipper_venv/bin/python
+29684  12.2  2.7 04-18:39:00 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/156.0.8078.48/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)
+29713  10.8  2.1 04-18:38:57 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/156.0.8078.48/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)
+29685  10.4  1.1 04-18:39:00 /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex
+29205   8.6  0.2 04-18:39:02 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/156.0.8078.48/Helpers/Codex (Service).app/Contents/MacOS/Codex (Service)
+96201   7.9  0.2       06:07 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+40644   6.3  0.3    23:27:39 /Users/jina/Applications/iTerm.app/Contents/MacOS/iTerm2
+ 7194   5.7  0.3 04-18:55:07 /Applications/CodexBar.app/Contents/MacOS/CodexBar
+38809   4.7  0.6       30:05 /Applications/flow.app/Contents/Frameworks/flow Helper (Renderer).app/Contents/MacOS/flow Helper (Renderer)
+Note: No thermal warning level has been recorded
+Note: No performance warning level has been recorded
+Note: No CPU power status has been recorded

@@ -1,0 +1,89 @@
+
+> clipper-studio-dev@0.0.1 build:app:mac:arm64:local-api
+> node scripts/build-app.mjs darwin arm64 --local-api
+
+
+=== ClipperStudio [darwin/arm64] ===
+
+CLIPPER_DESKTOP_TELEMETRY_INGEST_KEY가 설정되지 않았다 — 이 빌드는 텔레메트리를 전송하지 않는다. 개발 빌드라 경고만 하고 계속 진행한다(릴리스 산출물이면 위에서 이미 멈춘다).
+── Step 0/5: Clean Python bytecode cache
+── Step 1/5: Angular build
+
+> npm run build:packaged -- --progress=false
+
+> clipper-angular@0.0.0 build:packaged
+> ng build --configuration=packaged --progress=false
+
+Initial chunk files | Names                              |  Raw size | Estimated transfer size
+main-W72VBJGU.js    | main                               | 313.64 kB |                64.33 kB
+styles-EDTMW33K.css | styles                             | 117.40 kB |                10.77 kB
+
+                    | Initial total                      | 431.05 kB |                75.09 kB
+
+Lazy chunk files    | Names                              |  Raw size | Estimated transfer size
+chunk-BkxrZWtg.js   | -                                  | 553.55 kB |               112.94 kB
+chunk--IQ6BRRE.js   | shortform-explainer-page-component | 366.28 kB |                70.94 kB
+chunk-CcRv2W7e.js   | shortform-workflow-page-component  | 246.02 kB |                52.07 kB
+chunk-cZEkb3Yw.js   | curation-page-component            | 228.38 kB |                51.69 kB
+chunk-jj0z0huH.js   | projects-detail-page-component     | 207.03 kB |                40.17 kB
+chunk-BZP9qcV8.js   | -                                  | 189.54 kB |                55.28 kB
+chunk-BJw8VzAY.js   | ranking-setup-component            | 169.70 kB |                39.40 kB
+chunk-Cqo2mVVz2.js  | asset-manager-page-component       | 165.01 kB |                30.42 kB
+chunk-CvHfW4Ua.js   | template-builder-page-component    | 158.33 kB |                32.04 kB
+chunk-CywRxRGT.js   | -                                  | 125.59 kB |                31.99 kB
+chunk-BELm2_QT.js   | overseas-dub-page-component        | 106.24 kB |                24.79 kB
+chunk-Cfuj3dnu.js   | projects-component                 | 103.19 kB |                23.82 kB
+chunk-CHUu8-ID2.js  | comment-overlay-setup-component    | 102.14 kB |                23.36 kB
+chunk-C3Ystwlc.js   | -                                  |  75.24 kB |                20.46 kB
+chunk-DqLet4tI.js   | v2-variation-list-component        |  70.87 kB |                16.77 kB
+...and 97 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [10.729 seconds] - 2026-11-02T07:09:04.807Z
+
+Output location: /Users/jina/project/adlight/desktop/clipper_angular/dist/clipper_angular
+
+
+── Step 2/5: NestJS bundle
+
+> npm run bundle
+
+> clipper-nestjs@0.0.1 bundle
+> node scripts/clean-output-dir.mjs dist/bundled && ncc build src/main.ts -o dist/bundled && node scripts/copy-assets.mjs dist/bundled
+
+ncc: Version 0.38.4
+ncc: Compiling file index.js into CJS
+ncc: Using typescript@5.9.3 (local user-provided)
+    4kB  dist/bundled/index1.js
+12483kB  dist/bundled/index.js
+12487kB  [11664ms] - ncc 0.38.4
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/projects/assets -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/bundled/modules/projects/assets
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/shortform/assets -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/bundled/modules/shortform/assets
+copied /Users/jina/project/adlight/desktop/clipper_nestjs/src/modules/template-builder/assets/backgrounds -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/bundled/modules/template-builder/assets/backgrounds
+copied 10 bundled font(s) /Users/jina/project/adlight/desktop/clipper_python/fonts -> /Users/jina/project/adlight/desktop/clipper_nestjs/dist/bundled/modules/template-builder/assets/fonts
+
+── Step 3/5: Electron TypeScript compile
+
+> npx tsc -p tsconfig.json
+
+── Step 4/5: Prepare uv binary
+
+> node scripts/prepare-uv.mjs darwin arm64
+✓ uv-darwin-arm64 → uv
+
+── Step 5/5: electron-builder
+  미서명 빌드 — 키체인 인증서 자동 탐색을 끕니다
+
+> npx electron-builder --mac --arm64 --dir --publish never --config build/generated/electron-builder.dev.yml
+  • electron-builder  version=26.15.3 os=27.0.0
+  • loaded configuration  file=/Users/jina/project/adlight/desktop/clipper_electron/build/generated/electron-builder.dev.yml
+  • author is missed in the package.json  appPackageFile=/Users/jina/project/adlight/desktop/clipper_electron/package.json
+  • executing @electron/rebuild  electronVersion=43.3.0 arch=arm64 buildFromSource=false workspaceRoot=/Users/jina/project/adlight/desktop/clipper_electron projectDir=./ appDir=./
+  • installing native dependencies  arch=arm64
+  • completed installing native dependencies
+  • packaging       platform=darwin arch=arm64 electron=43.3.0 appOutDir=dist-app/mac-arm64
+  • downloaded      label=electron progress=100%
+  • downloaded electron zip extracted successfully  output=/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64
+  • searching for node modules  pm=npm searchDir=/Users/jina/project/adlight/desktop/clipper_electron
+  • skipped macOS application code signing  reason=, see https://electron.build/code-signing CSC_IDENTITY_AUTO_DISCOVERY=false
+
+✓ Done. Artifacts in dist-app/

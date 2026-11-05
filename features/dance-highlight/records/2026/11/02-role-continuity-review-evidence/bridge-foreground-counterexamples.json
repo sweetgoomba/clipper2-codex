@@ -1,0 +1,78 @@
+{
+  "reviewed_segment_sha256": "d7eb92801c26d9f643db12ae1bf15641511cf2d51652214efbba3aa822a45379",
+  "cases": [
+    {
+      "case": "original",
+      "before": "main",
+      "after": "group",
+      "central_veto": false,
+      "existing_large_foreground_guard": false,
+      "gap_box_heights": [
+        207.75,
+        399.0,
+        174.0
+      ],
+      "bridges": [
+        {
+          "start": 143.67686666666668,
+          "end": 143.74360000000001,
+          "frames": [
+            8612
+          ],
+          "left_anchor_frame": 8604,
+          "right_anchor_frame": 8616,
+          "reason": "bidirectional_observed_ensemble"
+        }
+      ]
+    },
+    {
+      "case": "new_reliable_foreground_at_old_art_bbox",
+      "before": "main",
+      "after": "group",
+      "central_veto": false,
+      "existing_large_foreground_guard": true,
+      "gap_box_heights": [
+        207.75,
+        399.0,
+        174.0
+      ],
+      "bridges": [
+        {
+          "start": 143.67686666666668,
+          "end": 143.74360000000001,
+          "frames": [
+            8612
+          ],
+          "left_anchor_frame": 8604,
+          "right_anchor_frame": 8616,
+          "reason": "bidirectional_observed_ensemble"
+        }
+      ]
+    },
+    {
+      "case": "missing_gap_pose",
+      "before": "main",
+      "after": "group",
+      "central_veto": false,
+      "existing_large_foreground_guard": false,
+      "gap_box_heights": [
+        207.75,
+        399.0,
+        174.0
+      ],
+      "bridges": [
+        {
+          "start": 143.67686666666668,
+          "end": 143.74360000000001,
+          "frames": [
+            8612
+          ],
+          "left_anchor_frame": 8604,
+          "right_anchor_frame": 8616,
+          "reason": "bidirectional_observed_ensemble"
+        }
+      ]
+    }
+  ],
+  "scope": "Synthetic pose perturbations on the saved real fixture, calling the frozen proposed bridge. No ML or video decode."
+}

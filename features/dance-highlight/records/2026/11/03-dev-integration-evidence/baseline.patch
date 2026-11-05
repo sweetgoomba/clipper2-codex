@@ -1,0 +1,89 @@
+diff --git a/plugins/dance_highlight/dance_highlight/app.py b/plugins/dance_highlight/dance_highlight/app.py
+index 5ccc700..68b4dab 100644
+--- a/plugins/dance_highlight/dance_highlight/app.py
++++ b/plugins/dance_highlight/dance_highlight/app.py
+@@ -71,6 +71,7 @@ class DanceHighlightPlugin(PluginBase):
+         return {
+             "primary_device": self._device,
+             "pipeline": "yolo_pose_opencv_face",
++            "models": {"body_tracking": {"enabled": False, "reason": "disabled_runtime_cost"}},
+         }
+ 
+     def register_extra_routes(self, app: FastAPI) -> None:
+diff --git a/plugins/dance_highlight/dance_highlight/services/pipeline.py b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+index ef97489..bbeef00 100644
+--- a/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -993,24 +993,32 @@ class DancePipeline:
+                 if context_audit.get('reason') == 'complete':
+                     scene_context_cuts = context_cuts
+                 stage_before = (list(identity_refinement['segments']), list(identity_refinement['decisions']))
+-                identity_refinement, mask_continuity_refinement = recover_mask_names(
+-                    identity_refinement,evidence_recs,input_video,fps,secondary_refinement.get('video_anchors',[]),
+-                    context_anchors=context_anchors,
+-                    joint_matches=secondary_refinement.get('joint_matches',{}),
+-                    cut_frames=context_cuts if context_audit.get('reason') == 'complete' else None,
+-                    on_progress=lambda done,total:_progress(66+int(2*done/max(1,total)),
+-                        '확인된 인물의 움직임을 따라 미확인 구간을 검증하고 있습니다'))
++                # User-disabled: retain the invocation for later bounded evaluation.
++                # identity_refinement, mask_continuity_refinement = recover_mask_names(
++                #     identity_refinement,evidence_recs,input_video,fps,secondary_refinement.get('video_anchors',[]),
++                #     context_anchors=context_anchors,
++                #     joint_matches=secondary_refinement.get('joint_matches',{}),
++                #     cut_frames=context_cuts if context_audit.get('reason') == 'complete' else None,
++                #     on_progress=lambda done,total:_progress(66+int(2*done/max(1,total)),
++                #         '확인된 인물의 움직임을 따라 미확인 구간을 검증하고 있습니다'))
++                _timings['mask_continuity'] = 0.
++                mask_continuity_refinement = dict(version='disabled_runtime_cost_v1',
++                    reason='disabled_runtime_cost', recovered_seconds=0., candidates=[])
+                 mask_continuity_refinement['output_changes'] = _output_identity_changes(
+                     stage_before, (identity_refinement['segments'], identity_refinement['decisions']), eligible_main)
+                 mask_continuity_refinement['context_faces'] = context_audit
+                 stage_before = (list(identity_refinement['segments']), list(identity_refinement['decisions']))
+-                identity_refinement,joint_identity_refinement = revalidate_named_segments(
+-                    identity_refinement,evidence_recs,input_video,fps,secondary_refinement.get('joint_matches',{}),
+-                    secondary_refinement.get('video_anchors',[]),
+-                    cut_frames=context_cuts if context_audit.get('reason') == 'complete' else None,
+-                    camera_transitions=context_audit.get('camera_transitions',()),
+-                    on_progress=lambda done,total:_progress(68+int(done/max(1,total)),
+-                        '미확인 구간과 멤버 이름의 충돌을 재검증하고 있습니다'))
++                # User-disabled: retain the invocation for later bounded evaluation.
++                # identity_refinement,joint_identity_refinement = revalidate_named_segments(
++                #     identity_refinement,evidence_recs,input_video,fps,secondary_refinement.get('joint_matches',{}),
++                #     secondary_refinement.get('video_anchors',[]),
++                #     cut_frames=context_cuts if context_audit.get('reason') == 'complete' else None,
++                #     camera_transitions=context_audit.get('camera_transitions',()),
++                #     on_progress=lambda done,total:_progress(68+int(done/max(1,total)),
++                #         '미확인 구간과 멤버 이름의 충돌을 재검증하고 있습니다'))
++                _timings['joint_identity'] = 0.
++                joint_identity_refinement = dict(version='disabled_runtime_cost_v1',
++                    reason='disabled_runtime_cost', corrected_seconds=0., recovered_seconds=0., conflict_seconds=0., candidates=[])
+                 joint_identity_refinement['output_changes'] = _output_identity_changes(
+                     stage_before, (identity_refinement['segments'], identity_refinement['decisions']), eligible_main)
+                 secondary_refinement['identity_revalidation'] = joint_identity_refinement
+diff --git a/tests/test_acceleration_dev_merge_scope.py b/tests/test_acceleration_dev_merge_scope.py
+index fdd310e..a7b4646 100644
+--- a/tests/test_acceleration_dev_merge_scope.py
++++ b/tests/test_acceleration_dev_merge_scope.py
+@@ -58,13 +58,18 @@ def test_forced_cpu_reference_does_not_enter_optional_routes(monkeypatch,tmp_pat
+     assert all(row.providers==['CPUExecutionProvider'] for row in created)
+ 
+ 
+-def test_runtime_does_not_claim_restored_remote_sam_is_disabled():
++def test_runtime_reports_user_disabled_sam_and_pipeline_has_no_tracking_calls():
+     from dance_highlight.app import DanceHighlightPlugin
+     plugin=DanceHighlightPlugin();plugin._device='mps'
+     plugin._pipeline=SimpleNamespace(face=None)
+     tracking=plugin.get_runtime_accelerators().get('models',{}).get('body_tracking',{})
+-    assert tracking.get('enabled') is not False
+-    assert tracking.get('reason')!='disabled_runtime_cost'
++    assert tracking.get('enabled') is False
++    assert tracking.get('reason')=='disabled_runtime_cost'
++    import ast, inspect
++    from dance_highlight.services import pipeline
++    calls={node.func.id for node in ast.walk(ast.parse(inspect.getsource(pipeline)))
++           if isinstance(node,ast.Call) and isinstance(node.func,ast.Name)}
++    assert not calls & {'recover_mask_names','revalidate_named_segments'}
+ 
+ 
+ @pytest.mark.parametrize('consumer',['cut','sampled'])

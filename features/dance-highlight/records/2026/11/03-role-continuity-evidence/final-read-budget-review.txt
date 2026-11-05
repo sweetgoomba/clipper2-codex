@@ -1,0 +1,18 @@
+최종 두 변경의 읽기 전용 독립 검토 — 2026-11-03
+
+검토 소스 SHA256
+bounded_face_path.py b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79
+shot_member_gaps.py 62caefd2ebf2c9c177ec3abedd1282b8a461dc599b41a5284ebfb7ed506ca0ce
+
+결론: 요청된 두 변경에서 새 차단 결함을 발견하지 못했다. 원래 앱 통합 검사 및 빌드를 진행할 수 있다. 이번 검토는 소스/테스트 읽기만 수행했고 테스트·디코딩·모델·리플레이는 새로 실행하지 않았다. 최신 변경의 테스트 통과 수치는 부모 세션의 실행 증거에 의존한다.
+
+1. bounded_face_path
+기존 검토 c207481...와 직접 diff했다. _observed_face는 기존 association/failure/detector_score/face_bbox 조건과 좌표 모양·유한성·양의 면적 검사를 분리했다. 모든 jump window의 양 끝을 cap.set/read 전에 검사하므로 어느 끝이 부적격이어도 디코딩을 쓰지 않는다. 이미지 범위와 select_pose_face 소유권 검사는 여전히 _owned_face에서 실제 이미지 크기로 수행한다. 픽셀 경로, 원래 identity/body/cut guard, 임계값을 완화하지 않았다. 새 12개 테스트는 양 끝 각각의 얼굴 없음/ambiguous/failure/낮은 score/잘못된 bbox 형태/NaN에서 seek/read가 모두 0임을 검사한다. 기존 캐시 회귀가 기대하는 총 16회 읽기와도 일치하는 구조다.
+
+2. shot_member_gaps._BoundedSource
+read 직전에 실제 읽기 횟수를 검사하고 240회 이후 underlying cap.read를 호출하지 않는다. 첫 source scan뿐 아니라 bounded face 재읽기도 이 객체를 통하므로 같은 한도를 공유한다. 예약 검사는 max(frames_reserved, frames_read)를 사용해 이미 소비한 추가 읽기도 반영한다. 초과 시 실패를 source_frame_budget_exhausted로 명시하고 candidate는 확정되지 않으며 원래 unknown을 유지한다. 이 budget 실패는 monotone physical-transition cache에 넣지 않는다. 이미 증명된 exact-path 캐시 결과를 재사용하는 것은 추가 읽기 없이 유효하다. 새 테스트는 한도 2에서 3회 읽기 요청이 underlying 2회에서 끝나고 명시적 budget 실패를 반환하는 것을 검증한다.
+
+범위와 후속 확인
+이는 전체 앱의 시간 상한을 증명하는 변경이 아니라 shot_member_gaps의 실제 read 호출 상한이다. seek 내부 디코더 비용까지 프레임 단위로 재는 값은 아니다. 소스 사전검사는 신규 모델/이름/역할 근거를 만들지 않는다. 최종 세 영상 앱 결과에서 MMN38 회복, ANT154 경계, NEON padding 제거 및 43.777–44.110733 역할 주의점, 의도하지 않은 이름·구간·썸네일 변경, SAM OFF, 실제 job wall time을 별도로 확인해야 한다.
+
+이 보고 이후 부모 세션의 앱 실행 완료 통지까지 추가 pytest/디코딩/모델/리플레이를 하지 않는다.

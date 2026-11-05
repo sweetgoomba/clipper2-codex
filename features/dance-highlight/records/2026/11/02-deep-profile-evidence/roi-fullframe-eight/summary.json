@@ -1,0 +1,5088 @@
+[
+  {
+    "case": "ANT",
+    "timings": {
+      "model_initialization": 1.4443261250271462,
+      "eight_frame_query_part": 1.2138263750239275,
+      "frozen_photo_gallery": 1.7532904999679886,
+      "frozen_video_gallery": 10.67699291597819,
+      "frozen_matching_no_model": 0.6279924999689683,
+      "final_matching_no_inference": 0.55934816703666
+    },
+    "source_frame_count": 4,
+    "primary_anchor_count": 773,
+    "frozen_dual_anchor_count": 724,
+    "frozen_joint_saved_query_parity": [
+      {
+        "frame_index": 280,
+        "old": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.6491918563842773,
+          "margin": 0.02285289764404297,
+          "primary": 0.7610641717910767,
+          "secondary": 0.537319540977478,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7610641717910767
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7807379961013794
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8029494285583496
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8081628084182739
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8122418522834778
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.537319540977478
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.5633515119552612
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.5776386260986328
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6759804487228394
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7698717713356018
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              3996,
+              796
+            ],
+            [
+              736,
+              3800
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.6491917967796326,
+          "margin": 0.022853076457977295,
+          "primary": 0.7610640525817871,
+          "secondary": 0.537319540977478,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7610640525817871
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7807378768920898
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8029495477676392
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8081629872322083
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8122419118881226
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.537319540977478
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.5633518099784851
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.5776386260986328
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6759803295135498
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7698715329170227
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              3996,
+              796
+            ],
+            [
+              736,
+              3800
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 5.960464477539063e-08
+      },
+      {
+        "frame_index": 296,
+        "old": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.6352428197860718,
+          "margin": 0.005750417709350586,
+          "primary": 0.7017800211906433,
+          "secondary": 0.5687055587768555,
+          "model_candidates": [
+            [
+              {
+                "name": "카즈하",
+                "distance": 0.6932519674301147
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7017800211906433
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7323281764984131
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7638360261917114
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7768915295600891
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.5687055587768555
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.58873450756073
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6068023443222046
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6533346176147461
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6966120004653931
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2096,
+              5088
+            ],
+            [
+              3808,
+              3848
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.6352427005767822,
+          "margin": 0.005750417709350586,
+          "primary": 0.7017800807952881,
+          "secondary": 0.5687053799629211,
+          "model_candidates": [
+            [
+              {
+                "name": "카즈하",
+                "distance": 0.6932519674301147
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7017800807952881
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7323280572891235
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7638359665870667
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7768915891647339
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.5687053799629211
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.5887343287467957
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6068027019500732
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6533345580101013
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6966118812561035
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2096,
+              5088
+            ],
+            [
+              3808,
+              3848
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 1.1920928955078125e-07
+      },
+      {
+        "frame_index": 320,
+        "old": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.725218653678894,
+          "margin": 0.05806159973144531,
+          "primary": 0.8023770451545715,
+          "secondary": 0.6480602025985718,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.8023770451545715
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8414971828460693
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8425636291503906
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8514160513877869
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.9055125117301941
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.6480602025985718
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7250633239746094
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7467190623283386
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7833995819091797
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8173012733459473
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              6440,
+              2064
+            ],
+            [
+              2096,
+              5068
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.7252188324928284,
+          "margin": 0.058061301708221436,
+          "primary": 0.8023771047592163,
+          "secondary": 0.6480605602264404,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.8023771047592163
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8414970636367798
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8425636291503906
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8514160513877869
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.9055124521255493
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.6480605602264404
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.725063145160675
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7467190027236938
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7833993434906006
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8173015713691711
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              6440,
+              2064
+            ],
+            [
+              2096,
+              5068
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 1.7881393432617188e-07
+      },
+      {
+        "frame_index": 344,
+        "old": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.7742600440979004,
+          "margin": 0.026269197463989258,
+          "primary": 0.7956889867782593,
+          "secondary": 0.7528311014175415,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7956889867782593
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7986269593238831
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8060740828514099
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8073839545249939
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8646604418754578
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7528311014175415
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.802431583404541
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8486818075180054
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8778486251831055
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.9046159386634827
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              6448,
+              736
+            ],
+            [
+              3076,
+              4212
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.7742600440979004,
+          "margin": 0.026269137859344482,
+          "primary": 0.7956889271736145,
+          "secondary": 0.752831220626831,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7956889271736145
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7986267805099487
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8060741424560547
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8073840141296387
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8646605014801025
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.752831220626831
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.802431583404541
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8486819267272949
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8778486251831055
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.904616117477417
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              6448,
+              736
+            ],
+            [
+              3076,
+              4212
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 0.0
+      }
+    ],
+    "summary": [
+      {
+        "frame_index": 280,
+        "time_seconds": 4.671333333333333,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.8758941292762756,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:280",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8216414302587509
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.846516028046608
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8485827744007111
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8515917062759399
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.877325177192688
+                  }
+                ],
+                "margin": 0.024874597787857056,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "02e13838d76e9ef89a69ef5ed5a8f1036e096c71015eb4aaf6a760a99c63c69f"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.6722011566162109,
+                "margin": 0.018637806177139282,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6722011566162109
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6908389627933502
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7220520675182343
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.790292277932167
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9609884358942509
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5373195707798004,
+                "margin": 0.026032239198684692,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5373195707798004,
+                    "support_frames": [
+                      736,
+                      3800
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5633518099784851,
+                    "support_frames": [
+                      4756,
+                      6260
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.5776386260986328,
+                    "support_frames": [
+                      1912,
+                      1884
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6759803295135498,
+                    "support_frames": [
+                      5656,
+                      5676
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.7698715031147003,
+                    "support_frames": [
+                      3284,
+                      8136
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6491917967796326,
+                "margin": 0.022853076457977295,
+                "primary": 0.7610640525817871,
+                "secondary": 0.537319540977478,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7610640525817871
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7807378768920898
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8029495477676392
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8081629872322083
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8122419118881226
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.537319540977478
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5633518099784851
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.5776386260986328
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6759803295135498
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7698715329170227
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    3996,
+                    796
+                  ],
+                  [
+                    736,
+                    3800
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.8758941292762756,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 5.960464477539063e-08,
+            "sface_distance_from_saved": -1.1920928955078125e-07,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:280",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8216417282819748
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8465159833431244
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8485830128192902
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8515917062759399
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8773253113031387
+                  }
+                ],
+                "margin": 0.024874255061149597,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "d0e70178ca9107e269fd15c512b6fcad11e63836ba5615833f7fd34cff8f62c9"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.6722011566162109,
+                "margin": 0.018637806177139282,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6722011566162109
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6908389627933502
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7220520675182343
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.790292277932167
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9609884358942509
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5373195707798004,
+                "margin": 0.026032239198684692,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5373195707798004,
+                    "support_frames": [
+                      736,
+                      3800
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5633518099784851,
+                    "support_frames": [
+                      4756,
+                      6260
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.5776386260986328,
+                    "support_frames": [
+                      1912,
+                      1884
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6759803295135498,
+                    "support_frames": [
+                      5656,
+                      5676
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.7698715031147003,
+                    "support_frames": [
+                      3284,
+                      8136
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6491918563842773,
+                "margin": 0.02285301685333252,
+                "primary": 0.7610642313957214,
+                "secondary": 0.537319540977478,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7610642313957214
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7807378768920898
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8029497861862183
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8081631660461426
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8122421503067017
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.537319540977478
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5633518099784851
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.5776386260986328
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6759803295135498
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7698715329170227
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    3996,
+                    796
+                  ],
+                  [
+                    736,
+                    3800
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8779268264770508,
+            "rotation": 0.0,
+            "landmark_rms": 1.4828479691826963,
+            "aura_distance_from_saved": 0.3601628541946411,
+            "sface_distance_from_saved": 0.07460743188858032,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:280",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.7816133499145508
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8222576379776001
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8407561630010605
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8592503368854523
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.873201847076416
+                  }
+                ],
+                "margin": 0.040644288063049316,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "157ad7db0a55e096ab0ac38a36f4ae953c771f0ec989a6f89dbd0b280c5f1bf1"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.6503476500511169,
+                "margin": 0.01823684573173523,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6503476500511169
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.6685844957828522
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7215603888034821
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7651046812534332
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8541090488433838
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5314393639564514,
+                "margin": 0.024639904499053955,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5314393639564514,
+                    "support_frames": [
+                      3996,
+                      2096
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5560792684555054,
+                    "support_frames": [
+                      2352,
+                      4756
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.5750181674957275,
+                    "support_frames": [
+                      1912,
+                      1884
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6774300336837769,
+                    "support_frames": [
+                      10696,
+                      5656
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6897063851356506,
+                    "support_frames": [
+                      8136,
+                      3284
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6428033113479614,
+                "margin": 0.006559252738952637,
+                "primary": 0.7541672587394714,
+                "secondary": 0.5314394235610962,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "카즈하",
+                      "distance": 0.742645800113678
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7541672587394714
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7674727439880371
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7830539345741272
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8083364367485046
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.5314394235610962
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5560792684555054
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.5750181674957275
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6774300336837769
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6897063255310059
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    5228,
+                    4096
+                  ],
+                  [
+                    3996,
+                    2096
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 296,
+        "time_seconds": 4.938266666666666,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.9034779071807861,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:296",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.7868658155202866
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8239609748125076
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8319272696971893
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8447800129652023
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8516943752765656
+                  }
+                ],
+                "margin": 0.03709515929222107,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "02ec4361b4c44ac083a1c020c63d45d44d4c22929ec6acf4961b2c790f4d51fc"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7086201310157776,
+                "margin": 0.030298888683319092,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7086201310157776
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.7389190196990967
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7737084031105042
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8158374726772308
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8907213136553764
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5687054395675659,
+                "margin": 0.020028889179229736,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5687054395675659,
+                    "support_frames": [
+                      3808,
+                      3848
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5887343287467957,
+                    "support_frames": [
+                      9552,
+                      6268
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6068027019500732,
+                    "support_frames": [
+                      5676,
+                      10696
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6533345878124237,
+                    "support_frames": [
+                      1932,
+                      1884
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6966118514537811,
+                    "support_frames": [
+                      7840,
+                      7852
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6352427005767822,
+                "margin": 0.005750417709350586,
+                "primary": 0.7017800807952881,
+                "secondary": 0.5687053799629211,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "카즈하",
+                      "distance": 0.6932519674301147
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7017800807952881
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7323280572891235
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7638359665870667
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7768915891647339
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.5687053799629211
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5887343287467957
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6068027019500732
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.6533345580101013
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6966118812561035
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    2096,
+                    5088
+                  ],
+                  [
+                    3808,
+                    3848
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.9034779071807861,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 0.0,
+            "sface_distance_from_saved": 0.0,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:296",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.7868659049272537
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8239606767892838
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8319273293018341
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8447799533605576
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8516945242881775
+                  }
+                ],
+                "margin": 0.03709477186203003,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "7c8a3e6cf69220c5c2aecbb83611d24fa1dbeb52faa8b8d397b114dfc99bd4be"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7086201310157776,
+                "margin": 0.030298888683319092,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7086201310157776
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.7389190196990967
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7737084031105042
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8158374726772308
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8907213136553764
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5687054395675659,
+                "margin": 0.020028889179229736,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5687054395675659,
+                    "support_frames": [
+                      3808,
+                      3848
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5887343287467957,
+                    "support_frames": [
+                      9552,
+                      6268
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6068027019500732,
+                    "support_frames": [
+                      5676,
+                      10696
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6533345878124237,
+                    "support_frames": [
+                      1932,
+                      1884
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6966118514537811,
+                    "support_frames": [
+                      7840,
+                      7852
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6352427005767822,
+                "margin": 0.005750536918640137,
+                "primary": 0.7017799615859985,
+                "secondary": 0.5687053799629211,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "카즈하",
+                      "distance": 0.6932520866394043
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7017799615859985
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7323277592658997
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7638358473777771
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7768914103507996
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.5687053799629211
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5887343287467957
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6068027019500732
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.6533345580101013
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6966118812561035
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    2096,
+                    5088
+                  ],
+                  [
+                    3808,
+                    3848
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.9046915173530579,
+            "rotation": 0.0,
+            "landmark_rms": 1.0543981255949622,
+            "aura_distance_from_saved": 0.26508498191833496,
+            "sface_distance_from_saved": 0.11080306768417358,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:296",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8133079707622528
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8174246251583099
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8388919830322266
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8547468781471252
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8563142418861389
+                  }
+                ],
+                "margin": 0.004116654396057129,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "8f1af3dab1f9c738f66a210208ede14b18aaca22c12efbe9b20049594d319388"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.6874222755432129,
+                "margin": 0.08554260432720184,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6874222755432129
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7729648798704147
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7858538925647736
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8305462300777435
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 1.0044114142656326
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5148636102676392,
+                "margin": 0.04880771040916443,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.5148636102676392,
+                    "support_frames": [
+                      3808,
+                      3128
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.5636713206768036,
+                    "support_frames": [
+                      1628,
+                      2352
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.5986618101596832,
+                    "support_frames": [
+                      10696,
+                      5676
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.656291127204895,
+                    "support_frames": [
+                      1932,
+                      8700
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.7646324634552002,
+                    "support_frames": [
+                      7840,
+                      7852
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.6090582013130188,
+                "margin": 0.031272172927856445,
+                "primary": 0.703252911567688,
+                "secondary": 0.5148634910583496,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.703252911567688
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7169895172119141
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7490947842597961
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7681547403335571
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7984773516654968
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.5148634910583496
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.5636712312698364
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.5986617803573608
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.656291127204895
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7646324634552002
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    2096,
+                    5228
+                  ],
+                  [
+                    3808,
+                    3128
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 320,
+        "time_seconds": 5.338666666666667,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.8588079810142517,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8831260502338409
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8902917355298996
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8929750770330429
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9049632176756859
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9088774845004082
+                  }
+                ],
+                "margin": 0.007165685296058655,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "daff111265ccd0a7c1a1bd6f895b28ba45aa600a4ad1956a63e3f82b66ec6748"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8399355858564377,
+                "margin": 0.055991388857364655,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.8399355858564377
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8959269747138023
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9158254191279411
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9235661774873734
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9607350751757622
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.6480605602264404,
+                "margin": 0.07700258493423462,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6480605602264404,
+                    "support_frames": [
+                      2096,
+                      5068
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.725063145160675,
+                    "support_frames": [
+                      2392,
+                      9588
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7467190027236938,
+                    "support_frames": [
+                      6900,
+                      6888
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7833993434906006,
+                    "support_frames": [
+                      1912,
+                      9016
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8173015266656876,
+                    "support_frames": [
+                      3284,
+                      8156
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7252188324928284,
+                "margin": 0.058061301708221436,
+                "primary": 0.8023771047592163,
+                "secondary": 0.6480605602264404,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.8023771047592163
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8414970636367798
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8425636291503906
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8514160513877869
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.9055124521255493
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.6480605602264404
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.725063145160675
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7467190027236938
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7833993434906006
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8173015713691711
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    6440,
+                    2064
+                  ],
+                  [
+                    2096,
+                    5068
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.8588079810142517,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 1.1920928955078125e-07,
+            "sface_distance_from_saved": 0.0,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8831258788704872
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8902914896607399
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8929749429225922
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9049633145332336
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9088774546980858
+                  }
+                ],
+                "margin": 0.0071656107902526855,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "a63c0c765e16935fc45765a9c1fe5b8066d4112733910c40bbe047465a451e3c"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8399355858564377,
+                "margin": 0.055991388857364655,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.8399355858564377
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8959269747138023
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9158254191279411
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9235661774873734
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9607350751757622
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.6480605602264404,
+                "margin": 0.07700258493423462,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6480605602264404,
+                    "support_frames": [
+                      2096,
+                      5068
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.725063145160675,
+                    "support_frames": [
+                      2392,
+                      9588
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7467190027236938,
+                    "support_frames": [
+                      6900,
+                      6888
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7833993434906006,
+                    "support_frames": [
+                      1912,
+                      9016
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8173015266656876,
+                    "support_frames": [
+                      3284,
+                      8156
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7252188324928284,
+                "margin": 0.058061063289642334,
+                "primary": 0.8023771047592163,
+                "secondary": 0.6480605602264404,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.8023771047592163
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8414967060089111
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8425635099411011
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.851415753364563
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.9055125117301941
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.6480605602264404
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.725063145160675
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7467190027236938
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7833993434906006
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8173015713691711
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    6440,
+                    2064
+                  ],
+                  [
+                    2096,
+                    5068
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8463054895401001,
+            "rotation": 0.0,
+            "landmark_rms": 0.8087399697602748,
+            "aura_distance_from_saved": 0.24207210540771484,
+            "sface_distance_from_saved": 0.07497298717498779,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.827749714255333
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8466428220272064
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9041784182190895
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9128440693020821
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9220348745584488
+                  }
+                ],
+                "margin": 0.018893107771873474,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "be9fe5b078048ec9e78c1d9e0075673b166de8d679bc46ac5d36e8e7a7b8d6df"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8483749628067017,
+                "margin": 0.023732557892799377,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.8483749628067017
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.872107520699501
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8743629157543182
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8905578404664993
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9799936395138502
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.6322091817855835,
+                "margin": 0.07096737623214722,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.6322091817855835,
+                    "support_frames": [
+                      5068,
+                      752
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7031765580177307,
+                    "support_frames": [
+                      2392,
+                      9548
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7327542006969452,
+                    "support_frames": [
+                      6900,
+                      5668
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7935825735330582,
+                    "support_frames": [
+                      1912,
+                      9016
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8009305447340012,
+                    "support_frames": [
+                      3284,
+                      7912
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7126728296279907,
+                "margin": 0.053766608238220215,
+                "primary": 0.7931365370750427,
+                "secondary": 0.6322091817855835,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7931365370750427
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8297023177146912
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8462680578231812
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8469828367233276
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.9002637267112732
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.6322091817855835
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7031765580177307
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7327541708946228
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.793582558631897
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8009305596351624
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    3996,
+                    796
+                  ],
+                  [
+                    5068,
+                    752
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 344,
+        "time_seconds": 5.739066666666667,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.8566557168960571,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8341929614543915
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8463392555713654
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8882650882005692
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9074294865131378
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9330934286117554
+                  }
+                ],
+                "margin": 0.012146294116973877,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "6f931eeab29c55417d12692e9a3a4adf9491a0023b484c0c46d90e611a4357e9"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8744594156742096,
+                "margin": 0.07754232361912727,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8744594156742096
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9520017392933369
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9541817754507065
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.964520987123251
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9823835380375385
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7528312504291534,
+                "margin": 0.04960033297538757,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7528312504291534,
+                    "support_frames": [
+                      3076,
+                      4212
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.802431583404541,
+                    "support_frames": [
+                      6176,
+                      6156
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8486819416284561,
+                    "support_frames": [
+                      5528,
+                      10636
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8778486400842667,
+                    "support_frames": [
+                      10292,
+                      7820
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.904616117477417,
+                    "support_frames": [
+                      7308,
+                      8700
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7742600440979004,
+                "margin": 0.026269137859344482,
+                "primary": 0.7956889271736145,
+                "secondary": 0.752831220626831,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7956889271736145
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7986267805099487
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8060741424560547
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8073840141296387
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8646605014801025
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.752831220626831
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.802431583404541
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8486819267272949
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8778486251831055
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.904616117477417
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    6448,
+                    736
+                  ],
+                  [
+                    3076,
+                    4212
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.8566557168960571,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 0.0,
+            "sface_distance_from_saved": 0.0,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8341929614543915
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.846339225769043
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8882652372121811
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.907429426908493
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9330933392047882
+                  }
+                ],
+                "margin": 0.01214626431465149,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "2a25ef77cc2822135a51e4a6242c4e6bf4a8e9f7ea244982b093448e03609244"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8744594156742096,
+                "margin": 0.07754232361912727,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8744594156742096
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9520017392933369
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9541817754507065
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.964520987123251
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9823835380375385
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7528312504291534,
+                "margin": 0.04960033297538757,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7528312504291534,
+                    "support_frames": [
+                      3076,
+                      4212
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.802431583404541,
+                    "support_frames": [
+                      6176,
+                      6156
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8486819416284561,
+                    "support_frames": [
+                      5528,
+                      10636
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8778486400842667,
+                    "support_frames": [
+                      10292,
+                      7820
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.904616117477417,
+                    "support_frames": [
+                      7308,
+                      8700
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7742599844932556,
+                "margin": 0.02626901865005493,
+                "primary": 0.7956887483596802,
+                "secondary": 0.752831220626831,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7956887483596802
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7986264824867249
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8060740232467651
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8073840141296387
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8646601438522339
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.752831220626831
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.802431583404541
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8486819267272949
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8778486251831055
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.904616117477417
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    6448,
+                    736
+                  ],
+                  [
+                    3076,
+                    4212
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8483110070228577,
+            "rotation": 0.0,
+            "landmark_rms": 0.815993655726155,
+            "aura_distance_from_saved": 0.3106963634490967,
+            "sface_distance_from_saved": 0.18260174989700317,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8139880150556564
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8203242868185043
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8407553136348724
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8821471855044365
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9108242690563202
+                  }
+                ],
+                "margin": 0.0063362717628479,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "46209555c7f76108cb8f7675410580b3537b59a84ef578fcb5be61562916644c"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.8228047043085098,
+                "margin": 0.0810973048210144,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8228047043085098
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9039020091295242
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.9247402548789978
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9260966181755066
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9871903769671917
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7455714046955109,
+                "margin": 0.048241302371025085,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7455714046955109,
+                    "support_frames": [
+                      752,
+                      3996
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.793812707066536,
+                    "support_frames": [
+                      6176,
+                      1652
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8086671829223633,
+                    "support_frames": [
+                      5680,
+                      5552
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8476799428462982,
+                    "support_frames": [
+                      7308,
+                      1932
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.882969357073307,
+                    "support_frames": [
+                      7820,
+                      1252
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7818219065666199,
+                "margin": 0.02068173885345459,
+                "primary": 0.8180724382400513,
+                "secondary": 0.7455713748931885,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "홍은채",
+                      "distance": 0.7652649879455566
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8111945390701294
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8180724382400513
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8180859088897705
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8644963502883911
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7455713748931885
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7938127517700195
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8086671829223633
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8476799726486206
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.882969319820404
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    6448,
+                    2056
+                  ],
+                  [
+                    752,
+                    3996
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "case": "MMN",
+    "timings": {
+      "model_initialization": 0.7274606249993667,
+      "eight_frame_query_part": 1.0899709169752896,
+      "final_matching_no_inference": 0.4017020000028424,
+      "frozen_gallery_wall_estimate_from_saved_file_mtimes": 11.890571117401123,
+      "note": "First script completed all vectors but stopped on absent historical match for invalid score <.8. Final tables computed with no inference. MMN gallery elapsed estimate includes photo-cache reuse and saving."
+    },
+    "source_frame_count": 4,
+    "primary_anchor_count": 761,
+    "frozen_dual_anchor_count": 692,
+    "frozen_joint_saved_query_parity": [
+      {
+        "frame_index": 2300,
+        "old": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.7079742550849915,
+          "margin": 0.00510251522064209,
+          "primary": 0.7610025405883789,
+          "secondary": 0.654945969581604,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.7610025405883789
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8023266196250916
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8134719133377075
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8401848077774048
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8772903680801392
+              }
+            ],
+            [
+              {
+                "name": "홍은채",
+                "distance": 0.6126816272735596
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6481289863586426
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.654945969581604
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7598634362220764
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7721861004829407
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              8244,
+              8256
+            ],
+            [
+              7104,
+              7168
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.7079743146896362,
+          "margin": 0.0051024556159973145,
+          "primary": 0.7610025405883789,
+          "secondary": 0.6549460887908936,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.7610025405883789
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.802326500415802
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8134719133377075
+              },
+              {
+                "name": "김채원",
+                "distance": 0.84018474817276
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8772903680801392
+              }
+            ],
+            [
+              {
+                "name": "홍은채",
+                "distance": 0.6126816272735596
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6481289863586426
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6549460887908936
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7598634958267212
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7721863985061646
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              8244,
+              8256
+            ],
+            [
+              7104,
+              7168
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 5.960464477539063e-08
+      },
+      {
+        "frame_index": 2320,
+        "old": {},
+        "new": {
+          "name": null,
+          "status": "unavailable",
+          "reason": "missing_joint_embedding"
+        },
+        "same_status_name": null,
+        "distance_delta": null
+      },
+      {
+        "frame_index": 2344,
+        "old": {},
+        "new": {
+          "name": null,
+          "status": "unavailable",
+          "reason": "missing_joint_embedding"
+        },
+        "same_status_name": null,
+        "distance_delta": null
+      },
+      {
+        "frame_index": 2356,
+        "old": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.7993752956390381,
+          "margin": 0.03477787971496582,
+          "primary": 0.8448303937911987,
+          "secondary": 0.7539201378822327,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.8448303937911987
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8490989208221436
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.856869637966156
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8601848483085632
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8661248683929443
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7539201378822327
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8021815419197083
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8545964360237122
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8726291060447693
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8972327709197998
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              384,
+              7008
+            ],
+            [
+              8948,
+              8964
+            ]
+          ]
+        },
+        "new": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "김채원",
+          "distance": 0.7993752956390381,
+          "margin": 0.034777939319610596,
+          "primary": 0.844830334186554,
+          "secondary": 0.7539201974868774,
+          "model_candidates": [
+            [
+              {
+                "name": "김채원",
+                "distance": 0.844830334186554
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8490989208221436
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8568695783615112
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8601847887039185
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8661248087882996
+              }
+            ],
+            [
+              {
+                "name": "김채원",
+                "distance": 0.7539201974868774
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8021816611289978
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8545965552330017
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.8726292848587036
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8972325921058655
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              384,
+              7008
+            ],
+            [
+              8948,
+              8964
+            ]
+          ]
+        },
+        "same_status_name": true,
+        "distance_delta": 0.0
+      }
+    ],
+    "summary": [
+      {
+        "frame_index": 2300,
+        "time_seconds": 38.37166666666667,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.8592700958251953,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2300",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.841625988483429
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8954520523548126
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9055326133966446
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.9073155373334885
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9580907300114632
+                  }
+                ],
+                "margin": 0.05382606387138367,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "c94d81e0466e769fa420398eafbca7a72ee9f5daf6ddeb33e052c35902e5e352"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7762578725814819,
+                "margin": 0.06244143843650818,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7762578725814819
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8386993110179901
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8595459163188934
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8730272352695465
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8834243193268776
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.6126816272735596,
+                "margin": 0.03544741868972778,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6126816272735596,
+                    "support_frames": [
+                      4144,
+                      1764
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6481290459632874,
+                    "support_frames": [
+                      8684,
+                      2708
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6549461185932159,
+                    "support_frames": [
+                      7104,
+                      7168
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.759863555431366,
+                    "support_frames": [
+                      964,
+                      848
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.7721864283084869,
+                    "support_frames": [
+                      356,
+                      580
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "사쿠라",
+                "distance": 0.7079743146896362,
+                "margin": 0.0051024556159973145,
+                "primary": 0.7610025405883789,
+                "secondary": 0.6549460887908936,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7610025405883789
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.802326500415802
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8134719133377075
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.84018474817276
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8772903680801392
+                    }
+                  ],
+                  [
+                    {
+                      "name": "홍은채",
+                      "distance": 0.6126816272735596
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6481289863586426
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6549460887908936
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7598634958267212
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7721863985061646
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    8244,
+                    8256
+                  ],
+                  [
+                    7104,
+                    7168
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.8592700958251953,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 0.0,
+            "sface_distance_from_saved": 5.960464477539063e-08,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2300",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8416260331869125
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8954519405961037
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9055327773094177
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.9073155000805855
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9580904729664326
+                  }
+                ],
+                "margin": 0.05382590740919113,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "f260c5a4fdec27db8ec459fc688b88e1efcd0d9bc8950f0953cf5ed448133b41"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7762578725814819,
+                "margin": 0.06244143843650818,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7762578725814819
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8386993110179901
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8595459163188934
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8730272352695465
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8834243193268776
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.6126816272735596,
+                "margin": 0.03544741868972778,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.6126816272735596,
+                    "support_frames": [
+                      4144,
+                      1764
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6481290459632874,
+                    "support_frames": [
+                      8684,
+                      2708
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6549461185932159,
+                    "support_frames": [
+                      7104,
+                      7168
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.759863555431366,
+                    "support_frames": [
+                      964,
+                      848
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.7721864283084869,
+                    "support_frames": [
+                      356,
+                      580
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "사쿠라",
+                "distance": 0.7079744338989258,
+                "margin": 0.005102396011352539,
+                "primary": 0.761002779006958,
+                "secondary": 0.6549460887908936,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.761002779006958
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8023266196250916
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8134719729423523
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8401848077774048
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8772901296615601
+                    }
+                  ],
+                  [
+                    {
+                      "name": "홍은채",
+                      "distance": 0.6126816272735596
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6481289863586426
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6549460887908936
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7598634958267212
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7721863985061646
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    8244,
+                    8256
+                  ],
+                  [
+                    7104,
+                    7168
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8677307963371277,
+            "rotation": 0.0,
+            "landmark_rms": 1.0145011383383302,
+            "aura_distance_from_saved": 0.3424510955810547,
+            "sface_distance_from_saved": 0.029548466205596924,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2300",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8254205882549286
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8832848742604256
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8852144479751587
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8943085223436356
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9153269827365875
+                  }
+                ],
+                "margin": 0.05786428600549698,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "0e15b3723ccb65e5c5686f4f642d323758d013a4d74353f78b4f592b69aaff67"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7794257700443268,
+                "margin": 0.04714483022689819,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.7794257700443268
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.826570600271225
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8459664136171341
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8573132008314133
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8934662193059921
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.5870727896690369,
+                "margin": 0.04802060127258301,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "홍은채",
+                    "distance": 0.5870727896690369,
+                    "support_frames": [
+                      4144,
+                      1764
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.6350933909416199,
+                    "support_frames": [
+                      8684,
+                      2708
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.6598739624023438,
+                    "support_frames": [
+                      7168,
+                      7104
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.7833701372146606,
+                    "support_frames": [
+                      356,
+                      3704
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.7851649224758148,
+                    "support_frames": [
+                      848,
+                      1112
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "conflict",
+                "reason": "joint_video_rejected",
+                "best": "홍은채",
+                "distance": 0.7143367528915405,
+                "margin": 0.0012139081954956055,
+                "primary": 0.8416008353233337,
+                "secondary": 0.5870727300643921,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7712273001670837
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8155534863471985
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8261165618896484
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8416008353233337
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8490293622016907
+                    }
+                  ],
+                  [
+                    {
+                      "name": "홍은채",
+                      "distance": 0.5870727300643921
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.6350933313369751
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.6598739624023438
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7833701372146606
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.7851648330688477
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    7484,
+                    7468
+                  ],
+                  [
+                    4144,
+                    1764
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 2320,
+        "time_seconds": 38.705333333333336,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.7927877306938171,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.7957668304443359
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.7962700724601746
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8449149131774902
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8817329853773117
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8837654292583466
+                  }
+                ],
+                "margin": 0.000503242015838623,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "1832f6d73a44afc868066ce6dd304d38caa02c359eb0ac0fe7015dbefc54db16"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.961280569434166,
+                "margin": 0.004372786730527878,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.961280569434166
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9656533561646938
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9835231453180313
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 1.0295977387577295
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 1.0324947610497475
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.8285465240478516,
+                "margin": 0.03730253875255585,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8285465240478516,
+                    "support_frames": [
+                      2708,
+                      4368
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8658490628004074,
+                    "support_frames": [
+                      5196,
+                      3672
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8984467834234238,
+                    "support_frames": [
+                      4628,
+                      812
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9432241655886173,
+                    "support_frames": [
+                      7120,
+                      7168
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9631249159574509,
+                    "support_frames": [
+                      4156,
+                      4144
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "unavailable",
+                "reason": "missing_joint_embedding"
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.7927877306938171,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 5.960464477539063e-08,
+            "sface_distance_from_saved": 0.0,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.795766681432724
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.7962700426578522
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8449150919914246
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8817330896854401
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8837654516100883
+                  }
+                ],
+                "margin": 0.0005033612251281738,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "198d146af58da7b9471cb9cd963a6207d5f0ec3158cedb409bef8001d1cc3549"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.961280569434166,
+                "margin": 0.004372786730527878,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.961280569434166
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9656533561646938
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9835231453180313
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 1.0295977387577295
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 1.0324947610497475
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.8285465240478516,
+                "margin": 0.03730253875255585,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8285465240478516,
+                    "support_frames": [
+                      2708,
+                      4368
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8658490628004074,
+                    "support_frames": [
+                      5196,
+                      3672
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8984467834234238,
+                    "support_frames": [
+                      4628,
+                      812
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9432241655886173,
+                    "support_frames": [
+                      7120,
+                      7168
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9631249159574509,
+                    "support_frames": [
+                      4156,
+                      4144
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "unavailable",
+                "reason": "missing_joint_embedding"
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8480237722396851,
+            "rotation": 0.0,
+            "landmark_rms": 1.170505680440014,
+            "aura_distance_from_saved": 0.2987479567527771,
+            "sface_distance_from_saved": 0.05507993698120117,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2320",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8317178934812546
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.8380700647830963
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.899806335568428
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9160859882831573
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9496978595852852
+                  }
+                ],
+                "margin": 0.006352171301841736,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "7b06511984d283541d98d4eaed476ca99ab86528e564915dfe70b6a816dfeac1"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.9352615624666214,
+                "margin": 0.008825767785310745,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9352615624666214
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9440873302519321
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 1.0010718069970608
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 1.0023814961314201
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 1.0184342954307795
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7954822480678558,
+                "margin": 0.0879160687327385,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "허윤진",
+                    "distance": 0.7954822480678558,
+                    "support_frames": [
+                      4364,
+                      2708
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8833983168005943,
+                    "support_frames": [
+                      388,
+                      5196
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8847853094339371,
+                    "support_frames": [
+                      812,
+                      4628
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.916309729218483,
+                    "support_frames": [
+                      7168,
+                      7120
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9277180656790733,
+                    "support_frames": [
+                      4144,
+                      7608
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "허윤진",
+                "distance": 0.7963680028915405,
+                "margin": 0.07214325666427612,
+                "primary": 0.7972537875175476,
+                "secondary": 0.7954822182655334,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7972537875175476
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8522372245788574
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8557322025299072
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8725466132164001
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.874859094619751
+                    }
+                  ],
+                  [
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7954822182655334
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8833982944488525
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8847852945327759
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.9163097143173218
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.9277180433273315
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    2940,
+                    2952
+                  ],
+                  [
+                    4364,
+                    2708
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 2344,
+        "time_seconds": 39.10573333333333,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.7025249600410461,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8722156286239624
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.896995335817337
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9033789560198784
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9046631753444672
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9467383623123169
+                  }
+                ],
+                "margin": 0.024779707193374634,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "012f58ca070fd6d5f0b6139ff245427c533cd68b78b264efc20e30439be8c52a"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.9507759362459183,
+                "margin": 0.003571636974811554,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.9507759362459183
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9543475732207298
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9867938607931137
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 1.001598946750164
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 1.0919394791126251
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.8272138386964798,
+                "margin": 0.0032335519790649414,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8272138386964798,
+                    "support_frames": [
+                      8372,
+                      8388
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8304473906755447,
+                    "support_frames": [
+                      4352,
+                      4224
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8890311568975449,
+                    "support_frames": [
+                      8868,
+                      3756
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.947423655539751,
+                    "support_frames": [
+                      4156,
+                      4056
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.954021506011486,
+                    "support_frames": [
+                      4628,
+                      868
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "unavailable",
+                "reason": "missing_joint_embedding"
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.7025249600410461,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 0.0,
+            "sface_distance_from_saved": 0.0,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.8722158670425415
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.896995484828949
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9033791422843933
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9046632423996925
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.946738388389349
+                  }
+                ],
+                "margin": 0.02477961778640747,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "66ae48e08ab5f850d6c5ee71674714ea957081603d2ab88fb4d098c383d0e187"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.9507759362459183,
+                "margin": 0.003571636974811554,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.9507759362459183
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9543475732207298
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9867938607931137
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 1.001598946750164
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 1.0919394791126251
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.8272138386964798,
+                "margin": 0.0032335519790649414,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8272138386964798,
+                    "support_frames": [
+                      8372,
+                      8388
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8304473906755447,
+                    "support_frames": [
+                      4352,
+                      4224
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8890311568975449,
+                    "support_frames": [
+                      8868,
+                      3756
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.947423655539751,
+                    "support_frames": [
+                      4156,
+                      4056
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.954021506011486,
+                    "support_frames": [
+                      4628,
+                      868
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "unavailable",
+                "reason": "missing_joint_embedding"
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.7220936417579651,
+            "rotation": 0.0,
+            "landmark_rms": 1.5097500632188523,
+            "aura_distance_from_saved": 0.6258552074432373,
+            "sface_distance_from_saved": 0.2668614387512207,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2344",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.884037584066391
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8938214629888535
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9036166295409203
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9458464086055756
+                  },
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9610060229897499
+                  }
+                ],
+                "margin": 0.009783878922462463,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "670690ee9455010e86c13e9d67f7af1a74ed5bc59cd01e1dc111e00f9696d2b9"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.817565381526947,
+                "margin": 0.1065661758184433,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.817565381526947
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.9241315573453903
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.9533983394503593
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9642201848328114
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9986261688172817
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7975639551877975,
+                "margin": 0.028419092297554016,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7975639551877975,
+                    "support_frames": [
+                      7168,
+                      8364
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8259830474853516,
+                    "support_frames": [
+                      364,
+                      3672
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8810959532856941,
+                    "support_frames": [
+                      4628,
+                      4468
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8853462189435959,
+                    "support_frames": [
+                      4368,
+                      2708
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9112520143389702,
+                    "support_frames": [
+                      1868,
+                      1948
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "unavailable",
+                "reason": "missing_joint_embedding"
+              }
+            }
+          }
+        }
+      },
+      {
+        "frame_index": 2356,
+        "time_seconds": 39.305933333333336,
+        "alternatives": {
+          "saved": {
+            "failure": null,
+            "score": 0.8353427648544312,
+            "rotation": 0.0,
+            "landmark_rms": null,
+            "aura_distance_from_saved": null,
+            "sface_distance_from_saved": null,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2356",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.9154052138328552
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9174261763691902
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9303619414567947
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.9563971534371376
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.9595609158277512
+                  }
+                ],
+                "margin": 0.0020209625363349915,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "77e6419e4e0807b1e8cd24b482ec137a5cce2a9db358c96cda89c5fe4dc3155f"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.9169364422559738,
+                "margin": 0.000530637800693512,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.9169364422559738
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9174670800566673
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.9374326691031456
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9532249830663204
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9610968939960003
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7539201974868774,
+                "margin": 0.04826149344444275,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7539201974868774,
+                    "support_frames": [
+                      8948,
+                      8964
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8021816909313202,
+                    "support_frames": [
+                      4228,
+                      2588
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8545965403318405,
+                    "support_frames": [
+                      4768,
+                      1120
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8726292848587036,
+                    "support_frames": [
+                      8376,
+                      8388
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8972325995564461,
+                    "support_frames": [
+                      7592,
+                      6060
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7993752956390381,
+                "margin": 0.034777939319610596,
+                "primary": 0.844830334186554,
+                "secondary": 0.7539201974868774,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.844830334186554
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8490989208221436
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8568695783615112
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8601847887039185
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8661248087882996
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7539201974868774
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8021816611289978
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8545965552330017
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8726292848587036
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8972325921058655
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    384,
+                    7008
+                  ],
+                  [
+                    8948,
+                    8964
+                  ]
+                ]
+              }
+            }
+          },
+          "roi": {
+            "failure": null,
+            "score": 0.8353427648544312,
+            "rotation": 0.0,
+            "landmark_rms": 0.0,
+            "aura_distance_from_saved": 0.0,
+            "sface_distance_from_saved": 1.1920928955078125e-07,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2356",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.915405347943306
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.9174262136220932
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9303620979189873
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.956397108733654
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.959560938179493
+                  }
+                ],
+                "margin": 0.0020208656787872314,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "24028483619bf3bf5c76e65eb53b72571112617b30413216fda102f5b26156c5"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.9169364422559738,
+                "margin": 0.000530637800693512,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.9169364422559738
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.9174670800566673
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.9374326691031456
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.9532249830663204
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.9610968939960003
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7539201974868774,
+                "margin": 0.04826149344444275,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7539201974868774,
+                    "support_frames": [
+                      8948,
+                      8964
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.8021816909313202,
+                    "support_frames": [
+                      4228,
+                      2588
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8545965403318405,
+                    "support_frames": [
+                      4768,
+                      1120
+                    ]
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8726292848587036,
+                    "support_frames": [
+                      8376,
+                      8388
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8972325995564461,
+                    "support_frames": [
+                      7592,
+                      6060
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "김채원",
+                "distance": 0.7993753552436829,
+                "margin": 0.034777820110321045,
+                "primary": 0.8448305130004883,
+                "secondary": 0.7539201974868774,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.8448305130004883
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8490989208221436
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8568698763847351
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.860184907913208
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8661247491836548
+                    }
+                  ],
+                  [
+                    {
+                      "name": "김채원",
+                      "distance": 0.7539201974868774
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8021816611289978
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8545965552330017
+                    },
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.8726292848587036
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8972325921058655
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    384,
+                    7008
+                  ],
+                  [
+                    8948,
+                    8964
+                  ]
+                ]
+              }
+            }
+          },
+          "fullframe": {
+            "failure": null,
+            "score": 0.8584396839141846,
+            "rotation": 0.0,
+            "landmark_rms": 1.260196808344047,
+            "aura_distance_from_saved": 0.430378794670105,
+            "sface_distance_from_saved": 0.24598264694213867,
+            "matches": {
+              "auraface_reference": {
+                "observation_id": "same-frame-alternative:frame:2356",
+                "status": "unmatched",
+                "reference_id": null,
+                "candidates": [
+                  {
+                    "reference_id": "김채원",
+                    "distance": 0.8289492428302765
+                  },
+                  {
+                    "reference_id": "사쿠라",
+                    "distance": 0.8873311877250671
+                  },
+                  {
+                    "reference_id": "홍은채",
+                    "distance": 0.8925561010837555
+                  },
+                  {
+                    "reference_id": "허윤진",
+                    "distance": 0.909794956445694
+                  },
+                  {
+                    "reference_id": "카즈하",
+                    "distance": 0.9336597174406052
+                  }
+                ],
+                "margin": 0.05838194489479065,
+                "reason": "distance_exceeded",
+                "space_fingerprint": "def452e06ec3d1687666ddaad2b6851e0de8b0c736593795a480f7a9c4b78984",
+                "gallery_fingerprint": "4afa11750cad233631dd294e0e31d56c9cf095ae5e483b0437152bf7a631d23e",
+                "policy_fingerprint": "58739b17d26961ba1e772881de17fa90190ab3451d32a5dcab8fc2357bcaad5f",
+                "evidence_fingerprint": "79e5c0ac16f9dfcda06ad75a725010b91f5edcb4df48bec7d89a0d9381d91aec"
+              },
+              "auraface_video_name": null,
+              "sface_reference": {
+                "name": null,
+                "distance": 0.7899269759654999,
+                "margin": 0.04291129112243652,
+                "reason": "secondary_reference_rejected",
+                "candidates": [
+                  {
+                    "name": "김채원",
+                    "distance": 0.7899269759654999
+                  },
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.8328382670879364
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8446215689182281
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.87523053586483
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.960121538490057
+                  }
+                ]
+              },
+              "sface_video": {
+                "name": null,
+                "distance": 0.7599765062332153,
+                "margin": 0.008925989270210266,
+                "reason": "secondary_video_rejected",
+                "candidates": [
+                  {
+                    "name": "사쿠라",
+                    "distance": 0.7599765062332153,
+                    "support_frames": [
+                      8384,
+                      8396
+                    ]
+                  },
+                  {
+                    "name": "허윤진",
+                    "distance": 0.7689024955034256,
+                    "support_frames": [
+                      4228,
+                      2908
+                    ]
+                  },
+                  {
+                    "name": "카즈하",
+                    "distance": 0.8264846205711365,
+                    "support_frames": [
+                      5656,
+                      5552
+                    ]
+                  },
+                  {
+                    "name": "홍은채",
+                    "distance": 0.8283375799655914,
+                    "support_frames": [
+                      4144,
+                      1748
+                    ]
+                  },
+                  {
+                    "name": "김채원",
+                    "distance": 0.8311586678028107,
+                    "support_frames": [
+                      400,
+                      364
+                    ]
+                  }
+                ]
+              },
+              "joint": {
+                "name": null,
+                "status": "insufficient",
+                "reason": "joint_video_rejected",
+                "best": "사쿠라",
+                "distance": 0.7756970524787903,
+                "margin": 0.015344440937042236,
+                "primary": 0.7914175987243652,
+                "secondary": 0.7599765062332153,
+                "model_candidates": [
+                  [
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7914175987243652
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.7952463626861572
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.8088855147361755
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.8131804466247559
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8282815217971802
+                    }
+                  ],
+                  [
+                    {
+                      "name": "사쿠라",
+                      "distance": 0.7599765062332153
+                    },
+                    {
+                      "name": "허윤진",
+                      "distance": 0.7689024806022644
+                    },
+                    {
+                      "name": "카즈하",
+                      "distance": 0.8264846205711365
+                    },
+                    {
+                      "name": "홍은채",
+                      "distance": 0.828337550163269
+                    },
+                    {
+                      "name": "김채원",
+                      "distance": 0.8311586380004883
+                    }
+                  ]
+                ],
+                "support_frames": [
+                  [
+                    8244,
+                    8396
+                  ],
+                  [
+                    8384,
+                    8396
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+]

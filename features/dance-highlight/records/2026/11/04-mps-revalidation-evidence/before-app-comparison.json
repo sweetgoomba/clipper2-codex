@@ -1,0 +1,1459 @@
+{
+  "smoke": {
+    "MMN": {
+      "id": "dance_1793715367745",
+      "elapsed_seconds": 1452.317,
+      "counts": {
+        "output": 91,
+        "output_short": 44,
+        "raw": 91,
+        "raw_short": 44,
+        "named_short": 9,
+        "unknown_seconds": 5.856250000000024
+      },
+      "persons": [
+        {
+          "person_name": "미확인 인물",
+          "num_clips": 14
+        },
+        {
+          "person_name": "김채원",
+          "num_clips": 9
+        },
+        {
+          "person_name": "사쿠라",
+          "num_clips": 10
+        },
+        {
+          "person_name": "카즈하",
+          "num_clips": 6
+        },
+        {
+          "person_name": "허윤진",
+          "num_clips": 11
+        },
+        {
+          "person_name": "홍은채",
+          "num_clips": 8
+        }
+      ],
+      "member_overlap_seconds": 1.1011000000000024,
+      "member_group_overlap_seconds": 14.898216666666674,
+      "reviewed_windows": [
+        {
+          "start": 1.9,
+          "end": 2.3,
+          "accepted_labels": [],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.0,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 1.9,
+              "end": 2.3,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 2.3,
+          "end": 4.37,
+          "accepted_labels": [
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 2.0700000000000003,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 2.3,
+              "end": 4.37,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 10.91,
+          "end": 11.31,
+          "accepted_labels": [
+            "카즈하",
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.40000000000000036,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 10.91,
+              "end": 11.31,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 34.73,
+          "end": 35.44,
+          "accepted_labels": [
+            "사쿠라",
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.6051999999999964,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.10480000000000445,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 34.73,
+              "end": 34.8348,
+              "names": [
+                "unknown"
+              ],
+              "group": false
+            },
+            {
+              "start": 34.8348,
+              "end": 35.4354,
+              "names": [],
+              "group": true
+            },
+            {
+              "start": 35.4354,
+              "end": 35.44,
+              "names": [
+                "사쿠라"
+              ],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 37.738,
+          "end": 39.339,
+          "accepted_labels": [
+            "사쿠라"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.46673333333333744,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 1.1342666666666616,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 37.738,
+              "end": 38.20473333333334,
+              "names": [
+                "사쿠라"
+              ],
+              "group": false
+            },
+            {
+              "start": 38.20473333333334,
+              "end": 38.705333333333336,
+              "names": [
+                "unknown"
+              ],
+              "group": false
+            },
+            {
+              "start": 38.705333333333336,
+              "end": 39.339,
+              "names": [
+                "unknown"
+              ],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 45.0,
+          "end": 48.0,
+          "accepted_labels": [
+            "사쿠라"
+          ],
+          "approximate_boundary": true,
+          "accepted_coverage_seconds": 2.6192833333333354,
+          "wrong_named_main_seconds": 1.481816666666667,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 45.0,
+              "end": 45.361983333333335,
+              "names": [
+                "허윤진"
+              ],
+              "group": false
+            },
+            {
+              "start": 45.361983333333335,
+              "end": 46.46308333333334,
+              "names": [
+                "사쿠라",
+                "허윤진"
+              ],
+              "group": false
+            },
+            {
+              "start": 46.46308333333334,
+              "end": 47.98126666666667,
+              "names": [
+                "사쿠라"
+              ],
+              "group": false
+            },
+            {
+              "start": 47.98126666666667,
+              "end": 48.0,
+              "names": [
+                "허윤진"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 89.0,
+          "end": 93.0,
+          "accepted_labels": [
+            "카즈하"
+          ],
+          "approximate_boundary": true,
+          "accepted_coverage_seconds": 4.0,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 89.0,
+              "end": 89.75633333333333,
+              "names": [
+                "카즈하"
+              ],
+              "group": false
+            },
+            {
+              "start": 89.75633333333333,
+              "end": 89.95653333333334,
+              "names": [
+                "카즈하"
+              ],
+              "group": true
+            },
+            {
+              "start": 89.95653333333334,
+              "end": 90.8908,
+              "names": [
+                "카즈하"
+              ],
+              "group": false
+            },
+            {
+              "start": 90.8908,
+              "end": 91.8918,
+              "names": [
+                "카즈하"
+              ],
+              "group": true
+            },
+            {
+              "start": 91.8918,
+              "end": 93.0,
+              "names": [
+                "카즈하"
+              ],
+              "group": false
+            }
+          ]
+        }
+      ],
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "main_0010",
+            "start": 39.3393,
+            "end": 42.97626666666667,
+            "person_id": "사쿠라",
+            "seg_type": "main"
+          },
+          {
+            "clip_id": "group_0009",
+            "start": 41.30793333333333,
+            "end": 41.708333333333336,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "main_0016",
+            "start": 50.650600000000004,
+            "end": 50.68396666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0017",
+            "start": 50.68396666666667,
+            "end": 52.48576666666666,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0042",
+            "start": 102.93616666666667,
+            "end": 103.25315,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0049",
+            "start": 113.64686666666667,
+            "end": 118.50171666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          },
+          {
+            "clip_id": "group_0030",
+            "start": 117.3172,
+            "end": 118.38493333333334,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0053",
+            "start": 134.16736666666668,
+            "end": 137.17036666666667,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0024",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0024",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": []
+      },
+      "performance": {},
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 17.967950000000005,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v2_lower_partial",
+        "native_scene_changed_observations": 0,
+        "scene_context_policy": "main_scene_context_v2_supported_main",
+        "scene_context_added_main_seconds": 5.955950000000016,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 1.184516666666667,
+        "body_continuity_recovery": "main_body_face_gap_v1",
+        "body_continuity_recovered_seconds": 1.7352666666666678,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 3,
+        "main_evidence_seconds": 151.5514,
+        "main_eligible_seconds": 133.8503833333333,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 7,
+        "incoming_preparation_context_count": 1,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 2,
+        "identity_recovered_seconds": -5.856250000000024,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 44,
+          "ambiguous": 0,
+          "unmatched": 14,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 155.03821666666667,
+        "raw_main_segments": 87,
+        "raw_group_segments": 33,
+        "smoothed_main_segments": 3,
+        "smoothed_group_segments": 33,
+        "kept_main_segments": 58,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 5
+      }
+    }
+  },
+  "baseline": {
+    "ANT": {
+      "id": "dance_1793715989047",
+      "status": "cancelled"
+    },
+    "NEON": {
+      "id": "dance_1793716263604",
+      "status": "cancelled"
+    },
+    "MMN": {
+      "id": "dance_1793716792265",
+      "status": "cancelled"
+    }
+  },
+  "candidate": {},
+  "merged_dev": {
+    "MMN": {
+      "id": "dance_1793719164438",
+      "elapsed_seconds": 729.961,
+      "counts": {
+        "output": 64,
+        "output_short": 22,
+        "raw": 81,
+        "raw_short": 34,
+        "named_short": 6,
+        "unknown_seconds": 4.27143333333337
+      },
+      "persons": [
+        {
+          "person_name": "미확인 인물",
+          "num_clips": 9
+        },
+        {
+          "person_name": "김채원",
+          "num_clips": 9
+        },
+        {
+          "person_name": "사쿠라",
+          "num_clips": 9
+        },
+        {
+          "person_name": "카즈하",
+          "num_clips": 5
+        },
+        {
+          "person_name": "허윤진",
+          "num_clips": 10
+        },
+        {
+          "person_name": "홍은채",
+          "num_clips": 7
+        }
+      ],
+      "member_overlap_seconds": 1.1011000000000024,
+      "member_group_overlap_seconds": 2.118783333333326,
+      "reviewed_windows": [
+        {
+          "start": 1.9,
+          "end": 2.3,
+          "accepted_labels": [],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.0,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 1.9,
+              "end": 2.3,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 2.3,
+          "end": 4.37,
+          "accepted_labels": [
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 2.0700000000000003,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 2.3,
+              "end": 4.37,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 10.91,
+          "end": 11.31,
+          "accepted_labels": [
+            "카즈하",
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.40000000000000036,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 10.91,
+              "end": 11.31,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 34.73,
+          "end": 35.44,
+          "accepted_labels": [
+            "사쿠라",
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.6051999999999964,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.10480000000000445,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 34.73,
+              "end": 34.8348,
+              "names": [
+                "unknown"
+              ],
+              "group": false
+            },
+            {
+              "start": 34.8348,
+              "end": 35.4354,
+              "names": [],
+              "group": true
+            },
+            {
+              "start": 35.4354,
+              "end": 35.44,
+              "names": [
+                "사쿠라"
+              ],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 37.738,
+          "end": 39.339,
+          "accepted_labels": [
+            "사쿠라"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 1.600999999999999,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 37.738,
+              "end": 39.339,
+              "names": [
+                "사쿠라"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 45.0,
+          "end": 48.0,
+          "accepted_labels": [
+            "사쿠라"
+          ],
+          "approximate_boundary": true,
+          "accepted_coverage_seconds": 2.6192833333333354,
+          "wrong_named_main_seconds": 1.481816666666667,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 45.0,
+              "end": 45.361983333333335,
+              "names": [
+                "허윤진"
+              ],
+              "group": false
+            },
+            {
+              "start": 45.361983333333335,
+              "end": 46.46308333333334,
+              "names": [
+                "사쿠라",
+                "허윤진"
+              ],
+              "group": false
+            },
+            {
+              "start": 46.46308333333334,
+              "end": 47.98126666666667,
+              "names": [
+                "사쿠라"
+              ],
+              "group": false
+            },
+            {
+              "start": 47.98126666666667,
+              "end": 48.0,
+              "names": [
+                "허윤진"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 89.0,
+          "end": 93.0,
+          "accepted_labels": [
+            "카즈하"
+          ],
+          "approximate_boundary": true,
+          "accepted_coverage_seconds": 4.0,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 89.0,
+              "end": 93.0,
+              "names": [
+                "카즈하"
+              ],
+              "group": false
+            }
+          ]
+        }
+      ],
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "main_0008",
+            "start": 35.4354,
+            "end": 42.97626666666667,
+            "person_id": "사쿠라",
+            "seg_type": "main"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "group_0011",
+            "start": 50.2502,
+            "end": 50.83411666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0014",
+            "start": 50.83411666666667,
+            "end": 52.452400000000004,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0035",
+            "start": 97.79780000000001,
+            "end": 104.02058333333333,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0040",
+            "start": 113.64686666666667,
+            "end": 118.50171666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0044",
+            "start": 134.16736666666668,
+            "end": 137.17036666666667,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0020",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0020",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": []
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.009490458003710955,
+          "yolo": 135.40196308400482,
+          "ref_embs": 3.0422092499793507,
+          "pose_observations": 0.19268725003348663,
+          "main_selection": 272.85076041700086,
+          "native_scene": 48.33596666704398,
+          "group_context": 0.09145370800979435,
+          "segment_build": 66.11132854199968,
+          "face_extract": 146.5349269590224,
+          "secondary_faces": 24.13939887500601,
+          "body_continuity": 1.6792945410124958,
+          "context_faces": 0.00032125000143423676,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.1850659580086358,
+          "observed_part_continuity": 0.20466020802268758,
+          "shot_member_gaps": 0.0029899170040152967,
+          "cluster_map": 43.414057832967956,
+          "group_continuity": 0.06681579200085253,
+          "clips_main": 5.324102375016082,
+          "clips_group": 3.5912466250010766
+        },
+        "total_before_metadata_write_seconds": 713.4225341659621,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 17.817799999999995,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 0,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 6.289616666666703,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 0.4671333333333365,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 2.8698333333333323,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 3,
+        "main_evidence_seconds": 151.5514,
+        "main_eligible_seconds": 134.00053333333332,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 0,
+        "incoming_preparation_context_count": 1,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 2,
+        "identity_recovered_seconds": -4.4550500000000355,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 40,
+          "ambiguous": 0,
+          "unmatched": 9,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 155.03821666666667,
+        "raw_main_segments": 84,
+        "raw_group_segments": 33,
+        "smoothed_main_segments": 3,
+        "smoothed_group_segments": 32,
+        "kept_main_segments": 49,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 5
+      }
+    },
+    "ANT": {
+      "id": "dance_1793719441015",
+      "elapsed_seconds": 1204.641,
+      "counts": {
+        "output": 120,
+        "output_short": 62,
+        "raw": 128,
+        "raw_short": 70,
+        "named_short": 21,
+        "unknown_seconds": 13.748266666666712
+      },
+      "persons": [
+        {
+          "person_name": "미확인 인물",
+          "num_clips": 28
+        },
+        {
+          "person_name": "김채원",
+          "num_clips": 17
+        },
+        {
+          "person_name": "사쿠라",
+          "num_clips": 12
+        },
+        {
+          "person_name": "카즈하",
+          "num_clips": 14
+        },
+        {
+          "person_name": "허윤진",
+          "num_clips": 15
+        },
+        {
+          "person_name": "홍은채",
+          "num_clips": 10
+        }
+      ],
+      "member_overlap_seconds": 0,
+      "member_group_overlap_seconds": 5.72238333333334,
+      "reviewed_windows": [
+        {
+          "start": 4.571,
+          "end": 6.139,
+          "accepted_labels": [
+            "홍은채"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.0,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 1.5680000000000005,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 4.571,
+              "end": 5.6723333333333334,
+              "names": [
+                "unknown"
+              ],
+              "group": false
+            },
+            {
+              "start": 5.6723333333333334,
+              "end": 6.139,
+              "names": [
+                "unknown"
+              ],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 8.375,
+          "end": 9.0,
+          "accepted_labels": [
+            "홍은채"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.6006333333333345,
+          "wrong_named_main_seconds": 0.024366666666665537,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 8.375,
+              "end": 8.975633333333334,
+              "names": [
+                "홍은채"
+              ],
+              "group": false
+            },
+            {
+              "start": 8.975633333333334,
+              "end": 9.0,
+              "names": [
+                "김채원"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 9.4,
+          "end": 10.277,
+          "accepted_labels": [
+            "김채원"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 0.8769999999999989,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 9.4,
+              "end": 10.277,
+              "names": [
+                "김채원"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 32.633,
+          "end": 33.433,
+          "accepted_labels": [
+            "홍은채",
+            "김채원"
+          ],
+          "approximate_boundary": true,
+          "accepted_coverage_seconds": 0.7999999999999972,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 32.633,
+              "end": 32.66596666666667,
+              "names": [
+                "홍은채"
+              ],
+              "group": false
+            },
+            {
+              "start": 32.66596666666667,
+              "end": 33.433,
+              "names": [
+                "김채원"
+              ],
+              "group": false
+            }
+          ]
+        }
+      ],
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "main_0019",
+            "start": 38.60523333333333,
+            "end": 42.125416666666666,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "main_0022",
+            "start": 47.48076666666667,
+            "end": 53.720333333333336,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0022",
+            "start": 47.48076666666667,
+            "end": 53.720333333333336,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0045",
+            "start": 99.7997,
+            "end": 106.05595,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0050",
+            "start": 117.60081666666667,
+            "end": 119.68623333333333,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0058",
+            "start": 134.10053333333332,
+            "end": 135.10163333333333,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0027",
+            "start": 64.3643,
+            "end": 64.41435,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0028",
+            "start": 64.41435,
+            "end": 69.2692,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": [
+          {
+            "clip_id": "main_0084",
+            "start": 171.80496666666667,
+            "end": 172.2053666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ]
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.008849749981891364,
+          "yolo": 252.55261791701196,
+          "ref_embs": 3.1594996249768883,
+          "pose_observations": 0.30612204200588167,
+          "main_selection": 405.6043322919868,
+          "native_scene": 136.92686033301288,
+          "group_context": 0.06450029200641438,
+          "segment_build": 154.07800204196246,
+          "face_extract": 235.07858004199807,
+          "secondary_faces": 47.585002541018184,
+          "body_continuity": 0.7137484169797972,
+          "context_faces": 0.0005842910031788051,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.29148745798738673,
+          "observed_part_continuity": 0.543954707973171,
+          "shot_member_gaps": 0.1950942080002278,
+          "cluster_map": 72.7041310829809,
+          "group_continuity": 0.1553923329920508,
+          "clips_main": 9.465931750019081,
+          "clips_group": 2.714828792028129
+        },
+        "total_before_metadata_write_seconds": 1194.7623561670189,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 16.249566666666727,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 0,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 2.068733333333313,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 16.133483333333356,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 0.7508499999999856,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 1,
+        "main_evidence_seconds": 206.73986666666667,
+        "main_eligible_seconds": 190.49029999999993,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 3,
+        "incoming_preparation_context_count": 1,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 1,
+        "identity_recovered_seconds": 173.85571666666658,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 68,
+          "ambiguous": 0,
+          "unmatched": 28,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 220.83728333333335,
+        "raw_main_segments": 126,
+        "raw_group_segments": 33,
+        "smoothed_main_segments": 1,
+        "smoothed_group_segments": 32,
+        "kept_main_segments": 96,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 5
+      }
+    },
+    "NEON": {
+      "id": "dance_1793719521324",
+      "elapsed_seconds": 1274.762,
+      "counts": {
+        "output": 187,
+        "output_short": 103,
+        "raw": 188,
+        "raw_short": 104,
+        "named_short": 32,
+        "unknown_seconds": 14.949766666666815
+      },
+      "persons": [
+        {
+          "person_name": "미확인 인물",
+          "num_clips": 45
+        },
+        {
+          "person_name": "라다",
+          "num_clips": 4
+        },
+        {
+          "person_name": "메르시",
+          "num_clips": 8
+        },
+        {
+          "person_name": "보라",
+          "num_clips": 3
+        },
+        {
+          "person_name": "시리",
+          "num_clips": 11
+        },
+        {
+          "person_name": "아윤",
+          "num_clips": 4
+        },
+        {
+          "person_name": "아이찡",
+          "num_clips": 24
+        },
+        {
+          "person_name": "영",
+          "num_clips": 14
+        },
+        {
+          "person_name": "오아",
+          "num_clips": 21
+        },
+        {
+          "person_name": "히메키",
+          "num_clips": 5
+        }
+      ],
+      "member_overlap_seconds": 0,
+      "member_group_overlap_seconds": 2.3022000000000205,
+      "reviewed_windows": [
+        {
+          "start": 78.378,
+          "end": 79.68,
+          "accepted_labels": [
+            "시리"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 1.3020000000000067,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 78.378,
+              "end": 79.68,
+              "names": [
+                "시리"
+              ],
+              "group": false
+            }
+          ]
+        },
+        {
+          "start": 150.617,
+          "end": 152.619,
+          "accepted_labels": [
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 2.0020000000000095,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 150.617,
+              "end": 152.619,
+              "names": [],
+              "group": true
+            }
+          ]
+        },
+        {
+          "start": 183.15,
+          "end": 184.82,
+          "accepted_labels": [
+            "group"
+          ],
+          "approximate_boundary": false,
+          "accepted_coverage_seconds": 1.6699999999999875,
+          "wrong_named_main_seconds": 0.0,
+          "unknown_seconds": 0.0,
+          "no_clip_seconds": 0.0,
+          "ranges": [
+            {
+              "start": 183.15,
+              "end": 184.82,
+              "names": [],
+              "group": true
+            }
+          ]
+        }
+      ],
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "group_0001",
+            "start": 41.4414,
+            "end": 41.77506666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "main_0016",
+            "start": 50.08336666666667,
+            "end": 51.4514,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0016",
+            "start": 50.08336666666667,
+            "end": 51.4514,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0049",
+            "start": 101.96853333333334,
+            "end": 106.37293333333334,
+            "person_id": "아윤",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0058",
+            "start": 117.9178,
+            "end": 119.35256666666666,
+            "person_id": "영",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0067",
+            "start": 131.89853333333335,
+            "end": 137.27046666666666,
+            "person_id": "아이찡",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0022",
+            "start": 62.595866666666666,
+            "end": 64.56439999999999,
+            "person_id": "히메키",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0023",
+            "start": 64.56439999999999,
+            "end": 64.79806666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": [
+          {
+            "clip_id": "main_0102",
+            "start": 169.80296666666666,
+            "end": 177.0769,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ]
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.025910124997608364,
+          "yolo": 223.67419745901134,
+          "ref_embs": 4.378384749987163,
+          "pose_observations": 0.5547409169957973,
+          "main_selection": 409.8299692089786,
+          "native_scene": 218.0990594580071,
+          "group_context": 0.03540079202502966,
+          "segment_build": 238.0246394170099,
+          "face_extract": 235.29855833400507,
+          "secondary_faces": 44.63614666700596,
+          "body_continuity": 0.7511252500116825,
+          "context_faces": 0.0004019159823656082,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.4364416250027716,
+          "observed_part_continuity": 0.3628660829854198,
+          "shot_member_gaps": 0.02112062502419576,
+          "cluster_map": 60.02004837500863,
+          "group_continuity": 0.2862590419827029,
+          "clips_main": 13.409549000032712,
+          "clips_group": 4.443514458020218
+        },
+        "total_before_metadata_write_seconds": 1260.9951359579572,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 45.6122333333334,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 56,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 0.8341666666666754,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 4.872133333333316,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 1.3350666666666804,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 19,
+        "main_evidence_seconds": 221.9550666666667,
+        "main_eligible_seconds": 177.61076666666662,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 0,
+        "incoming_preparation_context_count": 0,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 5,
+        "identity_recovered_seconds": 48.28016666666649,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 94,
+          "ambiguous": 0,
+          "unmatched": 45,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 242.32541666666668,
+        "raw_main_segments": 177,
+        "raw_group_segments": 52,
+        "smoothed_main_segments": 19,
+        "smoothed_group_segments": 49,
+        "kept_main_segments": 139,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 9
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "MMN": {
+    "source_equal": true,
+    "selection_equal": true,
+    "reference_bytes_equal": true,
+    "images": 31
+  },
+  "ANT": {
+    "source_equal": true,
+    "selection_equal": true,
+    "reference_bytes_equal": true,
+    "images": 31
+  },
+  "NEON": {
+    "source_equal": true,
+    "selection_equal": true,
+    "reference_bytes_equal": true,
+    "images": 40
+  }
+}

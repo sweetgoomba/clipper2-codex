@@ -1,0 +1,248 @@
+{
+  "torch": "2.11.0",
+  "ort": "1.31.0",
+  "mps": true,
+  "providers": [
+    "CoreMLExecutionProvider",
+    "AzureExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "threads": 1,
+  "sam": [
+    {
+      "name": "ANTIFRAGILE",
+      "frames": 23,
+      "seconds": [
+        4.6046000000000005,
+        4.671333333333333,
+        4.738066666666667,
+        4.8048,
+        4.871533333333334,
+        4.938266666666666,
+        5.005,
+        5.071733333333333,
+        5.138466666666667,
+        5.2052000000000005,
+        5.271933333333333,
+        5.338666666666667,
+        5.4054,
+        5.472133333333334,
+        5.538866666666666,
+        5.6056,
+        5.6723333333333334,
+        5.739066666666667,
+        5.8058000000000005,
+        5.872533333333333,
+        5.939266666666667,
+        6.006,
+        6.072733333333334
+      ],
+      "cpu": {
+        "setup_sec": 0.16466962499544024,
+        "actual_device": "cpu",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          4.186177042021882,
+          2.002979874960147
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mps": {
+        "setup_sec": 0.22526058403309435,
+        "actual_device": "mps",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          12.039233416027855,
+          1.425730500021018
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mask_iou_min": 0.2438802039369281,
+      "mask_iou_mean": 0.5381137307712404,
+      "head_owner_differences": 2
+    },
+    {
+      "name": "NEON",
+      "frames": 23,
+      "seconds": [
+        78.41166666666666,
+        78.47840000000001,
+        78.54513333333334,
+        78.61186666666667,
+        78.6786,
+        78.74533333333333,
+        78.81206666666667,
+        78.8788,
+        78.94553333333333,
+        79.01226666666666,
+        79.07900000000001,
+        79.14573333333334,
+        79.21246666666667,
+        79.2792,
+        79.34593333333333,
+        79.41266666666667,
+        79.4794,
+        79.54613333333333,
+        79.61286666666666,
+        79.67960000000001,
+        79.74633333333334,
+        79.81306666666667,
+        79.8798
+      ],
+      "cpu": {
+        "setup_sec": 0.13065524998819456,
+        "actual_device": "cpu",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          4.131158332980704,
+          1.9416515420307405
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mps": {
+        "setup_sec": 0.25492083304561675,
+        "actual_device": "mps",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          2.9008667080197483,
+          1.3943081249599345
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mask_iou_min": 0.6140870719323426,
+      "mask_iou_mean": 0.7944639863146616,
+      "head_owner_differences": 4
+    },
+    {
+      "name": "Made My Night",
+      "frames": 23,
+      "seconds": [
+        37.77106666666667,
+        37.8378,
+        37.90453333333333,
+        37.971266666666665,
+        38.038000000000004,
+        38.104733333333336,
+        38.17146666666667,
+        38.2382,
+        38.30493333333333,
+        38.37166666666667,
+        38.4384,
+        38.50513333333333,
+        38.571866666666665,
+        38.638600000000004,
+        38.705333333333336,
+        38.77206666666667,
+        38.8388,
+        38.90553333333333,
+        38.97226666666667,
+        39.039,
+        39.10573333333333,
+        39.172466666666665,
+        39.239200000000004
+      ],
+      "cpu": {
+        "setup_sec": 0.11369558400474489,
+        "actual_device": "cpu",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          4.451801292016171,
+          1.9726972499629483
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mps": {
+        "setup_sec": 0.21885858301538974,
+        "actual_device": "mps",
+        "dtype": "torch.float32",
+        "runs_sec": [
+          2.9489894580328837,
+          1.4454754589824006
+        ],
+        "cache_hits": 25,
+        "cache_misses": 23
+      },
+      "mask_iou_min": 0.8581538800462631,
+      "mask_iou_mean": 0.9402527272027318,
+      "head_owner_differences": 0
+    }
+  ],
+  "face": {
+    "cpu": {
+      "requested_providers": [
+        "CPUExecutionProvider"
+      ],
+      "crops": 36,
+      "setup_sec": 0.129318916995544,
+      "actual_providers": [
+        "CPUExecutionProvider"
+      ],
+      "input_shape": [
+        "None",
+        3,
+        112,
+        112
+      ],
+      "first_inference_sec": 0.055662999977357686,
+      "runs_sec": [
+        1.9575442919740453,
+        1.9754231660044752,
+        2.0117459999746643
+      ],
+      "profile_provider_events": {
+        "CPUExecutionProvider": 22454
+      }
+    },
+    "coreml_gpu": {
+      "requested_providers": [
+        [
+          "CoreMLExecutionProvider",
+          {
+            "ModelFormat": "MLProgram",
+            "MLComputeUnits": "CPUAndGPU",
+            "ModelCacheDirectory": "/private/tmp/dance-gpu-audit-20261102/coreml-cache",
+            "RequireStaticInputShapes": "0"
+          }
+        ],
+        "CPUExecutionProvider"
+      ],
+      "crops": 36,
+      "setup_sec": 1.2991426670341752,
+      "actual_providers": [
+        "CoreMLExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "input_shape": [
+        "None",
+        3,
+        112,
+        112
+      ],
+      "first_inference_sec": 1.0487435419927351,
+      "runs_sec": [
+        0.5300286249839701,
+        0.4426450420287438,
+        0.45751295797526836
+      ],
+      "cpu_cosine_min": 0.9999998807907104,
+      "cpu_cosine_mean": 1.0,
+      "profile_provider_events": {
+        "CoreMLExecutionProvider": 218,
+        "CPUExecutionProvider": 218
+      },
+      "compute_plan_gpu_ops": 253
+    },
+    "speedup_median": 4.31774255038971
+  },
+  "hardware": {
+    "chip": "Apple M4",
+    "memory_gib": 24,
+    "os": "macOS 27.0",
+    "python_source_head": "4b54bced17e13aadbeb97be75259b7f7213a9b24"
+  }
+}

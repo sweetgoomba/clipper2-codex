@@ -1,0 +1,72 @@
+{
+  "torch": "2.11.0",
+  "ort": "1.31.0",
+  "mps": false,
+  "providers": [
+    "CoreMLExecutionProvider",
+    "AzureExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "threads": 1,
+  "sam": [],
+  "face": {
+    "cpu": {
+      "requested_providers": [
+        "CPUExecutionProvider"
+      ],
+      "crops": 36,
+      "setup_sec": 0.15709125000284985,
+      "actual_providers": [
+        "CPUExecutionProvider"
+      ],
+      "input_shape": [
+        "None",
+        3,
+        112,
+        112
+      ],
+      "first_inference_sec": 0.0474683329812251,
+      "runs_sec": [
+        1.7592707499861717,
+        1.7818754579639062,
+        1.8147101660142653
+      ],
+      "profiling_enabled": false
+    },
+    "coreml_gpu": {
+      "requested_providers": [
+        [
+          "CoreMLExecutionProvider",
+          {
+            "ModelFormat": "MLProgram",
+            "MLComputeUnits": "CPUAndGPU",
+            "ModelCacheDirectory": "/private/tmp/dance-gpu-audit-20261102/coreml-cache",
+            "RequireStaticInputShapes": "0"
+          }
+        ],
+        "CPUExecutionProvider"
+      ],
+      "crops": 36,
+      "setup_sec": 0.5624254170106724,
+      "actual_providers": [
+        "CoreMLExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "input_shape": [
+        "None",
+        3,
+        112,
+        112
+      ],
+      "first_inference_sec": 0.07356250000884756,
+      "runs_sec": [
+        1.0961630000383593,
+        1.0939228339702822,
+        1.0904996250174008
+      ],
+      "cpu_cosine_min": 0.9999998807907104,
+      "cpu_cosine_mean": 1.0,
+      "profiling_enabled": false
+    }
+  }
+}

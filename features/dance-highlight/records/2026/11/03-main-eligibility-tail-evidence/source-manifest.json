@@ -1,0 +1,57 @@
+[
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/ensemble_continuity.py",
+    "sha256": "3a5a402fc4b21d596f82a7799e37174a6fc8eac1bc65e4d4d925de4ea9258827"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "f5128b9c40ca324fba0a8bb9bfa2b225f7b3ee83c170884ccfa320e320111779"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "sha256": "278c82a19e95948faa1d2892f5a02dad65baf6f27ec076f4461bea99c1b97682"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+    "sha256": "021d517e8b10d2d93d24838bf500d33c9a7ef7ddbd71a1e0191201ec9ff2120b"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+    "sha256": "cb5d2e082fa9a4ae89f8871f3f25eb99b3c7010ab9339109ec8b5e7b6fcc337d"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+    "sha256": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+    "sha256": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/test_dance_ensemble_continuity.py",
+    "sha256": "2eecef7995d0d7e68f73308880b975143fc056b00f799584f2b9d4f165b4fc9a"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/test_dance_member_timeline.py",
+    "sha256": "4db35e0aad04141e94b01a769b8081dcd119d335712661ca65e8e1484ce36317"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/test_dance_shot_member_gaps.py",
+    "sha256": "299482e1bca14e131c8cedb57dbf1233bfd676fc0bc26b239cb16c8e1417e0c5"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/fixtures/dance_scene_review/mmn50_ensemble_zoom.json",
+    "sha256": "e382c70418d81acb040891de4c7471f95c4674447b89c1fa50756db2f212b13c"
+  }
+]

@@ -1,0 +1,65 @@
+부분 몸통 참여자 근거 — 저장 3영상 전수 검증 / 2026-11-03
+
+제품 파일은 이번 작업에서 수정하지 않았다. 실험·고정 fixture·보고서는 모두 /private/tmp/dance-partial-presence-20261103에 있다. SAM 또는 추가 ML 추론을 사용하지 않았다. 아래 클립 숫자는 저장된 scene 관측을 재판정한 뒤 현재 출력 구간에 투영한 값이며, 앱이나 전체 파이프라인을 다시 실행한 결과가 아니다.
+
+결론: 제한적인 실제 개선 후보 한 곳을 확인했다. NEON 156.556400–156.689867초(0.133467초)의 두 no_person 관측에서 원래 측정된 몸통 네 점이 양쪽 원래 완전 몸 관측에 유일하게 이어진다. 모든 원본 프레임을 직접 확인했으며 원경 군무가 계속된다. 기존 group_0032(156.022533–156.556400), group_0033(156.689867–156.956800)를 하나의 0.934267초 군무 구간으로 연결할 수 있다. 기존 named/unknown main과 겹치지 않는다. 이름을 복원한 성과가 아니다. 이미 해결한 NEON 185초 중복 사례는 재집계하지 않았다.
+
+현재 실제 앱 기준과 예상 결과
+MMN 1793633624877: 89 / short 42 / unknown 6.807200초 → 그대로
+ANT 1793633679903: 128 / short 73 / unknown 15.483933초 → 그대로
+NEON 1793633791815: 197 / short 115 / unknown 16.317800초 → 196 / short 114 / unknown 그대로
+전체: 414 / short 230 / unknown 38.608933초 → 413 / short 229 / unknown 그대로
+short group: 79→78. 설명한 분절은 79개 중 한 개에 해당하며 큰 잔여 문제를 해결했다고 볼 수 없다.
+전수 범위: pose 9,266행, 저장 native 975프레임 / 2,863개 몸 관측. 모든 native 저장 관측을 확인했다. native 저장 관측 자체가 없는 프레임은 새로운 관측을 만들어 채우지 않았다.
+
+측정 근거
+9380 / 156.489667초: 양쪽 연결의 왼쪽 원래 full-body 관측
+9384 / 156.556400초: 기존 full 1명 + 부분 몸통 original indices 0,2 → 중복 제거 후 3명
+9388 / 156.623133초: 기존 full 2명 + 부분 몸통 original indices 1,2 → 중복 제거 후 4명
+9392 / 156.689867초: 양쪽 연결의 오른쪽 원래 full-body 관측
+9384의 0번은 9380의 1번 → 9384의 0번 → 9388의 1번 → 9392의 0번으로 연결된다. 정규화 몸통 거리 .09517/.12692/.11105.
+9384의 2번은 9380의 2번 → 9384의 2번 → 9388의 2번 → 9392의 1번으로 연결된다. 거리 .22167/.04261/.08415.
+양쪽 full-body extent는 약 125–137px로 기존 H/6=180px 안이다. 모든 중간 관절은 해당 시점 원본 native 측정값이며 head/feet 또는 몸통 좌표를 보간하지 않았다. 네 지지 시점에 accepted joint face 판정은 없다. 얼굴/이름 근거를 이 규칙으로 만들지 않는다.
+
+프로토타입 규칙
+1. 원래 native_distant_ensemble group 양쪽 사이의 최대 0.6초 관측 틈만 검토한다. 이는 클립 최소 길이 규칙이 아니라 기존 native 근거 시간 범위다. 회복된 group 또는 참여자는 다른 회복의 anchor로 쓸 수 없다.
+2. 각 중간 몸통은 원래 confidence>=.75인 어깨/골반 네 점, box 내부·유효 좌표·신체 순서를 갖춰야 한다. 원래 full-body anchor까지 모든 인접 native 관측을 통과한다. 샘플 누락·한 방향 대응·동률/모호 대응은 거부한다. 좌표 이동을 예측하거나 보간하지 않는다.
+3. 각 인접 쌍에서 양방향 유일 최근접 대응을 요구한다. 몸통 평균 점 거리 / 평균 몸통 높이 <=.3, 차선 후보 차이 >=.08, 몸통 높이 비율 1/1.4–1.4. .3/.08과 높이>=4px는 기존 strict_pose_corresponding 수치를 참조했지만, head 없이 torso만 비교하는 것은 새 증거 유형이다. 기존 head+torso 함수와 같은 보증이라고 주장하지 않는다. 1.4는 기존 규모 안정성 수치를 몸통에 적용한 실험 조건이다. 전역 threshold를 완화하지 않았다.
+4. 원래 완전 몸과 지지가 확인된 부분 몸통을 합친 후 기존 torso-overlap 연결 성분으로 중복 제거한다. 매 시점 최소 3개 서로 다른 몸이 있어야 한다. 한 사람의 복제/중복은 사람 수를 늘리지 못한다. partial을 full로 바꾸는 것은 개수 계산용 local dictionary에서만 하며 원래 geometry/joints/full/extent는 그대로 둔다.
+5. 모든 원래 native 크기 제한, partial 박스 size-veto, 원래 low-resolution foreground veto를 유지한다. 알려진 source cut, handoff, camera episode 또는 독립 scene-context main 보호가 지지 경로에 하나라도 걸리면 거부한다. 세 이벤트 목록이 없으면 증거 부족으로 거부한다.
+6. 소스 독립 검증이 없으면 candidate만 보고하고 출력 관측은 바꾸지 않는다. 양쪽 anchor까지 13개의 연속 source frame을 읽어 12쌍 모두 raw color/spatial cut 후보 없음, 기존 구조 연속성 수치 만족을 요구했다. 전체 화면과 원래 full-body 박스들의 합집합 주변 영역 양쪽을 확인했다. 모든 판정이 확인된 이후에만 두 scene record를 group으로 바꾸며 원래 body/head/pose 관측을 보존한다.
+
+소스와 반례
+source-contact.jpg에 9380/9384/9388/9392 원본 및 실제 9465→9466 컷, 9468 근접을 배치했다. 네 지지 프레임은 원경 군무이며 복원 대상의 두 부분 몸통은 실제 무대 참여자이다.
+source-candidate-audit.json: 13프레임/12쌍 모두 통과. 화면 구조 inlier 비율 .9139–.9580, 군무 영역 .8602–.9696, 모든 쌍 4분면의 대응을 확보했다.
+source-negative-audit.json: 실제 NEON 157.924433초의 9465→9466 근접 컷, 후보 가운데 실제 9468 근접 프레임을 넣은 반례, 기존 cut 목록에 경계가 있는 반례를 모두 거부했다. 컷 목록 없이 영상만 검사한 앞의 두 반례도 source_change_candidate로 거부했다.
+27개 pytest: 실제 지지 양성, 원본 관측 불변, 소스 미확인/실패, 5개 위치의 cut, 누락 native/sample, 4개 위치의 독립 main 보호, 회복 anchor 재사용, 신뢰 없는 골반, 중복 몸통, 오른쪽 대응 누락, 큰 native partial, 원래 coherent foreground, 시간 지지 부족, handoff/camera episode, source 역할 목록 누락을 검증했다. tests.log: 27 passed in 0.65s.
+최종 전수 replay에서 실제 NEON157.924433초, MMN50.834117초 주변 기록은 변경되지 않았다.
+
+해결되지 않은 원인
+NEON154.120633–157.924433 원본 shot의 현재 scene 분포는 {'no_person': 22, 'main': 10, 'group': 25}이다. 이번 후보는 no_person 중 두 관측만 복원한다.
+155.488667–156.022533초 틈: 9320의251px, 9332의260px native 부분 포즈가 기존 규모 상한을 넘는다. 앞선 원본 시각 진단에서는 LED/장식 false pose였지만, 이 실험은 headless라고 해당 veto를 지우지 않는다.
+156.956800–157.357200초 틈: 9412 원래 lowres 관측의 foreground veto가 남는다. 이번 규칙은 이 관측을 삭제하지 않는다.
+142.742600–142.809333 및143.343200–143.409933초: 기존 full-body 수가 충분해도 각각188/238px 규모 veto가 남아 바꾸지 않는다.
+154초 shot 시작은 양쪽 원래 full-body/군무 지지가 없는 구간이 포함되므로 extrapolation하지 않는다. 따라서 이 규칙만 넓혀 큰 개선을 약속할 근거가 없다.
+
+시간과 한계
+포즈 전수 재판정 0.268229초 + 실제 source proof 2.244305초 = 2.512534초 추가였다. source는13reads/1seek/0grab, decode 약0.188초였다. 이 세 영상에서는 추가5초 목표 안이다. 후보 수가 늘어나는 다른 영상에서 전역5초 상한이 보장된다는 의미는 아니다. 제품화한다면 기존 SourceFrameReader/구조 feature cache를 재사용하고 소스 검증 예산 초과는 후보 보류로 처리해야 한다.
+구조 연속성은 장면/관측 연속성 근거이며 개별 인물 신원 근거가 아니다. 정적인 배경의 특징이 새 전경을 가릴 수 있으므로, 실제 컷·근접 반례 통과만으로 모든 관측 사이 전경 출현을 막았다고 보증할 수 없다. 원래 sampled foreground/size 가드를 유지하고 독립 Astra가 이 문제를 공격적으로 검토해야 한다. 현재 실제 후보는 원본 모든 프레임을 직접 확인했지만, 이것을 모든 영상으로 일반화하는 것은 별도 검토 대상이다.
+
+독립 검토용 파일
+partial_presence.py — 저장 관측만 이용하는 후보/대응/사람 수/role 가드
+source_guard.py — 원본 dense 소스 확인, 기존 structural 기준 재사용
+neon156-frozen-fixture.json — 원본 네 시점 lowres/native 관측, 역할 목록, 소스 검증 결과
+saved-prototype-audit.json — 세 영상 전체 candidate와 각 관측 대응 경로
+source-candidate-audit.json / source-negative-audit.json — 원본/반례 결과
+source-contact.jpg — 직접 검토한 원본 프레임
+final-replay.json — baseline IDs, 정확한 두 변경, 출력 구간 투영, 남은 veto, 런타임, 코드 hash
+ test_partial_presence.py / tests.log — 27개 고정 fixture 검증
+replay_saved.py / verify_source_candidate.py / visual_source_check.py / finalize_replay.py — 재현 스크립트
+
+프로토타입 SHA256
+partial_presence.py 26026d149591cd1c86fdf77b9656da817c44886b41d74c12b25a23a7e0b8bb81
+source_guard.py 5e90174c6866d567b1ae9ecb113b802394c39abcb1d751e2b8ccddbd70e02970
+
+제품 채택 요청은 하지 않는다. 우선 독립 검토에서 torso-only 소유와 관측 사이 foreground 반례를 확인할 수 있는 작은 후보를 제공한다. 효과는 총/short 한 개씩 감소이며 이름과 unknown 해결 성과는 0이다.

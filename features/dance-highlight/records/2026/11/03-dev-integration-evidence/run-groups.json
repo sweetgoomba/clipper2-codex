@@ -1,0 +1,22 @@
+{
+  "smoke": {
+    "MMN": "dance_1793715367745"
+  },
+  "baseline": {
+    "ANT": "dance_1793715989047",
+    "NEON": "dance_1793716263604",
+    "MMN": "dance_1793716792265"
+  },
+  "candidate": {},
+  "notes": [
+    "Baseline is latest dev with only SAM/mask/joint disabled.",
+    "First MMN run overlaps implementation validation and is excluded from controlled timing; queue a clean repeat.",
+    "Same YouTube URLs and cached reference choices; verify byte hashes for paired runs.",
+    "2026-11-04 user changed priority: merge quality work to remote dev first, then run combined dev app. Old baseline ANT/NEON/MMN repeat cancelled; no complete baseline matrix claimed."
+  ],
+  "merged_dev": {
+    "MMN": "dance_1793719164438",
+    "ANT": "dance_1793719441015",
+    "NEON": "dance_1793719521324"
+  }
+}

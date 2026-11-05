@@ -1,0 +1,166 @@
+[
+  {
+    "video": "MMN",
+    "frame": 2298,
+    "kind": "zoom_peak",
+    "existing_structure": {
+      "continuous": false,
+      "inliers": 17,
+      "matches": 58,
+      "ratio": 0.29310344827586204,
+      "quadrants": 4,
+      "p90_flow": 48.05686569213867
+    },
+    "match_count": 58,
+    "fit": {
+      "matrix": [
+        [
+          0.8670498066303942,
+          -0.005201307484930085,
+          138.1465290288577
+        ],
+        [
+          0.005201307484930085,
+          0.8670498066303942,
+          62.98152531944889
+        ]
+      ],
+      "inliers": 17,
+      "inlier_ratio": 0.29310344827586204,
+      "scale": 0.8670654074389987,
+      "rotation_degrees": 0.3437050442106119,
+      "inlier_p90_compensated_residual": 2.5798285007476807,
+      "all_match_p90_compensated_residual": 19.32322120666504
+    }
+  },
+  {
+    "video": "MMN",
+    "frame": 2360,
+    "kind": "zoom_return",
+    "existing_structure": {
+      "continuous": false,
+      "inliers": 56,
+      "matches": 140,
+      "ratio": 0.4,
+      "quadrants": 4,
+      "p90_flow": 82.80950164794922
+    },
+    "match_count": 140,
+    "fit": {
+      "matrix": [
+        [
+          1.2302641322129644,
+          -0.00031950704375761284,
+          -222.11406208088113
+        ],
+        [
+          0.00031950704375761284,
+          1.2302641322129644,
+          -112.16600768221429
+        ]
+      ],
+      "inliers": 56,
+      "inlier_ratio": 0.4,
+      "scale": 1.2302641737019206,
+      "rotation_degrees": 0.014880060501732883,
+      "inlier_p90_compensated_residual": 2.557589054107666,
+      "all_match_p90_compensated_residual": 7.790337562561035
+    }
+  },
+  {
+    "video": "ANT",
+    "frame": 616,
+    "kind": "lighting_peak",
+    "existing_structure": {
+      "continuous": false,
+      "inliers": 148,
+      "matches": 331,
+      "ratio": 0.4471299093655589,
+      "quadrants": 4,
+      "p90_flow": 5.5502166748046875
+    },
+    "match_count": 331,
+    "fit": {
+      "matrix": [
+        [
+          0.9989845935040079,
+          0.005326017592557948,
+          0.24509503889726947
+        ],
+        [
+          -0.005326017592557948,
+          0.9989845935040079,
+          3.151162948989961
+        ]
+      ],
+      "inliers": 148,
+      "inlier_ratio": 0.4471299093655589,
+      "scale": 0.9989987910512025,
+      "rotation_degrees": -0.3054656101906458,
+      "inlier_p90_compensated_residual": 2.4057655334472656,
+      "all_match_p90_compensated_residual": 10.859639167785645
+    }
+  },
+  {
+    "video": "NEON",
+    "frame": 4912,
+    "kind": "real_wide_cut",
+    "existing_structure": {
+      "continuous": false,
+      "reason": "insufficient_correspondence",
+      "matches": 3
+    },
+    "match_count": 3,
+    "fit": {
+      "matrix": [
+        [
+          0.7514462836280557,
+          0.27672181051472755,
+          145.15649693627586
+        ],
+        [
+          -0.27672181051472755,
+          0.7514462836280557,
+          606.1865274916294
+        ]
+      ],
+      "inliers": 2,
+      "inlier_ratio": 0.6666666666666666,
+      "scale": 0.8007786695416936,
+      "rotation_degrees": -20.216344903295436,
+      "inlier_p90_compensated_residual": 2.746581958490424e-05,
+      "all_match_p90_compensated_residual": 459.8695068359375
+    }
+  },
+  {
+    "video": "MMN",
+    "frame": 2407,
+    "kind": "real_view_cut",
+    "existing_structure": {
+      "continuous": false,
+      "reason": "insufficient_correspondence",
+      "matches": 10
+    },
+    "match_count": 10,
+    "fit": {
+      "matrix": [
+        [
+          0.510868711830003,
+          -0.007231618389292554,
+          484.6437160777516
+        ],
+        [
+          0.007231618389292554,
+          0.510868711830003,
+          196.074631201463
+        ]
+      ],
+      "inliers": 4,
+      "inlier_ratio": 0.4,
+      "scale": 0.5109198929689224,
+      "rotation_degrees": 0.8109980732503621,
+      "inlier_p90_compensated_residual": 2.0476980209350586,
+      "all_match_p90_compensated_residual": 174.93605041503906
+    }
+  }
+]

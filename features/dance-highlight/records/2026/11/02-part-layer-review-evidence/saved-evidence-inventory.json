@@ -1,0 +1,2280 @@
+{
+  "MMN": {
+    "project": "1793617663026",
+    "meta_sha256": "4d1058a7e1c39b07590774a8e07f5bba3cec8ec6e3d9542273ea60199f286172",
+    "evidence_sha256": "bdeda5a51a2c76f3e581a7055969f419bac8748f4f1391f4a8295eade773e326",
+    "initial_identity_scopes": 3,
+    "initial_boundary_reasons": {
+      "face_coverage_gap": 10,
+      "repeated_face_change": 26,
+      "repeated_reference_change": 28,
+      "named_evidence_edge": 6
+    },
+    "initial_boundary_count": 70,
+    "role_reasons": {
+      "measured_face_composition": 1427,
+      "incomplete_incumbent_geometry": 152,
+      "confirmed_measured_face_composition": 18,
+      "dominant_face": 347,
+      "awaiting_sustained_composition": 42,
+      "confirmed_corroborated_foreground_subject": 9,
+      "corroborated_foreground_subject": 126,
+      "near_tie_keep_incumbent": 5,
+      "confirmed_dominant_face": 3,
+      "confirmed_near_tie_transition": 3,
+      "stationary_camera_subject_behind_lateral_foreground": 139,
+      "occluded_camera_subject": 4,
+      "no_measured_face_keep_previous_selection": 49
+    },
+    "camera_episode_count": 5,
+    "handoff_count": 9,
+    "body_check_reasons": {
+      "conflicting_face_evidence": 2,
+      "isolated_visual_change": 1,
+      "visual_cut": 1,
+      "unconfirmed_body_continuity": 1,
+      "confirmed_body_continuity": 1
+    },
+    "unknown_blocks": [
+      {
+        "start": 34.4344,
+        "end": 34.8348,
+        "clip_count": 2,
+        "previous_name": "사쿠라",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 34.4344,
+            "end": 35.4354,
+            "name": "사쿠라",
+            "seed_frames": [
+              2060,
+              2128
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 5,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": [
+          2078
+        ]
+      },
+      {
+        "start": 38.20473333333334,
+        "end": 39.3393,
+        "clip_count": 1,
+        "previous_name": "사쿠라",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 38.20473333333334,
+            "end": 39.3393,
+            "name": "사쿠라",
+            "seed_frames": [
+              2284,
+              2364
+            ],
+            "pose_link_frames": [
+              2320
+            ],
+            "reason": "isolated_visual_change"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 14
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 42.97626666666667,
+        "end": 43.143100000000004,
+        "clip_count": 1,
+        "previous_name": "사쿠라",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 2,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 49.866483333333335,
+        "end": 50.2502,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 1,
+          "incomplete_incumbent_geometry": 4
+        },
+        "cut_frames": [
+          2989
+        ]
+      },
+      {
+        "start": 52.48576666666666,
+        "end": 52.6526,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 53.119733333333336,
+        "end": 53.42013333333333,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 5
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 57.791066666666666,
+        "end": 59.125733333333336,
+        "clip_count": 2,
+        "previous_name": "사쿠라",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 1,
+          "incomplete_incumbent_geometry": 19
+        },
+        "cut_frames": [
+          3467
+        ]
+      },
+      {
+        "start": 68.30146666666666,
+        "end": 68.83553333333334,
+        "clip_count": 1,
+        "previous_name": "홍은채",
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 68.30146666666666,
+            "end": 68.83553333333334,
+            "name": "홍은채",
+            "seed_frames": [
+              4088,
+              4136
+            ],
+            "pose_link_frames": [
+              4092
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 7,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 88.25483333333334,
+        "end": 88.42166666666667,
+        "clip_count": 2,
+        "previous_name": "김채원",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_near_tie_transition": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 96.34625,
+        "end": 97.84775,
+        "clip_count": 3,
+        "previous_name": "카즈하",
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [
+          {
+            "frame": 5776,
+            "time": 96.36293333333333,
+            "name": "허윤진",
+            "detector": 0.8289766311645508
+          }
+        ],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 4,
+          "incomplete_incumbent_geometry": 12,
+          "corroborated_foreground_subject": 2,
+          "awaiting_sustained_composition": 5
+        },
+        "cut_frames": [
+          5775
+        ]
+      },
+      {
+        "start": 111.86175,
+        "end": 112.57913333333333,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 9,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": [
+          6705
+        ]
+      }
+    ],
+    "selected_cases": [
+      {
+        "start": 1.9,
+        "end": 2.3,
+        "output": [
+          {
+            "seg_id": 0,
+            "seg_type": "group",
+            "start": 0.0,
+            "end": 4.371033333333333,
+            "person_id": null,
+            "clip_id": "group_0000",
+            "thumbnail_path": "clips/dance/group/group_0000.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 4,
+          "confirmed_measured_face_composition": 2
+        },
+        "handoffs": [
+          {
+            "frame": 132,
+            "time": 2.2022,
+            "previous_frame": 128,
+            "previous_time": 2.135466666666667,
+            "boundary_policy": "first_observed_new_main",
+            "previous_selected": 1,
+            "current_selected": 2,
+            "outgoing_current": 1,
+            "incoming_previous": 2
+          }
+        ],
+        "initial_boundary_reasons": {
+          "face_coverage_gap": 1
+        },
+        "body_checks": []
+      },
+      {
+        "start": 34.73,
+        "end": 35.44,
+        "output": [
+          {
+            "seg_id": 7,
+            "seg_type": "main",
+            "start": 34.4344,
+            "end": 34.734700000000004,
+            "person_id": "unknown",
+            "clip_id": "main_0007",
+            "thumbnail_path": "clips/dance/main/main_0007.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 8,
+            "seg_type": "main",
+            "start": 34.734700000000004,
+            "end": 34.8348,
+            "person_id": "unknown",
+            "clip_id": "main_0008",
+            "thumbnail_path": "clips/dance/main/main_0008.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 9,
+            "seg_type": "main",
+            "start": 35.4354,
+            "end": 38.20473333333334,
+            "person_id": "사쿠라",
+            "clip_id": "main_0009",
+            "thumbnail_path": "clips/dance/main/main_0009.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 5,
+            "seg_type": "group",
+            "start": 34.8348,
+            "end": 35.568866666666665,
+            "person_id": null,
+            "clip_id": "group_0005",
+            "thumbnail_path": "clips/dance/group/group_0005.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 4,
+          "measured_face_composition": 7
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 2
+        },
+        "body_checks": [
+          {
+            "start": 34.4344,
+            "end": 35.4354,
+            "name": "사쿠라",
+            "seed_frames": [
+              2060,
+              2128
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ]
+      },
+      {
+        "start": 37.738,
+        "end": 39.339,
+        "output": [
+          {
+            "seg_id": 9,
+            "seg_type": "main",
+            "start": 35.4354,
+            "end": 38.20473333333334,
+            "person_id": "사쿠라",
+            "clip_id": "main_0009",
+            "thumbnail_path": "clips/dance/main/main_0009.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 10,
+            "seg_type": "main",
+            "start": 38.20473333333334,
+            "end": 39.3393,
+            "person_id": "unknown",
+            "clip_id": "main_0010",
+            "thumbnail_path": "clips/dance/main/main_0010.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 6,
+            "seg_type": "group",
+            "start": 38.705333333333336,
+            "end": 39.50613333333333,
+            "person_id": null,
+            "clip_id": "group_0006",
+            "thumbnail_path": "clips/dance/group/group_0006.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 21,
+          "incomplete_incumbent_geometry": 3
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {},
+        "body_checks": [
+          {
+            "start": 38.20473333333334,
+            "end": 39.3393,
+            "name": "사쿠라",
+            "seed_frames": [
+              2284,
+              2364
+            ],
+            "pose_link_frames": [
+              2320
+            ],
+            "reason": "isolated_visual_change"
+          }
+        ]
+      },
+      {
+        "start": 45,
+        "end": 48,
+        "output": [
+          {
+            "seg_id": 13,
+            "seg_type": "main",
+            "start": 43.143100000000004,
+            "end": 46.46308333333334,
+            "person_id": "허윤진",
+            "clip_id": "main_0013",
+            "thumbnail_path": "clips/dance/main/main_0013.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 14,
+            "seg_type": "main",
+            "start": 45.361983333333335,
+            "end": 47.98126666666667,
+            "person_id": "사쿠라",
+            "clip_id": "main_0014",
+            "thumbnail_path": "clips/dance/main/main_0014.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 15,
+            "seg_type": "main",
+            "start": 47.98126666666667,
+            "end": 49.866483333333335,
+            "person_id": "허윤진",
+            "clip_id": "main_0015",
+            "thumbnail_path": "clips/dance/main/main_0015.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 28,
+          "corroborated_foreground_subject": 15,
+          "near_tie_keep_incumbent": 1,
+          "awaiting_sustained_composition": 1
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_reference_change": 2
+        },
+        "body_checks": []
+      }
+    ]
+  },
+  "ANT": {
+    "project": "1793617753764",
+    "meta_sha256": "825ca5957430869b454dad6755e5edb0e4807b98c3b58d3455cbb7d61c236feb",
+    "evidence_sha256": "663435b5366500769756dd45422fe166ec3e4f0894f1123ca7efd253e482ed37",
+    "initial_identity_scopes": 1,
+    "initial_boundary_reasons": {
+      "face_coverage_gap": 9,
+      "repeated_face_change": 59,
+      "repeated_reference_change": 37,
+      "named_evidence_edge": 20
+    },
+    "initial_boundary_count": 125,
+    "role_reasons": {
+      "incomplete_incumbent_geometry": 198,
+      "corroborated_foreground_subject": 463,
+      "measured_face_composition": 1722,
+      "dominant_face": 560,
+      "confirmed_near_tie_transition": 14,
+      "confirmed_measured_face_composition": 36,
+      "awaiting_sustained_composition": 88,
+      "near_tie_keep_incumbent": 8,
+      "confirmed_dominant_face": 7,
+      "confirmed_corroborated_foreground_subject": 2,
+      "no_measured_face_keep_previous_selection": 212
+    },
+    "camera_episode_count": 0,
+    "handoff_count": 11,
+    "body_check_reasons": {
+      "visual_cut": 3,
+      "unconfirmed_body_continuity": 1,
+      "confirmed_body_continuity": 3,
+      "conflicting_face_name": 1,
+      "conflicting_face_evidence": 2
+    },
+    "unknown_blocks": [
+      {
+        "start": 0.0,
+        "end": 1.1679333333333333,
+        "clip_count": 1,
+        "previous_name": null,
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 16,
+          "corroborated_foreground_subject": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 4.571233333333334,
+        "end": 6.139466666666666,
+        "clip_count": 1,
+        "previous_name": "홍은채",
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 23
+        },
+        "cut_frames": [
+          290
+        ]
+      },
+      {
+        "start": 6.7066,
+        "end": 7.157150000000001,
+        "clip_count": 1,
+        "previous_name": "홍은채",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "corroborated_foreground_subject": 5,
+          "measured_face_composition": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "clip_count": 1,
+        "previous_name": "김채원",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 9.9098,
+            "end": 10.276933333333334,
+            "name": "김채원",
+            "seed_frames": [
+              588,
+              616
+            ],
+            "pose_link_frames": [
+              592,
+              596,
+              600,
+              604,
+              612
+            ],
+            "reason": "visual_cut"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 4,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 18.25146666666667,
+        "end": 19.7198,
+        "clip_count": 2,
+        "previous_name": "김채원",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 22
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 27.861166666666666,
+        "end": 28.661966666666668,
+        "clip_count": 3,
+        "previous_name": "카즈하",
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 6,
+          "awaiting_sustained_composition": 2,
+          "near_tie_keep_incumbent": 1,
+          "confirmed_near_tie_transition": 3
+        },
+        "cut_frames": [
+          1670
+        ]
+      },
+      {
+        "start": 46.446400000000004,
+        "end": 46.513133333333336,
+        "clip_count": 1,
+        "previous_name": "사쿠라",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 48.08136666666667,
+        "end": 48.415033333333334,
+        "clip_count": 1,
+        "previous_name": "김채원",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 48.08136666666667,
+            "end": 48.415033333333334,
+            "name": "김채원",
+            "seed_frames": [
+              2876,
+              2904
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ],
+        "role_reasons": {
+          "dominant_face": 1,
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 64.43093333333333,
+        "end": 64.89826666666667,
+        "clip_count": 1,
+        "previous_name": "김채원",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 64.43093333333333,
+            "end": 64.89826666666667,
+            "name": "김채원",
+            "seed_frames": [
+              3856,
+              3896
+            ],
+            "reason": "visual_cut"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 7
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 73.44003333333333,
+        "end": 73.80706666666667,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 73.44003333333333,
+            "end": 74.30756666666667,
+            "name": "허윤진",
+            "seed_frames": [
+              4400,
+              4460
+            ],
+            "reason": "conflicting_face_name"
+          }
+        ],
+        "role_reasons": {
+          "dominant_face": 2,
+          "incomplete_incumbent_geometry": 1,
+          "measured_face_composition": 2
+        },
+        "cut_frames": [
+          4413
+        ]
+      },
+      {
+        "start": 75.14173333333333,
+        "end": 75.37530000000001,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "dominant_face": 3,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 82.182,
+        "end": 82.68260000000001,
+        "clip_count": 1,
+        "previous_name": "카즈하",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "awaiting_sustained_composition": 5,
+          "measured_face_composition": 1,
+          "confirmed_near_tie_transition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 119.68623333333333,
+        "end": 120.35356666666667,
+        "clip_count": 2,
+        "previous_name": "홍은채",
+        "next_name": "홍은채",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 3,
+          "confirmed_measured_face_composition": 3,
+          "corroborated_foreground_subject": 3,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 134.06726666666668,
+        "end": 135.10163333333333,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [
+          {
+            "frame": 8040,
+            "time": 134.13400000000001,
+            "name": "허윤진",
+            "detector": 0.9157793521881104
+          }
+        ],
+        "body_checks": [
+          {
+            "start": 134.03379999999999,
+            "end": 135.10163333333333,
+            "name": "허윤진",
+            "seed_frames": [
+              8032,
+              8100
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 15,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 146.67986666666667,
+        "end": 146.88006666666666,
+        "clip_count": 2,
+        "previous_name": "홍은채",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 2,
+          "confirmed_measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 147.34720000000002,
+        "end": 147.51413333333335,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 148.38146666666665,
+        "end": 148.8487,
+        "clip_count": 1,
+        "previous_name": "카즈하",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 7
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 149.3492,
+        "end": 149.51603333333333,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1,
+          "awaiting_sustained_composition": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 151.0508,
+        "end": 151.98516666666666,
+        "clip_count": 1,
+        "previous_name": "홍은채",
+        "next_name": "김채원",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [
+          {
+            "frame": 9060,
+            "time": 151.151,
+            "name": "김채원",
+            "detector": 0.9108814597129822
+          },
+          {
+            "frame": 9064,
+            "time": 151.21773333333334,
+            "name": "김채원",
+            "detector": 0.9121092557907104
+          }
+        ],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_dominant_face": 1,
+          "confirmed_measured_face_composition": 1,
+          "dominant_face": 1,
+          "incomplete_incumbent_geometry": 6,
+          "measured_face_composition": 2,
+          "awaiting_sustained_composition": 2,
+          "near_tie_keep_incumbent": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 152.2521,
+        "end": 152.58586666666667,
+        "clip_count": 1,
+        "previous_name": "김채원",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3,
+          "awaiting_sustained_composition": 1,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 153.98706666666666,
+        "end": 154.65460000000002,
+        "clip_count": 2,
+        "previous_name": "김채원",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 10
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 155.78896666666668,
+        "end": 155.88906666666668,
+        "clip_count": 1,
+        "previous_name": "카즈하",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 160.29346666666666,
+        "end": 160.87738333333334,
+        "clip_count": 1,
+        "previous_name": "카즈하",
+        "next_name": "카즈하",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 5,
+          "incomplete_incumbent_geometry": 4
+        },
+        "cut_frames": [
+          9608
+        ]
+      },
+      {
+        "start": 164.93133333333333,
+        "end": 165.33183333333335,
+        "clip_count": 1,
+        "previous_name": "카즈하",
+        "next_name": "허윤진",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 2,
+          "awaiting_sustained_composition": 1,
+          "measured_face_composition": 1,
+          "near_tie_keep_incumbent": 1,
+          "dominant_face": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 171.80496666666667,
+        "end": 172.2053666666667,
+        "clip_count": 1,
+        "previous_name": "허윤진",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "awaiting_sustained_composition": 1,
+          "measured_face_composition": 1,
+          "incomplete_incumbent_geometry": 4
+        },
+        "cut_frames": [
+          10303
+        ]
+      },
+      {
+        "start": 173.13953333333333,
+        "end": 173.43993333333333,
+        "clip_count": 1,
+        "previous_name": "사쿠라",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 173.13953333333333,
+            "end": 174.00716666666668,
+            "name": "사쿠라",
+            "seed_frames": [
+              10360,
+              10436
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "corroborated_foreground_subject": 1,
+          "incomplete_incumbent_geometry": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 180.8806,
+        "end": 182.6826,
+        "clip_count": 1,
+        "previous_name": "사쿠라",
+        "next_name": "사쿠라",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 180.8806,
+            "end": 182.6826,
+            "name": "사쿠라",
+            "seed_frames": [
+              10836,
+              10956
+            ],
+            "reason": "visual_cut"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 25,
+          "dominant_face": 1,
+          "awaiting_sustained_composition": 1
+        },
+        "cut_frames": []
+      }
+    ],
+    "selected_cases": [
+      {
+        "start": 4.571,
+        "end": 6.139,
+        "output": [
+          {
+            "seg_id": 2,
+            "seg_type": "main",
+            "start": 3.7370666666666668,
+            "end": 4.571233333333334,
+            "person_id": "홍은채",
+            "clip_id": "main_0002",
+            "thumbnail_path": "clips/dance/main/main_0002.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 3,
+            "seg_type": "main",
+            "start": 4.571233333333334,
+            "end": 6.139466666666666,
+            "person_id": "unknown",
+            "clip_id": "main_0003",
+            "thumbnail_path": "clips/dance/main/main_0003.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 1,
+            "seg_type": "group",
+            "start": 5.6056,
+            "end": 6.4064000000000005,
+            "person_id": null,
+            "clip_id": "group_0001",
+            "thumbnail_path": "clips/dance/group/group_0001.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 23
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 1
+        },
+        "body_checks": []
+      },
+      {
+        "start": 9.4,
+        "end": 10.277,
+        "output": [
+          {
+            "seg_id": 8,
+            "seg_type": "main",
+            "start": 8.975633333333334,
+            "end": 9.9098,
+            "person_id": "김채원",
+            "clip_id": "main_0008",
+            "thumbnail_path": "clips/dance/main/main_0008.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 9,
+            "seg_type": "main",
+            "start": 9.9098,
+            "end": 10.276933333333334,
+            "person_id": "unknown",
+            "clip_id": "main_0009",
+            "thumbnail_path": "clips/dance/main/main_0009.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 10,
+            "seg_type": "main",
+            "start": 10.276933333333334,
+            "end": 17.150466666666667,
+            "person_id": "김채원",
+            "clip_id": "main_0010",
+            "thumbnail_path": "clips/dance/main/main_0010.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 10,
+          "incomplete_incumbent_geometry": 4
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 1
+        },
+        "body_checks": [
+          {
+            "start": 9.9098,
+            "end": 10.276933333333334,
+            "name": "김채원",
+            "seed_frames": [
+              588,
+              616
+            ],
+            "pose_link_frames": [
+              592,
+              596,
+              600,
+              604,
+              612
+            ],
+            "reason": "visual_cut"
+          }
+        ]
+      },
+      {
+        "start": 48,
+        "end": 49,
+        "output": [
+          {
+            "seg_id": 24,
+            "seg_type": "main",
+            "start": 47.48076666666667,
+            "end": 48.08136666666667,
+            "person_id": "김채원",
+            "clip_id": "main_0024",
+            "thumbnail_path": "clips/dance/main/main_0024.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 25,
+            "seg_type": "main",
+            "start": 48.08136666666667,
+            "end": 48.415033333333334,
+            "person_id": "unknown",
+            "clip_id": "main_0025",
+            "thumbnail_path": "clips/dance/main/main_0025.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 26,
+            "seg_type": "main",
+            "start": 48.415033333333334,
+            "end": 53.720333333333336,
+            "person_id": "김채원",
+            "clip_id": "main_0026",
+            "thumbnail_path": "clips/dance/main/main_0026.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "dominant_face": 2,
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 10
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 2
+        },
+        "body_checks": [
+          {
+            "start": 48.08136666666667,
+            "end": 48.415033333333334,
+            "name": "김채원",
+            "seed_frames": [
+              2876,
+              2904
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ]
+      },
+      {
+        "start": 75,
+        "end": 76,
+        "output": [
+          {
+            "seg_id": 34,
+            "seg_type": "main",
+            "start": 74.34093333333334,
+            "end": 75.14173333333333,
+            "person_id": "허윤진",
+            "clip_id": "main_0034",
+            "thumbnail_path": "clips/dance/main/main_0034.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 35,
+            "seg_type": "main",
+            "start": 75.14173333333333,
+            "end": 75.37530000000001,
+            "person_id": "unknown",
+            "clip_id": "main_0035",
+            "thumbnail_path": "clips/dance/main/main_0035.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 36,
+            "seg_type": "main",
+            "start": 75.37530000000001,
+            "end": 82.182,
+            "person_id": "카즈하",
+            "clip_id": "main_0036",
+            "thumbnail_path": "clips/dance/main/main_0036.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "corroborated_foreground_subject": 1,
+          "dominant_face": 9,
+          "measured_face_composition": 5
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 1,
+          "repeated_reference_change": 1
+        },
+        "body_checks": []
+      },
+      {
+        "start": 117.25,
+        "end": 117.72,
+        "output": [
+          {
+            "seg_id": 49,
+            "seg_type": "main",
+            "start": 110.97753333333334,
+            "end": 117.60081666666667,
+            "person_id": "사쿠라",
+            "clip_id": "main_0049",
+            "thumbnail_path": "clips/dance/main/main_0049.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 50,
+            "seg_type": "main",
+            "start": 117.60081666666667,
+            "end": 119.68623333333333,
+            "person_id": "홍은채",
+            "clip_id": "main_0050",
+            "thumbnail_path": "clips/dance/main/main_0050.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 4,
+          "awaiting_sustained_composition": 2,
+          "confirmed_dominant_face": 2
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_reference_change": 1
+        },
+        "body_checks": []
+      },
+      {
+        "start": 180,
+        "end": 181,
+        "output": [
+          {
+            "seg_id": 94,
+            "seg_type": "main",
+            "start": 175.24173333333334,
+            "end": 180.8806,
+            "person_id": "사쿠라",
+            "clip_id": "main_0094",
+            "thumbnail_path": "clips/dance/main/main_0094.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 95,
+            "seg_type": "main",
+            "start": 180.8806,
+            "end": 182.6826,
+            "person_id": "unknown",
+            "clip_id": "main_0095",
+            "thumbnail_path": "clips/dance/main/main_0095.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "dominant_face": 10,
+          "incomplete_incumbent_geometry": 1,
+          "measured_face_composition": 4
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "named_evidence_edge": 1
+        },
+        "body_checks": [
+          {
+            "start": 180.8806,
+            "end": 182.6826,
+            "name": "사쿠라",
+            "seed_frames": [
+              10836,
+              10956
+            ],
+            "reason": "visual_cut"
+          }
+        ]
+      }
+    ]
+  },
+  "NEON": {
+    "project": "1793617837063",
+    "meta_sha256": "a7c04fe2dbccb3a2c767af3697a165cc99e4bd72448d7174bcb8d6d61b58568d",
+    "evidence_sha256": "3112767da138e81b20e41f08ad8237aedd2fbc6ab2a4d858a478672e20f0dec2",
+    "initial_identity_scopes": 19,
+    "initial_boundary_reasons": {
+      "repeated_reference_change": 63,
+      "face_coverage_gap": 19,
+      "repeated_face_change": 45,
+      "named_evidence_edge": 25
+    },
+    "initial_boundary_count": 152,
+    "role_reasons": {
+      "no_measured_face_keep_previous_selection": 305,
+      "incomplete_incumbent_geometry": 369,
+      "measured_face_composition": 2145,
+      "dominant_face": 314,
+      "confirmed_measured_face_composition": 96,
+      "confirmed_dominant_face": 6,
+      "awaiting_sustained_composition": 139,
+      "confirmed_near_tie_transition": 24,
+      "corroborated_foreground_subject": 183,
+      "near_tie_keep_incumbent": 45,
+      "confirmed_corroborated_foreground_subject": 6
+    },
+    "camera_episode_count": 0,
+    "handoff_count": 18,
+    "body_check_reasons": {
+      "confirmed_body_continuity": 4,
+      "unconfirmed_body_continuity": 3,
+      "conflicting_face_evidence": 4,
+      "isolated_visual_change": 1,
+      "conflicting_face_name": 1
+    },
+    "unknown_blocks": [
+      {
+        "start": 30.063266666666667,
+        "end": 30.797533333333334,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 30.063266666666667,
+            "end": 30.797533333333334,
+            "name": "아이찡",
+            "seed_frames": [
+              1796,
+              1860
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 11
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 34.3343,
+        "end": 35.1351,
+        "clip_count": 2,
+        "previous_name": "시리",
+        "next_name": "시리",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_near_tie_transition": 2,
+          "measured_face_composition": 4,
+          "incomplete_incumbent_geometry": 4,
+          "dominant_face": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 37.804433333333336,
+        "end": 38.47176666666667,
+        "clip_count": 2,
+        "previous_name": "시리",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "dominant_face": 1,
+          "incomplete_incumbent_geometry": 4,
+          "measured_face_composition": 5
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 40.90753333333333,
+        "end": 41.4414,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "dominant_face": 3,
+          "incomplete_incumbent_geometry": 5
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 41.77506666666667,
+        "end": 41.80853333333333,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "메르시",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 42.208733333333335,
+        "end": 42.6426,
+        "clip_count": 1,
+        "previous_name": "메르시",
+        "next_name": "오아",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 6
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 64.56439999999999,
+        "end": 64.79806666666667,
+        "clip_count": 1,
+        "previous_name": "히메키",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_measured_face_composition": 2,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 65.26520000000001,
+        "end": 65.43213333333334,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "near_tie_keep_incumbent": 2,
+          "measured_face_composition": 1
+        },
+        "cut_frames": [
+          3918
+        ]
+      },
+      {
+        "start": 72.1721,
+        "end": 72.80606666666667,
+        "clip_count": 2,
+        "previous_name": "아이찡",
+        "next_name": "영",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 6
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 75.8758,
+        "end": 77.37740000000001,
+        "clip_count": 1,
+        "previous_name": "영",
+        "next_name": "시리",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 9,
+          "near_tie_keep_incumbent": 2,
+          "awaiting_sustained_composition": 9,
+          "confirmed_measured_face_composition": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 81.94853333333333,
+        "end": 82.84943333333334,
+        "clip_count": 1,
+        "previous_name": "시리",
+        "next_name": "시리",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 81.94853333333333,
+            "end": 82.84943333333334,
+            "name": "시리",
+            "seed_frames": [
+              4908,
+              4984
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 9,
+          "near_tie_keep_incumbent": 2
+        },
+        "cut_frames": [
+          4912
+        ]
+      },
+      {
+        "start": 93.05953333333333,
+        "end": 94.92816666666667,
+        "clip_count": 2,
+        "previous_name": "오아",
+        "next_name": "오아",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 93.05953333333333,
+            "end": 94.92816666666667,
+            "name": "오아",
+            "seed_frames": [
+              5572,
+              5692
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "awaiting_sustained_composition": 2,
+          "measured_face_composition": 19,
+          "incomplete_incumbent_geometry": 5,
+          "near_tie_keep_incumbent": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 107.19041666666666,
+        "end": 107.84106666666668,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 107.19041666666666,
+            "end": 107.84106666666668,
+            "name": "아이찡",
+            "seed_frames": [
+              6416,
+              6472
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 5,
+          "measured_face_composition": 4,
+          "corroborated_foreground_subject": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 115.6155,
+        "end": 115.9158,
+        "clip_count": 1,
+        "previous_name": "영",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 115.6155,
+            "end": 116.64986666666667,
+            "name": "영",
+            "seed_frames": [
+              6928,
+              7012
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 4
+        },
+        "cut_frames": [
+          6930
+        ]
+      },
+      {
+        "start": 116.5164,
+        "end": 116.64986666666667,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "영",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 115.6155,
+            "end": 116.64986666666667,
+            "name": "영",
+            "seed_frames": [
+              6928,
+              7012
+            ],
+            "reason": "conflicting_face_evidence"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 1,
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 130.69713333333334,
+        "end": 130.79733333333334,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 130.69713333333334,
+            "end": 131.09773333333334,
+            "name": "아이찡",
+            "seed_frames": [
+              7816,
+              7888
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 141.07426666666666,
+        "end": 141.97526666666667,
+        "clip_count": 1,
+        "previous_name": "메르시",
+        "next_name": "영",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [
+          {
+            "frame": 8504,
+            "time": 141.87506666666667,
+            "name": "히메키",
+            "detector": 0.9139750599861145
+          }
+        ],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_measured_face_composition": 1,
+          "measured_face_composition": 10,
+          "awaiting_sustained_composition": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 142.7426,
+        "end": 142.80933333333334,
+        "clip_count": 1,
+        "previous_name": "영",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 143.3432,
+        "end": 143.40993333333333,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 143.67686666666668,
+        "end": 144.07726666666667,
+        "clip_count": 2,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 5,
+          "awaiting_sustained_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 144.3442,
+        "end": 144.5444,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 144.81133333333332,
+        "end": 145.2452,
+        "clip_count": 2,
+        "previous_name": "unknown",
+        "next_name": "시리",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1,
+          "confirmed_near_tie_transition": 1,
+          "measured_face_composition": 5
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 149.88306666666668,
+        "end": 150.28346666666667,
+        "clip_count": 1,
+        "previous_name": "아윤",
+        "next_name": "시리",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 4,
+          "corroborated_foreground_subject": 2
+        },
+        "cut_frames": [
+          8984
+        ]
+      },
+      {
+        "start": 154.22073333333333,
+        "end": 154.42093333333332,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 154.62113333333335,
+        "end": 154.68786666666668,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 154.7546,
+        "end": 154.88806666666667,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 155.62213333333332,
+        "end": 155.68886666666668,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 157.02353333333335,
+        "end": 157.09026666666668,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 157.22373333333334,
+        "end": 157.29046666666667,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 157.7576,
+        "end": 157.82433333333333,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 157.9578,
+        "end": 158.5584,
+        "clip_count": 2,
+        "previous_name": "unknown",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [
+          {
+            "frame": 9476,
+            "time": 158.09126666666668,
+            "name": "아이찡",
+            "detector": 0.9263960719108582
+          }
+        ],
+        "body_checks": [],
+        "role_reasons": {
+          "measured_face_composition": 7,
+          "incomplete_incumbent_geometry": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 158.62513333333334,
+        "end": 158.7586,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 161.19436666666667,
+        "end": 161.72823333333332,
+        "clip_count": 1,
+        "previous_name": "아이찡",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": true,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 161.19436666666667,
+            "end": 161.72823333333332,
+            "name": "아이찡",
+            "seed_frames": [
+              9660,
+              9708
+            ],
+            "reason": "unconfirmed_body_continuity"
+          }
+        ],
+        "role_reasons": {
+          "corroborated_foreground_subject": 1,
+          "dominant_face": 2,
+          "incomplete_incumbent_geometry": 5
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 163.39646666666667,
+        "end": 164.63113333333334,
+        "clip_count": 2,
+        "previous_name": "아이찡",
+        "next_name": "아이찡",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 8,
+          "measured_face_composition": 3,
+          "corroborated_foreground_subject": 7
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 168.33473333333333,
+        "end": 168.73533333333333,
+        "clip_count": 2,
+        "previous_name": "아이찡",
+        "next_name": "오아",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 6
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 180.94743333333332,
+        "end": 181.19768333333334,
+        "clip_count": 1,
+        "previous_name": "오아",
+        "next_name": "메르시",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "confirmed_dominant_face": 3,
+          "corroborated_foreground_subject": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 185.25173333333333,
+        "end": 185.2852,
+        "clip_count": 1,
+        "previous_name": "오아",
+        "next_name": "메르시",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 189.95643333333334,
+        "end": 189.9898,
+        "clip_count": 1,
+        "previous_name": "메르시",
+        "next_name": "영",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [],
+        "role_reasons": {},
+        "cut_frames": []
+      },
+      {
+        "start": 194.0938,
+        "end": 194.26073333333335,
+        "clip_count": 1,
+        "previous_name": "영",
+        "next_name": "히메키",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 194.0938,
+            "end": 194.6946,
+            "name": "영",
+            "seed_frames": [
+              11628,
+              11676
+            ],
+            "reason": "isolated_visual_change"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 2
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 221.75486666666666,
+        "end": 221.88833333333335,
+        "clip_count": 2,
+        "previous_name": "오아",
+        "next_name": "unknown",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 221.5212,
+            "end": 224.1239,
+            "name": "오아",
+            "seed_frames": [
+              13272,
+              13436
+            ],
+            "reason": "conflicting_face_name"
+          }
+        ],
+        "role_reasons": {
+          "awaiting_sustained_composition": 1,
+          "measured_face_composition": 1
+        },
+        "cut_frames": []
+      },
+      {
+        "start": 222.222,
+        "end": 222.6224,
+        "clip_count": 1,
+        "previous_name": "unknown",
+        "next_name": "오아",
+        "contiguous_same_name_bracket": false,
+        "accepted_joint_faces": [],
+        "body_checks": [
+          {
+            "start": 221.5212,
+            "end": 224.1239,
+            "name": "오아",
+            "seed_frames": [
+              13272,
+              13436
+            ],
+            "reason": "conflicting_face_name"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 3,
+          "measured_face_composition": 2,
+          "awaiting_sustained_composition": 1
+        },
+        "cut_frames": [
+          13324
+        ]
+      }
+    ],
+    "selected_cases": [
+      {
+        "start": 38,
+        "end": 39,
+        "output": [
+          {
+            "seg_id": 9,
+            "seg_type": "main",
+            "start": 37.804433333333336,
+            "end": 38.20483333333333,
+            "person_id": "unknown",
+            "clip_id": "main_0009",
+            "thumbnail_path": "clips/dance/main/main_0009.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 10,
+            "seg_type": "main",
+            "start": 38.20483333333333,
+            "end": 38.47176666666667,
+            "person_id": "unknown",
+            "clip_id": "main_0010",
+            "thumbnail_path": "clips/dance/main/main_0010.jpg",
+            "kind": "main"
+          },
+          {
+            "seg_id": 11,
+            "seg_type": "main",
+            "start": 38.47176666666667,
+            "end": 40.90753333333333,
+            "person_id": "아이찡",
+            "clip_id": "main_0011",
+            "thumbnail_path": "clips/dance/main/main_0011.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "incomplete_incumbent_geometry": 2,
+          "measured_face_composition": 12,
+          "dominant_face": 1
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "repeated_face_change": 2
+        },
+        "body_checks": []
+      },
+      {
+        "start": 78.378,
+        "end": 79.68,
+        "output": [
+          {
+            "seg_id": 39,
+            "seg_type": "main",
+            "start": 77.37740000000001,
+            "end": 81.94853333333333,
+            "person_id": "시리",
+            "clip_id": "main_0039",
+            "thumbnail_path": "clips/dance/main/main_0039.jpg",
+            "kind": "main"
+          }
+        ],
+        "role_reasons": {
+          "dominant_face": 1,
+          "incomplete_incumbent_geometry": 8,
+          "measured_face_composition": 10,
+          "corroborated_foreground_subject": 1
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {},
+        "body_checks": []
+      },
+      {
+        "start": 150.617,
+        "end": 152.619,
+        "output": [
+          {
+            "seg_id": 31,
+            "seg_type": "group",
+            "start": 150.5504,
+            "end": 152.61913333333334,
+            "person_id": null,
+            "clip_id": "group_0031",
+            "thumbnail_path": "clips/dance/group/group_0031.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 10,
+          "awaiting_sustained_composition": 6,
+          "corroborated_foreground_subject": 4,
+          "near_tie_keep_incumbent": 1,
+          "confirmed_measured_face_composition": 6,
+          "confirmed_near_tie_transition": 3
+        },
+        "handoffs": [
+          {
+            "frame": 9096,
+            "time": 151.7516,
+            "previous_frame": 9092,
+            "previous_time": 151.68486666666666,
+            "boundary_policy": "first_observed_new_main",
+            "previous_selected": 5,
+            "current_selected": 4,
+            "outgoing_current": 0,
+            "incoming_previous": 2
+          },
+          {
+            "frame": 9116,
+            "time": 152.08526666666668,
+            "previous_frame": 9112,
+            "previous_time": 152.01853333333332,
+            "boundary_policy": "first_observed_new_main",
+            "previous_selected": 4,
+            "current_selected": 3,
+            "outgoing_current": 4,
+            "incoming_previous": 1
+          }
+        ],
+        "initial_boundary_reasons": {
+          "repeated_reference_change": 1,
+          "repeated_face_change": 1
+        },
+        "body_checks": []
+      },
+      {
+        "start": 183.15,
+        "end": 184.82,
+        "output": [
+          {
+            "seg_id": 38,
+            "seg_type": "group",
+            "start": 183.14963333333333,
+            "end": 185.25173333333333,
+            "person_id": null,
+            "clip_id": "group_0038",
+            "thumbnail_path": "clips/dance/group/group_0038.jpg",
+            "person_ids": [],
+            "kind": "group"
+          }
+        ],
+        "role_reasons": {
+          "measured_face_composition": 13,
+          "incomplete_incumbent_geometry": 4,
+          "awaiting_sustained_composition": 8
+        },
+        "handoffs": [],
+        "initial_boundary_reasons": {
+          "named_evidence_edge": 1,
+          "repeated_reference_change": 1
+        },
+        "body_checks": []
+      }
+    ]
+  }
+}

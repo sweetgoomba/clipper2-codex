@@ -1,0 +1,5 @@
+{"v": 1, "ts": "2026-10-29T01:20:42.085Z", "level": "info", "src": "python.dance_highlight", "msg": "[YOLO] device=mps half=True"}
+{"v": 1, "ts": "2026-10-29T01:20:42.589Z", "level": "info", "src": "python.dance_highlight", "msg": "DancePipeline ready (device=mps)", "ctx": {"logger": "dance_highlight"}}
+{"v": 1, "ts": "2026-10-29T01:38:35.888Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 17m 38.4s  | download_refs=0.1s  yolo=1m 28.4s  ref_embs=3.1s  segment_build=50.1s  face_extract=3m 27.6s  cluster_map=4m 21.4s  clips_main=7.1s  clips_group=4.3s"}
+{"v": 1, "ts": "2026-10-29T02:03:54.443Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 24m 58.3s  | download_refs=0.0s  yolo=1m 35.4s  ref_embs=2.6s  segment_build=46.3s  face_extract=4m 10.8s  cluster_map=8m 23.3s  clips_main=10.1s  clips_group=3.3s"}
+{"v": 1, "ts": "2026-10-29T02:48:30.810Z", "level": "info", "src": "python.dance_highlight", "msg": "[DANCE][T] TOTAL: 44m 16.6s  | download_refs=0.0s  yolo=1m 52.9s  ref_embs=4.4s  segment_build=1m 16.9s  face_extract=4m 6.4s  cluster_map=25m 42.1s  clips_main=22.4s  clips_group=15.8s"}

@@ -1,0 +1,14 @@
+{
+  "plugins/dance_highlight/dance_highlight/services/native_scene.py": {
+    "bytes": 15061,
+    "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+  },
+  "tests/test_dance_native_scene.py": {
+    "bytes": 15182,
+    "sha256": "4ebad7bf424f5a571d4214041b68f99da7315f93d3e8f4bffd71be8550306128"
+  },
+  "tests/fixtures/dance_native_upper_background.json": {
+    "bytes": 48632,
+    "sha256": "63861ea14ec83f802d0eb641178a1103f011997c26f44cf932f0afc555ed111e"
+  }
+}

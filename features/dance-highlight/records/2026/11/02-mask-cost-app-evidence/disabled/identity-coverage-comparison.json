@@ -1,0 +1,424 @@
+[
+  {
+    "title": "Made My Night",
+    "changed_seconds": 2.45275000000003,
+    "changes": [
+      {
+        "start": 34.4344,
+        "end": 34.8348,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 38.20473333333334,
+        "end": 39.3393,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 68.30146666666666,
+        "end": 68.83553333333334,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 97.46403333333333,
+        "end": 97.84775,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ]
+      }
+    ],
+    "transitions": [
+      {
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 1.5349666666666693
+      },
+      {
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 0.9177833333333609
+      }
+    ]
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "changed_seconds": 8.142366666666677,
+    "changes": [
+      {
+        "start": 0.0,
+        "end": 1.1679333333333333,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 4.571233333333334,
+        "end": 6.139466666666666,
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 48.08136666666667,
+        "end": 48.415033333333334,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 64.43093333333333,
+        "end": 64.89826666666667,
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 82.182,
+        "end": 82.5825,
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 117.31720000000001,
+        "end": 117.6175,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "홍은채"
+        ]
+      },
+      {
+        "start": 134.06726666666668,
+        "end": 134.96816666666666,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 147.34720000000002,
+        "end": 147.51413333333335,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 148.58176666666668,
+        "end": 148.8487,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 149.3492,
+        "end": 149.51603333333333,
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 154.42093333333332,
+        "end": 154.65460000000002,
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 180.8806,
+        "end": 182.6826,
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ]
+      }
+    ],
+    "transitions": [
+      {
+        "before": [
+          "홍은채"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 2.7361666666666657
+      },
+      {
+        "before": [
+          "김채원"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 1.1681333333333423
+      },
+      {
+        "before": [
+          "카즈하"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 0.6341666666666868
+      },
+      {
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "홍은채"
+        ],
+        "seconds": 0.3002999999999929
+      },
+      {
+        "before": [
+          "허윤진"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 1.5015999999999678
+      },
+      {
+        "before": [
+          "사쿠라"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 1.802000000000021
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "changed_seconds": 4.738466666666724,
+    "changes": [
+      {
+        "start": 34.3343,
+        "end": 35.1351,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 37.804433333333336,
+        "end": 38.47176666666667,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 40.90753333333333,
+        "end": 41.20783333333333,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 143.3432,
+        "end": 143.40993333333333,
+        "before": [
+          "시리"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 143.67686666666668,
+        "end": 143.84380000000002,
+        "before": [
+          "시리"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 157.9578,
+        "end": 158.5584,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 161.19436666666667,
+        "end": 161.72823333333332,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 163.39646666666667,
+        "end": 163.6635,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 163.73023333333333,
+        "end": 164.63113333333334,
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 194.0938,
+        "end": 194.26073333333335,
+        "before": [
+          "영"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 201.0008,
+        "end": 201.16773333333333,
+        "before": [
+          "시리"
+        ],
+        "after": [
+          "unknown"
+        ]
+      },
+      {
+        "start": 221.75486666666666,
+        "end": 221.85496666666668,
+        "before": [
+          "오아"
+        ],
+        "after": [
+          "unknown"
+        ]
+      }
+    ],
+    "transitions": [
+      {
+        "before": [
+          "아이찡"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 4.07083333333334
+      },
+      {
+        "before": [
+          "시리"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 0.4005999999999972
+      },
+      {
+        "before": [
+          "영"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 0.16693333333336113
+      },
+      {
+        "before": [
+          "오아"
+        ],
+        "after": [
+          "unknown"
+        ],
+        "seconds": 0.10010000000002606
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+[
+  "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+  "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py",
+  "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+  "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+  "plugins/dance_highlight/dance_highlight/services/role_state.py",
+  "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+  "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+  "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+  "tests/fixtures/dance_scene_review/mmn104_role_state.json",
+  "tests/fixtures/dance_scene_review/neon98_foreground_context.json",
+  "tests/test_dance_role_state.py",
+  "tests/test_dance_role_state_integration.py",
+  "tests/test_dance_scene_foreground_context.py",
+  "tests/test_dance_shot_member_gaps.py"
+]

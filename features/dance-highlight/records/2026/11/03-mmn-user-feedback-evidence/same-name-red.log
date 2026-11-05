@@ -1,0 +1,13 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_direct_same_name_across_a_view_change_never_creates_a_short_unknown ___
+tests/test_dance_member_timeline.py:731: in test_direct_same_name_across_a_view_change_never_creates_a_short_unknown
+    assert [(s.start,s.end,d.reference_id) for s,d in zip(result['segments'],result['decisions'])] == [(0.,.7,'A')]
+E   AssertionError: assert [(0.0, 0.5, '...5, 0.7, None)] == [(0.0, 0.7, 'A')]
+E     
+E     At index 0 diff: (0.0, 0.5, 'A') != (0.0, 0.7, 'A')
+E     Left contains one more item: (0.5, 0.7, None)
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_dance_member_timeline.py::test_direct_same_name_across_a_view_change_never_creates_a_short_unknown
+1 failed, 77 deselected in 0.72s

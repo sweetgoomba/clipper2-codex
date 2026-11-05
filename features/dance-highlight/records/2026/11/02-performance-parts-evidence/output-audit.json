@@ -1,0 +1,241 @@
+[
+  {
+    "title": "MMN",
+    "main_changes": [],
+    "main_changes_outside_expected": [],
+    "group_changes": [],
+    "before": {
+      "named": {
+        "count": 41,
+        "short": 7,
+        "seconds": 128.1943333333333,
+        "longest": 10.660650000000018
+      },
+      "unknown": {
+        "count": 16,
+        "short": 14,
+        "seconds": 6.80720000000003,
+        "longest": 1.2346666666666692
+      },
+      "group": {
+        "count": 32,
+        "short": 21,
+        "seconds": 33.51681666666667,
+        "longest": 4.371033333333333
+      }
+    },
+    "after": {
+      "named": {
+        "count": 41,
+        "short": 7,
+        "seconds": 128.1943333333333,
+        "longest": 10.660650000000018
+      },
+      "unknown": {
+        "count": 16,
+        "short": 14,
+        "seconds": 6.80720000000003,
+        "longest": 1.2346666666666692
+      },
+      "group": {
+        "count": 32,
+        "short": 21,
+        "seconds": 33.51681666666667,
+        "longest": 4.371033333333333
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": true,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v1",
+    "identity_span_count": 72,
+    "part_count": 57,
+    "newly_named_seconds": 9.999999999621423e-05
+  },
+  {
+    "title": "ANT",
+    "main_changes": [
+      {
+        "start": 146.61313333333334,
+        "end": 146.67986666666667,
+        "before": [
+          "홍은채"
+        ],
+        "after": []
+      },
+      {
+        "start": 146.67986666666667,
+        "end": 146.88006666666666,
+        "before": [
+          "unknown"
+        ],
+        "after": []
+      }
+    ],
+    "main_changes_outside_expected": [],
+    "group_changes": [
+      {
+        "start": 146.61313333333334,
+        "end": 146.88006666666666,
+        "before": [],
+        "after": [
+          "group"
+        ]
+      }
+    ],
+    "before": {
+      "named": {
+        "count": 69,
+        "short": 25,
+        "seconds": 175.87389999999985,
+        "longest": 8.842166666666664
+      },
+      "unknown": {
+        "count": 33,
+        "short": 29,
+        "seconds": 16.01780000000008,
+        "longest": 1.802000000000021
+      },
+      "group": {
+        "count": 32,
+        "short": 25,
+        "seconds": 27.49413333333333,
+        "longest": 3.136466666666678
+      }
+    },
+    "after": {
+      "named": {
+        "count": 69,
+        "short": 25,
+        "seconds": 175.80716666666652,
+        "longest": 8.842166666666664
+      },
+      "unknown": {
+        "count": 31,
+        "short": 27,
+        "seconds": 15.817600000000084,
+        "longest": 1.802000000000021
+      },
+      "group": {
+        "count": 32,
+        "short": 25,
+        "seconds": 27.761066666666657,
+        "longest": 3.136466666666678
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": false,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v1",
+    "identity_span_count": 97,
+    "part_count": 100,
+    "newly_named_seconds": 0.0
+  },
+  {
+    "title": "NEON",
+    "main_changes": [
+      {
+        "start": 143.67686666666668,
+        "end": 144.07726666666667,
+        "before": [
+          "unknown"
+        ],
+        "after": []
+      }
+    ],
+    "main_changes_outside_expected": [],
+    "group_changes": [
+      {
+        "start": 143.67686666666668,
+        "end": 144.07726666666667,
+        "before": [],
+        "after": [
+          "group"
+        ]
+      }
+    ],
+    "before": {
+      "named": {
+        "count": 99,
+        "short": 41,
+        "seconds": 160.4920666666665,
+        "longest": 8.274933333333337
+      },
+      "unknown": {
+        "count": 51,
+        "short": 49,
+        "seconds": 16.751666666666797,
+        "longest": 1.5349666666666621
+      },
+      "group": {
+        "count": 56,
+        "short": 34,
+        "seconds": 50.316933333333424,
+        "longest": 2.4024
+      }
+    },
+    "after": {
+      "named": {
+        "count": 99,
+        "short": 41,
+        "seconds": 160.4920666666665,
+        "longest": 8.274933333333337
+      },
+      "unknown": {
+        "count": 49,
+        "short": 47,
+        "seconds": 16.351266666666806,
+        "longest": 1.5349666666666621
+      },
+      "group": {
+        "count": 55,
+        "short": 33,
+        "seconds": 50.717333333333414,
+        "longest": 2.4024
+      }
+    },
+    "original_face_segments_identical": true,
+    "pose_heads_identical": false,
+    "pose_original_measurements_identical": true,
+    "main_selection_refinement_identical": false,
+    "mask": {
+      "version": "disabled_runtime_cost_v1",
+      "reason": "disabled_runtime_cost",
+      "recovered_seconds": 0.0,
+      "candidates": [],
+      "output_changes": {
+        "recovered_seconds": 0.0,
+        "corrected_seconds": 0.0,
+        "conflict_seconds": 0.0
+      }
+    },
+    "parts_version": "performance_parts_v1",
+    "identity_span_count": 149,
+    "part_count": 148,
+    "newly_named_seconds": 0.1669333333333327
+  }
+]

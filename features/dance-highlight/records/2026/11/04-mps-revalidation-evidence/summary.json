@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-11-03T17:38:29.337827+00:00",
+  "total_before_seconds": 3209.364,
+  "total_after_seconds": 2952.51,
+  "observed_reduction_percent": 8.003267937198766,
+  "totals": {
+    "before_counts": {
+      "raw": 397,
+      "output": 371,
+      "raw_short": 208,
+      "output_short": 187,
+      "named_short": 59,
+      "unknown_seconds": 32.9694666666669
+    },
+    "counts": {
+      "raw": 393,
+      "output": 367,
+      "raw_short": 208,
+      "output_short": 187,
+      "named_short": 62,
+      "unknown_seconds": 36.32311666666686
+    }
+  },
+  "known_review_window_count": 14,
+  "changed_review_windows": [
+    {
+      "video": "ANT",
+      "start": 4.571,
+      "end": 6.139,
+      "changed_ranges": [
+        {
+          "start": 4.571,
+          "end": 4.571233333333334,
+          "before": [
+            "unknown"
+          ],
+          "after": [
+            "홍은채"
+          ]
+        },
+        {
+          "start": 5.6056,
+          "end": 5.6723333333333334,
+          "before": [
+            "unknown"
+          ],
+          "after": [
+            "group",
+            "unknown"
+          ]
+        }
+      ]
+    },
+    {
+      "video": "ANT",
+      "start": 9.4,
+      "end": 10.277,
+      "changed_ranges": [
+        {
+          "start": 9.9098,
+          "end": 10.276933333333334,
+          "before": [
+            "김채원"
+          ],
+          "after": [
+            "unknown"
+          ]
+        }
+      ]
+    }
+  ],
+  "actual_successful_mps_calls": 10241,
+  "cpu_reanalysis_jobs": 0,
+  "body_costly_tracking": "OFF",
+  "newer_priority_provenance": "latest-user-priority.json",
+  "scope": "Mac Dance only, one product-app run per video per condition, cached same YouTube inputs"
+}

@@ -1,0 +1,277 @@
+[
+  {
+    "path": "plugins/dance_highlight/dance_highlight/__init__.py",
+    "sha256": "5f7dea4133b77db96a2c77dfbb6438e32f122c0f899a0ba360da33bb12233224",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/app.py",
+    "sha256": "55761e3f8dc69b375f9bc9e49e51a7cccea4d13c2a9ff6c30128633bd98b7533",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/__main__.py",
+    "sha256": "2dcad1574b35b004f6984310d0aae6d54616e69be249499eb51145828161b448",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/reference_matcher.py",
+    "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/output_continuity.py",
+    "sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_models.py",
+    "sha256": "962e60028e30496a8a7d929f555413a66edb471a787e0a559358fa669507e143",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/artist_detector.py",
+    "sha256": "768f8da7984d82bb7f5e7e77afbdbeb68c59580ec32bb0e04d8ea4cc15e5b117",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pose_engine.py",
+    "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/focal_output.py",
+    "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "sha256": "48b6b2a8cd46795dff3e6af5f76041b31c4f89e9b174fdde6ac7e4019c900d1c",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/config.py",
+    "sha256": "35c9c0a9695665bfe72f3f4e4abcae574ceea0fd9548738f758e7514f930ef45",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+    "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/observed_main.py",
+    "sha256": "3a76c610bdbd78c47e615f209a8a6c261e2ceacb5a2dc37bf0b183b9db599507",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+    "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_face_link.py",
+    "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/sampled_face_link.py",
+    "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/render.py",
+    "sha256": "83d7ae0e62e0bd21668f17f68da1be368cd54e6c74bf7b77e1bb4763abcf57c7",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/track.py",
+    "sha256": "798d0ca50b471e7a5f13962507488daad5463ca540d96c9e966cb48e604fbd9b",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/protocols.py",
+    "sha256": "bcd5c09786c17899a4497b670e79b2352c6c24bb615b6160d841c5b2b098cd2e",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+    "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+    "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/diagnostics.py",
+    "sha256": "8db63226fa87d99895890919b004b1c5672c296c802283ffbf8c4a44f104d641",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/native_scene.py",
+    "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/group_resolver.py",
+    "sha256": "3d274bccb5bf1e6f1d191709988bd109d5e778285f7dd9bbe8b9d6a5718ade6d",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+    "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_role_timeline.py",
+    "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+    "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+    "sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+    "sha256": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+    "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/__init__.py",
+    "sha256": "71bcc9e0efac22b18cf90da2b1299eeee74560e7209d91ec18e052bd3d2f683d",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/source_reader.py",
+    "sha256": "e86c525fdf45db5c0275ff02d376ed80813f775e942883da80ffd358b6ad04de",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/dance_meta.py",
+    "sha256": "a8a46018bc905239ab2813e2b26044e8c88aa20b4e49006880023acc4d8b924b",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+    "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/person_thumbnails.py",
+    "sha256": "15acd5cec9779b66e7346cc86a5e9ad28c875d1bb18d731203b6f98a2454669b",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+    "sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py",
+    "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+    "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "8689ac56184aaaf3d11a73ddc87fcdbb49cc1ca2e46950e4d048a656a2cca89b",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/member_coverage.py",
+    "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+    "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/image_search_service.py",
+    "sha256": "2fb085e091437f6f984c7f648a37273e4e29e3a6318efefb9ce02411af6bd0d3",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/incoming_context.py",
+    "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+    "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+    "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/ffmpeg_utils.py",
+    "sha256": "83cccdf1e8ddc3cb0fa35ad2c26bdaef185704f2610862f666e2f4ec941bfdce",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/segment.py",
+    "sha256": "4f39bb4a54e2a4e42baf532af84ac33077e6c7c9ffe22338575311b523a0e39f",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+    "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_recovery.py",
+    "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/context_faces.py",
+    "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+    "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+    "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_identity.py",
+    "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f",
+    "packaged_equal": true
+  },
+  {
+    "path": "plugins/dance_highlight/pyproject.toml",
+    "sha256": "1e6e3c8d2f3a4fb62ef454b619c9ddc954ba503280866e4785ca5793862b9428",
+    "packaged_equal": true
+  },
+  {
+    "path": "uv.lock",
+    "sha256": "cd5b5192ca3623293a1b6ed0afa261276b4a192d0625a8553a6714ba834109c1",
+    "packaged_equal": true
+  }
+]

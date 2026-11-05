@@ -1,0 +1,20 @@
+[
+  {
+    "tag": "before",
+    "timestamp_argument": "117.317",
+    "file": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793610363935/clips/dance/main/main_0050.jpg",
+    "reextracted": "/private/tmp/dance-astra-review-20261102/ANT-main0050-before-reextracted.jpg",
+    "same_bytes": true,
+    "size": 252111,
+    "sha256": "e8149be2ab4103be068d2b944596f82b8718d95aceff4805330f037524fcbbb4"
+  },
+  {
+    "tag": "after",
+    "timestamp_argument": "117.601",
+    "file": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/clips/dance/main/main_0050.jpg",
+    "reextracted": "/private/tmp/dance-astra-review-20261102/ANT-main0050-after-reextracted.jpg",
+    "same_bytes": true,
+    "size": 213953,
+    "sha256": "98bb7c29fb553f8d7e70f6fe3e07f907e60b7a010bdfbeec673a739e65bf7b3b"
+  }
+]

@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_camera_cut_support_cannot_create_a_preceding_face_change _________
+
+    def test_camera_cut_support_cannot_create_a_preceding_face_change():
+        """MMN: new-shot Yunjin faces must not split the preceding shot at 50.684."""
+        import json
+        from pathlib import Path
+        from dance_highlight.services.member_timeline import _identity_boundaries
+        data = json.loads((Path(__file__).parent / 'fixtures/dance_scene_review/mmn50_cut_support.json').read_text())
+        rows = [FaceObservation(**dict(o, embedding=np.array(o['embedding']) if o['embedding'] is not None else None))
+                for o in data['observations']]
+        segment = Segment('main', 0, 49.9, 51.3, [])
+>       result = _identity_boundaries(segment, rows, [None]*len(rows), [],
+                                      cut_times=[3047/data['fps']])
+E       TypeError: _identity_boundaries() got an unexpected keyword argument 'cut_times'
+
+tests/test_dance_member_timeline.py:697: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_dance_member_timeline.py::test_camera_cut_support_cannot_create_a_preceding_face_change
+1 failed, 73 deselected in 1.17s

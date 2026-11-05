@@ -1,0 +1,12 @@
+{
+  "verified_at": "2026-11-02T21:40:16.747673+09:00",
+  "frozen_source_files": 54,
+  "live_source_changed_since_capture": [],
+  "synthetic_cases": 5,
+  "initial_boundaries": 347,
+  "face_gap_boundaries": 38,
+  "same_named_unknown_blocks": 14,
+  "explicit_body_rejections": 11,
+  "no_body_proof": 3,
+  "unknown_seconds": 11.379133333333408
+}

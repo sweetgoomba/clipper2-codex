@@ -1,0 +1,46 @@
+{
+  "version": "bounded_original_role_state_v1",
+  "scope": "Product vs corrected prototype exact whole-audit equality, except version rename; all three saved-video baselines and source cut/identity interval unions.",
+  "videos": {
+    "MMN": {
+      "project_id": "1793633624877",
+      "exact_full_audit_equivalent": true,
+      "plain_json_serializable": true,
+      "seconds": 0.01769154198700562,
+      "accepted": [
+        {
+          "start": 104.57113333333334,
+          "end": 104.90480000000001,
+          "name": "허윤진",
+          "frames": [
+            6268,
+            6272,
+            6276,
+            6280,
+            6284
+          ],
+          "group_export_policy": "preserve_original_dual_eligibility"
+        }
+      ]
+    },
+    "ANT": {
+      "project_id": "1793633679903",
+      "exact_full_audit_equivalent": true,
+      "plain_json_serializable": true,
+      "seconds": 0.0016233750502578914,
+      "accepted": []
+    },
+    "NEON": {
+      "project_id": "1793633791815",
+      "exact_full_audit_equivalent": true,
+      "plain_json_serializable": true,
+      "seconds": 0.002081291051581502,
+      "accepted": []
+    }
+  },
+  "files": {
+    "plugins/dance_highlight/dance_highlight/services/role_state.py": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0",
+    "tests/test_dance_role_state.py": "f77ad67bfe83facb2e20ccec861b258675faa02dcfff138ad3d502ee4f760b2c",
+    "tests/fixtures/dance_scene_review/mmn104_role_state.json": "bbcef6f7c411300246d6cb8b2de72555bda57333f094399ad98e6f5f4f30eeee"
+  }
+}

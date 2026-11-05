@@ -1,0 +1,672 @@
+{
+  "checked_at": "2026-11-03T16:14:35.142326+00:00",
+  "jobs": {
+    "MMN": {
+      "id": "dance_1793719164438",
+      "status": "completed",
+      "elapsed_seconds": 729.961,
+      "counts": {
+        "output": 64,
+        "output_short": 22,
+        "raw": 81,
+        "raw_short": 34,
+        "named_short": 6,
+        "unknown_seconds": 4.27143333333337
+      },
+      "loaded_module_count": 50,
+      "loaded_module_mismatches": [],
+      "source_url": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/BZDZBUyaJbA",
+        "requestedQuality": "1080p"
+      },
+      "source_file": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/BZDZBUyaJbA/source.mp4",
+      "source_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+      "source_modified_at": "2026-10-23T01:44:03.524914+00:00",
+      "same_selected_images_as_previous": true,
+      "same_reference_image_bytes_as_previous": true,
+      "acceleration": {
+        "attempt": 1,
+        "requested_device": "cpu",
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable",
+        "elapsed_seconds": 718.6740736250067
+      },
+      "acceleration_models": {
+        "schema": 1,
+        "mode": "cpu",
+        "consumer": "dance",
+        "device": "cpu",
+        "release_qualified": null,
+        "candidate_failures": {},
+        "models": [
+          {
+            "model_id": "pose.yolov8s",
+            "selected_backend": "torch_cpu",
+            "reason": "existing_runtime",
+            "calls": 2459,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "torch_cpu"
+            ]
+          },
+          {
+            "model_id": "face.auraface",
+            "selected_backend": "CPUExecutionProvider",
+            "reason": "existing_runtime",
+            "calls": 4590,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "CPUExecutionProvider"
+            ]
+          },
+          {
+            "model_id": "face.yunet",
+            "selected_backend": "opencv_cpu",
+            "reason": "existing_runtime",
+            "calls": null,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown"
+          }
+        ],
+        "failed_attempt": {
+          "schema": 1,
+          "mode": "auto",
+          "consumer": "dance",
+          "device": "mps",
+          "release_qualified": null,
+          "candidate_failures": {},
+          "models": [
+            {
+              "model_id": "pose.yolov8s",
+              "selected_backend": "torch_mps",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "provider_only",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.auraface",
+              "selected_backend": "CPUExecutionProvider",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.yunet",
+              "selected_backend": "opencv_cpu",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            }
+          ]
+        },
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable"
+      },
+      "body_costly_recovery": {
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0
+      },
+      "targets": {
+        "41.5": [
+          {
+            "clip_id": "main_0008",
+            "start": 35.4354,
+            "end": 42.97626666666667,
+            "person_id": "사쿠라",
+            "seg_type": "main"
+          }
+        ],
+        "45.5": [
+          {
+            "clip_id": "main_0010",
+            "start": 43.143100000000004,
+            "end": 46.46308333333334,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          },
+          {
+            "clip_id": "main_0011",
+            "start": 45.361983333333335,
+            "end": 47.98126666666667,
+            "person_id": "사쿠라",
+            "seg_type": "main"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "group_0011",
+            "start": 50.2502,
+            "end": 50.83411666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0014",
+            "start": 50.83411666666667,
+            "end": 52.452400000000004,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          }
+        ],
+        "90.0": [
+          {
+            "clip_id": "main_0031",
+            "start": 88.85543333333334,
+            "end": 96.34625,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0035",
+            "start": 97.79780000000001,
+            "end": 104.02058333333333,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0040",
+            "start": 113.64686666666667,
+            "end": 118.50171666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0044",
+            "start": 134.16736666666668,
+            "end": 137.17036666666667,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ]
+      }
+    },
+    "ANT": {
+      "id": "dance_1793719441015",
+      "status": "completed",
+      "elapsed_seconds": 1204.641,
+      "counts": {
+        "output": 120,
+        "output_short": 62,
+        "raw": 128,
+        "raw_short": 70,
+        "named_short": 21,
+        "unknown_seconds": 13.748266666666712
+      },
+      "loaded_module_count": 50,
+      "loaded_module_mismatches": [],
+      "source_url": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/p_XdZdg9oGc",
+        "requestedQuality": "1080p"
+      },
+      "source_file": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/p_XdZdg9oGc/source.mp4",
+      "source_sha256": "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2",
+      "source_modified_at": "2026-10-22T16:43:14.878977+00:00",
+      "same_selected_images_as_previous": true,
+      "same_reference_image_bytes_as_previous": true,
+      "acceleration": {
+        "attempt": 1,
+        "requested_device": "cpu",
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable",
+        "elapsed_seconds": 1199.8783829590539
+      },
+      "acceleration_models": {
+        "schema": 1,
+        "mode": "cpu",
+        "consumer": "dance",
+        "device": "cpu",
+        "release_qualified": null,
+        "candidate_failures": {},
+        "models": [
+          {
+            "model_id": "pose.yolov8s",
+            "selected_backend": "torch_cpu",
+            "reason": "existing_runtime",
+            "calls": 3609,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "torch_cpu"
+            ]
+          },
+          {
+            "model_id": "face.auraface",
+            "selected_backend": "CPUExecutionProvider",
+            "reason": "existing_runtime",
+            "calls": 7330,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "CPUExecutionProvider"
+            ]
+          },
+          {
+            "model_id": "face.yunet",
+            "selected_backend": "opencv_cpu",
+            "reason": "existing_runtime",
+            "calls": null,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown"
+          }
+        ],
+        "failed_attempt": {
+          "schema": 1,
+          "mode": "auto",
+          "consumer": "dance",
+          "device": "mps",
+          "release_qualified": null,
+          "candidate_failures": {},
+          "models": [
+            {
+              "model_id": "pose.yolov8s",
+              "selected_backend": "torch_mps",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "provider_only",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.auraface",
+              "selected_backend": "CPUExecutionProvider",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.yunet",
+              "selected_backend": "opencv_cpu",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            }
+          ]
+        },
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable"
+      },
+      "body_costly_recovery": {
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0
+      },
+      "targets": {
+        "4.57": [
+          {
+            "clip_id": "main_0003",
+            "start": 4.371033333333333,
+            "end": 4.7047,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "8.8": [
+          {
+            "clip_id": "main_0006",
+            "start": 7.590916666666667,
+            "end": 8.975633333333334,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "9.1": [
+          {
+            "clip_id": "main_0007",
+            "start": 8.975633333333334,
+            "end": 17.150466666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "9.91": [
+          {
+            "clip_id": "main_0007",
+            "start": 8.975633333333334,
+            "end": 17.150466666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "32.7": [
+          {
+            "clip_id": "main_0018",
+            "start": 32.66596666666667,
+            "end": 36.97026666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "33.5": [
+          {
+            "clip_id": "main_0018",
+            "start": 32.66596666666667,
+            "end": 36.97026666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "64.3643": [
+          {
+            "clip_id": "main_0027",
+            "start": 64.3643,
+            "end": 64.41435,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "64.41435": [
+          {
+            "clip_id": "main_0028",
+            "start": 64.41435,
+            "end": 69.2692,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.8": [
+          {
+            "clip_id": "main_0083",
+            "start": 169.70286666666667,
+            "end": 171.80496666666667,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": [
+          {
+            "clip_id": "main_0084",
+            "start": 171.80496666666667,
+            "end": 172.2053666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ]
+      }
+    },
+    "NEON": {
+      "id": "dance_1793719521324",
+      "status": "completed",
+      "elapsed_seconds": 1274.762,
+      "counts": {
+        "output": 187,
+        "output_short": 103,
+        "raw": 188,
+        "raw_short": 104,
+        "named_short": 32,
+        "unknown_seconds": 14.949766666666815
+      },
+      "loaded_module_count": 50,
+      "loaded_module_mismatches": [],
+      "source_url": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/93j1fDGi_-8",
+        "requestedQuality": "1080p"
+      },
+      "source_file": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/93j1fDGi_-8/source.mp4",
+      "source_sha256": "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f",
+      "source_modified_at": "2026-10-22T22:53:10.620354+00:00",
+      "same_selected_images_as_previous": true,
+      "same_reference_image_bytes_as_previous": true,
+      "acceleration": {
+        "attempt": 1,
+        "requested_device": "cpu",
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable",
+        "elapsed_seconds": 1269.1708262920147
+      },
+      "acceleration_models": {
+        "schema": 1,
+        "mode": "cpu",
+        "consumer": "dance",
+        "device": "cpu",
+        "release_qualified": null,
+        "candidate_failures": {},
+        "models": [
+          {
+            "model_id": "pose.yolov8s",
+            "selected_backend": "torch_cpu",
+            "reason": "existing_runtime",
+            "calls": 4173,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "torch_cpu"
+            ]
+          },
+          {
+            "model_id": "face.auraface",
+            "selected_backend": "CPUExecutionProvider",
+            "reason": "existing_runtime",
+            "calls": 7337,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown",
+            "backends": [
+              "CPUExecutionProvider"
+            ]
+          },
+          {
+            "model_id": "face.yunet",
+            "selected_backend": "opencv_cpu",
+            "reason": "existing_runtime",
+            "calls": null,
+            "samples": 0,
+            "distinct_inputs": 0,
+            "cpu_median_ms": null,
+            "candidate_median_ms": null,
+            "execution_evidence": "unverified",
+            "profile_verified": false,
+            "graph_execution": "unknown"
+          }
+        ],
+        "failed_attempt": {
+          "schema": 1,
+          "mode": "auto",
+          "consumer": "dance",
+          "device": "mps",
+          "release_qualified": null,
+          "candidate_failures": {},
+          "models": [
+            {
+              "model_id": "pose.yolov8s",
+              "selected_backend": "torch_mps",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "provider_only",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.auraface",
+              "selected_backend": "CPUExecutionProvider",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            },
+            {
+              "model_id": "face.yunet",
+              "selected_backend": "opencv_cpu",
+              "reason": "existing_runtime",
+              "calls": null,
+              "samples": 0,
+              "distinct_inputs": 0,
+              "cpu_median_ms": null,
+              "candidate_median_ms": null,
+              "execution_evidence": "unverified",
+              "profile_verified": false,
+              "graph_execution": "unknown"
+            }
+          ]
+        },
+        "cpu_reanalysis": true,
+        "fallback_reason": "backend_unavailable"
+      },
+      "body_costly_recovery": {
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0
+      },
+      "targets": {
+        "78.378": [
+          {
+            "clip_id": "main_0035",
+            "start": 77.37740000000001,
+            "end": 81.94853333333333,
+            "person_id": "시리",
+            "seg_type": "main"
+          }
+        ],
+        "79.68": [
+          {
+            "clip_id": "main_0035",
+            "start": 77.37740000000001,
+            "end": 81.94853333333333,
+            "person_id": "시리",
+            "seg_type": "main"
+          }
+        ],
+        "150.617": [
+          {
+            "clip_id": "group_0027",
+            "start": 150.5504,
+            "end": 152.61913333333334,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "152.619": [
+          {
+            "clip_id": "group_0027",
+            "start": 150.5504,
+            "end": 152.61913333333334,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "183.15": [
+          {
+            "clip_id": "group_0034",
+            "start": 183.14963333333333,
+            "end": 187.72086666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "184.82": [
+          {
+            "clip_id": "group_0034",
+            "start": 183.14963333333333,
+            "end": 187.72086666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ]
+      }
+    }
+  }
+}

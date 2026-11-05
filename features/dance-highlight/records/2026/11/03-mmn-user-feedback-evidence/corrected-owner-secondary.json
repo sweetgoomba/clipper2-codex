@@ -1,0 +1,45 @@
+{
+  "secondary_reason": "complete",
+  "secondary_names": {
+    "6172": "홍은채",
+    "6176": "홍은채",
+    "6180": "홍은채",
+    "6184": "홍은채",
+    "6188": "홍은채"
+  },
+  "seconds": 23.79689633398084,
+  "new_selected_owner_face_matches": [
+    [
+      6172,
+      null,
+      null
+    ],
+    [
+      6176,
+      null,
+      null
+    ],
+    [
+      6180,
+      null,
+      null
+    ],
+    [
+      6184,
+      null,
+      null
+    ],
+    [
+      6188,
+      null,
+      null
+    ]
+  ],
+  "output": [
+    [
+      102.93616666666667,
+      103.25315,
+      "홍은채"
+    ]
+  ]
+}

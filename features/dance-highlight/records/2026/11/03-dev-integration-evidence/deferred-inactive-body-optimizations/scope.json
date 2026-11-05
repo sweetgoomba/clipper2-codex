@@ -1,0 +1,12 @@
+{
+  "not_merged": [
+    "plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+    "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+    "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py",
+    "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+    "tests/test_dance_mask_continuity.py",
+    "tests/test_dance_mask_tracker.py"
+  ],
+  "reason": "SAM disabled; preserve latest dev implementations and defer inactive local optimizations",
+  "shared_acceleration_changes": false
+}

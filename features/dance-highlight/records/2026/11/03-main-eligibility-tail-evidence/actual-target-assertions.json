@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "MMN_same_inputs": true,
+    "MMN_code_and_tracking": true,
+    "ANT_same_inputs": true,
+    "ANT_code_and_tracking": true,
+    "NEON_same_inputs": true,
+    "NEON_code_and_tracking": true,
+    "mmn_50_ensemble_has_no_gap": true,
+    "mmn_no_fake_kim_before_real_cut": true,
+    "mmn_yunjin_after_real_cut": true,
+    "mmn_103_is_continuous_eunchae": true,
+    "mmn_late_eunchae_restored": true,
+    "mmn_late_kazuha_restored": true,
+    "ant_unknown_prefix_preserved": true,
+    "ant_proved_suffix_restored": true,
+    "ant_prefix_not_forcibly_named": true,
+    "reviewed_14_no_new_wrong_name_or_coverage_loss": true
+  },
+  "passed": true,
+  "scope": "Targeted actual-output assertions; no claim of full-video accuracy or that all 14 references pass."
+}

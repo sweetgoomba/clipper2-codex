@@ -1,0 +1,391 @@
+{
+  "independent_cut_probe": {
+    "edge_cut": {
+      "parts": [
+        [
+          0.0,
+          1.0,
+          "A"
+        ]
+      ],
+      "boundaries": []
+    },
+    "sparse_same_name_no_cut": {
+      "parts": [
+        [
+          0.0,
+          0.65,
+          "A"
+        ],
+        [
+          0.65,
+          1.0,
+          null
+        ]
+      ],
+      "boundaries": [
+        {
+          "time": 0.65,
+          "left_time": 0.65,
+          "right_time": 0.65,
+          "reason": "face_coverage_gap",
+          "strength": 3.0
+        }
+      ]
+    },
+    "sparse_same_name_with_cut": {
+      "parts": [
+        [
+          0.0,
+          0.65,
+          "A"
+        ],
+        [
+          0.65,
+          1.0,
+          null
+        ]
+      ],
+      "boundaries": [
+        {
+          "time": 0.65,
+          "left_time": 0.65,
+          "right_time": 0.65,
+          "reason": "face_coverage_gap",
+          "strength": 3.0
+        }
+      ]
+    },
+    "supported_same_name_with_cut": {
+      "parts": [
+        [
+          0.0,
+          1.0,
+          "A"
+        ]
+      ],
+      "boundaries": []
+    },
+    "mmn103": {
+      "frames": [
+        6148,
+        6152,
+        6156,
+        6160,
+        6164,
+        6168,
+        6172,
+        6176,
+        6180,
+        6184,
+        6188
+      ],
+      "all_expected": true,
+      "reasons": [
+        "awaiting_sustained_composition",
+        "measured_face_composition"
+      ]
+    },
+    "front_confirmed": [
+      {
+        "frame": 1720,
+        "passed": true
+      },
+      {
+        "frame": 1728,
+        "passed": true
+      },
+      {
+        "frame": 1744,
+        "passed": true
+      },
+      {
+        "frame": 2792,
+        "passed": true
+      },
+      {
+        "frame": 2836,
+        "passed": true
+      },
+      {
+        "frame": 2864,
+        "passed": true
+      }
+    ],
+    "sha256": {
+      "member_timeline": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8",
+      "stage_prominence": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c"
+    },
+    "models_called": false,
+    "video_reads": 0
+  },
+  "independent_cut_snap_probe": {
+    "comment": "A remains A on both sides of camera cut .25; actual A/B face change lies between .3 and .4. Names withheld to exercise embedding boundary.",
+    "old_no_cut": [
+      {
+        "time": 0.35,
+        "left_time": 0.3,
+        "right_time": 0.4,
+        "reason": "repeated_face_change",
+        "strength": 1.0
+      }
+    ],
+    "new_cut": [],
+    "sha256": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8"
+  },
+  "independent_same_name_cut_probe": {
+    "baseline": {
+      "parts": [
+        [
+          0.0,
+          0.7,
+          "A"
+        ]
+      ],
+      "boundaries": []
+    },
+    "cut": {
+      "parts": [
+        [
+          0.0,
+          0.7,
+          "A"
+        ]
+      ],
+      "boundaries": []
+    },
+    "sha256": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8"
+  },
+  "mmn50": {
+    "secondary_names": {
+      "3020": "김채원",
+      "3024": "김채원",
+      "3028": "김채원",
+      "3032": "김채원",
+      "3036": "김채원"
+    },
+    "named_ranges": [
+      {
+        "start": 50.28366666666667,
+        "end": 50.750600000000006,
+        "name": "김채원",
+        "first_time": 50.38366666666667,
+        "last_time": 50.650600000000004,
+        "support_frames": [
+          3020,
+          3024,
+          3032,
+          3036
+        ]
+      }
+    ],
+    "with_secondary": [],
+    "without_secondary": [],
+    "fixture_sha256": "c59c7c7d905037df8d2963d836a27d1d89e0a087f2ee5a37ddd5be425d3f302e"
+  },
+  "both": [
+    {
+      "time": 0.65,
+      "left_time": 0.5,
+      "right_time": 0.75,
+      "reason": "source_cut_face_change",
+      "strength": 4.0
+    }
+  ],
+  "left_only": [
+    {
+      "time": 0.85,
+      "left_time": 0.85,
+      "right_time": 0.85,
+      "reason": "face_coverage_gap",
+      "strength": 3.0
+    }
+  ],
+  "right_only": [
+    {
+      "time": 0.4,
+      "left_time": 0.4,
+      "right_time": 0.4,
+      "reason": "face_coverage_gap",
+      "strength": 3.0
+    }
+  ],
+  "name_functions_unchanged": {
+    "_window_name": true,
+    "_named_ranges": false,
+    "_assign_piece": true
+  },
+  "cut_forwarding": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "sha_before": {
+    "member_timeline": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8",
+    "stage_prominence": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c",
+    "pipeline": "8f4cf456d5444cbf68596f0ab40dcc5c01012c3f9604f1b01ae150a1c9d58867"
+  },
+  "sha_after": {
+    "member_timeline": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8",
+    "stage_prominence": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c",
+    "pipeline": "8f4cf456d5444cbf68596f0ab40dcc5c01012c3f9604f1b01ae150a1c9d58867"
+  },
+  "stable": true,
+  "models_called": false,
+  "video_reads": 0,
+  "padding_cases": {
+    "no_cut": [
+      {
+        "start": 0.0,
+        "end": 0.6,
+        "name": "A",
+        "first_time": 0.1,
+        "last_time": 0.5,
+        "support_frames": [
+          100,
+          300,
+          500
+        ]
+      }
+    ],
+    "both_outer_cuts": [
+      {
+        "start": 0.084,
+        "end": 0.516,
+        "name": "A",
+        "first_time": 0.1,
+        "last_time": 0.5,
+        "support_frames": [
+          100,
+          300,
+          500
+        ]
+      }
+    ],
+    "interior_same_name_cut": [
+      {
+        "start": 0.0,
+        "end": 0.6,
+        "name": "A",
+        "first_time": 0.1,
+        "last_time": 0.5,
+        "support_frames": [
+          100,
+          300,
+          500
+        ]
+      }
+    ],
+    "outside_scope_cuts": [
+      {
+        "start": 0.0,
+        "end": 0.6,
+        "name": "A",
+        "first_time": 0.1,
+        "last_time": 0.5,
+        "support_frames": [
+          100,
+          300,
+          500
+        ]
+      }
+    ]
+  },
+  "clear_named_change": [
+    {
+      "time": 0.5,
+      "left_time": 0.3,
+      "right_time": 0.55,
+      "reason": "source_cut_face_change",
+      "strength": 4.0
+    }
+  ],
+  "saved_parent_comparison": {
+    "MMN": {
+      "before": {
+        "file_sha256": "66103cad97f0da278e6e3034ab0c86d8fcd68dbe4eccace1382d04c729414d77",
+        "parts": [
+          {
+            "start": 49.866483333333335,
+            "end": 50.2502,
+            "name": null,
+            "reason": "unresolved_face_interval"
+          },
+          {
+            "start": 50.650600000000004,
+            "end": 50.68396666666667,
+            "name": "김채원",
+            "reason": "member_timeline_consensus"
+          },
+          {
+            "start": 50.68396666666667,
+            "end": 52.48576666666666,
+            "name": "허윤진",
+            "reason": "member_timeline_consensus"
+          }
+        ]
+      },
+      "after": {
+        "file_sha256": "1b8c0d160a284dd9149a4deb3ab943ea2fef8e60286f8216be9d9fc4670aa56c",
+        "parts": [
+          {
+            "start": 49.866483333333335,
+            "end": 50.2502,
+            "name": null,
+            "reason": "unresolved_face_interval"
+          },
+          {
+            "start": 50.650600000000004,
+            "end": 50.83411666666667,
+            "name": "김채원",
+            "reason": "member_timeline_consensus"
+          },
+          {
+            "start": 50.83411666666667,
+            "end": 52.452400000000004,
+            "name": "허윤진",
+            "reason": "member_timeline_consensus"
+          }
+        ]
+      }
+    },
+    "ANT": {
+      "before": {
+        "file_sha256": "0ad472d3771e6955df35401c19b00314910a0da20cacb48c0c1365a1ba0cf8a9",
+        "parts": [
+          {
+            "start": 7.590916666666667,
+            "end": 8.975633333333334,
+            "name": "홍은채",
+            "reason": "member_timeline_consensus"
+          },
+          {
+            "start": 8.975633333333334,
+            "end": 9.9098,
+            "name": "김채원",
+            "reason": "member_timeline_consensus"
+          }
+        ]
+      },
+      "after": {
+        "file_sha256": "5c8e08cb213ea5768d1b08dad9b26cfd70aa538d46dbf42155e057c4ca264e80",
+        "parts": [
+          {
+            "start": 7.590916666666667,
+            "end": 8.975633333333334,
+            "name": "홍은채",
+            "reason": "member_timeline_consensus"
+          },
+          {
+            "start": 8.975633333333334,
+            "end": 9.9098,
+            "name": "김채원",
+            "reason": "member_timeline_consensus"
+          }
+        ]
+      }
+    }
+  },
+  "final_member_sha": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8"
+}

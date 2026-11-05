@@ -1,0 +1,87 @@
+세 영상 실제 앱 결과 — 최종 독립 검토
+2026-11-03 (Asia/Seoul)
+
+결론
+품질·변경 범위·원본/모듈 provenance 검증109개가 모두 통과했다. 승인한 세 범위를 제외한 이름·구간 커버리지 변화, 새 극단적 짧은 조각, 썸네일 바이트 변경은 발견하지 못했다. SAM OFF도 유지됐다.
+그러나 실행시간은 기준1116.809초에서1207.958초로91.149초(+8.161557%) 늘었다. 이번 결과를 속도 개선으로 표현해서는 안 된다. 단일 실행 비교이므로 원인은 분리 확정하지 않았다.
+
+사전 소스 검토와 실제 앱 검증의 구분
+최종freeze의변경14개파일을독립동결하고관련208pytest, role원본cache16검사, scene_context통합20검사, shot22검사를통과시킨뒤실제앱비교를진행했다. role_state SHA는d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0, shot_member_gaps SHA는5b03843400b5a2ab84f1daa78730fd0b7e96af71eb63288225452c77531823b9다. 사전검증과이번실제앱109검사는서로구분한다.109는주대조106개에기준source동일inode/바이트보존3검사를추가한수다. 실제앱검증중새모델추론이나제품수정은없었고, 원본디코딩은NEON query의정확한ROI증명및3개접촉시트에만사용했다. 전체영상정답재라벨링이나반복성능실험은실행하지않았다.
+사전증거: /private/tmp/dance-episode-review-20261103/final-integrated-reviewed-source/independent-manifest-review.json 및 final-related-tests.log.
+최종freeze: /private/tmp/dance-continuity-next-20261103/final-source-manifest.json.
+
+대조 대상
+MMN: 기준1793633624877 → 새1793639096353
+ANT: 기준1793633679903 → 새1793639190408
+NEON: 기준1793633791815 → 새1793639268565
+기준은 이전 독립 검토를 마친414개 출력이다. 저장된 원본 metadata/evidence 해시와 현재 기준 파일이 일치한다. 새 실행 세 건은 오류 없이 완료됐고 job 종료 시각과 project 완료 시각이 일치한다.
+
+정확히 허용한 변화
+MMN
+- 기존 허윤진104.020583333–104.571133333 및104.904800000–106.706600000을104.020583333–106.706600000으로 연결.
+- main 자격 추가는104.571133333–104.904800000(0.333666667초)에 한정.
+- 원래 group 출력32개와 전체 group 커버리지를 그대로 보존.
+- 전체89→88개.
+ANT
+- 기존 김채원62.562500000–64.430933333 / unknown64.430933333–64.898266667 / 김채원64.898266667–69.202466667을62.562500000–69.202466667로 연결.
+- 새 이름 복원은 unknown0.467333333초만이며 다른 이름 변경은 없음.
+- group 출력32개와 커버리지 보존.
+- 전체128→126개.
+NEON
+- 기존 오아98.231466667–98.298200000 및98.531766667–99.966533333을98.231466667–99.966533333로 연결.
+- main 추가 및 중복 group 제거는98.298200000–98.531766667(0.233566667초)에 한정.
+- 전체197→195개. 원래 컷5906은 유지됨.
+
+합계
+전체 출력414→409 / main296→292 / group118→117.
+1초 미만230→226: named71→69, unknown80→79, group79→78.
+0.1초 미만20→19. 새로 생긴 극단적 짧은 조각은 없다.
+unknown 시간38.608933333→38.141600000초. 감소분은 ANT 이름 복원0.467333333초뿐이다.
+
+이름·썸네일·진단 이미지
+- 완전히 동일한 구간406개의 의미 정보와 이미지가 보존됐다. person 이름/설명/대표 정보도 clip 연결 수·ID를 제외하고 동일하다.
+- 병합된3개를 포함한 최종 썸네일409개 모두 기존 동일 시작 시점의 원본 썸네일과 바이트가 같다. clip ID/파일 번호 재배치를 이미지 변화로 오인하지 않았다.
+- 변경되지 않은 main의 얼굴 진단 이미지 순서는 모두 동일하다. MMN/ANT 병합 진단 이미지는 기존 소유 구간 이미지에서 나온 바이트다.
+- NEON 병합 main 진단 이미지5장 중4장은 이전 export에 없던 새 표시 이미지다. 이4장은 허용 복원 구간의 원본 frame5892/5896/5900/5904다. 원본 영상에서 저장된 ROI/face bbox로JPEG품질92를 재구성해5장 모두 바이트 일치를 확인했다. 원래 owned 관측/embedding은 동일하며 원래 joint 이름도 오아다. 새 얼굴 추론이나 다른 인물 이미지로 교체한 것이 아니다.
+- 그 밖의 이미지 자산은 동일하다.
+
+원본 증거와 경계 보존
+Face raw segments/observations/embeddings, identity refinement, reference gallery, body continuity, native scene 관측이 동일하다. 전체9266개 pose 중 기하/키포인트/후보 몸 소유권은 동일하고 scene_kind/scene_reason만 승인한MMN5개 및NEON4개 표본에서 변경됐다. 원래 main selection, cuts, handoffs, camera episodes도 동일하다.
+NEON secondary/mask 감사의 차이는5906 source cut에 대한 deferred structure 평가 완료3필드뿐이다. 원래 cut=true를 유지하며 신원 결과는 변하지 않았다. 후처리 preparation의 accepted 변경도 source_index와 시간 측정을 제외하고 동일하다. NEON은 병합으로 rejected 후보가33→32가 됐지만 accepted는0으로 같다.
+세 영상의 기준/신규source.mp4는 각각 동일 inode이며, 신규 바이트 해시가 양쪽 원래 기록과 일치한다. 현재 reference 파일 바이트도 저장된 인식 gallery와 일치한다. config, 설정, 요청 source, reference 선택은 동일하다.
+
+보호 구간
+원래 사용자가 지적한14개 범위의 잘린 커버리지가 모두 같다.
+MMN:1.9–2.3 /2.3–4.37 /10.91–11.31 /34.73–35.44 /37.738–39.339 /45–48 /89–93.
+ANT:4.571–6.139 /8.375–9 /9.4–10.277 /32.633–33.433.
+NEON:78.378–79.68 /150.617–152.619 /183.15–184.82.
+추가 보호 사례 ANT82.182–82.6826 중앙 인계, ANT180.8806–182.6826 wide ensemble, NEON93.059533–94.928167 identity 변화, NEON115.6155–115.9158 컷 뒤 duet에도 변경이 없다.
+
+SAM OFF 및 실행 소스
+mask/joint 정책은 disabled_runtime_cost_v1이며 각 실행시간0, SAM mask 후보0, 관련 복원/교정0을 유지했다. 기록된 모델 목록에 SAM은 없다.
+실행 기록의 Dance41모듈은 최종 검토 source SHA와 일치하고, AuraFace를 포함한42모듈의 실제 설치 파일 바이트도 기록 SHA와 같다. AuraFace는 이전과 동일하다. 설치 dance_highlight 패키지58개Python 파일 모두 freeze와 같고, source/test 최종manifest181개도 유지됐다. Person31개와SDK25개는 작업 시작 전과 바이트가 같다.
+검증기 작성 중 더 넓은 packaged 산출물 수84를 dance_highlight 패키지 수로 잘못 적용한 count assertion3건은 발견 즉시 범위를 교정했다. 해당 패키지의 manifest/설치 파일은 모두58개이고 바이트 불일치는 처음부터0이었다. 이는 제품 실패가 아닌 검증기 개수 오류이며 별도 기록을 보존했다.
+
+실행시간 — 대기열 시간 제외
+영상       기준(s)      신규(s)      증가(s)      증가율
+MMN        288.679      314.957       26.278       9.102844%
+ANT        389.900      431.777       41.877      10.740446%
+NEON       438.230      461.224       22.994       5.247016%
+합계      1116.809     1207.958       91.149       8.161557%
+
+새 shot stage는MMN0.008010초 /ANT0.188351초 /NEON0.020147초다. ANT에서만source seek1/read49가 발생했고 다른 두 영상은0이다. 영상별12paths/240frames 한도를 지켰다. 각 단계 시간의 전체 내 포함 관계도 확인했다.
+증가분 중64.344067초가 YOLO+main_selection 단계 기록에서 관측됐다. 출력 관측은 동일하지만 이 사실만으로 속도 증가 원인을 해당 코드 또는 외부 부하로 확정할 수 없다. 단계 중첩 시간을 중복 합산하지 않았으며, 개선 주장이나 반복 벤치마크 주장은 하지 않는다.
+
+표적 원본 화면 검토
+승인 범위별6프레임을 원본 영상에서 추출해 선택 몸의 bbox와 함께 확인했다. MMN에서는 단체 구도 안의 연속된 선택 몸이 유지돼 group 보존이 타당하다. ANT는 컷 전후가 별도 샷임이 확인되며 이름 증거도 샷마다 독립 확인한 경로다. NEON은 승인4표본의 foreground 선택 몸과 뒤의 원래 컷을 보존한다. 신원은 시각적 추정이 아니라 동일한 원본 owned face 증거에 근거한다.
+
+한계 및 최종 판정
+세 영상의 허용 변경 범위·원본 증거·출력 자산에 대한 독립 대조로서 품질 퇴행은 발견하지 못했다. 모든 장면의 신원 정답을 새로 라벨링한 검사는 아니다. 성능은 단일 실제 실행에서8.16% 느려졌으며 원인 미확정이다. 최종 상태는 '품질/범위/provenance 통과, 관측된 실행시간 퇴행 있음'이다.
+
+주요 증거 파일
+final-app-independent-verification.json:109검사, 영상별 모든 차이/시간/해시 검증 결과.
+member-app-images-audit.json:전체 이미지 해시와썸네일/진단 이미지 대응.
+neon-query-original-source-proof.json:NEON5개query 원본frame/ROI/바이트 증명.
+MMN-approved-change-source-contact.jpg /ANT-approved-change-source-contact.jpg /NEON-approved-change-source-contact.jpg:표적 원본 화면.
+verification-harness-correction.json:84/58 검증기 범위 교정 기록.
+audit_app.py /audit_images.py /verify_final_app.py /prove_neon_query_sources.py:대조 및표적 증명 스크립트.

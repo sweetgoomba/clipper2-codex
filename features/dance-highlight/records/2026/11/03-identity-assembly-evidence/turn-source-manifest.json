@@ -1,0 +1,11 @@
+{
+  "plugins/dance_highlight/dance_highlight/services/identity_projection.py": "e478409aec1ff084217a946a1c7319c0b602b8cd926da00f718e46ff019fddb0",
+  "plugins/dance_highlight/dance_highlight/services/face_evidence.py": "2bfc8d3c9123a8440a52345e28ed8871c8e557d03298886c8d0e2db6ff5f6b20",
+  "plugins/dance_highlight/dance_highlight/services/performance_parts.py": "cd2554a18ca8fe2c8e8431464414343f562433ade907c4d9a7f994454512bbbe",
+  "tests/test_dance_performance_parts.py": "d00a9858994c004e7ae16c05d1937c1541f673bdb5c353fa91f2c45e497cc783",
+  "tests/test_dance_identity_projection.py": "6d33b075220e92b25f32a4fad33114e1971b57219010fc3a14ed21f58198011d",
+  "plugins/dance_highlight/dance_highlight/services/part_boundary_events.py": "8d039cd019195019450d371c8c1e02d7afa9a25d7bf802024f95b25f7f43a10d",
+  "tests/test_dance_part_boundary_events.py": "1065b95660e5bd06db23486cf4b283a8c1f61bf24e14b56f94ab308501ab1aca",
+  "tests/fixtures/dance_scene_review/coincident_boundary_events.json": "a8b7b570ca0961e6711ad2394b31be6a9fcbe6e610e09aaa73ed1b4f141a9808",
+  "tests/fixtures/dance_scene_review/neon187_projected_identity.json": "0e4c27782bafd4793000f449d95e9c89d3ad1ea7424386b0cbf89aaef96d9e65"
+}

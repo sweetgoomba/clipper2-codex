@@ -1,0 +1,50 @@
+[
+  {
+    "title": "MMN",
+    "unchanged_clip_thumbnails_compared": 87,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 43,
+        "seg_type": "main",
+        "start": 104.02058333333333,
+        "end": 106.70660000000001,
+        "person_id": "허윤진",
+        "clip_id": "main_0043",
+        "thumbnail_path": "clips/dance/main/main_0043.jpg"
+      }
+    ]
+  },
+  {
+    "title": "ANT",
+    "unchanged_clip_thumbnails_compared": 125,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 25,
+        "seg_type": "main",
+        "start": 62.5625,
+        "end": 69.20246666666667,
+        "person_id": "김채원",
+        "clip_id": "main_0025",
+        "thumbnail_path": "clips/dance/main/main_0025.jpg"
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "unchanged_clip_thumbnails_compared": 194,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 51,
+        "seg_type": "main",
+        "start": 98.23146666666666,
+        "end": 99.96653333333333,
+        "person_id": "오아",
+        "clip_id": "main_0051",
+        "thumbnail_path": "clips/dance/main/main_0051.jpg"
+      }
+    ]
+  }
+]

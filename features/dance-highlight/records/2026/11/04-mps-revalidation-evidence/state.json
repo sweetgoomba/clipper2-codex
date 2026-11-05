@@ -1,0 +1,195 @@
+{
+  "status": "completed_requested_mps_revalidation",
+  "owner_thread_id": "01a19e03-43e4-7880-83f1-92e0b923fb88",
+  "owner_host": "local",
+  "after_cursor": "7ff3e8b7-6503-42e9-b23e-99a1cafd9e28:83",
+  "requested_at": "2026-11-03T16:22:48.305530+00:00",
+  "before_remote": {
+    "python": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+    "angular": "4150871c6bb14f0a3eb5fd4d55a51a7bec54e98c",
+    "nestjs": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+    "electron": "540c6e6544e8aa46ad97224958d7e543c44c1c0c"
+  },
+  "before_jobs": {
+    "MMN": "dance_1793719164438",
+    "ANT": "dance_1793719441015",
+    "NEON": "dance_1793719521324"
+  },
+  "after_jobs": {
+    "MMN": "dance_1793724487371",
+    "ANT": "dance_1793724620401",
+    "NEON": "dance_1793724725509"
+  },
+  "body_costly_tracking": "off",
+  "gpu_implementation_owner": "existing_audit_thread",
+  "build_location": "original desktop repos on dev",
+  "root_cause_reproduction": {
+    "source": "owner thread current reproduction commentary",
+    "reason": "memory_admission_deferred",
+    "status": 409,
+    "estimated_mib_approx": 289,
+    "free_mib_approx": 246,
+    "inference_calls": 0,
+    "original_three_failures_exact_cause": "not_retroactively_proven"
+  },
+  "owner_validation_progress": "MPS24 actual inferences, probe1x~2.7ms; Python3382 passed +6 baseline render failures/5skip; Electron1975 passed; remote merge pending",
+  "owner_completed": true,
+  "owner_report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/04-mps-admission-cpu-recovery-fix.md",
+  "after_remote": {
+    "clipper_python": "5d565dfa96c1fa3bd6a4b94e9dc96110088f0dab",
+    "clipper_electron": "6831d8de76d34bb6ae2523122e9c6271ba68d00f",
+    "clipper_nestjs": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+    "clipper_angular": "7b559706cea07e21374592f3106c0503d7a93d34"
+  },
+  "build": {
+    "exit_code": 0,
+    "log": "/private/tmp/dance-mps-revalidation-20261104/build.log",
+    "app": "/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app",
+    "python_source_files": 160,
+    "electron_compiled_files": 164,
+    "mismatches": []
+  },
+  "observer_session": 96516,
+  "owner_readonly_review": {
+    "status": "completed",
+    "turn_id": "01a1a25c-61cf-7a21-a737-2dabab8f0660",
+    "after_cursor": "7ff3e8b7-6503-42e9-b23e-99a1cafd9e28:89",
+    "scope": "No new models/tests/edits while app ANT/NEON timing; inspect MMN 1.484817s label differences, actualhalfTrue vsprobeFP32",
+    "record": "owner-readonly-quality-review.json",
+    "finding": "Actual app MPS FP16 differs from CPU/probe FP32; 4bodycount/8scene frames differ, ROIs/face embeddings and temporal identity evidence differ. FP16 solecause notseparated. No models/tests/edits performed."
+  },
+  "first_result": {
+    "MMN": {
+      "elapsed_seconds": 721.975,
+      "before_elapsed_seconds": 729.961,
+      "mps_calls": 2459,
+      "cpu_reanalysis": false,
+      "backends": {
+        "yolo": "torch_mps",
+        "auraface": "CPUExecutionProvider",
+        "yunet": "opencv_cpu"
+      },
+      "unknown_seconds": 4.872033333333363,
+      "before_unknown_seconds": 4.27143333333337,
+      "output_short": 22,
+      "named_short": 4,
+      "before_named_short": 6,
+      "changed_timeline_seconds": 1.48481666666666,
+      "reviewed_windows_changed": 0,
+      "target_labels_maintained": true
+    }
+  },
+  "second_result": {
+    "ANT": {
+      "elapsed_seconds": 1191.718,
+      "before_elapsed_seconds": 1204.641,
+      "mps_calls": 3609,
+      "cpu_reanalysis": false,
+      "named_short": 24,
+      "before_named_short": 21,
+      "unknown_seconds": 14.832883333333363,
+      "before_unknown_seconds": 13.748266666666712,
+      "changed_timeline_seconds": 7.29131666666667,
+      "confirmed_regression": {
+        "start": 9.9098,
+        "end": 10.276933333333334,
+        "before": "김채원",
+        "after": "unknown",
+        "truth": "user-confirmed 김채원"
+      }
+    }
+  },
+  "required_after_current_three": "DONE: all3 completed, GPU/time/input/runtime/SAM checks passed; actualqualitydifferences documented and finalresults sent to existingGPUowner. Newer directuser speed-first request preserved; owner continues bigCPUbottleneck/Mac8repo/Windowsbuild work. No duplicate full3rerun or build by root.",
+  "newer_direct_user_priority": {
+    "thread_id": "01a19e03-43e4-7880-83f1-92e0b923fb88",
+    "turn_id": "01a1a270-caed-71c1-865a-75f5cf117c33",
+    "direct_user_quote": "아니 기존 품질과 완전히 같지 않아도 돼. 지금 가장 중요한건 실행 시간을 단축시키는거라고.",
+    "request": "실행 시간 병목 파악, 원본8개 최신dev Mac local-api 빌드 및 Windows 전달용 빌드. 담당 세션에서 진행 중.",
+    "root_action": "현재 NEON 실측 보존 후3영상 최종자료를 전달한다. 작은 수치/분류 차이만으로 정밀도 수정과 전체3회 재실행을 필수로 추가하지 않는다. 품질 차이를 숨기지 않고 후속 큰 병목 개선에 함께 넘긴다. 새 빌드는 담당 세션이 일원화한다."
+  },
+  "superseded_required_after_current_three": "Finish currentNEON timedrun, then existingGPUowner bounded CPUFP32/MPSFP32/MPSFP16 same-frame investigation of confirmedANT9.91Kim->unknown regression; fix supportedruntimeprecision cause withoutpolicy/body/Person change ifproven, then rebuildoriginaldev andrerun3ifcodechanges. Do not finish with unaddressed known regression or run extra models during currentNEON.",
+  "completed_at": "2026-11-03T17:39:53.683380+00:00",
+  "final_summary": {
+    "checked_at": "2026-11-03T17:38:29.337827+00:00",
+    "total_before_seconds": 3209.364,
+    "total_after_seconds": 2952.51,
+    "observed_reduction_percent": 8.003267937198766,
+    "totals": {
+      "before_counts": {
+        "raw": 397,
+        "output": 371,
+        "raw_short": 208,
+        "output_short": 187,
+        "named_short": 59,
+        "unknown_seconds": 32.9694666666669
+      },
+      "counts": {
+        "raw": 393,
+        "output": 367,
+        "raw_short": 208,
+        "output_short": 187,
+        "named_short": 62,
+        "unknown_seconds": 36.32311666666686
+      }
+    },
+    "known_review_window_count": 14,
+    "changed_review_windows": [
+      {
+        "video": "ANT",
+        "start": 4.571,
+        "end": 6.139,
+        "changed_ranges": [
+          {
+            "start": 4.571,
+            "end": 4.571233333333334,
+            "before": [
+              "unknown"
+            ],
+            "after": [
+              "홍은채"
+            ]
+          },
+          {
+            "start": 5.6056,
+            "end": 5.6723333333333334,
+            "before": [
+              "unknown"
+            ],
+            "after": [
+              "group",
+              "unknown"
+            ]
+          }
+        ]
+      },
+      {
+        "video": "ANT",
+        "start": 9.4,
+        "end": 10.277,
+        "changed_ranges": [
+          {
+            "start": 9.9098,
+            "end": 10.276933333333334,
+            "before": [
+              "김채원"
+            ],
+            "after": [
+              "unknown"
+            ]
+          }
+        ]
+      }
+    ],
+    "actual_successful_mps_calls": 10241,
+    "cpu_reanalysis_jobs": 0,
+    "body_costly_tracking": "OFF",
+    "newer_priority_provenance": "latest-user-priority.json",
+    "scope": "Mac Dance only, one product-app run per video per condition, cached same YouTube inputs"
+  },
+  "observer_completed": true,
+  "remaining_work_owner": {
+    "thread_id": "01a19e03-43e4-7880-83f1-92e0b923fb88",
+    "work": "큰 CPU 얼굴·메인 병목 개선, 얼굴 GPU 선택 조건 점검, 원본8개 최신dev Mac local-api 및 Windows 전달용 빌드; 해당 세션 최신 사용자 요청으로 진행 중",
+    "known_quality_limits": "출력1초미만187개 동일, 이름있는초단편59→62, 미확인32.969467→36.323117초; ANT9.9098–10.276933김채원→미확인 회귀 미해결. 정밀도 영향 단독 인과 미분리."
+  }
+}

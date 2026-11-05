@@ -1,0 +1,10 @@
+{
+  "rejected": true,
+  "output_identity_unchanged": true,
+  "audit": {
+    "version": "original_face_run_boundary_v1",
+    "corrected_seconds": 0.0,
+    "corrections": [],
+    "candidates": []
+  }
+}

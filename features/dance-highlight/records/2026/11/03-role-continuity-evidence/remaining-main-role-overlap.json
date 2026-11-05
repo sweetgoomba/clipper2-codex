@@ -1,0 +1,4331 @@
+{
+  "project_id": "1793649506337",
+  "source": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649506337",
+  "mode": "JSON/source read-only; no product code calls, tests, source decode, replay, or ML",
+  "fps": 59.94005994005994,
+  "source_size": [
+    1920,
+    1080
+  ],
+  "final_main": [
+    {
+      "seg_id": 9,
+      "seg_type": "main",
+      "start": 35.4354,
+      "end": 42.97626666666667,
+      "person_id": "사쿠라",
+      "clip_id": "main_0009",
+      "thumbnail_path": "clips/dance/main/main_0009.jpg"
+    },
+    {
+      "seg_id": 10,
+      "seg_type": "main",
+      "start": 42.97626666666667,
+      "end": 43.143100000000004,
+      "person_id": "unknown",
+      "clip_id": "main_0010",
+      "thumbnail_path": "clips/dance/main/main_0010.jpg"
+    },
+    {
+      "seg_id": 11,
+      "seg_type": "main",
+      "start": 43.143100000000004,
+      "end": 46.46308333333334,
+      "person_id": "허윤진",
+      "clip_id": "main_0011",
+      "thumbnail_path": "clips/dance/main/main_0011.jpg"
+    },
+    {
+      "seg_id": 12,
+      "seg_type": "main",
+      "start": 45.361983333333335,
+      "end": 47.98126666666667,
+      "person_id": "사쿠라",
+      "clip_id": "main_0012",
+      "thumbnail_path": "clips/dance/main/main_0012.jpg"
+    },
+    {
+      "seg_id": 13,
+      "seg_type": "main",
+      "start": 47.98126666666667,
+      "end": 49.866483333333335,
+      "person_id": "허윤진",
+      "clip_id": "main_0013",
+      "thumbnail_path": "clips/dance/main/main_0013.jpg"
+    },
+    {
+      "seg_id": 14,
+      "seg_type": "main",
+      "start": 49.866483333333335,
+      "end": 50.2502,
+      "person_id": "unknown",
+      "clip_id": "main_0014",
+      "thumbnail_path": "clips/dance/main/main_0014.jpg"
+    },
+    {
+      "seg_id": 15,
+      "seg_type": "main",
+      "start": 50.650600000000004,
+      "end": 50.68396666666667,
+      "person_id": "김채원",
+      "clip_id": "main_0015",
+      "thumbnail_path": "clips/dance/main/main_0015.jpg"
+    },
+    {
+      "seg_id": 16,
+      "seg_type": "main",
+      "start": 50.68396666666667,
+      "end": 52.48576666666666,
+      "person_id": "허윤진",
+      "clip_id": "main_0016",
+      "thumbnail_path": "clips/dance/main/main_0016.jpg"
+    }
+  ],
+  "identity_spans": [
+    {
+      "id": 15,
+      "range": [
+        35.4354,
+        42.97626666666667
+      ],
+      "name": "사쿠라",
+      "reason": "member_body_continuity",
+      "observation_frames": [
+        2124,
+        2128,
+        2132,
+        2136,
+        2140,
+        2144,
+        2148,
+        2152,
+        2156,
+        2160,
+        2164,
+        2168,
+        2172,
+        2176,
+        2180,
+        2184,
+        2188,
+        2192,
+        2196,
+        2200,
+        2204,
+        2208,
+        2212,
+        2216,
+        2220,
+        2224,
+        2228,
+        2232,
+        2236,
+        2240,
+        2244,
+        2248,
+        2252,
+        2256,
+        2260,
+        2264,
+        2268,
+        2272,
+        2276,
+        2280,
+        2284,
+        2288,
+        2292,
+        2296,
+        2300,
+        2304,
+        2308,
+        2312,
+        2316,
+        2320,
+        2324,
+        2328,
+        2332,
+        2336,
+        2340,
+        2344,
+        2348,
+        2352,
+        2356,
+        2360,
+        2364,
+        2368,
+        2372,
+        2376,
+        2380,
+        2384,
+        2388,
+        2392,
+        2396,
+        2400,
+        2404,
+        2408,
+        2412,
+        2416,
+        2420,
+        2424,
+        2428,
+        2432,
+        2436,
+        2440,
+        2444,
+        2448,
+        2452,
+        2456,
+        2460,
+        2464,
+        2468,
+        2472,
+        2476,
+        2480,
+        2484,
+        2488,
+        2492,
+        2496,
+        2500,
+        2504,
+        2508,
+        2512,
+        2516,
+        2520,
+        2524,
+        2528,
+        2532,
+        2536,
+        2540,
+        2544,
+        2548,
+        2552,
+        2556,
+        2560,
+        2564,
+        2568,
+        2572
+      ]
+    },
+    {
+      "id": 16,
+      "range": [
+        42.97626666666667,
+        43.143100000000004
+      ],
+      "name": null,
+      "reason": "unresolved_face_interval",
+      "observation_frames": [
+        2576,
+        2580,
+        2584
+      ]
+    },
+    {
+      "id": 17,
+      "range": [
+        43.143100000000004,
+        46.46308333333334
+      ],
+      "name": "허윤진",
+      "reason": "member_timeline_consensus",
+      "observation_frames": [
+        2588,
+        2592,
+        2596,
+        2600,
+        2604,
+        2608,
+        2612,
+        2616,
+        2620,
+        2624,
+        2628,
+        2632,
+        2636,
+        2640,
+        2644,
+        2648,
+        2652,
+        2656,
+        2660,
+        2664,
+        2668,
+        2672,
+        2676,
+        2680,
+        2684,
+        2688,
+        2692,
+        2696,
+        2700,
+        2704,
+        2708,
+        2712,
+        2716,
+        2720,
+        2724,
+        2728,
+        2732,
+        2736,
+        2740,
+        2744,
+        2748,
+        2752,
+        2756,
+        2760,
+        2764,
+        2768,
+        2772,
+        2776,
+        2780,
+        2784
+      ]
+    },
+    {
+      "id": 18,
+      "range": [
+        46.46308333333334,
+        47.98126666666667
+      ],
+      "name": "사쿠라",
+      "reason": "member_timeline_consensus",
+      "observation_frames": [
+        2788,
+        2792,
+        2796,
+        2800,
+        2804,
+        2808,
+        2812,
+        2816,
+        2820,
+        2824,
+        2828,
+        2832,
+        2836,
+        2840,
+        2844,
+        2848,
+        2852,
+        2856,
+        2860,
+        2864,
+        2868,
+        2872
+      ]
+    },
+    {
+      "id": 19,
+      "range": [
+        47.98126666666667,
+        49.866483333333335
+      ],
+      "name": "허윤진",
+      "reason": "member_timeline_consensus",
+      "observation_frames": [
+        2876,
+        2880,
+        2884,
+        2888,
+        2892,
+        2896,
+        2900,
+        2904,
+        2908,
+        2912,
+        2916,
+        2920,
+        2924,
+        2928,
+        2932,
+        2936,
+        2940,
+        2944,
+        2948,
+        2952,
+        2956,
+        2960,
+        2964,
+        2968,
+        2972,
+        2976,
+        2980,
+        2984,
+        2988
+      ]
+    },
+    {
+      "id": 20,
+      "range": [
+        49.866483333333335,
+        50.28366666666667
+      ],
+      "name": null,
+      "reason": "unresolved_face_interval",
+      "observation_frames": [
+        2992,
+        2996,
+        3000,
+        3004,
+        3008,
+        3012
+      ]
+    },
+    {
+      "id": 21,
+      "range": [
+        50.28366666666667,
+        50.68396666666667
+      ],
+      "name": "김채원",
+      "reason": "member_timeline_consensus",
+      "observation_frames": [
+        3016,
+        3020,
+        3024,
+        3028,
+        3032,
+        3036
+      ]
+    },
+    {
+      "id": 22,
+      "range": [
+        50.68396666666667,
+        52.48576666666666
+      ],
+      "name": "허윤진",
+      "reason": "member_timeline_consensus",
+      "observation_frames": [
+        3040,
+        3044,
+        3048,
+        3052,
+        3056,
+        3060,
+        3064,
+        3068,
+        3072,
+        3076,
+        3080,
+        3084,
+        3088,
+        3092,
+        3096,
+        3100,
+        3104,
+        3108,
+        3112,
+        3116,
+        3120,
+        3124,
+        3128,
+        3132,
+        3136,
+        3140,
+        3144
+      ]
+    }
+  ],
+  "pre_preparation_parts": [
+    {
+      "range": [
+        35.4354,
+        42.97626666666667
+      ],
+      "name": "사쿠라",
+      "source_spans": [
+        15
+      ],
+      "newly_named_seconds": 0
+    },
+    {
+      "range": [
+        42.97626666666667,
+        43.143100000000004
+      ],
+      "name": null,
+      "source_spans": [
+        16
+      ],
+      "newly_named_seconds": 0.0
+    },
+    {
+      "range": [
+        43.143100000000004,
+        46.46308333333334
+      ],
+      "name": "허윤진",
+      "source_spans": [
+        17
+      ],
+      "newly_named_seconds": 0
+    },
+    {
+      "range": [
+        46.46308333333334,
+        47.98126666666667
+      ],
+      "name": "사쿠라",
+      "source_spans": [
+        18
+      ],
+      "newly_named_seconds": 0
+    },
+    {
+      "range": [
+        47.98126666666667,
+        49.866483333333335
+      ],
+      "name": "허윤진",
+      "source_spans": [
+        19
+      ],
+      "newly_named_seconds": 0
+    },
+    {
+      "range": [
+        49.866483333333335,
+        50.2502
+      ],
+      "name": null,
+      "source_spans": [
+        20
+      ],
+      "newly_named_seconds": 0.0
+    },
+    {
+      "range": [
+        50.650600000000004,
+        50.68396666666667
+      ],
+      "name": "김채원",
+      "source_spans": [
+        21
+      ],
+      "newly_named_seconds": 0
+    },
+    {
+      "range": [
+        50.68396666666667,
+        52.48576666666666
+      ],
+      "name": "허윤진",
+      "source_spans": [
+        22
+      ],
+      "newly_named_seconds": 0
+    }
+  ],
+  "preparation_proof": {
+    "source_index": 12,
+    "start": 45.361983333333335,
+    "end": 46.46308333333334,
+    "reference_id": "사쿠라",
+    "reason": "named_incoming_preparation",
+    "previous_cut": 2719,
+    "incoming_cut": 2785,
+    "named_frames": [
+      2768,
+      2772,
+      2780,
+      2784
+    ],
+    "incoming_front_frames": [
+      2816,
+      2820,
+      2824,
+      2828
+    ],
+    "bridges": [
+      {
+        "previous_frame": 2768,
+        "frame": 2772,
+        "reason": "independently_named_owned_endpoints"
+      }
+    ],
+    "visible_targets": [
+      {
+        "frame": 2720,
+        "index": 1
+      },
+      {
+        "frame": 2724,
+        "index": 0
+      },
+      {
+        "frame": 2728,
+        "index": 2
+      },
+      {
+        "frame": 2732,
+        "index": 0
+      },
+      {
+        "frame": 2736,
+        "index": 1
+      },
+      {
+        "frame": 2740,
+        "index": 2
+      },
+      {
+        "frame": 2744,
+        "index": 2
+      },
+      {
+        "frame": 2748,
+        "index": 2
+      },
+      {
+        "frame": 2752,
+        "index": 2
+      },
+      {
+        "frame": 2756,
+        "index": 3
+      },
+      {
+        "frame": 2760,
+        "index": 2
+      },
+      {
+        "frame": 2764,
+        "index": 3
+      },
+      {
+        "frame": 2768,
+        "index": 3
+      },
+      {
+        "frame": 2772,
+        "index": 1
+      },
+      {
+        "frame": 2776,
+        "index": 2
+      },
+      {
+        "frame": 2780,
+        "index": 3
+      },
+      {
+        "frame": 2784,
+        "index": 4
+      }
+    ]
+  },
+  "overlap": {
+    "start": 45.361983333333335,
+    "end": 46.46308333333334,
+    "seconds": 1.1011000000000024
+  },
+  "summary": {
+    "samples": 17,
+    "all_distinct_bodies": true,
+    "original_faces_own_selected_count": 17,
+    "role_reason_counts": {
+      "measured_face_composition": 16,
+      "corroborated_foreground_subject": 1
+    },
+    "selected_feature_source_counts": {
+      "detected": 17
+    },
+    "preparation_feature_source_counts": {
+      "detected": 12,
+      "repeated_same_pose_geometry": 5
+    },
+    "selected_joint_counts": [
+      {
+        "status": "accepted",
+        "name": "허윤진",
+        "count": 14
+      },
+      {
+        "status": "insufficient",
+        "name": null,
+        "count": 2
+      },
+      {
+        "status": "conflict",
+        "name": null,
+        "count": 1
+      }
+    ],
+    "preparation_accepted_joint_count": 6,
+    "preparation_seed_frames": [
+      2768,
+      2772,
+      2780,
+      2784
+    ],
+    "selected_score_wins_over_preparation": 17,
+    "score_ratio_range": [
+      1.575279763174045,
+      2.231218003597922
+    ]
+  },
+  "cuts": [
+    {
+      "frame": 2494,
+      "time": 41.60823333333333
+    },
+    {
+      "frame": 2563,
+      "time": 42.75938333333333
+    },
+    {
+      "frame": 2650,
+      "time": 44.21083333333333
+    },
+    {
+      "frame": 2719,
+      "time": 45.361983333333335
+    },
+    {
+      "frame": 2785,
+      "time": 46.46308333333334
+    },
+    {
+      "frame": 2876,
+      "time": 47.98126666666667
+    },
+    {
+      "frame": 2933,
+      "time": 48.93221666666667
+    },
+    {
+      "frame": 2989,
+      "time": 49.866483333333335
+    },
+    {
+      "frame": 3047,
+      "time": 50.83411666666667
+    }
+  ],
+  "incoming_boundary_audit": {
+    "version": "original_incoming_selected_body_v1",
+    "corrections": [],
+    "candidates": [],
+    "corrected_seconds": 0.0,
+    "source_reads": {
+      "reads": 0,
+      "seeks": 0,
+      "grabs": 0,
+      "cache_hits": 0,
+      "decode_seconds": 0.0
+    },
+    "reason": "complete",
+    "seconds": 0.19669062504544854
+  },
+  "incoming_boundary_explanation": {
+    "recorded": "No per-boundary rejection was logged; candidates=[] and source_reads=0.",
+    "code_and_saved_cut_constraint": "Before preparation, the existing boundary is exactly source cut2785. Any sampled backward path from incoming Sakura must stop before crossing2785; earliest possible incoming sample2788=46.513133 is already after boundary46.463083, so no earlier candidate can be emitted.",
+    "call_order": "build_performance_parts calls incoming_identity_boundary before pipeline._include_incoming_preparation.",
+    "after_preparation": "Output starts45.361983 and overlaps previous Yunjin by1.1011s, but incoming boundary was not called again. Calling again would fail its adjacency guard; widening this would violate different-body/original accepted identity constraints."
+  },
+  "evidence_interpretation": {
+    "confirmed": [
+      "The overlapping clips refer to different observed bodies at all17 sampled observations.",
+      "Original selected-body naming supports Yunjin (14 accepted joints); separate incoming preparation has six accepted Sakura joints and four high-detector seed frames.",
+      "The overlap is introduced only by apply_preparation_contexts, which intentionally changes the incoming start and preserves outgoing clips.",
+      "Selected Yunjin uses detected geometry in17/17 rows; this is not incomplete-incumbent hold or missing-face filling."
+    ],
+    "limited": [
+      "No source pixels were opened; relative performance focus cannot be independently judged visually here.",
+      "Approximate user45–48 target is not an exact timestamp label. Actual saved cuts are45.361983/46.463083/47.981267.",
+      "Whether the outgoing Yunjin main card should be trimmed is a main-role/output-context semantics decision; saved faces do not justify relabeling that body Sakura."
+    ]
+  },
+  "rows": [
+    {
+      "frame": 2720,
+      "time": 45.37866666666667,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 2,
+        "box": [
+          862.5,
+          303.75,
+          1078.5,
+          937.5
+        ],
+        "x": 959.4375,
+        "size": 52.64930725097656,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04869224714791387,
+      "selected_original_face": {
+        "body_bbox": [
+          862.5,
+          303.75,
+          1078.5,
+          937.5
+        ],
+        "face_bbox": [
+          932.4907684326172,
+          325.01904296875,
+          977.7118644714355,
+          388.0820770263672
+        ],
+        "detector_score": 0.9098398685455322,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.43418338894844055,
+        "margin": 0.16782793402671814,
+        "primary": 0.4934823513031006,
+        "secondary": 0.3748844265937805,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4934823513031006
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6640336513519287
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6872444152832031
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7293941974639893
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8088243007659912
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3748844265937805
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.516778290271759
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7023957967758179
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7357769012451172
+            },
+            {
+              "name": "김채원",
+              "distance": 0.884446382522583
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2900,
+            2936
+          ],
+          [
+            2940,
+            2964
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 1,
+        "box": [
+          1081.5,
+          380.25,
+          1288.5,
+          899.25
+        ],
+        "x": 1170.1875,
+        "size": 53.74686050415039,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.030359333424364494,
+      "score_ratio_selected_over_preparation": 1.6038641714325825,
+      "preparation_context_face": {
+        "frame": 2720,
+        "time": 45.37866666666667,
+        "person_index": 1,
+        "body_bbox": [
+          1081.5,
+          380.25,
+          1288.5,
+          899.25
+        ],
+        "face_bbox": [
+          1136.8223876953125,
+          407.93646240234375,
+          1186.6993408203125,
+          465.8534965515137
+        ],
+        "landmarks": [
+          [
+            1147.50537109375,
+            430.338134765625
+          ],
+          [
+            1170.015869140625,
+            430.3994445800781
+          ],
+          [
+            1156.40380859375,
+            441.55615234375
+          ],
+          [
+            1149.446533203125,
+            449.696044921875
+          ],
+          [
+            1167.3658447265625,
+            450.7235412597656
+          ]
+        ],
+        "detector_score": 0.8624604940414429,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.6839547157287598,
+          "margin": 0.03123319149017334,
+          "primary": 0.6897440552711487,
+          "secondary": 0.6781654357910156,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.6897440552711487
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7858827114105225
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8095779418945312
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8264947533607483
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8357552886009216
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.6444931030273438
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6781654357910156
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7682647705078125
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8288205862045288
+              },
+              {
+                "name": "김채원",
+                "distance": 0.9417935013771057
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              8324,
+              8348
+            ],
+            [
+              8352,
+              8288
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.013905793600618683,
+        "1": 0.030359333424364494,
+        "2": 0.04869224714791387,
+        "3": 0.025769093324789268
+      }
+    },
+    {
+      "frame": 2724,
+      "time": 45.4454,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 2,
+        "box": [
+          867.75,
+          287.25,
+          1082.25,
+          936.75
+        ],
+        "x": 956.625,
+        "size": 50.71772384643555,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04663124231702844,
+      "selected_original_face": {
+        "body_bbox": [
+          867.75,
+          287.25,
+          1082.25,
+          936.75
+        ],
+        "face_bbox": [
+          928.7068176269531,
+          313.8727111816406,
+          971.6579055786133,
+          373.6861801147461
+        ],
+        "detector_score": 0.9124306440353394,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4187541604042053,
+        "margin": 0.20845073461532593,
+        "primary": 0.46263498067855835,
+        "secondary": 0.3748733401298523,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.46263498067855835
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6928677558898926
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7143035531044006
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7507677674293518
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7687338590621948
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3748733401298523
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5401061773300171
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7022548913955688
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.763525664806366
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8886207342147827
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2900,
+            2920
+          ],
+          [
+            2920,
+            2964
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 0,
+        "box": [
+          1087.5,
+          367.5,
+          1288.5,
+          889.5
+        ],
+        "x": 1171.5,
+        "size": 52.58984661102295,
+        "source": "repeated_same_pose_geometry",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.029601879873750642,
+      "score_ratio_selected_over_preparation": 1.575279763174045,
+      "preparation_context_face": {},
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.029601879873750642,
+        "1": 0.014808969971949406,
+        "2": 0.04663124231702844,
+        "3": 0.024961889446612314,
+        "4": 0.016928717105841956
+      }
+    },
+    {
+      "frame": 2728,
+      "time": 45.51213333333333,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 0,
+        "box": [
+          879.0,
+          270.0,
+          1086.0,
+          940.5
+        ],
+        "x": 960.5625,
+        "size": 50.8095817565918,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04699079326116326,
+      "selected_original_face": {
+        "body_bbox": [
+          879.0,
+          270.0,
+          1086.0,
+          940.5
+        ],
+        "face_bbox": [
+          928.4420700073242,
+          292.8511962890625,
+          973.3834457397461,
+          357.2023468017578
+        ],
+        "detector_score": 0.8999627232551575,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4496127665042877,
+        "margin": 0.1819654405117035,
+        "primary": 0.4542897939682007,
+        "secondary": 0.44493573904037476,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4542897939682007
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6651917695999146
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6666100025177002
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7794033288955688
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7982423305511475
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.44493573904037476
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5979646444320679
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7450519800186157
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.8416245579719543
+            },
+            {
+              "name": "김채원",
+              "distance": 0.9547139406204224
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2900,
+            2916
+          ],
+          [
+            2900,
+            2964
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1084.5,
+          342.0,
+          1288.5,
+          898.5
+        ],
+        "x": 1178.8125,
+        "size": 52.19466018676758,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.02880819351628654,
+      "score_ratio_selected_over_preparation": 1.631160705533212,
+      "preparation_context_face": {
+        "frame": 2728,
+        "time": 45.51213333333333,
+        "person_index": 2,
+        "body_bbox": [
+          1084.5,
+          342.0,
+          1288.5,
+          898.5
+        ],
+        "face_bbox": [
+          1138.3966064453125,
+          374.87176513671875,
+          1186.796646118164,
+          431.1585502624512
+        ],
+        "landmarks": [
+          [
+            1149.3724365234375,
+            396.4464111328125
+          ],
+          [
+            1171.3995361328125,
+            397.1461486816406
+          ],
+          [
+            1157.99462890625,
+            407.90277099609375
+          ],
+          [
+            1150.3282470703125,
+            415.3298034667969
+          ],
+          [
+            1167.4295654296875,
+            417.23443603515625
+          ]
+        ],
+        "detector_score": 0.8586437702178955,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.7186387181282043,
+          "margin": 0.00662606954574585,
+          "primary": 0.76976478099823,
+          "secondary": 0.6675126552581787,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.76976478099823
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8219591379165649
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.840067982673645
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8939343094825745
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.9119077920913696
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.6104615330696106
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6675126552581787
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7317474484443665
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7637109160423279
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8527598977088928
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2132,
+              2196
+            ],
+            [
+              8352,
+              8328
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.04699079326116326,
+        "1": 0.014752235541914464,
+        "2": 0.02880819351628654,
+        "3": 0.026187004920963774,
+        "4": 0.019518431437962912
+      }
+    },
+    {
+      "frame": 2732,
+      "time": 45.57886666666667,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 1,
+        "box": [
+          871.5,
+          256.5,
+          1084.5,
+          944.25
+        ],
+        "x": 971.8125,
+        "size": 55.14472198486328,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.049811105599392176,
+      "selected_original_face": {
+        "body_bbox": [
+          871.5,
+          256.5,
+          1084.5,
+          944.25
+        ],
+        "face_bbox": [
+          926.6878356933594,
+          278.2684326171875,
+          973.8047103881836,
+          346.97766876220703
+        ],
+        "detector_score": 0.9015189409255981,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.3967268764972687,
+        "margin": 0.2579197585582733,
+        "primary": 0.43342316150665283,
+        "secondary": 0.3600305914878845,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.43342316150665283
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6980066299438477
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7573814988136292
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7787667512893677
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8316763043403625
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3600305914878845
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5519117116928101
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6700356006622314
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7730048894882202
+            },
+            {
+              "name": "김채원",
+              "distance": 0.9312298893928528
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8668
+          ],
+          [
+            4204,
+            8724
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 0,
+        "box": [
+          1080.0,
+          321.0,
+          1302.0,
+          904.5
+        ],
+        "x": 1179.375,
+        "size": 52.21078109741211,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.02877336827286517,
+      "score_ratio_selected_over_preparation": 1.7311530970938402,
+      "preparation_context_face": {
+        "frame": 2732,
+        "time": 45.57886666666667,
+        "person_index": 0,
+        "body_bbox": [
+          1080.0,
+          321.0,
+          1302.0,
+          904.5
+        ],
+        "face_bbox": [
+          1139.4822998046875,
+          344.1703186035156,
+          1188.2318077087402,
+          400.0881233215332
+        ],
+        "landmarks": [
+          [
+            1149.0697021484375,
+            364.6149597167969
+          ],
+          [
+            1170.287841796875,
+            364.2012939453125
+          ],
+          [
+            1156.703369140625,
+            374.21929931640625
+          ],
+          [
+            1150.423583984375,
+            382.93389892578125
+          ],
+          [
+            1168.083984375,
+            384.4080505371094
+          ]
+        ],
+        "detector_score": 0.8363761305809021,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.7373169660568237,
+          "margin": 0.006437420845031738,
+          "primary": 0.6978814005851746,
+          "secondary": 0.7767524719238281,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.6978814005851746
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7860149145126343
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8184876441955566
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.8372654914855957
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8552901744842529
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.6690211296081543
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.739093005657196
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7767524719238281
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8855603337287903
+              },
+              {
+                "name": "김채원",
+                "distance": 0.9487212300300598
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2132,
+              2172
+            ],
+            [
+              8260,
+              8432
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.02877336827286517,
+        "1": 0.049811105599392176,
+        "2": 0.02463118232559888,
+        "3": 0.014435675643747715,
+        "4": 0.018958641499938023
+      }
+    },
+    {
+      "frame": 2736,
+      "time": 45.6456,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 6,
+      "selected": {
+        "index": 0,
+        "box": [
+          857.25,
+          261.9375,
+          1085.25,
+          948.75
+        ],
+        "x": 982.875,
+        "size": 55.62863540649414,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.049082563010631325,
+      "selected_original_face": {
+        "body_bbox": [
+          857.25,
+          261.9375,
+          1085.25,
+          948.75
+        ],
+        "face_bbox": [
+          927.2498016357422,
+          276.1820068359375,
+          977.2764053344727,
+          347.06127166748047
+        ],
+        "detector_score": 0.8960040211677551,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4393343925476074,
+        "margin": 0.20035523176193237,
+        "primary": 0.4761425256729126,
+        "secondary": 0.40252625942230225,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4761425256729126
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.702939510345459
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7318952083587646
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7480546236038208
+            },
+            {
+              "name": "김채원",
+              "distance": 0.766718327999115
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.40252625942230225
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5474840402603149
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6419316530227661
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7523468732833862
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8549342155456543
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8696
+          ],
+          [
+            4204,
+            8724
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 1,
+        "box": [
+          1072.5,
+          313.5,
+          1308.0,
+          883.5
+        ],
+        "x": 1188.1875,
+        "size": 52.20708465576172,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.02809071976198417,
+      "score_ratio_selected_over_preparation": 1.7472874823612,
+      "preparation_context_face": {
+        "frame": 2736,
+        "time": 45.6456,
+        "person_index": 1,
+        "body_bbox": [
+          1072.5,
+          313.5,
+          1308.0,
+          883.5
+        ],
+        "face_bbox": [
+          1144.99169921875,
+          329.54010009765625,
+          1192.7535820007324,
+          386.6061019897461
+        ],
+        "landmarks": [
+          [
+            1151.347900390625,
+            347.8087463378906
+          ],
+          [
+            1169.529052734375,
+            347.3421325683594
+          ],
+          [
+            1153.3631591796875,
+            357.2101745605469
+          ],
+          [
+            1151.8743896484375,
+            369.0418395996094
+          ],
+          [
+            1167.169677734375,
+            369.3606872558594
+          ]
+        ],
+        "detector_score": 0.8000888824462891,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.6733505725860596,
+          "margin": 0.01751089096069336,
+          "primary": 0.6372990012168884,
+          "secondary": 0.7094021439552307,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.6372990012168884
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.716020405292511
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7462843060493469
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8174699544906616
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8410102128982544
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.6657024621963501
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7094021439552307
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7221336960792542
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7821331024169922
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8223543167114258
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2196,
+              8248
+            ],
+            [
+              7168,
+              2220
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.049082563010631325,
+        "1": 0.02809071976198417,
+        "2": 0.02787311857486687,
+        "3": 0.014080023114942984
+      }
+    },
+    {
+      "frame": 2740,
+      "time": 45.71233333333333,
+      "scene_kind": "main",
+      "role_reason": "corroborated_foreground_subject",
+      "body_count": 5,
+      "selected": {
+        "index": 0,
+        "box": [
+          855.0,
+          259.3125,
+          1096.5,
+          949.5
+        ],
+        "x": 982.6875,
+        "size": 58.58793640136719,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.0517143175075002,
+      "selected_original_face": {
+        "body_bbox": [
+          855.0,
+          259.3125,
+          1096.5,
+          949.5
+        ],
+        "face_bbox": [
+          928.0881576538086,
+          280.8929443359375,
+          977.9566116333008,
+          346.4578857421875
+        ],
+        "detector_score": 0.8911871314048767,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.43288758397102356,
+        "margin": 0.1876983344554901,
+        "primary": 0.4986572265625,
+        "secondary": 0.3671179413795471,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4986572265625
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6876400709152222
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6945547461509705
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6980089545249939
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7362911105155945
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3671179413795471
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5535317659378052
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6584793329238892
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.770545244216919
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8627382516860962
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8696
+          ],
+          [
+            8704,
+            8720
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1071.0,
+          314.25,
+          1320.0,
+          843.75
+        ],
+        "x": 1202.625,
+        "size": 52.88923645019531,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.02734598373791798,
+      "score_ratio_selected_over_preparation": 1.8911119820419204,
+      "preparation_context_face": {
+        "frame": 2740,
+        "time": 45.71233333333333,
+        "person_index": 2,
+        "body_bbox": [
+          1071.0,
+          314.25,
+          1320.0,
+          843.75
+        ],
+        "face_bbox": [
+          1147.76025390625,
+          335.2670593261719,
+          1195.687858581543,
+          393.6315727233887
+        ],
+        "landmarks": [
+          [
+            1155.13427734375,
+            356.7814025878906
+          ],
+          [
+            1174.1522216796875,
+            356.8876953125
+          ],
+          [
+            1159.56103515625,
+            366.5148010253906
+          ],
+          [
+            1157.46533203125,
+            376.9655456542969
+          ],
+          [
+            1171.34326171875,
+            378.133056640625
+          ]
+        ],
+        "detector_score": 0.8337934613227844,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.7216672897338867,
+          "margin": 0.006498456001281738,
+          "primary": 0.700307309627533,
+          "secondary": 0.7430273294448853,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.700307309627533
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.759384274482727
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7696725726127625
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7843399047851562
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8354356288909912
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.6969472169876099
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7366231679916382
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.7430273294448853
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7605075836181641
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7948182821273804
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              8296,
+              2132
+            ],
+            [
+              7136,
+              7124
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.0517143175075002,
+        "1": 0.02840056151498866,
+        "2": 0.02734598373791798,
+        "3": 0.014507377830569263,
+        "4": 0.01721842719284275
+      }
+    },
+    {
+      "frame": 2744,
+      "time": 45.779066666666665,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 4,
+      "selected": {
+        "index": 0,
+        "box": [
+          861.0,
+          257.8125,
+          1095.0,
+          943.5
+        ],
+        "x": 990.9375,
+        "size": 56.41205596923828,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04892102730567852,
+      "selected_original_face": {
+        "body_bbox": [
+          861.0,
+          257.8125,
+          1095.0,
+          943.5
+        ],
+        "face_bbox": [
+          930.7509307861328,
+          280.2508544921875,
+          978.7376594543457,
+          350.09883880615234
+        ],
+        "detector_score": 0.8871878385543823,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4236980080604553,
+        "margin": 0.1956803798675537,
+        "primary": 0.5031411647796631,
+        "secondary": 0.34425485134124756,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.5031411647796631
+            },
+            {
+              "name": "김채원",
+              "distance": 0.6703524589538574
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6747559309005737
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6842648983001709
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7083573341369629
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.34425485134124756
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5640008449554443
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6611001491546631
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7311168313026428
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8059185147285461
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8696
+          ],
+          [
+            8724,
+            8700
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1078.5,
+          313.6875,
+          1273.5,
+          907.5
+        ],
+        "x": 1203.0,
+        "size": 52.43570073445638,
+        "source": "repeated_same_pose_geometry",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.02708314942900827,
+      "score_ratio_selected_over_preparation": 1.806327119891016,
+      "preparation_context_face": {},
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.04892102730567852,
+        "1": 0.027843083671676573,
+        "2": 0.02708314942900827,
+        "3": 0.01578830763480316
+      }
+    },
+    {
+      "frame": 2748,
+      "time": 45.845800000000004,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 0,
+        "box": [
+          874.5,
+          266.0625,
+          1095.0,
+          951.75
+        ],
+        "x": 996.1875,
+        "size": 56.27921676635742,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04825579688692596,
+      "selected_original_face": {
+        "body_bbox": [
+          874.5,
+          266.0625,
+          1095.0,
+          951.75
+        ],
+        "face_bbox": [
+          933.9147338867188,
+          286.9926452636719,
+          979.1224746704102,
+          353.00758361816406
+        ],
+        "detector_score": 0.8995282649993896,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4272511303424835,
+        "margin": 0.21778056025505066,
+        "primary": 0.5059486627578735,
+        "secondary": 0.3485535979270935,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.5059486627578735
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6570833921432495
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6997710466384888
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7039053440093994
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7394779920578003
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3485535979270935
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5902923345565796
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6583216190338135
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7304767966270447
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8226850628852844
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2908,
+            2620
+          ],
+          [
+            8700,
+            8724
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1083.0,
+          315.0,
+          1299.0,
+          879.75
+        ],
+        "x": 1212.9375,
+        "size": 54.247552235921226,
+        "source": "repeated_same_pose_geometry",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.027247680238982868,
+      "score_ratio_selected_over_preparation": 1.7710056952990472,
+      "preparation_context_face": {},
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.04825579688692596,
+        "1": 0.028370337079795988,
+        "2": 0.027247680238982868,
+        "3": 0.01505851583776494,
+        "4": 0.01699926103876775
+      }
+    },
+    {
+      "frame": 2752,
+      "time": 45.912533333333336,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 6,
+      "selected": {
+        "index": 0,
+        "box": [
+          891.0,
+          267.1875,
+          1113.0,
+          954.0
+        ],
+        "x": 991.875,
+        "size": 59.68124771118164,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.05165169935025915,
+      "selected_original_face": {
+        "body_bbox": [
+          891.0,
+          267.1875,
+          1113.0,
+          954.0
+        ],
+        "face_bbox": [
+          937.5205383300781,
+          286.3665771484375,
+          988.0853729248047,
+          359.4077453613281
+        ],
+        "detector_score": 0.9054586887359619,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4274922013282776,
+        "margin": 0.20906317234039307,
+        "primary": 0.48263245820999146,
+        "secondary": 0.3723519444465637,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.48263245820999146
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6905121803283691
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6973264217376709
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7023273706436157
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7145731449127197
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3723519444465637
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5825985670089722
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6555973291397095
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7304465770721436
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8062492609024048
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8696
+          ],
+          [
+            8700,
+            8724
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1095.0,
+          315.0,
+          1318.5,
+          891.75
+        ],
+        "x": 1226.4375,
+        "size": 56.626670837402344,
+        "source": "repeated_same_pose_geometry",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.027366925805639764,
+      "score_ratio_selected_over_preparation": 1.8873767450933343,
+      "preparation_context_face": {
+        "frame": 2752,
+        "time": 45.912533333333336,
+        "person_index": 2,
+        "body_bbox": [
+          1095.0,
+          315.0,
+          1318.5,
+          891.75
+        ],
+        "face_bbox": [
+          1166.304443359375,
+          320.09600830078125,
+          1230.011962890625,
+          391.2889709472656
+        ],
+        "landmarks": [
+          [
+            1184.9071044921875,
+            350.69891357421875
+          ],
+          [
+            1205.0042724609375,
+            343.6395568847656
+          ],
+          [
+            1199.5823974609375,
+            358.1387023925781
+          ],
+          [
+            1194.4263916015625,
+            370.66015625
+          ],
+          [
+            1211.7420654296875,
+            364.9208068847656
+          ]
+        ],
+        "detector_score": 0.8973270058631897,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.48566675186157227,
+          "margin": 0.1444959044456482,
+          "primary": 0.5349944829940796,
+          "secondary": 0.43633902072906494,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5349944829940796
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6916983127593994
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7039448022842407
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7096182107925415
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8156217932701111
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.43633902072906494
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.5563805103302002
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.5609018206596375
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7183527946472168
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7774977684020996
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              7168,
+              8248
+            ],
+            [
+              2220,
+              7104
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.05165169935025915,
+        "1": 0.027861533215508206,
+        "2": 0.027366925805639764,
+        "3": 0.014772628096863763
+      }
+    },
+    {
+      "frame": 2756,
+      "time": 45.97926666666667,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 0,
+        "box": [
+          894.0,
+          268.6875,
+          1179.0,
+          960.0
+        ],
+        "x": 996.75,
+        "size": 61.892520904541016,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.05300423650129878,
+      "selected_original_face": {
+        "body_bbox": [
+          894.0,
+          268.6875,
+          1179.0,
+          960.0
+        ],
+        "face_bbox": [
+          945.2231369018555,
+          294.2102355957031,
+          994.924674987793,
+          370.5818328857422
+        ],
+        "detector_score": 0.8923022747039795,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.4328075051307678,
+        "margin": 0.25261110067367554,
+        "primary": 0.5101171731948853,
+        "secondary": 0.3554978370666504,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.5101171731948853
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.748948335647583
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7492272853851318
+            },
+            {
+              "name": "김채원",
+              "distance": 0.754915714263916
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7557841539382935
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3554978370666504
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6150529980659485
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6672560572624207
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7211705446243286
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8194741010665894
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2912,
+            8696
+          ],
+          [
+            8704,
+            8720
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 3,
+        "box": [
+          1116.0,
+          312.75,
+          1329.0,
+          862.5
+        ],
+        "x": 1233.75,
+        "size": 58.52680206298828,
+        "source": "repeated_same_pose_geometry",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.027691934010363184,
+      "score_ratio_selected_over_preparation": 1.914067702221988,
+      "preparation_context_face": {},
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.05300423650129878,
+        "1": 0.029033103800461202,
+        "2": 0.017751599527824506,
+        "3": 0.027691934010363184
+      }
+    },
+    {
+      "frame": 2760,
+      "time": 46.046,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 0,
+        "box": [
+          895.5,
+          272.0625,
+          1198.5,
+          963.75
+        ],
+        "x": 1004.25,
+        "size": 60.97296905517578,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.051371822870996155,
+      "selected_original_face": {
+        "body_bbox": [
+          895.5,
+          272.0625,
+          1198.5,
+          963.75
+        ],
+        "face_bbox": [
+          952.6721038818359,
+          300.9411926269531,
+          1001.4896545410156,
+          372.0709915161133
+        ],
+        "detector_score": 0.9009575247764587,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.38988828659057617,
+        "margin": 0.284917950630188,
+        "primary": 0.4482383728027344,
+        "secondary": 0.33153820037841797,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4482383728027344
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6741437911987305
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7112027406692505
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7136040925979614
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7238277196884155
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.33153820037841797
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6334095001220703
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6556153297424316
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6754686236381531
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8200196027755737
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            4384,
+            8696
+          ],
+          [
+            8720,
+            2620
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1091.25,
+          323.4375,
+          1379.25,
+          918.75
+        ],
+        "x": 1248.75,
+        "size": 57.64633560180664,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.0260960082868998,
+      "score_ratio_selected_over_preparation": 1.9685701470590358,
+      "preparation_context_face": {
+        "frame": 2760,
+        "time": 46.046,
+        "person_index": 2,
+        "body_bbox": [
+          1091.25,
+          323.4375,
+          1379.25,
+          918.75
+        ],
+        "face_bbox": [
+          1200.2099609375,
+          338.6784362792969,
+          1252.5990715026855,
+          402.1095542907715
+        ],
+        "landmarks": [
+          [
+            1214.156982421875,
+            358.3194274902344
+          ],
+          [
+            1236.4271240234375,
+            357.5683288574219
+          ],
+          [
+            1224.74853515625,
+            368.9312744140625
+          ],
+          [
+            1216.094970703125,
+            379.5406188964844
+          ],
+          [
+            1235.528564453125,
+            381.4031677246094
+          ]
+        ],
+        "detector_score": 0.8748711943626404,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "conflict",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.5882604122161865,
+          "margin": 0.06720584630966187,
+          "primary": 0.5617100596427917,
+          "secondary": 0.6148107051849365,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5617100596427917
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6296355724334717
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7126898169517517
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7560280561447144
+              },
+              {
+                "name": "김채원",
+                "distance": 0.781647801399231
+              }
+            ],
+            [
+              {
+                "name": "허윤진",
+                "distance": 0.608471691608429
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6148107051849365
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6697075366973877
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6812969446182251
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7081562280654907
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              7168,
+              2168
+            ],
+            [
+              8276,
+              7168
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.051371822870996155,
+        "1": 0.026768651976426347,
+        "2": 0.0260960082868998,
+        "3": 0.01891092921042184
+      }
+    },
+    {
+      "frame": 2764,
+      "time": 46.11273333333333,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 1,
+        "box": [
+          897.0,
+          281.4375,
+          1200.0,
+          968.25
+        ],
+        "x": 1016.4375,
+        "size": 60.10771560668945,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.049303800575472484,
+      "selected_original_face": {
+        "body_bbox": [
+          897.0,
+          281.4375,
+          1200.0,
+          968.25
+        ],
+        "face_bbox": [
+          962.5775909423828,
+          300.96240234375,
+          1014.0605850219727,
+          372.7866668701172
+        ],
+        "detector_score": 0.9020593762397766,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.3765939176082611,
+        "margin": 0.2629120647907257,
+        "primary": 0.4328939914703369,
+        "secondary": 0.3202938437461853,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4328939914703369
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6459333300590515
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6847797632217407
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6961604356765747
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7271369099617004
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3202938437461853
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6330786943435669
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6383535861968994
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7070554494857788
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8643686175346375
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2908,
+            8660
+          ],
+          [
+            8704,
+            8720
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 3,
+        "box": [
+          1126.5,
+          331.5,
+          1395.0,
+          947.25
+        ],
+        "x": 1265.625,
+        "size": 59.34444046020508,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.025530964153761115,
+      "score_ratio_selected_over_preparation": 1.9311374329045563,
+      "preparation_context_face": {
+        "frame": 2764,
+        "time": 46.11273333333333,
+        "person_index": 3,
+        "body_bbox": [
+          1126.5,
+          331.5,
+          1395.0,
+          947.25
+        ],
+        "face_bbox": [
+          1217.9803466796875,
+          347.0194091796875,
+          1271.350212097168,
+          413.0072555541992
+        ],
+        "landmarks": [
+          [
+            1231.7713623046875,
+            367.5450744628906
+          ],
+          [
+            1255.584228515625,
+            366.2531433105469
+          ],
+          [
+            1244.146240234375,
+            378.72332763671875
+          ],
+          [
+            1234.8028564453125,
+            392.04364013671875
+          ],
+          [
+            1255.6461181640625,
+            391.862060546875
+          ]
+        ],
+        "detector_score": 0.8988345265388489,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.469237744808197,
+          "margin": 0.19184726476669312,
+          "primary": 0.5012327432632446,
+          "secondary": 0.4372427463531494,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5012327432632446
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7028871178627014
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7069536447525024
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7985411286354065
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.8408633470535278
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.4372427463531494
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.5719609260559082
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6192828416824341
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6369810104370117
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7722431421279907
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2164,
+              2132
+            ],
+            [
+              7168,
+              8248
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.026160687690002772,
+        "1": 0.049303800575472484,
+        "2": 0.018068960626351327,
+        "3": 0.025530964153761115
+      }
+    },
+    {
+      "frame": 2768,
+      "time": 46.17946666666667,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 1,
+        "box": [
+          901.5,
+          279.0,
+          1200.0,
+          969.0
+        ],
+        "x": 1037.0625,
+        "size": 60.921531677246094,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04771605353794546,
+      "selected_original_face": {
+        "body_bbox": [
+          901.5,
+          279.0,
+          1200.0,
+          969.0
+        ],
+        "face_bbox": [
+          972.1427841186523,
+          307.34375,
+          1023.9264297485352,
+          378.64554595947266
+        ],
+        "detector_score": 0.9060340523719788,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.3927887976169586,
+        "margin": 0.2581837475299835,
+        "primary": 0.43076467514038086,
+        "secondary": 0.3548129200935364,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.43076467514038086
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6669541001319885
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7044141292572021
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7163132429122925
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7207586765289307
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3548129200935364
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.633977472782135
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6349909901618958
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7776483297348022
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8498392105102539
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            7348,
+            6688
+          ],
+          [
+            2620,
+            8720
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 3,
+        "box": [
+          1174.5,
+          333.75,
+          1407.0,
+          954.75
+        ],
+        "x": 1297.3125,
+        "size": 58.589630126953125,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.022824161418102454,
+      "score_ratio_selected_over_preparation": 2.0905939396354154,
+      "preparation_context_face": {
+        "frame": 2768,
+        "time": 46.17946666666667,
+        "person_index": 3,
+        "body_bbox": [
+          1174.5,
+          333.75,
+          1407.0,
+          954.75
+        ],
+        "face_bbox": [
+          1239.044189453125,
+          350.5490417480469,
+          1290.9925117492676,
+          416.62903594970703
+        ],
+        "landmarks": [
+          [
+            1251.9761962890625,
+            373.9804992675781
+          ],
+          [
+            1275.086669921875,
+            373.2127380371094
+          ],
+          [
+            1264.1434326171875,
+            385.7051086425781
+          ],
+          [
+            1256.2904052734375,
+            397.63665771484375
+          ],
+          [
+            1276.600341796875,
+            397.343505859375
+          ]
+        ],
+        "detector_score": 0.9074954986572266,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.46667245030403137,
+          "margin": 0.1901104748249054,
+          "primary": 0.5352694392204285,
+          "secondary": 0.3980754613876343,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5352694392204285
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.705664873123169
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7125169038772583
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7851487398147583
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8344249725341797
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.3980754613876343
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6079009771347046
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6198002099990845
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.684393584728241
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7572723627090454
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              7168,
+              2168
+            ],
+            [
+              7168,
+              8248
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.027463538940217677,
+        "1": 0.04771605353794546,
+        "2": 0.019963874360468727,
+        "3": 0.022824161418102454
+      }
+    },
+    {
+      "frame": 2772,
+      "time": 46.2462,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 4,
+      "selected": {
+        "index": 2,
+        "box": [
+          921.0,
+          285.75,
+          1201.5,
+          973.5
+        ],
+        "x": 1055.25,
+        "size": 55.46113204956055,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.04166809539618273,
+      "selected_original_face": {
+        "body_bbox": [
+          921.0,
+          285.75,
+          1201.5,
+          973.5
+        ],
+        "face_bbox": [
+          987.3429718017578,
+          312.2450256347656,
+          1040.1044692993164,
+          382.17857360839844
+        ],
+        "detector_score": 0.8980834484100342,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": "허윤진",
+        "status": "accepted",
+        "reason": "joint_video_match",
+        "best": "허윤진",
+        "distance": 0.39096516370773315,
+        "margin": 0.23236733675003052,
+        "primary": 0.4625088572502136,
+        "secondary": 0.3194214701652527,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4625088572502136
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6138479113578796
+            },
+            {
+              "name": "김채원",
+              "distance": 0.6601496934890747
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6639074087142944
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.6763675808906555
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.3194214701652527
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.5891067981719971
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6328170299530029
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6927500367164612
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7803297638893127
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            7348,
+            2620
+          ],
+          [
+            8704,
+            8716
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 1,
+        "box": [
+          1179.0,
+          329.8125,
+          1416.0,
+          957.0
+        ],
+        "x": 1326.0,
+        "size": 59.47737503051758,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.021084264781326058,
+      "score_ratio_selected_over_preparation": 1.976265040699327,
+      "preparation_context_face": {
+        "frame": 2772,
+        "time": 46.2462,
+        "person_index": 1,
+        "body_bbox": [
+          1179.0,
+          329.8125,
+          1416.0,
+          957.0
+        ],
+        "face_bbox": [
+          1260.21142578125,
+          350.28167724609375,
+          1313.2946510314941,
+          416.9234161376953
+        ],
+        "landmarks": [
+          [
+            1276.5169677734375,
+            373.14691162109375
+          ],
+          [
+            1299.2186279296875,
+            372.38653564453125
+          ],
+          [
+            1289.8619384765625,
+            385.35675048828125
+          ],
+          [
+            1279.4935302734375,
+            398.05426025390625
+          ],
+          [
+            1298.8729248046875,
+            397.22113037109375
+          ]
+        ],
+        "detector_score": 0.9156259298324585,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.48375460505485535,
+          "margin": 0.17454233765602112,
+          "primary": 0.5343249440193176,
+          "secondary": 0.43318426609039307,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5343249440193176
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.658206582069397
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6901621222496033
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7496374845504761
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8055869936943054
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.43318426609039307
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.5886712670326233
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6583873629570007
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7060548067092896
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7674633264541626
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              7168,
+              2168
+            ],
+            [
+              7168,
+              8248
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.030630285611608996,
+        "1": 0.021084264781326058,
+        "2": 0.04166809539618273,
+        "3": 0.020484084180727998
+      }
+    },
+    {
+      "frame": 2776,
+      "time": 46.31293333333333,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 4,
+      "selected": {
+        "index": 1,
+        "box": [
+          934.5,
+          289.3125,
+          1206.0,
+          973.5
+        ],
+        "x": 1068.375,
+        "size": 60.02632141113281,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.043739348676463126,
+      "selected_original_face": {
+        "body_bbox": [
+          934.5,
+          289.3125,
+          1206.0,
+          973.5
+        ],
+        "face_bbox": [
+          1007.7065200805664,
+          308.73004150390625,
+          1064.2490463256836,
+          380.2962951660156
+        ],
+        "detector_score": 0.9114159941673279,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": null,
+        "status": "insufficient",
+        "reason": "joint_video_rejected",
+        "best": "허윤진",
+        "distance": 0.5034737586975098,
+        "margin": 0.24275696277618408,
+        "primary": 0.543217658996582,
+        "secondary": 0.4637298583984375,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.543217658996582
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7680285573005676
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7759996652603149
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7810569405555725
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.8069380521774292
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.4637298583984375
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7164617776870728
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7778959274291992
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7950281500816345
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8553155660629272
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            4360,
+            2972
+          ],
+          [
+            4344,
+            4356
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 2,
+        "box": [
+          1200.0,
+          320.4375,
+          1419.0,
+          957.75
+        ],
+        "x": 1342.875,
+        "size": 61.98735809326172,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.020743244224606317,
+      "score_ratio_selected_over_preparation": 2.108606937413294,
+      "preparation_context_face": {
+        "frame": 2776,
+        "time": 46.31293333333333,
+        "person_index": 2,
+        "body_bbox": [
+          1200.0,
+          320.4375,
+          1419.0,
+          957.75
+        ],
+        "face_bbox": [
+          1284.173583984375,
+          342.7701416015625,
+          1340.4197273254395,
+          411.0847396850586
+        ],
+        "landmarks": [
+          [
+            1303.5718994140625,
+            364.5306091308594
+          ],
+          [
+            1327.1866455078125,
+            364.46038818359375
+          ],
+          [
+            1317.236572265625,
+            377.44488525390625
+          ],
+          [
+            1305.68310546875,
+            390.3323059082031
+          ],
+          [
+            1325.6505126953125,
+            389.954833984375
+          ]
+        ],
+        "detector_score": 0.9255577921867371,
+        "association": "confirmed",
+        "joint_match": {
+          "name": null,
+          "status": "insufficient",
+          "reason": "joint_video_rejected",
+          "best": "사쿠라",
+          "distance": 0.5302808284759521,
+          "margin": 0.16030335426330566,
+          "primary": 0.5643773674964905,
+          "secondary": 0.49618422985076904,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5643773674964905
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.7181322574615479
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.771135151386261
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7941809892654419
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7946827411651611
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.49618422985076904
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6375958919525146
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6630361080169678
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7176540493965149
+              },
+              {
+                "name": "김채원",
+                "distance": 0.768440842628479
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2160,
+              2172
+            ],
+            [
+              7168,
+              8372
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.0313543018737325,
+        "1": 0.043739348676463126,
+        "2": 0.020743244224606317,
+        "3": 0.01800750948075768
+      }
+    },
+    {
+      "frame": 2780,
+      "time": 46.379666666666665,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 4,
+      "selected": {
+        "index": 1,
+        "box": [
+          941.25,
+          287.8125,
+          1205.25,
+          976.5
+        ],
+        "x": 1082.0625,
+        "size": 56.305686950683594,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.0397200048890736,
+      "selected_original_face": {
+        "body_bbox": [
+          941.25,
+          287.8125,
+          1205.25,
+          976.5
+        ],
+        "face_bbox": [
+          1038.62939453125,
+          308.42291259765625,
+          1090.2649765014648,
+          373.4554138183594
+        ],
+        "detector_score": 0.9082464575767517,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": null,
+        "status": "insufficient",
+        "reason": "joint_video_rejected",
+        "best": "허윤진",
+        "distance": 0.5173594951629639,
+        "margin": 0.14790219068527222,
+        "primary": 0.5951772928237915,
+        "secondary": 0.43954163789749146,
+        "model_candidates": [
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.5951772928237915
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.6275322437286377
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7049492597579956
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.738396167755127
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7414056062698364
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.43954163789749146
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.659392237663269
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.6960660219192505
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7029911279678345
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7097211480140686
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2648,
+            2920
+          ],
+          [
+            4340,
+            2588
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 3,
+        "box": [
+          1209.0,
+          310.5,
+          1461.0,
+          945.0
+        ],
+        "x": 1342.125,
+        "size": 61.557289123535156,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.020652901669702257,
+      "score_ratio_selected_over_preparation": 1.9232166755213254,
+      "preparation_context_face": {
+        "frame": 2780,
+        "time": 46.379666666666665,
+        "person_index": 3,
+        "body_bbox": [
+          1209.0,
+          310.5,
+          1461.0,
+          945.0
+        ],
+        "face_bbox": [
+          1309.0848388671875,
+          331.59356689453125,
+          1364.2534446716309,
+          400.2793655395508
+        ],
+        "landmarks": [
+          [
+            1328.7672119140625,
+            355.42694091796875
+          ],
+          [
+            1351.6573486328125,
+            354.2223205566406
+          ],
+          [
+            1344.129638671875,
+            368.6820068359375
+          ],
+          [
+            1333.27294921875,
+            383.90618896484375
+          ],
+          [
+            1353.0628662109375,
+            379.2381591796875
+          ]
+        ],
+        "detector_score": 0.9158296585083008,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.48871657252311707,
+          "margin": 0.12311866879463196,
+          "primary": 0.524581789970398,
+          "secondary": 0.4528513550758362,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.524581789970398
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.5753855109214783
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6474242210388184
+              },
+              {
+                "name": "김채원",
+                "distance": 0.6775563955307007
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7391801476478577
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.4528513550758362
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.6425518989562988
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6482849717140198
+              },
+              {
+                "name": "김채원",
+                "distance": 0.6914060115814209
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7347879409790039
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              2168,
+              8244
+            ],
+            [
+              7168,
+              8312
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.03417730963890251,
+        "1": 0.0397200048890736,
+        "2": 0.018933596142582245,
+        "3": 0.020652901669702257
+      }
+    },
+    {
+      "frame": 2784,
+      "time": 46.446400000000004,
+      "scene_kind": "main",
+      "role_reason": "measured_face_composition",
+      "body_count": 5,
+      "selected": {
+        "index": 1,
+        "box": [
+          940.5,
+          281.4375,
+          1225.5,
+          975.75
+        ],
+        "x": 1089.75,
+        "size": 56.31987762451172,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "selected_score_annotation": 0.03900436837377492,
+      "selected_original_face": {
+        "body_bbox": [
+          940.5,
+          281.4375,
+          1225.5,
+          975.75
+        ],
+        "face_bbox": [
+          1060.9468231201172,
+          314.9916076660156,
+          1107.2073860168457,
+          376.52379989624023
+        ],
+        "detector_score": 0.8821337819099426,
+        "failure": null,
+        "association": "confirmed"
+      },
+      "selected_joint": {
+        "name": null,
+        "status": "conflict",
+        "reason": "joint_video_rejected",
+        "best": "허윤진",
+        "distance": 0.654706597328186,
+        "margin": 0.09400177001953125,
+        "primary": 0.64969801902771,
+        "secondary": 0.6597151756286621,
+        "model_candidates": [
+          [
+            {
+              "name": "홍은채",
+              "distance": 0.6238971948623657
+            },
+            {
+              "name": "허윤진",
+              "distance": 0.64969801902771
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.7443569898605347
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7557697892189026
+            },
+            {
+              "name": "김채원",
+              "distance": 0.7675220966339111
+            }
+          ],
+          [
+            {
+              "name": "허윤진",
+              "distance": 0.6597151756286621
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.7532801628112793
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.8295121788978577
+            },
+            {
+              "name": "김채원",
+              "distance": 0.8732311129570007
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.8735194802284241
+            }
+          ]
+        ],
+        "support_frames": [
+          [
+            2620,
+            2648
+          ],
+          [
+            2628,
+            2904
+          ]
+        ]
+      },
+      "selected_face_exactly_owns_role": true,
+      "selected_matches_final_rounded_box": true,
+      "preparation_target": {
+        "index": 4,
+        "box": [
+          1290.0,
+          298.5,
+          1506.0,
+          952.5
+        ],
+        "x": 1383.75,
+        "size": 60.506614685058594,
+        "source": "detected",
+        "cropped_foreground": false
+      },
+      "preparation_score_annotation": 0.01748120009379582,
+      "score_ratio_selected_over_preparation": 2.231218003597922,
+      "preparation_context_face": {
+        "frame": 2784,
+        "time": 46.446400000000004,
+        "person_index": 4,
+        "body_bbox": [
+          1290.0,
+          298.5,
+          1506.0,
+          952.5
+        ],
+        "face_bbox": [
+          1338.0950927734375,
+          323.8571472167969,
+          1393.1926155090332,
+          390.3038787841797
+        ],
+        "landmarks": [
+          [
+            1358.9918212890625,
+            347.0907897949219
+          ],
+          [
+            1380.4005126953125,
+            346.52935791015625
+          ],
+          [
+            1374.2528076171875,
+            359.8642883300781
+          ],
+          [
+            1362.6318359375,
+            370.35113525390625
+          ],
+          [
+            1380.8350830078125,
+            370.2562255859375
+          ]
+        ],
+        "detector_score": 0.9158917665481567,
+        "association": "confirmed",
+        "joint_match": {
+          "name": "사쿠라",
+          "status": "accepted",
+          "reason": "joint_video_match",
+          "best": "사쿠라",
+          "distance": 0.4993540048599243,
+          "margin": 0.10597622394561768,
+          "primary": 0.5313923954963684,
+          "secondary": 0.4673156142234802,
+          "model_candidates": [
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.5313923954963684
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.5822772979736328
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.6884322166442871
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.7058009505271912
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7248857021331787
+              }
+            ],
+            [
+              {
+                "name": "사쿠라",
+                "distance": 0.4673156142234802
+              },
+              {
+                "name": "허윤진",
+                "distance": 0.5927169322967529
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.6283831000328064
+              },
+              {
+                "name": "김채원",
+                "distance": 0.7227882146835327
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7416408658027649
+              }
+            ]
+          ],
+          "support_frames": [
+            [
+              7156,
+              7120
+            ],
+            [
+              7168,
+              8376
+            ]
+          ]
+        }
+      },
+      "distinct_selected_and_preparation_bodies": true,
+      "all_original_score_annotations": {
+        "0": 0.03718526321423862,
+        "1": 0.03900436837377492,
+        "2": 0.018012506136472508,
+        "4": 0.01748120009379582
+      }
+    }
+  ],
+  "future_semantic_connection_points": [
+    {
+      "location": "stage_prominence.foreground_subject + focal_composition.camera_focal_evidence + main_role_timeline.choose_roles",
+      "finding": "Current perspective dominance and within-cut stationary-central push-in do not consume following-shot named foreground/preparation intent.",
+      "saved_evidence": "No camera episode in the window; Sakura context x1170.1875→1383.75. Existing selected Yunjin detected geometry dominates saved score17/17."
+    },
+    {
+      "location": "incoming_context._formation/_repositions/incoming_preparation_context/apply_preparation_contexts",
+      "finding": "Formation motion and next-shot foreground/name proof are preserved in preparation audit and used for clip context only; they deliberately do not alter outgoing selected-main roles.",
+      "saved_evidence": "Cuts2719/2785;17 distinct visible targets; high-quality named2768/2772/2780/2784; incoming-front2816/2820/2824/2828."
+    }
+  ],
+  "freeze_decision": "Do not trim the existing overlap or change role/name semantics in this frozen benchmark; report as future policy work."
+}

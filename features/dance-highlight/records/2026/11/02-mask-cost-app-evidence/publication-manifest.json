@@ -1,0 +1,257 @@
+[
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/build-optimized.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/build-optimized.log",
+    "sha256": "962133b3f716abde72970be95575ec140733c59bd5caa25e35e4fb8aef0ccc05"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/build-disabled.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/build-disabled.log",
+    "sha256": "dbe802816d8fb16a7417f28a7a295ce90d630c4a830dbf8c104e2bf7b3965da6"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/build-final.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/build-final.log",
+    "sha256": "9d401e891cadf1a8e950cfe4092dd0d9e7eed30c9945bdee80002d49db811893"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/red.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/red.log",
+    "sha256": "8539f9ddbe7db6207d001cace3ab527eec2276ab6caf9d00bc7aad22e4cb3e96"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/focused-tests.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/focused-tests.log",
+    "sha256": "9b45e4f5112f2ecd85829abd54d64d4344cfcb9edc9ca879fc152d33248914ea"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/dance-person-regressions.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/dance-person-regressions.log",
+    "sha256": "ea0769204783fa1c340eedd1c416c5b6896bcdac4e387a5c6a8d3f8f860aaf49"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled-red.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled-red.log",
+    "sha256": "13009e05f75a93ab164bc22cb13523660304e4fec420158ea5e35918fe65dd7d"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/joint-disabled-red.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/joint-disabled-red.log",
+    "sha256": "ff2912beed496b144d86a030d0a2ff83d5b6aeef66fdc18873ac16bb518005ca"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled-focused-tests.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled-focused-tests.log",
+    "sha256": "03b76a62d28032fa6aecf59749634a986e06367754cb3755efedd079c2f26328"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled-regressions-before-expectation-update.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled-regressions-before-expectation-update.log",
+    "sha256": "17aea4ada091b632240192f85f477c8f6e8714566e94c08f9f41c62f1ad18951"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled-dance-person-regressions.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled-dance-person-regressions.log",
+    "sha256": "62d42c6c98f0e54e41ebf9e5a530c37fd4a4214a2aeb865dbc3d81858f15965e"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/runtime-status-red.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/runtime-status-red.log",
+    "sha256": "269bd5d72d0a83a8e99b907b2d86958664b7f9b8abeebd3a923d8e5e13e969f3"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/runtime-status-tests.log",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/runtime-status-tests.log",
+    "sha256": "b2bb4074266d1068b6ca6c1475e3155e68e3870ecbf7b93c0756e4de10a08699"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/runtime-status-only.diff",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/runtime-status-only.diff",
+    "sha256": "6da9a7cccdf2b4fc91b86ebc42381229d350e36131bf05d321f85742d745b751"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/final-source-hashes.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/final-source-hashes.json",
+    "sha256": "234ae820016782a439b0091ccb38642452ccc3186831027c81a69fbe7c2b9376"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/final-runtime-accelerators.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/final-runtime-accelerators.json",
+    "sha256": "549ac9f2469bc544b2ef8bc19a1ce6c9c929d5af2fec3f95abeba32398a6edeb"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/final-launch-time.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/final-launch-time.txt",
+    "sha256": "2d1a4d6d525ae764e4eaffc4cfeb4b8fd00a50cb16660e29f3a1b8c48d7f5196"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/compare_runtime.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/compare_runtime.py",
+    "sha256": "5079da7ccb1c08d396d400cff4db093907ba3787b8eb2693d2f4f77a4ae66df0"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/compare_coverage.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/compare_coverage.py",
+    "sha256": "edf8590cddd56bbdd990d1f299fb94f219c84bbde17fe4456d2514445280a614"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/review_cases.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/review_cases.py",
+    "sha256": "28af95f3ed138607c4346a5f4af711bf3a79527ab883a214a0f71c44a9321e53"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/analyze_reviewed_deltas.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/analyze_reviewed_deltas.py",
+    "sha256": "5f312e7156b729f2172c987c2d7ba581a5d8638e690a18a75c67dfb44419c187"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/run_final_regressions.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/run_final_regressions.py",
+    "sha256": "85ab72600d5c34711c6387a54d084d456201751e0ffb00e49971ae36c7135d3e"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/baseline-timings.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/baseline-timings.json",
+    "sha256": "8cdf232f3fcdf531b1bac42c45d85b88070443fa80f828f254d9919c65839dee"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/build-repos.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/build-repos.json",
+    "sha256": "305d174b6f1396c077bedd4eca9615462a185641ae6e3be96165de9d236b4485"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/compare_runs.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/compare_runs.py",
+    "sha256": "b579f26210036679b464d6f8a062f0c40d7e586e6a41493938b313e9f04d0ec7"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/comparison-latest.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/comparison-latest.txt",
+    "sha256": "8f1cdcb8080bfd8ace03266cff906a65e3ca1e445475b8af8d17011522e5119c"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/identity-coverage-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/identity-coverage-comparison.json",
+    "sha256": "d07757462dfd276ff260afd4339df4ae1afb08c66e49b000d1f24b01c4b0d834"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/mask-attempt-cost-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/mask-attempt-cost-comparison.json",
+    "sha256": "cb183a858144648ee673837e54d03277edf846de636e8c0ba736c435fa11d9e7"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/packaged-run-log.jsonl",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/packaged-run-log.jsonl",
+    "sha256": "e61b051fac41f7af21dba615705dc57fa9cddcda9b2b3899915a14a42037b0b6"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/reviewed-case-analysis.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/reviewed-case-analysis.json",
+    "sha256": "3f28efb1b9485bad4e240367708806bca25d48c7f2feb6e9f6594ffbde16d12f"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/reviewed-case-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/reviewed-case-comparison.json",
+    "sha256": "5d3a36780072be7ecdf06336c4f91d6eb4df6785f6ef54f1ea8ca244838f0d83"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/run-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/run-comparison.json",
+    "sha256": "61f8bcd5900dd74bbf0f637d3fdf1a4c2911a2a04f01b09beea40cd18d0dd4cd"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/run-manifest.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/run-manifest.json",
+    "sha256": "7c6b09e38c05eacf8bec5271b853cdb55af744da266ba71a54c249a6ad24a7fb"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/runtime-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/runtime-comparison.json",
+    "sha256": "533d19075389725844f2588f4aecb95240cdc095096c1ef494b9fd9e41447eda"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/source-hashes.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/source-hashes.json",
+    "sha256": "db3d9229bc53270218a75ed94ee2e36ab5247b247e051f54074f7d5009a2acdb"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/watch-cursor.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/watch-cursor.txt",
+    "sha256": "01e6690f41c2554479421027eefaeb5a89516f3a284b4fbf3c8373bbf88c118c"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/optimized/watch_runs.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/optimized/watch_runs.py",
+    "sha256": "80214319e3334cb2d263e0e5b5fd5846bd0c5a7b0003cd752a6c0c5f3f25299a"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/baseline-timings.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/baseline-timings.json",
+    "sha256": "8cdf232f3fcdf531b1bac42c45d85b88070443fa80f828f254d9919c65839dee"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/build-repos.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/build-repos.json",
+    "sha256": "5c069c6c82d5986fb277d8aa186a275b7c5c5f980473893f071ab7a063070aa0"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/compare_runs.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/compare_runs.py",
+    "sha256": "b579f26210036679b464d6f8a062f0c40d7e586e6a41493938b313e9f04d0ec7"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/comparison-latest.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/comparison-latest.txt",
+    "sha256": "38d983fc03f64c816ca63fd6367483427a387992ae890a61b6e2a75b0f5671c1"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/identity-coverage-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/identity-coverage-comparison.json",
+    "sha256": "af0303e5120b2e63f97b7434e3ad2e88eb6d538e4f9ee0dbd63586a9f754fb7d"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/packaged-run-log.jsonl",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/packaged-run-log.jsonl",
+    "sha256": "41079f03833b84e5d6ad43261f76df077b0ca7eeabe5e1b2016365b996478a7a"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/reviewed-case-analysis.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/reviewed-case-analysis.json",
+    "sha256": "dc7015ab35d1b5f1a9b5d6f20ee35509c5b761b04cbb7074974a3782ddc91559"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/reviewed-case-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/reviewed-case-comparison.json",
+    "sha256": "3ac7e2f59c0a977e7a8351ad302e005f62ae2c232cf55d44551f5d936b6610d7"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/run-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/run-comparison.json",
+    "sha256": "2007cc38a65c58560aee55d4f243a44a5faa1788a4398ad5e86d60fa722a5d09"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/run-manifest.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/run-manifest.json",
+    "sha256": "371da8a2f13fd72a5aec3fcf599c9435e3eba9ce13b0c1d58a54caede5a0aedd"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/runtime-comparison.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/runtime-comparison.json",
+    "sha256": "29bfb5f4194d23638dcdf2aed60e6668491f38f57b9c51482d4b473d7a145c70"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/source-hashes.json",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/source-hashes.json",
+    "sha256": "e619b9fc87eeb5e9916d959ed77d8d2972a99d92c3a2594995f77220cb39e91d"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/watch-cursor.txt",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/watch-cursor.txt",
+    "sha256": "aed554c59162964f73d22525aff9a412355896bc0db3b24842bae04229e2e7e7"
+  },
+  {
+    "original_path": "/private/tmp/dance-mask-cost-20261102/disabled/watch_runs.py",
+    "published_path": "/Users/jina/project/adlight/.codex/features/dance-highlight/records/2026/11/02-mask-cost-app-evidence/disabled/watch_runs.py",
+    "sha256": "80214319e3334cb2d263e0e5b5fd5846bd0c5a7b0003cd752a6c0c5f3f25299a"
+  }
+]

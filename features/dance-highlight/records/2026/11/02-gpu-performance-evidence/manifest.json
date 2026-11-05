@@ -1,0 +1,47 @@
+[
+  {
+    "file": "probe.py",
+    "source": "/private/tmp/dance-gpu-audit-20261102/probe.py",
+    "sha256": "ee70f14981999219c98673ce3e7e2e1741e73ffb51b0b76dddb4067f0b3f8f4f"
+  },
+  {
+    "file": "probe_no_profile.py",
+    "source": "/private/tmp/dance-gpu-audit-20261102/probe_no_profile.py",
+    "sha256": "fc28293fe3cada7ad4616167d1a73cce7046f98b877788a8732f7322388415de"
+  },
+  {
+    "file": "coreml_plan.py",
+    "source": "/private/tmp/dance-gpu-audit-20261102/coreml_plan.py",
+    "sha256": "05c23a3f1fceeb5e434fbe63e7c8e381d19fce7e36681f80ec663fb303269b71"
+  },
+  {
+    "file": "results.json",
+    "source": "/private/tmp/dance-gpu-audit-20261102/results.json",
+    "sha256": "c03bdb78fc040fc7ac25149fb8bd1c5b22f20e24aff26d176c6fb10247ee720d"
+  },
+  {
+    "file": "no-profile-results.json",
+    "source": "/private/tmp/dance-gpu-audit-20261102/no-profile/results.json",
+    "sha256": "dd7eec7ce425b7278fa7e5399d6e840ec5ae1d4eaaffb8c6243fb15231a8a9ec"
+  },
+  {
+    "file": "historical-runtime-summary.json",
+    "source": "/private/tmp/dance-gpu-audit-20261102/historical-runtime-summary.json",
+    "sha256": "b41ebcf8632fc3433b6745ba9f65850a9f0c9ec40db727720740d5cf7209bf35"
+  },
+  {
+    "file": "historical-timing.jsonl",
+    "source": "/private/tmp/dance-gpu-audit-20261102/historical-timing.jsonl",
+    "sha256": "6a81924bcbac1b39ab5807b6900fa91f5da4a1161d82b0e3ae171fd662f778b0"
+  },
+  {
+    "file": "coreml-plan.log",
+    "source": "/private/tmp/dance-gpu-audit-20261102/coreml-plan.log",
+    "sha256": "87a24228db581d8b04a3a66f76a0b937c43e9b39dfb027ded2b03d13d0111171"
+  },
+  {
+    "file": "no-profile-probe.log",
+    "source": "/private/tmp/dance-gpu-audit-20261102/no-profile/probe.log",
+    "sha256": "177b82085a4ce5f905fd73bd406ca6e836cddb5bb5cdeace353f9d0db547b9a4"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "snapshotted_files": 109,
+  "changed_since_task_start": [
+    "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "plugins/dance_highlight/dance_highlight/services/observed_main.py",
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py"
+  ],
+  "new_product_file": "plugins/dance_highlight/dance_highlight/services/named_boundaries.py",
+  "unchanged_person_sdk_files": 56,
+  "tests": [
+    "tests/test_dance_named_boundaries.py",
+    "tests/test_dance_observed_main.py"
+  ]
+}

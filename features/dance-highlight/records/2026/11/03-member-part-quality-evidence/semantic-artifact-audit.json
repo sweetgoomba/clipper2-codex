@@ -1,0 +1,86 @@
+[
+  {
+    "title": "MMN",
+    "unchanged_clip_thumbnails_compared": 89,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": []
+  },
+  {
+    "title": "ANT",
+    "unchanged_clip_thumbnails_compared": 125,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 17,
+        "seg_type": "main",
+        "start": 28.2282,
+        "end": 28.661966666666668,
+        "person_id": "unknown",
+        "clip_id": "main_0017",
+        "thumbnail_path": "clips/dance/main/main_0017.jpg"
+      },
+      {
+        "seg_id": 23,
+        "seg_type": "main",
+        "start": 47.48076666666667,
+        "end": 53.720333333333336,
+        "person_id": "김채원",
+        "clip_id": "main_0023",
+        "thumbnail_path": "clips/dance/main/main_0023.jpg"
+      },
+      {
+        "seg_id": 73,
+        "seg_type": "main",
+        "start": 153.98706666666666,
+        "end": 154.65460000000002,
+        "person_id": "unknown",
+        "clip_id": "main_0073",
+        "thumbnail_path": "clips/dance/main/main_0073.jpg"
+      }
+    ]
+  },
+  {
+    "title": "NEON",
+    "unchanged_clip_thumbnails_compared": 193,
+    "unchanged_clip_thumbnail_mismatches": [],
+    "changed_clips": [
+      {
+        "seg_id": 9,
+        "seg_type": "main",
+        "start": 37.804433333333336,
+        "end": 38.47176666666667,
+        "person_id": "unknown",
+        "clip_id": "main_0009",
+        "thumbnail_path": "clips/dance/main/main_0009.jpg"
+      },
+      {
+        "seg_id": 93,
+        "seg_type": "main",
+        "start": 157.9578,
+        "end": 158.5584,
+        "person_id": "unknown",
+        "clip_id": "main_0093",
+        "thumbnail_path": "clips/dance/main/main_0093.jpg"
+      },
+      {
+        "seg_id": 99,
+        "seg_type": "main",
+        "start": 163.39646666666667,
+        "end": 164.63113333333334,
+        "person_id": "unknown",
+        "clip_id": "main_0099",
+        "thumbnail_path": "clips/dance/main/main_0099.jpg"
+      },
+      {
+        "seg_id": 37,
+        "seg_type": "group",
+        "start": 183.14963333333333,
+        "end": 187.72086666666667,
+        "person_id": null,
+        "clip_id": "group_0037",
+        "thumbnail_path": "clips/dance/group/group_0037.jpg",
+        "person_ids": []
+      }
+    ]
+  }
+]

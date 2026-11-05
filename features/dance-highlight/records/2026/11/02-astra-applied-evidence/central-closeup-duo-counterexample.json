@@ -1,0 +1,53 @@
+{
+  "frame": {
+    "frame": 0,
+    "index": 0,
+    "box": [
+      500.0,
+      70.0,
+      700.0,
+      570.0
+    ],
+    "reason": "measured_face_composition",
+    "features": [
+      {
+        "index": 0,
+        "box": [
+          500.0,
+          70.0,
+          700.0,
+          570.0
+        ],
+        "x": 600.0,
+        "source": "detected"
+      },
+      {
+        "index": 1,
+        "box": [
+          220.0,
+          70.0,
+          420.0,
+          570.0
+        ],
+        "x": 320.0,
+        "source": "detected"
+      }
+    ]
+  },
+  "proof": {
+    "frame": 0,
+    "box": [
+      500.0,
+      70.0,
+      700.0,
+      570.0
+    ],
+    "reason": "measured_face_composition",
+    "closeup_subject": true,
+    "closeup_competitors": [
+      0
+    ],
+    "unmeasured_central_competitor": false,
+    "face_source": "detected"
+  }
+}

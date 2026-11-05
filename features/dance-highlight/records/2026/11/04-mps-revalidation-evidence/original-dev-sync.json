@@ -1,0 +1,39 @@
+{
+  "updated_at": "2026-11-03T16:44:30.613496+00:00",
+  "repos": {
+    "clipper_python": {
+      "before": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+      "head": "5d565dfa96c1fa3bd6a4b94e9dc96110088f0dab",
+      "server_dev": "5d565dfa96c1fa3bd6a4b94e9dc96110088f0dab",
+      "fetch": "From https://github.com/OhMyMetabuzz/clipper_python\n * branch            dev        -> FETCH_HEAD",
+      "merge": "Updating 9a9a940..5d565df\nFast-forward\n .../clipper_accelerators/errors.py                 | 37 ++++++++-\n .../clipper_accelerators/lease_client.py           | 10 ++-\n .../clipper_accelerators/owned_stage.py            | 10 ++-\n .../clipper_accelerators/visual_unit.py            |  9 +-\n tests/test_accelerator_admission_diagnostics.py    | 96 ++++++++++++++++++++++\n 5 files changed, 154 insertions(+), 8 deletions(-)\n create mode 100644 tests/test_accelerator_admission_diagnostics.py",
+      "tracked_status": ""
+    },
+    "clipper_electron": {
+      "before": "540c6e6544e8aa46ad97224958d7e543c44c1c0c",
+      "head": "6831d8de76d34bb6ae2523122e9c6271ba68d00f",
+      "server_dev": "6831d8de76d34bb6ae2523122e9c6271ba68d00f",
+      "fetch": "From https://github.com/OhMyMetabuzz/clipper_electron\n * branch            dev        -> FETCH_HEAD",
+      "merge": "Updating 540c6e6..6831d8d\nFast-forward\n scripts/assert-no-packaged-secrets.mjs        |  1 +\n scripts/build-runtime-config.mjs              | 15 ++++-\n src/main/accelerators/leases.ts               | 28 ++++++---\n src/main/accelerators/memory.ts               | 57 ++++++++++++++++++\n src/main/backend/owned-child-cleanup.ts       | 20 +++++--\n src/main/config/packaged-runtime-config.ts    | 15 +++++\n src/main/external-url.ts                      |  6 +-\n src/main/main.ts                              |  2 +-\n test/accelerator-admission-memory.test.js     | 80 +++++++++++++++++++++++++\n test/local-runtime-profile.test.mjs           | 19 +++++-\n test/owned-process-identity-snapshots.test.js | 85 +++++++++++++++++++++++++++\n test/packaged-secret-scan.test.js             |  1 +\n test/web-client-runtime-routing.test.js       | 36 ++++++++++++\n 13 files changed, 345 insertions(+), 20 deletions(-)\n create mode 100644 src/main/accelerators/memory.ts\n create mode 100644 test/accelerator-admission-memory.test.js\n create mode 100644 test/owned-process-identity-snapshots.test.js\n create mode 100644 test/web-client-runtime-routing.test.js",
+      "tracked_status": ""
+    },
+    "clipper_nestjs": {
+      "before": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+      "head": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "server_dev": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "fetch": "From https://github.com/OhMyMetabuzz/clipper_nestjs\n * branch              dev        -> FETCH_HEAD",
+      "merge": "Updating a75f6ba4..a5f8db6f\nFast-forward\n src/core/errors/error-category.ts                  |   1 +\n src/modules/jobs/application/jobs.service.ts       |  56 +++-\n src/modules/jobs/domain/job.model.ts               |   3 +\n .../billable-job-attempt.coordinator.ts            |  62 ++++-\n .../billing-restart-reconciliation.service.ts      |  45 +--\n .../application/billing-terminal-outbox.service.ts |  54 +++-\n .../operations/domain/billable-job-attempt.ts      |   2 +\n .../operations/domain/billing-job-binding.ts       |  47 ++++\n .../operations/domain/billing-terminal-command.ts  |   3 +\n .../json-billing-attempt.repository.ts             |  13 +-\n .../infrastructure/json-billing-terminal-outbox.ts |   5 +\n test/archive-delete-entry.test.js                  |   3 +-\n test/billing-crash-boundaries.test.js              |  15 +-\n .../billing-interrupted-refund.integration.test.js | 125 +++++++++\n test/billing-restart-reconciliation.test.js        |  67 ++++-\n test/billing-terminal-outbox.test.js               |  78 ++++++\n test/dance-job-reference-gate.test.js              |   1 +\n test/job-workflow-auth-context.test.js             |   1 +\n test/jobs-billing-state.test.js                    | 309 +++++++++++++++++++++\n test/jobs-confirmed-billing.test.js                |   1 +\n ...-v2-initial-billing-restart.integration.test.js |   1 +\n ...on-v2-retry-billing-restart.integration.test.js |   6 +\n 22 files changed, 837 insertions(+), 61 deletions(-)\n create mode 100644 src/modules/operations/domain/billing-job-binding.ts\n create mode 100644 test/billing-interrupted-refund.integration.test.js\n create mode 100644 test/jobs-billing-state.test.js",
+      "tracked_status": ""
+    },
+    "clipper_angular": {
+      "before": "4150871c6bb14f0a3eb5fd4d55a51a7bec54e98c",
+      "head": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "server_dev": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "fetch": "From https://github.com/OhMyMetabuzz/clipper_angular\n * branch              dev        -> FETCH_HEAD",
+      "merge": "Updating 4150871c..7b559706\nFast-forward\n src/core/errors/error-catalog.spec.ts              |   7 ++\n src/core/errors/error-catalog.ts                   |   1 +\n src/core/history/job-history.service.ts            |   7 +-\n .../operations/operation-recovery.service.spec.ts  |  46 +++++++++\n src/core/operations/operation-recovery.service.ts  |   9 +-\n .../operation-charge-guard.service.spec.ts         |  35 +++++++\n .../operations/operation-charge-guard.service.ts   |   5 +\n src/shell/projects/models/project-card.builder.ts  |   4 +\n src/shell/projects/models/projects-view.ts         |   2 +\n .../project-card/project-card.component.html       |  18 +++-\n .../projects/projects/projects.component.spec.ts   | 112 +++++++++++++++++++++\n src/shell/projects/projects/projects.component.ts  |  44 ++++++--\n 12 files changed, 278 insertions(+), 12 deletions(-)",
+      "tracked_status": ""
+    }
+  },
+  "quality_policy_diff": "",
+  "active_heavy_tracking_calls": []
+}

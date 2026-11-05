@@ -1,0 +1,38 @@
+incoming_identity_boundary 최종 독립 검토 — 2026-11-03
+SHA256 c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3
+
+결론: 제가 제기한 ANT154의 경계 지연 문제를 이 후보가 해결한다. retained A의 독립 근거를 요구하는 최종본까지 읽고 검증했다. 검토 범위에서 새 차단 결함을 찾지 못했으며 원본 앱 빌드 및 세 영상 실제 비교로 진행할 수 있다. 최종 제품 채택/정확도/실행시간 승인은 실제 통합 결과를 확인한 뒤 내려야 한다.
+
+독립 테스트
+동결 소스/테스트/fixture를 별도scratch에서 실행했다.
+/Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python -m pytest -q --rootdir=. --confcutdir=. test_dance_incoming_identity_boundary.py
+관측결과: 41 passed in0.95s, exit0.
+없는/약한/미정렬anchor, 모델/얼굴충돌, 원래cut/handoff, missing sample/pose/selected body, 진짜group역할, malformedjointmargin, 남는A의근거없는초단편, 시간별증거/preview재분배, 멱등성 및두번째후보source실패시전체rollback을포함한다.
+
+실제 ANT 원본 재검증
+job1793645767403의rawpose/FaceObservation/원래reference vectors/complete joint ranks를직접읽었다. fixture의bodybox/pose/selected body/scene_kind를raw원본과일치assert했다. 별도실행은원래gallery벡터와모델/config/source해시로생성한ReferenceObservationMatcher를썼다. 새모델추론없음.
+원래두출력range:
+김채원153.553400–154.821333, 카즈하154.821333–155.788967.
+독립실행후:
+김채원153.553400–154.687867, 카즈하154.687867–155.788967.
+변경 .133466667초, 시작/끝이하나의경계에서정확히맞는다.
+
+남는김채원: acceptedjoint anchors9244/9256, selectedpath9244/9248/9252/9256/9260/9264/9268.
+들어오는카즈하: acceptedjoint anchors9308/9320, selectedpath9272부터9320까지4frame간격13관측.
+경계는최초확인된B몸9272의시각이다. 실제교대가일어나는앞선9268–9272관측사이의정확한시점을추정했다고주장하지않는다.
+원본source9244–9320의77프레임을직접읽었다. color/spatialcut없음, decode .145294초/API .220515초. 이는좁은검증함수실행시간이며전체앱runtime이아니다.
+입력output/record/face의pickle동일,decisions/labels동일assert통과. 모듈은이름을새로정하지않으며증거tuple이름도바꾸지않는다.
+
+조건의 의미
+- A/B서로다른기존확정main두구간에만적용한다. unknown/group승격없음.
+- B의원래acceptedjoint2개(.15초이상)와각모델의일치순위/점수,photo반대없음을확인한다. 역방향reciprocal몸path의최초관측으로만경계를당긴다.
+- 새B범위에서jointconflict/accepted다른이름/photo다른이름/신뢰할만한반대단일모델을거부한다.
+- 줄어든A에도자체acceptedanchor2개와B직전까지선택몸path를요구한다. A의기존영역은늘리지않는다. 그기존영역의약한rejectedjoint불일치는새근거로쓰지않으며긍정적인반대이름은거부한다.
+- 모든후보의기하/신원/source검사가끝난뒤에만출력복사본을변경한다. boundary/bbox/evidence/preview를같은시간기준으로재분배하며원래판정/labels/record는보존한다.
+- performance_parts에서기존named-boundary처리뒤에연결되고,원래cut+scene변경cut과frozenobservations를받으며named_boundaries stage시간과별도감사에포함되는것을확인했다.
+
+부모측 전체 투영 자료
+product-report.md와product-three-video-replay.json을읽었다. 세영상main291개중ANT154만교정/MMN·NEON변화0/ANTshortmain46→45는담당agent의전체투영결과다. 본검토의독립actual재생은ANT해당두구간에한정된다. 전체integration및새앱benchmark는아직별도다.
+
+증거: source-manifest.json, independent-ant-source-replay.json, independent_ant_replay.py, 동결source/test/fixture.
+이검토완료후실제앱benchmark동안decode/replay/pytest/모델실행을보류한다. 결과수신후source/module provenance,의도된names/ranges/thumbnail변경,SAM OFF및시간을다시대조해야한다. NEON43.777초확장등의역할품질평가를단순clip감소로대체하면안된다.

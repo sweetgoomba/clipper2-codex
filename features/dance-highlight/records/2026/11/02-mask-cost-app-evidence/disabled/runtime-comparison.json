@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Made My Night",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 5004,
+      "inferences": 4846,
+      "cache_hits": 158,
+      "fallbacks": 0,
+      "inference_seconds": 64.47890599165112,
+      "setup_seconds": 1.3001185830216855
+    },
+    "mask_reason": "disabled_runtime_cost",
+    "mask_recovered_seconds": 0.0,
+    "mask_attempts": 0,
+    "mask_model_initialized": false,
+    "joint_reason": "disabled_runtime_cost",
+    "joint_model_initialized": false
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 12979,
+      "inferences": 12566,
+      "cache_hits": 413,
+      "fallbacks": 0,
+      "inference_seconds": 168.49857196997618,
+      "setup_seconds": 1.3001185830216855
+    },
+    "mask_reason": "disabled_runtime_cost",
+    "mask_recovered_seconds": 0.0,
+    "mask_attempts": 0,
+    "mask_model_initialized": false,
+    "joint_reason": "disabled_runtime_cost",
+    "joint_model_initialized": false
+  },
+  {
+    "title": "NEON",
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats": {
+      "requests": 21640,
+      "inferences": 20892,
+      "cache_hits": 748,
+      "fallbacks": 0,
+      "inference_seconds": 278.6473190727411,
+      "setup_seconds": 1.3001185830216855
+    },
+    "mask_reason": "disabled_runtime_cost",
+    "mask_recovered_seconds": 0.0,
+    "mask_attempts": 0,
+    "mask_model_initialized": false,
+    "joint_reason": "disabled_runtime_cost",
+    "joint_model_initialized": false
+  }
+]

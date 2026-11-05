@@ -1,0 +1,885 @@
+{
+  "jobs": [
+    {
+      "id": "dance_1793719164438",
+      "source": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/BZDZBUyaJbA",
+        "requestedQuality": "1080p"
+      },
+      "status": "completed",
+      "startedAt": "2026-11-03T15:19:26.187Z",
+      "finishedAt": "2026-11-03T15:31:36.148Z",
+      "progress": 1,
+      "message": "완료",
+      "elapsed_seconds": 729.961,
+      "selection": {
+        "허윤진": [
+          "dance-asset:acf3344b-8da0-4c85-983d-8361d7d42aca:dacda9578c565a2aeb5d12be6f2ba7b7",
+          "dance-asset:41ec38c6-098a-411a-a13c-001470de7eb2:00f6ad9e845742920c73fdbff2365554",
+          "dance-asset:6a86a488-a5cb-4129-bf05-82742d513199:847550a864f901db659ae515c85e6d8d",
+          "dance-asset:4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2:4f4dbf85ac07e4b35ddf8e86f1b45032",
+          "dance-asset:45420a1b-0666-4f74-92ed-f69f05194d3d:bfac300caf192323ee0c0b00aba8a83d",
+          "dance-asset:10d77536-9576-4186-966d-da2fa18f082b:57d575510256d43c95a7d4d1288b81cc",
+          "dance-asset:e4736b85-86e6-4cd1-80ef-b6b83792f3e7:4d9170c324166c0c97448b09655ad59a",
+          "dance-asset:782997da-79b7-4eb5-a5f2-88689f09d46c:cf411a0ed880da8ea4678a566341721b"
+        ],
+        "홍은채": [
+          "dance-asset:eca625c2-a5e6-4a02-9e81-58efdc4f06fb:dd88fcef07de1ca78f9aca7c09881323",
+          "dance-asset:40a115f8-670d-4001-b311-a12e71120ade:af5d3962a353be531223cfea0c0ecf8d",
+          "dance-asset:751eeea6-a217-4f85-998c-81adf3990720:d0cb6f3ab5a0e9ba3bbc0f0d3a560aaa",
+          "dance-asset:c8006503-1e65-4f71-bc9d-2f5040975d63:10687edafae46d2a322a63cf78ba5f92",
+          "dance-asset:00273f0d-b929-412b-9314-9d4c98b137ee:299057be61e258717f7ba5535a7b6b86",
+          "dance-asset:e01960a6-3239-4fc6-82b9-3f6513cdaa71:8865e561bb15b4e7507796f07d0c7504"
+        ],
+        "카즈하": [
+          "dance-asset:f734d783-0970-4a51-9e4c-6fe485bca7ea:a3a38c5738c26f36fb5584913e06ff4a",
+          "dance-asset:fd12ee85-9561-45c0-a51c-385dadba4196:815800151e9a385089e38b49f207937d",
+          "dance-asset:bbbb8289-9586-4ebb-87ef-c5b36b953c3f:f3f52df81a3a4746fb3b7751d6496524",
+          "dance-asset:858d432e-e73e-433a-ba90-5871a0683ee5:941aa8d82400f9296360c02a384c24fa",
+          "dance-asset:12e1c164-a348-405d-956a-8015b631f0ce:1b15250b8961bff041bf6bf742fd1472"
+        ],
+        "김채원": [
+          "dance-asset:93b52129-8de1-4c08-8b5b-c5b3a72b7b89:5dda323d34c85f74085d29f5923e74dc",
+          "dance-asset:0b47c9d5-bbbc-4402-8095-2848e1fd4899:3e09b6fa8e97c70b55f54c0e8364d585",
+          "dance-asset:f87f9245-9ab5-4422-8fea-7a9e9537c3d2:a6ae3860a57095c781b3312613058051",
+          "dance-asset:94bfa131-b5ba-48cb-adbd-bc9a99a78db8:444d3ed74823cebceaf12ea9c36cbf9c",
+          "dance-asset:04b4674c-3ad1-4bee-8dd8-fde48a498652:f57612a1023428093d57f023c97db0d1",
+          "dance-asset:5ece3942-a5d8-4399-982f-41388de37344:1b36d739f4e95372eea961daf8665daa"
+        ],
+        "사쿠라": [
+          "dance-asset:bc1e6635-0831-4bdc-819b-8e0557f29b0c:6d97bf8a439241f752a29a247e79c825",
+          "dance-asset:924036b1-bf13-42d8-a5d3-97ad967672da:8d88cd13393e09f92753c3005a19fa49",
+          "dance-asset:98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae:400bdbc518c3f82a581c985dd74bb9b0",
+          "dance-asset:cf2daf1b-82a2-49e5-86da-a2840d1383eb:f0babe9a9503e46b1b2baabff9f02a89",
+          "dance-asset:1c4893ca-d993-487e-a220-e919482e405a:05401007dc9efd54fb1b4668ba1c9ac2",
+          "dance-asset:c6d893d0-def1-49b9-934a-54c2ea1db318:e6f233091f36c5eedb7a744c56a0c778"
+        ]
+      },
+      "reference_hashes": {
+        "허윤진": [
+          "419fb6ff40c31fce4dc7e8eb25aedbce7988cdd85f250131bb7a9f1caf2a5d50",
+          "812e2c59553fde6b070edadf8c23d63c617b25ce7b2820ce7bc04e442caf6190",
+          "60b55512d7fbc5e8fd2b5cd479c981421a06558ef7398ccaa14dd8e8323e4171",
+          "4abf83ebb59d922e67615e3381cf3a39c5512acba0d073d6f0814f3312480722",
+          "d4ee5714559c50f81cf81c14d01480228ef46f20fa48de67a061d88eeb6b1787",
+          "49d40dcf71632c827b608d7ba483c7ffe441347eb3b2d16593ab620a0a51568a",
+          "a88f4a226206c45aa2fdcb24c89abc6affcc8351b0e47c8c281fbd93e4eadf90",
+          "7e9f88c7effa7fab0fff8c114f021dbb0a72516b56cd7a22788c4f249a9a4049"
+        ],
+        "홍은채": [
+          "4d1767fc2a8a2983f5c3f58fae6b5298473485615d92cd1db3b7cd93fedba000",
+          "99da853febb84964f6fc11ec76889ee9495265447ec81b206ef4308c9117e6b0",
+          "c19b7bd069d284a5d4c46c45736c53f038b8b989bf447d7d09ea551ce343b344",
+          "6d7b7d4ea0386c69c933448454aeec60723738cd840ca43c95a106d2d85e075f",
+          "bc0fdc0ced007672a5e04640376bc7902939ecf108ae3daf32332c4bb57acb9b",
+          "660727122ebf45c73486345ed0664949654735345378ec8a7d4e66dd0b76e71f"
+        ],
+        "카즈하": [
+          "25d0617feb9499b0d2254b2943ff465005c8fe9932e71e3d17353e01b3e9e66b",
+          "f7d2ddb6829e82d4db76bd9cf6a6217d4d70b998cda7f95e9a1f27ee1bd9e13d",
+          "3398c61e1f24eb9c491ccdc847a6df36ae8cecebc90ed39167b6cf31510402e9",
+          "23e7a603330e98420c185aa150316a08e8adc895b3556472e66cd7315aede06b",
+          "1087800472a40b397eb9321614ba9989125558ad79edbd7e86b8c4589c01a82b"
+        ],
+        "김채원": [
+          "60172a2c5a06565160b90882a494f9ed97e03960ed2a9f74954b46b4f0593221",
+          "0ed628934970f82ea51392358747e3be70d0c3970665c61915aaea149b1af705",
+          "7f1a9d6b6a7f646fc3f484dc7327fb50a46f3295d58e87714654840e32c82bc5",
+          "9b6832ce5ed7b678efaad8f59c57fd458804afdabae95f7f21787a61e9de8183",
+          "2537e25aa079f9b833d8ba70577b01cb82f23bd88664a473fa15133f8f30ad53",
+          "66b40c2050e698a4d8f6f99a2d6b00b5cc13fc1ff9418944cb3244f8352bd358"
+        ],
+        "사쿠라": [
+          "389f975846961e1a349c72c8c219235fcb2af05a0ea5791b903ad85ac4686273",
+          "1c07506b80d53f59866cc0a3a2ad53a0cfbbde7866c615937be04ade94873d52",
+          "5c23a8fb3be84ce07f5bb2fc69c392553f3a967a1383b6aa0efe72a7398bc1b1",
+          "bb2fd7ae6052bfcbf1abec6749416e47bb7f4112ddfa1de41c67baa92f291484",
+          "1bb10230abbb15596970e4cc1f898a69cbcc3a02cfc4983372c5775711cdd168",
+          "ce12b1d31594e7964898223a2d022df686e7eab17f4a8be63571a248605b72d8"
+        ]
+      },
+      "meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793719164438/.acceleration/runs/dance_highlight-b2cb3ca4ff2d4231a726a26e1a6d9231/033337490ecc48838fcb6336f2643bdb/json/dance_meta.json",
+      "meta_sha256": "c080ea04c48e5c95b9667a77acc240c11a78e98d8ae5516912683b523bff6adf",
+      "counts": {
+        "output": 64,
+        "output_short": 22,
+        "raw": 81,
+        "raw_short": 34,
+        "named_short": 6,
+        "unknown_seconds": 4.27143333333337
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 17.817799999999995,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 0,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 6.289616666666703,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 0.4671333333333365,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 2.8698333333333323,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 3,
+        "main_evidence_seconds": 151.5514,
+        "main_eligible_seconds": 134.00053333333332,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 0,
+        "incoming_preparation_context_count": 1,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 2,
+        "identity_recovered_seconds": -4.4550500000000355,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 40,
+          "ambiguous": 0,
+          "unmatched": 9,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 155.03821666666667,
+        "raw_main_segments": 84,
+        "raw_group_segments": 33,
+        "smoothed_main_segments": 3,
+        "smoothed_group_segments": 32,
+        "kept_main_segments": 49,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 5
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.009490458003710955,
+          "yolo": 135.40196308400482,
+          "ref_embs": 3.0422092499793507,
+          "pose_observations": 0.19268725003348663,
+          "main_selection": 272.85076041700086,
+          "native_scene": 48.33596666704398,
+          "group_context": 0.09145370800979435,
+          "segment_build": 66.11132854199968,
+          "face_extract": 146.5349269590224,
+          "secondary_faces": 24.13939887500601,
+          "body_continuity": 1.6792945410124958,
+          "context_faces": 0.00032125000143423676,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.1850659580086358,
+          "observed_part_continuity": 0.20466020802268758,
+          "shot_member_gaps": 0.0029899170040152967,
+          "cluster_map": 43.414057832967956,
+          "group_continuity": 0.06681579200085253,
+          "clips_main": 5.324102375016082,
+          "clips_group": 3.5912466250010766
+        },
+        "total_before_metadata_write_seconds": 713.4225341659621,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "main_0008",
+            "start": 35.4354,
+            "end": 42.97626666666667,
+            "person_id": "사쿠라",
+            "seg_type": "main"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "group_0011",
+            "start": 50.2502,
+            "end": 50.83411666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0014",
+            "start": 50.83411666666667,
+            "end": 52.452400000000004,
+            "person_id": "허윤진",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0035",
+            "start": 97.79780000000001,
+            "end": 104.02058333333333,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0040",
+            "start": 113.64686666666667,
+            "end": 118.50171666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0044",
+            "start": 134.16736666666668,
+            "end": 137.17036666666667,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0020",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0020",
+            "start": 59.67628333333334,
+            "end": 65.24851666666667,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": []
+      }
+    },
+    {
+      "id": "dance_1793719441015",
+      "source": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/p_XdZdg9oGc",
+        "requestedQuality": "1080p"
+      },
+      "status": "completed",
+      "startedAt": "2026-11-03T15:31:36.442Z",
+      "finishedAt": "2026-11-03T15:51:41.083Z",
+      "progress": 1,
+      "message": "완료",
+      "elapsed_seconds": 1204.641,
+      "selection": {
+        "허윤진": [
+          "dance-asset:acf3344b-8da0-4c85-983d-8361d7d42aca:dacda9578c565a2aeb5d12be6f2ba7b7",
+          "dance-asset:41ec38c6-098a-411a-a13c-001470de7eb2:00f6ad9e845742920c73fdbff2365554",
+          "dance-asset:6a86a488-a5cb-4129-bf05-82742d513199:847550a864f901db659ae515c85e6d8d",
+          "dance-asset:4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2:4f4dbf85ac07e4b35ddf8e86f1b45032",
+          "dance-asset:45420a1b-0666-4f74-92ed-f69f05194d3d:bfac300caf192323ee0c0b00aba8a83d",
+          "dance-asset:10d77536-9576-4186-966d-da2fa18f082b:57d575510256d43c95a7d4d1288b81cc",
+          "dance-asset:e4736b85-86e6-4cd1-80ef-b6b83792f3e7:4d9170c324166c0c97448b09655ad59a",
+          "dance-asset:782997da-79b7-4eb5-a5f2-88689f09d46c:cf411a0ed880da8ea4678a566341721b"
+        ],
+        "홍은채": [
+          "dance-asset:eca625c2-a5e6-4a02-9e81-58efdc4f06fb:dd88fcef07de1ca78f9aca7c09881323",
+          "dance-asset:40a115f8-670d-4001-b311-a12e71120ade:af5d3962a353be531223cfea0c0ecf8d",
+          "dance-asset:751eeea6-a217-4f85-998c-81adf3990720:d0cb6f3ab5a0e9ba3bbc0f0d3a560aaa",
+          "dance-asset:c8006503-1e65-4f71-bc9d-2f5040975d63:10687edafae46d2a322a63cf78ba5f92",
+          "dance-asset:00273f0d-b929-412b-9314-9d4c98b137ee:299057be61e258717f7ba5535a7b6b86",
+          "dance-asset:e01960a6-3239-4fc6-82b9-3f6513cdaa71:8865e561bb15b4e7507796f07d0c7504"
+        ],
+        "카즈하": [
+          "dance-asset:f734d783-0970-4a51-9e4c-6fe485bca7ea:a3a38c5738c26f36fb5584913e06ff4a",
+          "dance-asset:fd12ee85-9561-45c0-a51c-385dadba4196:815800151e9a385089e38b49f207937d",
+          "dance-asset:bbbb8289-9586-4ebb-87ef-c5b36b953c3f:f3f52df81a3a4746fb3b7751d6496524",
+          "dance-asset:858d432e-e73e-433a-ba90-5871a0683ee5:941aa8d82400f9296360c02a384c24fa",
+          "dance-asset:12e1c164-a348-405d-956a-8015b631f0ce:1b15250b8961bff041bf6bf742fd1472"
+        ],
+        "김채원": [
+          "dance-asset:93b52129-8de1-4c08-8b5b-c5b3a72b7b89:5dda323d34c85f74085d29f5923e74dc",
+          "dance-asset:0b47c9d5-bbbc-4402-8095-2848e1fd4899:3e09b6fa8e97c70b55f54c0e8364d585",
+          "dance-asset:f87f9245-9ab5-4422-8fea-7a9e9537c3d2:a6ae3860a57095c781b3312613058051",
+          "dance-asset:94bfa131-b5ba-48cb-adbd-bc9a99a78db8:444d3ed74823cebceaf12ea9c36cbf9c",
+          "dance-asset:04b4674c-3ad1-4bee-8dd8-fde48a498652:f57612a1023428093d57f023c97db0d1",
+          "dance-asset:5ece3942-a5d8-4399-982f-41388de37344:1b36d739f4e95372eea961daf8665daa"
+        ],
+        "사쿠라": [
+          "dance-asset:bc1e6635-0831-4bdc-819b-8e0557f29b0c:6d97bf8a439241f752a29a247e79c825",
+          "dance-asset:924036b1-bf13-42d8-a5d3-97ad967672da:8d88cd13393e09f92753c3005a19fa49",
+          "dance-asset:98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae:400bdbc518c3f82a581c985dd74bb9b0",
+          "dance-asset:cf2daf1b-82a2-49e5-86da-a2840d1383eb:f0babe9a9503e46b1b2baabff9f02a89",
+          "dance-asset:1c4893ca-d993-487e-a220-e919482e405a:05401007dc9efd54fb1b4668ba1c9ac2",
+          "dance-asset:c6d893d0-def1-49b9-934a-54c2ea1db318:e6f233091f36c5eedb7a744c56a0c778"
+        ]
+      },
+      "reference_hashes": {
+        "허윤진": [
+          "419fb6ff40c31fce4dc7e8eb25aedbce7988cdd85f250131bb7a9f1caf2a5d50",
+          "812e2c59553fde6b070edadf8c23d63c617b25ce7b2820ce7bc04e442caf6190",
+          "60b55512d7fbc5e8fd2b5cd479c981421a06558ef7398ccaa14dd8e8323e4171",
+          "4abf83ebb59d922e67615e3381cf3a39c5512acba0d073d6f0814f3312480722",
+          "d4ee5714559c50f81cf81c14d01480228ef46f20fa48de67a061d88eeb6b1787",
+          "49d40dcf71632c827b608d7ba483c7ffe441347eb3b2d16593ab620a0a51568a",
+          "a88f4a226206c45aa2fdcb24c89abc6affcc8351b0e47c8c281fbd93e4eadf90",
+          "7e9f88c7effa7fab0fff8c114f021dbb0a72516b56cd7a22788c4f249a9a4049"
+        ],
+        "홍은채": [
+          "4d1767fc2a8a2983f5c3f58fae6b5298473485615d92cd1db3b7cd93fedba000",
+          "99da853febb84964f6fc11ec76889ee9495265447ec81b206ef4308c9117e6b0",
+          "c19b7bd069d284a5d4c46c45736c53f038b8b989bf447d7d09ea551ce343b344",
+          "6d7b7d4ea0386c69c933448454aeec60723738cd840ca43c95a106d2d85e075f",
+          "bc0fdc0ced007672a5e04640376bc7902939ecf108ae3daf32332c4bb57acb9b",
+          "660727122ebf45c73486345ed0664949654735345378ec8a7d4e66dd0b76e71f"
+        ],
+        "카즈하": [
+          "25d0617feb9499b0d2254b2943ff465005c8fe9932e71e3d17353e01b3e9e66b",
+          "f7d2ddb6829e82d4db76bd9cf6a6217d4d70b998cda7f95e9a1f27ee1bd9e13d",
+          "3398c61e1f24eb9c491ccdc847a6df36ae8cecebc90ed39167b6cf31510402e9",
+          "23e7a603330e98420c185aa150316a08e8adc895b3556472e66cd7315aede06b",
+          "1087800472a40b397eb9321614ba9989125558ad79edbd7e86b8c4589c01a82b"
+        ],
+        "김채원": [
+          "60172a2c5a06565160b90882a494f9ed97e03960ed2a9f74954b46b4f0593221",
+          "0ed628934970f82ea51392358747e3be70d0c3970665c61915aaea149b1af705",
+          "7f1a9d6b6a7f646fc3f484dc7327fb50a46f3295d58e87714654840e32c82bc5",
+          "9b6832ce5ed7b678efaad8f59c57fd458804afdabae95f7f21787a61e9de8183",
+          "2537e25aa079f9b833d8ba70577b01cb82f23bd88664a473fa15133f8f30ad53",
+          "66b40c2050e698a4d8f6f99a2d6b00b5cc13fc1ff9418944cb3244f8352bd358"
+        ],
+        "사쿠라": [
+          "389f975846961e1a349c72c8c219235fcb2af05a0ea5791b903ad85ac4686273",
+          "1c07506b80d53f59866cc0a3a2ad53a0cfbbde7866c615937be04ade94873d52",
+          "5c23a8fb3be84ce07f5bb2fc69c392553f3a967a1383b6aa0efe72a7398bc1b1",
+          "bb2fd7ae6052bfcbf1abec6749416e47bb7f4112ddfa1de41c67baa92f291484",
+          "1bb10230abbb15596970e4cc1f898a69cbcc3a02cfc4983372c5775711cdd168",
+          "ce12b1d31594e7964898223a2d022df686e7eab17f4a8be63571a248605b72d8"
+        ]
+      },
+      "meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793719441015/.acceleration/runs/dance_highlight-c75af4b2a90d4b09a21a80717baa4905/6cc0ba5392ae4d4e9eb4b8fb8bf040a0/json/dance_meta.json",
+      "meta_sha256": "1365220781803b2612b6c4d330a8b67729776f40dc0029ce5a1d3e95e95626db",
+      "counts": {
+        "output": 120,
+        "output_short": 62,
+        "raw": 128,
+        "raw_short": 70,
+        "named_short": 21,
+        "unknown_seconds": 13.748266666666712
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 16.249566666666727,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 0,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 2.068733333333313,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 16.133483333333356,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 0.7508499999999856,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 1,
+        "main_evidence_seconds": 206.73986666666667,
+        "main_eligible_seconds": 190.49029999999993,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 3,
+        "incoming_preparation_context_count": 1,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 1,
+        "identity_recovered_seconds": 173.85571666666658,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 68,
+          "ambiguous": 0,
+          "unmatched": 28,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 220.83728333333335,
+        "raw_main_segments": 126,
+        "raw_group_segments": 33,
+        "smoothed_main_segments": 1,
+        "smoothed_group_segments": 32,
+        "kept_main_segments": 96,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 5
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.008849749981891364,
+          "yolo": 252.55261791701196,
+          "ref_embs": 3.1594996249768883,
+          "pose_observations": 0.30612204200588167,
+          "main_selection": 405.6043322919868,
+          "native_scene": 136.92686033301288,
+          "group_context": 0.06450029200641438,
+          "segment_build": 154.07800204196246,
+          "face_extract": 235.07858004199807,
+          "secondary_faces": 47.585002541018184,
+          "body_continuity": 0.7137484169797972,
+          "context_faces": 0.0005842910031788051,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.29148745798738673,
+          "observed_part_continuity": 0.543954707973171,
+          "shot_member_gaps": 0.1950942080002278,
+          "cluster_map": 72.7041310829809,
+          "group_continuity": 0.1553923329920508,
+          "clips_main": 9.465931750019081,
+          "clips_group": 2.714828792028129
+        },
+        "total_before_metadata_write_seconds": 1194.7623561670189,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "main_0019",
+            "start": 38.60523333333333,
+            "end": 42.125416666666666,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "main_0022",
+            "start": 47.48076666666667,
+            "end": 53.720333333333336,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0022",
+            "start": 47.48076666666667,
+            "end": 53.720333333333336,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0045",
+            "start": 99.7997,
+            "end": 106.05595,
+            "person_id": "카즈하",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0050",
+            "start": 117.60081666666667,
+            "end": 119.68623333333333,
+            "person_id": "홍은채",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0058",
+            "start": 134.10053333333332,
+            "end": 135.10163333333333,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0027",
+            "start": 64.3643,
+            "end": 64.41435,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0028",
+            "start": 64.41435,
+            "end": 69.2692,
+            "person_id": "김채원",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": [
+          {
+            "clip_id": "main_0084",
+            "start": 171.80496666666667,
+            "end": 172.2053666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dance_1793719521324",
+      "source": {
+        "type": "youtube_url",
+        "url": "https://youtu.be/93j1fDGi_-8",
+        "requestedQuality": "1080p"
+      },
+      "status": "completed",
+      "startedAt": "2026-11-03T15:51:41.653Z",
+      "finishedAt": "2026-11-03T16:12:56.415Z",
+      "progress": 1,
+      "message": "완료",
+      "elapsed_seconds": 1274.762,
+      "selection": {
+        "보라": [
+          "dance-asset:76889073-f5cd-44e5-afde-3e4579545277:e19771ca60b9bff3d21702debc126d38",
+          "dance-asset:7df35f93-15eb-45aa-b1d5-5859222363a5:0f8ba0df5b229b3042537f37d57eacc0",
+          "dance-asset:0773c80d-1d88-4330-b803-d94a18cf4dd8:d2bf6e3e43d5922f062a283ff60ca3c7",
+          "dance-asset:033788eb-504e-48ec-bc1b-ed1c38c24054:2e899c32bf36d805e943e211aba60d4b",
+          "dance-asset:38f60b69-e905-4398-89fc-762de39a62ec:9b6441f10dccd98090d47e21496b6fdb"
+        ],
+        "히메키": [
+          "dance-asset:fe28c489-ec67-43aa-ae57-9d928f884919:284d65ce3674fe5945debc49f831d2ae",
+          "dance-asset:bc5321da-bcda-4f4e-bc6f-36ac57c06643:8fb34f2afd175251d907cd99d5ba012b",
+          "dance-asset:a7fa4a45-9d56-4166-9c45-5dae966b77ea:85b7dcf245bb1dcdaa9d71f284004276",
+          "dance-asset:77cb5b24-9e39-4d72-8d90-8f3b71f12102:52a6dd3ca3b02d6b5bab82b47c9ea730",
+          "dance-asset:8f2e303b-aaf9-4172-b104-0e646d3f9b05:86ecdcd1e2b7c5d43c09827b6a5b018d",
+          "dance-asset:85d9c502-b888-4c2f-bef2-89cf1c6f41e3:6007d4ae60b01b5cdf195a808d5569a2",
+          "dance-asset:1f0fa988-b036-4eb8-9e95-d5aa9aa777cb:97457f896f3540b224baeab198c31a6c"
+        ],
+        "아윤": [
+          "dance-asset:01dc995e-d260-4eec-9cd3-a481ce69ab9d:71fbefe716883938710733b0e8cc9529",
+          "dance-asset:108b719f-9f85-4096-8b15-bbd2d6670c9e:d420f23699baf6c6f41e9529afa9370d",
+          "dance-asset:556f281b-9d7d-4fb0-ac86-21c998fa9d13:a2ba824de35377524ded5867bf6df52d",
+          "dance-asset:3afac97b-9592-4005-a4fe-a32c1d536cd6:aa2554939e7addb2249c9d346bea8ef1",
+          "dance-asset:496dc9ca-5443-4ef4-9884-cdb0d757db7f:a83703cdc448debce2fdbfda19247de1"
+        ],
+        "라다": [
+          "dance-asset:05dac683-f231-47aa-8ae9-f9268a766540:b55f37dd8f8070bf061e8760a4928d80",
+          "dance-asset:fe713102-e47f-4bb0-bd42-3a3b5c40a620:6e5f57ef3ab9e341e1635b70b0220fde",
+          "dance-asset:24a08a26-7150-4364-b3b3-84cde131354a:3838aa4bb23b2d692e445676aaed7e2e"
+        ],
+        "시리": [
+          "dance-asset:841b81b4-bc3d-4b89-b762-4b9d53fdb245:38e8bf21f6e5113c10f2c26fd124ccbb",
+          "dance-asset:b219341e-ca06-46b2-aeb0-2da4d6945060:5d974a0bf4c507619c97121ec74290d0",
+          "dance-asset:62a15573-ce41-4c40-98e0-ddc005e95c17:14b356dd0a0f6a51220f49072b364af3"
+        ],
+        "아이찡": [
+          "dance-asset:7b0174b0-ac53-462c-ad0b-6e0fee9afc7d:1dab6768a448767bf4cb883409b58efb",
+          "dance-asset:2507070a-d289-4a8a-8cd5-019fd1607ca3:c6b694e16b43769bd0c160dd9a6cecc9",
+          "dance-asset:b9b5cce4-2e62-4b66-8353-3b6c9087f15f:8507d91dcb036ac75aecb35d04a93154",
+          "dance-asset:feb19612-6002-4118-adec-404f55bd952b:a6a119535f6a3a808ca03086dc031147"
+        ],
+        "영": [
+          "dance-asset:ec0faa03-5347-45c3-bd8d-d044e72c9439:516c8893f8ed5a62d5f61f96a9049947",
+          "dance-asset:98bfea9f-05bb-48a4-a275-ab332795fa98:a744ab0611cb4328c18d046406a790ae",
+          "dance-asset:85ba75c3-9b23-439f-a210-ce437d06951b:fbb3f1b51495e942ec80ea39ea03705b",
+          "dance-asset:83b061dd-a513-4748-83fa-f0c3322732ca:71d0e11415a8b9b140ec33a566a48249"
+        ],
+        "오아": [
+          "dance-asset:41985b97-43d8-4e1d-82f1-00543eec8fa0:d14fc2ee09697daf445ec7f3b8767233",
+          "dance-asset:3b790696-b058-402e-95b8-b49bf8522435:cb58e6ddb0fed5b1c43a5f2187212aec",
+          "dance-asset:daae22af-6f99-447d-9359-69f0a3ade24d:9606e52ae561cbcff1d4f63319214b23",
+          "dance-asset:9ce9f98f-ce03-4f14-94d5-ed662cfcf513:537814274023cc6df201570281d6afbc"
+        ],
+        "메르시": [
+          "dance-asset:d0693add-13d3-4907-93e9-b9acfab3d41d:2e16598045914ca1f58ab8ceffdee8d6",
+          "dance-asset:c8a0e5a3-40dc-420d-a64c-c82b4b6b7860:796ef54f6dd27c3cbcdf2aa2e204047f",
+          "dance-asset:4e7f873b-e202-4561-9d1d-4de53a74277f:1a312042f1e9d08a40c0830457632f62",
+          "dance-asset:289760af-9efe-4b26-9eb5-c07ff9d30e41:0b92bd6b4427b94aaf261f10db3f7bb5",
+          "dance-asset:ef142b3c-8108-473e-9c32-f95bb08325cc:3d1639d9d59b688039b3dedf1ffdfaf1"
+        ]
+      },
+      "reference_hashes": {
+        "보라": [
+          "978ec427845bca3e1cf32f155c77c75d84ab0e27e5619eb00907b91e2c265918",
+          "7a089272f7b3735c45ba7862a17e62bf8cf1b087d056c0a0f8a642a10d8154c5",
+          "f7f0fdded97c650ae7c8c83143db0d178cdf4a860073f9c99ebab5f21902ec60",
+          "48e15b53fbbb903bd992563dde1ebba8442c16ec17bd812c18f9821369692605",
+          "0cec55d02b4f772c9ca7cf578b88c47eaad88eaf02987d3ad5ee2b85bf85d50f"
+        ],
+        "히메키": [
+          "f80708c2fbead3869cab52c0519216d3be164500b60ac4c810fd9a94bbfd4532",
+          "7fa5a3a429f873b0981815ca2e12b6c573735ce8788c0d48e34318c2b0dc8d65",
+          "3540b955fa026fdabd8b9177dd11e623e41bf3a348c72902fa1a4ca508ac2e68",
+          "f243d414de4e659e92b418f738e17655fb3ae5f97f3854ea2cabdf8b7a7e97b9",
+          "867abbb6811e9cfd3c9c9586152a86f871241366acf0c1b067a79ac01a729ed8",
+          "99be83b5265ce4990a7e286517d45859fded16317a8d45b2b1dbd47126fe7a7e",
+          "42478c855c6d87968fd6f09fd41d2444232ddc738c7bb8edbef0b27d5ef906ad"
+        ],
+        "아윤": [
+          "2781bb7d9f5327cc94356fe26b51f0779c7f488ed22f0ffe8862a7a8b15368ed",
+          "de5d7af99b32e1ba7dad5539339826c1b86d59cae66bd9057a5d5997a1dd7491",
+          "5519094cc9eb596190ad08d4fa74a0e020d52dd9e7b5ce0224780d5b0907d447",
+          "84addbe43b8f1b3d468471091c730bb9628cc61538b6ec408af4929e94c29167",
+          "ec95831357674388df0326ff3c126d4faeb5276a591a09cbe5aff3c6432cb747"
+        ],
+        "라다": [
+          "75a22cbfcce3c389cfda63c2a63a92a471ad4bc92d2e996beb3114cc268bf2d3",
+          "db55d613d76dabb9f97908124a82238ba74455064840ab77c4a6fe42bfea7cff",
+          "375996a17b1bb8f701b7ab376a93e0ce32aa9cb72f2745f11fb1d615f65f23bd"
+        ],
+        "시리": [
+          "224288c5861979566c7d4f2a9bad43052858670522035f9f6a5677f1b801bd9b",
+          "8861fde65827e9e4c39b9b08111661d109a0c111868bcf7ce819101b63a551d0",
+          "215a89e50d74f620937a6cc93de798150403708a249eaf13b0798d5ce46e2527"
+        ],
+        "아이찡": [
+          "a7c87eb6582b7c380ab53902d0a1e2f6f86a6130aa962c05daab887af9990790",
+          "97e7a5bd7db4ced230994fc12de7cb95be4078d806aff18201c3286f66a33de9",
+          "f19668a3ebf1989cfbec1542e64127fa5105abddafc19b0b872c6175e90242f0",
+          "e1059908e02839fffeb2da549d31c3c3d14057b44f531c0a8f11a9943b8ed5e0"
+        ],
+        "영": [
+          "cbdd14624ee613e11a622463aa6746873ee74127080fc4b6965621e133e15758",
+          "1d10a5dbf13815cad60166532e15f9023abf9bbc9890007ddd15c0dd23d7d164",
+          "631733278e1acdbf6d2d2cfe4ec8d55d69f47e9d02cdb674c058d6a35e3ec9fd",
+          "9e2faf5f9dea4ba1d5857b0d5259d7d304d71e3cf73caa80818722b205f1d0c3"
+        ],
+        "오아": [
+          "279eae50feb7efea891aaaa4f8a8801069600cb0b011b0aab14010b2a1fabbc7",
+          "089d23ee8650334dc553bf62712160c18dc7660038fab92ab05e597f4d8f94d1",
+          "6d15d4d372deb32833d62eb2eb6f2e64f3248983cd2663572aa209f052ab5f5b",
+          "1a35af9a476a2df78684663c57bf38f5dd22a6e3312440749c9999fbf598b0c1"
+        ],
+        "메르시": [
+          "9a93685f20ccec4cb625829e54b4166a317989a8ef35489b3ef546173aecd469",
+          "1440eb35e11c668da6a6ed9fba89a0cfe47a411a649c3a74703422909faed23f",
+          "b9f12b7f7e4b70e4800c8b1188d4cb3cc021b51be276516c161442a53f9ad81b",
+          "629d66e50cff72cf4ff43b5a4b37e83fbdab09ce3b09730e3c8572ae9ec3fca3",
+          "c0cdb59bf51f5a00088a721831107fda7d6431ba599312e13de96d9ec3e1918b"
+        ]
+      },
+      "meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793719521324/.acceleration/runs/dance_highlight-765a6ff4990945f1985d4bdad9ce23d8/3b1608ec28bd41e8b8431b475e3e28ab/json/dance_meta.json",
+      "meta_sha256": "6cabce3892f5c707d197809b7409eb53fe02e46245a7c2d2f1060f7d04634dc4",
+      "counts": {
+        "output": 187,
+        "output_short": 103,
+        "raw": 188,
+        "raw_short": 104,
+        "named_short": 32,
+        "unknown_seconds": 14.949766666666815
+      },
+      "stats": {
+        "reference_matching": "shared_reference_v1",
+        "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+        "scene_policy": "observed_ensemble_v3_pose_extent",
+        "scene_group_seconds": 45.6122333333334,
+        "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+        "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+        "native_scene_changed_observations": 56,
+        "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+        "scene_context_added_main_seconds": 0.8341666666666754,
+        "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+        "secondary_reference_recovered_seconds": 4.872133333333316,
+        "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+        "body_continuity_recovered_seconds": 1.3350666666666804,
+        "mask_continuity_recovery": "disabled_runtime_cost_v1",
+        "mask_continuity_recovered_seconds": 0.0,
+        "joint_identity_revalidation": "disabled_runtime_cost_v1",
+        "joint_identity_corrected_seconds": 0.0,
+        "joint_identity_recovered_seconds": 0.0,
+        "joint_identity_conflict_seconds": 0.0,
+        "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+        "main_scope_policy": "identity_context_before_scene_mask",
+        "main_face_sampling": "all_pose_observations",
+        "main_evidence_scope_count": 19,
+        "main_evidence_seconds": 221.9550666666667,
+        "main_eligible_seconds": 177.61076666666662,
+        "output_named_continuity": "final_named_continuity_v3_mask_edges",
+        "output_named_join_count": 0,
+        "incoming_preparation_context_count": 0,
+        "visible_member_clips_added": 0,
+        "identity_split_parent_count": 5,
+        "identity_recovered_seconds": 48.28016666666649,
+        "reference_match_distance_max": 0.6,
+        "reference_match_min_margin": 0.0,
+        "reference_match_status_counts": {
+          "matched": 94,
+          "ambiguous": 0,
+          "unmatched": 45,
+          "invalid": 0
+        },
+        "fps": 59.94005994005994,
+        "duration_sec": 242.32541666666668,
+        "raw_main_segments": 177,
+        "raw_group_segments": 52,
+        "smoothed_main_segments": 19,
+        "smoothed_group_segments": 49,
+        "kept_main_segments": 139,
+        "dropped_main_no_face": 0,
+        "num_persons_inferred": 9
+      },
+      "performance": {
+        "stage_seconds": {
+          "download_refs": 0.025910124997608364,
+          "yolo": 223.67419745901134,
+          "ref_embs": 4.378384749987163,
+          "pose_observations": 0.5547409169957973,
+          "main_selection": 409.8299692089786,
+          "native_scene": 218.0990594580071,
+          "group_context": 0.03540079202502966,
+          "segment_build": 238.0246394170099,
+          "face_extract": 235.29855833400507,
+          "secondary_faces": 44.63614666700596,
+          "body_continuity": 0.7511252500116825,
+          "context_faces": 0.0004019159823656082,
+          "mask_continuity": 0.0,
+          "joint_identity": 0.0,
+          "named_boundaries": 0.4364416250027716,
+          "observed_part_continuity": 0.3628660829854198,
+          "shot_member_gaps": 0.02112062502419576,
+          "cluster_map": 60.02004837500863,
+          "group_continuity": 0.2862590419827029,
+          "clips_main": 13.409549000032712,
+          "clips_group": 4.443514458020218
+        },
+        "total_before_metadata_write_seconds": 1260.9951359579572,
+        "nested_stages": {
+          "segment_build": [
+            "native_scene",
+            "group_context"
+          ],
+          "cluster_map": [
+            "secondary_faces",
+            "body_continuity",
+            "context_faces",
+            "mask_continuity",
+            "joint_identity",
+            "named_boundaries",
+            "observed_part_continuity",
+            "shot_member_gaps"
+          ]
+        }
+      },
+      "key_windows": {
+        "41.5": [
+          {
+            "clip_id": "group_0001",
+            "start": 41.4414,
+            "end": 41.77506666666667,
+            "person_id": null,
+            "seg_type": "group"
+          }
+        ],
+        "50.673": [
+          {
+            "clip_id": "main_0016",
+            "start": 50.08336666666667,
+            "end": 51.4514,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ],
+        "50.85": [
+          {
+            "clip_id": "main_0016",
+            "start": 50.08336666666667,
+            "end": 51.4514,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ],
+        "102.99": [
+          {
+            "clip_id": "main_0049",
+            "start": 101.96853333333334,
+            "end": 106.37293333333334,
+            "person_id": "아윤",
+            "seg_type": "main"
+          }
+        ],
+        "118.3": [
+          {
+            "clip_id": "main_0058",
+            "start": 117.9178,
+            "end": 119.35256666666666,
+            "person_id": "영",
+            "seg_type": "main"
+          }
+        ],
+        "134.18": [
+          {
+            "clip_id": "main_0067",
+            "start": 131.89853333333335,
+            "end": 137.27046666666666,
+            "person_id": "아이찡",
+            "seg_type": "main"
+          }
+        ],
+        "64.38": [
+          {
+            "clip_id": "main_0022",
+            "start": 62.595866666666666,
+            "end": 64.56439999999999,
+            "person_id": "히메키",
+            "seg_type": "main"
+          }
+        ],
+        "64.6": [
+          {
+            "clip_id": "main_0023",
+            "start": 64.56439999999999,
+            "end": 64.79806666666667,
+            "person_id": "unknown",
+            "seg_type": "main"
+          }
+        ],
+        "171.9": [
+          {
+            "clip_id": "main_0102",
+            "start": 169.80296666666666,
+            "end": 177.0769,
+            "person_id": "오아",
+            "seg_type": "main"
+          }
+        ]
+      }
+    }
+  ]
+}

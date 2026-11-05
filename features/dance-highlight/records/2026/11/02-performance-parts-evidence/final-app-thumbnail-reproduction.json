@@ -1,0 +1,48 @@
+[
+  {
+    "video": "ANT",
+    "tag": "before",
+    "project_id": "1793617753764",
+    "timestamp_argument": "146.880",
+    "app_thumbnail": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/clips/dance/group/group_0021.jpg",
+    "reextracted": "/private/tmp/dance-role-continuity-review-20261102/ANT-final-group0021-before-reextracted.jpg",
+    "same_bytes": true,
+    "sha256": "2da5b7f2f247b3a785c3244ca0c8c7e10cff988dbe3ffad1104ce773a37d8989",
+    "command": [
+      "/Users/jina/Library/Application Support/Clipper Studio Dev/bin/ffmpeg",
+      "-y",
+      "-ss",
+      "146.880",
+      "-i",
+      "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793617753764/diagnostics/source.mp4",
+      "-frames:v",
+      "1",
+      "-q:v",
+      "2",
+      "/private/tmp/dance-role-continuity-review-20261102/ANT-final-group0021-before-reextracted.jpg"
+    ]
+  },
+  {
+    "video": "ANT",
+    "tag": "after",
+    "project_id": "1793628143826",
+    "timestamp_argument": "146.613",
+    "app_thumbnail": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793628143826/clips/dance/group/group_0021.jpg",
+    "reextracted": "/private/tmp/dance-role-continuity-review-20261102/ANT-final-group0021-after-reextracted.jpg",
+    "same_bytes": true,
+    "sha256": "3fdf89ee807c753ab13c297e7152647e337ff6d9d9a349f4423d014be5595fd3",
+    "command": [
+      "/Users/jina/Library/Application Support/Clipper Studio Dev/bin/ffmpeg",
+      "-y",
+      "-ss",
+      "146.613",
+      "-i",
+      "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793628143826/diagnostics/source.mp4",
+      "-frames:v",
+      "1",
+      "-q:v",
+      "2",
+      "/private/tmp/dance-role-continuity-review-20261102/ANT-final-group0021-after-reextracted.jpg"
+    ]
+  }
+]

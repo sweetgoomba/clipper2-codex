@@ -1,0 +1,195 @@
+{
+  "reconstructed_helper_frames": [
+    2452,
+    2456,
+    2460,
+    2464,
+    2468,
+    2472,
+    2476,
+    2480,
+    2484,
+    2488,
+    2492,
+    3036,
+    3040,
+    3044,
+    7084,
+    7088,
+    7092,
+    7096,
+    7100
+  ],
+  "source_scene_sha256": "021d517e8b10d2d93d24838bf500d33c9a7ef7ddbd71a1e0191201ec9ff2120b",
+  "windows": {
+    "sakura": {
+      "current": {
+        "focus": [
+          [
+            2476,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2480,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2484,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2488,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2492,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      },
+      "proposed": {
+        "focus": [
+          [
+            2476,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2480,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2484,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2488,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            2492,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      }
+    },
+    "kim118": {
+      "current": {
+        "focus": [
+          [
+            7084,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7088,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7092,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7096,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7100,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      },
+      "proposed": {
+        "focus": [
+          [
+            7084,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7088,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7092,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7096,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            7100,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      }
+    },
+    "kim50": {
+      "current": {
+        "focus": [
+          [
+            3036,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            3040,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            3044,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      },
+      "proposed": {
+        "focus": [
+          [
+            3036,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            3040,
+            "group",
+            "continuous_distributed_ensemble"
+          ],
+          [
+            3044,
+            "group",
+            "continuous_distributed_ensemble"
+          ]
+        ],
+        "changes": []
+      }
+    }
+  },
+  "models_called": false,
+  "video_reads": 0,
+  "note": "Pure saved-window simulation, no resolve_transition/video reads, not final full pipeline."
+}

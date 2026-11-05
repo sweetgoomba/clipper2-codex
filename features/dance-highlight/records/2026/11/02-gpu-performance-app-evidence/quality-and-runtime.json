@@ -1,0 +1,155 @@
+[
+  {
+    "title": "Made My Night",
+    "baseline_project_id": "1793236627928",
+    "project_id": 1793558808114,
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "video_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+    "config_sha256": "d60021535aa694c4a7977eb43b519d67b3f6a06ced1af9955445b728f49a7aa0",
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats_session_cumulative": {
+      "requests": 5004,
+      "inferences": 4846,
+      "cache_hits": 158,
+      "fallbacks": 0,
+      "inference_seconds": 66.85422062233556,
+      "setup_seconds": 1.7545007080188952
+    },
+    "recognizer_stats_this_job": {
+      "requests": 5004,
+      "inferences": 4846,
+      "cache_hits": 158,
+      "fallbacks": 0,
+      "inference_seconds": 66.85422062233556
+    },
+    "detector_stats_session_cumulative": {
+      "requests": 7086,
+      "cache_hits": 1111,
+      "detection_seconds": 229.67106708115898
+    },
+    "detector_stats_this_job": {
+      "requests": 7086,
+      "cache_hits": 1111,
+      "detection_seconds": 229.67106708115898
+    },
+    "mask_cache": {
+      "hits": 0,
+      "misses": 50,
+      "max_bytes": 134217728
+    },
+    "reused_transition_frames": 9292,
+    "baseline_clips_sha256": "1f01fb6197cf45c4aaf47057792fbf8b3d1fe83ab29dc5fdd031f8fd75fab73d",
+    "new_clips_sha256": "1f01fb6197cf45c4aaf47057792fbf8b3d1fe83ab29dc5fdd031f8fd75fab73d",
+    "baseline_frames_sha256": "c4b7173c4662f537b7ed177696eb52c9a01d7be34e5cf4642f92662ab7bcb4f4",
+    "new_frames_sha256": "c4b7173c4662f537b7ed177696eb52c9a01d7be34e5cf4642f92662ab7bcb4f4",
+    "source_meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558808114/json/dance_meta.json",
+    "source_evidence_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558808114/diagnostics/face_evidence.json"
+  },
+  {
+    "title": "ANTIFRAGILE",
+    "baseline_project_id": "1793237055448",
+    "project_id": 1793558865224,
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "video_sha256": "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2",
+    "config_sha256": "d60021535aa694c4a7977eb43b519d67b3f6a06ced1af9955445b728f49a7aa0",
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats_session_cumulative": {
+      "requests": 12979,
+      "inferences": 12566,
+      "cache_hits": 413,
+      "fallbacks": 0,
+      "inference_seconds": 174.02762048516888,
+      "setup_seconds": 1.7545007080188952
+    },
+    "recognizer_stats_this_job": {
+      "requests": 7975,
+      "inferences": 7720,
+      "cache_hits": 255,
+      "fallbacks": 0,
+      "inference_seconds": 107.17339986283332
+    },
+    "detector_stats_session_cumulative": {
+      "requests": 17045,
+      "cache_hits": 2653,
+      "detection_seconds": 560.376059979666
+    },
+    "detector_stats_this_job": {
+      "requests": 9959,
+      "cache_hits": 1542,
+      "detection_seconds": 330.70499289850704
+    },
+    "mask_cache": {
+      "hits": 2,
+      "misses": 103,
+      "max_bytes": 134217728
+    },
+    "reused_transition_frames": 13236,
+    "baseline_clips_sha256": "c94cd7ce5c08d45a1a6a3eb5fc6dc047f5f379d8f9044ebf1eed21336c3762ad",
+    "new_clips_sha256": "c94cd7ce5c08d45a1a6a3eb5fc6dc047f5f379d8f9044ebf1eed21336c3762ad",
+    "baseline_frames_sha256": "cd5fdfc5698af5b13a4fad3df67838a3c4af1c3392a6ffd830e9af44ccc8d858",
+    "new_frames_sha256": "cd5fdfc5698af5b13a4fad3df67838a3c4af1c3392a6ffd830e9af44ccc8d858",
+    "source_meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558865224/json/dance_meta.json",
+    "source_evidence_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558865224/diagnostics/face_evidence.json"
+  },
+  {
+    "title": "NEON",
+    "baseline_project_id": "1793237089917",
+    "project_id": 1793558916550,
+    "same_video_hash": true,
+    "same_model_hashes": true,
+    "same_config_hash": true,
+    "video_sha256": "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f",
+    "config_sha256": "d60021535aa694c4a7977eb43b519d67b3f6a06ced1af9955445b728f49a7aa0",
+    "providers": [
+      "CoreMLExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "recognizer_stats_session_cumulative": {
+      "requests": 21640,
+      "inferences": 20892,
+      "cache_hits": 748,
+      "fallbacks": 0,
+      "inference_seconds": 288.8175880666822,
+      "setup_seconds": 1.7545007080188952
+    },
+    "recognizer_stats_this_job": {
+      "requests": 8661,
+      "inferences": 8326,
+      "cache_hits": 335,
+      "fallbacks": 0,
+      "inference_seconds": 114.78996758151334
+    },
+    "detector_stats_session_cumulative": {
+      "requests": 28199,
+      "cache_hits": 4110,
+      "detection_seconds": 903.466981620877
+    },
+    "detector_stats_this_job": {
+      "requests": 11154,
+      "cache_hits": 1457,
+      "detection_seconds": 343.090921641211
+    },
+    "mask_cache": {
+      "hits": 2,
+      "misses": 171,
+      "max_bytes": 134217728
+    },
+    "reused_transition_frames": 14524,
+    "baseline_clips_sha256": "280bb145dfb7560dd2ba662f49c2a93bad7626526d8235ee932d39e1ee7f3b00",
+    "new_clips_sha256": "280bb145dfb7560dd2ba662f49c2a93bad7626526d8235ee932d39e1ee7f3b00",
+    "baseline_frames_sha256": "6d47c5bf8f6f9a4884cbb8f778eab4d09b8ad1e0bbe56ab99d4b6c9c7580e8da",
+    "new_frames_sha256": "6d47c5bf8f6f9a4884cbb8f778eab4d09b8ad1e0bbe56ab99d4b6c9c7580e8da",
+    "source_meta_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558916550/json/dance_meta.json",
+    "source_evidence_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793558916550/diagnostics/face_evidence.json"
+  }
+]

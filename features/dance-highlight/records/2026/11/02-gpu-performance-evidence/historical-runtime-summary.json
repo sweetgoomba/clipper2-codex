@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Made My Night",
+    "project_id": "1793236627928",
+    "mask_attempts": 40,
+    "mask_attempt_seconds": 85.49919162500123,
+    "recognizer_providers": [
+      "CPUExecutionProvider"
+    ],
+    "mask_summary": {
+      "version": "frozen_face_mask_continuity_v11_joint_context",
+      "recovered_seconds": 3.387016666666689,
+      "joint_seed_count": 837
+    }
+  },
+  {
+    "name": "ANTIFRAGILE",
+    "project_id": "1793237055448",
+    "mask_attempts": 86,
+    "mask_attempt_seconds": 279.34512025000276,
+    "recognizer_providers": [
+      "CPUExecutionProvider"
+    ],
+    "mask_summary": {
+      "version": "frozen_face_mask_continuity_v11_joint_context",
+      "recovered_seconds": 9.243666666666728,
+      "joint_seed_count": 776
+    }
+  },
+  {
+    "name": "NEON",
+    "project_id": "1793237089917",
+    "mask_attempts": 146,
+    "mask_attempt_seconds": 1298.755851710006,
+    "recognizer_providers": [
+      "CPUExecutionProvider"
+    ],
+    "mask_summary": {
+      "version": "frozen_face_mask_continuity_v11_joint_context",
+      "recovered_seconds": 8.642766666666759,
+      "joint_seed_count": 645
+    }
+  }
+]

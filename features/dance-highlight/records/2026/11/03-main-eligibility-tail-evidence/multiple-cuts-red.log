@@ -1,0 +1,22 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_several_source_cut_candidates_do_not_erase_a_confirmed_name_change ____
+
+    def test_several_source_cut_candidates_do_not_erase_a_confirmed_name_change():
+        # A real edit can produce two adjacent source-cut detections. Both sides
+        # still have repeated, independent member evidence; uncertainty about the
+        # exact edit frame must not merge the two names into one unresolved part.
+        rows = [observation(t, 'A') for t in (.1, .3, .5, .7)] + [
+            observation(t, 'B') for t in (1.1, 1.3, 1.5, 1.7, 1.9)]
+        result = refine(rows, 2., cut_times=(.8, .8333333333333334))
+>       assert [d.reference_id for d in result['decisions']] == ['A', 'B']
+E       AssertionError: assert [None] == ['A', 'B']
+E         
+E         At index 0 diff: None != 'A'
+E         Right contains one more item: 'B'
+E         Use -v to get more diff
+
+tests/test_dance_member_timeline.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_dance_member_timeline.py::test_several_source_cut_candidates_do_not_erase_a_confirmed_name_change
+1 failed, 1 passed, 78 deselected in 3.47s

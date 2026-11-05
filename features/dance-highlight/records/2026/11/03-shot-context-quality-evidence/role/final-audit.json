@@ -1,0 +1,952 @@
+{
+  "scope": "Complete three-video saved scene records; feature-only proof and output interval projection. No app rerun or new inference.",
+  "before": {
+    "total": 414,
+    "short": 230,
+    "group": 118,
+    "short_group": 79,
+    "unknown_seconds": 38.60893333333358
+  },
+  "projected_after": {
+    "total": 413,
+    "short": 229,
+    "group": 118,
+    "short_group": 79,
+    "unknown_seconds": 38.60893333333358
+  },
+  "videos": {
+    "MMN": {
+      "baseline_id": "1793633624877",
+      "before": {
+        "total": 89,
+        "short": 42,
+        "group": 32,
+        "short_group": 21,
+        "unknown_seconds": 6.80720000000003
+      },
+      "projected_after": {
+        "total": 88,
+        "short": 41,
+        "group": 32,
+        "short_group": 21,
+        "unknown_seconds": 6.80720000000003
+      },
+      "main_changes": [
+        {
+          "start": 104.57113333333334,
+          "end": 104.90480000000001,
+          "name": "허윤진",
+          "added_main_seconds": 0.333666666666673,
+          "merged_main_ranges": [
+            [
+              104.02058333333333,
+              104.57113333333334
+            ],
+            [
+              104.90480000000001,
+              106.70660000000001
+            ]
+          ],
+          "resulting_main_range": [
+            104.02058333333333,
+            106.70660000000001
+          ],
+          "group_removed_seconds": 0
+        }
+      ],
+      "protected_cases": [],
+      "candidate_reasons": {
+        "missing_or_conflicting_original_owned_face": 2,
+        "different_or_missing_original_named_bracket": 11,
+        "accepted": 1
+      },
+      "seconds_feature_only": 0.0170574999647215
+    },
+    "ANT": {
+      "baseline_id": "1793633679903",
+      "before": {
+        "total": 128,
+        "short": 73,
+        "group": 32,
+        "short_group": 25,
+        "unknown_seconds": 15.483933333333418
+      },
+      "projected_after": {
+        "total": 128,
+        "short": 73,
+        "group": 32,
+        "short_group": 25,
+        "unknown_seconds": 15.483933333333418
+      },
+      "main_changes": [],
+      "protected_cases": [
+        {
+          "start": 82.182,
+          "end": 82.683,
+          "accepted_changes": 0,
+          "source_cuts": [],
+          "original_owned_names": {
+            "카즈하": 1,
+            "none": 10
+          },
+          "composition_proof_counts": {
+            "unmeasured_plausible_competitor": 3,
+            "different_original_role_basis": 6,
+            "same_original_role_with_observed_competitor_dominance": 2
+          },
+          "failed_selected_body_links": [
+            4924,
+            4928,
+            4932,
+            4936,
+            4940,
+            4952
+          ],
+          "samples": [
+            {
+              "frame": 4920,
+              "time": 82.08200000000001,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": "카즈하",
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 4924,
+              "time": 82.14873333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 4928,
+              "time": 82.21546666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4932,
+              "time": 82.2822,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 4936,
+              "time": 82.34893333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4940,
+              "time": 82.41566666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4944,
+              "time": 82.4824,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4948,
+              "time": 82.54913333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4952,
+              "time": 82.61586666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 4956,
+              "time": 82.68260000000001,
+              "scene": "group",
+              "scene_reason": "distributed_full_body_ensemble",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 4960,
+              "time": 82.74933333333334,
+              "scene": "group",
+              "scene_reason": "distributed_full_body_ensemble",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            }
+          ]
+        },
+        {
+          "start": 180.8806,
+          "end": 182.6826,
+          "accepted_changes": 0,
+          "source_cuts": [
+            10840
+          ],
+          "original_owned_names": {
+            "사쿠라": 2,
+            "none": 29
+          },
+          "composition_proof_counts": {
+            "different_original_role_basis": 3,
+            "same_original_role_with_observed_competitor_dominance": 14,
+            "unmeasured_plausible_competitor": 9,
+            "torso_composition_not_uniquely_retained": 2,
+            "unmeasured_face_on_possible_foreground": 1,
+            "target_face_not_directly_measured": 2
+          },
+          "failed_selected_body_links": [
+            10840
+          ],
+          "samples": [
+            {
+              "frame": 10836,
+              "time": 180.7806,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": "사쿠라",
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 10840,
+              "time": 180.84733333333332,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10844,
+              "time": 180.91406666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10848,
+              "time": 180.98080000000002,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10852,
+              "time": 181.04753333333335,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10856,
+              "time": 181.11426666666668,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 10860,
+              "time": 181.181,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10864,
+              "time": 181.24773333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10868,
+              "time": 181.31446666666668,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10872,
+              "time": 181.3812,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10876,
+              "time": 181.44793333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10880,
+              "time": 181.51466666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10884,
+              "time": 181.5814,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10888,
+              "time": 181.64813333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10892,
+              "time": 181.71486666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10896,
+              "time": 181.7816,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10900,
+              "time": 181.84833333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10904,
+              "time": 181.91506666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 10908,
+              "time": 181.9818,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10912,
+              "time": 182.04853333333332,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10916,
+              "time": 182.11526666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_face_on_possible_foreground",
+              "accepted": false
+            },
+            {
+              "frame": 10920,
+              "time": 182.18200000000002,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "target_face_not_directly_measured",
+              "accepted": false
+            },
+            {
+              "frame": 10924,
+              "time": 182.24873333333335,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "target_face_not_directly_measured",
+              "accepted": false
+            },
+            {
+              "frame": 10928,
+              "time": 182.31546666666668,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10932,
+              "time": 182.3822,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 10936,
+              "time": 182.44893333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 10940,
+              "time": 182.51566666666668,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10944,
+              "time": 182.5824,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10948,
+              "time": 182.64913333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 10952,
+              "time": 182.71586666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 10956,
+              "time": 182.7826,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": "사쿠라",
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            }
+          ]
+        }
+      ],
+      "candidate_reasons": {
+        "different_or_missing_original_named_bracket": 24
+      },
+      "seconds_feature_only": 0.0015509999939240515
+    },
+    "NEON": {
+      "baseline_id": "1793633791815",
+      "before": {
+        "total": 197,
+        "short": 115,
+        "group": 54,
+        "short_group": 33,
+        "unknown_seconds": 16.317800000000137
+      },
+      "projected_after": {
+        "total": 197,
+        "short": 115,
+        "group": 54,
+        "short_group": 33,
+        "unknown_seconds": 16.317800000000137
+      },
+      "main_changes": [],
+      "protected_cases": [
+        {
+          "start": 115.6155,
+          "end": 115.9158,
+          "accepted_changes": 0,
+          "source_cuts": [
+            6930
+          ],
+          "original_owned_names": {
+            "영": 1,
+            "none": 6
+          },
+          "composition_proof_counts": {
+            "not_three_distinct_observed_ensemble_bodies": 1,
+            "unmeasured_competitor_position": 2,
+            "unmeasured_face_on_possible_foreground": 3,
+            "same_original_role_with_observed_competitor_dominance": 1
+          },
+          "failed_selected_body_links": [
+            6932
+          ],
+          "samples": [
+            {
+              "frame": 6928,
+              "time": 115.58213333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": "영",
+              "role_proof": "not_three_distinct_observed_ensemble_bodies",
+              "accepted": false
+            },
+            {
+              "frame": 6932,
+              "time": 115.64886666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_competitor_position",
+              "accepted": false
+            },
+            {
+              "frame": 6936,
+              "time": 115.71560000000001,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_face_on_possible_foreground",
+              "accepted": false
+            },
+            {
+              "frame": 6940,
+              "time": 115.78233333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_face_on_possible_foreground",
+              "accepted": false
+            },
+            {
+              "frame": 6944,
+              "time": 115.84906666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_face_on_possible_foreground",
+              "accepted": false
+            },
+            {
+              "frame": 6948,
+              "time": 115.9158,
+              "scene": "group",
+              "scene_reason": "distributed_full_body_ensemble",
+              "owned_name": null,
+              "role_proof": "unmeasured_competitor_position",
+              "accepted": false
+            },
+            {
+              "frame": 6952,
+              "time": 115.98253333333334,
+              "scene": "group",
+              "scene_reason": "distributed_full_body_ensemble",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            }
+          ]
+        },
+        {
+          "start": 93.059533,
+          "end": 94.928167,
+          "accepted_changes": 0,
+          "source_cuts": [
+            5690
+          ],
+          "original_owned_names": {
+            "none": 30,
+            "오아": 1
+          },
+          "composition_proof_counts": {
+            "unmeasured_plausible_competitor": 3,
+            "target_face_not_directly_measured": 2,
+            "different_original_role_basis": 9,
+            "torso_composition_not_uniquely_retained": 8,
+            "unmeasured_face_on_possible_foreground": 1,
+            "same_original_role_with_observed_competitor_dominance": 4,
+            "face_composition_not_uniquely_retained": 2,
+            "not_three_distinct_observed_ensemble_bodies": 2
+          },
+          "failed_selected_body_links": [
+            5652,
+            5656,
+            5660,
+            5664,
+            5680,
+            5684,
+            5688,
+            5692
+          ],
+          "samples": [
+            {
+              "frame": 5572,
+              "time": 92.95953333333334,
+              "scene": "group",
+              "scene_reason": "distributed_full_body_ensemble",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 5576,
+              "time": 93.02626666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "target_face_not_directly_measured",
+              "accepted": false
+            },
+            {
+              "frame": 5580,
+              "time": 93.093,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5584,
+              "time": 93.15973333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5588,
+              "time": 93.22646666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5592,
+              "time": 93.2932,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_face_on_possible_foreground",
+              "accepted": false
+            },
+            {
+              "frame": 5596,
+              "time": 93.35993333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5600,
+              "time": 93.42666666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 5604,
+              "time": 93.49340000000001,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 5608,
+              "time": 93.56013333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 5612,
+              "time": 93.62686666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "same_original_role_with_observed_competitor_dominance",
+              "accepted": true
+            },
+            {
+              "frame": 5616,
+              "time": 93.6936,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "face_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5620,
+              "time": 93.76033333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5624,
+              "time": 93.82706666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "face_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5628,
+              "time": 93.8938,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5632,
+              "time": 93.96053333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5636,
+              "time": 94.02726666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5640,
+              "time": 94.09400000000001,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "torso_composition_not_uniquely_retained",
+              "accepted": false
+            },
+            {
+              "frame": 5644,
+              "time": 94.16073333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5648,
+              "time": 94.22746666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 5652,
+              "time": 94.2942,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5656,
+              "time": 94.36093333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5660,
+              "time": 94.42766666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5664,
+              "time": 94.4944,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "target_face_not_directly_measured",
+              "accepted": false
+            },
+            {
+              "frame": 5668,
+              "time": 94.56113333333333,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "unmeasured_plausible_competitor",
+              "accepted": false
+            },
+            {
+              "frame": 5672,
+              "time": 94.62786666666666,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5676,
+              "time": 94.69460000000001,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5680,
+              "time": 94.76133333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5684,
+              "time": 94.82806666666667,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "not_three_distinct_observed_ensemble_bodies",
+              "accepted": false
+            },
+            {
+              "frame": 5688,
+              "time": 94.8948,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": null,
+              "role_proof": "different_original_role_basis",
+              "accepted": false
+            },
+            {
+              "frame": 5692,
+              "time": 94.96153333333334,
+              "scene": "main",
+              "scene_reason": "main_eligible_composition",
+              "owned_name": "오아",
+              "role_proof": "not_three_distinct_observed_ensemble_bodies",
+              "accepted": false
+            }
+          ]
+        }
+      ],
+      "candidate_reasons": {
+        "different_or_missing_original_named_bracket": 46,
+        "missing_two_sustained_original_main_anchors": 3,
+        "missing_or_conflicting_original_owned_face": 1
+      },
+      "seconds_feature_only": 0.002217791974544525
+    }
+  },
+  "code_sha256": {
+    "test_role_state.py": "8f23fa0c81529fb4cc96f49c567f33fe95c4aef6a974767b7c9bd577cdf54250",
+    "write_final_report.py": "4c38a57cfe4906c53157043c116391474bc2da1f585d3ac6d06f90cdfee1b936",
+    "inspect_role.py": "760f4f6ba657694c1342137362473935a87e4bd295c8e6d33efe7c961cf548dc",
+    "finish_role_audit.py": "4162ee933ca5d0ae052adbbf1c1f2fcf8f159689b16b592de3bcaa5c57b3ae97",
+    "role_state.py": "ed8f8725187b1d02d794779c0cdeefd63f909d988f058cc00d3831000e76adbc",
+    "make_fixture.py": "d2bdd861f069a74cdcc2718520cba12b3c50cb8f7162b50fd1319cae3422f1d5",
+    "replay_role_state.py": "d5bcda77a5078fdfdf170d0c81b72d8b55921ec3db3665519fb91de24d9671c0"
+  }
+}

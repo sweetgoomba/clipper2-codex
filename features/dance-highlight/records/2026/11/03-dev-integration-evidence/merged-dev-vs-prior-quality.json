@@ -1,0 +1,74 @@
+{
+  "MMN": {
+    "previous_id": "1793691157709",
+    "current_id": "dance_1793719164438",
+    "previous_elapsed_seconds": 359.027,
+    "previous_counts": {
+      "output": 66,
+      "output_short": 22,
+      "named_short": 4,
+      "unknown_seconds": 4.872033333333363
+    },
+    "same_selected_images": true,
+    "same_reference_image_bytes": true,
+    "same_source_path": true,
+    "previous_acceleration": null,
+    "current_elapsed_seconds": 729.961,
+    "current_counts": {
+      "output": 64,
+      "output_short": 22,
+      "raw": 81,
+      "raw_short": 34,
+      "named_short": 6,
+      "unknown_seconds": 4.27143333333337
+    }
+  },
+  "ANT": {
+    "previous_id": "1793691223616",
+    "current_id": "dance_1793719441015",
+    "previous_elapsed_seconds": 527.614,
+    "previous_counts": {
+      "output": 117,
+      "output_short": 60,
+      "named_short": 24,
+      "unknown_seconds": 14.432483333333344
+    },
+    "same_selected_images": true,
+    "same_reference_image_bytes": true,
+    "same_source_path": true,
+    "previous_acceleration": null,
+    "current_elapsed_seconds": 1204.641,
+    "current_counts": {
+      "output": 120,
+      "output_short": 62,
+      "raw": 128,
+      "raw_short": 70,
+      "named_short": 21,
+      "unknown_seconds": 13.748266666666712
+    }
+  },
+  "NEON": {
+    "previous_id": "1793691318467",
+    "current_id": "dance_1793719521324",
+    "previous_elapsed_seconds": 498.374,
+    "previous_counts": {
+      "output": 185,
+      "output_short": 103,
+      "named_short": 33,
+      "unknown_seconds": 17.018600000000145
+    },
+    "same_selected_images": true,
+    "same_reference_image_bytes": true,
+    "same_source_path": true,
+    "previous_acceleration": null,
+    "current_elapsed_seconds": 1274.762,
+    "current_counts": {
+      "output": 187,
+      "output_short": 103,
+      "raw": 188,
+      "raw_short": 104,
+      "named_short": 32,
+      "unknown_seconds": 14.949766666666815
+    }
+  }
+}

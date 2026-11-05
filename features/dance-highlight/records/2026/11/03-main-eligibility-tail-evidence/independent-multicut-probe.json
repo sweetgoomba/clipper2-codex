@@ -1,0 +1,95 @@
+{
+  "ab_two": {
+    "parts": [
+      [
+        0.0,
+        0.9,
+        "A"
+      ],
+      [
+        0.9,
+        2.0,
+        "B"
+      ]
+    ],
+    "boundaries": [
+      {
+        "time": 0.9,
+        "left_time": 0.7,
+        "right_time": 1.1,
+        "reason": "repeated_reference_change",
+        "strength": 2.0
+      }
+    ]
+  },
+  "aa_two": {
+    "parts": [
+      [
+        0.0,
+        2.0,
+        "A"
+      ]
+    ],
+    "boundaries": []
+  },
+  "ab_one": {
+    "parts": [
+      [
+        0.0,
+        0.8,
+        "A"
+      ],
+      [
+        0.8,
+        2.0,
+        "B"
+      ]
+    ],
+    "boundaries": [
+      {
+        "time": 0.8,
+        "left_time": 0.7,
+        "right_time": 1.1,
+        "reason": "source_cut_face_change",
+        "strength": 4.0
+      }
+    ]
+  },
+  "ab_none": {
+    "parts": [
+      [
+        0.0,
+        0.9,
+        "A"
+      ],
+      [
+        0.9,
+        2.0,
+        "B"
+      ]
+    ],
+    "boundaries": [
+      {
+        "time": 0.9,
+        "left_time": 0.7,
+        "right_time": 1.1,
+        "reason": "repeated_reference_change",
+        "strength": 2.0
+      }
+    ]
+  },
+  "actual_tail_candidates": [
+    {
+      "time": 134.3342,
+      "left_time": 134.13400000000001,
+      "right_time": 134.5344,
+      "reason": "repeated_reference_change",
+      "strength": 2.0
+    }
+  ],
+  "sha_before": "cb5d2e082fa9a4ae89f8871f3f25eb99b3c7010ab9339109ec8b5e7b6fcc337d",
+  "sha_after": "cb5d2e082fa9a4ae89f8871f3f25eb99b3c7010ab9339109ec8b5e7b6fcc337d",
+  "stable": true,
+  "models_called": false,
+  "video_reads": 0
+}

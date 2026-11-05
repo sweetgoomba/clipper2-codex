@@ -1,0 +1,102 @@
+[
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+    "sha256": "ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687",
+    "existed_before": true
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/bounded_face_path.py",
+    "sha256": "b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "sha256": "dc3102d7ee09badefed9774f2c65407c0f0042dd656b693adaae2ace69811f19",
+    "existed_before": true
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/group_continuity.py",
+    "sha256": "baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/group_output.py",
+    "sha256": "a68c327266679e053c8d0c6a38d4abc055edf074b7969f4772f8dd81200a354f",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/identity_projection.py",
+    "sha256": "f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/incoming_identity_boundary.py",
+    "sha256": "c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+    "sha256": "26c5742c78c8d77373cd5145bf6988d87efb833febf9ff1e6e54261c8e1d3366",
+    "existed_before": true
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "c48d1d19c0cae2af8f9dd3a84bb311cfe854b876691fd0d0f8e8df191ca47d59",
+    "existed_before": true
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/pose_observations.py",
+    "sha256": "64b0d7e2194c21422188478a9d0bbd0f84385e29d136448e105bfedacd57fe57",
+    "existed_before": false
+  },
+  {
+    "file": "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+    "sha256": "62caefd2ebf2c9c177ec3abedd1282b8a461dc599b41a5284ebfb7ed506ca0ce",
+    "existed_before": true
+  },
+  {
+    "file": "tests/test_dance_bounded_face_path.py",
+    "sha256": "9b3410db10c1bb50d28a37389ff11b371b60813b22fc07aab1606154c92b1ec3",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_evidence_scopes.py",
+    "sha256": "568db74eb660505093827954a4e13738a9ed5292a7afb211b82ce3bc9769fdf3",
+    "existed_before": true
+  },
+  {
+    "file": "tests/test_dance_group_continuity.py",
+    "sha256": "610c092da3627a6288f71c181db112f09e6c288376c38d19f9111f7e9a93476a",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_group_output.py",
+    "sha256": "7df1a70cafd269fe471338ebfca6de2d1fc3a5a0039a213f158322b8847d4876",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_identity_projection.py",
+    "sha256": "181f20588f25861e784c6b1e21cccc87931e80af6d99e85df39c560fde7a3f0f",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_incoming_identity_boundary.py",
+    "sha256": "1856b0b1db522b1b3050cfad83fd21459120603ade47c03371d59eded641c9c7",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_pose_observations.py",
+    "sha256": "c8f2ad9985e450d7c3b4b61169b3dea4a58217bc0231117f5214bea60cc8a374",
+    "existed_before": false
+  },
+  {
+    "file": "tests/test_dance_reference_matcher.py",
+    "sha256": "507953bc547839db588e2a7f1461ef8f20b52f310762752a98d807126ac23d56",
+    "existed_before": true
+  },
+  {
+    "file": "tests/test_dance_shot_member_gaps.py",
+    "sha256": "0829ad9ea4bc53c3709b08c2234cdbcd1c4699516880c1e280df26ca5a49ba3b",
+    "existed_before": true
+  }
+]

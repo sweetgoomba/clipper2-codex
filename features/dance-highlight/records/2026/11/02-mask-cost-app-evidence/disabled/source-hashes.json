@@ -1,0 +1,257 @@
+[
+  {
+    "path": "plugins/dance_highlight/dance_highlight/__init__.py",
+    "sha256": "5f7dea4133b77db96a2c77dfbb6438e32f122c0f899a0ba360da33bb12233224",
+    "packaged_sha256": "5f7dea4133b77db96a2c77dfbb6438e32f122c0f899a0ba360da33bb12233224"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/__main__.py",
+    "sha256": "2dcad1574b35b004f6984310d0aae6d54616e69be249499eb51145828161b448",
+    "packaged_sha256": "2dcad1574b35b004f6984310d0aae6d54616e69be249499eb51145828161b448"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/app.py",
+    "sha256": "c272f98f52ff37e9b3a478ebe659ff9d714dde55126c3c203996dc6388d1227f",
+    "packaged_sha256": "c272f98f52ff37e9b3a478ebe659ff9d714dde55126c3c203996dc6388d1227f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/__init__.py",
+    "sha256": "71bcc9e0efac22b18cf90da2b1299eeee74560e7209d91ec18e052bd3d2f683d",
+    "packaged_sha256": "71bcc9e0efac22b18cf90da2b1299eeee74560e7209d91ec18e052bd3d2f683d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/artist_detector.py",
+    "sha256": "768f8da7984d82bb7f5e7e77afbdbeb68c59580ec32bb0e04d8ea4cc15e5b117",
+    "packaged_sha256": "768f8da7984d82bb7f5e7e77afbdbeb68c59580ec32bb0e04d8ea4cc15e5b117"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+    "sha256": "2ee1c85319112598a29680336aadfd39d24252a8af90bdd58141a549594a2a17",
+    "packaged_sha256": "2ee1c85319112598a29680336aadfd39d24252a8af90bdd58141a549594a2a17"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+    "sha256": "f6b4286fe93a9bd98668e736925d160619e616e27b51dd77813680fe3bba749b",
+    "packaged_sha256": "f6b4286fe93a9bd98668e736925d160619e616e27b51dd77813680fe3bba749b"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/config.py",
+    "sha256": "35c9c0a9695665bfe72f3f4e4abcae574ceea0fd9548738f758e7514f930ef45",
+    "packaged_sha256": "35c9c0a9695665bfe72f3f4e4abcae574ceea0fd9548738f758e7514f930ef45"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/context_faces.py",
+    "sha256": "2264db144616a386e1dd4ad305c365923117fc584a63c0cbc7a450af04a50c28",
+    "packaged_sha256": "2264db144616a386e1dd4ad305c365923117fc584a63c0cbc7a450af04a50c28"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+    "sha256": "8dbf0cd30fc12ba961cfbb1a65cd0b51e9190686c1fe87a6e77cdda8b5441257",
+    "packaged_sha256": "8dbf0cd30fc12ba961cfbb1a65cd0b51e9190686c1fe87a6e77cdda8b5441257"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/dance_meta.py",
+    "sha256": "a8a46018bc905239ab2813e2b26044e8c88aa20b4e49006880023acc4d8b924b",
+    "packaged_sha256": "a8a46018bc905239ab2813e2b26044e8c88aa20b4e49006880023acc4d8b924b"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/diagnostics.py",
+    "sha256": "8db63226fa87d99895890919b004b1c5672c296c802283ffbf8c4a44f104d641",
+    "packaged_sha256": "8db63226fa87d99895890919b004b1c5672c296c802283ffbf8c4a44f104d641"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+    "sha256": "43f833b93e6384f2fc65c4045b6395aea109fb6a5e3227f1de72b79c1a78469a",
+    "packaged_sha256": "43f833b93e6384f2fc65c4045b6395aea109fb6a5e3227f1de72b79c1a78469a"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "sha256": "cadb7fb328f3bb5761be83686e5774ad4f12f3ad0e63e492ca3883c4d5512a08",
+    "packaged_sha256": "cadb7fb328f3bb5761be83686e5774ad4f12f3ad0e63e492ca3883c4d5512a08"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_models.py",
+    "sha256": "962e60028e30496a8a7d929f555413a66edb471a787e0a559358fa669507e143",
+    "packaged_sha256": "962e60028e30496a8a7d929f555413a66edb471a787e0a559358fa669507e143"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_recovery.py",
+    "sha256": "8409bbb70eccc96091e6f477e5f867e015c4ebcaa55963260664527382a1cc4d",
+    "packaged_sha256": "8409bbb70eccc96091e6f477e5f867e015c4ebcaa55963260664527382a1cc4d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+    "sha256": "8d9a141bf49debeca25676cd06285874a652617ad0e60204e004d50e4a367837",
+    "packaged_sha256": "8d9a141bf49debeca25676cd06285874a652617ad0e60204e004d50e4a367837"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/ffmpeg_utils.py",
+    "sha256": "83cccdf1e8ddc3cb0fa35ad2c26bdaef185704f2610862f666e2f4ec941bfdce",
+    "packaged_sha256": "83cccdf1e8ddc3cb0fa35ad2c26bdaef185704f2610862f666e2f4ec941bfdce"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/focal_composition.py",
+    "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9",
+    "packaged_sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/focal_output.py",
+    "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad",
+    "packaged_sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/group_resolver.py",
+    "sha256": "3d274bccb5bf1e6f1d191709988bd109d5e778285f7dd9bbe8b9d6a5718ade6d",
+    "packaged_sha256": "3d274bccb5bf1e6f1d191709988bd109d5e778285f7dd9bbe8b9d6a5718ade6d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/image_search_service.py",
+    "sha256": "2fb085e091437f6f984c7f648a37273e4e29e3a6318efefb9ce02411af6bd0d3",
+    "packaged_sha256": "2fb085e091437f6f984c7f648a37273e4e29e3a6318efefb9ce02411af6bd0d3"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/incoming_context.py",
+    "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3",
+    "packaged_sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+    "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac",
+    "packaged_sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_face_link.py",
+    "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41",
+    "packaged_sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_identity.py",
+    "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f",
+    "packaged_sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/main_role_timeline.py",
+    "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637",
+    "packaged_sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+    "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9",
+    "packaged_sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py",
+    "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547",
+    "packaged_sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+    "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f",
+    "packaged_sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/member_coverage.py",
+    "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136",
+    "packaged_sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+    "sha256": "06057137b7496d19e3d93703556e44c9dc0a24b99bc7a38ae86ac352ebc8aa28",
+    "packaged_sha256": "06057137b7496d19e3d93703556e44c9dc0a24b99bc7a38ae86ac352ebc8aa28"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/native_scene.py",
+    "sha256": "f7c595d5e854b8cbc340be99e26e918946a9b20d773ef32b923bc81af6f62098",
+    "packaged_sha256": "f7c595d5e854b8cbc340be99e26e918946a9b20d773ef32b923bc81af6f62098"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/observed_main.py",
+    "sha256": "0be7b821e372445ab31623cdc65c5e82aeb504cdf29e6a44bc1f8faf94fde72d",
+    "packaged_sha256": "0be7b821e372445ab31623cdc65c5e82aeb504cdf29e6a44bc1f8faf94fde72d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/output_continuity.py",
+    "sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f",
+    "packaged_sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/person_thumbnails.py",
+    "sha256": "15acd5cec9779b66e7346cc86a5e9ad28c875d1bb18d731203b6f98a2454669b",
+    "packaged_sha256": "15acd5cec9779b66e7346cc86a5e9ad28c875d1bb18d731203b6f98a2454669b"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "235c15e043cafd2b5a6615618ac9c3a8efd3f3fde726509eb01f5398c2b46bf7",
+    "packaged_sha256": "235c15e043cafd2b5a6615618ac9c3a8efd3f3fde726509eb01f5398c2b46bf7"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pose_engine.py",
+    "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d",
+    "packaged_sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pose_face_rotation.py",
+    "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5",
+    "packaged_sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/protocols.py",
+    "sha256": "bcd5c09786c17899a4497b670e79b2352c6c24bb615b6160d841c5b2b098cd2e",
+    "packaged_sha256": "bcd5c09786c17899a4497b670e79b2352c6c24bb615b6160d841c5b2b098cd2e"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/reference_matcher.py",
+    "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994",
+    "packaged_sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/render.py",
+    "sha256": "83d7ae0e62e0bd21668f17f68da1be368cd54e6c74bf7b77e1bb4763abcf57c7",
+    "packaged_sha256": "83d7ae0e62e0bd21668f17f68da1be368cd54e6c74bf7b77e1bb4763abcf57c7"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/sampled_face_link.py",
+    "sha256": "9eb906cfd73acfc29fb3a051e0df686b9340890d9444223a6f1f712ed8c0deb3",
+    "packaged_sha256": "9eb906cfd73acfc29fb3a051e0df686b9340890d9444223a6f1f712ed8c0deb3"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+    "sha256": "1d1162b5e0e4f330846186c4b438cdff3f0a301292ede1679dc70aa75074c316",
+    "packaged_sha256": "1d1162b5e0e4f330846186c4b438cdff3f0a301292ede1679dc70aa75074c316"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+    "sha256": "5daca43fbfe99dfdb87712def6e40e0f460f14285a49a3b73316e51c61645826",
+    "packaged_sha256": "5daca43fbfe99dfdb87712def6e40e0f460f14285a49a3b73316e51c61645826"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/scene_cut_proof.py",
+    "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682",
+    "packaged_sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+    "sha256": "89bebde739543cc8f04bf833e1a23cf66eb0fe20628a106f8b70847a5b230bbf",
+    "packaged_sha256": "89bebde739543cc8f04bf833e1a23cf66eb0fe20628a106f8b70847a5b230bbf"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/segment.py",
+    "sha256": "4f39bb4a54e2a4e42baf532af84ac33077e6c7c9ffe22338575311b523a0e39f",
+    "packaged_sha256": "4f39bb4a54e2a4e42baf532af84ac33077e6c7c9ffe22338575311b523a0e39f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+    "sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a",
+    "packaged_sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/temporal_support.py",
+    "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27",
+    "packaged_sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/track.py",
+    "sha256": "798d0ca50b471e7a5f13962507488daad5463ca540d96c9e966cb48e604fbd9b",
+    "packaged_sha256": "798d0ca50b471e7a5f13962507488daad5463ca540d96c9e966cb48e604fbd9b"
+  }
+]

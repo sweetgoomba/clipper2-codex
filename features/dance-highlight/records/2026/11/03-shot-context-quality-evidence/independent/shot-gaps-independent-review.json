@@ -1,0 +1,378 @@
+{
+  "scope": "Independent cached original-evidence replay, dense source reads only in bounded source proof; no ML/app execution",
+  "source_module_sha256": "5b03843400b5a2ab84f1daa78730fd0b7e96af71eb63288225452c77531823b9",
+  "checks": [
+    {
+      "name": "MMN original inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "MMN original named time never relabeled or removed",
+      "passed": true
+    },
+    {
+      "name": "MMN interval union coverage unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN original anchors and recognition labels unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN deterministic source path/frame limits",
+      "passed": true
+    },
+    {
+      "name": "MMN protected real intervals unchanged",
+      "passed": true
+    },
+    {
+      "name": "MMN expected named recovery only",
+      "passed": true
+    },
+    {
+      "name": "ANT original inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "ANT original named time never relabeled or removed",
+      "passed": true
+    },
+    {
+      "name": "ANT interval union coverage unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT original anchors and recognition labels unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT deterministic source path/frame limits",
+      "passed": true
+    },
+    {
+      "name": "ANT protected real intervals unchanged",
+      "passed": true
+    },
+    {
+      "name": "ANT expected named recovery only",
+      "passed": true
+    },
+    {
+      "name": "NEON original inputs immutable",
+      "passed": true
+    },
+    {
+      "name": "NEON original named time never relabeled or removed",
+      "passed": true
+    },
+    {
+      "name": "NEON interval union coverage unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON original anchors and recognition labels unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON deterministic source path/frame limits",
+      "passed": true
+    },
+    {
+      "name": "NEON protected real intervals unchanged",
+      "passed": true
+    },
+    {
+      "name": "NEON expected named recovery only",
+      "passed": true
+    },
+    {
+      "name": "source module unchanged during run",
+      "passed": true
+    }
+  ],
+  "videos": [
+    {
+      "title": "MMN",
+      "elapsed_seconds": 0.00807791599072516,
+      "baseline_project_id": "1793633624877",
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "recovered_seconds": 0.0,
+      "before_parts": 57,
+      "after_parts": 57,
+      "changed_time": [],
+      "candidates": [
+        {
+          "start": 38.20473333333334,
+          "end": 39.3393,
+          "name": "사쿠라",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "no_source_cut_between_original_faces",
+          "seconds": 0.00510329200187698
+        },
+        {
+          "start": 68.30146666666666,
+          "end": 68.83553333333334,
+          "name": "홍은채",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "no_source_cut_between_original_faces",
+          "seconds": 0.0016738330014050007
+        }
+      ]
+    },
+    {
+      "title": "ANT",
+      "elapsed_seconds": 0.2681480419705622,
+      "baseline_project_id": "1793633679903",
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 1,
+        "frames_reserved": 49,
+        "frames_read": 49,
+        "seeks": 1,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "recovered_seconds": 0.46733333333334315,
+      "before_parts": 96,
+      "after_parts": 94,
+      "changed_time": [
+        {
+          "start": 64.43093333333333,
+          "end": 64.89826666666667,
+          "before": null,
+          "after": "김채원"
+        }
+      ],
+      "candidates": [
+        {
+          "start": 9.9098,
+          "end": 10.276933333333334,
+          "name": "김채원",
+          "shots": [],
+          "cut_frames": [
+            616
+          ],
+          "reason": "unmeasured_or_unowned_main_role",
+          "seconds": 0.005521125043742359
+        },
+        {
+          "start": 64.43093333333333,
+          "end": 64.89826666666667,
+          "name": "김채원",
+          "shots": [
+            {
+              "shot": 49,
+              "new_frames": [],
+              "new_source_frames": [],
+              "new_time": null,
+              "seed_frames": [
+                3844,
+                3856
+              ],
+              "source_frames": [],
+              "proof_kind": "original_named_shot_faces"
+            },
+            {
+              "shot": 50,
+              "new_frames": [
+                3864,
+                3868,
+                3872,
+                3876,
+                3880,
+                3884,
+                3888
+              ],
+              "new_source_frames": [
+                3862,
+                3863,
+                3864,
+                3865,
+                3866,
+                3867,
+                3868,
+                3869,
+                3870,
+                3871,
+                3872,
+                3873,
+                3874,
+                3875,
+                3876,
+                3877,
+                3878,
+                3879,
+                3880,
+                3881,
+                3882,
+                3883,
+                3884,
+                3885,
+                3886,
+                3887,
+                3888,
+                3889,
+                3890
+              ],
+              "new_time": [
+                64.43093333333333,
+                64.89826666666667
+              ],
+              "seed_frames": [
+                3896,
+                3908
+              ],
+              "source_frames": [
+                3860,
+                3864,
+                3868,
+                3872,
+                3876,
+                3880,
+                3884,
+                3888,
+                3892,
+                3896,
+                3900,
+                3904,
+                3908
+              ],
+              "proof_kind": "new_main_source_path",
+              "attempts": [
+                {
+                  "seed_frames": [
+                    3896,
+                    3908
+                  ],
+                  "reason": "proved"
+                }
+              ]
+            }
+          ],
+          "cut_frames": [
+            3858
+          ],
+          "reason": "independent_shot_main_identity",
+          "seconds": 0.246186166012194
+        },
+        {
+          "start": 119.68623333333333,
+          "end": 120.35356666666667,
+          "name": "홍은채",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "missing_original_two_sided_faces",
+          "seconds": 0.005528250010684133
+        },
+        {
+          "start": 160.29346666666666,
+          "end": 160.87738333333334,
+          "name": "카즈하",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "missing_original_two_sided_faces",
+          "seconds": 0.002208750054705888
+        },
+        {
+          "start": 180.8806,
+          "end": 182.6826,
+          "name": "사쿠라",
+          "shots": [],
+          "cut_frames": [
+            10840
+          ],
+          "reason": "unmeasured_or_unowned_main_role",
+          "seconds": 0.00462404201971367
+        }
+      ]
+    },
+    {
+      "title": "NEON",
+      "elapsed_seconds": 0.02406129101291299,
+      "baseline_project_id": "1793633791815",
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      },
+      "recovered_seconds": 0.0,
+      "before_parts": 143,
+      "after_parts": 143,
+      "changed_time": [],
+      "candidates": [
+        {
+          "start": 30.063266666666667,
+          "end": 30.797533333333334,
+          "name": "아이찡",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "no_source_cut_between_original_faces",
+          "seconds": 0.0033760000369511545
+        },
+        {
+          "start": 34.3343,
+          "end": 35.1351,
+          "name": "시리",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "missing_original_two_sided_faces",
+          "seconds": 0.003318042028695345
+        },
+        {
+          "start": 81.94853333333333,
+          "end": 82.84943333333334,
+          "name": "시리",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "missing_original_two_sided_faces",
+          "seconds": 0.001884666969999671
+        },
+        {
+          "start": 93.05953333333333,
+          "end": 94.92816666666667,
+          "name": "오아",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "missing_original_two_sided_faces",
+          "seconds": 0.0010763750178739429
+        },
+        {
+          "start": 107.19041666666666,
+          "end": 107.84106666666668,
+          "name": "아이찡",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "no_source_cut_between_original_faces",
+          "seconds": 0.004420416022185236
+        },
+        {
+          "start": 161.19436666666667,
+          "end": 161.72823333333332,
+          "name": "아이찡",
+          "shots": [],
+          "cut_frames": [],
+          "reason": "no_source_cut_between_original_faces",
+          "seconds": 0.005753457953687757
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "MMN": {
+    "corrected_owner": {
+      "seconds": 3.5207000419613905,
+      "parts": [
+        {
+          "start": 4.4044,
+          "end": 8.1081,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 8.1081,
+          "end": 8.141466666666666,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 9.209200000000001,
+          "end": 10.3103,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 10.3103,
+          "end": 10.343666666666667,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 13.413400000000001,
+          "end": 19.45276666666667,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 19.45276666666667,
+          "end": 26.142783333333334,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 26.142783333333334,
+          "end": 26.393033333333335,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 26.393033333333335,
+          "end": 32.515816666666666,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 32.515816666666666,
+          "end": 32.666066666666666,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 32.666066666666666,
+          "end": 34.467666666666666,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 34.467666666666666,
+          "end": 34.8348,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 35.4354,
+          "end": 38.20473333333334,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 38.20473333333334,
+          "end": 39.3393,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 39.3393,
+          "end": 42.97626666666667,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 42.97626666666667,
+          "end": 43.143100000000004,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 43.143100000000004,
+          "end": 46.46308333333334,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 46.46308333333334,
+          "end": 47.98126666666667,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 47.98126666666667,
+          "end": 49.866483333333335,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 49.866483333333335,
+          "end": 50.2502,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 50.650600000000004,
+          "end": 50.83411666666667,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 50.83411666666667,
+          "end": 52.452400000000004,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 52.452400000000004,
+          "end": 52.6526,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 53.119733333333336,
+          "end": 53.42013333333333,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 53.42013333333333,
+          "end": 55.72233333333333,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 56.2562,
+          "end": 57.490766666666666,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 57.490766666666666,
+          "end": 57.52413333333333,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 57.791066666666666,
+          "end": 57.89106666666667,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 57.89106666666667,
+          "end": 59.125733333333336,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 59.726333333333336,
+          "end": 65.24851666666667,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 65.24851666666667,
+          "end": 65.26520000000001,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 67.06700000000001,
+          "end": 68.30146666666666,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 68.30146666666666,
+          "end": 68.83553333333334,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 68.83553333333334,
+          "end": 69.43603333333334,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 69.43603333333334,
+          "end": 69.80306666666667,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 69.93653333333333,
+          "end": 70.00326666666666,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 70.13673333333334,
+          "end": 70.8708,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 72.072,
+          "end": 73.30656666666667,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 73.30656666666667,
+          "end": 79.8798,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 79.8798,
+          "end": 80.78059999999999,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 80.78059999999999,
+          "end": 81.9819,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 81.9819,
+          "end": 88.25483333333334,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 88.25483333333334,
+          "end": 88.42166666666667,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 88.42166666666667,
+          "end": 88.85543333333334,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 88.85543333333334,
+          "end": 96.34625,
+          "name": "카즈하",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 96.34625,
+          "end": 97.03026666666668,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 97.03026666666668,
+          "end": 97.2972,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 97.2972,
+          "end": 97.79780000000001,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 97.79780000000001,
+          "end": 102.08531666666667,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 102.08531666666667,
+          "end": 102.53586666666668,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 102.53586666666668,
+          "end": 104.02058333333333,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 104.02058333333333,
+          "end": 106.70660000000001,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 108.04126666666667,
+          "end": 109.89311666666667,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 109.89311666666667,
+          "end": 111.86175,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 111.86175,
+          "end": 112.57913333333333,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 113.64686666666667,
+          "end": 118.50171666666667,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 118.50171666666667,
+          "end": 120.38693333333333,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 121.121,
+          "end": 123.50671666666666,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 123.50671666666666,
+          "end": 131.29773333333333,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 131.29773333333333,
+          "end": 132.6326,
+          "name": null,
+          "reason": "unresolved_face_interval"
+        },
+        {
+          "start": 132.6326,
+          "end": 137.17036666666667,
+          "name": null,
+          "reason": "conflicting_reference_parts"
+        },
+        {
+          "start": 137.17036666666667,
+          "end": 140.75728333333333,
+          "name": "사쿠라",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 140.75728333333333,
+          "end": 144.17736666666667,
+          "name": "홍은채",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 144.17736666666667,
+          "end": 147.16368333333332,
+          "name": "허윤진",
+          "reason": "member_timeline_consensus"
+        },
+        {
+          "start": 147.16368333333332,
+          "end": 151.81833333333333,
+          "name": "김채원",
+          "reason": "member_timeline_consensus"
+        }
+      ],
+      "short": 26,
+      "clips": 64
+    }
+  }
+}

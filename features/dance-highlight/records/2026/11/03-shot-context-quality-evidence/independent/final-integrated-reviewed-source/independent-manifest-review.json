@@ -1,0 +1,40 @@
+{
+  "manifest_files": 181,
+  "all_files_match_final_manifest": true,
+  "changed_files": [
+    "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+    "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py",
+    "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "plugins/dance_highlight/dance_highlight/services/role_state.py",
+    "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+    "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+    "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+    "tests/fixtures/dance_scene_review/mmn104_role_state.json",
+    "tests/fixtures/dance_scene_review/neon98_foreground_context.json",
+    "tests/test_dance_role_state.py",
+    "tests/test_dance_role_state_integration.py",
+    "tests/test_dance_scene_foreground_context.py",
+    "tests/test_dance_shot_member_gaps.py"
+  ],
+  "changed_matches_parent_list": true,
+  "person_files": 31,
+  "sdk_files": 25,
+  "person_and_sdk_unchanged": true,
+  "source_hashes": {
+    "plugins/dance_highlight/dance_highlight/services/face_evidence.py": "70e8ff652e66593830fa081585ec275b31d426adbf5c537a3eb8930bbbc8f671",
+    "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297",
+    "plugins/dance_highlight/dance_highlight/services/performance_parts.py": "74f5074c23f93ca70499e0f39520a66542b96cb42fa08e34b32fa9d90a15756a",
+    "plugins/dance_highlight/dance_highlight/services/pipeline.py": "f225f2b8dc9fdad6fabeee0b2ece7c08ac7e57e3031546b7ae893338c393f6f1",
+    "plugins/dance_highlight/dance_highlight/services/role_state.py": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0",
+    "plugins/dance_highlight/dance_highlight/services/scene_context.py": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7",
+    "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py": "5b03843400b5a2ab84f1daa78730fd0b7e96af71eb63288225452c77531823b9",
+    "plugins/dance_highlight/dance_highlight/services/stage_prominence.py": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff",
+    "tests/fixtures/dance_scene_review/mmn104_role_state.json": "bbcef6f7c411300246d6cb8b2de72555bda57333f094399ad98e6f5f4f30eeee",
+    "tests/fixtures/dance_scene_review/neon98_foreground_context.json": "38bc354f24779e3707d2ad5f92c7026b108d074fef413dbdf43666932031d799",
+    "tests/test_dance_role_state.py": "f77ad67bfe83facb2e20ccec861b258675faa02dcfff138ad3d502ee4f760b2c",
+    "tests/test_dance_role_state_integration.py": "d1968bf947574f5a0f36b644575a1fb59410d49fd89ac4e84de4cf0adcc6a3b9",
+    "tests/test_dance_scene_foreground_context.py": "8636c87c93dfd765e04ea5c93e4234ebf821e1201b36d93f98915e77cb9149d1",
+    "tests/test_dance_shot_member_gaps.py": "ca2cbdc3c73e0b997ae6f9c1fb46677886615ac153cf052767458f7e9ec019d9"
+  }
+}

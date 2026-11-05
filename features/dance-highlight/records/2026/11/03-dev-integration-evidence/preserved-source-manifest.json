@@ -1,0 +1,471 @@
+{
+  "desktop/clipper_python": {
+    "head": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+    "branch": "fix/dance-gpu-performance-20261102",
+    "dev": "469370b206c82a8a1d4a0e181e72fb6ce8c3910c",
+    "files": [
+      {
+        "path": "plugins/dance_highlight/dance_highlight/app.py",
+        "sha256": "55761e3f8dc69b375f9bc9e49e51a7cccea4d13c2a9ff6c30128633bd98b7533"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/body_continuity.py",
+        "sha256": "ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/bounded_face_path.py",
+        "sha256": "b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/camera_transitions.py",
+        "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/context_faces.py",
+        "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/cut_face_link.py",
+        "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/ensemble_continuity.py",
+        "sha256": "3a5a402fc4b21d596f82a7799e37174a6fc8eac1bc65e4d4d925de4ea9258827"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/face_cluster.py",
+        "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+        "sha256": "278c82a19e95948faa1d2892f5a02dad65baf6f27ec076f4461bea99c1b97682"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/face_recovery.py",
+        "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+        "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/group_continuity.py",
+        "sha256": "baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/group_output.py",
+        "sha256": "a68c327266679e053c8d0c6a38d4abc055edf074b7969f4772f8dd81200a354f"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/identity_projection.py",
+        "sha256": "e478409aec1ff084217a946a1c7319c0b602b8cd926da00f718e46ff019fddb0"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/incoming_identity_boundary.py",
+        "sha256": "c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/joint_identity.py",
+        "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+        "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/mask_frame_cache.py",
+        "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+        "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+        "sha256": "cb5d2e082fa9a4ae89f8871f3f25eb99b3c7010ab9339109ec8b5e7b6fcc337d"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/named_boundaries.py",
+        "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/native_scene.py",
+        "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/observed_main.py",
+        "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/observed_member_edges.py",
+        "sha256": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/opencv_acceleration.py",
+        "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/output_continuity.py",
+        "sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/part_boundary_events.py",
+        "sha256": "8d039cd019195019450d371c8c1e02d7afa9a25d7bf802024f95b25f7f43a10d"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/performance_parts.py",
+        "sha256": "cd2554a18ca8fe2c8e8431464414343f562433ade907c4d9a7f994454512bbbe"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+        "sha256": "f5128b9c40ca324fba0a8bb9bfa2b225f7b3ee83c170884ccfa320e320111779"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/pose_observations.py",
+        "sha256": "64b0d7e2194c21422188478a9d0bbd0f84385e29d136448e105bfedacd57fe57"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/role_state.py",
+        "sha256": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/sampled_face_link.py",
+        "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/scene_boundaries.py",
+        "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+        "sha256": "021d517e8b10d2d93d24838bf500d33c9a7ef7ddbd71a1e0191201ec9ff2120b"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/secondary_faces.py",
+        "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/segment.py",
+        "sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/shot_member_gaps.py",
+        "sha256": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/source_reader.py",
+        "sha256": "e86c525fdf45db5c0275ff02d376ed80813f775e942883da80ffd358b6ad04de"
+      },
+      {
+        "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+        "sha256": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c"
+      },
+      {
+        "path": "plugins/dance_highlight/pyproject.toml",
+        "sha256": "1e6e3c8d2f3a4fb62ef454b619c9ddc954ba503280866e4785ca5793862b9428"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-2296.png",
+        "sha256": "28dfd4c510d47565ee9d484a54584789a74e48ec2e1cda4546546b6cd7b4a59d"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-2297.png",
+        "sha256": "f8c5240f4f49225b61469bb8e2694e642397e2c94a97a60f70e77364ab751dc0"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-2298.png",
+        "sha256": "4ae6f0577908a1cb6a6ca23417376752c78c03b3d44843a546a28786cf34380c"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-2299.png",
+        "sha256": "59d4b3670a85c1cceb79dbaf9f0385143a4e1ff67e54d427ad7e452e268a854c"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-2300.png",
+        "sha256": "4457d2abc79804b95e6a8761ab835dc4eabec9c6fcd5f986cc2c3f10255f2721"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38-other-face.png",
+        "sha256": "0dafbfd193d02a7e9f934e899a42f03951390988f315a3de0b5d116ff8d10ceb"
+      },
+      {
+        "path": "tests/fixtures/dance_face_path/mmn38.json",
+        "sha256": "460801b9bba8c7d2f493d4a843a53ce4f6f3de84daa05b38bbf64d53809c8753"
+      },
+      {
+        "path": "tests/fixtures/dance_native_upper_background.json",
+        "sha256": "63861ea14ec83f802d0eb641178a1103f011997c26f44cf932f0afc555ed111e"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/coincident_boundary_events.json",
+        "sha256": "a8b7b570ca0961e6711ad2394b31be6a9fcbe6e610e09aaa73ed1b4f141a9808"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/compact_formation_roles.json",
+        "sha256": "2cee4256353b34995f37b6d8b6da59a39e1b7ec7d31589c58af99e483e75d7b2"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/compact_group_gap.json",
+        "sha256": "5505c35ef3dbe0a45a764a0f39251eeed06c0dba895efb2cd914863d70212a1a"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/group_continuity.json",
+        "sha256": "a5510b5036b216192f5c9d958d982c15c95e6d0f9ac0b1a3ae60dd5b9ad1db59"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/group_continuity_source/3576.png",
+        "sha256": "e65cceb50adaa5aad2523efedf9e6f93b58bcf631afc31203319e65413d7e5ab"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/group_continuity_source/3577.png",
+        "sha256": "fba93d50cef1a889c70df2e3a06b30e22a60d25149ed72ef632be5288dfada2f"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/incoming_identity_boundary_ant154.json",
+        "sha256": "fed7dac02b5e464a12459a1948dffe1d5749d744b2627ea8180ccec217f91ea3"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/mmn103_role_subject.json",
+        "sha256": "9b24b9c50329983c32db2db51429d31450d0a9dd6c9cde9242aa9cc97b79c1b2"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/mmn104_role_state.json",
+        "sha256": "bbcef6f7c411300246d6cb8b2de72555bda57333f094399ad98e6f5f4f30eeee"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/mmn50_cut_support.json",
+        "sha256": "c59c7c7d905037df8d2963d836a27d1d89e0a087f2ee5a37ddd5be425d3f302e"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/mmn50_ensemble_zoom.json",
+        "sha256": "e382c70418d81acb040891de4c7471f95c4674447b89c1fa50756db2f212b13c"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/mmn_hybrid_observation.json",
+        "sha256": "52683cb33ae135093b575cbab1c51ab83e62380490c57ecfe0d858fdeb7c6df1"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/neon185_duplicate.json",
+        "sha256": "947c424ec23dde59f3896522d86201d6860bf10d39be51d3e8e194f4a60a41bf"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/neon187_projected_identity.json",
+        "sha256": "0e4c27782bafd4793000f449d95e9c89d3ad1ea7424386b0cbf89aaef96d9e65"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/neon42_identity_padding.json",
+        "sha256": "8154e1d6833164a3e5c9e03fe072697eb6bf56325bb28da7bbf338004f7915fc"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/neon53_duplicate_observations.json",
+        "sha256": "93ef7101d612a6b99594b40abb3a033d4364ebee8828e5fdbbbc2b942da7f356"
+      },
+      {
+        "path": "tests/fixtures/dance_scene_review/neon98_foreground_context.json",
+        "sha256": "38bc354f24779e3707d2ad5f92c7026b108d074fef413dbdf43666932031d799"
+      },
+      {
+        "path": "tests/test_dance_body_continuity.py",
+        "sha256": "cadb4144d78000c36f3a86eba219a336ec6dff0cbed0a7a5121c793b3f23a210"
+      },
+      {
+        "path": "tests/test_dance_bounded_face_path.py",
+        "sha256": "9b3410db10c1bb50d28a37389ff11b371b60813b22fc07aab1606154c92b1ec3"
+      },
+      {
+        "path": "tests/test_dance_camera_transitions.py",
+        "sha256": "0afc71db9c14bd55074661e786a62e988a5bf149d7094c8bf3406d27c606dc5f"
+      },
+      {
+        "path": "tests/test_dance_compact_group_context.py",
+        "sha256": "7e348acb72ce7b9645960609f46f66c28c3a05c55692aeac99267ea2e4189b7d"
+      },
+      {
+        "path": "tests/test_dance_context_faces.py",
+        "sha256": "90c0044597e87c15fc9a281ec3bd84f301de1ab820438c855f554a2fd4c6e85f"
+      },
+      {
+        "path": "tests/test_dance_duplicate_scene_scale.py",
+        "sha256": "14180c9802e036463648d9b64afab800b5fe51ffdcf65d8bc0de12bcb8113d09"
+      },
+      {
+        "path": "tests/test_dance_ensemble_continuity.py",
+        "sha256": "2eecef7995d0d7e68f73308880b975143fc056b00f799584f2b9d4f165b4fc9a"
+      },
+      {
+        "path": "tests/test_dance_evidence_scopes.py",
+        "sha256": "568db74eb660505093827954a4e13738a9ed5292a7afb211b82ce3bc9769fdf3"
+      },
+      {
+        "path": "tests/test_dance_exact_reuse.py",
+        "sha256": "2f0df4a320ce8293dc56239dd4195a37f73833ffcc1754b92c92e60d6c08d00b"
+      },
+      {
+        "path": "tests/test_dance_face_cluster_opencv.py",
+        "sha256": "06e5438ffb9c1418c7a9cb38ecd79e0d3e6177015ba6723912a17110ca472bbd"
+      },
+      {
+        "path": "tests/test_dance_face_prefetch.py",
+        "sha256": "09a66c21ec2402f4628a9c1b17aa821aea534cd2acbb9c3d9a3773df6bf26b35"
+      },
+      {
+        "path": "tests/test_dance_face_runtime.py",
+        "sha256": "d4cdacb45f9ebc92acf67b218e17cd71853fff173ab7e06af1fe4ee267aec6bc"
+      },
+      {
+        "path": "tests/test_dance_group_continuity.py",
+        "sha256": "610c092da3627a6288f71c181db112f09e6c288376c38d19f9111f7e9a93476a"
+      },
+      {
+        "path": "tests/test_dance_group_output.py",
+        "sha256": "7df1a70cafd269fe471338ebfca6de2d1fc3a5a0039a213f158322b8847d4876"
+      },
+      {
+        "path": "tests/test_dance_identity_projection.py",
+        "sha256": "6d33b075220e92b25f32a4fad33114e1971b57219010fc3a14ed21f58198011d"
+      },
+      {
+        "path": "tests/test_dance_incoming_identity_boundary.py",
+        "sha256": "1856b0b1db522b1b3050cfad83fd21459120603ade47c03371d59eded641c9c7"
+      },
+      {
+        "path": "tests/test_dance_joint_seed_pipeline.py",
+        "sha256": "0c8624c05711523601259e16bb1924b09dadff98fc9f595bd658bdcf39ad67f7"
+      },
+      {
+        "path": "tests/test_dance_mask_continuity.py",
+        "sha256": "52c28bd2d4312c989758cda5656f931d0e60db4e73cea2ee843dc3601148a091"
+      },
+      {
+        "path": "tests/test_dance_mask_tracker.py",
+        "sha256": "ff2a6ec049cd5061a560004da6c938cff488dba19e76343b5b581ea348ebf8a5"
+      },
+      {
+        "path": "tests/test_dance_member_timeline.py",
+        "sha256": "4db35e0aad04141e94b01a769b8081dcd119d335712661ca65e8e1484ce36317"
+      },
+      {
+        "path": "tests/test_dance_member_timeline_pipeline.py",
+        "sha256": "80394e36ea75669f74a8f1b5aa59072f67993d60595a060de19fe41a5fee3c0c"
+      },
+      {
+        "path": "tests/test_dance_named_boundaries.py",
+        "sha256": "40060efed94198170aecf297661a7a60834575ad7a3328c130c2ad98e0d5211d"
+      },
+      {
+        "path": "tests/test_dance_native_scene.py",
+        "sha256": "4ebad7bf424f5a571d4214041b68f99da7315f93d3e8f4bffd71be8550306128"
+      },
+      {
+        "path": "tests/test_dance_observed_main.py",
+        "sha256": "186556e08e3c3c06be94a6fa73fc51c07c6535bc4d9cb9290be2db7f760879f2"
+      },
+      {
+        "path": "tests/test_dance_observed_member_edges.py",
+        "sha256": "835cebb9d9cac4bfb2e556dd517b6da20d0708451324eaf84eeb5beb02495dc3"
+      },
+      {
+        "path": "tests/test_dance_opencv_acceleration.py",
+        "sha256": "01ca2c302cc533e0357cf83e37e4430bbcc606119fca09cbe199e297dabdc11d"
+      },
+      {
+        "path": "tests/test_dance_output_continuity.py",
+        "sha256": "8697ce7d6f6e560fa5ca6018f6a04c559296a2a3d1b4f54994b05a14f9913f70"
+      },
+      {
+        "path": "tests/test_dance_part_boundary_events.py",
+        "sha256": "1065b95660e5bd06db23486cf4b283a8c1f61bf24e14b56f94ab308501ab1aca"
+      },
+      {
+        "path": "tests/test_dance_performance_parts.py",
+        "sha256": "d00a9858994c004e7ae16c05d1937c1541f673bdb5c353fa91f2c45e497cc783"
+      },
+      {
+        "path": "tests/test_dance_pose_observations.py",
+        "sha256": "c8f2ad9985e450d7c3b4b61169b3dea4a58217bc0231117f5214bea60cc8a374"
+      },
+      {
+        "path": "tests/test_dance_reference_matcher.py",
+        "sha256": "507953bc547839db588e2a7f1461ef8f20b52f310762752a98d807126ac23d56"
+      },
+      {
+        "path": "tests/test_dance_role_state.py",
+        "sha256": "f77ad67bfe83facb2e20ccec861b258675faa02dcfff138ad3d502ee4f760b2c"
+      },
+      {
+        "path": "tests/test_dance_role_state_integration.py",
+        "sha256": "d1968bf947574f5a0f36b644575a1fb59410d49fd89ac4e84de4cf0adcc6a3b9"
+      },
+      {
+        "path": "tests/test_dance_scene_context.py",
+        "sha256": "34732dc73b58b0241eea109d35a062fa71a40ea9bd6ac72ea4e246a59ddc0790"
+      },
+      {
+        "path": "tests/test_dance_scene_eligibility.py",
+        "sha256": "60d12416bc90f0c8e52f1dfcc5b0f1d30006d6d9b4ee2839a494198c50f85702"
+      },
+      {
+        "path": "tests/test_dance_scene_foreground_context.py",
+        "sha256": "8636c87c93dfd765e04ea5c93e4234ebf821e1201b36d93f98915e77cb9149d1"
+      },
+      {
+        "path": "tests/test_dance_secondary_faces.py",
+        "sha256": "3ea51e229e4e9084a9496b8a3af1145e0e224447856eb166957d01931068a576"
+      },
+      {
+        "path": "tests/test_dance_shot_member_gaps.py",
+        "sha256": "299482e1bca14e131c8cedb57dbf1233bfd676fc0bc26b239cb16c8e1417e0c5"
+      },
+      {
+        "path": "tests/test_dance_source_reuse.py",
+        "sha256": "e55aa89c893f64173aae687dbd43df2c0b108153b63b33aa16a342ec2622cf2a"
+      },
+      {
+        "path": "tests/test_dance_stage_prominence.py",
+        "sha256": "22890bb637b709001b0857fc26ee609eefee08f6a812827d32f548ae1eb48bf0"
+      },
+      {
+        "path": "tests/test_dance_unknown_continuity.py",
+        "sha256": "3292ab2b039d4865d17fdef30aa4c56969002b38f99448a9c832bdad5676d106"
+      },
+      {
+        "path": "uv.lock",
+        "sha256": "cd5b5192ca3623293a1b6ed0afa261276b4a192d0625a8553a6714ba834109c1"
+      }
+    ]
+  },
+  "desktop/clipper_angular": {
+    "head": "500cf9f455bcf4b0d857fa1de08e44fa9ff97e93",
+    "branch": "dev",
+    "dev": "4d508c0d3b0c3009f48f171edd6bfac11de33d04",
+    "files": [
+      {
+        "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.html",
+        "sha256": "878f01bb2717c5651390fa7a45dfb98254295ca5cdc61ca1c5977b44e90db3c2"
+      },
+      {
+        "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.spec.ts",
+        "sha256": "5c1ca84d2860ed0f5e66deb74b106bc893b0a57a970a87b0d99a5dba18d16ee1"
+      },
+      {
+        "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.ts",
+        "sha256": "98a823e627fee45e6289c7bf67abbac541b35504722daaa2f07b40f2c78c9b4e"
+      }
+    ]
+  },
+  "desktop/clipper_nestjs": {
+    "head": "e4e1fcf5d37bdbbd2c0c00a9f558b052c2d55f7f",
+    "branch": "dev",
+    "dev": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+    "files": [
+      {
+        "path": "src/modules/access/application/access.service.ts",
+        "sha256": "9340b432c5e3a597159cead83bf145a360ef4fc23cebbbba2f5c4515a7e65c14"
+      },
+      {
+        "path": "test/access-credit-proxy.test.js",
+        "sha256": "da3dbf5ee05888d3dd5e07ed85ae21d42c4a3f0a0a6d24042cf3371c4a2225a5"
+      }
+    ]
+  }
+}

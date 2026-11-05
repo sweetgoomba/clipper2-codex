@@ -1,0 +1,103 @@
+{
+  "MMN": {
+    "before": {
+      "main": 57,
+      "main_short": 21,
+      "group": 32,
+      "group_short": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "after": {
+      "main": 57,
+      "main_short": 21,
+      "group": 32,
+      "group_short": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "baseline_additional_changes": [],
+    "changes": [],
+    "affected_main": []
+  },
+  "ANT": {
+    "before": {
+      "main": 102,
+      "main_short": 54,
+      "group": 32,
+      "group_short": 25,
+      "unknown_seconds": 16.01780000000008
+    },
+    "after": {
+      "main": 102,
+      "main_short": 54,
+      "group": 32,
+      "group_short": 25,
+      "unknown_seconds": 16.01780000000008
+    },
+    "baseline_additional_changes": [],
+    "changes": [],
+    "affected_main": []
+  },
+  "NEON": {
+    "before": {
+      "main": 151,
+      "main_short": 91,
+      "group": 56,
+      "group_short": 34,
+      "unknown_seconds": 16.81840000000013
+    },
+    "after": {
+      "main": 150,
+      "main_short": 90,
+      "group": 56,
+      "group_short": 34,
+      "unknown_seconds": 16.751666666666797
+    },
+    "baseline_additional_changes": [
+      {
+        "frame": 9284,
+        "time": 154.88806666666667,
+        "before": "no_person"
+      },
+      {
+        "frame": 9288,
+        "time": 154.9548,
+        "before": "no_person"
+      },
+      {
+        "frame": 9292,
+        "time": 155.02153333333334,
+        "before": "no_person"
+      },
+      {
+        "frame": 9296,
+        "time": 155.08826666666667,
+        "before": "no_person"
+      },
+      {
+        "frame": 9300,
+        "time": 155.155,
+        "before": "main"
+      }
+    ],
+    "changes": [
+      {
+        "start": 154.88806666666667,
+        "end": 155.22173333333333,
+        "frames": [
+          9284,
+          9288,
+          9292,
+          9296,
+          9300
+        ]
+      }
+    ],
+    "affected_main": [
+      {
+        "start": 155.155,
+        "end": 155.22173333333333,
+        "person": "unknown"
+      }
+    ]
+  }
+}

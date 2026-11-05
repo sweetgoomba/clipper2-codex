@@ -1,0 +1,26 @@
+{
+  "member_timeline": {
+    "sha256": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8",
+    "packaged_same": true
+  },
+  "stage_prominence": {
+    "sha256": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c",
+    "packaged_same": true
+  },
+  "pipeline": {
+    "sha256": "8f4cf456d5444cbf68596f0ab40dcc5c01012c3f9604f1b01ae150a1c9d58867",
+    "packaged_same": true
+  },
+  "part_boundary_events": {
+    "sha256": "8d039cd019195019450d371c8c1e02d7afa9a25d7bf802024f95b25f7f43a10d",
+    "packaged_same": true
+  },
+  "performance_parts": {
+    "sha256": "cd2554a18ca8fe2c8e8431464414343f562433ade907c4d9a7f994454512bbbe",
+    "packaged_same": true
+  },
+  "identity_projection": {
+    "sha256": "e478409aec1ff084217a946a1c7319c0b602b8cd926da00f718e46ff019fddb0",
+    "packaged_same": true
+  }
+}

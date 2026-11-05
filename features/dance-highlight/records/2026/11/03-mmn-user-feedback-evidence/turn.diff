@@ -1,0 +1,336 @@
+--- before/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py
++++ after/clipper_python/plugins/dance_highlight/dance_highlight/services/member_timeline.py
+@@ -75,7 +75,7 @@
+     return match.reference_id if not direct_names or direct_names == {match.reference_id} else None
+ 
+ 
+-def _named_ranges(segment, rows, names):
++def _named_ranges(segment, rows, names, *, cut_times=()):
+     hits = [(row, name) for row, name in zip(rows, names, strict=True) if name]
+     # A single erroneous named frame cannot create a part or interrupt another.
+     hits = [(row, name) for row, name in hits if any(
+@@ -96,15 +96,19 @@
+     for name, support in runs:
+         if len(support) < 2 or support[-1].time_seconds-support[0].time_seconds < .15:
+             continue
+-        ranges.append({'start': max(segment.start, support[0].time_seconds-.1),
+-                       'end': min(segment.end, support[-1].time_seconds+.1),
++        ranges.append({'start': max(segment.start, support[0].time_seconds-.1,
++                                max((c for c in cut_times if c <= support[0].time_seconds), default=segment.start)),
++                       'end': min(segment.end, support[-1].time_seconds+.1,
++                                  min((c for c in cut_times if c > support[-1].time_seconds), default=segment.end)),
+                        'name': name, 'first_time': support[0].time_seconds,
+                        'last_time': support[-1].time_seconds,
+                        'support_frames': [o.frame_index for o in support]})
+     if ranges:
+-        if ranges[0]['start']-segment.start <= .3:
++        if ranges[0]['start']-segment.start <= .3 and not any(
++                segment.start < c <= ranges[0]['first_time'] for c in cut_times):
+             ranges[0]['start'] = segment.start
+-        if segment.end-ranges[-1]['end'] <= .3:
++        if segment.end-ranges[-1]['end'] <= .3 and not any(
++                ranges[-1]['last_time'] < c < segment.end for c in cut_times):
+             ranges[-1]['end'] = segment.end
+     return ranges
+ 
+@@ -131,13 +135,17 @@
+     return _select_boundaries(segment, candidates)
+ 
+ 
+-def _identity_boundaries(segment, rows, names, ranges):
++def _identity_boundaries(segment, rows, names, ranges, *, cut_times=()):
+     candidates = []
+     for left, right in zip(ranges, ranges[1:]):
+         if left['name'] != right['name']:
+-            candidates.append({'time': (left['last_time']+right['first_time'])/2,
++            cuts = [cut for cut in cut_times if left['last_time'] < cut <= right['first_time']]
++            if len(cuts) > 1:
++                continue
++            candidates.append({'time': cuts[0] if cuts else (left['last_time']+right['first_time'])/2,
+                                'left_time': left['last_time'], 'right_time': right['first_time'],
+-                               'reason': 'repeated_reference_change', 'strength': 2.})
++                               'reason': 'source_cut_face_change' if cuts else 'repeated_reference_change',
++                               'strength': 4. if cuts else 2.})
+     valid = [(o, name) for o, name in zip(rows, names, strict=True) if _valid(o)]
+     # Bound classification by observed face coverage. A brief face appearance
+     # cannot name several unseen seconds.
+@@ -158,28 +166,36 @@
+         # support time at every sampling cadence. Two adjacent dense samples
+         # alone may be only one source-frame interval apart.
+         lo, hi = index-1, index
+-        while lo > 0 and valid[index-1][0].time_seconds-valid[lo][0].time_seconds < .15:
++        while (lo > 0 and valid[index-1][0].time_seconds-valid[lo][0].time_seconds < .15
++               and not any(valid[lo-1][0].time_seconds < cut <= valid[lo][0].time_seconds
++                           for cut in cut_times)):
+             lo -= 1
+-        while hi+1 < len(valid) and valid[hi][0].time_seconds-valid[index][0].time_seconds < .15:
++        while (hi+1 < len(valid) and valid[hi][0].time_seconds-valid[index][0].time_seconds < .15
++               and not any(valid[hi][0].time_seconds < cut <= valid[hi+1][0].time_seconds
++                           for cut in cut_times)):
+             hi += 1
+         left, right = valid[lo:index], valid[index:hi+1]
+         a, b = left[-1][0], right[0][0]
++        left_names, right_names = {n for _, n in left if n}, {n for _, n in right if n}
++        if left_names & right_names:
++            continue
++        crossed = [cut for cut in cut_times if a.time_seconds < cut <= b.time_seconds]
++        if len(crossed) > 1:
++            continue
+         if (b.time_seconds-a.time_seconds > .6 or a.time_seconds-left[0][0].time_seconds < .15
+                 or right[-1][0].time_seconds-b.time_seconds < .15
+                 or a.time_seconds-left[0][0].time_seconds > .6
+                 or right[-1][0].time_seconds-b.time_seconds > .6):
+-            continue
+-        left_names, right_names = {n for _, n in left if n}, {n for _, n in right if n}
+-        if left_names & right_names:
+             continue
+         lv, rv = np.asarray([o.embedding for o, _ in left]), np.asarray([o.embedding for o, _ in right])
+         lc, rc = lv.mean(axis=0), rv.mean(axis=0)
+         lc /= np.linalg.norm(lc)+1e-9; rc /= np.linalg.norm(rc)+1e-9
+         distance = 1.-float(lc @ rc)
+         if distance >= .65 and max(float(np.mean(1.-lv @ lc)), float(np.mean(1.-rv @ rc))) <= .3:
+-            candidates.append({'time': (a.time_seconds+b.time_seconds)/2,
++            candidates.append({'time': crossed[0] if crossed else (a.time_seconds+b.time_seconds)/2,
+                                'left_time': a.time_seconds, 'right_time': b.time_seconds,
+-                               'reason': 'repeated_face_change', 'strength': distance})
++                               'reason': 'source_cut_face_change' if crossed else 'repeated_face_change',
++                               'strength': 4. if crossed else distance})
+     return _select_boundaries(segment, candidates)
+ 
+ 
+@@ -188,8 +204,12 @@
+     for cut in sorted(candidates, key=lambda c: c['strength'], reverse=True):
+         # The identity support itself requires 0.15 seconds. A separate 0.3s
+         # clip floor would discard an already confirmed shorter member part.
+-        if (cut['time']-segment.start >= .15 and segment.end-cut['time'] >= .15
+-                and all(abs(cut['time']-other['time']) >= .15 for other in selected)):
++        exact = cut['reason'] == 'source_cut_face_change'
++        if ((segment.start < cut['time'] < segment.end if exact else
++             cut['time']-segment.start >= .15 and segment.end-cut['time'] >= .15)
++                and all(abs(cut['time']-other['time']) >= .15
++                        or exact and other['reason'] == 'source_cut_face_change'
++                        and abs(cut['time']-other['time']) > 1e-6 for other in selected)):
+             selected.append(cut)
+     return sorted(selected, key=lambda c: c['time'])
+ 
+@@ -256,9 +276,9 @@
+     return build_video_anchors(rows, matches)
+ 
+ 
+-def refine_member_timeline(segments, decisions, labels, previews, face_results, matcher, *, video_path=None, seed_anchors=(), fallback_names=None):
++def refine_member_timeline(segments, decisions, labels, previews, face_results, matcher, *, video_path=None, seed_anchors=(), fallback_names=None, cut_times=()):
+     output = _refine_member_scopes(segments, decisions, labels, previews, face_results, matcher,
+-                                   video_path=video_path, seed_anchors=seed_anchors, fallback_names=fallback_names)
++                                   video_path=video_path, seed_anchors=seed_anchors, fallback_names=fallback_names, cut_times=cut_times)
+     _merge_continuous_named(output, matcher, video_path=video_path)
+     _keep_unidentified_in_review_bucket(output)
+     return output
+@@ -305,7 +325,7 @@
+             [seg],[decision],[primary['labels'][index]],[primary['previews'][index]],
+             [SimpleNamespace(owned_observations=[row for row,_ in evidence],
+                              owned_thumbnails=thumbnails,owned_previews=owned)],matcher,
+-            video_path=video_path,seed_anchors=primary['anchors'],fallback_names=local_names)
++            video_path=video_path,seed_anchors=primary['anchors'],fallback_names=local_names, cut_times=primary.get('cut_times', ()))
+         offset = len(output['segments'])
+         output['accurate_indices'].extend(offset+i for i in local['accurate_indices'])
+         for key in keys:
+@@ -360,7 +380,8 @@
+                 for box in output['segments'][i].bboxes if start<=box[0]<end])
+             proposal=_refine_member_scopes([scope],[decision],[None],[[]],
+                 [SimpleNamespace(owned_observations=rows,owned_thumbnails=thumbnails,owned_previews=previews)],
+-                matcher,video_path=video_path,seed_anchors=output['anchors'],fallback_names=frozen_names)
++                matcher,video_path=video_path,seed_anchors=output['anchors'],fallback_names=frozen_names,
++                cut_times=output.get('cut_times', ()))
+             pieces=[]
+             for part,assignment,evidence in zip(proposal['segments'],proposal['decisions'],proposal['evidence'],strict=True):
+                 left,right=max(segment.start,part.start),min(segment.end,part.end)
+@@ -428,14 +449,15 @@
+     return result
+ 
+ 
+-def _refine_member_scopes(segments, decisions, labels, previews, face_results, matcher, *, video_path=None, seed_anchors=(), fallback_names=None):
++def _refine_member_scopes(segments, decisions, labels, previews, face_results, matcher, *, video_path=None, seed_anchors=(), fallback_names=None, cut_times=()):
+     """Partition every main scope, including previously named and unsplit ones."""
+     prepared, all_rows, all_matches = _prepare_observations(segments, face_results, matcher)
+     anchors = list({(name, row.frame_index): (name, row)
+                     for name, row in [*seed_anchors, *build_video_anchors(all_rows, all_matches)]}.values())
+     fallback_names = fallback_names or {}
+     output = {'segments': [], 'decisions': [], 'labels': [], 'previews': [], 'fallback_names': fallback_names,
+-              'accurate_indices': [], 'audit': [], 'evidence': [], 'anchors': anchors, 'preview_sources': []}
++              'accurate_indices': [], 'audit': [], 'evidence': [], 'anchors': anchors, 'preview_sources': [],
++              'cut_times': tuple(cut_times)}
+     next_label = max((label for label in labels if label is not None), default=0) + 1
+     for index, (seg, baseline, label, images, result, prepared_rows) in enumerate(zip(
+             segments, decisions, labels, previews, face_results, prepared, strict=True)):
+@@ -452,8 +474,8 @@
+                     # never enter the primary gallery or become video anchors.
+                     name = fallback_names.get(row.frame_index)
+             names.append(name)
+-        ranges = _named_ranges(seg, rows, names)
+-        boundaries = _identity_boundaries(seg, rows, names, ranges)
++        ranges = _named_ranges(seg, rows, names, cut_times=cut_times)
++        boundaries = _identity_boundaries(seg, rows, names, ranges, cut_times=cut_times)
+         if video_path and boundaries:
+             changes = [b for b in boundaries if b['reason'] in ('repeated_reference_change', 'repeated_face_change')
+                        and b['right_time']-b['left_time'] <= .65]
+@@ -595,7 +617,7 @@
+             [SimpleNamespace(owned_observations=[o for o, _ in evidence],
+                              owned_thumbnails=thumbnails, owned_previews=owned)],
+             matcher, video_path=video_path, seed_anchors=output['anchors'],
+-            fallback_names=output.get('fallback_names'))
++            fallback_names=output.get('fallback_names'), cut_times=output.get('cut_times', ()))
+         if preserve_named and any(d.reference_id != output['decisions'][first].reference_id
+                                   for d in combined['decisions']):
+             # A secondary-only pass cannot demote a previously named interval
+--- before/clipper_python/plugins/dance_highlight/dance_highlight/services/stage_prominence.py
++++ after/clipper_python/plugins/dance_highlight/dance_highlight/services/stage_prominence.py
+@@ -10,33 +10,41 @@
+ 
+ def foreground_subject(features, width, height):
+     measured = []
++    torso_peers = []
+     for feature in features:
+         size, x = feature.get('size'), feature.get('x')
+         pose = np.asarray(feature.get('pose_keypoints', []))
+-        if size is None or x is None:
++        if pose.shape != (17, 3):
++            if size is not None and x is not None:
++                return None
+             continue
+-        if pose.shape != (17, 3):
+-            return None
+         torso = pose[[5, 6, 11, 12]]
+         if (not np.isfinite(torso).all() or (torso[:, 2] < .75).any()
+                 or (torso[:, 0] < 0).any() or (torso[:, 0] >= width).any()
+                 or (torso[:, 1] < 0).any() or (torso[:, 1] >= height).any()):
+-            return None
++            if size is not None and x is not None:
++                return None
++            continue
+         length = float(np.linalg.norm(torso[:2, :2].mean(axis=0) - torso[2:, :2].mean(axis=0)))
+         if length < .08 * height:
+-            return None
+-        measured.append((feature, length))
++            if size is not None and x is not None:
++                return None
++            continue
++        torso_peers.append((feature, length))
++        if size is not None and x is not None:
++            measured.append((feature, length))
+     if len(measured) < 3:
+         return None
+     selected, length = max(measured, key=lambda pair: pair[0]['size'])
+     if not .2 * width <= selected['x'] <= .8 * width or selected['size'] < .04 * height:
+         return None
+     others = [(f, scale) for f, scale in measured if f is not selected]
++    # A faceless peer still competes via its measured torso.
+     # Both measurements must be uniquely larger; two people in the front row
+     # supply no single-subject evidence. The role timeline still requires a
+     # sustained observation before this can replace an incumbent.
+     if (selected['size'] < 1.08 * max(f['size'] for f, _ in others)
+-            or length < 1.08 * max(scale for _, scale in others)):
++            or any(length < 1.08 * scale for peer, scale in torso_peers if peer is not selected)):
+         return None
+     return selected
+ 
+--- before/clipper_python/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ after/clipper_python/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -989,6 +989,7 @@
+                 identity_refinement = refine_member_timeline(
+                     kept_main_segs, reference_decisions, raw_labels, selected_evidence,
+                     kept_face_results, matcher, video_path=str(input_video),
++                    cut_times=tuple(frame/fps for frame in scene_context_cuts or ()),
+                 )
+                 primary_unknown_seconds = _unknown_main_seconds(
+                     identity_refinement['segments'], identity_refinement['decisions'], eligible_main)
+--- before/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.ts
++++ after/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.ts
+@@ -35,8 +35,7 @@
+ import { FileDownloadService, FileSaveResult } from '../../../core/download/file-download.service';
+ import { fileTimestamp, safeFilePart } from '../../../core/download/download-filename';
+ import { DanceResultDetailComponent } from '../dance-result-detail/dance-result-detail.component';
+-// 판정 지도 재활성화 시 템플릿의 진입 분기와 함께 복원한다.
+-// import { DanceDiagnosticTimelineComponent } from '../dance-diagnostic-timeline/dance-diagnostic-timeline.component';
++import { DanceDiagnosticTimelineComponent } from '../dance-diagnostic-timeline/dance-diagnostic-timeline.component';
+ import { DialogResultDetailComponent } from '../dialog-result-detail/dialog-result-detail.component';
+ import { PersonResultDetailComponent } from '../person-result-detail/person-result-detail.component';
+ import { ProjectsClipOverlayComponent } from '../projects-clip-overlay/projects-clip-overlay.component';
+@@ -79,7 +78,7 @@
+     MatProgressSpinnerModule,
+     MatTooltipModule,
+     DanceResultDetailComponent,
+-    // DanceDiagnosticTimelineComponent,
++    DanceDiagnosticTimelineComponent,
+     DialogResultDetailComponent,
+     PersonResultDetailComponent,
+     ProjectsClipOverlayComponent,
+@@ -96,7 +95,7 @@
+   readonly projects = inject(ProjectHistoryService);
+ 
+   readonly detail = signal<ProjectDetail | null>(null);
+-  // readonly danceStep = signal<'map' | 'result'>('result');
++  readonly danceStep = signal<'map' | 'result'>('result');
+   readonly loading = signal(false);
+   readonly error = signal<string | null>(null);
+   readonly selectedClipId = signal<string | null>(null);
+@@ -309,7 +308,7 @@
+     await this.load(projectId);
+     const shortformJobId = this.route.snapshot.queryParamMap.get('fromShortform');
+     if (shortformJobId) {
+-      // this.danceStep.set('result');
++      this.danceStep.set('result');
+       await this.restoreFromShortform(shortformJobId);
+     }
+   }
+--- before/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.html
++++ after/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.html
+@@ -83,12 +83,10 @@
+         <section class="detail-panel">
+           <section class="result-section">
+             @if (project.category === 'dance') {
+-              <!-- 판정 지도는 임시 비노출. 다시 사용할 때 이 진입 분기와 아래 닫는 괄호 주석을 함께 복원한다.
+               @if (danceStep() === 'map') {
+                 <app-dance-diagnostic-timeline [project]="project" (viewResults)="danceStep.set('result')" />
+               } @else {
+                 <button data-testid="dance-return-to-map" matButton="tonal" type="button" (click)="danceStep.set('map')">← 판정 지도</button>
+-              -->
+                 <app-dance-result-detail
+                 [project]="project"
+                 [persons]="visiblePersons()"
+@@ -106,7 +104,7 @@
+                 (downloadSelectedZip)="downloadSelectedDanceZip($event)"
+ 
+               />
+-              <!-- } -->
++              }
+             } @else if (project.category === 'person') {
+               <app-person-result-detail
+                 [project]="project" [persons]="visiblePersons()"
+--- before/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.spec.ts
++++ after/clipper_angular/src/shell/projects/projects-detail-page/projects-detail-page.component.spec.ts
+@@ -452,7 +452,7 @@
+     expect(fixture.componentInstance).toBeTruthy();
+   });
+ 
+-  it('판정 지도 진입을 숨기고 안무 결과를 바로 보여준다', () => {
++  it('안무 결과에서 판정 지도로 갔다가 결과로 돌아온다', () => {
+     fixture.detectChanges();
+     fixture.componentInstance.loading.set(false);
+     fixture.componentInstance.error.set(null);
+@@ -460,7 +460,15 @@
+     fixture.detectChanges();
+     expect(fixture.nativeElement.querySelector('app-dance-result-detail')).not.toBeNull();
+     expect(fixture.nativeElement.querySelector('app-dance-diagnostic-timeline')).toBeNull();
+-    expect(fixture.nativeElement.querySelector('[data-testid="dance-return-to-map"]')).toBeNull();
++    const button = fixture.nativeElement.querySelector('[data-testid="dance-return-to-map"]') as HTMLButtonElement;
++    expect(button).not.toBeNull();
++    button.click();
++    fixture.detectChanges();
++    expect(fixture.nativeElement.querySelector('app-dance-diagnostic-timeline')).not.toBeNull();
++    expect(fixture.nativeElement.querySelector('app-dance-result-detail')).toBeNull();
++    (fixture.nativeElement.querySelector('[data-testid="dance-view-results"]') as HTMLButtonElement).click();
++    fixture.detectChanges();
++    expect(fixture.nativeElement.querySelector('app-dance-result-detail')).not.toBeNull();
+   });
+ 
+   it('헤더 뒤로가기 = 「뒤로」 — 홈 카드로 들어간 다른 화면들과 같은 이름', () => {

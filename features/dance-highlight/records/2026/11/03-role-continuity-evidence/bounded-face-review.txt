@@ -1,0 +1,24 @@
+bounded_face_path 읽기 및 독립 테스트 검토 — 2026-11-03
+
+검토 범위에서 새 차단 결함을 찾지 못했다. 실제 앱 채택 승인과 전체 MMN38 회복의 정답 판정은 별도다.
+
+동결 SHA256
+bounded_face_path.py c207481c8d340550760f129b8d3ed79467032669e0bc4b9b8c69a0677559e7ac
+body_continuity.py ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687
+
+독립 실행
+실행 위치 /private/tmp/dance-role-continuity-20261103-review/bounded-face-review
+/Users/jina/project/adlight/desktop/clipper_python/.venv/bin/python -m pytest -q --rootdir=. --confcutdir=. test_dance_bounded_face_path.py
+관측 결과: 24 passed in 0.47s, exit0.
+현재 제품 파일 대신 이 폴더에 동결한 두 서비스 파일을 주입했다. 실제 원본 crop fixture와 부정 사례, 기존 cut/body/name guard가 예외 실행 전에 거부하는 사례를 포함한다. 전수 모델/새 얼굴 추론/전체 앱 재실행은 없다.
+
+검토 확인
+- body_continuity의 같은 이름 양옆 지지/다른 이름 및 반복 다른 얼굴 거부/원본 색 컷/몸 소유권과 reciprocal body·pose 검사가 유지된다.
+- 새 예외는 마지막 isolated_visual_change 분기에서만 호출된다. earlier visual_cut/body/name 실패는 그대로 반환된다.
+- 각 원본 얼굴 관측 사이 간격1–4프레임, 최대5연속source프레임만 사용하고 모든 의심 jump를 덮어야 한다.
+- 시작/끝 검출은원래confirmed소유권/점수/유효bbox를요구하고 select_pose_face로원본head의독점소유권을다시검사한다.
+- 양끝에서독립적으로시작한pixeltrack에인접왕복및전체왕복오차2pixel,최소6점과2차원분산을요구하고,양방향경로의중간convex hull교차도검사한다. 새이름/embedding/galleryanchor를만들지않는다.
+- 원본sequence의seek/read/frameposition을확인하며,하나의window라도실패하면기존거부를유지한다. audit에window별근거·decoded_frames·seconds를기록한다.
+
+제한
+새검출모델없이픽셀대응을검증하는예외다. 이것만으로얼굴신원이나모든영상편집부재를독립증명했다고보고하면안된다. 기존guard를통과한후보에만적용되는호출계약을유지해야한다. 부모/다른agent의전체7창및1.1345667초회복보고는이24test실행과구분한다. identity_padding의상충이름문제및ANT154교대경계는이변경으로해결되지않는다.

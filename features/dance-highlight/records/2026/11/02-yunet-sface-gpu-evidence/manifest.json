@@ -1,0 +1,158 @@
+[
+  {
+    "path": "build.log",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/build.log",
+    "bytes": 5455,
+    "sha256": "076a1f45fdafc19ee4763d0a708d743d928ff9c20b0985f2d996ba44836bf04a"
+  },
+  {
+    "path": "parity-report.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/parity-report.json",
+    "bytes": 1303,
+    "sha256": "7f57db9bd6430bde1ae0eae6a7cf92a999c4cb70e14eb604409fd49c8186a4f5"
+  },
+  {
+    "path": "sface-report.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/sface-report.json",
+    "bytes": 773,
+    "sha256": "f53857ac64fea972e61495aaaaec50ce607ea8687f4337886ece41c3ae29bc75"
+  },
+  {
+    "path": "yunet-report.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/yunet-report.json",
+    "bytes": 936,
+    "sha256": "051436ce9b3b797f393ac2ab18fbdc71cf43cfa9cd528d09078a6a43ca2946f9"
+  },
+  {
+    "path": "yunet-static-report.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/yunet-static-report.json",
+    "bytes": 907,
+    "sha256": "d6be928deafc30256a5f5685de7a4b1f338bf85a0a030126ccb36444ff7b1a3c"
+  },
+  {
+    "path": "yunet-static-roi-report.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/yunet-static-roi-report.json",
+    "bytes": 909,
+    "sha256": "369444258ecc3b4a1b7688253a0e2d4d1d22b9f1c29dee2ac6655c4149a2ab10"
+  },
+  {
+    "path": "yunet-gpu-plan.txt",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/yunet-gpu-plan.txt",
+    "bytes": 16482,
+    "sha256": "df91fe597907561fe4b36cd4922c2b97854234ecea4b50765d9a1cf35370a9af"
+  },
+  {
+    "path": "sface-gpu-plan.txt",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/sface-gpu-plan.txt",
+    "bytes": 8965,
+    "sha256": "8ed72ce30e8b4e7203be64ca61087c9128b7863a857dfc81e358597d2fa837a9"
+  },
+  {
+    "path": "test-summary.txt",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/test-summary.txt",
+    "bytes": 1260,
+    "sha256": "512dc1165c7e987dd7f4ef84d00a68eb089633568c26903cd694d651826cc3c9"
+  },
+  {
+    "path": "tests-integration.log",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/tests-integration.log",
+    "bytes": 99,
+    "sha256": "cf1fe46382cb268d2e0d3b086b2cd1096e30a619fea060b1c1d3647bbc64199b"
+  },
+  {
+    "path": "full-suite-unrestricted.log",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/full-suite-unrestricted.log",
+    "bytes": 23768,
+    "sha256": "61dc66442f609f0da76ccba6f9271725cf90b31efcc25452dc4b2dd4a75dcfe1"
+  },
+  {
+    "path": "model-hashes.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/model-hashes.json",
+    "bytes": 306,
+    "sha256": "ac0d54beb5b7ac41340f4d236801e513c3f29ec4b9b098b0f54d9fc653451b7d"
+  },
+  {
+    "path": "dance-requirements.txt",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/dance-requirements.txt",
+    "bytes": 10157,
+    "sha256": "cce685264c182289a7710a15d1c42239fbc041f73de41d44db63f110c4f910cc"
+  },
+  {
+    "path": "current-task-changes.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/current-task-changes.json",
+    "bytes": 2241,
+    "sha256": "51c1b3bc8313e13da5c8bbfc329231474a84c1866857bd89d68d2fc764c8cd0c"
+  },
+  {
+    "path": "app/run-manifest.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/run-manifest.json",
+    "bytes": 1029,
+    "sha256": "83160883aac51a0388c2efa7a32b4c3c7f969d6a2772d8257deb316c386aa0f3"
+  },
+  {
+    "path": "app/baseline-timings.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/baseline-timings.json",
+    "bytes": 342,
+    "sha256": "50d429a113946aabe07304917fc96364e9c7d7b46732e85c98660a660ba7769c"
+  },
+  {
+    "path": "app/final-summary.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/final-summary.json",
+    "bytes": 8660,
+    "sha256": "86680c51e237fc7e01195bdb2c922e495027f3adf03a0406f26f774b6556a94c"
+  },
+  {
+    "path": "app/run-comparison.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/run-comparison.json",
+    "bytes": 9338,
+    "sha256": "b67b8f274017db98e71c4d38aa5bfad956c5a84fbce829e45ea82c4ce08463c1"
+  },
+  {
+    "path": "app/provenance-comparison.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/provenance-comparison.json",
+    "bytes": 3030,
+    "sha256": "185703f1de55c273e90d3dd6309064e191a614cd0e6702b0bd86c588dfa0fb8c"
+  },
+  {
+    "path": "app/identity-coverage-comparison.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/identity-coverage-comparison.json",
+    "bytes": 310,
+    "sha256": "d07757462dfd276ff260afd4339df4ae1afb08c66e49b000d1f24b01c4b0d834"
+  },
+  {
+    "path": "app/reviewed-case-comparison.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/reviewed-case-comparison.json",
+    "bytes": 13445,
+    "sha256": "d0f7016721b9b90a216fd0e5cdda0e752c09286ff9091702061c2c02b3c2b1bd"
+  },
+  {
+    "path": "app/reviewed-case-analysis.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/reviewed-case-analysis.json",
+    "bytes": 2975,
+    "sha256": "3f28efb1b9485bad4e240367708806bca25d48c7f2feb6e9f6594ffbde16d12f"
+  },
+  {
+    "path": "app/source-hashes.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/source-hashes.json",
+    "bytes": 13015,
+    "sha256": "80700d731e429c282406edfb4110230ae8a99fd95b3ea15e4bcca39b05bdaef9"
+  },
+  {
+    "path": "app/runtime-start.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/runtime-start.json",
+    "bytes": 1361,
+    "sha256": "5c801aa900efa6254858e6688e91277c292ba5447910943fbd642066defd83c1"
+  },
+  {
+    "path": "app/runtime-neon.json",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/runtime-neon.json",
+    "bytes": 1505,
+    "sha256": "13972ff51bfaf21c48e3a6f4c7329b5593719bb47751e5b97407d7a0c9491433"
+  },
+  {
+    "path": "app/packaged-run-log.jsonl",
+    "original_path": "/private/tmp/dance-yunet-sface-20261102/app/packaged-run-log.jsonl",
+    "bytes": 113695,
+    "sha256": "5cfe416e5d46f149e9e922d80398e398902b8dcdcb780eedd97608df65aaaa1b"
+  }
+]

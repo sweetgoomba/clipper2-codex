@@ -1,0 +1,16 @@
+.............FF                                                          [100%]
+=================================== FAILURES ===================================
+__ test_an_unconfirmed_but_measured_new_foreground_subject_is_not_overridden ___
+tests/test_dance_ensemble_continuity.py:80: in test_an_unconfirmed_but_measured_new_foreground_subject_is_not_overridden
+    assert all(r.scene_kind=='main' for r in result if 50.65<r.t<50.8)
+E   assert False
+E    +  where False = all(<generator object test_an_unconfirmed_but_measured_new_foreground_subject_is_not_overridden.<locals>.<genexpr> at 0x12a44fd80>)
+__ test_role_measurements_for_a_different_selected_body_are_not_current_proof __
+tests/test_dance_ensemble_continuity.py:88: in test_role_measurements_for_a_different_selected_body_are_not_current_proof
+    assert all(r.scene_kind=='main' for r in result if 50.65<r.t<50.8)
+E   assert False
+E    +  where False = all(<generator object test_role_measurements_for_a_different_selected_body_are_not_current_proof.<locals>.<genexpr> at 0x12a858c80>)
+=========================== short test summary info ============================
+FAILED tests/test_dance_ensemble_continuity.py::test_an_unconfirmed_but_measured_new_foreground_subject_is_not_overridden
+FAILED tests/test_dance_ensemble_continuity.py::test_role_measurements_for_a_different_selected_body_are_not_current_proof
+2 failed, 13 passed in 1.36s

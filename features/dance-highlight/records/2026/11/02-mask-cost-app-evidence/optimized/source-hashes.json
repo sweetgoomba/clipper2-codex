@@ -1,0 +1,14 @@
+[
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_tracker.py",
+    "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/mask_continuity.py",
+    "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+  },
+  {
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "cea9c9768e47a7a677c0a7fed00c5a56b95c32a025b275e672e3e12a21d46e43"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only static inspection of current-task.patch and integration sources; no pipeline/app runs or source-video computation.",
+  "patch_sha256": "4d98ba5315bf05b3c3eca067c6fb2f0d0397ff0800757c9fb1a1f2f1c793bb06",
+  "source_hashes": {
+    "face_evidence": "970778121f68f9f4fea25ece3b685b09e92e479ae2ae9dfc2a837a200186ea2c",
+    "observed_member_edges": "167fcd64e8926535640730bda97c8d7115fde202ff9c41a2a7eeb4e3355c3a1d",
+    "output_continuity": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6",
+    "performance_parts": "8c81570530cf5273ac3241bebcba3fc8f9c03877ebdf0626226b9dc50bf64b26",
+    "pipeline": "b8ce968cc645573cdb73fc1398c74517a2a11ecc431e6ef5727f82f0628545b0",
+    "segment": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726"
+  },
+  "new_blocking_findings": [],
+  "checks": [
+    {
+      "area": "Original recognition provenance",
+      "finding": "New member recovery and unknown joining consume frozen owned observations from original face_results. No new face names, embeddings or gallery anchors are written; final face_evidence still serializes all_face_results with original main_result_count."
+    },
+    {
+      "area": "Merge arrays and metadata indexing",
+      "finding": "Both new transforms rebuild segments/decisions/labels/previews/evidence/preview_sources together and remap accurate_indices. Pipeline assigns kept_main_segs/reference_decisions/raw_labels/selected_evidence from the same returned state before producing person_ids/main_items/diagnostics.clips."
+    },
+    {
+      "area": "Images",
+      "finding": "Merged preview bytes are materialized before original FaceThumbnailStore closes. Scene thumbnails are regenerated from each final start. Query images use selected_evidence at the matching final clip index. Named member portraits are not rebuilt by persist_person_thumbnails, which only handles person_N."
+    },
+    {
+      "area": "Preparation separation",
+      "finding": "Incoming preparation runs after the new operations, uses original owned face plus joint-positive independent anchors, preserves preview ownership and keeps new observation names None. performance_parts.parts is before preparation, so final displayed starts may intentionally precede those audit ranges."
+    },
+    {
+      "area": "Hash inventory",
+      "finding": "All six changed service modules in this patch are declared in runtime.modules, including new observed_member_edges and performance_parts. The inventory lists40 modules. Actual installed module path/hash agreement remains to be checked on frozen app outputs."
+    },
+    {
+      "area": "Timing",
+      "finding": "Observed member edge and unknown-join elapsed seconds accumulate under observed_part_continuity; pipeline nested_stages places it within cluster_map, preventing additive double counting when interpreted correctly."
+    },
+    {
+      "area": "Audit indices",
+      "finding": "joins.source_indices and unknown_main_joins.source_indices are local to each transformation input. performance_parts.parts.source_spans maps to identity_spans. No product consumer of these stage-local indices was found; do not equate them with final main_N IDs in external comparisons."
+    }
+  ],
+  "remaining": [
+    "Freeze and review upcoming camera exception implementation and any added runtime module entries.",
+    "Verify final app arrays, preparation starts, actual images, SAM policy, native requests, loaded module hashes and wall clock after all sequential runs complete."
+  ],
+  "timing_policy": "During app timing, only read states/finished JSON/logs; no heavy ML, source decoding, replay tests or video hashing."
+}

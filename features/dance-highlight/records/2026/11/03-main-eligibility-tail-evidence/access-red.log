@@ -1,0 +1,32 @@
+✔ access proxy forwards the caller bearer token (1.259166ms)
+✔ access proxy accepts a promotion plan from the Web API (0.104208ms)
+✔ access proxy rejects malformed provider responses (0.155292ms)
+✔ credit proxies forward summary, grants, and ledger with paging (0.423125ms)
+✔ credit proxies reject malformed summary and page responses (0.203416ms)
+✔ credit summary remains compatible when an older Web API omits currentBenefit (0.084833ms)
+✔ credit summary accepts every valid Web API currentBenefit variant (0.110417ms)
+✔ credit summary rejects currentBenefit variants outside the Web API contract (0.12475ms)
+✔ access and credit controllers obtain auth context from request headers (0.159ms)
+✖ access proxy accepts the current free plan source without changing entitlements (0.162958ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204.598916
+
+✖ failing tests:
+
+test at test/access-credit-proxy.test.js:292:1
+✖ access proxy accepts the current free plan source without changing entitlements (0.162958ms)
+  BadGatewayException: Web API access response is invalid.
+      at AccessService.current (/Users/jina/project/adlight/desktop/clipper_nestjs/dist/modules/access/application/access.service.js:53:19)
+      at async TestContext.<anonymous> (/Users/jina/project/adlight/desktop/clipper_nestjs/test/access-credit-proxy.test.js:297:21)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    response: { message: 'Web API access response is invalid.', error: 'Bad Gateway', statusCode: 502 },
+    status: 502,
+    options: {}
+  }

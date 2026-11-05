@@ -1,0 +1,2773 @@
+{
+  "MMN": {
+    "source_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+    "runtime_video_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+    "seed_frames": [
+      2284,
+      2364
+    ],
+    "original_check_reason": "isolated_visual_change",
+    "original_check_audit": {
+      "pose_link_frames": [
+        2320
+      ]
+    },
+    "max_luma": {
+      "frame": 2298,
+      "time": 38.338300000000004,
+      "luma": 20.703125,
+      "color": 0.10437787416340474,
+      "color_cut": false
+    },
+    "median_luma": 1.8932291666666665,
+    "old_spike_limit": 6.0,
+    "suspicious_pairs": [
+      2287,
+      2288,
+      2289,
+      2290,
+      2291,
+      2292,
+      2293,
+      2294,
+      2295,
+      2296,
+      2297,
+      2298,
+      2299,
+      2300,
+      2301,
+      2302,
+      2303,
+      2358,
+      2359,
+      2360,
+      2361,
+      2362,
+      2363
+    ],
+    "pixel_pairs": [
+      {
+        "frame": 2285,
+        "time": 38.12141666666667,
+        "luma": 5.41796875,
+        "color": 0.0877558258550288,
+        "color_cut": false
+      },
+      {
+        "frame": 2286,
+        "time": 38.1381,
+        "luma": 5.379774305555555,
+        "color": 0.09229384951083792,
+        "color_cut": false
+      },
+      {
+        "frame": 2287,
+        "time": 38.154783333333334,
+        "luma": 6.342013888888889,
+        "color": 0.09134912894659505,
+        "color_cut": false
+      },
+      {
+        "frame": 2288,
+        "time": 38.17146666666667,
+        "luma": 6.575954861111111,
+        "color": 0.0818166263775166,
+        "color_cut": false
+      },
+      {
+        "frame": 2289,
+        "time": 38.18815,
+        "luma": 6.295138888888889,
+        "color": 0.08712847665080822,
+        "color_cut": false
+      },
+      {
+        "frame": 2290,
+        "time": 38.20483333333333,
+        "luma": 6.538194444444445,
+        "color": 0.09955589507630498,
+        "color_cut": false
+      },
+      {
+        "frame": 2291,
+        "time": 38.221516666666666,
+        "luma": 7.273003472222222,
+        "color": 0.08574149982340729,
+        "color_cut": false
+      },
+      {
+        "frame": 2292,
+        "time": 38.2382,
+        "luma": 7.304253472222222,
+        "color": 0.09374265314808845,
+        "color_cut": false
+      },
+      {
+        "frame": 2293,
+        "time": 38.25488333333333,
+        "luma": 7.653211805555555,
+        "color": 0.09708281918444225,
+        "color_cut": false
+      },
+      {
+        "frame": 2294,
+        "time": 38.271566666666665,
+        "luma": 8.77517361111111,
+        "color": 0.0872432939342576,
+        "color_cut": false
+      },
+      {
+        "frame": 2295,
+        "time": 38.28825,
+        "luma": 13.514322916666666,
+        "color": 0.10361633212903563,
+        "color_cut": false
+      },
+      {
+        "frame": 2296,
+        "time": 38.30493333333333,
+        "luma": 15.69921875,
+        "color": 0.10693065958720847,
+        "color_cut": false
+      },
+      {
+        "frame": 2297,
+        "time": 38.32161666666667,
+        "luma": 19.80512152777778,
+        "color": 0.13403768286493695,
+        "color_cut": false
+      },
+      {
+        "frame": 2298,
+        "time": 38.338300000000004,
+        "luma": 20.703125,
+        "color": 0.10437787416340474,
+        "color_cut": false
+      },
+      {
+        "frame": 2299,
+        "time": 38.35498333333334,
+        "luma": 20.161458333333332,
+        "color": 0.12097798424759063,
+        "color_cut": false
+      },
+      {
+        "frame": 2300,
+        "time": 38.37166666666667,
+        "luma": 18.02777777777778,
+        "color": 0.11785930277976328,
+        "color_cut": false
+      },
+      {
+        "frame": 2301,
+        "time": 38.38835,
+        "luma": 15.35763888888889,
+        "color": 0.12654151637665337,
+        "color_cut": false
+      },
+      {
+        "frame": 2302,
+        "time": 38.405033333333336,
+        "luma": 11.740885416666666,
+        "color": 0.09662701940124441,
+        "color_cut": false
+      },
+      {
+        "frame": 2303,
+        "time": 38.42171666666667,
+        "luma": 7.390190972222222,
+        "color": 0.07588859768591057,
+        "color_cut": false
+      },
+      {
+        "frame": 2304,
+        "time": 38.4384,
+        "luma": 5.799045138888889,
+        "color": 0.10326034347559772,
+        "color_cut": false
+      },
+      {
+        "frame": 2305,
+        "time": 38.455083333333334,
+        "luma": 3.0850694444444446,
+        "color": 0.07912668287435222,
+        "color_cut": false
+      },
+      {
+        "frame": 2306,
+        "time": 38.47176666666667,
+        "luma": 2.00390625,
+        "color": 0.06163256372229903,
+        "color_cut": false
+      },
+      {
+        "frame": 2307,
+        "time": 38.48845,
+        "luma": 1.7495659722222223,
+        "color": 0.0656896769839237,
+        "color_cut": false
+      },
+      {
+        "frame": 2308,
+        "time": 38.50513333333333,
+        "luma": 1.4223090277777777,
+        "color": 0.06480569650151116,
+        "color_cut": false
+      },
+      {
+        "frame": 2309,
+        "time": 38.521816666666666,
+        "luma": 1.1228298611111112,
+        "color": 0.0508146904241919,
+        "color_cut": false
+      },
+      {
+        "frame": 2310,
+        "time": 38.5385,
+        "luma": 1.8411458333333333,
+        "color": 0.08954852334042489,
+        "color_cut": false
+      },
+      {
+        "frame": 2311,
+        "time": 38.55518333333333,
+        "luma": 1.6163194444444444,
+        "color": 0.05801095007510123,
+        "color_cut": false
+      },
+      {
+        "frame": 2312,
+        "time": 38.571866666666665,
+        "luma": 2.8832465277777777,
+        "color": 0.10277551555083934,
+        "color_cut": false
+      },
+      {
+        "frame": 2313,
+        "time": 38.58855,
+        "luma": 1.6697048611111112,
+        "color": 0.06498079914258899,
+        "color_cut": false
+      },
+      {
+        "frame": 2314,
+        "time": 38.60523333333333,
+        "luma": 1.2100694444444444,
+        "color": 0.06595739784895963,
+        "color_cut": false
+      },
+      {
+        "frame": 2315,
+        "time": 38.62191666666667,
+        "luma": 2.3936631944444446,
+        "color": 0.10332170257653356,
+        "color_cut": false
+      },
+      {
+        "frame": 2316,
+        "time": 38.638600000000004,
+        "luma": 0.9986979166666666,
+        "color": 0.07538602494453495,
+        "color_cut": false
+      },
+      {
+        "frame": 2317,
+        "time": 38.65528333333334,
+        "luma": 0.9978298611111112,
+        "color": 0.055725969373522484,
+        "color_cut": false
+      },
+      {
+        "frame": 2318,
+        "time": 38.67196666666667,
+        "luma": 2.4144965277777777,
+        "color": 0.09630716955095876,
+        "color_cut": false
+      },
+      {
+        "frame": 2319,
+        "time": 38.68865,
+        "luma": 1.0425347222222223,
+        "color": 0.056410624633914955,
+        "color_cut": false
+      },
+      {
+        "frame": 2320,
+        "time": 38.705333333333336,
+        "luma": 2.0073784722222223,
+        "color": 0.06832249952873662,
+        "color_cut": false
+      },
+      {
+        "frame": 2321,
+        "time": 38.72201666666667,
+        "luma": 1.1072048611111112,
+        "color": 0.0668784675852929,
+        "color_cut": false
+      },
+      {
+        "frame": 2322,
+        "time": 38.7387,
+        "luma": 1.0546875,
+        "color": 0.04499897039512593,
+        "color_cut": false
+      },
+      {
+        "frame": 2323,
+        "time": 38.755383333333334,
+        "luma": 2.451388888888889,
+        "color": 0.05607348409705972,
+        "color_cut": false
+      },
+      {
+        "frame": 2324,
+        "time": 38.77206666666667,
+        "luma": 1.1323784722222223,
+        "color": 0.05579644231336184,
+        "color_cut": false
+      },
+      {
+        "frame": 2325,
+        "time": 38.78875,
+        "luma": 1.7426215277777777,
+        "color": 0.06295110995668092,
+        "color_cut": false
+      },
+      {
+        "frame": 2326,
+        "time": 38.80543333333333,
+        "luma": 1.4717881944444444,
+        "color": 0.06372226769486809,
+        "color_cut": false
+      },
+      {
+        "frame": 2327,
+        "time": 38.822116666666666,
+        "luma": 1.5503472222222223,
+        "color": 0.06767489894230651,
+        "color_cut": false
+      },
+      {
+        "frame": 2328,
+        "time": 38.8388,
+        "luma": 1.9769965277777777,
+        "color": 0.05721967769971726,
+        "color_cut": false
+      },
+      {
+        "frame": 2329,
+        "time": 38.85548333333333,
+        "luma": 1.5234375,
+        "color": 0.04561901156795801,
+        "color_cut": false
+      },
+      {
+        "frame": 2330,
+        "time": 38.872166666666665,
+        "luma": 1.5490451388888888,
+        "color": 0.05144763608543669,
+        "color_cut": false
+      },
+      {
+        "frame": 2331,
+        "time": 38.88885,
+        "luma": 1.5729166666666667,
+        "color": 0.04367394067581318,
+        "color_cut": false
+      },
+      {
+        "frame": 2332,
+        "time": 38.90553333333333,
+        "luma": 1.3129340277777777,
+        "color": 0.03988513819386031,
+        "color_cut": false
+      },
+      {
+        "frame": 2333,
+        "time": 38.92221666666667,
+        "luma": 1.1879340277777777,
+        "color": 0.051360351038035566,
+        "color_cut": false
+      },
+      {
+        "frame": 2334,
+        "time": 38.938900000000004,
+        "luma": 1.3098958333333333,
+        "color": 0.05746588491412512,
+        "color_cut": false
+      },
+      {
+        "frame": 2335,
+        "time": 38.95558333333334,
+        "luma": 1.0243055555555556,
+        "color": 0.0609253471709353,
+        "color_cut": false
+      },
+      {
+        "frame": 2336,
+        "time": 38.97226666666667,
+        "luma": 1.046875,
+        "color": 0.05632350774146326,
+        "color_cut": false
+      },
+      {
+        "frame": 2337,
+        "time": 38.98895,
+        "luma": 1.2165798611111112,
+        "color": 0.06248158696769622,
+        "color_cut": false
+      },
+      {
+        "frame": 2338,
+        "time": 39.005633333333336,
+        "luma": 1.2291666666666667,
+        "color": 0.06681073569951204,
+        "color_cut": false
+      },
+      {
+        "frame": 2339,
+        "time": 39.02231666666667,
+        "luma": 1.4652777777777777,
+        "color": 0.06099535389536283,
+        "color_cut": false
+      },
+      {
+        "frame": 2340,
+        "time": 39.039,
+        "luma": 1.1736111111111112,
+        "color": 0.04236211907655825,
+        "color_cut": false
+      },
+      {
+        "frame": 2341,
+        "time": 39.055683333333334,
+        "luma": 1.0707465277777777,
+        "color": 0.042973435788034905,
+        "color_cut": false
+      },
+      {
+        "frame": 2342,
+        "time": 39.07236666666667,
+        "luma": 1.6184895833333333,
+        "color": 0.030992139682049835,
+        "color_cut": false
+      },
+      {
+        "frame": 2343,
+        "time": 39.08905,
+        "luma": 1.0694444444444444,
+        "color": 0.05093590911058847,
+        "color_cut": false
+      },
+      {
+        "frame": 2344,
+        "time": 39.10573333333333,
+        "luma": 1.0720486111111112,
+        "color": 0.034956696468387186,
+        "color_cut": false
+      },
+      {
+        "frame": 2345,
+        "time": 39.122416666666666,
+        "luma": 1.3068576388888888,
+        "color": 0.03165830884550552,
+        "color_cut": false
+      },
+      {
+        "frame": 2346,
+        "time": 39.1391,
+        "luma": 1.2352430555555556,
+        "color": 0.0490938161369303,
+        "color_cut": false
+      },
+      {
+        "frame": 2347,
+        "time": 39.15578333333333,
+        "luma": 1.7213541666666667,
+        "color": 0.0625509385051752,
+        "color_cut": false
+      },
+      {
+        "frame": 2348,
+        "time": 39.172466666666665,
+        "luma": 1.0043402777777777,
+        "color": 0.05794417264008021,
+        "color_cut": false
+      },
+      {
+        "frame": 2349,
+        "time": 39.18915,
+        "luma": 0.9908854166666666,
+        "color": 0.05546405592446472,
+        "color_cut": false
+      },
+      {
+        "frame": 2350,
+        "time": 39.20583333333333,
+        "luma": 2.2217881944444446,
+        "color": 0.06934174136563369,
+        "color_cut": false
+      },
+      {
+        "frame": 2351,
+        "time": 39.22251666666667,
+        "luma": 0.9292534722222222,
+        "color": 0.05985945701138476,
+        "color_cut": false
+      },
+      {
+        "frame": 2352,
+        "time": 39.239200000000004,
+        "luma": 0.8732638888888888,
+        "color": 0.06617287585072185,
+        "color_cut": false
+      },
+      {
+        "frame": 2353,
+        "time": 39.25588333333334,
+        "luma": 1.9453125,
+        "color": 0.06602051537465844,
+        "color_cut": false
+      },
+      {
+        "frame": 2354,
+        "time": 39.27256666666667,
+        "luma": 1.16015625,
+        "color": 0.047817663633040616,
+        "color_cut": false
+      },
+      {
+        "frame": 2355,
+        "time": 39.28925,
+        "luma": 2.1458333333333335,
+        "color": 0.06822926068593856,
+        "color_cut": false
+      },
+      {
+        "frame": 2356,
+        "time": 39.305933333333336,
+        "luma": 2.748263888888889,
+        "color": 0.09812166866278015,
+        "color_cut": false
+      },
+      {
+        "frame": 2357,
+        "time": 39.32261666666667,
+        "luma": 5.713107638888889,
+        "color": 0.07630632089709753,
+        "color_cut": false
+      },
+      {
+        "frame": 2358,
+        "time": 39.3393,
+        "luma": 10.114149305555555,
+        "color": 0.1308698929384037,
+        "color_cut": false
+      },
+      {
+        "frame": 2359,
+        "time": 39.355983333333334,
+        "luma": 14.81814236111111,
+        "color": 0.16000483359826193,
+        "color_cut": false
+      },
+      {
+        "frame": 2360,
+        "time": 39.37266666666667,
+        "luma": 16.74956597222222,
+        "color": 0.14780104659598986,
+        "color_cut": false
+      },
+      {
+        "frame": 2361,
+        "time": 39.38935,
+        "luma": 17.595052083333332,
+        "color": 0.14329433032906866,
+        "color_cut": false
+      },
+      {
+        "frame": 2362,
+        "time": 39.40603333333333,
+        "luma": 17.825520833333332,
+        "color": 0.136867120138924,
+        "color_cut": false
+      },
+      {
+        "frame": 2363,
+        "time": 39.422716666666666,
+        "luma": 15.496527777777779,
+        "color": 0.11267306702785786,
+        "color_cut": false
+      },
+      {
+        "frame": 2364,
+        "time": 39.4394,
+        "luma": 5.743923611111111,
+        "color": 0.07320795406516181,
+        "color_cut": false
+      }
+    ],
+    "body_steps": [
+      {
+        "frame": 2284,
+        "time": 38.104733333333336,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          750.375,
+          190.5,
+          1170.0,
+          1069.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.880947470664978,
+        "joint_status": "insufficient",
+        "joint_name": null
+      },
+      {
+        "frame": 2288,
+        "time": 38.17146666666667,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          762.0,
+          203.25,
+          1173.0,
+          1068.75
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8111799359321594,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2292,
+        "time": 38.2382,
+        "owners": [
+          2
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          759.75,
+          235.5,
+          1164.75,
+          1068.75
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.814854085445404,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2296,
+        "time": 38.30493333333333,
+        "owners": [
+          1
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          757.875,
+          324.75,
+          1141.5,
+          1070.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8223389983177185,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2300,
+        "time": 38.37166666666667,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          808.5,
+          407.25,
+          1072.5,
+          1064.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8592700958251953,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2304,
+        "time": 38.4384,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          855.0,
+          432.0,
+          1044.0,
+          914.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.908672571182251,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2308,
+        "time": 38.50513333333333,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          855.0,
+          428.25,
+          1050.0,
+          901.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8806744813919067,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2312,
+        "time": 38.571866666666665,
+        "owners": [
+          3
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          858.0,
+          418.5,
+          1089.0,
+          895.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8519279956817627,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2316,
+        "time": 38.638600000000004,
+        "owners": [
+          1
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          861.0,
+          419.25,
+          1080.0,
+          891.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.852425217628479,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2320,
+        "time": 38.705333333333336,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          864.0,
+          411.75,
+          1086.0,
+          891.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7927877306938171,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2324,
+        "time": 38.77206666666667,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          862.5,
+          412.5,
+          1081.5,
+          890.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8322017192840576,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2328,
+        "time": 38.8388,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          862.5,
+          414.0,
+          1072.5,
+          887.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7289289832115173,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2332,
+        "time": 38.90553333333333,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          856.5,
+          409.5,
+          1072.5,
+          885.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7882434725761414,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2336,
+        "time": 38.97226666666667,
+        "owners": [
+          3
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          856.5,
+          412.5,
+          1066.5,
+          888.75
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7807353138923645,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2340,
+        "time": 39.039,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          858.75,
+          409.5,
+          1074.75,
+          886.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7869141101837158,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2344,
+        "time": 39.10573333333333,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          859.5,
+          410.25,
+          1066.5,
+          885.75
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7025249600410461,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2348,
+        "time": 39.172466666666665,
+        "owners": [
+          3
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          864.75,
+          411.0,
+          1082.25,
+          886.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7824088335037231,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2352,
+        "time": 39.239200000000004,
+        "owners": [
+          4
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          858.0,
+          414.75,
+          1062.0,
+          888.75
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.664419949054718,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2356,
+        "time": 39.305933333333336,
+        "owners": [
+          1
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          846.75,
+          420.0,
+          1080.75,
+          906.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8353427648544312,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2360,
+        "time": 39.37266666666667,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          815.25,
+          363.0,
+          1107.75,
+          1066.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9097603559494019,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 2364,
+        "time": 39.4394,
+        "owners": [
+          1
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          819.0,
+          304.5,
+          1182.0,
+          1070.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9195358753204346,
+        "joint_status": "accepted",
+        "joint_name": "사쿠라",
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      }
+    ],
+    "alien_valid_faces": [
+      {
+        "frame": 2292,
+        "time": 38.2382,
+        "seed_distances": [
+          0.7249167263507843,
+          0.8140698671340942
+        ]
+      },
+      {
+        "frame": 2300,
+        "time": 38.37166666666667,
+        "seed_distances": [
+          0.8428979814052582,
+          0.8247226923704147
+        ]
+      },
+      {
+        "frame": 2304,
+        "time": 38.4384,
+        "seed_distances": [
+          0.7872592657804489,
+          0.7383324503898621
+        ]
+      },
+      {
+        "frame": 2308,
+        "time": 38.50513333333333,
+        "seed_distances": [
+          0.8021118938922882,
+          0.7697635293006897
+        ]
+      },
+      {
+        "frame": 2312,
+        "time": 38.571866666666665,
+        "seed_distances": [
+          0.8589526861906052,
+          0.8920715972781181
+        ]
+      },
+      {
+        "frame": 2316,
+        "time": 38.638600000000004,
+        "seed_distances": [
+          0.849137470126152,
+          0.8979955315589905
+        ]
+      },
+      {
+        "frame": 2324,
+        "time": 38.77206666666667,
+        "seed_distances": [
+          0.7882996201515198,
+          0.8990971371531487
+        ]
+      },
+      {
+        "frame": 2356,
+        "time": 39.305933333333336,
+        "seed_distances": [
+          0.8796032518148422,
+          0.8580489456653595
+        ]
+      }
+    ],
+    "handoffs": [],
+    "cuts": [],
+    "group_clips": [
+      {
+        "seg_id": 6,
+        "seg_type": "group",
+        "start": 38.705333333333336,
+        "end": 39.50613333333333,
+        "person_id": null,
+        "clip_id": "group_0006",
+        "thumbnail_path": "clips/dance/group/group_0006.jpg",
+        "person_ids": []
+      }
+    ]
+  },
+  "ANT": {
+    "source_sha256": "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2",
+    "runtime_video_sha256": "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2",
+    "seed_frames": [
+      588,
+      616
+    ],
+    "original_check_reason": "visual_cut",
+    "original_check_audit": {
+      "pose_link_frames": [
+        592,
+        596,
+        600,
+        604,
+        612
+      ]
+    },
+    "max_luma": {
+      "frame": 616,
+      "time": 10.276933333333334,
+      "luma": 33.1953125,
+      "color": 0.35462030069571776,
+      "color_cut": true
+    },
+    "median_luma": 5.208767361111111,
+    "old_spike_limit": 15.626302083333332,
+    "suspicious_pairs": [
+      589,
+      590,
+      591,
+      616
+    ],
+    "pixel_pairs": [
+      {
+        "frame": 589,
+        "time": 9.826483333333334,
+        "luma": 17.667100694444443,
+        "color": 0.06756120968651401,
+        "color_cut": false
+      },
+      {
+        "frame": 590,
+        "time": 9.843166666666667,
+        "luma": 17.53559027777778,
+        "color": 0.06562434420057661,
+        "color_cut": false
+      },
+      {
+        "frame": 591,
+        "time": 9.85985,
+        "luma": 16.83376736111111,
+        "color": 0.08555452298762331,
+        "color_cut": false
+      },
+      {
+        "frame": 592,
+        "time": 9.876533333333333,
+        "luma": 13.31032986111111,
+        "color": 0.09867532144311324,
+        "color_cut": false
+      },
+      {
+        "frame": 593,
+        "time": 9.893216666666667,
+        "luma": 5.171440972222222,
+        "color": 0.06447936933968809,
+        "color_cut": false
+      },
+      {
+        "frame": 594,
+        "time": 9.9099,
+        "luma": 4.676649305555555,
+        "color": 0.08045248846667263,
+        "color_cut": false
+      },
+      {
+        "frame": 595,
+        "time": 9.926583333333333,
+        "luma": 4.748697916666667,
+        "color": 0.06464169887276043,
+        "color_cut": false
+      },
+      {
+        "frame": 596,
+        "time": 9.943266666666666,
+        "luma": 4.319010416666667,
+        "color": 0.07787003689816317,
+        "color_cut": false
+      },
+      {
+        "frame": 597,
+        "time": 9.959950000000001,
+        "luma": 5.23046875,
+        "color": 0.06231240780944874,
+        "color_cut": false
+      },
+      {
+        "frame": 598,
+        "time": 9.976633333333334,
+        "luma": 4.726128472222222,
+        "color": 0.06177159190573906,
+        "color_cut": false
+      },
+      {
+        "frame": 599,
+        "time": 9.993316666666667,
+        "luma": 5.243055555555555,
+        "color": 0.06998585154469672,
+        "color_cut": false
+      },
+      {
+        "frame": 600,
+        "time": 10.01,
+        "luma": 4.897569444444445,
+        "color": 0.07998296253538001,
+        "color_cut": false
+      },
+      {
+        "frame": 601,
+        "time": 10.026683333333333,
+        "luma": 5.446614583333333,
+        "color": 0.08631647696660813,
+        "color_cut": false
+      },
+      {
+        "frame": 602,
+        "time": 10.043366666666667,
+        "luma": 4.8203125,
+        "color": 0.07505114481146186,
+        "color_cut": false
+      },
+      {
+        "frame": 603,
+        "time": 10.06005,
+        "luma": 4.662326388888889,
+        "color": 0.07519177770960118,
+        "color_cut": false
+      },
+      {
+        "frame": 604,
+        "time": 10.076733333333333,
+        "luma": 3.658420138888889,
+        "color": 0.06691256058664928,
+        "color_cut": false
+      },
+      {
+        "frame": 605,
+        "time": 10.093416666666666,
+        "luma": 2.67578125,
+        "color": 0.04469609533666503,
+        "color_cut": false
+      },
+      {
+        "frame": 606,
+        "time": 10.110100000000001,
+        "luma": 2.5243055555555554,
+        "color": 0.040180626964039845,
+        "color_cut": false
+      },
+      {
+        "frame": 607,
+        "time": 10.126783333333334,
+        "luma": 3.60546875,
+        "color": 0.07788823310345329,
+        "color_cut": false
+      },
+      {
+        "frame": 608,
+        "time": 10.143466666666667,
+        "luma": 4.184461805555555,
+        "color": 0.07422565737266872,
+        "color_cut": false
+      },
+      {
+        "frame": 609,
+        "time": 10.16015,
+        "luma": 5.187065972222222,
+        "color": 0.1275128004226542,
+        "color_cut": false
+      },
+      {
+        "frame": 610,
+        "time": 10.176833333333333,
+        "luma": 6.140190972222222,
+        "color": 0.17368781801750827,
+        "color_cut": false
+      },
+      {
+        "frame": 611,
+        "time": 10.193516666666667,
+        "luma": 9.289496527777779,
+        "color": 0.30275747719401136,
+        "color_cut": false
+      },
+      {
+        "frame": 612,
+        "time": 10.2102,
+        "luma": 9.901475694444445,
+        "color": 0.3590546275401157,
+        "color_cut": false
+      },
+      {
+        "frame": 613,
+        "time": 10.226883333333333,
+        "luma": 12.62673611111111,
+        "color": 0.21475417341605363,
+        "color_cut": false
+      },
+      {
+        "frame": 614,
+        "time": 10.243566666666666,
+        "luma": 11.89453125,
+        "color": 0.17745885850381488,
+        "color_cut": false
+      },
+      {
+        "frame": 615,
+        "time": 10.260250000000001,
+        "luma": 10.205729166666666,
+        "color": 0.1654398425790643,
+        "color_cut": false
+      },
+      {
+        "frame": 616,
+        "time": 10.276933333333334,
+        "luma": 33.1953125,
+        "color": 0.35462030069571776,
+        "color_cut": true
+      }
+    ],
+    "body_steps": [
+      {
+        "frame": 588,
+        "time": 9.809800000000001,
+        "owners": [
+          1
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          810.0,
+          389.625,
+          1119.0,
+          1077.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8415670394897461,
+        "joint_status": "insufficient",
+        "joint_name": null
+      },
+      {
+        "frame": 592,
+        "time": 9.876533333333333,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          762.0,
+          348.75,
+          1143.0,
+          1072.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8331326246261597,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 596,
+        "time": 9.943266666666666,
+        "owners": [
+          4
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          757.5,
+          326.25,
+          1134.0,
+          1074.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": "pose_face_missing",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 600,
+        "time": 10.01,
+        "owners": [
+          4
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          743.25,
+          341.0625,
+          1137.75,
+          1073.25
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": "pose_face_missing",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 604,
+        "time": 10.076733333333333,
+        "owners": [
+          2
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          764.25,
+          351.0,
+          1142.25,
+          1074.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": false,
+        "face_failure": "pose_face_missing",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 608,
+        "time": 10.143466666666667,
+        "owners": [
+          1
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          752.25,
+          350.25,
+          1163.25,
+          1074.0
+        ],
+        "scene": "main",
+        "body_count": 7,
+        "valid_face": false,
+        "face_failure": "pose_face_missing",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 612,
+        "time": 10.2102,
+        "owners": [
+          2
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          762.0,
+          333.75,
+          1207.5,
+          1072.5
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8012866973876953,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 616,
+        "time": 10.276933333333334,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          777.0,
+          314.8125,
+          1245.0,
+          1071.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9092852473258972,
+        "joint_status": "accepted",
+        "joint_name": "김채원",
+        "appearance_link": false,
+        "pose_link": true,
+        "either_link": true
+      }
+    ],
+    "alien_valid_faces": [
+      {
+        "frame": 592,
+        "time": 9.876533333333333,
+        "seed_distances": [
+          0.7408484220504761,
+          0.9085232019424438
+        ]
+      }
+    ],
+    "handoffs": [],
+    "cuts": [
+      616
+    ],
+    "group_clips": []
+  },
+  "NEON": {
+    "source_sha256": "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f",
+    "runtime_video_sha256": "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f",
+    "seed_frames": [
+      4908,
+      4984
+    ],
+    "original_check_reason": "visual_cut",
+    "original_check_audit": {},
+    "max_luma": {
+      "frame": 4912,
+      "time": 81.94853333333333,
+      "luma": 60.431423611111114,
+      "color": 0.5556883257718317,
+      "color_cut": true
+    },
+    "median_luma": 4.907118055555555,
+    "old_spike_limit": 14.721354166666666,
+    "suspicious_pairs": [
+      4912
+    ],
+    "pixel_pairs": [
+      {
+        "frame": 4909,
+        "time": 81.89848333333333,
+        "luma": 8.895833333333334,
+        "color": 0.053756762291437596,
+        "color_cut": false
+      },
+      {
+        "frame": 4910,
+        "time": 81.91516666666666,
+        "luma": 10.723090277777779,
+        "color": 0.07977782901909407,
+        "color_cut": false
+      },
+      {
+        "frame": 4911,
+        "time": 81.93185,
+        "luma": 10.410590277777779,
+        "color": 0.06122189661940297,
+        "color_cut": false
+      },
+      {
+        "frame": 4912,
+        "time": 81.94853333333333,
+        "luma": 60.431423611111114,
+        "color": 0.5556883257718317,
+        "color_cut": true
+      },
+      {
+        "frame": 4913,
+        "time": 81.96521666666666,
+        "luma": 3.9796006944444446,
+        "color": 0.054690887544018935,
+        "color_cut": false
+      },
+      {
+        "frame": 4914,
+        "time": 81.9819,
+        "luma": 4.073350694444445,
+        "color": 0.06043773980476753,
+        "color_cut": false
+      },
+      {
+        "frame": 4915,
+        "time": 81.99858333333333,
+        "luma": 3.7821180555555554,
+        "color": 0.05126058286216363,
+        "color_cut": false
+      },
+      {
+        "frame": 4916,
+        "time": 82.01526666666666,
+        "luma": 3.9756944444444446,
+        "color": 0.065884274112936,
+        "color_cut": false
+      },
+      {
+        "frame": 4917,
+        "time": 82.03195,
+        "luma": 3.775173611111111,
+        "color": 0.05351799233970969,
+        "color_cut": false
+      },
+      {
+        "frame": 4918,
+        "time": 82.04863333333333,
+        "luma": 3.872829861111111,
+        "color": 0.06026209365983694,
+        "color_cut": false
+      },
+      {
+        "frame": 4919,
+        "time": 82.06531666666667,
+        "luma": 4.095920138888889,
+        "color": 0.06511012268472315,
+        "color_cut": false
+      },
+      {
+        "frame": 4920,
+        "time": 82.08200000000001,
+        "luma": 4.084635416666667,
+        "color": 0.07073331664911216,
+        "color_cut": false
+      },
+      {
+        "frame": 4921,
+        "time": 82.09868333333334,
+        "luma": 3.642795138888889,
+        "color": 0.060431561450072356,
+        "color_cut": false
+      },
+      {
+        "frame": 4922,
+        "time": 82.11536666666667,
+        "luma": 4.20703125,
+        "color": 0.07088252924024135,
+        "color_cut": false
+      },
+      {
+        "frame": 4923,
+        "time": 82.13205,
+        "luma": 4.198784722222222,
+        "color": 0.0659968311510986,
+        "color_cut": false
+      },
+      {
+        "frame": 4924,
+        "time": 82.14873333333334,
+        "luma": 4.276475694444445,
+        "color": 0.05265599348100849,
+        "color_cut": false
+      },
+      {
+        "frame": 4925,
+        "time": 82.16541666666667,
+        "luma": 4.7109375,
+        "color": 0.05770738042708616,
+        "color_cut": false
+      },
+      {
+        "frame": 4926,
+        "time": 82.1821,
+        "luma": 4.529513888888889,
+        "color": 0.06686248239659903,
+        "color_cut": false
+      },
+      {
+        "frame": 4927,
+        "time": 82.19878333333334,
+        "luma": 4.183159722222222,
+        "color": 0.06696596962670232,
+        "color_cut": false
+      },
+      {
+        "frame": 4928,
+        "time": 82.21546666666667,
+        "luma": 4.478732638888889,
+        "color": 0.06664599985833054,
+        "color_cut": false
+      },
+      {
+        "frame": 4929,
+        "time": 82.23215,
+        "luma": 4.604166666666667,
+        "color": 0.06279111524904707,
+        "color_cut": false
+      },
+      {
+        "frame": 4930,
+        "time": 82.24883333333334,
+        "luma": 4.332899305555555,
+        "color": 0.07749485744509282,
+        "color_cut": false
+      },
+      {
+        "frame": 4931,
+        "time": 82.26551666666667,
+        "luma": 4.952256944444445,
+        "color": 0.08430590612834563,
+        "color_cut": false
+      },
+      {
+        "frame": 4932,
+        "time": 82.2822,
+        "luma": 4.756510416666667,
+        "color": 0.07879915332643213,
+        "color_cut": false
+      },
+      {
+        "frame": 4933,
+        "time": 82.29888333333334,
+        "luma": 4.685763888888889,
+        "color": 0.06675417858642721,
+        "color_cut": false
+      },
+      {
+        "frame": 4934,
+        "time": 82.31556666666667,
+        "luma": 4.828125,
+        "color": 0.06991238954631837,
+        "color_cut": false
+      },
+      {
+        "frame": 4935,
+        "time": 82.33225,
+        "luma": 5.295572916666667,
+        "color": 0.07754182082398763,
+        "color_cut": false
+      },
+      {
+        "frame": 4936,
+        "time": 82.34893333333333,
+        "luma": 4.556423611111111,
+        "color": 0.07584035071393765,
+        "color_cut": false
+      },
+      {
+        "frame": 4937,
+        "time": 82.36561666666667,
+        "luma": 5.21875,
+        "color": 0.06151990997940361,
+        "color_cut": false
+      },
+      {
+        "frame": 4938,
+        "time": 82.3823,
+        "luma": 4.869791666666667,
+        "color": 0.08737276997516497,
+        "color_cut": false
+      },
+      {
+        "frame": 4939,
+        "time": 82.39898333333333,
+        "luma": 5.053819444444445,
+        "color": 0.08080734351157243,
+        "color_cut": false
+      },
+      {
+        "frame": 4940,
+        "time": 82.41566666666667,
+        "luma": 5.585069444444445,
+        "color": 0.06728511809556027,
+        "color_cut": false
+      },
+      {
+        "frame": 4941,
+        "time": 82.43235,
+        "luma": 4.911024305555555,
+        "color": 0.07720975348748457,
+        "color_cut": false
+      },
+      {
+        "frame": 4942,
+        "time": 82.44903333333333,
+        "luma": 4.756510416666667,
+        "color": 0.059809574289874816,
+        "color_cut": false
+      },
+      {
+        "frame": 4943,
+        "time": 82.46571666666667,
+        "luma": 5.422743055555555,
+        "color": 0.07682397094597758,
+        "color_cut": false
+      },
+      {
+        "frame": 4944,
+        "time": 82.4824,
+        "luma": 5.083333333333333,
+        "color": 0.07147286614147005,
+        "color_cut": false
+      },
+      {
+        "frame": 4945,
+        "time": 82.49908333333333,
+        "luma": 4.434461805555555,
+        "color": 0.07116997657742302,
+        "color_cut": false
+      },
+      {
+        "frame": 4946,
+        "time": 82.51576666666666,
+        "luma": 4.622395833333333,
+        "color": 0.06176878570164593,
+        "color_cut": false
+      },
+      {
+        "frame": 4947,
+        "time": 82.53245,
+        "luma": 4.82421875,
+        "color": 0.0572723012131152,
+        "color_cut": false
+      },
+      {
+        "frame": 4948,
+        "time": 82.54913333333333,
+        "luma": 4.267795138888889,
+        "color": 0.06298439119140313,
+        "color_cut": false
+      },
+      {
+        "frame": 4949,
+        "time": 82.56581666666666,
+        "luma": 4.44140625,
+        "color": 0.07573424639694375,
+        "color_cut": false
+      },
+      {
+        "frame": 4950,
+        "time": 82.5825,
+        "luma": 4.955295138888889,
+        "color": 0.07384195452174933,
+        "color_cut": false
+      },
+      {
+        "frame": 4951,
+        "time": 82.59918333333333,
+        "luma": 4.559027777777778,
+        "color": 0.05998717086893725,
+        "color_cut": false
+      },
+      {
+        "frame": 4952,
+        "time": 82.61586666666666,
+        "luma": 4.957465277777778,
+        "color": 0.06114356664364866,
+        "color_cut": false
+      },
+      {
+        "frame": 4953,
+        "time": 82.63255,
+        "luma": 4.982638888888889,
+        "color": 0.06465192248396019,
+        "color_cut": false
+      },
+      {
+        "frame": 4954,
+        "time": 82.64923333333333,
+        "luma": 4.416232638888889,
+        "color": 0.0506845812878318,
+        "color_cut": false
+      },
+      {
+        "frame": 4955,
+        "time": 82.66591666666667,
+        "luma": 4.903211805555555,
+        "color": 0.06186536190197488,
+        "color_cut": false
+      },
+      {
+        "frame": 4956,
+        "time": 82.68260000000001,
+        "luma": 5.099392361111111,
+        "color": 0.05747076604990041,
+        "color_cut": false
+      },
+      {
+        "frame": 4957,
+        "time": 82.69928333333334,
+        "luma": 4.567708333333333,
+        "color": 0.08576362591662323,
+        "color_cut": false
+      },
+      {
+        "frame": 4958,
+        "time": 82.71596666666667,
+        "luma": 4.819010416666667,
+        "color": 0.07398048189606357,
+        "color_cut": false
+      },
+      {
+        "frame": 4959,
+        "time": 82.73265,
+        "luma": 5.03125,
+        "color": 0.06974361515846515,
+        "color_cut": false
+      },
+      {
+        "frame": 4960,
+        "time": 82.74933333333334,
+        "luma": 4.469184027777778,
+        "color": 0.06431272514418437,
+        "color_cut": false
+      },
+      {
+        "frame": 4961,
+        "time": 82.76601666666667,
+        "luma": 5.251736111111111,
+        "color": 0.0681495624431515,
+        "color_cut": false
+      },
+      {
+        "frame": 4962,
+        "time": 82.7827,
+        "luma": 5.291666666666667,
+        "color": 0.07486808077178532,
+        "color_cut": false
+      },
+      {
+        "frame": 4963,
+        "time": 82.79938333333334,
+        "luma": 4.610677083333333,
+        "color": 0.062445634248169256,
+        "color_cut": false
+      },
+      {
+        "frame": 4964,
+        "time": 82.81606666666667,
+        "luma": 4.815538194444445,
+        "color": 0.06891827910713505,
+        "color_cut": false
+      },
+      {
+        "frame": 4965,
+        "time": 82.83275,
+        "luma": 5.014322916666667,
+        "color": 0.06745296221912708,
+        "color_cut": false
+      },
+      {
+        "frame": 4966,
+        "time": 82.84943333333334,
+        "luma": 4.71875,
+        "color": 0.06823692841781653,
+        "color_cut": false
+      },
+      {
+        "frame": 4967,
+        "time": 82.86611666666667,
+        "luma": 4.911892361111111,
+        "color": 0.07130197087643278,
+        "color_cut": false
+      },
+      {
+        "frame": 4968,
+        "time": 82.8828,
+        "luma": 5.466579861111111,
+        "color": 0.054146797735928585,
+        "color_cut": false
+      },
+      {
+        "frame": 4969,
+        "time": 82.89948333333334,
+        "luma": 4.93359375,
+        "color": 0.06262879317130791,
+        "color_cut": false
+      },
+      {
+        "frame": 4970,
+        "time": 82.91616666666667,
+        "luma": 5.194444444444445,
+        "color": 0.08212334633919335,
+        "color_cut": false
+      },
+      {
+        "frame": 4971,
+        "time": 82.93285,
+        "luma": 6.131510416666667,
+        "color": 0.0711075020967252,
+        "color_cut": false
+      },
+      {
+        "frame": 4972,
+        "time": 82.94953333333333,
+        "luma": 5.94140625,
+        "color": 0.07047393930203553,
+        "color_cut": false
+      },
+      {
+        "frame": 4973,
+        "time": 82.96621666666667,
+        "luma": 5.993923611111111,
+        "color": 0.0597678860705753,
+        "color_cut": false
+      },
+      {
+        "frame": 4974,
+        "time": 82.9829,
+        "luma": 6.729600694444445,
+        "color": 0.054641145047824705,
+        "color_cut": false
+      },
+      {
+        "frame": 4975,
+        "time": 82.99958333333333,
+        "luma": 6.2890625,
+        "color": 0.06457983577390332,
+        "color_cut": false
+      },
+      {
+        "frame": 4976,
+        "time": 83.01626666666667,
+        "luma": 6.384548611111111,
+        "color": 0.06843538974042389,
+        "color_cut": false
+      },
+      {
+        "frame": 4977,
+        "time": 83.03295,
+        "luma": 7.051215277777778,
+        "color": 0.07065418044046744,
+        "color_cut": false
+      },
+      {
+        "frame": 4978,
+        "time": 83.04963333333333,
+        "luma": 6.598090277777778,
+        "color": 0.06369351259302287,
+        "color_cut": false
+      },
+      {
+        "frame": 4979,
+        "time": 83.06631666666667,
+        "luma": 6.981770833333333,
+        "color": 0.060486491922013844,
+        "color_cut": false
+      },
+      {
+        "frame": 4980,
+        "time": 83.083,
+        "luma": 7.160590277777778,
+        "color": 0.06543075511490742,
+        "color_cut": false
+      },
+      {
+        "frame": 4981,
+        "time": 83.09968333333333,
+        "luma": 6.898003472222222,
+        "color": 0.06366117688531546,
+        "color_cut": false
+      },
+      {
+        "frame": 4982,
+        "time": 83.11636666666666,
+        "luma": 6.860243055555555,
+        "color": 0.06351816073466701,
+        "color_cut": false
+      },
+      {
+        "frame": 4983,
+        "time": 83.13305,
+        "luma": 7.222222222222222,
+        "color": 0.0730746606840815,
+        "color_cut": false
+      },
+      {
+        "frame": 4984,
+        "time": 83.14973333333333,
+        "luma": 6.473524305555555,
+        "color": 0.06369008719063854,
+        "color_cut": false
+      }
+    ],
+    "body_steps": [
+      {
+        "frame": 4908,
+        "time": 81.8818,
+        "owners": [
+          2
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          683.25,
+          183.0,
+          1241.25,
+          1065.0
+        ],
+        "scene": "main",
+        "body_count": 5,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9287792444229126,
+        "joint_status": "accepted",
+        "joint_name": "시리"
+      },
+      {
+        "frame": 4912,
+        "time": 81.94853333333333,
+        "owners": [
+          1
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          928.5,
+          723.75,
+          988.5,
+          920.25
+        ],
+        "scene": "main",
+        "body_count": 3,
+        "valid_face": false,
+        "face_failure": "pose_face_ambiguous",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": false,
+        "pose_link": false,
+        "either_link": false
+      },
+      {
+        "frame": 4916,
+        "time": 82.01526666666666,
+        "owners": [
+          2
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          924.0,
+          707.25,
+          987.0,
+          918.75
+        ],
+        "scene": "main",
+        "body_count": 3,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.7446281313896179,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4920,
+        "time": 82.08200000000001,
+        "owners": [
+          1
+        ],
+        "role": "incomplete_incumbent_geometry",
+        "selected_box": [
+          910.5,
+          699.75,
+          976.5,
+          917.25
+        ],
+        "scene": "main",
+        "body_count": 3,
+        "valid_face": false,
+        "face_failure": "pose_head_unconfirmed",
+        "detector": 0.0,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": false,
+        "either_link": true
+      },
+      {
+        "frame": 4924,
+        "time": 82.14873333333334,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          912.0,
+          689.625,
+          996.0,
+          924.0
+        ],
+        "scene": "main",
+        "body_count": 3,
+        "valid_face": false,
+        "face_failure": null,
+        "detector": 0.6568565964698792,
+        "joint_status": null,
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": false,
+        "either_link": true
+      },
+      {
+        "frame": 4928,
+        "time": 82.21546666666667,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          909.75,
+          678.0,
+          972.75,
+          907.5
+        ],
+        "scene": "main",
+        "body_count": 4,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8463023900985718,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4932,
+        "time": 82.2822,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          903.75,
+          672.0,
+          969.75,
+          904.5
+        ],
+        "scene": "main",
+        "body_count": 4,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8648669719696045,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4936,
+        "time": 82.34893333333333,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          901.5,
+          660.75,
+          967.5,
+          879.75
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8747674822807312,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4940,
+        "time": 82.41566666666667,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          895.5,
+          650.625,
+          972.0,
+          903.0
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8928616642951965,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4944,
+        "time": 82.4824,
+        "owners": [
+          0
+        ],
+        "role": "near_tie_keep_incumbent",
+        "selected_box": [
+          888.75,
+          643.125,
+          974.25,
+          904.5
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.853927731513977,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4948,
+        "time": 82.54913333333333,
+        "owners": [
+          1
+        ],
+        "role": "near_tie_keep_incumbent",
+        "selected_box": [
+          889.5,
+          634.875,
+          964.5,
+          901.5
+        ],
+        "scene": "main",
+        "body_count": 7,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.843970775604248,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4952,
+        "time": 82.61586666666666,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          885.0,
+          625.125,
+          960.0,
+          880.5
+        ],
+        "scene": "main",
+        "body_count": 7,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8526301383972168,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4956,
+        "time": 82.68260000000001,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          885.0,
+          612.75,
+          966.0,
+          879.75
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8608549237251282,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4960,
+        "time": 82.74933333333334,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          880.5,
+          603.0,
+          964.5,
+          901.5
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8490213751792908,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4964,
+        "time": 82.81606666666667,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          879.75,
+          591.0,
+          965.25,
+          897.0
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8684911727905273,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4968,
+        "time": 82.8828,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          880.5,
+          582.75,
+          967.5,
+          890.25
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8861122727394104,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4972,
+        "time": 82.94953333333333,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          883.5,
+          589.5,
+          982.5,
+          903.0
+        ],
+        "scene": "main",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.8696401119232178,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4976,
+        "time": 83.01626666666667,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          879.0,
+          579.0,
+          990.0,
+          907.5
+        ],
+        "scene": "group",
+        "body_count": 7,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9029074907302856,
+        "joint_status": "conflict",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4980,
+        "time": 83.083,
+        "owners": [
+          0
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          876.0,
+          567.75,
+          999.0,
+          918.75
+        ],
+        "scene": "group",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9015802145004272,
+        "joint_status": "insufficient",
+        "joint_name": null,
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      },
+      {
+        "frame": 4984,
+        "time": 83.14973333333333,
+        "owners": [
+          1
+        ],
+        "role": "measured_face_composition",
+        "selected_box": [
+          898.5,
+          556.5,
+          1003.5,
+          934.5
+        ],
+        "scene": "group",
+        "body_count": 6,
+        "valid_face": true,
+        "face_failure": null,
+        "detector": 0.9169939160346985,
+        "joint_status": "accepted",
+        "joint_name": "시리",
+        "appearance_link": true,
+        "pose_link": true,
+        "either_link": true
+      }
+    ],
+    "alien_valid_faces": [
+      {
+        "frame": 4928,
+        "time": 82.21546666666667,
+        "seed_distances": [
+          0.707880437374115,
+          0.822329580783844
+        ]
+      },
+      {
+        "frame": 4932,
+        "time": 82.2822,
+        "seed_distances": [
+          0.68208247423172,
+          0.8083631992340088
+        ]
+      },
+      {
+        "frame": 4936,
+        "time": 82.34893333333333,
+        "seed_distances": [
+          0.7763771414756775,
+          0.7723952531814575
+        ]
+      },
+      {
+        "frame": 4940,
+        "time": 82.41566666666667,
+        "seed_distances": [
+          0.770898699760437,
+          0.8122711479663849
+        ]
+      },
+      {
+        "frame": 4944,
+        "time": 82.4824,
+        "seed_distances": [
+          0.7989764213562012,
+          0.7312365174293518
+        ]
+      },
+      {
+        "frame": 4948,
+        "time": 82.54913333333333,
+        "seed_distances": [
+          0.7926450073719025,
+          0.8109749853610992
+        ]
+      },
+      {
+        "frame": 4952,
+        "time": 82.61586666666666,
+        "seed_distances": [
+          0.7447870969772339,
+          0.7618382275104523
+        ]
+      },
+      {
+        "frame": 4956,
+        "time": 82.68260000000001,
+        "seed_distances": [
+          0.7986955046653748,
+          0.776983842253685
+        ]
+      },
+      {
+        "frame": 4960,
+        "time": 82.74933333333334,
+        "seed_distances": [
+          0.7133551836013794,
+          0.7098893523216248
+        ]
+      },
+      {
+        "frame": 4964,
+        "time": 82.81606666666667,
+        "seed_distances": [
+          0.8373415917158127,
+          0.7789639234542847
+        ]
+      },
+      {
+        "frame": 4968,
+        "time": 82.8828,
+        "seed_distances": [
+          0.868756040930748,
+          0.8073542565107346
+        ]
+      }
+    ],
+    "handoffs": [],
+    "cuts": [
+      4912
+    ],
+    "group_clips": [
+      {
+        "seg_id": 11,
+        "seg_type": "group",
+        "start": 82.21546666666667,
+        "end": 83.34993333333334,
+        "person_id": null,
+        "clip_id": "group_0011",
+        "thumbnail_path": "clips/dance/group/group_0011.jpg",
+        "person_ids": []
+      }
+    ]
+  }
+}

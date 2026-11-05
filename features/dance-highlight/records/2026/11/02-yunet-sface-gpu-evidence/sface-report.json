@@ -1,0 +1,40 @@
+{
+  "mode": "sface",
+  "blob": [
+    1,
+    3,
+    112,
+    112
+  ],
+  "opsets": [
+    [
+      "",
+      11
+    ]
+  ],
+  "CPUExecutionProvider": {
+    "setup": 0.05773116601631045,
+    "cold": 0.006485500023700297,
+    "warm_median": 0.00336445847642608,
+    "nodes": {
+      "CPUExecutionProvider": 682
+    }
+  },
+  "CoreMLExecutionProvider": {
+    "setup": 1.0198854170157574,
+    "cold": 0.044212166976649314,
+    "warm_median": 0.002839145512552932,
+    "nodes": {
+      "CoreMLExecutionProvider": 22,
+      "CPUExecutionProvider": 22
+    }
+  },
+  "max_abs_error": [
+    1.049041748046875e-05
+  ],
+  "opencv_ms": 7.196345896227285,
+  "cosine_vs_opencv": {
+    "CPUExecutionProvider": -1.1920928955078125e-07,
+    "CoreMLExecutionProvider": -1.1920928955078125e-07
+  }
+}

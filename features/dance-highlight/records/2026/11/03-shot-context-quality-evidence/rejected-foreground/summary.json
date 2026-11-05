@@ -1,0 +1,87 @@
+{
+  "decision": "hold_no_product_change",
+  "recovered_seconds": 0.0,
+  "positive_candidates": [
+    {
+      "video": "MMN",
+      "seed_frames": [
+        2284,
+        2364
+      ],
+      "accepted": false,
+      "accepted_pairs": [],
+      "flagged_pairs": 23
+    },
+    {
+      "video": "ANT",
+      "seed_frames": [
+        588,
+        616
+      ],
+      "accepted": false,
+      "accepted_pairs": [
+        589,
+        590
+      ],
+      "flagged_pairs": 4
+    }
+  ],
+  "negative_foreground_variants": 16,
+  "negative_foreground_pairs": 32,
+  "negative_foreground_false_positives": 0,
+  "actual_handoff_candidates": 38,
+  "accepted_handoffs": 0,
+  "timing": [
+    {
+      "video": "ANT",
+      "repeat": 0,
+      "seconds": 0.25679749995470047,
+      "accepted": false,
+      "pairs": 4
+    },
+    {
+      "video": "ANT",
+      "repeat": 1,
+      "seconds": 0.2596224169828929,
+      "accepted": false,
+      "pairs": 4
+    },
+    {
+      "video": "ANT",
+      "repeat": 2,
+      "seconds": 0.2600269580143504,
+      "accepted": false,
+      "pairs": 4
+    },
+    {
+      "video": "MMN",
+      "repeat": 0,
+      "seconds": 1.0504698330187239,
+      "accepted": false,
+      "pairs": 23
+    },
+    {
+      "video": "MMN",
+      "repeat": 1,
+      "seconds": 1.0670990420039743,
+      "accepted": false,
+      "pairs": 23
+    },
+    {
+      "video": "MMN",
+      "repeat": 2,
+      "seconds": 1.0614588339813054,
+      "accepted": false,
+      "pairs": 23
+    }
+  ],
+  "code_hashes": {
+    "foreground_patch_half.py": "d647783c5d01714f5934ec6883e2c6b75158281c989b2ebe0ad03a503d8194bd",
+    "handoff_and_timing.py": "3e0c8601244a41f7f6f064ac38f9625d97a0e00a8f252d4ca3fca005e5196562",
+    "make_half.py": "ea2c618000fd54fab8fa6ad721776567dfe19067fabe33e23be7465b0fbb2480",
+    "negative_controls.py": "607f640b5a1e70a02fd7e00e819b73d4b22c98b06c6140883348b66ad59414d0",
+    "foreground_patch_probe.py": "55c754598134d4d3fa2f3d4a42e61137d0eac24bc94749a8d2d1eaafe2799bea",
+    "write_report.py": "eba2449cd4b03ec2822fdae86b78f788a3c00d68c5d22b1cb64ed9086bac4e5f"
+  },
+  "baseline_manifest": "/private/tmp/dance-continuity-next-20261103/baseline-manifest.json"
+}

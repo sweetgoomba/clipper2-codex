@@ -1,0 +1,62 @@
+{
+  "recovered_seconds": 0.46733333333334315,
+  "source_sha256": "0d71926c4902cbcae7e2f8aca165c50dd15fc25037f43cf60bb83c95a8c14926",
+  "test_sha256": "b12e38517d826924407bae39d8a6c3d084228bcc347a8f001a4e9480321d8d61",
+  "test_result": "136 passed in 2.96s",
+  "videos": [
+    {
+      "video": "MMN",
+      "baseline_project_id": "1793633624877",
+      "recovered_seconds": 0.0,
+      "seconds": 0.0071337499539367855,
+      "before_parts": 57,
+      "after_parts": 57,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    },
+    {
+      "video": "ANT",
+      "baseline_project_id": "1793633679903",
+      "recovered_seconds": 0.46733333333334315,
+      "seconds": 0.18439883302198723,
+      "before_parts": 96,
+      "after_parts": 94,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 1,
+        "frames_reserved": 49,
+        "frames_read": 49,
+        "seeks": 1,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    },
+    {
+      "video": "NEON",
+      "baseline_project_id": "1793633791815",
+      "recovered_seconds": 0.0,
+      "seconds": 0.022028165985830128,
+      "before_parts": 143,
+      "after_parts": 143,
+      "source_budget": {
+        "path_limit": 12,
+        "frame_limit": 240,
+        "paths_used": 0,
+        "frames_reserved": 0,
+        "frames_read": 0,
+        "seeks": 0,
+        "exact_cache_hits": 0,
+        "superset_cache_hits": 0
+      }
+    }
+  ]
+}

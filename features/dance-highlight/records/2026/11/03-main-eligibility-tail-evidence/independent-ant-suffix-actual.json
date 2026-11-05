@@ -1,0 +1,260 @@
+{
+  "project_id": "1793689269286",
+  "sha_before": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64",
+  "sha_after": "5f803389060128a46244e8a4ea289d8dec62cb6ba11dc2a71a91ecffc4a66f64",
+  "seconds": 0.19889050000347197,
+  "parts": [
+    [
+      62.5625,
+      64.3643,
+      "김채원"
+    ],
+    [
+      64.3643,
+      64.41435,
+      null
+    ],
+    [
+      64.41435,
+      65.7,
+      "김채원"
+    ]
+  ],
+  "audit": {
+    "version": "independent_shot_member_gap_v2_proved_suffix",
+    "recovered_seconds": 0.48391666666667277,
+    "candidates": [
+      {
+        "start": 64.41435,
+        "end": 64.89826666666667,
+        "name": "김채원",
+        "shots": [
+          {
+            "shot": 49,
+            "new_frames": [],
+            "new_source_frames": [],
+            "new_time": null,
+            "seed_frames": [
+              3844,
+              3856
+            ],
+            "source_frames": [],
+            "proof_kind": "original_named_shot_faces"
+          },
+          {
+            "shot": 50,
+            "new_frames": [
+              3864,
+              3868,
+              3872,
+              3876,
+              3880,
+              3884,
+              3888
+            ],
+            "new_source_frames": [
+              3861,
+              3862,
+              3863,
+              3864,
+              3865,
+              3866,
+              3867,
+              3868,
+              3869,
+              3870,
+              3871,
+              3872,
+              3873,
+              3874,
+              3875,
+              3876,
+              3877,
+              3878,
+              3879,
+              3880,
+              3881,
+              3882,
+              3883,
+              3884,
+              3885,
+              3886,
+              3887,
+              3888,
+              3889,
+              3890
+            ],
+            "new_time": [
+              64.41435,
+              64.89826666666667
+            ],
+            "seed_frames": [
+              3896,
+              3908
+            ],
+            "source_frames": [
+              3860,
+              3864,
+              3868,
+              3872,
+              3876,
+              3880,
+              3884,
+              3888,
+              3892,
+              3896,
+              3900,
+              3904,
+              3908
+            ],
+            "proof_kind": "new_main_source_path",
+            "attempts": [
+              {
+                "seed_frames": [
+                  3896,
+                  3908
+                ],
+                "reason": "proved"
+              }
+            ]
+          }
+        ],
+        "cut_frames": [
+          3858
+        ],
+        "unresolved_prefix": [
+          64.3643,
+          64.41435
+        ],
+        "reason": "independent_shot_main_identity",
+        "seconds": 0.19740733300568536
+      }
+    ],
+    "recoveries": [
+      {
+        "start": 64.41435,
+        "end": 64.89826666666667,
+        "name": "김채원",
+        "shots": [
+          {
+            "shot": 49,
+            "new_frames": [],
+            "new_source_frames": [],
+            "new_time": null,
+            "seed_frames": [
+              3844,
+              3856
+            ],
+            "source_frames": [],
+            "proof_kind": "original_named_shot_faces"
+          },
+          {
+            "shot": 50,
+            "new_frames": [
+              3864,
+              3868,
+              3872,
+              3876,
+              3880,
+              3884,
+              3888
+            ],
+            "new_source_frames": [
+              3861,
+              3862,
+              3863,
+              3864,
+              3865,
+              3866,
+              3867,
+              3868,
+              3869,
+              3870,
+              3871,
+              3872,
+              3873,
+              3874,
+              3875,
+              3876,
+              3877,
+              3878,
+              3879,
+              3880,
+              3881,
+              3882,
+              3883,
+              3884,
+              3885,
+              3886,
+              3887,
+              3888,
+              3889,
+              3890
+            ],
+            "new_time": [
+              64.41435,
+              64.89826666666667
+            ],
+            "seed_frames": [
+              3896,
+              3908
+            ],
+            "source_frames": [
+              3860,
+              3864,
+              3868,
+              3872,
+              3876,
+              3880,
+              3884,
+              3888,
+              3892,
+              3896,
+              3900,
+              3904,
+              3908
+            ],
+            "proof_kind": "new_main_source_path",
+            "attempts": [
+              {
+                "seed_frames": [
+                  3896,
+                  3908
+                ],
+                "reason": "proved"
+              }
+            ]
+          }
+        ],
+        "cut_frames": [
+          3858
+        ],
+        "unresolved_prefix": [
+          64.3643,
+          64.41435
+        ],
+        "reason": "independent_shot_main_identity",
+        "seconds": 0.19740733300568536
+      }
+    ],
+    "source_budget": {
+      "path_limit": 12,
+      "frame_limit": 240,
+      "paths_used": 1,
+      "frames_reserved": 49,
+      "frames_read": 49,
+      "seeks": 1,
+      "exact_cache_hits": 0,
+      "superset_cache_hits": 0,
+      "read_budget_exhausted": false
+    }
+  },
+  "model_inference_calls": 0,
+  "source_reads": 49,
+  "original_output_unchanged": true,
+  "frozen_primary_reference_policy": {
+    "max_distance": 0.6,
+    "matcher": "MatchPolicy(max_distance=0.6, min_margin=0.08, minimum_support=2)"
+  },
+  "scope": "saved ANT original observations/reference vectors/poses/roles/cuts; three bounded original output segments; real source proof only"
+}

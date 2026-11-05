@@ -1,0 +1,336 @@
+{
+  "checks": [
+    {
+      "check": "MMN: original baseline audit hashes preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: final metadata still matches completed audit",
+      "passed": true
+    },
+    {
+      "check": "MMN: completed jobs without errors",
+      "passed": true
+    },
+    {
+      "check": "MMN: expected reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "MMN: recorded loaded segment and pipeline files match",
+      "passed": true
+    },
+    {
+      "check": "MMN: input source bytes and settings preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: output changes confined to two expected scopes",
+      "passed": true
+    },
+    {
+      "check": "MMN: no new named main or identity substitution",
+      "passed": true
+    },
+    {
+      "check": "MMN: no existing group coverage removed",
+      "passed": true
+    },
+    {
+      "check": "MMN: expected group scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "MMN: user-reviewed ranges preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: no new sub-0.1-second changed clip",
+      "passed": true
+    },
+    {
+      "check": "MMN: subsecond count did not increase",
+      "passed": true
+    },
+    {
+      "check": "MMN: raw identity/reference observations preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: raw pose measurements preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: person card references valid",
+      "passed": true
+    },
+    {
+      "check": "MMN: SAM OFF in both runs",
+      "passed": true
+    },
+    {
+      "check": "MMN: surviving diagnostic/reference images preserved",
+      "passed": true
+    },
+    {
+      "check": "MMN: removed query images belong only to excluded unknown clips",
+      "passed": true
+    },
+    {
+      "check": "MMN: surviving same-start thumbnails unchanged",
+      "passed": true
+    },
+    {
+      "check": "MMN: native pose requests and observations unchanged",
+      "passed": true
+    },
+    {
+      "check": "ANT: original baseline audit hashes preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: final metadata still matches completed audit",
+      "passed": true
+    },
+    {
+      "check": "ANT: completed jobs without errors",
+      "passed": true
+    },
+    {
+      "check": "ANT: expected reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "ANT: recorded loaded segment and pipeline files match",
+      "passed": true
+    },
+    {
+      "check": "ANT: input source bytes and settings preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: output changes confined to two expected scopes",
+      "passed": true
+    },
+    {
+      "check": "ANT: no new named main or identity substitution",
+      "passed": true
+    },
+    {
+      "check": "ANT: no existing group coverage removed",
+      "passed": true
+    },
+    {
+      "check": "ANT: expected group scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "ANT: user-reviewed ranges preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: no new sub-0.1-second changed clip",
+      "passed": true
+    },
+    {
+      "check": "ANT: subsecond count did not increase",
+      "passed": true
+    },
+    {
+      "check": "ANT: raw identity/reference observations preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: raw pose measurements preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: person card references valid",
+      "passed": true
+    },
+    {
+      "check": "ANT: SAM OFF in both runs",
+      "passed": true
+    },
+    {
+      "check": "ANT: surviving diagnostic/reference images preserved",
+      "passed": true
+    },
+    {
+      "check": "ANT: removed query images belong only to excluded unknown clips",
+      "passed": true
+    },
+    {
+      "check": "ANT: surviving same-start thumbnails unchanged",
+      "passed": true
+    },
+    {
+      "check": "ANT: native pose requests and observations unchanged",
+      "passed": true
+    },
+    {
+      "check": "NEON: original baseline audit hashes preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: final metadata still matches completed audit",
+      "passed": true
+    },
+    {
+      "check": "NEON: completed jobs without errors",
+      "passed": true
+    },
+    {
+      "check": "NEON: expected reviewed segment loaded",
+      "passed": true
+    },
+    {
+      "check": "NEON: recorded loaded segment and pipeline files match",
+      "passed": true
+    },
+    {
+      "check": "NEON: input source bytes and settings preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: output changes confined to two expected scopes",
+      "passed": true
+    },
+    {
+      "check": "NEON: no new named main or identity substitution",
+      "passed": true
+    },
+    {
+      "check": "NEON: no existing group coverage removed",
+      "passed": true
+    },
+    {
+      "check": "NEON: expected group scopes contain no final main",
+      "passed": true
+    },
+    {
+      "check": "NEON: user-reviewed ranges preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: no new sub-0.1-second changed clip",
+      "passed": true
+    },
+    {
+      "check": "NEON: subsecond count did not increase",
+      "passed": true
+    },
+    {
+      "check": "NEON: raw identity/reference observations preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: raw pose measurements preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: person descriptors preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: person card references valid",
+      "passed": true
+    },
+    {
+      "check": "NEON: SAM OFF in both runs",
+      "passed": true
+    },
+    {
+      "check": "NEON: surviving diagnostic/reference images preserved",
+      "passed": true
+    },
+    {
+      "check": "NEON: removed query images belong only to excluded unknown clips",
+      "passed": true
+    },
+    {
+      "check": "NEON: surviving same-start thumbnails unchanged",
+      "passed": true
+    },
+    {
+      "check": "NEON: native pose requests and observations unchanged",
+      "passed": true
+    },
+    {
+      "check": "all fourteen user cases compared",
+      "passed": true
+    },
+    {
+      "check": "exactly final expected main exclusion",
+      "passed": true
+    },
+    {
+      "check": "MMN output rows unchanged",
+      "passed": true
+    },
+    {
+      "check": "only expected ANT group thumbnail has a new start",
+      "passed": true
+    },
+    {
+      "check": "changed thumbnail reproduced from source",
+      "passed": true
+    }
+  ],
+  "count": 71,
+  "all_checks_passed": true,
+  "review_scope": "All final output intervals/names, 14 prior user ranges, saved identity/pose evidence, all image hashes and changed-thumbnail source reproduction; not a new ground-truth review of every scene.",
+  "main_removed_seconds": {
+    "named": 0.06673333333333176,
+    "unknown": 0.6005999999999858
+  },
+  "totals": {
+    "main": [
+      309,
+      305
+    ],
+    "group": [
+      120,
+      119
+    ],
+    "total": [
+      429,
+      424
+    ],
+    "subsecond": [
+      245,
+      240
+    ],
+    "under_0_1s": [
+      24,
+      23
+    ],
+    "unknown_seconds": [
+      39.57666666666691,
+      38.976066666666924
+    ]
+  },
+  "active_wall_seconds": [
+    1132.067,
+    1187.94
+  ],
+  "wall_change_percent": 4.935485267214745,
+  "image_counts": [
+    1776,
+    1762
+  ],
+  "unchanged_surviving_thumbnail_count": 423,
+  "new_start_thumbnail_count": 1,
+  "named_subsecond_clips": [
+    73,
+    73
+  ]
+}

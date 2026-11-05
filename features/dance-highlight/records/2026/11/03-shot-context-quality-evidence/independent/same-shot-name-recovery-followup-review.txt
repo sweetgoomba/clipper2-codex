@@ -1,0 +1,44 @@
+동일 샷 내 기존 main 이름 복원 — 후속 독립 설계 검토
+2026-11-03 / 제품 변경 없음
+
+결론
+같은 샷의 양쪽 독립 원본 얼굴 쌍과 전체 selected-body 경로를 사용해 기존 main의 이름을 복원하는 것은 논리적으로 가능하다. 그러나 현재 18개 조각은 복원 가능한 수가 아니며, cut 필수 조건만 제거해 얻는 검증된 새 복원은 0개다. 현재 제품과 세 영상 앱 실험을 유지한다. 다음 핵심은 fresh 실측 역할, incumbent 유지, 측정 공백을 구분하는 것이다.
+
+검토 범위
+저장 JSON과 코드를 읽었다. 영상 디코딩, 모델 추론, 해시 검사, pytest 또는 제품 변경은 하지 않았다. 이번 요청에서는 이 텍스트와 JSON 증거만 scratch에 저장했다. 새 실제 앱 결과는 아직 검토하지 않았다.
+
+직접 교차 확인한 자료
+18조각은 17개 unknown 블록이다. 양쪽 같은 이름3 / 다른 이름7 / 한쪽 named 이웃 없음7이다. unknown109표본 중 incomplete_incumbent_geometry37, awaiting9, near-tie계열4가 있으며 selected feature는 detected60/missing37/repeated12다. accepted joint는0이고 conflict30, insufficient27, unavailable52다. 원래 main 플래그나 확정 타인 이름 충돌 감사의 부재를 매시점 실측 역할 또는 식별 경쟁의 부재로 해석하면 안 된다.
+
+양쪽 같은 이름인3개도 모두 fresh selected role 전표본 조건을 만족하지 못한다.
+- ANT9.9098–10.276933 김채원: selected missing4/repeated1, 기존 visual_cut 실패.
+- ANT160.293467–160.877383 카즈하: selected missing4/repeated2, group 중첩0.05005초.
+- NEON161.194367–161.728233 아이찡: selected missing5/repeated2, 기존 unconfirmed_body_continuity 실패.
+
+전표본 fresh 조건을 만족하는4블록도 same-name 양쪽 경계가 없다. MMN53.119733은 오른쪽 이름만 있고, NEON194.0938은 왼쪽 이름만 있으며 기존 isolated_visual_change가 있다. ANT148.381467과 NEON149.883067은 양쪽 이름이 서로 다르다. ANT148.381467에는 group 중첩도 있다.
+
+원래 세션에서 받은 보완 정보 — 이번 후속 검토에서 독립 재실행하지 않음
+ANT9 지지 창에는 cut616이 있고 unknown shot 원본 얼굴1개/pair0이다. ANT160은 오른쪽 원본 얼굴이 없다. NEON161은 같은 샷 face pair21 및 지지 최대0.333667초가 있지만 fresh role1/8과 torso 미측정2표본이 남는다. direct-secondary에는 ANT148.381의8908 홍은채, ANT164.931의9900 사쿠라, NEON149.883의8992 시리라는 경쟁 신원도 보고됐다. 이들을 명시적으로 보호해야 한다.
+
+증명 계약의 구분
+기존 main 이름 복원에 group→main 신규 역할 확립의 절대 foreground torso 기준을 항상 적용할 필요는 없다. 하지만 observed_member_edges는 한쪽 이웃만으로도 연장할 수 있으므로 그 gate를 일괄 제거하면 위험이 달라진다. 양쪽의 원본 신원 재확인, 전표본 fresh selected role/ownership, 전체 source/body 경로를 함께 요구하는 대체 증명이어야 한다. body 대응만으로 새 주연 역할을 증명했다고 해석하면 안 된다.
+
+기존 경로와 중복
+bridge_main_face_gaps는 이미 양쪽 같은 이름 unknown에 dense source/body 검사를 한다. 이 경로는 더 이른 output evidence 라벨에서 가까운 얼굴 한 개씩을 선택하고 최종 scene 투영 전에 실행한다. 후속 경로를 연구한다면 기존 미신청, 이후 투영 범위 변경, 원본 seed 부족, source/body 실패를 먼저 구별해야 한다. 실패를 무시하는 두 번째 경로로 만들지 않는다.
+observed_member_edges.original_name은 primary+joint만 읽는다. 후속 증명은 shot_member_gaps처럼 direct-secondary까지 포함한 원본 충돌 계약을 유지해야 한다.
+
+향후 재현에 필요한 조건
+1. 양쪽 matched 같은 이름, 각 측의 owned 원본 얼굴 최소2개와0.15초 독립 간격, 기존0.6초 지지 유효기간.
+2. unknown 전표본 main_eligible_composition + 현재 detected selected role + 원본 bbox/시간 소유권. missing/hold/awaiting을 단순 통과시키지 않는다.
+3. 두 face pair와 모든 새 source 시간을 덮는 단일 경로. raw/refined cut이 있으면 same-shot 경로 불가. visual cut, isolated change, body 실패를 우회하지 않는다.
+4. 전체 경쟁 body를 남기고 group 중첩, closed handoff bracket, 다른 원본 이름·반복 alien·identity 경계 및 누적 union 충돌을 보존한다.
+5. 복원명을 새 seed로 쓰지 않는다. 샘플 사이 새 source 시간만 존재하는 경계 반례도 보호한다.
+6. 동일 helper와 영상별12paths/240frames 예산을 공유한다. 한쪽 연장/group→main 규칙은 그대로 둔다.
+
+필수 보호 사례
+ANT82 중앙 인계(handoff 빈 목록도 가능), NEON115.6 컷 뒤 duet, ANT181 wide ensemble, NEON93 반복 identity 경계, 양쪽 다른 이름 proposal, direct-secondary 경쟁 신원3사례를 포함한다.
+
+판정 범위
+새 안전 복원량·장면 정답·적용 승인을 확정한 검토가 아니다. 현재 조건 미달 사례에 cut 조건 제거 실험을 먼저 실행할 근거가 없다. 세 영상 최종 앱 결과의 이름·구간·썸네일·SAM OFF·전체 실행시간 비교는 별도다.
+
+상세 수치와 입력/코드 경로는 같은 이름의 JSON에 보존했다.

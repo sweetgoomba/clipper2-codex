@@ -1,0 +1,45 @@
+{
+  "scope": "Pure cached reference-vector matching and unchanged named union. No model instance, source video or new inference.",
+  "checks": {
+    "whole_union_matched_original_member": true,
+    "original_input_immutable": true,
+    "evidence_labels_immutable": true,
+    "old_handoff_guard_retained": true
+  },
+  "all_checks_passed": true,
+  "adjacent_valid_face_times": [
+    48.048,
+    48.114733333333334
+  ],
+  "gap_seconds": 0.06673333333333176,
+  "original_primary_name_counts": {
+    "김채원": 31,
+    "None": 62
+  },
+  "original_scope_anchor_count": 15,
+  "joins": [
+    {
+      "start": 47.48076666666667,
+      "boundary": 48.08136666666667,
+      "end": 53.720333333333336,
+      "reference_id": "김채원",
+      "source_indices": [
+        0,
+        1
+      ],
+      "reason": "member_timeline_consensus"
+    }
+  ],
+  "output": [
+    {
+      "start": 47.48076666666667,
+      "end": 53.720333333333336,
+      "name": "김채원"
+    }
+  ],
+  "app_scope": [
+    47.48076666666667,
+    53.720333333333336
+  ],
+  "newly_named_seconds": 0.3336666666666659
+}

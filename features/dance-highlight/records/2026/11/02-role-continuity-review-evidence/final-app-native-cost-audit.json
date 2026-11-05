@@ -1,0 +1,137 @@
+{
+  "MMN": {
+    "requested_frame_counts": [
+      135,
+      135
+    ],
+    "observed_frame_counts": [
+      135,
+      135
+    ],
+    "requested_frames_equal": true,
+    "native_observations_equal": true,
+    "native_scene_seconds": [
+      10.847293042053934,
+      11.021446208003908
+    ],
+    "group_context_seconds": [
+      0,
+      0.00046841701259836555
+    ],
+    "changes_count": [
+      0,
+      0
+    ],
+    "native_run_counts": [
+      0,
+      0
+    ],
+    "reason": [
+      "complete",
+      "complete"
+    ],
+    "compact_group_context": {
+      "version": "compact_group_gap_v1",
+      "bridges": [],
+      "reason": "complete"
+    },
+    "same_model_settings": true
+  },
+  "ANT": {
+    "requested_frame_counts": [
+      299,
+      299
+    ],
+    "observed_frame_counts": [
+      299,
+      299
+    ],
+    "requested_frames_equal": true,
+    "native_observations_equal": true,
+    "native_scene_seconds": [
+      21.74923320801463,
+      21.74075295799412
+    ],
+    "group_context_seconds": [
+      0,
+      0.0005211660172790289
+    ],
+    "changes_count": [
+      0,
+      0
+    ],
+    "native_run_counts": [
+      0,
+      0
+    ],
+    "reason": [
+      "complete",
+      "complete"
+    ],
+    "compact_group_context": {
+      "version": "compact_group_gap_v1",
+      "bridges": [],
+      "reason": "complete"
+    },
+    "same_model_settings": true
+  },
+  "NEON": {
+    "requested_frame_counts": [
+      541,
+      541
+    ],
+    "observed_frame_counts": [
+      541,
+      541
+    ],
+    "requested_frames_equal": true,
+    "native_observations_equal": true,
+    "native_scene_seconds": [
+      39.51813270803541,
+      44.88489379105158
+    ],
+    "group_context_seconds": [
+      0,
+      0.0015446670004166663
+    ],
+    "changes_count": [
+      68,
+      60
+    ],
+    "native_run_counts": [
+      11,
+      11
+    ],
+    "reason": [
+      "complete",
+      "complete"
+    ],
+    "compact_group_context": {
+      "version": "compact_group_gap_v1",
+      "bridges": [
+        {
+          "start": 143.67686666666668,
+          "end": 143.74360000000001,
+          "frames": [
+            8612
+          ],
+          "left_anchor_frame": 8608,
+          "right_anchor_frame": 8616,
+          "anchor_sources": [
+            "native_distant_ensemble",
+            "compact_distant_ensemble"
+          ],
+          "observed_body_counts": [
+            2
+          ],
+          "unobserved_box_counts": [
+            1
+          ],
+          "reason": "bidirectional_observed_ensemble"
+        }
+      ],
+      "reason": "complete"
+    },
+    "same_model_settings": true
+  }
+}

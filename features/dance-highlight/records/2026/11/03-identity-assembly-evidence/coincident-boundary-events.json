@@ -1,0 +1,1480 @@
+{
+  "MMN": [
+    {
+      "part_index": 31,
+      "range": [
+        88.25483333333334,
+        88.2882
+      ],
+      "name": null,
+      "source_identity_span": {
+        "id": 41,
+        "range": [
+          88.25483333333334,
+          88.42166666666667
+        ],
+        "name": null,
+        "reason": "unresolved_face_interval",
+        "observation_frames": [
+          5292,
+          5296
+        ]
+      },
+      "event": "same_bracket_handoff",
+      "boundary": {
+        "time": 88.25483333333334,
+        "left_time": 88.22146666666667,
+        "right_time": 88.2882,
+        "reason": "repeated_face_change",
+        "strength": 0.8884639516472816
+      },
+      "handoffs": [
+        {
+          "frame": 5292,
+          "time": 88.2882,
+          "previous_frame": 5288,
+          "previous_time": 88.22146666666667,
+          "boundary_policy": "first_observed_new_main",
+          "previous_selected": 4,
+          "current_selected": 1,
+          "outgoing_current": 4,
+          "incoming_previous": 1
+        }
+      ],
+      "cut_frames_in_closed_bracket": [],
+      "previous_part": {
+        "index": 30,
+        "range": [
+          79.8798,
+          88.25483333333334
+        ],
+        "name": "김채원"
+      },
+      "outgoing": {
+        "frame": 5288,
+        "time": 88.22146666666667,
+        "valid_owned_face": true,
+        "face_score": 0.9127067923545837,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "김채원",
+          "distance": 0.6666980981826782,
+          "margin": 0.1353069543838501,
+          "candidates": [
+            {
+              "name": "김채원",
+              "distance": 0.6666980981826782
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.8020050525665283
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.8277194499969482
+            },
+            {
+              "name": "허윤진",
+              "distance": 0.8367700576782227
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.9328140020370483
+            }
+          ]
+        },
+        "joint": {
+          "name": "김채원",
+          "status": "accepted",
+          "best": "김채원",
+          "reason": "joint_video_match",
+          "distance": 0.47730180621147156,
+          "margin": 0.15746769309043884
+        },
+        "secondary": {
+          "name": null,
+          "reason": null,
+          "raw_current_name": null,
+          "raw_current_reason": null,
+          "window_support_frames": [],
+          "raw_current_match": {}
+        },
+        "timeline_support_names": [
+          "김채원"
+        ],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "incoming": {
+        "frame": 5292,
+        "time": 88.2882,
+        "valid_owned_face": true,
+        "face_score": 0.9205731153488159,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "허윤진",
+          "distance": 0.7232264280319214,
+          "margin": 0.04230761528015137,
+          "candidates": [
+            {
+              "name": "허윤진",
+              "distance": 0.7232264280319214
+            },
+            {
+              "name": "홍은채",
+              "distance": 0.7655340433120728
+            },
+            {
+              "name": "사쿠라",
+              "distance": 0.8034696578979492
+            },
+            {
+              "name": "카즈하",
+              "distance": 0.9022967219352722
+            },
+            {
+              "name": "김채원",
+              "distance": 0.9026249647140503
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "insufficient",
+          "best": "허윤진",
+          "reason": "joint_video_rejected",
+          "distance": 0.5169228315353394,
+          "margin": 0.17035239934921265
+        },
+        "secondary": {
+          "name": "허윤진",
+          "reason": "secondary_video_match",
+          "raw_current_name": "허윤진",
+          "raw_current_reason": "secondary_video_match",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 5292,
+            "time_seconds": 88.2882,
+            "name": "허윤진",
+            "distance": 0.4677361249923706,
+            "margin": 0.18926098942756653,
+            "reason": "secondary_video_match",
+            "candidates": [
+              {
+                "name": "허윤진",
+                "distance": 0.4677361249923706,
+                "support_frames": [
+                  4204,
+                  2904
+                ]
+              },
+              {
+                "name": "사쿠라",
+                "distance": 0.6569971144199371,
+                "support_frames": [
+                  7128,
+                  7140
+                ]
+              },
+              {
+                "name": "홍은채",
+                "distance": 0.7122975587844849,
+                "support_frames": [
+                  1764,
+                  7456
+                ]
+              },
+              {
+                "name": "카즈하",
+                "distance": 0.8094661384820938,
+                "support_frames": [
+                  792,
+                  1140
+                ]
+              },
+              {
+                "name": "김채원",
+                "distance": 0.8651837110519409,
+                "support_frames": [
+                  356,
+                  312
+                ]
+              }
+            ],
+            "reference_match": {
+              "name": null,
+              "distance": 0.694005012512207,
+              "margin": 0.12912598252296448,
+              "reason": "secondary_reference_rejected",
+              "candidates": [
+                {
+                  "name": "홍은채",
+                  "distance": 0.694005012512207
+                },
+                {
+                  "name": "허윤진",
+                  "distance": 0.8231309950351715
+                },
+                {
+                  "name": "사쿠라",
+                  "distance": 0.829593688249588
+                },
+                {
+                  "name": "카즈하",
+                  "distance": 0.9786989167332649
+                },
+                {
+                  "name": "김채원",
+                  "distance": 1.0053173396736383
+                }
+              ]
+            }
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "confirmed_near_tie_transition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "outgoing_independent_name_agreement": true,
+      "right_scene": "main",
+      "left_scene": "main",
+      "padding_audit": [],
+      "classification": "outgoing_named_supported"
+    }
+  ],
+  "ANT": [],
+  "NEON": [
+    {
+      "part_index": 6,
+      "range": [
+        34.3343,
+        34.367666666666665
+      ],
+      "name": null,
+      "source_identity_span": {
+        "id": 6,
+        "range": [
+          34.3343,
+          35.1351
+        ],
+        "name": null,
+        "reason": "unresolved_face_interval",
+        "observation_frames": [
+          2060,
+          2064,
+          2068,
+          2072,
+          2076,
+          2080,
+          2084,
+          2088,
+          2092,
+          2096,
+          2100,
+          2104
+        ]
+      },
+      "event": "same_bracket_handoff",
+      "boundary": {
+        "time": 34.3343,
+        "left_time": 34.30093333333333,
+        "right_time": 34.367666666666665,
+        "reason": "repeated_face_change",
+        "strength": 0.7351008951663971
+      },
+      "handoffs": [
+        {
+          "frame": 2060,
+          "time": 34.367666666666665,
+          "previous_frame": 2056,
+          "previous_time": 34.30093333333333,
+          "boundary_policy": "first_observed_new_main",
+          "previous_selected": 0,
+          "current_selected": 0,
+          "outgoing_current": 1,
+          "incoming_previous": 1
+        }
+      ],
+      "cut_frames_in_closed_bracket": [],
+      "previous_part": {
+        "index": 5,
+        "range": [
+          33.86716666666666,
+          34.3343
+        ],
+        "name": "시리"
+      },
+      "outgoing": {
+        "frame": 2056,
+        "time": 34.30093333333333,
+        "valid_owned_face": true,
+        "face_score": 0.9168124794960022,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "아이찡",
+          "distance": 0.7599056959152222,
+          "margin": 0.04724085330963135,
+          "candidates": [
+            {
+              "name": "아이찡",
+              "distance": 0.7599056959152222
+            },
+            {
+              "name": "아윤",
+              "distance": 0.8071465492248535
+            },
+            {
+              "name": "영",
+              "distance": 0.810784101486206
+            },
+            {
+              "name": "오아",
+              "distance": 0.838841438293457
+            },
+            {
+              "name": "히메키",
+              "distance": 0.850559651851654
+            },
+            {
+              "name": "시리",
+              "distance": 0.8633730411529541
+            },
+            {
+              "name": "메르시",
+              "distance": 0.8655591011047363
+            },
+            {
+              "name": "라다",
+              "distance": 0.8741086721420288
+            },
+            {
+              "name": "보라",
+              "distance": 0.9447861909866333
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "conflict",
+          "best": "아이찡",
+          "reason": "joint_video_rejected",
+          "distance": 0.6119769215583801,
+          "margin": 0.0007585287094116211
+        },
+        "secondary": {
+          "name": null,
+          "reason": null,
+          "raw_current_name": null,
+          "raw_current_reason": null,
+          "window_support_frames": [],
+          "raw_current_match": {}
+        },
+        "timeline_support_names": [],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": [
+            {
+              "name": "아이찡",
+              "distance": 0.6636403203010559,
+              "support_frames": [
+                4168,
+                13188
+              ]
+            },
+            {
+              "name": "시리",
+              "distance": 0.698874294757843,
+              "support_frames": [
+                1480,
+                4860
+              ]
+            },
+            {
+              "name": "영",
+              "distance": 0.7287297248840332,
+              "support_frames": [
+                11452,
+                6868
+              ]
+            },
+            {
+              "name": "오아",
+              "distance": 0.7530198097229004,
+              "support_frames": [
+                10640,
+                3056
+              ]
+            },
+            {
+              "name": "아윤",
+              "distance": 0.7567193508148193,
+              "support_frames": [
+                6100,
+                6368
+              ]
+            },
+            {
+              "name": "메르시",
+              "distance": 0.7573264241218567,
+              "support_frames": [
+                3564,
+                3484
+              ]
+            },
+            {
+              "name": "히메키",
+              "distance": 0.7906891107559204,
+              "support_frames": [
+                11908,
+                4024
+              ]
+            },
+            {
+              "name": "라다",
+              "distance": 0.7923857569694519,
+              "support_frames": [
+                7436,
+                7452
+              ]
+            },
+            {
+              "name": "보라",
+              "distance": 0.8158366680145264,
+              "support_frames": [
+                5336,
+                5348
+              ]
+            }
+          ]
+        }
+      },
+      "incoming": {
+        "frame": 2060,
+        "time": 34.367666666666665,
+        "valid_owned_face": true,
+        "face_score": 0.881860077381134,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "아이찡",
+          "distance": 0.7772330641746521,
+          "margin": 0.004339754581451416,
+          "candidates": [
+            {
+              "name": "아이찡",
+              "distance": 0.7772330641746521
+            },
+            {
+              "name": "라다",
+              "distance": 0.7815728187561035
+            },
+            {
+              "name": "메르시",
+              "distance": 0.7818831205368042
+            },
+            {
+              "name": "아윤",
+              "distance": 0.8075608611106873
+            },
+            {
+              "name": "시리",
+              "distance": 0.8135193586349487
+            },
+            {
+              "name": "영",
+              "distance": 0.8321425318717957
+            },
+            {
+              "name": "보라",
+              "distance": 0.8680457472801208
+            },
+            {
+              "name": "히메키",
+              "distance": 0.8706582188606262
+            },
+            {
+              "name": "오아",
+              "distance": 0.8869829177856445
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "insufficient",
+          "best": "아이찡",
+          "reason": "joint_video_rejected",
+          "distance": 0.6085613667964935,
+          "margin": 0.08988463878631592
+        },
+        "secondary": {
+          "name": null,
+          "reason": "secondary_reference_rejected",
+          "raw_current_name": null,
+          "raw_current_reason": "secondary_reference_rejected",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 2060,
+            "time_seconds": 34.367666666666665,
+            "name": null,
+            "distance": 0.6892198622226715,
+            "margin": 0.027590066194534302,
+            "reason": "secondary_reference_rejected",
+            "candidates": [
+              {
+                "name": "아이찡",
+                "distance": 0.6892198622226715
+              },
+              {
+                "name": "라다",
+                "distance": 0.7168099284172058
+              },
+              {
+                "name": "보라",
+                "distance": 0.7579535841941833
+              },
+              {
+                "name": "오아",
+                "distance": 0.8224996030330658
+              },
+              {
+                "name": "시리",
+                "distance": 0.8311863541603088
+              },
+              {
+                "name": "아윤",
+                "distance": 0.8609115332365036
+              },
+              {
+                "name": "메르시",
+                "distance": 0.878703847527504
+              },
+              {
+                "name": "히메키",
+                "distance": 0.8851181864738464
+              },
+              {
+                "name": "영",
+                "distance": 0.9209763705730438
+              }
+            ]
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "confirmed_near_tie_transition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "outgoing_independent_name_agreement": false,
+      "right_scene": "main",
+      "left_scene": "main",
+      "padding_audit": [],
+      "classification": "outgoing_name_unconfirmed"
+    },
+    {
+      "part_index": 14,
+      "range": [
+        42.609233333333336,
+        42.6426
+      ],
+      "name": null,
+      "source_identity_span": {
+        "id": 14,
+        "range": [
+          42.609233333333336,
+          45.045
+        ],
+        "name": "오아",
+        "reason": "member_timeline_consensus",
+        "observation_frames": [
+          2556,
+          2560,
+          2564,
+          2568,
+          2572,
+          2576,
+          2580,
+          2584,
+          2588,
+          2592,
+          2596,
+          2600,
+          2604,
+          2608,
+          2612,
+          2616,
+          2620,
+          2624,
+          2628,
+          2632,
+          2636,
+          2640,
+          2644,
+          2648,
+          2652,
+          2656,
+          2660,
+          2664,
+          2668,
+          2672,
+          2676,
+          2680,
+          2684,
+          2688,
+          2692,
+          2696
+        ]
+      },
+      "event": "first_excluded_observation",
+      "boundary": {
+        "time": 42.609233333333336,
+        "left_time": 42.57586666666667,
+        "right_time": 42.6426,
+        "reason": "repeated_face_change",
+        "strength": 0.7701772451400757
+      },
+      "handoffs": [],
+      "cut_frames_in_closed_bracket": [],
+      "previous_part": {
+        "index": 13,
+        "range": [
+          42.208733333333335,
+          42.609233333333336
+        ],
+        "name": null
+      },
+      "outgoing": {
+        "frame": 2552,
+        "time": 42.57586666666667,
+        "valid_owned_face": true,
+        "face_score": 0.8905065059661865,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "영",
+          "distance": 0.8257735967636108,
+          "margin": 0.002600550651550293,
+          "candidates": [
+            {
+              "name": "영",
+              "distance": 0.8257735967636108
+            },
+            {
+              "name": "오아",
+              "distance": 0.8283741474151611
+            },
+            {
+              "name": "아윤",
+              "distance": 0.832116961479187
+            },
+            {
+              "name": "보라",
+              "distance": 0.8416886329650879
+            },
+            {
+              "name": "시리",
+              "distance": 0.8555717468261719
+            },
+            {
+              "name": "히메키",
+              "distance": 0.8565410375595093
+            },
+            {
+              "name": "메르시",
+              "distance": 0.8571736812591553
+            },
+            {
+              "name": "라다",
+              "distance": 0.8939947485923767
+            },
+            {
+              "name": "아이찡",
+              "distance": 0.9160477519035339
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "conflict",
+          "best": "메르시",
+          "reason": "joint_video_rejected",
+          "distance": 0.6340590417385101,
+          "margin": 0.015562444925308228
+        },
+        "secondary": {
+          "name": null,
+          "reason": "secondary_reference_rejected",
+          "raw_current_name": null,
+          "raw_current_reason": "secondary_reference_rejected",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 2552,
+            "time_seconds": 42.57586666666667,
+            "name": null,
+            "distance": 0.6346384584903717,
+            "margin": 0.07445019483566284,
+            "reason": "secondary_reference_rejected",
+            "candidates": [
+              {
+                "name": "메르시",
+                "distance": 0.6346384584903717
+              },
+              {
+                "name": "라다",
+                "distance": 0.7090886533260345
+              },
+              {
+                "name": "보라",
+                "distance": 0.7152108550071716
+              },
+              {
+                "name": "아윤",
+                "distance": 0.7378820180892944
+              },
+              {
+                "name": "오아",
+                "distance": 0.7631466388702393
+              },
+              {
+                "name": "영",
+                "distance": 0.7710751444101334
+              },
+              {
+                "name": "시리",
+                "distance": 0.7745573818683624
+              },
+              {
+                "name": "히메키",
+                "distance": 0.7801538705825806
+              },
+              {
+                "name": "아이찡",
+                "distance": 0.8451038897037506
+              }
+            ]
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "incoming": {
+        "frame": 2556,
+        "time": 42.6426,
+        "valid_owned_face": true,
+        "face_score": 0.8927764892578125,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "라다",
+          "distance": 0.7853485345840454,
+          "margin": 0.015060245990753174,
+          "candidates": [
+            {
+              "name": "라다",
+              "distance": 0.7853485345840454
+            },
+            {
+              "name": "오아",
+              "distance": 0.8004087805747986
+            },
+            {
+              "name": "보라",
+              "distance": 0.8071044683456421
+            },
+            {
+              "name": "아윤",
+              "distance": 0.8089555501937866
+            },
+            {
+              "name": "아이찡",
+              "distance": 0.8102096319198608
+            },
+            {
+              "name": "시리",
+              "distance": 0.8231691122055054
+            },
+            {
+              "name": "메르시",
+              "distance": 0.857860803604126
+            },
+            {
+              "name": "히메키",
+              "distance": 0.887458324432373
+            },
+            {
+              "name": "영",
+              "distance": 0.9058830142021179
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "insufficient",
+          "best": "오아",
+          "reason": "joint_video_rejected",
+          "distance": 0.5893974602222443,
+          "margin": 0.06901490688323975
+        },
+        "secondary": {
+          "name": null,
+          "reason": null,
+          "raw_current_name": null,
+          "raw_current_reason": null,
+          "window_support_frames": [],
+          "raw_current_match": {}
+        },
+        "timeline_support_names": [],
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "confirmed_measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "outgoing_independent_name_agreement": false,
+      "right_scene": "group",
+      "left_scene": "main",
+      "padding_audit": [
+        {
+          "parent_span": 14,
+          "start": 42.609233333333336,
+          "end": 42.6426,
+          "name": "오아",
+          "support_frame": 2560,
+          "source_frames": [
+            2552,
+            2556,
+            2560
+          ],
+          "reason": "selected_body_discontinuity"
+        }
+      ],
+      "classification": "outgoing_unknown_same_cell"
+    },
+    {
+      "part_index": 114,
+      "range": [
+        189.95643333333334,
+        189.9898
+      ],
+      "name": null,
+      "source_identity_span": {
+        "id": 114,
+        "range": [
+          189.95643333333334,
+          190.8908
+        ],
+        "name": null,
+        "reason": "unresolved_face_interval",
+        "observation_frames": [
+          11388,
+          11392,
+          11396,
+          11400,
+          11404,
+          11408,
+          11412,
+          11416,
+          11420,
+          11424,
+          11428,
+          11432,
+          11436,
+          11440
+        ]
+      },
+      "event": "first_excluded_observation",
+      "boundary": {
+        "time": 189.95643333333334,
+        "left_time": 189.92306666666667,
+        "right_time": 189.9898,
+        "reason": "repeated_face_change",
+        "strength": 0.6847324073314667
+      },
+      "handoffs": [],
+      "cut_frames_in_closed_bracket": [],
+      "previous_part": {
+        "index": 113,
+        "range": [
+          187.75433333333334,
+          189.95643333333334
+        ],
+        "name": "메르시"
+      },
+      "outgoing": {
+        "frame": 11384,
+        "time": 189.92306666666667,
+        "valid_owned_face": true,
+        "face_score": 0.9305129647254944,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "메르시",
+          "distance": 0.738944411277771,
+          "margin": 0.01329028606414795,
+          "candidates": [
+            {
+              "name": "메르시",
+              "distance": 0.738944411277771
+            },
+            {
+              "name": "영",
+              "distance": 0.752234697341919
+            },
+            {
+              "name": "히메키",
+              "distance": 0.7901692390441895
+            },
+            {
+              "name": "오아",
+              "distance": 0.8089063167572021
+            },
+            {
+              "name": "보라",
+              "distance": 0.8825165629386902
+            },
+            {
+              "name": "아윤",
+              "distance": 0.9055978655815125
+            },
+            {
+              "name": "시리",
+              "distance": 0.9065967798233032
+            },
+            {
+              "name": "아이찡",
+              "distance": 0.9251068234443665
+            },
+            {
+              "name": "라다",
+              "distance": 1.0000163316726685
+            }
+          ]
+        },
+        "joint": {
+          "name": "메르시",
+          "status": "accepted",
+          "best": "메르시",
+          "reason": "joint_video_match",
+          "distance": 0.43858402967453003,
+          "margin": 0.2142530381679535
+        },
+        "secondary": {
+          "name": null,
+          "reason": null,
+          "raw_current_name": null,
+          "raw_current_reason": null,
+          "window_support_frames": [],
+          "raw_current_match": {}
+        },
+        "timeline_support_names": [
+          "메르시"
+        ],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "awaiting_sustained_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "incoming": {
+        "frame": 11388,
+        "time": 189.9898,
+        "valid_owned_face": true,
+        "face_score": 0.8658172488212585,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "아이찡",
+          "distance": 0.8624946475028992,
+          "margin": 0.028799593448638916,
+          "candidates": [
+            {
+              "name": "아이찡",
+              "distance": 0.8624946475028992
+            },
+            {
+              "name": "오아",
+              "distance": 0.8912942409515381
+            },
+            {
+              "name": "라다",
+              "distance": 0.9078343510627747
+            },
+            {
+              "name": "아윤",
+              "distance": 0.9117960929870605
+            },
+            {
+              "name": "영",
+              "distance": 0.9173160791397095
+            },
+            {
+              "name": "보라",
+              "distance": 0.9224178791046143
+            },
+            {
+              "name": "시리",
+              "distance": 0.9285600185394287
+            },
+            {
+              "name": "메르시",
+              "distance": 0.9547228217124939
+            },
+            {
+              "name": "히메키",
+              "distance": 0.9717650413513184
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "conflict",
+          "best": "영",
+          "reason": "joint_video_rejected",
+          "distance": 0.7445002794265747,
+          "margin": 0.004225373268127441
+        },
+        "secondary": {
+          "name": null,
+          "reason": "secondary_reference_rejected",
+          "raw_current_name": null,
+          "raw_current_reason": "secondary_reference_rejected",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 11388,
+            "time_seconds": 189.9898,
+            "name": null,
+            "distance": 0.8611265569925308,
+            "margin": 0.0031716525554656982,
+            "reason": "secondary_reference_rejected",
+            "candidates": [
+              {
+                "name": "메르시",
+                "distance": 0.8611265569925308
+              },
+              {
+                "name": "라다",
+                "distance": 0.8642982095479965
+              },
+              {
+                "name": "보라",
+                "distance": 0.9019071757793427
+              },
+              {
+                "name": "히메키",
+                "distance": 0.9163803383708
+              },
+              {
+                "name": "오아",
+                "distance": 0.9473222456872463
+              },
+              {
+                "name": "아이찡",
+                "distance": 0.9526435844600201
+              },
+              {
+                "name": "시리",
+                "distance": 0.9597935229539871
+              },
+              {
+                "name": "영",
+                "distance": 0.9750780090689659
+              },
+              {
+                "name": "아윤",
+                "distance": 0.9898050837218761
+              }
+            ]
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "awaiting_sustained_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "outgoing_independent_name_agreement": true,
+      "right_scene": "group",
+      "left_scene": "main",
+      "padding_audit": [],
+      "classification": "outgoing_named_supported"
+    },
+    {
+      "part_index": 135,
+      "range": [
+        221.85496666666668,
+        221.88833333333335
+      ],
+      "name": null,
+      "source_identity_span": {
+        "id": 141,
+        "range": [
+          221.85496666666668,
+          224.1239
+        ],
+        "name": null,
+        "reason": "unresolved_face_interval",
+        "observation_frames": [
+          13300,
+          13304,
+          13308,
+          13312,
+          13316,
+          13320,
+          13324,
+          13328,
+          13332,
+          13336,
+          13340,
+          13344,
+          13348,
+          13352,
+          13356,
+          13360,
+          13364,
+          13368,
+          13372,
+          13376,
+          13380,
+          13384,
+          13388,
+          13392,
+          13396,
+          13400,
+          13404,
+          13408,
+          13412,
+          13416,
+          13420,
+          13424,
+          13428,
+          13432
+        ]
+      },
+      "event": "first_excluded_observation",
+      "boundary": {
+        "time": 221.85496666666668,
+        "left_time": 221.82160000000002,
+        "right_time": 221.88833333333335,
+        "reason": "repeated_face_change",
+        "strength": 0.6742980480194092
+      },
+      "handoffs": [],
+      "cut_frames_in_closed_bracket": [],
+      "previous_part": {
+        "index": 134,
+        "range": [
+          221.75486666666666,
+          221.85496666666668
+        ],
+        "name": null
+      },
+      "outgoing": {
+        "frame": 13296,
+        "time": 221.82160000000002,
+        "valid_owned_face": true,
+        "face_score": 0.8603187799453735,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "히메키",
+          "distance": 0.7992786169052124,
+          "margin": 0.008661448955535889,
+          "candidates": [
+            {
+              "name": "히메키",
+              "distance": 0.7992786169052124
+            },
+            {
+              "name": "아윤",
+              "distance": 0.8079400658607483
+            },
+            {
+              "name": "오아",
+              "distance": 0.811080813407898
+            },
+            {
+              "name": "영",
+              "distance": 0.830016016960144
+            },
+            {
+              "name": "메르시",
+              "distance": 0.839989185333252
+            },
+            {
+              "name": "아이찡",
+              "distance": 0.8456275463104248
+            },
+            {
+              "name": "라다",
+              "distance": 0.876971423625946
+            },
+            {
+              "name": "시리",
+              "distance": 0.8903884291648865
+            },
+            {
+              "name": "보라",
+              "distance": 0.9181593656539917
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "conflict",
+          "best": "오아",
+          "reason": "joint_video_rejected",
+          "distance": 0.6688162088394165,
+          "margin": 0.004949897527694702
+        },
+        "secondary": {
+          "name": null,
+          "reason": "secondary_reference_rejected",
+          "raw_current_name": null,
+          "raw_current_reason": "secondary_reference_rejected",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 13296,
+            "time_seconds": 221.82160000000002,
+            "name": null,
+            "distance": 0.8015080988407135,
+            "margin": 0.001807376742362976,
+            "reason": "secondary_reference_rejected",
+            "candidates": [
+              {
+                "name": "시리",
+                "distance": 0.8015080988407135
+              },
+              {
+                "name": "보라",
+                "distance": 0.8033154755830765
+              },
+              {
+                "name": "아이찡",
+                "distance": 0.827482208609581
+              },
+              {
+                "name": "메르시",
+                "distance": 0.8276331275701523
+              },
+              {
+                "name": "오아",
+                "distance": 0.8354095220565796
+              },
+              {
+                "name": "히메키",
+                "distance": 0.852947548031807
+              },
+              {
+                "name": "영",
+                "distance": 0.9101229012012482
+              },
+              {
+                "name": "아윤",
+                "distance": 0.9808945059776306
+              },
+              {
+                "name": "라다",
+                "distance": 1.038887906819582
+              }
+            ]
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "main",
+        "scene_reason": "main_eligible_composition",
+        "role_reason": "measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "incoming": {
+        "frame": 13300,
+        "time": 221.88833333333335,
+        "valid_owned_face": true,
+        "face_score": 0.8644717335700989,
+        "failure": null,
+        "association": "confirmed",
+        "primary": {
+          "name": null,
+          "reason": "distance_exceeded",
+          "mode": "centroid",
+          "best": "시리",
+          "distance": 0.845897912979126,
+          "margin": 0.009334087371826172,
+          "candidates": [
+            {
+              "name": "시리",
+              "distance": 0.845897912979126
+            },
+            {
+              "name": "보라",
+              "distance": 0.8552320003509521
+            },
+            {
+              "name": "아윤",
+              "distance": 0.863257646560669
+            },
+            {
+              "name": "영",
+              "distance": 0.866913914680481
+            },
+            {
+              "name": "오아",
+              "distance": 0.8675413131713867
+            },
+            {
+              "name": "라다",
+              "distance": 0.8718257546424866
+            },
+            {
+              "name": "메르시",
+              "distance": 0.8848063945770264
+            },
+            {
+              "name": "히메키",
+              "distance": 0.9189174175262451
+            },
+            {
+              "name": "아이찡",
+              "distance": 0.9317384362220764
+            }
+          ]
+        },
+        "joint": {
+          "name": null,
+          "status": "insufficient",
+          "best": "시리",
+          "reason": "joint_video_rejected",
+          "distance": 0.705244779586792,
+          "margin": 0.04393845796585083
+        },
+        "secondary": {
+          "name": null,
+          "reason": "secondary_reference_rejected",
+          "raw_current_name": null,
+          "raw_current_reason": "secondary_reference_rejected",
+          "window_support_frames": [],
+          "raw_current_match": {
+            "frame_index": 13300,
+            "time_seconds": 221.88833333333335,
+            "name": null,
+            "distance": 0.8455319106578827,
+            "margin": 0.020439982414245605,
+            "reason": "secondary_reference_rejected",
+            "candidates": [
+              {
+                "name": "보라",
+                "distance": 0.8455319106578827
+              },
+              {
+                "name": "시리",
+                "distance": 0.8659718930721283
+              },
+              {
+                "name": "아이찡",
+                "distance": 0.8888249322772026
+              },
+              {
+                "name": "영",
+                "distance": 0.8949458226561546
+              },
+              {
+                "name": "아윤",
+                "distance": 0.9134727120399475
+              },
+              {
+                "name": "히메키",
+                "distance": 0.9713942855596542
+              },
+              {
+                "name": "메르시",
+                "distance": 0.974522840231657
+              },
+              {
+                "name": "라다",
+                "distance": 1.0398683287203312
+              },
+              {
+                "name": "오아",
+                "distance": 1.041425198316574
+              }
+            ]
+          }
+        },
+        "timeline_support_names": [],
+        "scene": "group",
+        "scene_reason": "distributed_full_body_ensemble",
+        "role_reason": "confirmed_measured_face_composition",
+        "primary_video_reconstructed": {
+          "name": null,
+          "candidates": []
+        }
+      },
+      "outgoing_independent_name_agreement": false,
+      "right_scene": "group",
+      "left_scene": "main",
+      "padding_audit": [],
+      "classification": "outgoing_unknown_same_cell"
+    }
+  ]
+}

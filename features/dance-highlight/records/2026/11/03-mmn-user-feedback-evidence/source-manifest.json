@@ -1,0 +1,52 @@
+[
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+    "sha256": "dd40f1b5af530cc71af2d1b1f3533037cd657fd8e9979ec9cc9ace6a39883ae8"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+    "sha256": "1941b362e9813cef840664f2a57e9f0767b85e5092ba889367b01af00f6b9e3c"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+    "sha256": "8f4cf456d5444cbf68596f0ab40dcc5c01012c3f9604f1b01ae150a1c9d58867"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/test_dance_member_timeline.py",
+    "sha256": "1c83786a22e6734b7ab3bfb9d3f76022c8a8630e729d145aa8a1034830db6b4a"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/test_dance_stage_prominence.py",
+    "sha256": "22890bb637b709001b0857fc26ee609eefee08f6a812827d32f548ae1eb48bf0"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/fixtures/dance_scene_review/mmn50_cut_support.json",
+    "sha256": "c59c7c7d905037df8d2963d836a27d1d89e0a087f2ee5a37ddd5be425d3f302e"
+  },
+  {
+    "repository": "clipper_python",
+    "path": "tests/fixtures/dance_scene_review/mmn103_role_subject.json",
+    "sha256": "9b24b9c50329983c32db2db51429d31450d0a9dd6c9cde9242aa9cc97b79c1b2"
+  },
+  {
+    "repository": "clipper_angular",
+    "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.ts",
+    "sha256": "98a823e627fee45e6289c7bf67abbac541b35504722daaa2f07b40f2c78c9b4e"
+  },
+  {
+    "repository": "clipper_angular",
+    "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.html",
+    "sha256": "878f01bb2717c5651390fa7a45dfb98254295ca5cdc61ca1c5977b44e90db3c2"
+  },
+  {
+    "repository": "clipper_angular",
+    "path": "src/shell/projects/projects-detail-page/projects-detail-page.component.spec.ts",
+    "sha256": "5c1ca84d2860ed0f5e66deb74b106bc893b0a57a970a87b0d99a5dba18d16ee1"
+  }
+]

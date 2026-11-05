@@ -1,0 +1,443 @@
+{
+  "MMN": {
+    "main_selection_refinement": [
+      {
+        "path": "/preparation_context/elapsed_seconds",
+        "before": 9.099405583983753,
+        "after": 10.08333620801568
+      },
+      {
+        "path": "/preparation_context/rejected/5/source_index",
+        "before": 25,
+        "after": 26
+      },
+      {
+        "path": "/preparation_context/rejected/6/source_index",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "path": "/preparation_context/rejected/7/source_index",
+        "before": 29,
+        "after": 30
+      },
+      {
+        "path": "/preparation_context/rejected/8/source_index",
+        "before": 43,
+        "after": 44
+      },
+      {
+        "path": "/preparation_context/rejected/9/source_index",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "path": "/preparation_context/rejected/10/source_index",
+        "before": 49,
+        "after": 50
+      },
+      {
+        "path": "/preparation_context/rejected/11/source_index",
+        "before": 51,
+        "after": 52
+      }
+    ],
+    "scene_context_refinement": [
+      {
+        "path": "/added_main_seconds",
+        "before": 6.272933333333356,
+        "after": 6.27293333333337
+      }
+    ],
+    "native_scene_refinement": [],
+    "output_named_continuity": [
+      {
+        "path": "/joins/0/source_indices/0",
+        "before": 32,
+        "after": 33
+      },
+      {
+        "path": "/joins/0/source_indices/1",
+        "before": 33,
+        "after": 34
+      },
+      {
+        "path": "/joins/1/source_indices/0",
+        "before": 32,
+        "after": 33
+      },
+      {
+        "path": "/joins/1/source_indices/1",
+        "before": 33,
+        "after": 34
+      },
+      {
+        "path": "/joins/1/source_indices/2",
+        "before": 34,
+        "after": 35
+      },
+      {
+        "path": "/joins/2/source_indices/0",
+        "before": 32,
+        "after": 33
+      },
+      {
+        "path": "/joins/2/source_indices/1",
+        "before": 33,
+        "after": 34
+      },
+      {
+        "path": "/joins/2/source_indices/2",
+        "before": 34,
+        "after": 35
+      },
+      {
+        "path": "/joins/2/source_indices/3",
+        "before": 35,
+        "after": 36
+      },
+      {
+        "path": "/joins/3/source_indices/0",
+        "before": 39,
+        "after": 40
+      },
+      {
+        "path": "/joins/3/source_indices/1",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "path": "/joins/4/source_indices/0",
+        "before": 39,
+        "after": 40
+      },
+      {
+        "path": "/joins/4/source_indices/1",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "path": "/joins/4/source_indices/2",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "path": "/joins/5/source_indices/0",
+        "before": 39,
+        "after": 40
+      },
+      {
+        "path": "/joins/5/source_indices/1",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "path": "/joins/5/source_indices/2",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "path": "/joins/5/source_indices/3",
+        "before": 42,
+        "after": 43
+      },
+      {
+        "path": "/joins/6/source_indices/0",
+        "before": 39,
+        "after": 40
+      },
+      {
+        "path": "/joins/6/source_indices/1",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "path": "/joins/6/source_indices/2",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "path": "/joins/6/source_indices/3",
+        "before": 42,
+        "after": 43
+      },
+      {
+        "path": "/joins/6/source_indices/4",
+        "before": 43,
+        "after": 44
+      },
+      {
+        "path": "/joins/7/source_indices/0",
+        "before": 52,
+        "after": 53
+      },
+      {
+        "path": "/joins/7/source_indices/1",
+        "before": 53,
+        "after": 54
+      },
+      {
+        "path": "/joins/8/source_indices/0",
+        "before": 52,
+        "after": 53
+      },
+      {
+        "path": "/joins/8/source_indices/1",
+        "before": 53,
+        "after": 54
+      },
+      {
+        "path": "/joins/8/source_indices/2",
+        "before": 54,
+        "after": 55
+      },
+      {
+        "path": "/performance_parts",
+        "change": "added"
+      }
+    ],
+    "scene_boundary_refinement": [
+      {
+        "path": "/scene_group_ranges",
+        "before": {
+          "type": "list",
+          "length": 268
+        },
+        "after": {
+          "type": "list",
+          "length": 272
+        }
+      },
+      {
+        "path": "/scene_group_seconds",
+        "before": 17.917900000000014,
+        "after": 18.184833333333348
+      },
+      {
+        "path": "/source_reads/decode_seconds",
+        "before": 0.09150837495690212,
+        "after": 0.09140608296729624
+      }
+    ]
+  },
+  "ANT": {
+    "main_selection_refinement": [
+      {
+        "path": "/preparation_context/elapsed_seconds",
+        "before": 10.323639415961225,
+        "after": 18.26236679102294
+      },
+      {
+        "path": "/preparation_context/rejected/13/source_index",
+        "before": 76,
+        "after": 74
+      },
+      {
+        "path": "/preparation_context/rejected/14/source_index",
+        "before": 77,
+        "after": 75
+      },
+      {
+        "path": "/preparation_context/rejected/15/source_index",
+        "before": 89,
+        "after": 87
+      },
+      {
+        "path": "/preparation_context/rejected/16/source_index",
+        "before": 94,
+        "after": 92
+      },
+      {
+        "path": "/preparation_context/rejected/17/source_index",
+        "before": 97,
+        "after": 95
+      },
+      {
+        "path": "/preparation_context/rejected/18/source_index",
+        "before": 98,
+        "after": 96
+      },
+      {
+        "path": "/preparation_context/rejected/19/source_index",
+        "before": 99,
+        "after": 97
+      },
+      {
+        "path": "/preparation_context/rejected/20/source_index",
+        "before": 100,
+        "after": 98
+      },
+      {
+        "path": "/preparation_context/rejected/21/source_index",
+        "before": 101,
+        "after": 99
+      }
+    ],
+    "scene_context_refinement": [
+      {
+        "path": "/added_main_seconds",
+        "before": 2.001999999999981,
+        "after": 2.0019999999999527
+      }
+    ],
+    "native_scene_refinement": [],
+    "output_named_continuity": [
+      {
+        "path": "/performance_parts",
+        "change": "added"
+      }
+    ],
+    "scene_boundary_refinement": [
+      {
+        "path": "/scene_group_ranges",
+        "before": {
+          "type": "list",
+          "length": 243
+        },
+        "after": {
+          "type": "list",
+          "length": 254
+        }
+      },
+      {
+        "path": "/scene_group_seconds",
+        "before": 16.182833333333395,
+        "after": 16.91690000000006
+      },
+      {
+        "path": "/source_reads/decode_seconds",
+        "before": 0.08001362608047202,
+        "after": 0.13960479194065556
+      },
+      {
+        "path": "/unidentified_handoffs/changes",
+        "before": {
+          "type": "list",
+          "length": 3
+        },
+        "after": {
+          "type": "list",
+          "length": 2
+        }
+      }
+    ]
+  },
+  "NEON": {
+    "main_selection_refinement": [
+      {
+        "path": "/preparation_context/elapsed_seconds",
+        "before": 1.5989418750395998,
+        "after": 1.8564892500289716
+      },
+      {
+        "path": "/preparation_context/rejected/7/source_index",
+        "before": 45,
+        "after": 46
+      },
+      {
+        "path": "/preparation_context/rejected/8/source_index",
+        "before": 51,
+        "after": 52
+      },
+      {
+        "path": "/preparation_context/rejected/9/source_index",
+        "before": 53,
+        "after": 54
+      },
+      {
+        "path": "/preparation_context/rejected/10/source_index",
+        "before": 54,
+        "after": 55
+      },
+      {
+        "path": "/preparation_context/rejected/11/source_index",
+        "before": 56,
+        "after": 57
+      },
+      {
+        "path": "/preparation_context/rejected/12/source_index",
+        "before": 64,
+        "after": 65
+      },
+      {
+        "path": "/preparation_context/rejected/13/source_index",
+        "before": 66,
+        "after": 67
+      },
+      {
+        "path": "/preparation_context/rejected/14/source_index",
+        "before": 67,
+        "after": 68
+      },
+      {
+        "path": "/preparation_context/rejected/15/source_index",
+        "before": 68,
+        "after": 69
+      },
+      {
+        "path": "/preparation_context/rejected/16/source_index",
+        "before": 69,
+        "after": 70
+      }
+    ],
+    "scene_context_refinement": [
+      {
+        "path": "/added_main_seconds",
+        "before": 0.26693333333335545,
+        "after": 0.266933333333327
+      }
+    ],
+    "native_scene_refinement": [
+      {
+        "path": "/changes",
+        "before": {
+          "type": "list",
+          "length": 68
+        },
+        "after": {
+          "type": "list",
+          "length": 60
+        }
+      }
+    ],
+    "output_named_continuity": [
+      {
+        "path": "/face_edge_joins/0/source_indices/0",
+        "before": 44,
+        "after": 45
+      },
+      {
+        "path": "/face_edge_joins/0/source_indices/1",
+        "before": 45,
+        "after": 46
+      },
+      {
+        "path": "/performance_parts",
+        "change": "added"
+      }
+    ],
+    "scene_boundary_refinement": [
+      {
+        "path": "/scene_group_ranges",
+        "before": {
+          "type": "list",
+          "length": 692
+        },
+        "after": {
+          "type": "list",
+          "length": 707
+        }
+      },
+      {
+        "path": "/scene_group_seconds",
+        "before": 46.04600000000006,
+        "after": 47.047000000000054
+      },
+      {
+        "path": "/source_reads/decode_seconds",
+        "before": 0.04426441603573039,
+        "after": 0.04377391701564193
+      }
+    ]
+  }
+}

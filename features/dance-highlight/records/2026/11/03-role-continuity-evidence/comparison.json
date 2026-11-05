@@ -1,0 +1,4219 @@
+[
+  {
+    "title": "MMN",
+    "project_id": "1793649506337",
+    "baseline_project_id": "1793639096353",
+    "job_id": "dance_1793649506337",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649506337",
+    "submitted": "2026-11-02T19:58:28.039Z",
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/BZDZBUyaJbA",
+      "requestedQuality": "1080p"
+    },
+    "same_setup": true,
+    "same_reference_bytes": true,
+    "same_config": true,
+    "before_wall_seconds": 314.957,
+    "after_wall_seconds": 333.43,
+    "before": {
+      "clips": 88,
+      "under1": 41,
+      "under2": 62,
+      "cohorts": {
+        "named": {
+          "clips": 40,
+          "seconds": 128.52799999999996,
+          "under1": 6,
+          "under_half": 4
+        },
+        "unknown": {
+          "clips": 16,
+          "seconds": 6.80720000000003,
+          "under1": 14,
+          "under_half": 10
+        },
+        "group": {
+          "clips": 32,
+          "seconds": 33.51681666666667,
+          "under1": 21,
+          "under_half": 12
+        }
+      }
+    },
+    "after": {
+      "clips": 68,
+      "under1": 27,
+      "under2": 44,
+      "cohorts": {
+        "named": {
+          "clips": 39,
+          "seconds": 129.66256666666663,
+          "under1": 6,
+          "under_half": 4
+        },
+        "unknown": {
+          "clips": 15,
+          "seconds": 5.672633333333366,
+          "under1": 14,
+          "under_half": 10
+        },
+        "group": {
+          "clips": 14,
+          "seconds": 19.436083333333325,
+          "under1": 7,
+          "under_half": 3
+        }
+      }
+    },
+    "before_performance": {
+      "stage_seconds": {
+        "download_refs": 0.014906249998603016,
+        "yolo": 73.1174670420005,
+        "ref_embs": 1.4767883750027977,
+        "main_selection": 95.89470154099399,
+        "native_scene": 11.241465084021911,
+        "group_context": 0.0004080419894307852,
+        "segment_build": 27.715790916990954,
+        "face_extract": 43.98291204200359,
+        "secondary_faces": 17.138022125000134,
+        "body_continuity": 0.5181013330002315,
+        "context_faces": 0.0003368750330992043,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.005465249996632338,
+        "observed_part_continuity": 0.2917973329895176,
+        "shot_member_gaps": 0.008009583048988134,
+        "cluster_map": 38.98016833298607,
+        "clips_main": 7.017411332984921,
+        "clips_group": 4.026129374979064
+      },
+      "total_before_metadata_write_seconds": 305.55880766699556,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "after_performance": {
+      "stage_seconds": {
+        "download_refs": 0.03559191699605435,
+        "yolo": 79.1387330419966,
+        "ref_embs": 1.3661142499768175,
+        "pose_observations": 0.13742199999978766,
+        "main_selection": 99.63114420796046,
+        "native_scene": 10.963484166015405,
+        "group_context": 0.00042587495408952236,
+        "segment_build": 27.919401542050764,
+        "face_extract": 48.04884691594634,
+        "secondary_faces": 17.034890083014034,
+        "body_continuity": 1.7355377919739112,
+        "context_faces": 0.0002714169677346945,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.20560195803409442,
+        "observed_part_continuity": 0.304680417990312,
+        "shot_member_gaps": 0.0030477080144919455,
+        "cluster_map": 41.671863250026945,
+        "group_continuity": 0.07040195795707405,
+        "clips_main": 6.594638499955181,
+        "clips_group": 4.597108624991961
+      },
+      "total_before_metadata_write_seconds": 322.4444200830185,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "runtime_modules": {
+      "face_cluster": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+        "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+      },
+      "pose_engine": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+        "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+      },
+      "pipeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+        "sha256": "c48d1d19c0cae2af8f9dd3a84bb311cfe854b876691fd0d0f8e8df191ca47d59"
+      },
+      "reference_matcher": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+        "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+      },
+      "auraface": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+        "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+      },
+      "main_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+        "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+      },
+      "face_recovery": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+        "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+      },
+      "face_evidence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+        "sha256": "dc3102d7ee09badefed9774f2c65407c0f0042dd656b693adaae2ace69811f19"
+      },
+      "member_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+        "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+      },
+      "member_coverage": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+        "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+      },
+      "secondary_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+        "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+      },
+      "segment": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+        "sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726"
+      },
+      "body_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+        "sha256": "ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687"
+      },
+      "mask_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+        "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+      },
+      "mask_tracker": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+        "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+      },
+      "context_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+        "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+      },
+      "camera_transitions": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+        "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+      },
+      "joint_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+        "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+      },
+      "cut_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+        "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+      },
+      "sampled_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+        "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+      },
+      "pose_face_rotation": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+        "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+      },
+      "scene_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+        "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+      },
+      "observed_main": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+        "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+      },
+      "main_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+        "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+      },
+      "main_role_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+        "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+      },
+      "scene_cut_proof": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+        "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+      },
+      "scene_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+        "sha256": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7"
+      },
+      "temporal_support": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+        "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+      },
+      "native_scene": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+        "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+      },
+      "output_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+        "sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6"
+      },
+      "mask_frame_cache": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+        "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+      },
+      "stage_prominence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+        "sha256": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff"
+      },
+      "focal_composition": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+        "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+      },
+      "focal_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+        "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+      },
+      "incoming_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+        "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+      },
+      "face_runtime": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+        "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+      },
+      "opencv_acceleration": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+        "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+      },
+      "named_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+        "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+      },
+      "observed_member_edges": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_member_edges.py",
+        "sha256": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297"
+      },
+      "performance_parts": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/performance_parts.py",
+        "sha256": "26c5742c78c8d77373cd5145bf6988d87efb833febf9ff1e6e54261c8e1d3366"
+      },
+      "shot_member_gaps": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/shot_member_gaps.py",
+        "sha256": "62caefd2ebf2c9c177ec3abedd1282b8a461dc599b41a5284ebfb7ed506ca0ce"
+      },
+      "role_state": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/role_state.py",
+        "sha256": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+      },
+      "pose_observations": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_observations.py",
+        "sha256": "64b0d7e2194c21422188478a9d0bbd0f84385e29d136448e105bfedacd57fe57"
+      },
+      "group_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_output.py",
+        "sha256": "a68c327266679e053c8d0c6a38d4abc055edf074b7969f4772f8dd81200a354f"
+      },
+      "identity_projection": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/identity_projection.py",
+        "sha256": "f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0"
+      },
+      "group_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_continuity.py",
+        "sha256": "baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3"
+      },
+      "bounded_face_path": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/bounded_face_path.py",
+        "sha256": "b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79"
+      },
+      "incoming_identity_boundary": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_identity_boundary.py",
+        "sha256": "c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3"
+      }
+    },
+    "mask_disabled": true,
+    "joint_disabled": true,
+    "normalization_changed_frames": 10,
+    "after_before_output_dedup": {
+      "clips": 85,
+      "under1": 39,
+      "under2": 60,
+      "cohorts": {
+        "named": {
+          "clips": 39,
+          "seconds": 129.66256666666663,
+          "under1": 6,
+          "under_half": 4
+        },
+        "unknown": {
+          "clips": 15,
+          "seconds": 5.672633333333366,
+          "under1": 14,
+          "under_half": 10
+        },
+        "group": {
+          "clips": 31,
+          "seconds": 33.91721666666667,
+          "under1": 19,
+          "under_half": 11
+        }
+      }
+    },
+    "group_output_projection": {
+      "version": "contained_group_output_v1",
+      "classification_changed": false,
+      "input_group_count": 31,
+      "output_group_count": 14,
+      "suppressed": [
+        {
+          "group_clip_id": "group_0003",
+          "group_start": 16.016000000000002,
+          "group_end": 16.282933333333332,
+          "covering_main_clip_id": "main_0002",
+          "person_id": "카즈하",
+          "main_start": 13.413400000000001,
+          "main_end": 19.45276666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0004",
+          "group_start": 29.6296,
+          "group_end": 29.963266666666666,
+          "covering_main_clip_id": "main_0005",
+          "person_id": "홍은채",
+          "main_start": 26.393033333333335,
+          "main_end": 32.515816666666666,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0006",
+          "group_start": 38.705333333333336,
+          "group_end": 39.50613333333333,
+          "covering_main_clip_id": "main_0009",
+          "person_id": "사쿠라",
+          "main_start": 35.4354,
+          "main_end": 42.97626666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0007",
+          "group_start": 39.906533333333336,
+          "group_end": 40.10673333333333,
+          "covering_main_clip_id": "main_0009",
+          "person_id": "사쿠라",
+          "main_start": 35.4354,
+          "main_end": 42.97626666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0008",
+          "group_start": 40.17346666666667,
+          "group_end": 41.708333333333336,
+          "covering_main_clip_id": "main_0009",
+          "person_id": "사쿠라",
+          "main_start": 35.4354,
+          "main_end": 42.97626666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0009",
+          "group_start": 43.30993333333333,
+          "group_end": 43.57686666666667,
+          "covering_main_clip_id": "main_0011",
+          "person_id": "허윤진",
+          "main_start": 43.143100000000004,
+          "main_end": 46.46308333333334,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0010",
+          "group_start": 48.048,
+          "group_end": 48.6486,
+          "covering_main_clip_id": "main_0013",
+          "person_id": "허윤진",
+          "main_start": 47.98126666666667,
+          "main_end": 49.866483333333335,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0018",
+          "group_start": 81.01426666666667,
+          "group_end": 81.34793333333333,
+          "covering_main_clip_id": "main_0030",
+          "person_id": "김채원",
+          "main_start": 79.8798,
+          "main_end": 88.25483333333334,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0019",
+          "group_start": 84.6846,
+          "group_end": 85.21846666666667,
+          "covering_main_clip_id": "main_0030",
+          "person_id": "김채원",
+          "main_start": 79.8798,
+          "main_end": 88.25483333333334,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0020",
+          "group_start": 85.41866666666667,
+          "group_end": 85.81906666666667,
+          "covering_main_clip_id": "main_0030",
+          "person_id": "김채원",
+          "main_start": 79.8798,
+          "main_end": 88.25483333333334,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0021",
+          "group_start": 90.8908,
+          "group_end": 91.8918,
+          "covering_main_clip_id": "main_0034",
+          "person_id": "카즈하",
+          "main_start": 88.85543333333334,
+          "main_end": 96.34625,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0022",
+          "group_start": 93.02626666666667,
+          "group_end": 94.42766666666667,
+          "covering_main_clip_id": "main_0034",
+          "person_id": "카즈하",
+          "main_start": 88.85543333333334,
+          "main_end": 96.34625,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0023",
+          "group_start": 104.57113333333334,
+          "group_end": 104.90480000000001,
+          "covering_main_clip_id": "main_0041",
+          "person_id": "허윤진",
+          "main_start": 104.02058333333333,
+          "main_end": 106.70660000000001,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0025",
+          "group_start": 108.24146666666667,
+          "group_end": 108.97553333333333,
+          "covering_main_clip_id": "main_0042",
+          "person_id": "홍은채",
+          "main_start": 108.02458333333334,
+          "main_end": 109.89311666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0026",
+          "group_start": 110.17673333333333,
+          "group_end": 110.57713333333334,
+          "covering_main_clip_id": "main_0043",
+          "person_id": "허윤진",
+          "main_start": 109.89311666666667,
+          "main_end": 111.86175,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0028",
+          "group_start": 117.3172,
+          "group_end": 118.38493333333334,
+          "covering_main_clip_id": "main_0045",
+          "person_id": "김채원",
+          "main_start": 113.64686666666667,
+          "main_end": 118.50171666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0030",
+          "group_start": 127.7276,
+          "group_end": 131.99853333333334,
+          "covering_main_clip_id": "main_0048",
+          "person_id": "홍은채",
+          "main_start": 123.50671666666666,
+          "main_end": 134.16736666666668,
+          "reason": "single_named_main_contains_source_range"
+        }
+      ]
+    },
+    "group_continuity": {
+      "version": "observed_group_membership_v1",
+      "reason": "complete",
+      "bridges": [
+        {
+          "start": 40.90753333333333,
+          "end": 41.30793333333333,
+          "frames": [
+            2448,
+            2452,
+            2456,
+            2460,
+            2464,
+            2468,
+            2472,
+            2476
+          ],
+          "paths": [
+            [
+              0,
+              1,
+              0,
+              3,
+              1,
+              1,
+              2,
+              2
+            ],
+            [
+              1,
+              3,
+              3,
+              2,
+              4,
+              3,
+              3,
+              4
+            ],
+            [
+              2,
+              4,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          ],
+          "anchor_frames": [
+            2448,
+            2476
+          ],
+          "source_frames_checked": [
+            2448,
+            2476
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "start": 4.371033333333333,
+          "end": 8.1081,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            262,
+            443,
+            486
+          ]
+        },
+        {
+          "start": 9.175833333333333,
+          "end": 10.3103,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            550,
+            618
+          ]
+        },
+        {
+          "start": 14.681333333333333,
+          "end": 16.016000000000002,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            878,
+            910
+          ]
+        },
+        {
+          "start": 16.282933333333332,
+          "end": 29.6296,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            1135,
+            1228,
+            1370,
+            1477,
+            1567,
+            1601,
+            1717
+          ]
+        },
+        {
+          "start": 29.963266666666666,
+          "end": 34.8348,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            1949,
+            1979,
+            2001,
+            2004,
+            2078
+          ]
+        },
+        {
+          "start": 35.568866666666665,
+          "end": 38.705333333333336,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2255
+          ]
+        },
+        {
+          "start": 39.50613333333333,
+          "end": 39.906533333333336,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 40.10673333333333,
+          "end": 40.17346666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2407
+          ]
+        },
+        {
+          "start": 41.708333333333336,
+          "end": 43.30993333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2563
+          ]
+        },
+        {
+          "start": 43.57686666666667,
+          "end": 48.048,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2650,
+            2719,
+            2785,
+            2876
+          ]
+        },
+        {
+          "start": 48.6486,
+          "end": 50.2502,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2933,
+            2989
+          ]
+        },
+        {
+          "start": 50.650600000000004,
+          "end": 52.6526,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3047,
+            3144
+          ]
+        },
+        {
+          "start": 53.119733333333336,
+          "end": 55.72233333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3222,
+            3340
+          ]
+        },
+        {
+          "start": 56.2562,
+          "end": 57.490766666666666,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3377,
+            3392,
+            3408,
+            3425,
+            3426,
+            3439,
+            3440,
+            3446
+          ]
+        },
+        {
+          "start": 57.791066666666666,
+          "end": 59.125733333333336,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3467
+          ]
+        },
+        {
+          "start": 59.79306666666667,
+          "end": 65.24851666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3707,
+            3799,
+            3911
+          ]
+        },
+        {
+          "start": 67.06700000000001,
+          "end": 70.82075,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            4020,
+            4162,
+            4245
+          ]
+        },
+        {
+          "start": 72.072,
+          "end": 81.01426666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            4318,
+            4394,
+            4404,
+            4508,
+            4622,
+            4667,
+            4672,
+            4729,
+            4788,
+            4799,
+            4855
+          ]
+        },
+        {
+          "start": 81.34793333333333,
+          "end": 84.6846,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5073
+          ]
+        },
+        {
+          "start": 85.21846666666667,
+          "end": 85.41866666666667,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 85.81906666666667,
+          "end": 90.8908,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5201,
+            5315,
+            5434
+          ]
+        },
+        {
+          "start": 91.8918,
+          "end": 93.02626666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5574
+          ]
+        },
+        {
+          "start": 94.42766666666667,
+          "end": 104.57113333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5660,
+            5661,
+            5715,
+            5775,
+            5873,
+            6043,
+            6119,
+            6132,
+            6189,
+            6191,
+            6235
+          ]
+        },
+        {
+          "start": 104.90480000000001,
+          "end": 106.70660000000001,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6365
+          ]
+        },
+        {
+          "start": 108.02458333333334,
+          "end": 108.24146666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6481
+          ]
+        },
+        {
+          "start": 108.97553333333333,
+          "end": 110.17673333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6587
+          ]
+        },
+        {
+          "start": 110.57713333333334,
+          "end": 112.24546666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6641,
+            6705
+          ]
+        },
+        {
+          "start": 113.64686666666667,
+          "end": 117.3172,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6934,
+            7031
+          ]
+        },
+        {
+          "start": 118.38493333333334,
+          "end": 120.38693333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7103,
+            7176,
+            7198
+          ]
+        },
+        {
+          "start": 121.121,
+          "end": 127.7276,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7283,
+            7403,
+            7515,
+            7572,
+            7638
+          ]
+        }
+      ],
+      "source_reads": {
+        "reads": 29,
+        "seeks": 1,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.04619633388938382
+      },
+      "seconds": 0.07040195795707405,
+      "input_groups": [
+        {
+          "start": 0.0,
+          "end": 4.371033333333333
+        },
+        {
+          "start": 8.1081,
+          "end": 9.175833333333333
+        },
+        {
+          "start": 10.3103,
+          "end": 14.681333333333333
+        },
+        {
+          "start": 16.016000000000002,
+          "end": 16.282933333333332
+        },
+        {
+          "start": 29.6296,
+          "end": 29.963266666666666
+        },
+        {
+          "start": 34.8348,
+          "end": 35.568866666666665
+        },
+        {
+          "start": 38.705333333333336,
+          "end": 39.50613333333333
+        },
+        {
+          "start": 39.906533333333336,
+          "end": 40.10673333333333
+        },
+        {
+          "start": 40.17346666666667,
+          "end": 40.90753333333333
+        },
+        {
+          "start": 41.30793333333333,
+          "end": 41.708333333333336
+        },
+        {
+          "start": 43.30993333333333,
+          "end": 43.57686666666667
+        },
+        {
+          "start": 48.048,
+          "end": 48.6486
+        },
+        {
+          "start": 50.2502,
+          "end": 50.650600000000004
+        },
+        {
+          "start": 52.6526,
+          "end": 53.119733333333336
+        },
+        {
+          "start": 55.72233333333333,
+          "end": 56.2562
+        },
+        {
+          "start": 57.490766666666666,
+          "end": 57.791066666666666
+        },
+        {
+          "start": 59.125733333333336,
+          "end": 59.79306666666667
+        },
+        {
+          "start": 65.24851666666667,
+          "end": 67.06700000000001
+        },
+        {
+          "start": 70.82075,
+          "end": 72.072
+        },
+        {
+          "start": 81.01426666666667,
+          "end": 81.34793333333333
+        },
+        {
+          "start": 84.6846,
+          "end": 85.21846666666667
+        },
+        {
+          "start": 85.41866666666667,
+          "end": 85.81906666666667
+        },
+        {
+          "start": 90.8908,
+          "end": 91.8918
+        },
+        {
+          "start": 93.02626666666667,
+          "end": 94.42766666666667
+        },
+        {
+          "start": 104.57113333333334,
+          "end": 104.90480000000001
+        },
+        {
+          "start": 106.70660000000001,
+          "end": 108.02458333333334
+        },
+        {
+          "start": 108.24146666666667,
+          "end": 108.97553333333333
+        },
+        {
+          "start": 110.17673333333333,
+          "end": 110.57713333333334
+        },
+        {
+          "start": 112.24546666666667,
+          "end": 113.64686666666667
+        },
+        {
+          "start": 117.3172,
+          "end": 118.38493333333334
+        },
+        {
+          "start": 120.38693333333333,
+          "end": 121.121
+        },
+        {
+          "start": 127.7276,
+          "end": 131.99853333333334
+        }
+      ]
+    },
+    "identity_padding": {
+      "version": "observed_identity_padding_v1",
+      "rejected": [],
+      "verified": []
+    },
+    "incoming_identity_boundary": {
+      "version": "original_incoming_selected_body_v1",
+      "corrections": [],
+      "candidates": [],
+      "corrected_seconds": 0.0,
+      "source_reads": {
+        "reads": 0,
+        "seeks": 0,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.0
+      },
+      "reason": "complete",
+      "seconds": 0.19669062504544854
+    },
+    "source_face_paths": [
+      {
+        "start": 38.20473333333334,
+        "end": 39.3393,
+        "name": "사쿠라",
+        "seed_frames": [
+          2284,
+          2364
+        ],
+        "pose_link_frames": [
+          2320
+        ],
+        "source_face_path": {
+          "version": "bounded_owned_face_pixels_v1",
+          "accepted": true,
+          "windows": [
+            {
+              "frames": [
+                2284,
+                2288
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 51,
+                  "survived": 47,
+                  "roundtrip_median": 0.09630350023508072,
+                  "roundtrip_max": 1.1670759916305542,
+                  "minimum_spatial_variance": 1228.2211677978291
+                },
+                {
+                  "initial_points": 39,
+                  "survived": 37,
+                  "roundtrip_median": 0.14875289797782898,
+                  "roundtrip_max": 1.720343828201294,
+                  "minimum_spatial_variance": 798.2842540322181
+                }
+              ],
+              "minimum_path_intersection_area": 12075.453125,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2287,
+                2288
+              ]
+            },
+            {
+              "frames": [
+                2288,
+                2292
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 39,
+                  "survived": 25,
+                  "roundtrip_median": 0.16357429325580597,
+                  "roundtrip_max": 1.2350503206253052,
+                  "minimum_spatial_variance": 348.65237502308116
+                },
+                {
+                  "initial_points": 33,
+                  "survived": 31,
+                  "roundtrip_median": 0.10412712395191193,
+                  "roundtrip_max": 0.6989459991455078,
+                  "minimum_spatial_variance": 433.4538073994592
+                }
+              ],
+              "minimum_path_intersection_area": 6663.2666015625,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2289,
+                2290,
+                2291,
+                2292
+              ]
+            },
+            {
+              "frames": [
+                2292,
+                2296
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 33,
+                  "survived": 31,
+                  "roundtrip_median": 0.5450020432472229,
+                  "roundtrip_max": 1.748457670211792,
+                  "minimum_spatial_variance": 375.6796528679327
+                },
+                {
+                  "initial_points": 63,
+                  "survived": 40,
+                  "roundtrip_median": 0.46114617586135864,
+                  "roundtrip_max": 1.457682728767395,
+                  "minimum_spatial_variance": 413.446489241421
+                }
+              ],
+              "minimum_path_intersection_area": 4686.9482421875,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2293,
+                2294,
+                2295,
+                2296
+              ]
+            },
+            {
+              "frames": [
+                2296,
+                2300
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 63,
+                  "survived": 18,
+                  "roundtrip_median": 0.5535197257995605,
+                  "roundtrip_max": 1.9382286071777344,
+                  "minimum_spatial_variance": 98.34254853324313
+                },
+                {
+                  "initial_points": 25,
+                  "survived": 12,
+                  "roundtrip_median": 0.6114271879196167,
+                  "roundtrip_max": 1.6113803386688232,
+                  "minimum_spatial_variance": 124.99063770000608
+                }
+              ],
+              "minimum_path_intersection_area": 855.7275390625,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2297,
+                2298,
+                2299,
+                2300
+              ]
+            },
+            {
+              "frames": [
+                2300,
+                2304
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 25,
+                  "survived": 14,
+                  "roundtrip_median": 0.519890308380127,
+                  "roundtrip_max": 1.884456992149353,
+                  "minimum_spatial_variance": 95.50500767054785
+                },
+                {
+                  "initial_points": 25,
+                  "survived": 22,
+                  "roundtrip_median": 0.6307231187820435,
+                  "roundtrip_max": 1.8530055284500122,
+                  "minimum_spatial_variance": 138.65901285715503
+                }
+              ],
+              "minimum_path_intersection_area": 793.9619140625,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2301,
+                2302,
+                2303
+              ]
+            },
+            {
+              "frames": [
+                2356,
+                2360
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 21,
+                  "survived": 14,
+                  "roundtrip_median": 0.5719183683395386,
+                  "roundtrip_max": 1.8182121515274048,
+                  "minimum_spatial_variance": 85.62809757275053
+                },
+                {
+                  "initial_points": 53,
+                  "survived": 22,
+                  "roundtrip_median": 1.0523194074630737,
+                  "roundtrip_max": 1.681650161743164,
+                  "minimum_spatial_variance": 104.60809767879722
+                }
+              ],
+              "minimum_path_intersection_area": 812.7599487304688,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2358,
+                2359,
+                2360
+              ]
+            },
+            {
+              "frames": [
+                2360,
+                2364
+              ],
+              "accepted": true,
+              "directions": [
+                {
+                  "initial_points": 53,
+                  "survived": 43,
+                  "roundtrip_median": 0.5030970573425293,
+                  "roundtrip_max": 1.7687733173370361,
+                  "minimum_spatial_variance": 312.9104147658374
+                },
+                {
+                  "initial_points": 65,
+                  "survived": 52,
+                  "roundtrip_median": 0.6162087917327881,
+                  "roundtrip_max": 1.9383659362792969,
+                  "minimum_spatial_variance": 276.68596696937084
+                }
+              ],
+              "minimum_path_intersection_area": 3604.809814453125,
+              "reason": "bounded_owned_face_pixels",
+              "jump_frames": [
+                2361,
+                2362,
+                2363
+              ]
+            }
+          ],
+          "decoded_frames": 35,
+          "seconds": 1.2254263749928214,
+          "reason": "all_jump_windows_have_owned_face_paths"
+        },
+        "reason": "confirmed_body_continuity"
+      }
+    ],
+    "removed": [
+      {
+        "end": 38.20473333333334,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 35.4354
+      },
+      {
+        "end": 39.3393,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 38.20473333333334
+      },
+      {
+        "end": 42.97626666666667,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 39.3393
+      },
+      {
+        "end": 16.282933333333332,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 16.016000000000002
+      },
+      {
+        "end": 29.963266666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 29.6296
+      },
+      {
+        "end": 39.50613333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 38.705333333333336
+      },
+      {
+        "end": 40.10673333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 39.906533333333336
+      },
+      {
+        "end": 40.90753333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 40.17346666666667
+      },
+      {
+        "end": 41.708333333333336,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 41.30793333333333
+      },
+      {
+        "end": 43.57686666666667,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 43.30993333333333
+      },
+      {
+        "end": 48.6486,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 48.048
+      },
+      {
+        "end": 81.34793333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 81.01426666666667
+      },
+      {
+        "end": 85.21846666666667,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 84.6846
+      },
+      {
+        "end": 85.81906666666667,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 85.41866666666667
+      },
+      {
+        "end": 91.8918,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 90.8908
+      },
+      {
+        "end": 94.42766666666667,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 93.02626666666667
+      },
+      {
+        "end": 104.90480000000001,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 104.57113333333334
+      },
+      {
+        "end": 108.97553333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 108.24146666666667
+      },
+      {
+        "end": 110.57713333333334,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 110.17673333333333
+      },
+      {
+        "end": 118.38493333333334,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 117.3172
+      },
+      {
+        "end": 131.99853333333334,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 127.7276
+      }
+    ],
+    "added": [
+      {
+        "end": 42.97626666666667,
+        "person_id": "사쿠라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 35.4354
+      }
+    ],
+    "normalization": {
+      "version": "canonical_full_body_observations_v1",
+      "reason": "complete",
+      "raw_body_count": 8668,
+      "canonical_body_count": 8657
+    }
+  },
+  {
+    "title": "ANT",
+    "project_id": "1793649573540",
+    "baseline_project_id": "1793639190408",
+    "job_id": "dance_1793649573540",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649573540",
+    "submitted": "2026-11-02T19:59:35.327Z",
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/p_XdZdg9oGc",
+      "requestedQuality": "1080p"
+    },
+    "same_setup": true,
+    "same_reference_bytes": true,
+    "same_config": true,
+    "before_wall_seconds": 431.777,
+    "after_wall_seconds": 520.223,
+    "before": {
+      "clips": 126,
+      "under1": 72,
+      "under2": 89,
+      "cohorts": {
+        "named": {
+          "clips": 67,
+          "seconds": 176.60816666666653,
+          "under1": 24,
+          "under_half": 12
+        },
+        "unknown": {
+          "clips": 27,
+          "seconds": 15.016600000000075,
+          "under1": 23,
+          "under_half": 16
+        },
+        "group": {
+          "clips": 32,
+          "seconds": 27.761066666666657,
+          "under1": 25,
+          "under_half": 13
+        }
+      }
+    },
+    "after": {
+      "clips": 116,
+      "under1": 60,
+      "under2": 79,
+      "cohorts": {
+        "named": {
+          "clips": 67,
+          "seconds": 177.2756999999999,
+          "under1": 23,
+          "under_half": 11
+        },
+        "unknown": {
+          "clips": 26,
+          "seconds": 14.349066666666722,
+          "under1": 22,
+          "under_half": 16
+        },
+        "group": {
+          "clips": 23,
+          "seconds": 24.12410000000006,
+          "under1": 15,
+          "under_half": 7
+        }
+      }
+    },
+    "before_performance": {
+      "stage_seconds": {
+        "download_refs": 0.025194458954501897,
+        "yolo": 97.6485780000221,
+        "ref_embs": 0.3938318329746835,
+        "main_selection": 142.41009566700086,
+        "native_scene": 23.832617709005717,
+        "group_context": 0.0005658339941874146,
+        "segment_build": 37.379450874985196,
+        "face_extract": 68.92064108303748,
+        "secondary_faces": 27.396040166029707,
+        "body_continuity": 0.6489979579928331,
+        "context_faces": 0.00038425001548603177,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.15648091700859368,
+        "observed_part_continuity": 0.5730857489397749,
+        "shot_member_gaps": 0.18835104099707678,
+        "cluster_map": 50.952311208005995,
+        "clips_main": 9.661041583982296,
+        "clips_group": 3.1182496669935063
+      },
+      "total_before_metadata_write_seconds": 428.28990612499183,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "after_performance": {
+      "stage_seconds": {
+        "download_refs": 0.030157000001054257,
+        "yolo": 112.0488177909865,
+        "ref_embs": 0.4121359160053544,
+        "pose_observations": 0.25604204199044034,
+        "main_selection": 176.64378749998286,
+        "native_scene": 29.510563499992713,
+        "group_context": 0.0007367919897660613,
+        "segment_build": 45.198967750009615,
+        "face_extract": 88.46501116704894,
+        "secondary_faces": 31.01770237501478,
+        "body_continuity": 0.8042752080364153,
+        "context_faces": 0.0005899170064367354,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.5814836660283618,
+        "observed_part_continuity": 0.5955776250339113,
+        "shot_member_gaps": 0.2150361249805428,
+        "cluster_map": 58.511670125008095,
+        "group_continuity": 0.11018095799954608,
+        "clips_main": 12.266900333983358,
+        "clips_group": 2.577321667049546
+      },
+      "total_before_metadata_write_seconds": 515.1559408340254,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "runtime_modules": {
+      "face_cluster": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+        "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+      },
+      "pose_engine": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+        "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+      },
+      "pipeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+        "sha256": "c48d1d19c0cae2af8f9dd3a84bb311cfe854b876691fd0d0f8e8df191ca47d59"
+      },
+      "reference_matcher": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+        "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+      },
+      "auraface": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+        "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+      },
+      "main_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+        "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+      },
+      "face_recovery": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+        "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+      },
+      "face_evidence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+        "sha256": "dc3102d7ee09badefed9774f2c65407c0f0042dd656b693adaae2ace69811f19"
+      },
+      "member_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+        "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+      },
+      "member_coverage": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+        "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+      },
+      "secondary_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+        "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+      },
+      "segment": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+        "sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726"
+      },
+      "body_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+        "sha256": "ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687"
+      },
+      "mask_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+        "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+      },
+      "mask_tracker": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+        "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+      },
+      "context_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+        "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+      },
+      "camera_transitions": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+        "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+      },
+      "joint_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+        "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+      },
+      "cut_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+        "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+      },
+      "sampled_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+        "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+      },
+      "pose_face_rotation": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+        "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+      },
+      "scene_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+        "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+      },
+      "observed_main": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+        "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+      },
+      "main_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+        "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+      },
+      "main_role_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+        "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+      },
+      "scene_cut_proof": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+        "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+      },
+      "scene_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+        "sha256": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7"
+      },
+      "temporal_support": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+        "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+      },
+      "native_scene": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+        "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+      },
+      "output_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+        "sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6"
+      },
+      "mask_frame_cache": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+        "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+      },
+      "stage_prominence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+        "sha256": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff"
+      },
+      "focal_composition": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+        "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+      },
+      "focal_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+        "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+      },
+      "incoming_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+        "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+      },
+      "face_runtime": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+        "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+      },
+      "opencv_acceleration": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+        "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+      },
+      "named_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+        "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+      },
+      "observed_member_edges": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_member_edges.py",
+        "sha256": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297"
+      },
+      "performance_parts": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/performance_parts.py",
+        "sha256": "26c5742c78c8d77373cd5145bf6988d87efb833febf9ff1e6e54261c8e1d3366"
+      },
+      "shot_member_gaps": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/shot_member_gaps.py",
+        "sha256": "62caefd2ebf2c9c177ec3abedd1282b8a461dc599b41a5284ebfb7ed506ca0ce"
+      },
+      "role_state": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/role_state.py",
+        "sha256": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+      },
+      "pose_observations": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_observations.py",
+        "sha256": "64b0d7e2194c21422188478a9d0bbd0f84385e29d136448e105bfedacd57fe57"
+      },
+      "group_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_output.py",
+        "sha256": "a68c327266679e053c8d0c6a38d4abc055edf074b7969f4772f8dd81200a354f"
+      },
+      "identity_projection": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/identity_projection.py",
+        "sha256": "f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0"
+      },
+      "group_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_continuity.py",
+        "sha256": "baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3"
+      },
+      "bounded_face_path": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/bounded_face_path.py",
+        "sha256": "b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79"
+      },
+      "incoming_identity_boundary": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_identity_boundary.py",
+        "sha256": "c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3"
+      }
+    },
+    "mask_disabled": true,
+    "joint_disabled": true,
+    "normalization_changed_frames": 21,
+    "after_before_output_dedup": {
+      "clips": 124,
+      "under1": 68,
+      "under2": 87,
+      "cohorts": {
+        "named": {
+          "clips": 67,
+          "seconds": 177.2756999999999,
+          "under1": 23,
+          "under_half": 11
+        },
+        "unknown": {
+          "clips": 26,
+          "seconds": 14.349066666666722,
+          "under1": 22,
+          "under_half": 16
+        },
+        "group": {
+          "clips": 31,
+          "seconds": 28.228199999999994,
+          "under1": 23,
+          "under_half": 12
+        }
+      }
+    },
+    "group_output_projection": {
+      "version": "contained_group_output_v1",
+      "classification_changed": false,
+      "input_group_count": 31,
+      "output_group_count": 23,
+      "suppressed": [
+        {
+          "group_clip_id": "group_0002",
+          "group_start": 10.8108,
+          "group_end": 11.277933333333333,
+          "covering_main_clip_id": "main_0010",
+          "person_id": "김채원",
+          "main_start": 10.276933333333334,
+          "main_end": 17.150466666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0007",
+          "group_start": 49.2492,
+          "group_end": 49.6496,
+          "covering_main_clip_id": "main_0023",
+          "person_id": "김채원",
+          "main_start": 47.48076666666667,
+          "main_end": 53.720333333333336,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0013",
+          "group_start": 100.56713333333333,
+          "group_end": 100.96753333333334,
+          "covering_main_clip_id": "main_0041",
+          "person_id": "카즈하",
+          "main_start": 99.8998,
+          "main_end": 106.05595,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0014",
+          "group_start": 108.50840000000001,
+          "group_end": 109.04226666666666,
+          "covering_main_clip_id": "main_0042",
+          "person_id": "김채원",
+          "main_start": 106.05595,
+          "main_end": 109.10900000000001,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0019",
+          "group_start": 140.07326666666668,
+          "group_end": 140.97416666666666,
+          "covering_main_clip_id": "main_0053",
+          "person_id": "카즈하",
+          "main_start": 139.6395,
+          "main_end": 144.3442,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0021",
+          "group_start": 154.9548,
+          "group_end": 155.3552,
+          "covering_main_clip_id": "main_0071",
+          "person_id": "카즈하",
+          "main_start": 154.68786666666668,
+          "main_end": 155.78896666666668,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0025",
+          "group_start": 165.69886666666667,
+          "group_end": 166.3662,
+          "covering_main_clip_id": "main_0079",
+          "person_id": "허윤진",
+          "main_start": 165.33183333333335,
+          "main_end": 169.30246666666667,
+          "reason": "single_named_main_contains_source_range"
+        },
+        {
+          "group_clip_id": "group_0029",
+          "group_start": 183.71686666666668,
+          "group_end": 184.05053333333333,
+          "covering_main_clip_id": "main_0087",
+          "person_id": "사쿠라",
+          "main_start": 182.6826,
+          "main_end": 189.25573333333332,
+          "reason": "single_named_main_contains_source_range"
+        }
+      ]
+    },
+    "group_continuity": {
+      "version": "observed_group_membership_v1",
+      "reason": "complete",
+      "bridges": [
+        {
+          "start": 86.55313333333334,
+          "end": 87.02026666666667,
+          "frames": [
+            5184,
+            5188,
+            5192,
+            5196,
+            5200,
+            5204,
+            5208,
+            5212,
+            5216
+          ],
+          "paths": [
+            [
+              0,
+              1,
+              2,
+              0,
+              1,
+              2,
+              2,
+              2,
+              2
+            ],
+            [
+              1,
+              0,
+              1,
+              2,
+              2,
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              4,
+              0,
+              1,
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          ],
+          "anchor_frames": [
+            5184,
+            5216
+          ],
+          "source_frames_checked": [
+            5184,
+            5216
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "start": 3.7370666666666668,
+          "end": 5.6056,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            290
+          ]
+        },
+        {
+          "start": 6.4064000000000005,
+          "end": 10.8108,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            429,
+            455,
+            486,
+            488,
+            498,
+            503,
+            523,
+            568,
+            616,
+            631,
+            634
+          ]
+        },
+        {
+          "start": 11.277933333333333,
+          "end": 17.150466666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            723,
+            810,
+            870,
+            910,
+            986,
+            991,
+            1027
+          ]
+        },
+        {
+          "start": 17.6176,
+          "end": 36.56986666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            1056,
+            1092,
+            1188,
+            1254,
+            1438,
+            1534,
+            1614,
+            1670,
+            1718,
+            1762,
+            1872,
+            2004,
+            2073,
+            2148,
+            2192
+          ]
+        },
+        {
+          "start": 38.77206666666667,
+          "end": 42.125416666666666,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2525
+          ]
+        },
+        {
+          "start": 43.57686666666667,
+          "end": 44.96158333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2695
+          ]
+        },
+        {
+          "start": 47.48076666666667,
+          "end": 49.2492,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2846
+          ]
+        },
+        {
+          "start": 49.6496,
+          "end": 69.20246666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3220,
+            3318,
+            3391,
+            3432,
+            3782,
+            3858,
+            4092,
+            4125
+          ]
+        },
+        {
+          "start": 69.6696,
+          "end": 73.80706666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            4204,
+            4263,
+            4273,
+            4330,
+            4413
+          ]
+        },
+        {
+          "start": 74.34093333333334,
+          "end": 82.68260000000001,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            4740,
+            4817
+          ]
+        },
+        {
+          "start": 84.15073333333333,
+          "end": 86.15273333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5161
+          ]
+        },
+        {
+          "start": 87.6876,
+          "end": 96.6966,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5438,
+            5705,
+            5778
+          ]
+        },
+        {
+          "start": 97.2972,
+          "end": 100.56713333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5844,
+            5918
+          ]
+        },
+        {
+          "start": 100.96753333333334,
+          "end": 108.50840000000001,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6243,
+            6398,
+            6486,
+            6489
+          ]
+        },
+        {
+          "start": 109.04226666666666,
+          "end": 110.5104,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6535,
+            6553,
+            6555
+          ]
+        },
+        {
+          "start": 110.97753333333334,
+          "end": 133.80033333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6652,
+            6714,
+            6782,
+            7151,
+            7214,
+            7314,
+            7324,
+            7368,
+            7370,
+            7462,
+            7616,
+            7690,
+            8004
+          ]
+        },
+        {
+          "start": 134.06726666666668,
+          "end": 134.46766666666667,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 135.135,
+          "end": 136.3362,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8098,
+            8117,
+            8172
+          ]
+        },
+        {
+          "start": 137.137,
+          "end": 140.07326666666668,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8238,
+            8370
+          ]
+        },
+        {
+          "start": 140.97416666666666,
+          "end": 146.61313333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8450,
+            8788
+          ]
+        },
+        {
+          "start": 149.149,
+          "end": 154.9548,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9170,
+            9204
+          ]
+        },
+        {
+          "start": 155.3552,
+          "end": 155.88906666666668,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9344
+          ]
+        },
+        {
+          "start": 156.156,
+          "end": 156.7566,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9373
+          ]
+        },
+        {
+          "start": 157.02353333333335,
+          "end": 160.82733333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9426,
+            9608
+          ]
+        },
+        {
+          "start": 162.09526666666667,
+          "end": 165.69886666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9713,
+            9757,
+            9778,
+            9862,
+            9922
+          ]
+        },
+        {
+          "start": 166.3662,
+          "end": 169.30246666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            10092,
+            10131
+          ]
+        },
+        {
+          "start": 169.70286666666667,
+          "end": 173.43993333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            10172,
+            10267,
+            10303,
+            10325,
+            10361,
+            10362
+          ]
+        },
+        {
+          "start": 174.0739,
+          "end": 174.50766666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            10434
+          ]
+        },
+        {
+          "start": 175.24173333333334,
+          "end": 183.71686666666668,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            10504,
+            10569,
+            10633,
+            10670,
+            10840
+          ]
+        },
+        {
+          "start": 184.05053333333333,
+          "end": 186.25273333333334,
+          "reason": "observed_large_foreground"
+        }
+      ],
+      "source_reads": {
+        "reads": 33,
+        "seeks": 1,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.06923283205833286
+      },
+      "seconds": 0.11018095799954608,
+      "input_groups": [
+        {
+          "start": 3.1031,
+          "end": 3.7370666666666668
+        },
+        {
+          "start": 5.6056,
+          "end": 6.4064000000000005
+        },
+        {
+          "start": 10.8108,
+          "end": 11.277933333333333
+        },
+        {
+          "start": 17.150466666666667,
+          "end": 17.6176
+        },
+        {
+          "start": 36.56986666666667,
+          "end": 38.77206666666667
+        },
+        {
+          "start": 42.125416666666666,
+          "end": 43.57686666666667
+        },
+        {
+          "start": 44.96158333333334,
+          "end": 47.48076666666667
+        },
+        {
+          "start": 49.2492,
+          "end": 49.6496
+        },
+        {
+          "start": 69.20246666666667,
+          "end": 69.6696
+        },
+        {
+          "start": 73.80706666666667,
+          "end": 74.34093333333334
+        },
+        {
+          "start": 82.68260000000001,
+          "end": 84.15073333333333
+        },
+        {
+          "start": 86.15273333333333,
+          "end": 86.55313333333334
+        },
+        {
+          "start": 87.02026666666667,
+          "end": 87.6876
+        },
+        {
+          "start": 96.6966,
+          "end": 97.2972
+        },
+        {
+          "start": 100.56713333333333,
+          "end": 100.96753333333334
+        },
+        {
+          "start": 108.50840000000001,
+          "end": 109.04226666666666
+        },
+        {
+          "start": 110.5104,
+          "end": 110.97753333333334
+        },
+        {
+          "start": 133.80033333333333,
+          "end": 134.06726666666668
+        },
+        {
+          "start": 134.46766666666667,
+          "end": 135.135
+        },
+        {
+          "start": 136.3362,
+          "end": 137.137
+        },
+        {
+          "start": 140.07326666666668,
+          "end": 140.97416666666666
+        },
+        {
+          "start": 146.61313333333334,
+          "end": 149.149
+        },
+        {
+          "start": 154.9548,
+          "end": 155.3552
+        },
+        {
+          "start": 155.88906666666668,
+          "end": 156.156
+        },
+        {
+          "start": 156.7566,
+          "end": 157.02353333333335
+        },
+        {
+          "start": 160.82733333333334,
+          "end": 162.09526666666667
+        },
+        {
+          "start": 165.69886666666667,
+          "end": 166.3662
+        },
+        {
+          "start": 169.30246666666667,
+          "end": 169.70286666666667
+        },
+        {
+          "start": 173.43993333333333,
+          "end": 174.0739
+        },
+        {
+          "start": 174.50766666666667,
+          "end": 175.24173333333334
+        },
+        {
+          "start": 183.71686666666668,
+          "end": 184.05053333333333
+        },
+        {
+          "start": 186.25273333333334,
+          "end": 189.38920000000002
+        }
+      ]
+    },
+    "identity_padding": {
+      "version": "observed_identity_padding_v1",
+      "rejected": [],
+      "verified": []
+    },
+    "incoming_identity_boundary": {
+      "version": "original_incoming_selected_body_v1",
+      "corrections": [
+        {
+          "index": 70,
+          "name": "카즈하",
+          "previous_name": "김채원",
+          "before": 154.8213333333333,
+          "after": 154.68786666666668,
+          "seed_frames": [
+            9308,
+            9320
+          ],
+          "path_frames": [
+            9272,
+            9276,
+            9280,
+            9284,
+            9288,
+            9292,
+            9296,
+            9300,
+            9304,
+            9308,
+            9312,
+            9316,
+            9320
+          ],
+          "geometry_stop": "unproven_or_different_selected_body",
+          "retained_outgoing": {
+            "seed_frames": [
+              9244,
+              9256
+            ],
+            "path_frames": [
+              9244,
+              9248,
+              9252,
+              9256,
+              9260,
+              9264,
+              9268
+            ]
+          },
+          "reason": "original_incoming_selected_body",
+          "source_frames_checked": [
+            9244,
+            9320
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "index": 36,
+          "name": "사쿠라",
+          "previous_name": "김채원",
+          "before": 91.92526666666667,
+          "after": 91.8918,
+          "seed_frames": [
+            5520,
+            5532
+          ],
+          "path_frames": [
+            5508,
+            5512,
+            5516,
+            5520,
+            5524,
+            5528,
+            5532
+          ],
+          "geometry_stop": "unproven_or_different_selected_body",
+          "reason": "original_joint_conflict"
+        },
+        {
+          "index": 70,
+          "name": "카즈하",
+          "previous_name": "김채원",
+          "before": 154.8213333333333,
+          "after": 154.68786666666668,
+          "seed_frames": [
+            9308,
+            9320
+          ],
+          "path_frames": [
+            9272,
+            9276,
+            9280,
+            9284,
+            9288,
+            9292,
+            9296,
+            9300,
+            9304,
+            9308,
+            9312,
+            9316,
+            9320
+          ],
+          "geometry_stop": "unproven_or_different_selected_body",
+          "retained_outgoing": {
+            "seed_frames": [
+              9244,
+              9256
+            ],
+            "path_frames": [
+              9244,
+              9248,
+              9252,
+              9256,
+              9260,
+              9264,
+              9268
+            ]
+          },
+          "reason": "original_incoming_selected_body",
+          "source_frames_checked": [
+            9244,
+            9320
+          ]
+        }
+      ],
+      "corrected_seconds": 0.1334666666666351,
+      "source_reads": {
+        "reads": 77,
+        "seeks": 1,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.15033783100079745
+      },
+      "reason": "complete",
+      "seconds": 0.39047395798843354
+    },
+    "source_face_paths": [],
+    "removed": [
+      {
+        "end": 98.73196666666666,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 97.4974
+      },
+      {
+        "end": 99.8998,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.73196666666666
+      },
+      {
+        "end": 153.98706666666666,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 153.5534
+      },
+      {
+        "end": 154.65460000000002,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 153.98706666666666
+      },
+      {
+        "end": 155.78896666666668,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 154.65460000000002
+      },
+      {
+        "end": 11.277933333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 10.8108
+      },
+      {
+        "end": 49.6496,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 49.2492
+      },
+      {
+        "end": 86.55313333333334,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 86.15273333333333
+      },
+      {
+        "end": 87.6876,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 87.02026666666667
+      },
+      {
+        "end": 100.96753333333334,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 100.56713333333333
+      },
+      {
+        "end": 109.04226666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 108.50840000000001
+      },
+      {
+        "end": 140.97416666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 140.07326666666668
+      },
+      {
+        "end": 155.3552,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 154.9548
+      },
+      {
+        "end": 166.3662,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 165.69886666666667
+      },
+      {
+        "end": 184.05053333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 183.71686666666668
+      }
+    ],
+    "added": [
+      {
+        "end": 98.7986,
+        "person_id": "홍은채",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 97.4974
+      },
+      {
+        "end": 99.8998,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 98.7986
+      },
+      {
+        "end": 154.68786666666668,
+        "person_id": "김채원",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 153.5534
+      },
+      {
+        "end": 155.78896666666668,
+        "person_id": "카즈하",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 154.68786666666668
+      },
+      {
+        "end": 87.6876,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 86.15273333333333
+      }
+    ],
+    "normalization": {
+      "version": "canonical_full_body_observations_v1",
+      "reason": "complete",
+      "raw_body_count": 12679,
+      "canonical_body_count": 12658
+    }
+  },
+  {
+    "title": "NEON",
+    "project_id": "1793649654322",
+    "baseline_project_id": "1793639268565",
+    "job_id": "dance_1793649654322",
+    "output_root": "/Users/jina/Library/Application Support/Clipper Studio Dev/projects/files/116957ce-bd03-4d4a-a21d-984dc12487aa/1793649654322",
+    "submitted": "2026-11-02T20:00:55.789Z",
+    "source": {
+      "type": "youtube_url",
+      "url": "https://youtu.be/93j1fDGi_-8",
+      "requestedQuality": "1080p"
+    },
+    "same_setup": true,
+    "same_reference_bytes": true,
+    "same_config": true,
+    "before_wall_seconds": 461.224,
+    "after_wall_seconds": 473.277,
+    "before": {
+      "clips": 195,
+      "under1": 113,
+      "under2": 167,
+      "cohorts": {
+        "named": {
+          "clips": 97,
+          "seconds": 160.6923666666665,
+          "under1": 39,
+          "under_half": 21
+        },
+        "unknown": {
+          "clips": 45,
+          "seconds": 16.317800000000137,
+          "under1": 42,
+          "under_half": 33
+        },
+        "group": {
+          "clips": 53,
+          "seconds": 50.550500000000085,
+          "under1": 32,
+          "under_half": 20
+        }
+      }
+    },
+    "after": {
+      "clips": 190,
+      "under1": 108,
+      "under2": 161,
+      "cohorts": {
+        "named": {
+          "clips": 94,
+          "seconds": 160.55889999999982,
+          "under1": 35,
+          "under_half": 18
+        },
+        "unknown": {
+          "clips": 47,
+          "seconds": 16.784933333333466,
+          "under1": 44,
+          "under_half": 35
+        },
+        "group": {
+          "clips": 49,
+          "seconds": 50.81743333333344,
+          "under1": 29,
+          "under_half": 16
+        }
+      }
+    },
+    "before_performance": {
+      "stage_seconds": {
+        "download_refs": 0.048783958016429096,
+        "yolo": 103.20193591702264,
+        "ref_embs": 2.3121299170306884,
+        "main_selection": 139.51206199999433,
+        "native_scene": 40.921159417019226,
+        "group_context": 0.0014686249778605998,
+        "segment_build": 59.65263845800655,
+        "face_extract": 68.8800946669653,
+        "secondary_faces": 25.741567499993835,
+        "body_continuity": 0.9919032080215402,
+        "context_faces": 0.0005701250047422945,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.009970790997613221,
+        "observed_part_continuity": 0.5969937910558656,
+        "shot_member_gaps": 0.02014654199592769,
+        "cluster_map": 39.879225542012136,
+        "clips_main": 12.951870082993992,
+        "clips_group": 4.5956325409933925
+      },
+      "total_before_metadata_write_seconds": 457.08250274998136,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "after_performance": {
+      "stage_seconds": {
+        "download_refs": 0.04076520795933902,
+        "yolo": 113.1356120419805,
+        "ref_embs": 3.8077871249988675,
+        "pose_observations": 0.672082541976124,
+        "main_selection": 142.36184691701783,
+        "native_scene": 39.05107108305674,
+        "group_context": 0.0015310829621739686,
+        "segment_build": 57.45543670898769,
+        "face_extract": 71.84692162496503,
+        "secondary_faces": 24.134153291990515,
+        "body_continuity": 0.9448011660133488,
+        "context_faces": 0.00035670900251716375,
+        "mask_continuity": 0.0,
+        "joint_identity": 0.0,
+        "named_boundaries": 0.18076075002318248,
+        "observed_part_continuity": 0.6749350010068156,
+        "shot_member_gaps": 0.016311165993101895,
+        "cluster_map": 39.95649891602807,
+        "group_continuity": 0.23105425003450364,
+        "clips_main": 12.665834875020664,
+        "clips_group": 4.019067667017225
+      },
+      "total_before_metadata_write_seconds": 469.41505537496414,
+      "nested_stages": {
+        "segment_build": [
+          "native_scene",
+          "group_context"
+        ],
+        "cluster_map": [
+          "secondary_faces",
+          "body_continuity",
+          "context_faces",
+          "mask_continuity",
+          "joint_identity",
+          "named_boundaries",
+          "observed_part_continuity",
+          "shot_member_gaps"
+        ]
+      }
+    },
+    "runtime_modules": {
+      "face_cluster": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+        "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+      },
+      "pose_engine": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+        "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+      },
+      "pipeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+        "sha256": "c48d1d19c0cae2af8f9dd3a84bb311cfe854b876691fd0d0f8e8df191ca47d59"
+      },
+      "reference_matcher": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+        "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+      },
+      "auraface": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+        "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+      },
+      "main_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+        "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+      },
+      "face_recovery": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+        "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+      },
+      "face_evidence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+        "sha256": "dc3102d7ee09badefed9774f2c65407c0f0042dd656b693adaae2ace69811f19"
+      },
+      "member_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+        "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+      },
+      "member_coverage": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+        "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+      },
+      "secondary_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+        "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+      },
+      "segment": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+        "sha256": "f05a003d7071cc83e3eaf481a8f74a1f9c83a524fde0d8cc4ac3f02fea895726"
+      },
+      "body_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+        "sha256": "ea34e4fa02a4744a3e3ee118e75216ca31bb660c1126c41ebace8725eff4b687"
+      },
+      "mask_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+        "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+      },
+      "mask_tracker": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+        "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+      },
+      "context_faces": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+        "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+      },
+      "camera_transitions": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+        "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+      },
+      "joint_identity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+        "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+      },
+      "cut_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+        "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+      },
+      "sampled_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+        "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+      },
+      "pose_face_rotation": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+        "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+      },
+      "scene_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+        "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+      },
+      "observed_main": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+        "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+      },
+      "main_face_link": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+        "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+      },
+      "main_role_timeline": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+        "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+      },
+      "scene_cut_proof": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+        "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+      },
+      "scene_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+        "sha256": "d72264f9440b263cc2bf2d9d6d9bef88cd631d1c9145adc64ef94edf484d83b7"
+      },
+      "temporal_support": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+        "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+      },
+      "native_scene": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+        "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+      },
+      "output_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+        "sha256": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6"
+      },
+      "mask_frame_cache": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+        "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+      },
+      "stage_prominence": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+        "sha256": "d870ec3bbe61cde72d73892f4874a3412630aec84b69e77b4a7464984d532bff"
+      },
+      "focal_composition": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+        "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+      },
+      "focal_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+        "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+      },
+      "incoming_context": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+        "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+      },
+      "face_runtime": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+        "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+      },
+      "opencv_acceleration": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+        "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+      },
+      "named_boundaries": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+        "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+      },
+      "observed_member_edges": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_member_edges.py",
+        "sha256": "8133ade5c432b2bbf68503a87be373addf4eeab7915c14fa1232f9ff46d25297"
+      },
+      "performance_parts": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/performance_parts.py",
+        "sha256": "26c5742c78c8d77373cd5145bf6988d87efb833febf9ff1e6e54261c8e1d3366"
+      },
+      "shot_member_gaps": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/shot_member_gaps.py",
+        "sha256": "62caefd2ebf2c9c177ec3abedd1282b8a461dc599b41a5284ebfb7ed506ca0ce"
+      },
+      "role_state": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/role_state.py",
+        "sha256": "d60ad0daf24bdcd77bc3c036a21d7fbc1fb5d8b3b9ac8a25fec3c689c32e42f0"
+      },
+      "pose_observations": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_observations.py",
+        "sha256": "64b0d7e2194c21422188478a9d0bbd0f84385e29d136448e105bfedacd57fe57"
+      },
+      "group_output": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_output.py",
+        "sha256": "a68c327266679e053c8d0c6a38d4abc055edf074b7969f4772f8dd81200a354f"
+      },
+      "identity_projection": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/identity_projection.py",
+        "sha256": "f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0"
+      },
+      "group_continuity": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/group_continuity.py",
+        "sha256": "baeeb380d3799d630f1093a8ef4c03c0698092c49412f3d9d49415e5623e3ff3"
+      },
+      "bounded_face_path": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/bounded_face_path.py",
+        "sha256": "b4a6140348193e3afd037c55880b7542d9374d9b8af5b0ece2992e5d46325d79"
+      },
+      "incoming_identity_boundary": {
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_identity_boundary.py",
+        "sha256": "c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3"
+      }
+    },
+    "mask_disabled": true,
+    "joint_disabled": true,
+    "normalization_changed_frames": 90,
+    "after_before_output_dedup": {
+      "clips": 191,
+      "under1": 109,
+      "under2": 162,
+      "cohorts": {
+        "named": {
+          "clips": 94,
+          "seconds": 160.55889999999982,
+          "under1": 35,
+          "under_half": 18
+        },
+        "unknown": {
+          "clips": 47,
+          "seconds": 16.784933333333466,
+          "under1": 44,
+          "under_half": 35
+        },
+        "group": {
+          "clips": 50,
+          "seconds": 51.017633333333436,
+          "under1": 30,
+          "under_half": 17
+        }
+      }
+    },
+    "group_output_projection": {
+      "version": "contained_group_output_v1",
+      "classification_changed": false,
+      "input_group_count": 50,
+      "output_group_count": 49,
+      "suppressed": [
+        {
+          "group_clip_id": "group_0000",
+          "group_start": 23.223200000000002,
+          "group_end": 23.4234,
+          "covering_main_clip_id": "main_0001",
+          "person_id": "시리",
+          "main_start": 22.188833333333335,
+          "main_end": 24.791433333333334,
+          "reason": "single_named_main_contains_source_range"
+        }
+      ]
+    },
+    "group_continuity": {
+      "version": "observed_group_membership_v1",
+      "reason": "complete",
+      "bridges": [
+        {
+          "start": 52.8528,
+          "end": 53.119733333333336,
+          "frames": [
+            3164,
+            3168,
+            3172,
+            3176,
+            3180,
+            3184
+          ],
+          "paths": [
+            [
+              0,
+              1,
+              3,
+              1,
+              0,
+              3
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              2,
+              1
+            ],
+            [
+              2,
+              3,
+              5,
+              5,
+              5,
+              6
+            ]
+          ],
+          "anchor_frames": [
+            3164,
+            3184
+          ],
+          "source_frames_checked": [
+            3164,
+            3184
+          ]
+        },
+        {
+          "start": 210.87733333333333,
+          "end": 210.94406666666666,
+          "frames": [
+            12636,
+            12640,
+            12644
+          ],
+          "paths": [
+            [
+              0,
+              2,
+              1
+            ],
+            [
+              1,
+              0,
+              3
+            ],
+            [
+              2,
+              5,
+              4
+            ]
+          ],
+          "anchor_frames": [
+            12636,
+            12644
+          ],
+          "source_frames_checked": [
+            12636,
+            12644
+          ]
+        },
+        {
+          "start": 221.75486666666666,
+          "end": 221.88833333333335,
+          "frames": [
+            13288,
+            13292,
+            13296,
+            13300
+          ],
+          "paths": [
+            [
+              1,
+              4,
+              5,
+              5
+            ],
+            [
+              2,
+              3,
+              3,
+              4
+            ],
+            [
+              3,
+              5,
+              4,
+              3
+            ]
+          ],
+          "anchor_frames": [
+            13288,
+            13300
+          ],
+          "source_frames_checked": [
+            13288,
+            13300
+          ]
+        }
+      ],
+      "rejected": [
+        {
+          "start": 23.4234,
+          "end": 41.4414,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 41.77506666666667,
+          "end": 42.042,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 42.308933333333336,
+          "end": 42.6426,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 44.110733333333336,
+          "end": 48.915533333333336,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            2644,
+            2756,
+            2838
+          ]
+        },
+        {
+          "start": 50.08336666666667,
+          "end": 51.4514,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3002,
+            3084
+          ]
+        },
+        {
+          "start": 54.187466666666666,
+          "end": 58.324933333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3336
+          ]
+        },
+        {
+          "start": 58.925533333333334,
+          "end": 64.79806666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3752
+          ]
+        },
+        {
+          "start": 65.26520000000001,
+          "end": 75.60886666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            3918,
+            4000,
+            4056,
+            4222,
+            4364,
+            4526
+          ]
+        },
+        {
+          "start": 75.8758,
+          "end": 76.4764,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 76.94353333333333,
+          "end": 82.21546666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            4666,
+            4804,
+            4912
+          ]
+        },
+        {
+          "start": 83.34993333333334,
+          "end": 84.6846,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5024
+          ]
+        },
+        {
+          "start": 86.35293333333334,
+          "end": 86.41966666666667,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 86.88680000000001,
+          "end": 89.82306666666666,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5216
+          ]
+        },
+        {
+          "start": 90.25683333333333,
+          "end": 92.75933333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5410,
+            5543,
+            5550
+          ]
+        },
+        {
+          "start": 93.02626666666667,
+          "end": 93.8938,
+          "reason": "fewer_than_three_reciprocal_paths"
+        },
+        {
+          "start": 95.095,
+          "end": 96.76333333333334,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 98.23146666666666,
+          "end": 101.63486666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            5906,
+            5965,
+            5983,
+            5992
+          ]
+        },
+        {
+          "start": 101.96853333333334,
+          "end": 115.9158,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            6376,
+            6546,
+            6930
+          ]
+        },
+        {
+          "start": 116.5164,
+          "end": 116.78333333333333,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 117.18373333333334,
+          "end": 120.98753333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7068
+          ]
+        },
+        {
+          "start": 121.65486666666666,
+          "end": 125.5254,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7292,
+            7406
+          ]
+        },
+        {
+          "start": 127.16036666666668,
+          "end": 129.129,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7622,
+            7643,
+            7645
+          ]
+        },
+        {
+          "start": 129.5294,
+          "end": 130.79733333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7764,
+            7796
+          ]
+        },
+        {
+          "start": 131.5314,
+          "end": 137.27046666666666,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            7986,
+            8122
+          ]
+        },
+        {
+          "start": 137.60413333333332,
+          "end": 138.80533333333332,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8260,
+            8320
+          ]
+        },
+        {
+          "start": 141.07426666666666,
+          "end": 142.4423,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8538
+          ]
+        },
+        {
+          "start": 144.3442,
+          "end": 144.5444,
+          "reason": "fewer_than_three_reciprocal_paths"
+        },
+        {
+          "start": 144.81133333333332,
+          "end": 150.5504,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            8758,
+            8922,
+            8984
+          ]
+        },
+        {
+          "start": 152.61913333333334,
+          "end": 154.88806666666667,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9148,
+            9227,
+            9231,
+            9235,
+            9236,
+            9238
+          ]
+        },
+        {
+          "start": 155.48866666666666,
+          "end": 156.02253333333334,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 156.5564,
+          "end": 156.68986666666666,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 156.95680000000002,
+          "end": 157.3572,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 157.62413333333333,
+          "end": 159.42593333333335,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            9466
+          ]
+        },
+        {
+          "start": 160.09326666666666,
+          "end": 164.63113333333334,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 165.49866666666668,
+          "end": 183.14963333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            10861,
+            10978
+          ]
+        },
+        {
+          "start": 187.72086666666667,
+          "end": 189.9898,
+          "reason": "observed_large_foreground"
+        },
+        {
+          "start": 190.92406666666668,
+          "end": 194.26073333333335,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            11442
+          ]
+        },
+        {
+          "start": 195.52866666666668,
+          "end": 200.06653333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            11720,
+            11754,
+            11758,
+            11759,
+            11764,
+            11765,
+            11767,
+            11768,
+            11771,
+            11773,
+            11782,
+            11783,
+            11789,
+            11866,
+            11886
+          ]
+        },
+        {
+          "start": 200.26673333333335,
+          "end": 201.93506666666667,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 203.33646666666667,
+          "end": 204.8046,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            12188
+          ]
+        },
+        {
+          "start": 205.33846666666668,
+          "end": 205.6054,
+          "reason": "fewer_than_three_observed_members"
+        },
+        {
+          "start": 206.6064,
+          "end": 207.8076,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            12384,
+            12440
+          ]
+        },
+        {
+          "start": 209.37583333333333,
+          "end": 210.27673333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            12550
+          ]
+        },
+        {
+          "start": 211.211,
+          "end": 214.48093333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            12660,
+            12744,
+            12772,
+            12778,
+            12854
+          ]
+        },
+        {
+          "start": 216.28273333333334,
+          "end": 221.48793333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            12964,
+            13072,
+            13238
+          ]
+        },
+        {
+          "start": 222.222,
+          "end": 222.6224,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            13324
+          ]
+        },
+        {
+          "start": 224.1239,
+          "end": 225.89233333333334,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            13434
+          ]
+        },
+        {
+          "start": 228.16126666666668,
+          "end": 229.19563333333335,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            13717,
+            13738
+          ]
+        },
+        {
+          "start": 231.53130000000002,
+          "end": 233.49993333333333,
+          "reason": "source_cut_inventory",
+          "cut_frames": [
+            13878
+          ]
+        }
+      ],
+      "source_reads": {
+        "reads": 43,
+        "seeks": 3,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.16281628905562684
+      },
+      "seconds": 0.23105425003450364,
+      "input_groups": [
+        {
+          "start": 23.223200000000002,
+          "end": 23.4234
+        },
+        {
+          "start": 41.4414,
+          "end": 41.77506666666667
+        },
+        {
+          "start": 42.042,
+          "end": 42.308933333333336
+        },
+        {
+          "start": 42.6426,
+          "end": 44.110733333333336
+        },
+        {
+          "start": 48.915533333333336,
+          "end": 50.08336666666667
+        },
+        {
+          "start": 51.4514,
+          "end": 52.8528
+        },
+        {
+          "start": 53.119733333333336,
+          "end": 54.187466666666666
+        },
+        {
+          "start": 58.324933333333334,
+          "end": 58.925533333333334
+        },
+        {
+          "start": 64.79806666666667,
+          "end": 65.26520000000001
+        },
+        {
+          "start": 75.60886666666667,
+          "end": 75.8758
+        },
+        {
+          "start": 76.4764,
+          "end": 76.94353333333333
+        },
+        {
+          "start": 82.21546666666667,
+          "end": 83.34993333333334
+        },
+        {
+          "start": 84.6846,
+          "end": 86.35293333333334
+        },
+        {
+          "start": 86.41966666666667,
+          "end": 86.88680000000001
+        },
+        {
+          "start": 89.82306666666666,
+          "end": 90.25683333333333
+        },
+        {
+          "start": 92.75933333333333,
+          "end": 93.02626666666667
+        },
+        {
+          "start": 93.8938,
+          "end": 95.095
+        },
+        {
+          "start": 96.76333333333334,
+          "end": 98.23146666666666
+        },
+        {
+          "start": 101.63486666666667,
+          "end": 101.96853333333334
+        },
+        {
+          "start": 115.9158,
+          "end": 116.5164
+        },
+        {
+          "start": 116.78333333333333,
+          "end": 117.18373333333334
+        },
+        {
+          "start": 120.98753333333333,
+          "end": 121.65486666666666
+        },
+        {
+          "start": 125.5254,
+          "end": 127.16036666666668
+        },
+        {
+          "start": 129.129,
+          "end": 129.5294
+        },
+        {
+          "start": 130.79733333333334,
+          "end": 131.5314
+        },
+        {
+          "start": 137.27046666666666,
+          "end": 137.60413333333332
+        },
+        {
+          "start": 138.80533333333332,
+          "end": 141.07426666666666
+        },
+        {
+          "start": 142.4423,
+          "end": 144.3442
+        },
+        {
+          "start": 144.5444,
+          "end": 144.81133333333332
+        },
+        {
+          "start": 150.5504,
+          "end": 152.61913333333334
+        },
+        {
+          "start": 154.88806666666667,
+          "end": 155.48866666666666
+        },
+        {
+          "start": 156.02253333333334,
+          "end": 156.5564
+        },
+        {
+          "start": 156.68986666666666,
+          "end": 156.95680000000002
+        },
+        {
+          "start": 157.3572,
+          "end": 157.62413333333333
+        },
+        {
+          "start": 159.42593333333335,
+          "end": 160.09326666666666
+        },
+        {
+          "start": 164.63113333333334,
+          "end": 165.49866666666668
+        },
+        {
+          "start": 183.14963333333333,
+          "end": 187.72086666666667
+        },
+        {
+          "start": 189.9898,
+          "end": 190.92406666666668
+        },
+        {
+          "start": 194.26073333333335,
+          "end": 195.52866666666668
+        },
+        {
+          "start": 200.06653333333333,
+          "end": 200.26673333333335
+        },
+        {
+          "start": 201.93506666666667,
+          "end": 203.33646666666667
+        },
+        {
+          "start": 204.8046,
+          "end": 205.33846666666668
+        },
+        {
+          "start": 205.6054,
+          "end": 206.6064
+        },
+        {
+          "start": 207.8076,
+          "end": 209.37583333333333
+        },
+        {
+          "start": 210.27673333333334,
+          "end": 210.87733333333333
+        },
+        {
+          "start": 210.94406666666666,
+          "end": 211.211
+        },
+        {
+          "start": 214.48093333333333,
+          "end": 216.28273333333334
+        },
+        {
+          "start": 221.48793333333333,
+          "end": 221.75486666666666
+        },
+        {
+          "start": 221.88833333333335,
+          "end": 222.222
+        },
+        {
+          "start": 222.6224,
+          "end": 224.1239
+        },
+        {
+          "start": 225.89233333333334,
+          "end": 228.16126666666668
+        },
+        {
+          "start": 229.19563333333335,
+          "end": 231.53130000000002
+        },
+        {
+          "start": 233.49993333333333,
+          "end": 234.0338
+        }
+      ]
+    },
+    "identity_padding": {
+      "version": "observed_identity_padding_v1",
+      "rejected": [
+        {
+          "parent_span": 14,
+          "start": 42.609233333333336,
+          "end": 42.6426,
+          "name": "오아",
+          "support_frame": 2560,
+          "source_frames": [
+            2552,
+            2556,
+            2560
+          ],
+          "reason": "selected_body_discontinuity"
+        },
+        {
+          "parent_span": 39,
+          "start": 93.02626666666667,
+          "end": 93.05953333333333,
+          "name": "오아",
+          "support_frame": 5560,
+          "source_frames": [
+            5560,
+            5564,
+            5568,
+            5572,
+            5576
+          ],
+          "reason": "selected_body_discontinuity"
+        }
+      ],
+      "verified": []
+    },
+    "incoming_identity_boundary": {
+      "version": "original_incoming_selected_body_v1",
+      "corrections": [],
+      "candidates": [
+        {
+          "index": 20,
+          "name": "메르시",
+          "previous_name": "오아",
+          "before": 55.9559,
+          "after": 55.72233333333333,
+          "seed_frames": [
+            3400,
+            3412
+          ],
+          "path_frames": [
+            3340,
+            3344,
+            3348,
+            3352,
+            3356,
+            3360,
+            3364,
+            3368,
+            3372,
+            3376,
+            3380,
+            3384,
+            3388,
+            3392,
+            3396,
+            3400,
+            3404,
+            3408,
+            3412
+          ],
+          "geometry_stop": "unproven_or_different_selected_body",
+          "reason": "original_joint_conflict"
+        },
+        {
+          "index": 61,
+          "name": "시리",
+          "previous_name": "영",
+          "before": 119.35256666666666,
+          "after": 119.3192,
+          "seed_frames": [
+            7160,
+            7176
+          ],
+          "path_frames": [
+            7152,
+            7156,
+            7160,
+            7164,
+            7168,
+            7172,
+            7176
+          ],
+          "geometry_stop": "unproven_or_different_selected_body",
+          "reason": "original_joint_conflict"
+        }
+      ],
+      "corrected_seconds": 0.0,
+      "source_reads": {
+        "reads": 0,
+        "seeks": 0,
+        "grabs": 0,
+        "cache_hits": 0,
+        "decode_seconds": 0.0
+      },
+      "reason": "complete",
+      "seconds": 0.17071083304472268
+    },
+    "source_face_paths": [],
+    "removed": [
+      {
+        "end": 41.80853333333333,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 41.77506666666667
+      },
+      {
+        "end": 42.208733333333335,
+        "person_id": "메르시",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 41.80853333333333
+      },
+      {
+        "end": 42.6426,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 42.208733333333335
+      },
+      {
+        "end": 45.045,
+        "person_id": "오아",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 44.110733333333336
+      },
+      {
+        "end": 70.00326666666666,
+        "person_id": "아이찡",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 69.13573333333333
+      },
+      {
+        "end": 70.43703333333333,
+        "person_id": "오아",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 70.00326666666666
+      },
+      {
+        "end": 93.05953333333333,
+        "person_id": "오아",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 93.02626666666667
+      },
+      {
+        "end": 94.5945,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 93.05953333333333
+      },
+      {
+        "end": 168.33473333333333,
+        "person_id": "아이찡",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 165.49866666666668
+      },
+      {
+        "end": 201.93506666666667,
+        "person_id": "라다",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 201.83486666666667
+      },
+      {
+        "end": 203.5366666666667,
+        "person_id": "라다",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 203.33646666666667
+      },
+      {
+        "end": 204.8046,
+        "person_id": "보라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 203.5366666666667
+      },
+      {
+        "end": 23.4234,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 23.223200000000002
+      },
+      {
+        "end": 52.8528,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 51.4514
+      },
+      {
+        "end": 54.187466666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 53.119733333333336
+      },
+      {
+        "end": 210.87733333333333,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 210.27673333333334
+      },
+      {
+        "end": 211.211,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 210.94406666666666
+      },
+      {
+        "end": 221.75486666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 221.48793333333333
+      },
+      {
+        "end": 222.222,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 221.88833333333335
+      }
+    ],
+    "added": [
+      {
+        "end": 42.208733333333335,
+        "person_id": "메르시",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 41.77506666666667
+      },
+      {
+        "end": 42.609233333333336,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 42.208733333333335
+      },
+      {
+        "end": 42.6426,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 42.609233333333336
+      },
+      {
+        "end": 45.045,
+        "person_id": "오아",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 43.77706666666667
+      },
+      {
+        "end": 70.03663333333333,
+        "person_id": "아이찡",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 69.13573333333333
+      },
+      {
+        "end": 70.43703333333333,
+        "person_id": "오아",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 70.03663333333333
+      },
+      {
+        "end": 94.5945,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 93.02626666666667
+      },
+      {
+        "end": 165.8658,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 165.49866666666668
+      },
+      {
+        "end": 168.33473333333333,
+        "person_id": "아이찡",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 165.8658
+      },
+      {
+        "end": 201.93506666666667,
+        "person_id": "unknown",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 201.83486666666667
+      },
+      {
+        "end": 204.8046,
+        "person_id": "보라",
+        "person_ids": null,
+        "seg_type": "main",
+        "start": 203.33646666666667
+      },
+      {
+        "end": 54.187466666666666,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 51.4514
+      },
+      {
+        "end": 211.211,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 210.27673333333334
+      },
+      {
+        "end": 222.222,
+        "person_id": null,
+        "person_ids": [],
+        "seg_type": "group",
+        "start": 221.48793333333333
+      }
+    ],
+    "normalization": {
+      "version": "canonical_full_body_observations_v1",
+      "reason": "complete",
+      "raw_body_count": 16622,
+      "canonical_body_count": 16528
+    }
+  }
+]

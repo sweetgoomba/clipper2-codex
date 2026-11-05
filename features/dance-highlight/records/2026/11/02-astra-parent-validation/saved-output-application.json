@@ -1,0 +1,167 @@
+[
+  {
+    "video": "MMN",
+    "policy": "all_shadow_candidates",
+    "before": {
+      "clips": 57,
+      "subsecond": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "after": {
+      "clips": 57,
+      "subsecond": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "applied": [],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  },
+  {
+    "video": "MMN",
+    "policy": "reviewed_clear_main_only",
+    "before": {
+      "clips": 57,
+      "subsecond": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "after": {
+      "clips": 57,
+      "subsecond": 21,
+      "unknown_seconds": 6.80720000000003
+    },
+    "applied": [],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  },
+  {
+    "video": "ANT",
+    "policy": "all_shadow_candidates",
+    "before": {
+      "clips": 102,
+      "subsecond": 54,
+      "unknown_seconds": 16.01780000000008
+    },
+    "after": {
+      "clips": 99,
+      "subsecond": 52,
+      "unknown_seconds": 13.648566666666717
+    },
+    "applied": [
+      {
+        "start": 48.08136666666667,
+        "end": 48.415033333333334,
+        "name": "김채원",
+        "side": "right",
+        "seed_frames": [
+          2908,
+          2920
+        ]
+      },
+      {
+        "start": 75.14173333333333,
+        "end": 75.37530000000001,
+        "name": "카즈하",
+        "side": "right",
+        "seed_frames": [
+          4552,
+          4564
+        ]
+      },
+      {
+        "start": 180.8806,
+        "end": 182.6826,
+        "name": "사쿠라",
+        "side": "right",
+        "seed_frames": [
+          10956,
+          10968
+        ]
+      }
+    ],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  },
+  {
+    "video": "ANT",
+    "policy": "reviewed_clear_main_only",
+    "before": {
+      "clips": 102,
+      "subsecond": 54,
+      "unknown_seconds": 16.01780000000008
+    },
+    "after": {
+      "clips": 100,
+      "subsecond": 52,
+      "unknown_seconds": 15.450566666666738
+    },
+    "applied": [
+      {
+        "start": 48.08136666666667,
+        "end": 48.415033333333334,
+        "name": "김채원",
+        "side": "right",
+        "seed_frames": [
+          2908,
+          2920
+        ]
+      },
+      {
+        "start": 75.14173333333333,
+        "end": 75.37530000000001,
+        "name": "카즈하",
+        "side": "right",
+        "seed_frames": [
+          4552,
+          4564
+        ]
+      }
+    ],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  },
+  {
+    "video": "NEON",
+    "policy": "all_shadow_candidates",
+    "before": {
+      "clips": 150,
+      "subsecond": 90,
+      "unknown_seconds": 16.751666666666797
+    },
+    "after": {
+      "clips": 149,
+      "subsecond": 89,
+      "unknown_seconds": 16.484733333333462
+    },
+    "applied": [
+      {
+        "start": 38.20483333333333,
+        "end": 38.47176666666667,
+        "name": "아이찡",
+        "side": "right",
+        "seed_frames": [
+          2308,
+          2324
+        ]
+      }
+    ],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  },
+  {
+    "video": "NEON",
+    "policy": "reviewed_clear_main_only",
+    "before": {
+      "clips": 150,
+      "subsecond": 90,
+      "unknown_seconds": 16.751666666666797
+    },
+    "after": {
+      "clips": 150,
+      "subsecond": 90,
+      "unknown_seconds": 16.751666666666797
+    },
+    "applied": [],
+    "known_coverage_preserved": true,
+    "total_main_duration_preserved": true
+  }
+]

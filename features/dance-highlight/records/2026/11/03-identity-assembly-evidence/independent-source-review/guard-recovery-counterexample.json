@@ -1,0 +1,53 @@
+{
+  "source_sha256": {
+    "identity_projection": "76caa818bddfd837fc09c385a0bb2bf56009a14ab423a4ca07f9ffa32183a8e0",
+    "part_boundary_events": "4be3c85735c439e0712a06dc53eb4e1884e77219303331d29b2a03557b52140a",
+    "member_timeline": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6",
+    "output_continuity": "2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6"
+  },
+  "input_names": [
+    "A",
+    "A"
+  ],
+  "guarded_names": [
+    "A",
+    null
+  ],
+  "guard_rejected": [
+    {
+      "parent_span": 1,
+      "start": 0.3333333333333333,
+      "end": 0.36666666666666664,
+      "name": "A",
+      "reason": "conflicting_projected_identity",
+      "conflicting_faces": [
+        {
+          "frame": 20,
+          "name": "B"
+        }
+      ]
+    }
+  ],
+  "after_recovery": [
+    [
+      0.0,
+      0.36666666666666664,
+      "A"
+    ]
+  ],
+  "edge_recoveries": [
+    {
+      "start": 0.3333333333333333,
+      "end": 0.36666666666666664,
+      "context_start": 0.0,
+      "context_end": 0.36666666666666664,
+      "reason": "original_neighbor_face_support"
+    }
+  ],
+  "joint_at_conflict": {
+    "status": "accepted",
+    "name": "B"
+  },
+  "models_called": false,
+  "video_read": false
+}

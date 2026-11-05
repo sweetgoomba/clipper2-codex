@@ -1,0 +1,77 @@
+다음 role eligibility / performance part 설계의 독립 판단 — 2026-11-03
+
+상태: 다음 작업 제안이다. 이번 앱에 구현된 기능이나 검증된 품질 개선으로 보고하면 안 된다. MMN short 감사, bounded torso 설계/inventory, MMN45 감사 및 현재 제품 소스만 읽었다. 테스트/모델/영상 decode/replay/제품 수정 없음.
+
+핵심 판단
+torso 보완을 이번에 구현하지 않는 결정에 동의한다. inventory는 MMN 최신/ANT·NEON 이전 canonical 자료가 섞인 후보 상한이며, 두 직접 후보의 최대 main unknown1.067933초는 성공 예상치가 아니다. 이는 main role 선택과 구간 조립의 문제를 해결하지 않는다.
+
+다음 일관된 최소 변경은 '단체 제외 여부'와 '누가 메인 역할인가'를 독립된 증거로 다루고, 역할 구간·이름 근거·준비 맥락을 하나의 최종 조립 계약으로 연결하는 것이다. 최소 길이 필터나 또 다른 짧은 조각 복구 함수가 아니다. 현재 증거만으로 이 변경이 수십 개를 정확히 없앨 것이라고 수치로 약속할 수는 없다.
+
+읽은 코드에서 확인한 두 단절
+1. segment.classify_main_scenes는 group이 아니고 선택 bbox가 있으면 scene_kind=main/main_eligible_composition으로 내려간다. main_role_timeline.choose_roles도 foreground/dominant가 없으면 size×center 점수의 최댓값을 desired로 선택한다. 이는 몸 후보 순위이지 독립적인 단독 주역 증명은 아니다. MMN3036에서5명 중 선택자의 얼굴이 가장 작아도 이 경로가 성립한다. distributed_full_body_ensemble의H/3 경계를360→363px로 넘은 사실은 메인 역할이 바뀌었다는 증거가 아니다.
+2. performance_parts는 identity segment와 시간 eligibility를 교차하며, intersect_main_segments는 eligibility를 몸 소유자 없이 합친 시간 창으로 만든다. 그 뒤 pipeline이 preparation을 따로 적용한다. apply_preparation_contexts는 의도적으로 incoming.start만 앞당기고 outgoing.end를 보존한다. 따라서 역할 후보, 역할 확정, 맥락 확장의 의미가 최종 같은 main 목록에서 구분되지 않는다.
+
+선택할 최소 모델: 세 가지 사실과 한 조립기
+A. 원본 관측/이름
+원래 몸·얼굴·joint/model별 판정·cut/handoff는 그대로 보존한다. identity는 '그 소유 몸의 이름을 어디까지 지지하는가'이며 main 자격을 주지 않는다. selected candidate도 검색/인식 대상을 고르는 수단으로 남긴다. 이름이 불확실하다는 이유로 실제 메인 역할을 지우지 않는다.
+
+B. 역할 에피소드
+기존 scene mask 옆에 내부적으로 primary-role proof와 group/composition proof를 따로 둔다. 필요한 최소 정보는 source range, 원래 몸 소유 참조, accepted/unresolved, direct/retained의 근거·부모 source IDs, 경계 이유다. 거대한 새 상태기계나 전역 smoothing/새 모델은 필요하지 않다.
+- group=false는 primary=true를 만들지 않는다. primary unresolved는 no_person이나 unknown identity와 별개다. group 증거도 없다면 억지 group으로 바꾸지 않는다.
+- primary direct anchor는 이미 검증 가능한 단독/전경/카메라 초점 등 긍정적 역할 근거여야 한다. 기존 max face×center, measured_face_composition라는 reason 문자열, accepted 이름, 선택 track ID는 단독 anchor가 아니다. 기존 dominant/foreground 역시 가림 경쟁자와 camera/연속성 검사를 포함한 전체 계약으로 평가한다.
+- 현재 role_state.sample_proof를 통째로 다시 켜는 것이 답은 아니다. 얼굴과 torso에 같은 중앙 가중치를 곱해 둘 다 우세하다는 조건도 MMN50 같은 '중앙에 있지만 작은 한 명'을 독립적인 파트 의도로 증명하지 못할 수 있다. 이는 향후 shadow inventory에서 실제 반례로 확인해야 한다.
+- direct role로 시작한 episode는 원래 선택 몸의 유일 대응, 전체 경쟁자 관측, 역할 반대 증거 없음으로만 이어간다. retained 결과는 새 direct anchor가 되지 않는다. 개인과 group이 동시에 긍정일 수 있으며, group 사실을 지워서 main을 만든 것으로 기록하지 않는다.
+- 몸 대응은 source cut에서 끊는다. 같은 멤버 performance part가 컷 양쪽에 각각 독립 role/name 근거를 가지면 최종 part는 이어질 수 있다. 모든 cut을 무조건 클립 분할로 바꾸면 MMN89–93을 퇴행시킨다.
+- 작은 몸 크기 변화/한 feature 결측/이름 span 경계는 자체로 역할 전환 이벤트가 아니다. 반대로 실제 다른 주역/단체/무인/관측 불명으로 바뀌면 짧더라도 경계를 남긴다. 고정 최소 길이는 쓰지 않는다.
+
+C. 준비 맥락과 최종 part
+core role range와 context range, 실제 내보낼 clip range를 구별한다. context는 기존 independently owned preparation proof를 그대로 참조하고 identity/role anchor로 승격하지 않는다. 최종 조립기는 role episode와 그 몸의 identity support를 연결하고, verified context를 해당 part에 첨부하며, evidence/preview/bbox를 한 번만 배분한다.
+현재 함수들을 전부 새로 쓰지 않는다. 우선 build_performance_parts의 core 출력과 incoming_preparation_context의 기존 accepted contexts를 순수 finalizer에 함께 전달하는 정도로 경계를 좁힌다. 준비 인식을 두 번 실행하거나 순서 변경 때문에 probe/model 호출을 늘리지 않는다. provenance는 바뀌는 list index보다 원래 source 범위/몸/증거 IDs를 따라가야 한다.
+여러 identity span은 같은 role episode 안의 naming 문제일 수 있고, 하나의 identity span도 실제 다른 role episode면 나뉜다. 그 둘을 단순 시간 AND로 취급하지 않는다. episode가 길다는 이유로 내부 unknown/반대 얼굴을 덮지는 않는다. 실제 이름 변경은 별도 독립 신원 근거와 body 전환을 요구한다.
+
+MMN50에 적용할 기대 계약
+f3036의 원래 owned 김채원 얼굴과 identity span은 보존한다. 다만 group 탈락과 rank winner만으로2프레임 named MAIN을 확정하지 않는다. 원래 formation의 동일한 여러 물리 몸/배치가 계속 관측되고 별도의 primary 양성이 없으면, 이미 확정된 group episode의 유지 가능성을 역할 단계에서 평가한다. 다음 group anchor52.65초까지의 전 구간을 잇는 현재 helper만을 통과 조건으로 삼지 않는다. 국소 유지의 범위는 실제 관측/컷까지이며 f3047(50.834117)과 f3144를 반드시 경계로 지킨다. source 증거가 부족하면 role unresolved로 남긴다. unknown 이름으로 바꾸거나 raw 시간을 삭제하지 않는다.
+group 유지가 입증되지 않은 상태에서 확인된 역할 없음으로 이름 붙은 클립을 숨기는 것만으로 품질 향상/복원초를 계산하지 않는다. 실제 사용자 출력에 unresolved role이 어떻게 남는지도 검증해야 한다. 후속 role evidence가 생겼을 때만 올바른 group/primary episode로 분류한다.
+
+MMN45에 적용할 기대 계약과 한계
+현재 저장 근거는 두 다른 몸을 동시에 지지한다. 김채원→카즈하의 동일 selected timeline 교정인 ANT154와 다르다. 허윤진 core43.143100–46.463083, 사쿠라 core46.463083–47.981267, 사쿠라 preparation45.361983–46.463083을 별도 사실로 보존한다. 사쿠라의 clip range는45.361983–47.981267로 사용자가 원하는 준비 맥락을 포함할 수 있다. 그 앞부분까지 새 exclusive primary role로 확정된 것처럼 core를 덮어쓰지 않는다.
+이렇게 하면 '정의상 두 main core가 겹쳤다'는 문제는 제거할 수 있지만 실제 내보내는 두 clip의 맥락 중첩은 남는다. 필드만 바꾼 것을 실제 중복 영상 감소나 정확도 개선이라고 보고하면 안 된다.
+제품이 맥락 중첩까지 없애고 다음 파트 준비 동작을 이전 화면 중심 주역보다 우선하려면 별도의 명시적 역할 선택 정책이 필요하다. 기존 preparation의 이름/자리이동/다음 solo 증거는 '이 사람의 준비 맥락'을 증명하지만 '다른 주역의 역할은 종료됐다'까지 자동 증명하지 않는다. 그 정책은 독립적인 활동/연출 역할 전환 근거로 평가해야 하며 현재 accepted 허윤진 얼굴을 사쿠라로 고치거나 해당 구간을 무조건 잘라내선 안 된다. 지금 근거로45.0부터 사쿠라라고 넓히는 것도 불가하다.
+
+금지 반례
+- H/3 또는 spread 한 경계만 넘고 동일 군무/작은 중앙 몸이 유지됨: 단독 main 신설 금지.
+- 진짜 큰 전경 주역+작은 여러 배경 몸: group membership만으로 주역을 지우지 않기.
+- 큰 사람이 카메라 앞을 잠시 지나감/가림 경쟁자: rank winner를 새 role anchor로 사용 금지.
+- 얼굴 이름이 양끝 같지만 실제 wide group, 다른 몸, 컷 뒤 미관측: main/name 자동 전파 금지.
+- 같은 옷·겹침·shared head/부분 head·붙은 torso·완전 가림: 원래 ownership/competitor veto 보존.
+- 아주 짧지만 독립 face와 handoff/cut가 있는 MMN26.142783–26.393033,88.421667–88.855433,102.936167–103.253150,103.253150–104.020583: 짧다는 이유로 삭제/이웃 멤버 흡수 금지.
+- identity known / role unknown, identity unknown / role accepted, 둘 다unknown, no_person을 각각 구분. unresolved 증가/숨김을 이름 회복으로 집계 금지.
+- 서로 다른 몸의 동시 accepted A/B + incoming preparation: 이름/몸 덮어쓰기 금지, context에서 core로 무근거 승격 금지.
+- ANT154 재지연/phantom outgoing A, NEON42.609와93.026 padding, NEON43.777–44.110733 동일인≠main 역할 주의점을 다시 통과시키지 않기.
+- role episode/canonical part/context를 다시 원본 face/role anchor로 사용하지 않기. backward context가 끝없이 새맥락을 만드는 연쇄 금지.
+
+기존 사용자14범위의 채택 기준
+원래 입력/출력과 source 경계를 보존한 채 범위별 시간 coverage·잘못 붙은 이름·역할 종류·관측 오차를 평가한다. 대략적 사용자 끝점을 임의의 정확한 밀리초 정답으로 만들지 않는다. 이미 실패한 것은 다음 설계로 바뀌지 않았다는 이유만으로 통과로 세지 않는다.
+1 MMN1.9–약2.3: intro no_person 요구. 사람의 positive 역할 없이 main 출력 금지. 미검출을 무인으로 단정하지 말고 원래 정답과 실제화면으로 별도확인.
+2 MMN2.3–4.37: group 보존.
+3 MMN10.91–11.31: 카즈하 또는group 허용; 임의 다른 멤버 금지.
+4 MMN34.73–35.44: 사쿠라 또는group 허용; identity conflict를 양끝 이름으로 덮지 않기.
+5 MMN37.738–39.339: 사쿠라, 이번38초복원 보존.
+6 MMN약45–48: 사쿠라 준비 맥락이 clip에 포함되는지와 core/context의 근거를 함께 확인. 기존 허윤진을 무근거로 사쿠라로 바꾸지 않기. 중복제거 성과와 맥락분리 성과를 구별.
+7 MMN89–93: 카즈하, 컷마다 짧게 잘라 퇴행하지 않기; 각shot 독립근거 유지.
+8 ANT4.571–6.139: 홍은채. 기존 unknown은 미해결로 계속표시하며 실패를 숨기지 않기.
+9 ANT8.375–약9: 홍은채 뒤 김채원, 기존8.975633 교대허용; 실제교대 보호.
+10 ANT9.4–10.277: 김채원. 남은unknown9.9098 이후를 해결했다고 허위집계하지 않기.
+11 ANT32.3까지홍은채/33.4이후김채원,32.633–33.433은 양옆 어느쪽허용. 이름경계완화로 다른시간에전파 금지.
+12 NEON78.378–79.680: Siri 유지.
+13 NEON150.617–152.619: 원경group 보존.
+14 NEON183.15–184.82: 원경group 보존, 바로전183초근처Oa클로즈업 침범금지.
+추가보호: ANT82.182–82.6826 실제교대(handoffs[]만 믿지않기), NEON115.6155–115.9158 컷/duet, ANT180.8806–182.6826 원경ensemble, NEON93초경계와187.72 기존미해결도 별도negative inventory에 남긴다.
+
+효과와 비용을 판단하는 가장 짧은 후속 순서
+1 앱벤치 완료 후, 우선 저장 자료에서 모든 main eligibility의 direct/retained/fallback 근거와 identity→role projection split, preparation-overlap을 한 inventory로 산출한다. 이름/구간특례 없이 같은 규칙을 세 영상 전체에 적용하고 바뀔 source 시간/멤버를 전부 열거한다. 현재수치만으로 큰효과를 주장하지 않는다.
+2 제품출력은 아직바꾸지 않고 역할episode+core/context 계약을 기존결과 옆에 기록하는 작은 변경으로 예상차이를 검토한다. MMN50,45만맞춘 규칙이 아니라 보호short와14범위 및 실제단체에서 무엇이달라지는지 확인한다.
+3 양성역할근거의 충분성이 확인된 다음 finalizer에서소비한다. 기존threshold완화/최소길이/전역smoothing/신규ML/SAM없음. 기존face/role의원본provenance/SDK/Person모듈불변. 새로운source읽기가필요한증명은개수·필요성부터따로측정하며조회재사용을추론0비용으로표현하지않는다.
+4 품질수치는 잘못된main초/정확한role+name초, real교대누락,미확인identity초,미확인role초,core/context중첩,short종류별개수,원시와표시중복제거를 분리한다. 전체wall과 직접후처리비용도 분리한다. unresolved로숨겨short만줄면실패다.
+
+추천: 이 role/assembly 계약을 다음 주작업으로 삼고 torso2후보는 우선순위를 낮춘다. 다만 MMN45의 독점 메인 정책과 MMN50의 역할 증거 부족은 서로 다른 판단이므로 한 'merge' 조건으로 해결하려 하지 않는다.

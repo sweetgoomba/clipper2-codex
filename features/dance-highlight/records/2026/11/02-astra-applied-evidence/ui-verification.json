@@ -1,0 +1,23 @@
+{
+  "app": "Clipper Studio (dev)",
+  "app_path": "/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app",
+  "view": "projects?plugin=dance_highlight",
+  "verification": "cua_repl.getAXState full tree after all three jobs completed",
+  "cards": [
+    {
+      "title": "NEON",
+      "time_display": "11. 02. 20:26",
+      "clips": 206
+    },
+    {
+      "title": "ANTIFRAGILE",
+      "time_display": "11. 02. 20:19",
+      "clips": 134
+    },
+    {
+      "title": "Made My Night",
+      "time_display": "11. 02. 20:12",
+      "clips": 89
+    }
+  ]
+}

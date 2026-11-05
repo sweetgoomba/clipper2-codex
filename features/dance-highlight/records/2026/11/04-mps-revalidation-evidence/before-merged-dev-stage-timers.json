@@ -1,0 +1,164 @@
+{
+  "MMN": {
+    "id": "dance_1793719164438",
+    "status": "completed",
+    "stage_timers": [
+      {
+        "time": "2026-11-03T15:19:38.228Z",
+        "message": "[DANCE][T] download_refs: 0.0s"
+      },
+      {
+        "time": "2026-11-03T15:19:40.431Z",
+        "message": "[DANCE][T] download_refs: 0.0s"
+      },
+      {
+        "time": "2026-11-03T15:21:55.833Z",
+        "message": "[DANCE][T] yolo: 2m 15.4s  (frames=2324, video=2m 35.0s, fps=59.9)"
+      },
+      {
+        "time": "2026-11-03T15:21:58.875Z",
+        "message": "[DANCE][T] ref_embeddings: 3.0s"
+      },
+      {
+        "time": "2026-11-03T15:26:31.942Z",
+        "message": "[DANCE][T] main_selection: 4m 32.9s"
+      },
+      {
+        "time": "2026-11-03T15:27:38.052Z",
+        "message": "[DANCE][T] segment_build: 1m 6.1s  (main=3, group=33)"
+      },
+      {
+        "time": "2026-11-03T15:30:04.587Z",
+        "message": "[DANCE][T] face_extract: 2m 26.5s  (segs=3, candidates/seg=12, selected/seg=5, owned_samples=2271)"
+      },
+      {
+        "time": "2026-11-03T15:30:48.004Z",
+        "message": "[DANCE][T] cluster_map: 43.4s  (embs=2, clusters=40, persons=5)"
+      },
+      {
+        "time": "2026-11-03T15:30:48.074Z",
+        "message": "[DANCE][T] group_continuity: 0.1s  (joins=1)"
+      },
+      {
+        "time": "2026-11-03T15:31:29.271Z",
+        "message": "[DANCE][T] clips_main: 5.3s  (n=49)"
+      },
+      {
+        "time": "2026-11-03T15:31:32.862Z",
+        "message": "[DANCE][T] clips_group: 3.6s  (n=32)"
+      },
+      {
+        "time": "2026-11-03T15:31:34.147Z",
+        "message": "[DANCE][T] TOTAL: 11m 53.7s  | download_refs=0.0s  yolo=2m 15.4s  ref_embs=3.0s  main_selection=4m 32.9s  segment_build=1m 6.1s  face_extract=2m 26.5s  cluster_map=43.4s  clips_main=5.3s  clips_group=3.6s"
+      }
+    ]
+  },
+  "ANT": {
+    "id": "dance_1793719441015",
+    "status": "completed",
+    "stage_timers": [
+      {
+        "time": "2026-11-03T15:31:42.584Z",
+        "message": "[DANCE][T] download_refs: 0.0s"
+      },
+      {
+        "time": "2026-11-03T15:31:44.699Z",
+        "message": "[DANCE][T] download_refs: 0.0s"
+      },
+      {
+        "time": "2026-11-03T15:35:57.250Z",
+        "message": "[DANCE][T] yolo: 4m 12.6s  (frames=3310, video=3m 40.8s, fps=59.9)"
+      },
+      {
+        "time": "2026-11-03T15:36:00.410Z",
+        "message": "[DANCE][T] ref_embeddings: 3.2s"
+      },
+      {
+        "time": "2026-11-03T15:42:46.324Z",
+        "message": "[DANCE][T] main_selection: 6m 45.6s"
+      },
+      {
+        "time": "2026-11-03T15:45:20.401Z",
+        "message": "[DANCE][T] segment_build: 2m 34.1s  (main=1, group=33)"
+      },
+      {
+        "time": "2026-11-03T15:49:15.479Z",
+        "message": "[DANCE][T] face_extract: 3m 55.1s  (segs=1, candidates/seg=12, selected/seg=5, owned_samples=3098)"
+      },
+      {
+        "time": "2026-11-03T15:50:28.187Z",
+        "message": "[DANCE][T] cluster_map: 1m 12.7s  (embs=0, clusters=68, persons=5)"
+      },
+      {
+        "time": "2026-11-03T15:50:28.350Z",
+        "message": "[DANCE][T] group_continuity: 0.2s  (joins=1)"
+      },
+      {
+        "time": "2026-11-03T15:51:35.015Z",
+        "message": "[DANCE][T] clips_main: 9.5s  (n=96)"
+      },
+      {
+        "time": "2026-11-03T15:51:37.730Z",
+        "message": "[DANCE][T] clips_group: 2.7s  (n=32)"
+      },
+      {
+        "time": "2026-11-03T15:51:39.538Z",
+        "message": "[DANCE][T] TOTAL: 19m 54.9s  | download_refs=0.0s  yolo=4m 12.6s  ref_embs=3.2s  main_selection=6m 45.6s  segment_build=2m 34.1s  face_extract=3m 55.1s  cluster_map=1m 12.7s  clips_main=9.5s  clips_group=2.7s"
+      }
+    ]
+  },
+  "NEON": {
+    "id": "dance_1793719521324",
+    "status": "completed",
+    "stage_timers": [
+      {
+        "time": "2026-11-03T15:51:48.805Z",
+        "message": "[DANCE][T] download_refs: 0.1s"
+      },
+      {
+        "time": "2026-11-03T15:51:52.018Z",
+        "message": "[DANCE][T] download_refs: 0.0s"
+      },
+      {
+        "time": "2026-11-03T15:55:35.692Z",
+        "message": "[DANCE][T] yolo: 3m 43.7s  (frames=3632, video=4m 2.3s, fps=59.9)"
+      },
+      {
+        "time": "2026-11-03T15:55:40.069Z",
+        "message": "[DANCE][T] ref_embeddings: 4.4s"
+      },
+      {
+        "time": "2026-11-03T16:02:30.475Z",
+        "message": "[DANCE][T] main_selection: 6m 49.8s"
+      },
+      {
+        "time": "2026-11-03T16:06:28.498Z",
+        "message": "[DANCE][T] segment_build: 3m 58.0s  (main=19, group=53)"
+      },
+      {
+        "time": "2026-11-03T16:10:23.796Z",
+        "message": "[DANCE][T] face_extract: 3m 55.3s  (segs=19, candidates/seg=12, selected/seg=5, owned_samples=3327)"
+      },
+      {
+        "time": "2026-11-03T16:11:23.821Z",
+        "message": "[DANCE][T] cluster_map: 1m 0.0s  (embs=10, clusters=94, persons=9)"
+      },
+      {
+        "time": "2026-11-03T16:11:24.108Z",
+        "message": "[DANCE][T] group_continuity: 0.3s  (joins=3)"
+      },
+      {
+        "time": "2026-11-03T16:12:46.522Z",
+        "message": "[DANCE][T] clips_main: 13.4s  (n=139)"
+      },
+      {
+        "time": "2026-11-03T16:12:50.965Z",
+        "message": "[DANCE][T] clips_group: 4.4s  (n=49)"
+      },
+      {
+        "time": "2026-11-03T16:12:53.093Z",
+        "message": "[DANCE][T] TOTAL: 21m 1.1s  | download_refs=0.0s  yolo=3m 43.7s  ref_embs=4.4s  main_selection=6m 49.8s  segment_build=3m 58.0s  face_extract=3m 55.3s  cluster_map=1m 0.0s  clips_main=13.4s  clips_group=4.4s"
+      }
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+고정 main eligibility 안의 identity 경계 조립 — 독립 최소 계약
+2026-11-03 KST. 제품 수정/새 모델/영상 decode/pytest/replay 없음. 최신 저장 앱 MMN1793649506337, ANT1793649573540, NEON1793649654322의 JSON과 현재 소스만 읽었다. GPU 감사와 별개다.
+
+결론
+광범위하게 eligible episode의 얼굴을 다시 평균내어 한 이름을 붙이는 방법은 권하지 않는다. 가장 작은 구현 후보는 '같은 원본 관측 bracket에서 생성된 identity midpoint와 기존 main 이벤트 경계의 중복만 제거하는 출력 조립'이다. 알려진 서로 다른 인물/컷/역할 경계는 그대로이고, eligibility/classification/원본 인식은 바꾸지 않는다.
+NEON42의 unknown→unknown 경계 제거는 시간별 이름/unknown coverage를 그대로 보존하므로 가장 안전하다. MMN88의 outgoing 김채원 연장은 조건부로 가능하지만, unknown .033367초를 이름 있는 시간으로 바꾸는 효과가 있다. 이를 인식 회복이라고 보고하면 안 된다. 기존 first_observed_new_main이라는 샘플 경계 정책으로 정규화하는 것이며, 두 관측 사이 실제 교대 시점을 새로 관측한 것은 아니다. 이 구별을 계약과 audit에 남겨야 한다.
+NEON34는 같은 모양이어도 outgoing 마지막 관측이 conflict이므로 이름을 연장하면 안 된다. MMN50은 이번 좁은 bracket 중복 제거의 직접 대상이 아니며, 고정 eligibility에서2프레임 조각을 없애겠다고 보장할 수 없다.
+
+이번에 직접 확인한 실제 근거
+MMN88
+- 기존 김채원79.879800–88.254833, unknown88.254833–88.288200, unknown88.288200–88.421667, 허윤진88.421667–88.855433.
+- identity repeated_face_change: L5288/88.221467, R5292/88.288200, midpoint88.254833, strength .888464.
+- handoff도 정확히5288→5292이고 boundary_policy=first_observed_new_main. previous_selected4/current_selected1, outgoing_current4/incoming_previous1을 기록한다. 주변source cut 없음.
+- 마지막5288의 김채원 joint accepted(primary .483995/secondary .470609,margin .157468), detector .912707. .9127은 joint 점수가 아니라 detector score다.5280/5284도 accepted 김채원.
+- 5292는 허윤진 best지만 insufficient,5296 ambiguous,5300 insufficient,5304 accepted 허윤진. 따라서 허윤진 이름을5292부터 확정하는 변경은 별도의 근거 없이 하면 안 된다.
+- 더 넓은 repeated_reference_change88.421667은5288→5312 bracket이므로 이 좁은 handoff와 같은 이벤트로 합치지 않는다.
+
+NEON34
+- 시리33.867167–34.334300, unknown34.334300–34.367667, unknown34.367667–35.135100.
+- identity midpoint와 handoff가 둘 다2056→2060 bracket. 그러나2056은 joint conflict/best아이찡/margin .000759이며 시리 accepted가 아니다. 앞2048/2052의 시리 accepted를 마지막2056 대신 골라 충돌을 건너뛰면 안 된다.
+- 이름 연장 거부. unknown끼리라는 이유만으로 handoff34.367667을 가로질러 한 사람의 unknown clip처럼 합치는 것도 이번 계약 밖이다.
+
+NEON42
+- unknown42.208733–42.609233 + unknown42.609233–42.642600. 후자는 identity_padding 보류된 조각이다.
+- identity repeated_face_change bracket2552/42.575867→2556/42.642600. 마지막R은 고정 main eligibility의 종료이자 group 시작이다. 주변handoff/cut 없음.2552는 메르시 best conflict,2556 Oa best insufficient,2560 Oa accepted는 eligibility밖이다.
+- 새 Oa를 main으로 끌어오지 않는다. 원래두unknown을42.208733–42.642600 하나로 조립하는 것은 label/unknown시간불변이며group범위에들어가지않는다. 원래 identity 경계/거부 근거는 audit에 보존한다. 이는 경계를 episode밖으로 이동시켜 인식을 바꾸는 것이 아니라, episode밖 관측에서 발생한 naming 분할을 최종 clip 경계로 내보내지 않는 것이다.
+
+MMN50 — 정확한 한계와 추가 발견
+- 고정E 시작50.650600, 김채원identity 종료50.683967이 교차해 .033367초가 남고, 이후허윤진이52.485767까지다. upstream group→main은 이번 범위에서 그대로 둔다.
+- 50.683967은 repeated_reference_change가 아니라 repeated_face_change midpoint(3036/50.650600→3040/50.717333), strength .653580이다.3032/3036/3040 모두 joint insufficient이며 best김채원.3036에는 원래 owned face가 있지만 accepted joint 김채원이라고 부르면 틀리다.
+- 실제 source cut은3047/50.834117. 허윤진 accepted는3048/50.850800,3052/50.917533부터다. 저장 named_range 허윤진first_time50.850800, support3048/3052/3056/...이다.50.683967 bracket과일치하는handoff는없다(가까운handoff3020은다른사건).
+- member_timeline._identity_boundaries의 .15초 양쪽 embedding창은 컷으로 제한되지 않는다. 이 구간의 valid관측3024/3028/3032/3036과3040/3048/3052를 사용하면 오른쪽창은3047컷을가로지른다. 현재코드+저장관측상원인후보이며이번에matcher/함수를재실행해새이름을판정한것은아니다.
+- 그러므로 MMN50에는 upstream gate 문제뿐 아니라 컷 뒤 얼굴창이 컷 전 이름경계를 만드는 문제도 섞였을 수 있다. 하지만 이 사실은 김채원을컷까지늘리거나허윤진을E시작까지당길양성증명이아니다. 기존김채원결정은consensus이며이구간의acceptedjoint만으로연장을승인할수없다.
+- 최소 bracket중복제거판에서는이케이스를그대로남긴다. 후속조사가필요하다면 source cut으로name창을분리한정확한증거를평가하되모든group/eligibility는동결한다. .15/.1/.3초규칙을조절해길이를늘리는것과구분한다.
+
+최소 알고리즘
+입력은 immutable identity boundary audit, 현재 최종 projection(이름/unknown 포함), 원래 cut/handoff 전체 inventory, eligibility 원래 edges, frozen per-frame primary/joint 판정과 소유 몸이다. 출력은 제한된 part 경계/소스 인덱스 mapping과 audit뿐이다.
+
+1 이벤트를 정확히 식별한다.
+key는 원래 frame L/R와 해당몸교대 소유 정보다. 부동소수 시간의 근접성이나 clip 길이로 이벤트를 묶지 않는다. identity reason은 원래 repeated_face_change이며 left/right가 실제 이웃 관측이고, 저장time이 그 midpoint인 경우만 첫 구현 대상으로 삼는다. named_evidence_edge/face_coverage_gap/서로다른bracket의repeated_reference_change는자동묶지않는다.
+원래 cuts에는 main_selection뿐 아니라 확인된 scene_boundary/sourcecut inventory도 포함한다. null/누락을완전한빈목록으로취급하지않는다. frame중복, cadence누락, mismatch, 중간별도관측/이벤트가있으면보류한다.
+
+2 정확히 같은 사건의 권위 있는 출력 경계만 채택한다.
+(A) 같은 L→R의 confirmed handoff이며first_observed_new_main이면candidate boundary는R이다.
+(B) R이E의정확한끝이고그오른쪽분류는기존group/no-main이며두최종조각이unknown이면episode끝을유지하고내부midpoint를출력에서빼는후보다.
+이외에는아무것도하지않는다. (L,R]에독립sourcecut/scene cut/다른handoff가있으면첫구현에서는skip한다. sourcecut과handoff를무조건한이벤트로우선순위정렬하면실제로두사건인경우를잃으므로, exactcut을기존처리에그대로남기는것이최소다.
+
+3 이름 변하지 않는 unknown→unknown부터 처리한다.
+midpoint~R 사이에원래분석관측이없고오른쪽named support가E밖이라는이벤트provenance를확인한다. 새부정증거를삭제하지않고두unknown의증거·실패사유를합집합으로보존한다. E끝을넘기지않으며별도의내부handoff/실제facechange/cut을삭제하지않는다. 변화전후unknown시간집합은정확히동일해야한다.
+NEON42에서는42.609233을최종clipedge에서생략할수있다. unsupported_identity_padding이라는원래보류사유는source subrange audit로남긴다. unknown이하나가됐다고신원이같다고확정하거나새이름anchor로쓰지않는다.
+
+4 outgoing named 접합은 별도 강한 계약으로만 허용한다.
+새로이름붙는범위D=[midpoint,R)는같은event의관측없는경계셀하나이며온전히E안이어야한다. 길이가작다는조건이아니라두정확한원래관측사이에추가사건이없다는조건이다. 기존outgoingpart가A matched이고자체원래이름근거를가지며, 정확히L의소유얼굴이A accepted여야한다. detector/모델일치/마진/primary반대없음은기존accepted판정계약을그대로쓴다. 오래된accepted행을골라마지막L conflict/missing을건너뛰지않는다.
+L의얼굴body가handoff의outgoing selected와일치하고기존A의원래소유경로가L까지이어져야한다. body rawindex가우연히같다는것은증명이아니다. D에accepted다른이름/반대primary/반대역할/실제cut/더촘촘한소유얼굴관측이있으면보류한다. 다른몸의동시얼굴존재만으로A를부정하지않되selected ownership이모호하면보류한다.
+R의incoming관측은반개구간D밖이며기존handoff로남는다. R부터의unknown이나B이름범위는그대로다. preserved namedB를A로덮는경우는이후보대상에서제외한다. MMN88은계약을검증할양성후보,NEON34는거부해야하는음성후보다.
+
+5 변경은 일괄 적용하고 다시 인식 근거로 넣지 않는다.
+원래입력에대해후보를모두계산한후충돌없는변경만한번적용한다. 겹치는후보/다른사건을새A범위로연쇄통과시키지않는다. source_index lineage와원래decision/observations를보존하고sourcepart가없어진곳의previews/evidence를시간소유에맞게재배분한다. anchors/gallery/frozenmatch/원래timestamp/cut/handoff/classification/eligibility/group출력정책은수정하지않는다. 출력labels/accurate_indices/recipient/thumbnail remapping은현재불변조건을지킨다.
+
+권장 위치
+순수 helper를performance_parts의최종경계정규화에둔다. 기존projection/padding/handoff검증과unknown/name조립,기존named/incoming경계보정이모두끝난후return직전에한번실행하는위치를우선검토한다. preparation은그뒤의기존순서를유지한다. 원래boundaryaudit를읽기전용인자로전달하고provenance를임시span중간값으로소급수정하는방식은피한다. 현재개별helper를전부순서바꿔재실행하거나refine_member_timeline를eligible episode전체에다시호출하지않는다. 후자가_named_ranges의±.1/끝.3 padding,_select_boundaries의.15 floor,_assign_piece의전체piece평균/anchor를다시사용하면새자기증명·컷밖오염·최소길이효과가생긴다.
+구현위치는단일call과pure result transform으로좁히고,후단에서새중복경계가생기지않는지확인한다. 실제제품구조상다른helper가결과를재분할하면그sourceprovenance를한곳에서소비하도록조정할필요는있지만역할판정변경은불필요하다.
+
+정직하게 구분해야 하는 시간 의미
+MMN88에서M→R 이동은A .033367초증가/unknown .033367초감소다. '이름/unknown시간불변'이라고하면틀리다. 두샘플사이진짜전환은[L,R]안어디든가능하므로accepted outgoingL와no-counter만으로D전체의실제인물을관측했다고주장하면안된다. first-observed boundary convention을기존role출력과일치시키는합리적인조립정책이지새인식성공이아니다. audit에event_uncertainty=[L,R],resolved_by=existing_first_observed_boundary,named_delta/unknown_delta를남긴다.
+제품요구가이한셀의가정조차허용하지않는엄격한시간별이름불변이라면MMN88named접합은제외해야한다. 그경우unknown범위를보존한채실제handoff도보존하면해당초단편을없앨수없다는한계를명시한다. 관측되지않은사실을만들지않고모든초단편을없애는일반알고리즘은없다.
+
+반례/최소 검증표
+- 양성MMN88: 정확bracket중복,원래L outgoingA accepted,R firstnewbody,중간관측0/cut0. A끝R,unknownR–88.421667 유지,후속허윤진시작유지. 이름부착증가를boundary normalization으로기록.
+- 음성NEON34: 같은bracket이더라도L conflict. 시리연장0,원래handoff보존. 한step전accepted를대신쓰는변형도거부.
+- 양성NEON42: 두unknown시간집합정확히동일,main끝42.6426/group불변,Oa새이름0,2560anchor새사용0,midpoint는audit에만남음.
+- cut가L/R사이또는R에있음: canonicalR로몰지말고skip,exactsourcecut보존. 교대전후acceptedA/B도반대이름덮기금지.
+- timestamp상가깝지만bracket다름,같은trackid/다른몸,프레임중복/누락,rolehandoffinventory없음: no-op.
+- D에원래context/secondary의더촘촘한selectedowner반대얼굴있음: no-op. 해당얼굴을'없음'으로지우거나D밖anchor로만검사하면안됨.
+- 마지막L acceptedA아님/faceambiguous/malformedscore 또는모델반대: no-op. parent consensus/label/tuple이름/후처리복원이이를대체하지못함.
+- R에acceptedB이고이미B clip이M부터있음: 이좁은규칙으로B를덮지않기. actualA/B/incoming correction의기존별도계약유지.
+- unknown양쪽이서로다른역할몸이고중간confirmedhandoff있음: unknown이라는문자열이같아도함부로병합금지.
+- 같은unknown이group사이에두개로나뉨(MMN52초): eligibility밖gap을가로질러join금지. 보이는두fragment가남는것이이범위의한계.
+- 실제짧은named파트4개(MMN26/88.42/102.936/103.253),ANT154교정,NEONpadding2개,사용자14범위 및현재성공MMN38: 보존.
+- 멱등성,입력deep/pickle불변,모든원시sample의이름/소유변경0,eligibility시간합집합/각edge불변,unknown시간차와named시간차일치,동일시작썸네일바이트및recipient일관성검사.
+
+제한적 효과 예상과 채택 근거
+현재직접읽은세bracket후보만놓고보면MMN88조건부접합과NEON42unknown병합으로각1개경계/초단편을제거할가능성이있다. NEON34와MMN50은그대로남는다. 이는실행전예상이며전체적용횟수/클립수/정답개선수로확정하지않는다. 새모델/decoding/ML추론이필요없는정렬·검증변환이지만실행시간0을보장하지않는다.
+다음검증은정확bracket전체inventory와이네사례의작은frozen단위반례부터하고,동일세영상저장자료로모든changedinterval을분류한다. 성과는(1)순수unknown표현병합,(2)명시적샘플경계정규화,(3)실제새인식으로각각나눠기록한다. 이번후보는3을주장하지않는다.
+
+검토한 소스 SHA256
+member_timeline.py 0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6
+performance_parts.py 26c5742c78c8d77373cd5145bf6988d87efb833febf9ff1e6e54261c8e1d3366
+scene_boundaries.py 42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9
+output_continuity.py 2414d6816bccd6d240a952ed573861af526a94222255f5f02c40b380f4ee5cd6
+identity_projection.py f0c2d8b1529a32194c3f9f5998814a88e83a1e13051452b534e177610719bad0
+incoming_identity_boundary.py c51b6f0a31598b15ab3b67e4a99cb25b240672d3228d01c9a61003986aaa33a3

@@ -1,0 +1,33 @@
+
+> clipper-angular@0.0.0 test:styles
+> node --test test/breakpoints-scss-class-validation.test.mjs test/semantic-color-usage.test.mjs test/app-content-height.test.mjs test/select-usage.test.mjs test/packaged-base-href.test.mjs test/inline-banner-usage.test.mjs test/media-play-usage.test.mjs test/page-column-usage.test.mjs
+
+✔ 100vh는 셸·로그인·전체 화면 오버레이에서만 쓴다 — 화면은 var(--app-content-h, 100vh) (4.049791ms)
+✔ 공유 페이지 틀(.page)은 --app-content-h를 쓴다 (0.374084ms)
+✔ valid width class compiles cleanly (56.496166ms)
+✔ typo'd width class fails the build with a named error (15.699084ms)
+✔ valid height class compiles cleanly (2.539916ms)
+✔ a width class used on the height axis fails the build (axis mismatch) (9.32275ms)
+✔ the same typo fails from() and below() too, not just only() (13.628417ms)
+✔ the global (:root) variants validate too (3.152125ms)
+✔ 표에 없는 화면에 인라인 알림 줄을 새로 만들지 않는다 — 스낵바·상태 패널로 (0.570917ms)
+✔ 남은 화면의 인라인 알림 줄이 상한을 넘지 않는다 (0.0805ms)
+✔ 걷어 내서 줄었으면 상한도 낮춘다 — 줄어든 만큼 다시 늘지 못하게 (0.233042ms)
+✔ 미디어 play()의 거절을 버리는 곳이 0곳이다 — .catch로 받거나 await로 넘긴다 (195.292792ms)
+✔ 가드가 실제로 문다 — 버린 play()는 잡고 받은 play()는 통과시킨다 (0.327917ms)
+✔ packaged: 해시 이동 뒤에도 주소에 index.html이 남는다 — 리로드가 폴더를 열지 않는다 (1.311708ms)
+✔ electron: 해시 이동 뒤에도 주소에 index.html이 남는다 — 리로드가 폴더를 열지 않는다 (0.33725ms)
+✔ 탐지기: 손으로 쓴 가운데 한 줄을 잡고 비슷한 모양은 놓아 준다 (0.964875ms)
+✔ 화면 SCSS가 가운데 한 줄 폭을 손으로 쓰지 않는다 (127.110542ms)
+✔ 네이티브 <select>는 0곳이다 — 펼침을 OS가 그려 화면마다 모양이 다르다 (1.025125ms)
+✔ <mat-select>는 shared/ui/select 안에서만 쓴다 — 화면은 <app-select> (0.442334ms)
+✔ 보라 --secondary는 Material 매핑(_theme.scss) 말고는 쓰지 않는다 — 장식용 보라 금지 (1.775375ms)
+✔ 템플릿 빌더 정렬·측정선은 주의색이 아니라 --canvas-guide를 쓴다 (0.1155ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 432.544458

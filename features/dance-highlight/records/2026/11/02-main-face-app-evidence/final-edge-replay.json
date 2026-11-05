@@ -1,0 +1,61 @@
+[
+  {
+    "project_id": "1793571868350",
+    "seconds": 0.6723447090480477,
+    "before": 57,
+    "after": 57,
+    "audit": {
+      "version": "final_named_continuity_v3_mask_edges",
+      "reason": "complete",
+      "joins": [],
+      "bridges": [],
+      "face_edge_recoveries": [],
+      "unknown_before": 6.80720000000003,
+      "unknown_after": 6.80720000000003,
+      "short_before": 21,
+      "short_after": 21
+    }
+  },
+  {
+    "project_id": "1793571915955",
+    "seconds": 1.0256837090128101,
+    "before": 102,
+    "after": 102,
+    "audit": {
+      "version": "final_named_continuity_v3_mask_edges",
+      "reason": "complete",
+      "joins": [],
+      "bridges": [],
+      "face_edge_recoveries": [],
+      "unknown_before": 16.01780000000008,
+      "unknown_after": 16.01780000000008,
+      "short_before": 54,
+      "short_after": 54
+    }
+  },
+  {
+    "project_id": "1793571975392",
+    "seconds": 0.47849583299830556,
+    "before": 152,
+    "after": 151,
+    "audit": {
+      "version": "final_named_continuity_v3_mask_edges",
+      "reason": "complete",
+      "joins": [],
+      "bridges": [],
+      "face_edge_recoveries": [
+        {
+          "start": 201.0008,
+          "end": 201.16773333333333,
+          "context_start": 200.4008,
+          "context_end": 201.76773333333333,
+          "reason": "original_neighbor_face_support"
+        }
+      ],
+      "unknown_before": 16.98533333333346,
+      "unknown_after": 16.81840000000013,
+      "short_before": 92,
+      "short_after": 91
+    }
+  }
+]

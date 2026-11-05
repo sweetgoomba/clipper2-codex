@@ -1,0 +1,2420 @@
+{
+  "method": "Direct comparison of completed app metadata and saved diagnostics JSON only; no new model, decode, image extraction, or product tests.",
+  "videos": {
+    "MMN": {
+      "ids": [
+        "1793617663026",
+        "1793625050124"
+      ],
+      "metrics": [
+        {
+          "main": 57,
+          "group": 32,
+          "total": 89,
+          "subsecond": 42,
+          "under_0_1s": 2,
+          "unknown_seconds": 6.80720000000003,
+          "main_seconds": 135.00153333333333,
+          "names": {
+            "김채원": 8,
+            "카즈하": 6,
+            "홍은채": 8,
+            "사쿠라": 8,
+            "unknown": 16,
+            "허윤진": 11
+          }
+        },
+        {
+          "main": 58,
+          "group": 33,
+          "total": 91,
+          "subsecond": 44,
+          "under_0_1s": 4,
+          "unknown_seconds": 6.540266666666696,
+          "main_seconds": 134.73459999999997,
+          "names": {
+            "김채원": 8,
+            "카즈하": 6,
+            "홍은채": 8,
+            "사쿠라": 8,
+            "unknown": 17,
+            "허윤진": 11
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 49.916533333333334,
+            "end": 50.18346666666667,
+            "before": [
+              "unknown"
+            ],
+            "after": [],
+            "expected_scope": true
+          }
+        ],
+        "group": [
+          {
+            "start": 49.916533333333334,
+            "end": 50.18346666666667,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          }
+        ]
+      },
+      "outside_expected_coverage_changes": {
+        "main": [],
+        "group": []
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0016",
+              "start": 49.866483333333335,
+              "end": 50.2502,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0016.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0016",
+              "start": 49.866483333333335,
+              "end": 49.916533333333334,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0016.jpg"
+            },
+            {
+              "clip_id": "main_0017",
+              "start": 50.18346666666667,
+              "end": 50.2502,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0017.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 56,
+          "unchanged_rows_with_reindexed_ids": 40
+        },
+        "group": {
+          "removed_or_changed": [],
+          "added_or_changed": [
+            {
+              "clip_id": "group_0012",
+              "start": 49.916533333333334,
+              "end": 50.18346666666667,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0012.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 32,
+          "unchanged_rows_with_reindexed_ids": 20
+        }
+      },
+      "expected_scope_intersections": [
+        {
+          "start": 49.916533333333334,
+          "end": 50.18346666666667,
+          "before": {
+            "main": [
+              {
+                "clip_id": "main_0016",
+                "start": 49.866483333333335,
+                "end": 50.2502,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0016.jpg",
+                "overlap_start": 49.916533333333334,
+                "overlap_end": 50.18346666666667
+              }
+            ],
+            "group": []
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0012",
+                "start": 49.916533333333334,
+                "end": 50.18346666666667,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0012.jpg",
+                "overlap_start": 49.916533333333334,
+                "overlap_end": 50.18346666666667
+              }
+            ]
+          }
+        }
+      ],
+      "tiny_new_or_changed_clips": {
+        "main": [
+          {
+            "clip_id": "main_0016",
+            "start": 49.866483333333335,
+            "end": 49.916533333333334,
+            "person_id": "unknown",
+            "thumbnail_path": "clips/dance/main/main_0016.jpg"
+          },
+          {
+            "clip_id": "main_0017",
+            "start": 50.18346666666667,
+            "end": 50.2502,
+            "person_id": "unknown",
+            "thumbnail_path": "clips/dance/main/main_0017.jpg"
+          }
+        ],
+        "group": []
+      },
+      "sam": [
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        },
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        }
+      ],
+      "timings": [
+        {
+          "active_wall_seconds": 295.082,
+          "queue_seconds": 0.098,
+          "pipeline_seconds": 285.7119767499971,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        },
+        {
+          "active_wall_seconds": 320.61,
+          "queue_seconds": 0.087,
+          "pipeline_seconds": 310.76049608300673,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        }
+      ],
+      "same_config": true,
+      "same_dance_setup": true,
+      "person_diffs": [
+        {
+          "path": "/0/clip_ids",
+          "before": {
+            "type": "list",
+            "length": 16
+          },
+          "after": {
+            "type": "list",
+            "length": 17
+          }
+        },
+        {
+          "path": "/0/num_clips",
+          "before": 16,
+          "after": 17
+        },
+        {
+          "path": "/1/clip_ids/3",
+          "before": "main_0017",
+          "after": "main_0018"
+        },
+        {
+          "path": "/1/clip_ids/4",
+          "before": "main_0025",
+          "after": "main_0026"
+        },
+        {
+          "path": "/1/clip_ids/5",
+          "before": "main_0032",
+          "after": "main_0033"
+        },
+        {
+          "path": "/1/clip_ids/6",
+          "before": "main_0048",
+          "after": "main_0049"
+        },
+        {
+          "path": "/1/clip_ids/7",
+          "before": "main_0056",
+          "after": "main_0057"
+        },
+        {
+          "path": "/2/clip_ids/4",
+          "before": "main_0021",
+          "after": "main_0022"
+        },
+        {
+          "path": "/2/clip_ids/5",
+          "before": "main_0022",
+          "after": "main_0023"
+        },
+        {
+          "path": "/2/clip_ids/6",
+          "before": "main_0049",
+          "after": "main_0050"
+        },
+        {
+          "path": "/2/clip_ids/7",
+          "before": "main_0053",
+          "after": "main_0054"
+        },
+        {
+          "path": "/3/clip_ids/2",
+          "before": "main_0031",
+          "after": "main_0032"
+        },
+        {
+          "path": "/3/clip_ids/3",
+          "before": "main_0036",
+          "after": "main_0037"
+        },
+        {
+          "path": "/3/clip_ids/4",
+          "before": "main_0041",
+          "after": "main_0042"
+        },
+        {
+          "path": "/3/clip_ids/5",
+          "before": "main_0052",
+          "after": "main_0053"
+        },
+        {
+          "path": "/4/clip_ids/2",
+          "before": "main_0018",
+          "after": "main_0019"
+        },
+        {
+          "path": "/4/clip_ids/3",
+          "before": "main_0029",
+          "after": "main_0030"
+        },
+        {
+          "path": "/4/clip_ids/4",
+          "before": "main_0030",
+          "after": "main_0031"
+        },
+        {
+          "path": "/4/clip_ids/5",
+          "before": "main_0035",
+          "after": "main_0036"
+        },
+        {
+          "path": "/4/clip_ids/6",
+          "before": "main_0043",
+          "after": "main_0044"
+        },
+        {
+          "path": "/4/clip_ids/7",
+          "before": "main_0044",
+          "after": "main_0045"
+        },
+        {
+          "path": "/4/clip_ids/8",
+          "before": "main_0046",
+          "after": "main_0047"
+        },
+        {
+          "path": "/4/clip_ids/9",
+          "before": "main_0050",
+          "after": "main_0051"
+        },
+        {
+          "path": "/4/clip_ids/10",
+          "before": "main_0055",
+          "after": "main_0056"
+        },
+        {
+          "path": "/5/clip_ids/1",
+          "before": "main_0026",
+          "after": "main_0027"
+        },
+        {
+          "path": "/5/clip_ids/2",
+          "before": "main_0028",
+          "after": "main_0029"
+        },
+        {
+          "path": "/5/clip_ids/3",
+          "before": "main_0040",
+          "after": "main_0041"
+        },
+        {
+          "path": "/5/clip_ids/4",
+          "before": "main_0042",
+          "after": "main_0043"
+        },
+        {
+          "path": "/5/clip_ids/5",
+          "before": "main_0045",
+          "after": "main_0046"
+        },
+        {
+          "path": "/5/clip_ids/6",
+          "before": "main_0051",
+          "after": "main_0052"
+        },
+        {
+          "path": "/5/clip_ids/7",
+          "before": "main_0054",
+          "after": "main_0055"
+        }
+      ],
+      "recorded_source_hashes": [
+        "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+        "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363"
+      ],
+      "recorded_modules": {
+        "face_cluster": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+          "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+        },
+        "pose_engine": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+          "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+        },
+        "pipeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+          "sha256": "86cf30dc0ebe1879ae7234d394bd79f04dac9eb7899cfc0d0ea090053507a49f"
+        },
+        "reference_matcher": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+          "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+        },
+        "auraface": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+          "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+        },
+        "main_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+          "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+        },
+        "face_recovery": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+          "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+        },
+        "face_evidence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+          "sha256": "f0375f68d9243d0d8375988f58cb3f4cf7d55c4db411f562dd03317b10866f46"
+        },
+        "member_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+          "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+        },
+        "member_coverage": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+          "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+        },
+        "secondary_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+          "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+        },
+        "segment": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+          "sha256": "6782f647e99ec66cd46dea0cd4d2f15d6cb72e7aa8bb44435df033e96220329c"
+        },
+        "body_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+          "sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3"
+        },
+        "mask_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+          "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+        },
+        "mask_tracker": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+          "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+        },
+        "context_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+          "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+        },
+        "camera_transitions": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+          "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+        },
+        "joint_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+          "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+        },
+        "cut_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+          "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+        },
+        "sampled_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+          "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+        },
+        "pose_face_rotation": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+          "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+        },
+        "scene_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+          "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+        },
+        "observed_main": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+          "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+        },
+        "main_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+          "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+        },
+        "main_role_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+          "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+        },
+        "scene_cut_proof": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+          "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+        },
+        "scene_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+          "sha256": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c"
+        },
+        "temporal_support": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+          "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+        },
+        "native_scene": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+          "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+        },
+        "output_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+          "sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+        },
+        "mask_frame_cache": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+          "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+        },
+        "stage_prominence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+          "sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+        },
+        "focal_composition": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+          "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+        },
+        "focal_output": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+          "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+        },
+        "incoming_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+          "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+        },
+        "face_runtime": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+          "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+        },
+        "opencv_acceleration": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+          "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+        },
+        "named_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+          "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+        }
+      },
+      "evidence_keys": [
+        "schema_version",
+        "runtime",
+        "policy",
+        "identity_refinement",
+        "main_selection_refinement",
+        "secondary_reference_refinement",
+        "body_continuity_refinement",
+        "mask_continuity_refinement",
+        "scene_boundary_refinement",
+        "scene_context_refinement",
+        "native_scene_refinement",
+        "output_named_continuity",
+        "visible_member_refinement",
+        "main_result_count",
+        "references",
+        "segments",
+        "pose_heads"
+      ],
+      "raw_segments_equal": true,
+      "pose_diffs": [
+        {
+          "path": "/748/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/748/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "distributed_full_body_ensemble"
+        },
+        {
+          "path": "/749/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/749/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "distributed_full_body_ensemble"
+        },
+        {
+          "path": "/750/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/750/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/751/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/751/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        }
+      ],
+      "top_evidence_equality": {
+        "schema_version": true,
+        "runtime": false,
+        "policy": true,
+        "identity_refinement": true,
+        "main_selection_refinement": false,
+        "secondary_reference_refinement": true,
+        "body_continuity_refinement": true,
+        "mask_continuity_refinement": true,
+        "scene_boundary_refinement": false,
+        "scene_context_refinement": false,
+        "native_scene_refinement": true,
+        "output_named_continuity": false,
+        "visible_member_refinement": true,
+        "main_result_count": true,
+        "references": true,
+        "segments": true,
+        "pose_heads": false
+      },
+      "metadata_hashes": [
+        {
+          "meta": "4d1058a7e1c39b07590774a8e07f5bba3cec8ec6e3d9542273ea60199f286172",
+          "evidence": "bdeda5a51a2c76f3e581a7055969f419bac8748f4f1391f4a8295eade773e326"
+        },
+        {
+          "meta": "ce9ef3a7faa5e3e11225acd89f7d7dc2bbe0e6b8537b349e25494ae964574db6",
+          "evidence": "f84574f8236927cef7b6b5db0af26a369f7a07bef81249a0b014e16ad516e3f0"
+        }
+      ]
+    },
+    "ANT": {
+      "ids": [
+        "1793617753764",
+        "1793625132795"
+      ],
+      "metrics": [
+        {
+          "main": 102,
+          "group": 32,
+          "total": 134,
+          "subsecond": 79,
+          "under_0_1s": 3,
+          "unknown_seconds": 16.01780000000008,
+          "main_seconds": 191.89169999999993,
+          "names": {
+            "unknown": 33,
+            "홍은채": 11,
+            "김채원": 20,
+            "허윤진": 11,
+            "카즈하": 16,
+            "사쿠라": 11
+          }
+        },
+        {
+          "main": 100,
+          "group": 33,
+          "total": 133,
+          "subsecond": 78,
+          "under_0_1s": 2,
+          "unknown_seconds": 15.817600000000084,
+          "main_seconds": 191.15763333333328,
+          "names": {
+            "unknown": 31,
+            "홍은채": 11,
+            "김채원": 20,
+            "허윤진": 11,
+            "카즈하": 16,
+            "사쿠라": 11
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 99.83306666666667,
+            "end": 99.8998,
+            "before": [
+              "김채원"
+            ],
+            "after": [],
+            "expected_scope": true
+          },
+          {
+            "start": 99.8998,
+            "end": 100.3002,
+            "before": [
+              "카즈하"
+            ],
+            "after": [],
+            "expected_scope": true
+          },
+          {
+            "start": 146.61313333333334,
+            "end": 146.67986666666667,
+            "before": [
+              "홍은채"
+            ],
+            "after": [],
+            "expected_scope": true
+          },
+          {
+            "start": 146.67986666666667,
+            "end": 146.88006666666666,
+            "before": [
+              "unknown"
+            ],
+            "after": [],
+            "expected_scope": true
+          }
+        ],
+        "group": [
+          {
+            "start": 99.83306666666667,
+            "end": 100.3002,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          },
+          {
+            "start": 146.61313333333334,
+            "end": 146.88006666666666,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          }
+        ]
+      },
+      "outside_expected_coverage_changes": {
+        "main": [],
+        "group": []
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0045",
+              "start": 98.73196666666666,
+              "end": 99.8998,
+              "person_id": "김채원",
+              "thumbnail_path": "clips/dance/main/main_0045.jpg"
+            },
+            {
+              "clip_id": "main_0046",
+              "start": 99.8998,
+              "end": 106.05595,
+              "person_id": "카즈하",
+              "thumbnail_path": "clips/dance/main/main_0046.jpg"
+            },
+            {
+              "clip_id": "main_0060",
+              "start": 144.7780666666667,
+              "end": 146.67986666666667,
+              "person_id": "홍은채",
+              "thumbnail_path": "clips/dance/main/main_0060.jpg"
+            },
+            {
+              "clip_id": "main_0061",
+              "start": 146.67986666666667,
+              "end": 146.81333333333333,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0061.jpg"
+            },
+            {
+              "clip_id": "main_0062",
+              "start": 146.81333333333333,
+              "end": 146.88006666666666,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0062.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0045",
+              "start": 98.73196666666666,
+              "end": 99.83306666666667,
+              "person_id": "김채원",
+              "thumbnail_path": "clips/dance/main/main_0045.jpg"
+            },
+            {
+              "clip_id": "main_0046",
+              "start": 100.3002,
+              "end": 106.05595,
+              "person_id": "카즈하",
+              "thumbnail_path": "clips/dance/main/main_0046.jpg"
+            },
+            {
+              "clip_id": "main_0060",
+              "start": 144.7780666666667,
+              "end": 146.61313333333334,
+              "person_id": "홍은채",
+              "thumbnail_path": "clips/dance/main/main_0060.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 97,
+          "unchanged_rows_with_reindexed_ids": 39
+        },
+        "group": {
+          "removed_or_changed": [
+            {
+              "clip_id": "group_0021",
+              "start": 146.88006666666666,
+              "end": 149.149,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0021.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "group_0014",
+              "start": 99.83306666666667,
+              "end": 100.3002,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0014.jpg"
+            },
+            {
+              "clip_id": "group_0022",
+              "start": 146.61313333333334,
+              "end": 149.149,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0022.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 31,
+          "unchanged_rows_with_reindexed_ids": 17
+        }
+      },
+      "expected_scope_intersections": [
+        {
+          "start": 99.83306666666667,
+          "end": 100.3002,
+          "before": {
+            "main": [
+              {
+                "clip_id": "main_0045",
+                "start": 98.73196666666666,
+                "end": 99.8998,
+                "person_id": "김채원",
+                "thumbnail_path": "clips/dance/main/main_0045.jpg",
+                "overlap_start": 99.83306666666667,
+                "overlap_end": 99.8998
+              },
+              {
+                "clip_id": "main_0046",
+                "start": 99.8998,
+                "end": 106.05595,
+                "person_id": "카즈하",
+                "thumbnail_path": "clips/dance/main/main_0046.jpg",
+                "overlap_start": 99.8998,
+                "overlap_end": 100.3002
+              }
+            ],
+            "group": []
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0014",
+                "start": 99.83306666666667,
+                "end": 100.3002,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0014.jpg",
+                "overlap_start": 99.83306666666667,
+                "overlap_end": 100.3002
+              }
+            ]
+          }
+        },
+        {
+          "start": 146.61313333333334,
+          "end": 146.88006666666666,
+          "before": {
+            "main": [
+              {
+                "clip_id": "main_0060",
+                "start": 144.7780666666667,
+                "end": 146.67986666666667,
+                "person_id": "홍은채",
+                "thumbnail_path": "clips/dance/main/main_0060.jpg",
+                "overlap_start": 146.61313333333334,
+                "overlap_end": 146.67986666666667
+              },
+              {
+                "clip_id": "main_0061",
+                "start": 146.67986666666667,
+                "end": 146.81333333333333,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0061.jpg",
+                "overlap_start": 146.67986666666667,
+                "overlap_end": 146.81333333333333
+              },
+              {
+                "clip_id": "main_0062",
+                "start": 146.81333333333333,
+                "end": 146.88006666666666,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0062.jpg",
+                "overlap_start": 146.81333333333333,
+                "overlap_end": 146.88006666666666
+              }
+            ],
+            "group": []
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0022",
+                "start": 146.61313333333334,
+                "end": 149.149,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0022.jpg",
+                "overlap_start": 146.61313333333334,
+                "overlap_end": 146.88006666666666
+              }
+            ]
+          }
+        }
+      ],
+      "tiny_new_or_changed_clips": {
+        "main": [],
+        "group": []
+      },
+      "sam": [
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        },
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        }
+      ],
+      "timings": [
+        {
+          "active_wall_seconds": 397.721,
+          "queue_seconds": 204.343,
+          "pipeline_seconds": 394.5564360410208,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        },
+        {
+          "active_wall_seconds": 470.742,
+          "queue_seconds": 238.107,
+          "pipeline_seconds": 466.3327282919781,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        }
+      ],
+      "same_config": true,
+      "same_dance_setup": true,
+      "person_diffs": [
+        {
+          "path": "/0/clip_ids",
+          "before": {
+            "type": "list",
+            "length": 33
+          },
+          "after": {
+            "type": "list",
+            "length": 31
+          }
+        },
+        {
+          "path": "/0/num_clips",
+          "before": 33,
+          "after": 31
+        },
+        {
+          "path": "/1/clip_ids/17",
+          "before": "main_0073",
+          "after": "main_0071"
+        },
+        {
+          "path": "/1/clip_ids/18",
+          "before": "main_0077",
+          "after": "main_0075"
+        },
+        {
+          "path": "/1/clip_ids/19",
+          "before": "main_0098",
+          "after": "main_0096"
+        },
+        {
+          "path": "/2/clip_ids/4",
+          "before": "main_0069",
+          "after": "main_0067"
+        },
+        {
+          "path": "/2/clip_ids/5",
+          "before": "main_0076",
+          "after": "main_0074"
+        },
+        {
+          "path": "/2/clip_ids/6",
+          "before": "main_0091",
+          "after": "main_0089"
+        },
+        {
+          "path": "/2/clip_ids/7",
+          "before": "main_0093",
+          "after": "main_0091"
+        },
+        {
+          "path": "/2/clip_ids/8",
+          "before": "main_0094",
+          "after": "main_0092"
+        },
+        {
+          "path": "/2/clip_ids/9",
+          "before": "main_0096",
+          "after": "main_0094"
+        },
+        {
+          "path": "/2/clip_ids/10",
+          "before": "main_0099",
+          "after": "main_0097"
+        },
+        {
+          "path": "/3/clip_ids/6",
+          "before": "main_0064",
+          "after": "main_0062"
+        },
+        {
+          "path": "/3/clip_ids/7",
+          "before": "main_0065",
+          "after": "main_0063"
+        },
+        {
+          "path": "/3/clip_ids/8",
+          "before": "main_0070",
+          "after": "main_0068"
+        },
+        {
+          "path": "/3/clip_ids/9",
+          "before": "main_0075",
+          "after": "main_0073"
+        },
+        {
+          "path": "/3/clip_ids/10",
+          "before": "main_0080",
+          "after": "main_0078"
+        },
+        {
+          "path": "/3/clip_ids/11",
+          "before": "main_0082",
+          "after": "main_0080"
+        },
+        {
+          "path": "/3/clip_ids/12",
+          "before": "main_0083",
+          "after": "main_0081"
+        },
+        {
+          "path": "/3/clip_ids/13",
+          "before": "main_0085",
+          "after": "main_0083"
+        },
+        {
+          "path": "/3/clip_ids/14",
+          "before": "main_0086",
+          "after": "main_0084"
+        },
+        {
+          "path": "/3/clip_ids/15",
+          "before": "main_0101",
+          "after": "main_0099"
+        },
+        {
+          "path": "/4/clip_ids/7",
+          "before": "main_0067",
+          "after": "main_0065"
+        },
+        {
+          "path": "/4/clip_ids/8",
+          "before": "main_0088",
+          "after": "main_0086"
+        },
+        {
+          "path": "/4/clip_ids/9",
+          "before": "main_0089",
+          "after": "main_0087"
+        },
+        {
+          "path": "/4/clip_ids/10",
+          "before": "main_0100",
+          "after": "main_0098"
+        },
+        {
+          "path": "/5/clip_ids/9",
+          "before": "main_0071",
+          "after": "main_0069"
+        },
+        {
+          "path": "/5/clip_ids/10",
+          "before": "main_0097",
+          "after": "main_0095"
+        }
+      ],
+      "recorded_source_hashes": [
+        "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2",
+        "c0564c983a29b04780a5373cd4c8c210ddb148754bec92d0299ed7b234cdb5d2"
+      ],
+      "recorded_modules": {
+        "face_cluster": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+          "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+        },
+        "pose_engine": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+          "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+        },
+        "pipeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+          "sha256": "86cf30dc0ebe1879ae7234d394bd79f04dac9eb7899cfc0d0ea090053507a49f"
+        },
+        "reference_matcher": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+          "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+        },
+        "auraface": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+          "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+        },
+        "main_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+          "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+        },
+        "face_recovery": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+          "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+        },
+        "face_evidence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+          "sha256": "f0375f68d9243d0d8375988f58cb3f4cf7d55c4db411f562dd03317b10866f46"
+        },
+        "member_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+          "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+        },
+        "member_coverage": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+          "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+        },
+        "secondary_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+          "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+        },
+        "segment": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+          "sha256": "6782f647e99ec66cd46dea0cd4d2f15d6cb72e7aa8bb44435df033e96220329c"
+        },
+        "body_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+          "sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3"
+        },
+        "mask_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+          "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+        },
+        "mask_tracker": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+          "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+        },
+        "context_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+          "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+        },
+        "camera_transitions": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+          "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+        },
+        "joint_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+          "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+        },
+        "cut_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+          "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+        },
+        "sampled_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+          "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+        },
+        "pose_face_rotation": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+          "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+        },
+        "scene_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+          "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+        },
+        "observed_main": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+          "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+        },
+        "main_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+          "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+        },
+        "main_role_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+          "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+        },
+        "scene_cut_proof": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+          "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+        },
+        "scene_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+          "sha256": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c"
+        },
+        "temporal_support": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+          "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+        },
+        "native_scene": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+          "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+        },
+        "output_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+          "sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+        },
+        "mask_frame_cache": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+          "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+        },
+        "stage_prominence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+          "sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+        },
+        "focal_composition": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+          "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+        },
+        "focal_output": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+          "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+        },
+        "incoming_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+          "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+        },
+        "face_runtime": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+          "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+        },
+        "opencv_acceleration": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+          "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+        },
+        "named_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+          "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+        }
+      },
+      "evidence_keys": [
+        "schema_version",
+        "runtime",
+        "policy",
+        "identity_refinement",
+        "main_selection_refinement",
+        "secondary_reference_refinement",
+        "body_continuity_refinement",
+        "mask_continuity_refinement",
+        "scene_boundary_refinement",
+        "scene_context_refinement",
+        "native_scene_refinement",
+        "output_named_continuity",
+        "visible_member_refinement",
+        "main_result_count",
+        "references",
+        "segments",
+        "pose_heads"
+      ],
+      "raw_segments_equal": true,
+      "pose_diffs": [
+        {
+          "path": "/1496/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1496/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1497/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1497/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1498/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1498/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1499/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1499/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1500/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1500/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1501/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1501/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1502/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1502/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2197/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2197/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2198/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2198/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2199/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2199/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2200/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2200/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        }
+      ],
+      "top_evidence_equality": {
+        "schema_version": true,
+        "runtime": false,
+        "policy": true,
+        "identity_refinement": true,
+        "main_selection_refinement": false,
+        "secondary_reference_refinement": true,
+        "body_continuity_refinement": true,
+        "mask_continuity_refinement": true,
+        "scene_boundary_refinement": false,
+        "scene_context_refinement": false,
+        "native_scene_refinement": true,
+        "output_named_continuity": false,
+        "visible_member_refinement": true,
+        "main_result_count": true,
+        "references": true,
+        "segments": true,
+        "pose_heads": false
+      },
+      "metadata_hashes": [
+        {
+          "meta": "825ca5957430869b454dad6755e5edb0e4807b98c3b58d3455cbb7d61c236feb",
+          "evidence": "663435b5366500769756dd45422fe166ec3e4f0894f1123ca7efd253e482ed37"
+        },
+        {
+          "meta": "1304ba815c4580aad97be2e01a5e6a3b040b7cbb0399b94477c086762655c25a",
+          "evidence": "3069050aff86edb76112cacdb8f3e5f78b2d9124760471a9d26254c37b6e5404"
+        }
+      ]
+    },
+    "NEON": {
+      "ids": [
+        "1793617837063",
+        "1793625224514"
+      ],
+      "metrics": [
+        {
+          "main": 150,
+          "group": 56,
+          "total": 206,
+          "subsecond": 124,
+          "under_0_1s": 19,
+          "unknown_seconds": 16.751666666666797,
+          "main_seconds": 177.2437333333333,
+          "names": {
+            "아이찡": 20,
+            "시리": 13,
+            "unknown": 51,
+            "메르시": 9,
+            "오아": 23,
+            "히메키": 5,
+            "아윤": 4,
+            "영": 16,
+            "보라": 3,
+            "라다": 6
+          }
+        },
+        {
+          "main": 150,
+          "group": 56,
+          "total": 206,
+          "subsecond": 125,
+          "under_0_1s": 20,
+          "unknown_seconds": 15.750666666666806,
+          "main_seconds": 176.24273333333332,
+          "names": {
+            "아이찡": 20,
+            "시리": 13,
+            "unknown": 51,
+            "메르시": 9,
+            "오아": 23,
+            "히메키": 5,
+            "아윤": 4,
+            "영": 16,
+            "보라": 3,
+            "라다": 6
+          }
+        }
+      ],
+      "coverage_changes": {
+        "main": [
+          {
+            "start": 76.40966666666667,
+            "end": 77.077,
+            "before": [
+              "unknown"
+            ],
+            "after": [],
+            "expected_scope": true
+          },
+          {
+            "start": 143.74360000000001,
+            "end": 144.07726666666667,
+            "before": [
+              "unknown"
+            ],
+            "after": [],
+            "expected_scope": true
+          }
+        ],
+        "group": [
+          {
+            "start": 76.40966666666667,
+            "end": 76.4764,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          },
+          {
+            "start": 76.94353333333333,
+            "end": 77.077,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          },
+          {
+            "start": 143.74360000000001,
+            "end": 144.07726666666667,
+            "before": [],
+            "after": [
+              "None"
+            ],
+            "expected_scope": true
+          }
+        ]
+      },
+      "outside_expected_coverage_changes": {
+        "main": [],
+        "group": []
+      },
+      "clip_changes": {
+        "main": {
+          "removed_or_changed": [
+            {
+              "clip_id": "main_0038",
+              "start": 75.8758,
+              "end": 77.37740000000001,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0038.jpg"
+            },
+            {
+              "clip_id": "main_0078",
+              "start": 143.67686666666668,
+              "end": 143.84380000000002,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0078.jpg"
+            },
+            {
+              "clip_id": "main_0079",
+              "start": 143.84380000000002,
+              "end": 144.07726666666667,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0079.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "main_0038",
+              "start": 75.8758,
+              "end": 76.40966666666667,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0038.jpg"
+            },
+            {
+              "clip_id": "main_0039",
+              "start": 77.077,
+              "end": 77.37740000000001,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0039.jpg"
+            },
+            {
+              "clip_id": "main_0079",
+              "start": 143.67686666666668,
+              "end": 143.74360000000001,
+              "person_id": "unknown",
+              "thumbnail_path": "clips/dance/main/main_0079.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 147,
+          "unchanged_rows_with_reindexed_ids": 39
+        },
+        "group": {
+          "removed_or_changed": [
+            {
+              "clip_id": "group_0010",
+              "start": 76.4764,
+              "end": 76.94353333333333,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0010.jpg"
+            },
+            {
+              "clip_id": "group_0029",
+              "start": 144.07726666666667,
+              "end": 144.3442,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0029.jpg"
+            }
+          ],
+          "added_or_changed": [
+            {
+              "clip_id": "group_0010",
+              "start": 76.40966666666667,
+              "end": 77.077,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0010.jpg"
+            },
+            {
+              "clip_id": "group_0029",
+              "start": 143.74360000000001,
+              "end": 144.3442,
+              "person_id": null,
+              "thumbnail_path": "clips/dance/group/group_0029.jpg"
+            }
+          ],
+          "unchanged_semantic_rows": 54,
+          "unchanged_rows_with_reindexed_ids": 0
+        }
+      },
+      "expected_scope_intersections": [
+        {
+          "start": 76.40966666666667,
+          "end": 77.077,
+          "before": {
+            "main": [
+              {
+                "clip_id": "main_0038",
+                "start": 75.8758,
+                "end": 77.37740000000001,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0038.jpg",
+                "overlap_start": 76.40966666666667,
+                "overlap_end": 77.077
+              }
+            ],
+            "group": [
+              {
+                "clip_id": "group_0010",
+                "start": 76.4764,
+                "end": 76.94353333333333,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0010.jpg",
+                "overlap_start": 76.4764,
+                "overlap_end": 76.94353333333333
+              }
+            ]
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0010",
+                "start": 76.40966666666667,
+                "end": 77.077,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0010.jpg",
+                "overlap_start": 76.40966666666667,
+                "overlap_end": 77.077
+              }
+            ]
+          }
+        },
+        {
+          "start": 143.74360000000001,
+          "end": 144.07726666666667,
+          "before": {
+            "main": [
+              {
+                "clip_id": "main_0078",
+                "start": 143.67686666666668,
+                "end": 143.84380000000002,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0078.jpg",
+                "overlap_start": 143.74360000000001,
+                "overlap_end": 143.84380000000002
+              },
+              {
+                "clip_id": "main_0079",
+                "start": 143.84380000000002,
+                "end": 144.07726666666667,
+                "person_id": "unknown",
+                "thumbnail_path": "clips/dance/main/main_0079.jpg",
+                "overlap_start": 143.84380000000002,
+                "overlap_end": 144.07726666666667
+              }
+            ],
+            "group": []
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0029",
+                "start": 143.74360000000001,
+                "end": 144.3442,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0029.jpg",
+                "overlap_start": 143.74360000000001,
+                "overlap_end": 144.07726666666667
+              }
+            ]
+          }
+        },
+        {
+          "start": 229.229,
+          "end": 229.76286666666667,
+          "before": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0054",
+                "start": 229.19563333333335,
+                "end": 231.53130000000002,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0054.jpg",
+                "overlap_start": 229.229,
+                "overlap_end": 229.76286666666667
+              }
+            ]
+          },
+          "after": {
+            "main": [],
+            "group": [
+              {
+                "clip_id": "group_0054",
+                "start": 229.19563333333335,
+                "end": 231.53130000000002,
+                "person_id": null,
+                "thumbnail_path": "clips/dance/group/group_0054.jpg",
+                "overlap_start": 229.229,
+                "overlap_end": 229.76286666666667
+              }
+            ]
+          }
+        }
+      ],
+      "tiny_new_or_changed_clips": {
+        "main": [
+          {
+            "clip_id": "main_0079",
+            "start": 143.67686666666668,
+            "end": 143.74360000000001,
+            "person_id": "unknown",
+            "thumbnail_path": "clips/dance/main/main_0079.jpg"
+          }
+        ],
+        "group": []
+      },
+      "sam": [
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        },
+        {
+          "mask_policy": "disabled_runtime_cost_v1",
+          "joint_policy": "disabled_runtime_cost_v1",
+          "mask_seconds": 0.0,
+          "joint_seconds": 0.0,
+          "mask_reason": "disabled_runtime_cost",
+          "mask_candidates": 0,
+          "mask_recovered_seconds": 0.0,
+          "joint_corrected_seconds": 0.0,
+          "joint_recovered_seconds": 0.0,
+          "models": [
+            "opencv-yunet-face-detection",
+            "auraface-v1-face-recognition"
+          ]
+        }
+      ],
+      "timings": [
+        {
+          "active_wall_seconds": 439.264,
+          "queue_seconds": 519.026,
+          "pipeline_seconds": 435.73044779198244,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        },
+        {
+          "active_wall_seconds": 458.606,
+          "queue_seconds": 617.461,
+          "pipeline_seconds": 454.10915141698206,
+          "job_status": "completed",
+          "project_status": "completed",
+          "error": null,
+          "job_finished_matches_project": true
+        }
+      ],
+      "same_config": true,
+      "same_dance_setup": true,
+      "person_diffs": [
+        {
+          "path": "/0/clip_ids/13",
+          "before": "main_0040",
+          "after": "main_0039"
+        },
+        {
+          "path": "/0/clip_ids/14",
+          "before": "main_0049",
+          "after": "main_0041"
+        },
+        {
+          "path": "/0/clip_ids/16",
+          "before": "main_0057",
+          "after": "main_0051"
+        },
+        {
+          "path": "/0/clip_ids/17",
+          "before": "main_0060",
+          "after": "main_0058"
+        },
+        {
+          "path": "/0/clip_ids/19",
+          "before": "main_0070",
+          "after": "main_0062"
+        },
+        {
+          "path": "/0/clip_ids/20",
+          "before": "main_0074",
+          "after": "main_0071"
+        },
+        {
+          "path": "/0/clip_ids/21",
+          "before": "main_0076",
+          "after": "main_0075"
+        },
+        {
+          "path": "/1/clip_ids/0",
+          "before": "main_0067",
+          "after": "main_0068"
+        },
+        {
+          "path": "/1/clip_ids/1",
+          "before": "main_0068",
+          "after": "main_0069"
+        },
+        {
+          "path": "/2/clip_ids/4",
+          "before": "main_0046",
+          "after": "main_0047"
+        },
+        {
+          "path": "/2/clip_ids/5",
+          "before": "main_0073",
+          "after": "main_0074"
+        },
+        {
+          "path": "/3/clip_ids/0",
+          "before": "main_0043",
+          "after": "main_0044"
+        },
+        {
+          "path": "/3/clip_ids/1",
+          "before": "main_0044",
+          "after": "main_0045"
+        },
+        {
+          "path": "/4/clip_ids/4",
+          "before": "main_0039",
+          "after": "main_0040"
+        },
+        {
+          "path": "/4/clip_ids/5",
+          "before": "main_0041",
+          "after": "main_0042"
+        },
+        {
+          "path": "/4/clip_ids/6",
+          "before": "main_0042",
+          "after": "main_0043"
+        },
+        {
+          "path": "/4/clip_ids/7",
+          "before": "main_0063",
+          "after": "main_0064"
+        },
+        {
+          "path": "/4/clip_ids/8",
+          "before": "main_0065",
+          "after": "main_0066"
+        },
+        {
+          "path": "/5/clip_ids/1",
+          "before": "main_0054",
+          "after": "main_0055"
+        },
+        {
+          "path": "/5/clip_ids/2",
+          "before": "main_0055",
+          "after": "main_0056"
+        },
+        {
+          "path": "/6/clip_ids/7",
+          "before": "main_0045",
+          "after": "main_0046"
+        },
+        {
+          "path": "/6/clip_ids/8",
+          "before": "main_0056",
+          "after": "main_0057"
+        },
+        {
+          "path": "/6/clip_ids/9",
+          "before": "main_0058",
+          "after": "main_0059"
+        },
+        {
+          "path": "/6/clip_ids/10",
+          "before": "main_0069",
+          "after": "main_0070"
+        },
+        {
+          "path": "/6/clip_ids/11",
+          "before": "main_0071",
+          "after": "main_0072"
+        },
+        {
+          "path": "/6/clip_ids/12",
+          "before": "main_0072",
+          "after": "main_0073"
+        },
+        {
+          "path": "/7/clip_ids/1",
+          "before": "main_0059",
+          "after": "main_0060"
+        },
+        {
+          "path": "/7/clip_ids/2",
+          "before": "main_0062",
+          "after": "main_0063"
+        },
+        {
+          "path": "/7/clip_ids/3",
+          "before": "main_0064",
+          "after": "main_0065"
+        },
+        {
+          "path": "/7/clip_ids/4",
+          "before": "main_0075",
+          "after": "main_0076"
+        },
+        {
+          "path": "/8/clip_ids/7",
+          "before": "main_0047",
+          "after": "main_0048"
+        },
+        {
+          "path": "/8/clip_ids/8",
+          "before": "main_0048",
+          "after": "main_0049"
+        },
+        {
+          "path": "/8/clip_ids/9",
+          "before": "main_0051",
+          "after": "main_0052"
+        },
+        {
+          "path": "/8/clip_ids/10",
+          "before": "main_0052",
+          "after": "main_0053"
+        },
+        {
+          "path": "/8/clip_ids/11",
+          "before": "main_0053",
+          "after": "main_0054"
+        },
+        {
+          "path": "/8/clip_ids/12",
+          "before": "main_0066",
+          "after": "main_0067"
+        }
+      ],
+      "recorded_source_hashes": [
+        "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f",
+        "5794507bab7d139000b5172e37b263653a60a16fccab1913cdd4e5f88f4ebd2f"
+      ],
+      "recorded_modules": {
+        "face_cluster": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_cluster.py",
+          "sha256": "7b254088ce68acba5cb4ab4bfc6805635db68f19dbc21855b8ea8760b0c5fe1d"
+        },
+        "pose_engine": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+          "sha256": "f1cda4cb19fdb415bfa471fdbe60f68bb21c9d5e00df617c7a15710cfd8d548d"
+        },
+        "pipeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+          "sha256": "86cf30dc0ebe1879ae7234d394bd79f04dac9eb7899cfc0d0ea090053507a49f"
+        },
+        "reference_matcher": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/reference_matcher.py",
+          "sha256": "c8aee9f4063083e5dcafadffed0bf86baab5decb3650c05a6e2420fce6453994"
+        },
+        "auraface": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_face_core/auraface.py",
+          "sha256": "0ac175215c673d82342f2ee304c9b8cbb5f8913a054531c293fea0cb68792e56"
+        },
+        "main_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_identity.py",
+          "sha256": "40cc10c46291e5681c7cffeea48d8c9c9edd54bb6ff7c262267dd9870f21ef2f"
+        },
+        "face_recovery": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_recovery.py",
+          "sha256": "98282b8b0ba09a6cfd73468d9aae0e86e4d30079237ae978582a6559fbeeaabf"
+        },
+        "face_evidence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_evidence.py",
+          "sha256": "f0375f68d9243d0d8375988f58cb3f4cf7d55c4db411f562dd03317b10866f46"
+        },
+        "member_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_timeline.py",
+          "sha256": "0b7c81823cae32f8a4ef2d25e9bad85a216d893f1f3e4b75fabe8946c69820c6"
+        },
+        "member_coverage": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/member_coverage.py",
+          "sha256": "1ff31a6dea627250b88089391d7ce73b077de4be044201bbd6bcbd578654c136"
+        },
+        "secondary_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/secondary_faces.py",
+          "sha256": "c59755366600b3415e1d5c79f7474ed961d5fc2a77db83a47ac89c4ebb20db87"
+        },
+        "segment": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/segment.py",
+          "sha256": "6782f647e99ec66cd46dea0cd4d2f15d6cb72e7aa8bb44435df033e96220329c"
+        },
+        "body_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/body_continuity.py",
+          "sha256": "3b4650ae6c57906a05715169a32818f9df1d41b413144fec6e5d9ace4d6eece3"
+        },
+        "mask_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_continuity.py",
+          "sha256": "c67efaaef3dede2acf2a40df346a1afd0452c95227f12c88bcd01bca586b45b9"
+        },
+        "mask_tracker": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_tracker.py",
+          "sha256": "22c079d7660289224b1a6b89c982b3c910bd13acdc6b7af3a5be3df9c6a9231f"
+        },
+        "context_faces": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/context_faces.py",
+          "sha256": "55baf4b9edd1d6abaebaeb39dc61d211df4254ddbe1a33b089740e7c12493be7"
+        },
+        "camera_transitions": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/camera_transitions.py",
+          "sha256": "57f31bb3086094e7c8a65594fa354a031ae0d3a4025db9c2de202ecda89c7c71"
+        },
+        "joint_identity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/joint_identity.py",
+          "sha256": "b27ad70534e807c02c3dacda5ab8ce3f8d0741242601c4e6b4289c11f76768ac"
+        },
+        "cut_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/cut_face_link.py",
+          "sha256": "43c16f5e869606bb3db1889ee947d9b2284072b5786b94e219fcdbc0d1cbadb5"
+        },
+        "sampled_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/sampled_face_link.py",
+          "sha256": "8fb8a5626a1e1d0f5ad0b15c9f2c61ecb75712e8f26cd2ff125ea432d18997ee"
+        },
+        "pose_face_rotation": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_face_rotation.py",
+          "sha256": "f26b22a3f0761612a2ba7704f9d566266ef938bffe151880b173b7fb41de60d5"
+        },
+        "scene_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_boundaries.py",
+          "sha256": "42df6443ccdee788ccf6eaf71d9a71d79d8d2d91c633b1a4a784820524b875e9"
+        },
+        "observed_main": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/observed_main.py",
+          "sha256": "9ab5275c731dbd3635a1425772863105823c0cb3a3ff48017da8b0b7965d5fd7"
+        },
+        "main_face_link": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_face_link.py",
+          "sha256": "dbe3ca3d9d47a384279b614fd2cc7b5e3fde41ff26259f292d9547ba7b98fc41"
+        },
+        "main_role_timeline": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/main_role_timeline.py",
+          "sha256": "dd21ca899ce4489f77b03dee6ea0dd5e31c1eef021b1dd2208be8da0cb834637"
+        },
+        "scene_cut_proof": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_cut_proof.py",
+          "sha256": "0cc989207cc947f535dd163c102dbb41912ade115803dd13f90fef6f65120682"
+        },
+        "scene_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/scene_context.py",
+          "sha256": "4037a69179b14d58340261d72898c66fc40d6b1a8517c5aa08afb6f4f1c6533c"
+        },
+        "temporal_support": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/temporal_support.py",
+          "sha256": "1e3cc16fe59fe9eed65d6becc0e9f1ebae1a7c76426277d4376811e15af65f27"
+        },
+        "native_scene": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/native_scene.py",
+          "sha256": "5aeeb4532f35f3df912863eb59bb9e37df8e151f2ac15b56b9060eb5a7b73b6d"
+        },
+        "output_continuity": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/output_continuity.py",
+          "sha256": "39e0e4ac14f547121764f76dcd4e255f6f63af4014b9b2464d0d2c0fd38d8b7f"
+        },
+        "mask_frame_cache": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/mask_frame_cache.py",
+          "sha256": "a8ee102495690416ff24dc8b52f5ac71530700c928e6413d80effd41d695b547"
+        },
+        "stage_prominence": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/stage_prominence.py",
+          "sha256": "3a1a240e4999f0461c233822c910bf37a937bf67522c845e09a284f1d74a391a"
+        },
+        "focal_composition": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_composition.py",
+          "sha256": "6187e7ed89d7c772b2a40fa55de611695375ec2beb952707f1168a9ae4b91cc9"
+        },
+        "focal_output": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/focal_output.py",
+          "sha256": "cc8454fc30be160fd835c991bd9c66f7539aa70338a6bf1bf13ef7d6a23156ad"
+        },
+        "incoming_context": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/incoming_context.py",
+          "sha256": "77396c23b49f85e8218b6eac371576b8e03b6a44fbaa9d094f80dd9e7e8a1cc3"
+        },
+        "face_runtime": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/face_runtime.py",
+          "sha256": "75acf6cb04fdbf49b15f889079024b72642b3dac4726c446a8df08907530e99c"
+        },
+        "opencv_acceleration": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/opencv_acceleration.py",
+          "sha256": "2e1bb0d94e1c07c9441f330a29a7e70f80e362524acc28ae76b4b18d909b32e1"
+        },
+        "named_boundaries": {
+          "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/named_boundaries.py",
+          "sha256": "62047bf9ec86bc138dffa8c6948c2ec7d7f3e14f26c380de9ba9f4bde42aeab5"
+        }
+      },
+      "evidence_keys": [
+        "schema_version",
+        "runtime",
+        "policy",
+        "identity_refinement",
+        "main_selection_refinement",
+        "secondary_reference_refinement",
+        "body_continuity_refinement",
+        "mask_continuity_refinement",
+        "scene_boundary_refinement",
+        "scene_context_refinement",
+        "native_scene_refinement",
+        "output_named_continuity",
+        "visible_member_refinement",
+        "main_result_count",
+        "references",
+        "segments",
+        "pose_heads"
+      ],
+      "raw_segments_equal": true,
+      "pose_diffs": [
+        {
+          "path": "/1145/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1145/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1146/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1146/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1147/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1147/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1148/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1148/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1149/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1149/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1150/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1150/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1151/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1151/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1152/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1152/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1153/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1153/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/1154/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/1154/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2154/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2154/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2155/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2155/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2156/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2156/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2157/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2157/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/2158/scene_kind",
+          "before": "main",
+          "after": "group"
+        },
+        {
+          "path": "/2158/scene_reason",
+          "before": "main_eligible_composition",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3227/scene_reason",
+          "before": "sustained_wide_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3435/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3436/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3437/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3438/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3439/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3440/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3441/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        },
+        {
+          "path": "/3442/scene_reason",
+          "before": "native_distant_ensemble",
+          "after": "compact_distant_ensemble"
+        }
+      ],
+      "top_evidence_equality": {
+        "schema_version": true,
+        "runtime": false,
+        "policy": true,
+        "identity_refinement": true,
+        "main_selection_refinement": false,
+        "secondary_reference_refinement": true,
+        "body_continuity_refinement": true,
+        "mask_continuity_refinement": true,
+        "scene_boundary_refinement": false,
+        "scene_context_refinement": false,
+        "native_scene_refinement": false,
+        "output_named_continuity": false,
+        "visible_member_refinement": true,
+        "main_result_count": true,
+        "references": true,
+        "segments": true,
+        "pose_heads": false
+      },
+      "metadata_hashes": [
+        {
+          "meta": "a7c04fe2dbccb3a2c767af3697a165cc99e4bd72448d7174bcb8d6d61b58568d",
+          "evidence": "3112767da138e81b20e41f08ad8237aedd2fbc6ab2a4d858a478672e20f0dec2"
+        },
+        {
+          "meta": "02ee832786c4a2429288a2735c69edb3df94472a70399ebbe6a9b1ae8e19cbd8",
+          "evidence": "e9d4c2ac32db1d41ccdd4731ca08c20179562bc481eb6aa131ddebac684f46d8"
+        }
+      ]
+    }
+  }
+}
