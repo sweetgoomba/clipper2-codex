@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "documented_at_kst": "2026-11-04T04:38:07+09:00",
+  "scope": "Two PG/refund sessions; preserved historical evidence, not a new test run",
+  "threads": [
+    {
+      "title": "고객 환불·외부 취소 설계 독립 검증",
+      "id": "01a19e06-16f8-75d1-ba54-0514b52e8414"
+    },
+    {
+      "title": "pg 검증, 문제 수정",
+      "id": "01a19d31-4956-7a80-ae73-6ec56fefe6c6"
+    }
+  ],
+  "git_audit": {
+    "source": {
+      "original_path": "/private/tmp/pgops-final-audit-20261104/git-final-proof.json",
+      "sha256": "3301af8ff741a112913c022e47c53e38770b7915970e7138cd3b8d447353956a",
+      "mtime_kst": "2026-11-04T03:09:18+09:00"
+    },
+    "repositories": [
+      {
+        "repo": "api",
+        "head": "197af457fc00517de11e0f89fbb7c78863ca897c",
+        "remote_dev": "197af457fc00517de11e0f89fbb7c78863ca897c",
+        "unmerged_commits": [],
+        "behind": 0,
+        "remaining": [
+          " M src/core/database/admin.datasource.ts",
+          "?? src/modules/payments/infrastructure/renewal-wall-clock.postgres.spec.ts",
+          "?? test/fixtures/renewal-wall-clock.md",
+          "?? test/helpers/renewal-wall-clock-fixture.ts"
+        ]
+      },
+      {
+        "repo": "admin",
+        "head": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+        "remote_dev": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+        "unmerged_commits": [],
+        "behind": 0,
+        "remaining": [
+          " M src/environments/environment.local.ts",
+          "?? docs/superpowers/plans/2026-11-03-payment-menu-consolidation.md",
+          "?? docs/superpowers/plans/2026-11-03-payment-operations-lists.md",
+          "?? docs/superpowers/plans/2026-11-03-refund-management.md",
+          "?? docs/superpowers/plans/2026-11-03-refund-request-row-actions.md"
+        ]
+      },
+      {
+        "repo": "client",
+        "head": "aabcf3d4aa33a7da0795e7b141aee31da3ac2b71",
+        "remote_dev": "aabcf3d4aa33a7da0795e7b141aee31da3ac2b71",
+        "unmerged_commits": [],
+        "behind": 0,
+        "remaining": [
+          " M src/environments/environment.local.ts"
+        ]
+      },
+      {
+        "repo": "electron",
+        "head": "febb1670a56efc2348ad42f2b48ca4f30b74f7a7",
+        "remote_dev": "6831d8de76d34bb6ae2523122e9c6271ba68d00f",
+        "unmerged_commits": [],
+        "behind": 1,
+        "remaining": [
+          "?? dist-app-refund-20261103/"
+        ]
+      },
+      {
+        "repo": "angular",
+        "head": "7b559706cea07e21374592f3106c0503d7a93d34",
+        "remote_dev": "7b559706cea07e21374592f3106c0503d7a93d34",
+        "unmerged_commits": [],
+        "behind": 0,
+        "remaining": []
+      },
+      {
+        "repo": "nest",
+        "head": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+        "remote_dev": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+        "unmerged_commits": [],
+        "behind": 0,
+        "remaining": []
+      },
+      {
+        "repo": "python",
+        "head": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+        "remote_dev": "5d565dfa96c1fa3bd6a4b94e9dc96110088f0dab",
+        "unmerged_commits": [],
+        "behind": 1,
+        "remaining": []
+      }
+    ]
+  },
+  "latest_tests": {
+    "api": {
+      "passed_suites": 491,
+      "passed_tests": 5400,
+      "skipped_suites": 9,
+      "skipped_tests": 86,
+      "snapshots_passed": 5,
+      "source": {
+        "original_path": "/private/tmp/trial-validity-365-20261104/api/full-tests.log",
+        "sha256": "526ea3357567222c7e2e5a91be5cc6a654a00952e9140462b7915a04c89c016c",
+        "mtime_kst": "2026-11-04T03:04:00+09:00"
+      }
+    },
+    "admin": {
+      "passed_tests": 2868,
+      "source": {
+        "original_path": "/private/tmp/trial-validity-365-20261104/admin/full-tests.log",
+        "sha256": "5c435dd4cf76c60e096a139336436deba7c715006e5346e85c649d46aed627c8",
+        "mtime_kst": "2026-11-04T03:04:26+09:00"
+      }
+    },
+    "client": {
+      "passed_tests": 635,
+      "source": {
+        "original_path": "/private/tmp/catalog-trial-integration-20261104/client/full-tests.log",
+        "sha256": "478d6446b40ab74340af9eabdd83eea406a9e58d70725e50dfc339d6b3677946",
+        "mtime_kst": "2026-11-04T02:56:55+09:00"
+      }
+    }
+  },
+  "crash_and_relaunch": {
+    "source": {
+      "original_path": "/private/tmp/refund-real-crash-20261104/verdict.json",
+      "sha256": "9fcde89f665dd03fe8f75c081588f3d47c68fe8d491683394ccde132db50661e",
+      "mtime_kst": "2026-11-04T00:53:32+09:00"
+    },
+    "result": {
+      "passed": true,
+      "chargedCredits": 240,
+      "creditsAfterCharges": 5240,
+      "creditsAfterFirstRelaunch": 5480,
+      "creditsAfterSecondRelaunch": 5480,
+      "ledgerUnchangedOnSecondRelaunch": true,
+      "manualResolutionEvents": 0,
+      "pendingCommands": 0
+    },
+    "jobs": [
+      {
+        "beforeStatus": "running",
+        "charged": 160,
+        "refunded": 160,
+        "positiveRefundEntries": 1,
+        "originalGrantRestored": true,
+        "netCreditChange": 0
+      },
+      {
+        "beforeStatus": "queued",
+        "charged": 80,
+        "refunded": 80,
+        "positiveRefundEntries": 1,
+        "originalGrantRestored": true,
+        "netCreditChange": 0
+      }
+    ]
+  },
+  "offline_and_reconnect": {
+    "source": {
+      "original_path": "/private/tmp/refund-offline-crash-20261104/verdict.json",
+      "sha256": "80d4ab904aed74588b2d64b5be9dc1d684017e8c787a204674aae47a23f8b911",
+      "mtime_kst": "2026-11-04T01:06:13+09:00"
+    },
+    "result": {
+      "passed": true,
+      "apiUnavailableAtRelaunch": true,
+      "pendingCommandsWhileApiUnavailable": 2,
+      "appReloadedAfterApiRestore": false,
+      "manualFinancialCommands": 0,
+      "creditsAfterCharges": 5240,
+      "creditsWhileApiUnavailable": 5240,
+      "creditsAfterApiReconnection": 5480,
+      "creditsAfterAutomaticRecheck": 5480,
+      "ledgerUnchangedAfterAutomaticRecheck": true
+    },
+    "jobs": [
+      {
+        "beforeCrashStatus": "running",
+        "charged": 160,
+        "refunded": 160,
+        "positiveRefundEntries": 1,
+        "originalGrantRestored": true,
+        "netCreditChange": 0
+      },
+      {
+        "beforeCrashStatus": "queued",
+        "charged": 80,
+        "refunded": 80,
+        "positiveRefundEntries": 1,
+        "originalGrantRestored": true,
+        "netCreditChange": 0
+      }
+    ]
+  },
+  "web_stop": {
+    "source": {
+      "original_path": "/private/tmp/pgops-final-audit-20261104/web-stop-proof.json",
+      "sha256": "2cc75f27953e94122bfae81d4849028f6933b85d1d298016503ca91d0f7a3d40",
+      "mtime_kst": "2026-11-04T03:09:17+09:00"
+    },
+    "result": {
+      "stopped": [
+        {
+          "port": 4204,
+          "pid": 52677,
+          "cwd": "/Users/jina/project/adlight/.worktrees/pg-ops-20261103-admin",
+          "restart": "PATH=/Users/jina/.nvm/versions/node/v24.19.0/bin:$PATH ./node_modules/.bin/ng serve --configuration local --host 127.0.0.1 --port 4204 --poll 1000"
+        },
+        {
+          "port": 4203,
+          "pid": 72297,
+          "cwd": "/Users/jina/project/adlight/.worktrees/pg-ops-20261103-client",
+          "restart": "PATH=/Users/jina/.nvm/versions/node/v24.19.0/bin:$PATH ./node_modules/.bin/ng serve --configuration local --host 127.0.0.1 --port 4203 --poll 1000"
+        }
+      ],
+      "ports_released": [
+        4204,
+        4203
+      ],
+      "api_3311_preserved": true,
+      "databases_preserved": true
+    }
+  },
+  "local_runtime_readback": {
+    "at_kst": "2026-11-04T04:38:07+09:00",
+    "listeners": {
+      "4203": [],
+      "4204": [],
+      "3311": [
+        16416
+      ]
+    },
+    "compiled_policy_max_days": 3650,
+    "dev_policy_max_days": 365,
+    "rebuild_restart_pending": true
+  },
+  "additional_sources": [
+    {
+      "original_path": "/private/tmp/pg-session-audit-20261104.md",
+      "sha256": "5c506cf9a5df5d05bc59590e1e559bf386401b457b631fbdeb65183aa3dbcbe6",
+      "mtime_kst": "2026-11-04T01:53:38+09:00"
+    },
+    {
+      "original_path": "/private/tmp/external-cancellation-implementation-20261104/whole-review-package.diff",
+      "sha256": "0927e437c0384295975aa9ea6c268d5311a39d6d1a05ce5abf7fa453b5eed5fc",
+      "mtime_kst": "2026-11-04T02:45:34+09:00"
+    },
+    {
+      "original_path": "/private/tmp/catalog-trial-integration-20261104/pg-upgrade-smoke.log",
+      "sha256": "7341ee1b494a18604bf0081186b5c9b51594444a871932ead528f190c68b1f29",
+      "mtime_kst": "2026-11-04T02:56:38+09:00"
+    },
+    {
+      "original_path": "/private/tmp/trial-validity-365-20261104/independent-review.md",
+      "sha256": "78be09987396b812afb544ad905b2981e49e29c7073e9cab39736968a31e2e52",
+      "mtime_kst": "2026-11-04T03:03:53+09:00"
+    }
+  ],
+  "privacy": "No credentials, personal email, job/run identifiers or environment secret values copied",
+  "changes": "Documentation only; no product code/runtime/database changes or .codex commit/push"
+}

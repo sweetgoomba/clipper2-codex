@@ -1,0 +1,146 @@
+{
+  "recorded_at_kst": "2026-11-04T08:23:19+09:00",
+  "pre_push_gate": {
+    "review_file": "/private/tmp/customer-refunds-default-20261104/pre-dev-independent-review.md",
+    "review_sha256": "b813e06f140907459b4d17e87481dde0c9741f45f0d8d425c3896723922d4ac2",
+    "source_commits": [
+      {
+        "repo": "api",
+        "commit": "b924ca5cec28ac6ad91adb089f17f4875ca9bfde",
+        "tested_tree": "15b031606506cec508b08c5a39725e3565200349",
+        "review_passed": true,
+        "normal_fast_forward": true
+      },
+      {
+        "repo": "client",
+        "commit": "b90eedc952b7ca0ba2666c21699d91f995c7c67f",
+        "tested_tree": "04a6c4b8346b7b0f478e393c7657ecbaceae4063",
+        "review_passed": true,
+        "normal_fast_forward": true
+      }
+    ],
+    "decision": "PASS before any remote dev push"
+  },
+  "remote_after_push": [
+    {
+      "repo": "api",
+      "head": "b924ca5cec28ac6ad91adb089f17f4875ca9bfde",
+      "origin_dev": "b924ca5cec28ac6ad91adb089f17f4875ca9bfde",
+      "remaining": [
+        " M src/core/database/admin.datasource.ts",
+        "?? src/modules/payments/infrastructure/renewal-wall-clock.postgres.spec.ts",
+        "?? test/fixtures/renewal-wall-clock.md",
+        "?? test/helpers/renewal-wall-clock-fixture.ts"
+      ]
+    },
+    {
+      "repo": "client",
+      "head": "b90eedc952b7ca0ba2666c21699d91f995c7c67f",
+      "origin_dev": "b90eedc952b7ca0ba2666c21699d91f995c7c67f",
+      "remaining": [
+        " M src/environments/environment.local.ts"
+      ]
+    }
+  ],
+  "verification": {
+    "api": {
+      "passed_suites": 492,
+      "passed_tests": 5403,
+      "skipped_suites": 9,
+      "skipped_tests": 86,
+      "snapshots_passed": 5
+    },
+    "client": {
+      "passed_tests": 637
+    },
+    "api_build_exit": 0,
+    "client_build_exit": 0,
+    "local_api_build_exit": 0
+  },
+  "sources": [
+    {
+      "original_path": "/private/tmp/customer-refunds-default-20261104/api/full-tests.log",
+      "sha256": "c4370f7e0beacb68c5d0d9c9f2560a500aece210a1595c9ce76711673a9c9026"
+    },
+    {
+      "original_path": "/private/tmp/customer-refunds-default-20261104/client/full-tests.log",
+      "sha256": "db77e7f6c41df7e4427d5008713b8e3dc41a8e1a99e6cecb29aafaf6fccd611c"
+    },
+    {
+      "original_path": "/private/tmp/customer-refunds-default-20261104/api/build.log",
+      "sha256": "9692c7f7ee4895c0e24debe4e8ac18ab0070604bc9151ac51a147e62c55950d4"
+    },
+    {
+      "original_path": "/private/tmp/customer-refunds-default-20261104/client/build.log",
+      "sha256": "3336753cd85b1249e1cdeb8fe81c38e7af97ae4cb096751bfdb1e4e5500a4c27"
+    },
+    {
+      "original_path": "/private/tmp/customer-refunds-default-20261104/pre-dev-independent-review.md",
+      "sha256": "b813e06f140907459b4d17e87481dde0c9741f45f0d8d425c3896723922d4ac2"
+    }
+  ],
+  "launcher_cleanup": {
+    "before_sha256": "6df6d061ce29b905eeec1f77c7714aed5d79d0a2d300d4190ca9039a87e62d31",
+    "prepared_sha256": "c5e005007df6566e290ec411ef601916e1b75b703ea0fc7d3de6c54ce7e3a336",
+    "removed_lines": 1,
+    "other_bytes_preserved": true,
+    "applied": true,
+    "api3311_was_stopped": true,
+    "api_restarted": false,
+    "web4203_4204_restarted": false
+  },
+  "runtime": "API3311 and webs4203/4204 found stopped; new own API compiled; no service started/restarted",
+  "other_worktrees_status": [
+    {
+      "repo": "api",
+      "head": "b924ca5cec28ac6ad91adb089f17f4875ca9bfde",
+      "remote_dev": "197af457fc00517de11e0f89fbb7c78863ca897c",
+      "ahead": 1,
+      "behind": 0
+    },
+    {
+      "repo": "admin",
+      "head": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+      "remote_dev": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+      "ahead": 0,
+      "behind": 0
+    },
+    {
+      "repo": "client",
+      "head": "b90eedc952b7ca0ba2666c21699d91f995c7c67f",
+      "remote_dev": "aabcf3d4aa33a7da0795e7b141aee31da3ac2b71",
+      "ahead": 1,
+      "behind": 0
+    },
+    {
+      "repo": "electron",
+      "head": "febb1670a56efc2348ad42f2b48ca4f30b74f7a7",
+      "remote_dev": "849a51b7906f84054e1a55d02da45bfa3768be6f",
+      "ahead": 0,
+      "behind": 2
+    },
+    {
+      "repo": "angular",
+      "head": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "remote_dev": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "ahead": 0,
+      "behind": 0
+    },
+    {
+      "repo": "nest",
+      "head": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "remote_dev": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "ahead": 0,
+      "behind": 0
+    },
+    {
+      "repo": "python",
+      "head": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+      "remote_dev": "17259bcf1c7c466cd7108e04a25250172dd28151",
+      "ahead": 0,
+      "behind": 3
+    }
+  ],
+  "production_deployment": false,
+  "real_toss_e2e_executed": false
+}

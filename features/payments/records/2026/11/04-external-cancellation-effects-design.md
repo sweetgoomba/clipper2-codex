@@ -1,0 +1,46 @@
+# External cancellation effects design — 2026-11-04
+
+## Intent and authorization
+The user requests a combined audit of 「pg 검증, 문제 수정」 and 「고객 환불·외부 취소 설계 독립 검증」, then implementation of the missing handling for Toss-dashboard cancellations. The parent audit is /private/tmp/pg-session-audit-20261104.md. The user selected: confirmed full external cancellation automatically reclaims remaining credits and ends the related access/renewal; already-used credits and partial cancellation require operator review. Existing customer refunds still require operator approval. Prior user instruction permits design then implementation without an extra approval gate.
+
+## Current state
+API origin/dev7550104 detects verified cancellations via webhook/scan/admin lookup and stores events/incidents. Only an existing completed internal refund case reaches PaymentRefundEffectsService. Unmatched cancellations currently neither revoke credits/access nor stop future billing. Both sessions' refund/operations/desktop work is already in dev. Price/monthly-credit and signup-validity edits remain uncommitted, intentionally preserved. Real Toss TEST experiments established detection and ordinary refund, not unmatched external effects.
+
+## Approaches
+1. Reconstruct an ordinary refund case after an external cancellation: rejected, because ordinary eligibility assumes unused rights and may request money a second time or misrepresent an administrator/customer request.
+2. Independent durable external-effect record linked to the verified order/events: chosen engineering approach. Reuse the existing user/subscription lock discipline and ledger/access conventions; no extra Toss cancellation call.
+User chose automatic processing over an operator execution gate for full cancellation.
+
+## Binding behavior
+- Re-query Toss server-side and validate orderNo/paymentKey/keySet/currency/original total/cancellation transaction identities and totals before changing rights. Never trust a webhook body as final evidence. Never send cancelPayment from this flow.
+- Persist pending external effects atomically with observation; periodic recovery handles startup backlog and failed attempts. Detect historical existing incidents too. A process crash or duplicate scan/webhook must not lose or repeat financial effects.
+- Full cancellation of a topup revokes only grants backed by that payment. Preserve free-trial, promotion, manual and other paid grants. A partially used grant loses its remaining spendable credits; used credit amount is recorded for operator review, with no negative balance/debt or unrelated-grant debit.
+- Full subscription initial/renewal cancellation revokes grants attributable to that payment/contract. End current related subscription access and stop its renewal/retry/scheduled changes and further monthly grants only when the payment/contract period and ownership are unambiguous and no other valid paid order backs that current entitlement. For annual contracts include all monthly grants originating from that annual payment and stop future grants.
+- An old canceled period must not terminate a newer valid paid period or another access grant. Upgrade/mixed-payment/overlapping periods which cannot be safely unwound remain explicit operator cases; reclaim only clearly attributed grants and stop renewal only if it belongs to the affected current contract. No speculative downgrade or refund of other orders.
+- Partial cancellation records actual verified money state but does not invent a proportional credit/access policy. Keep action_required with a readable reason; a later full cancellation can advance to automatic processing.
+- An existing internal refund case owns its effects. Wait/recover through that path rather than revoke twice. A completed internal case can settle the corresponding external investigation.
+- Failure after partial DB work rolls back the transaction; durable retry remains visible. Use per-order processing ownership/lease and deterministic ledger references; do not hold a DB transaction while calling Toss.
+- Credit operations already serialize by user; external effects must share those locks. Maintain subscription→user→affected-row ordering; resolve observation/effect row order to avoid deadlock. Concurrent fulfillment, renewal, upgrade, ordinary refund and delayed operation-credit returns must not resurrect spendable canceled benefits.
+- Clearly distinguish provider money cancellation, internal effects pending/retry/completed, and operator review. An investigation is resolved only when applicable internal effects are complete and no review is outstanding. Record used credits, reclaimed credits, access/renewal action and reason safely.
+- Admin incident grid gains a compact internal-effects state with readable details and retry through the existing recheck action. Keep common table design and stable row layout. No inline editing expansion for the new details.
+
+## Contract
+API incident item adds optional `effects` (nullable for backward compatibility): `{ status: 'pending'|'processing'|'completed'|'retry_required'|'manual_action_required', reasonCode: string|null, revokedCredits: number, usedCredits: number, subscriptionEnded: boolean, renewalStopped: boolean, processedAt: string|null, lastAttemptAt: string|null }`.
+Observation/refund money must remain independently truthful. Existing recheck endpoint may enqueue/retry internal effects after re-verification; request cannot specify amounts/grant IDs/entitlement actions. No new client cancellation action.
+
+## Scope and verification
+API owns durable migration, engine, observation wiring, recovery, query/contract and meaningful unit+isolated PostgreSQL tests. Admin owns effects state/reason/retry wording and mocks/tests. Root checks customer history wording if completed effects would still claim internal review is needed. Do not modify parent price/signup-validity hunks, local env/ports, live/shared DBs, real financial records, packaged apps or unrelated worktrees.
+Prove full topup, current monthly/annual cancellation, used credits, unrelated grants, historical renewal, upgrade/mixed payment review, duplicate/concurrent delivery, provider mismatch, restart/retry/rollback, and delayed operation return. Build and full suites after focused red→green. Use fake Toss plus disposable PostgreSQL; disclose that real Toss end-to-end effects remain unverified.
+
+## Independent builder check: engineering rulings
+- Fence every fulfillment path: subscription→user→order row for subscription fulfillment; user→order row for topup. Re-read cancellation after lock, hold through benefit issuance. Prove both transaction orderings.
+- Annual null-order grants: require matching user/subscription/subscription source and benefit bounds wholly within canceled contract [start,end), and exactly one base-payment owner for that period. Exclude explicitly different payment IDs. Ambiguity/upgrades/overlap/missing snapshots remain review; explicit own grants may still be revoked.
+- Lock protocol: observation locks order row first, then event/incident/outbox, and never takes financial advisory locks. Financial worker takes subscription→user→order row before grants/access/external-effect records. Do not lock an ordinary refund case after financial advisory locks. Handoff ordinary-case work outside that transaction, resolving only after its internal effects complete.
+- Existing renewal/upgrade charge claims are unresolved money until reconciled. Fence preparation and late fulfillment; record paid money truthfully without reviving canceled rights. persistFailure also takes subscription lock before order. Tests use barriers before/after claim and provider result.
+- Customer history includes external-effect summaries in existing PaymentRefundSummary, excluding ordinary-case-owned jobs; pending/retry/review must not become a completed-refund label. CompletedAt comes from verified provider cancellation. No new client interface is needed if this projection suffices.
+Engineering rulings settle code boundaries, not new financial policy. No additional user choice is needed.
+
+- Final lifecycle check: completed internal cleanup must no longer inflate the unresolved payment-check warning list/count. Preserve the factual external cancellation marker on order/history, but warnings depend on unresolved case/effect/incident state; retain unrelated reconciliation_required warnings.
+
+## Pending customer request closure
+Engineering ruling: externally completed payments must not leave an outstanding customer request indefinitely. Add persisted resolved_externally (not approved/rejected), projected existing public completed plus optional resolutionSource=external_cancellation. Admin raw filter/count gains resolved_externally with label 외부 취소 완료. Close pending_approval or approval_blocked only when no ordinary refund case, nonempty original snapshot, and every snapshot payment is same-user, fully canceled and has completed external effects. Preserve withdrawn/rejected/approved history. No fake operator identity; retain system evidence. Closure uses separate request-row transaction outside financial advisory locks, SKIP LOCKED, and a periodic repair query so crash after effects cannot strand requests. Concurrent approvals/withdrawals must honor final outcome and never issue a second cancellation.
