@@ -1,5 +1,19 @@
 # Codex Workspace
 
+**2026-11-04 고객 환불 기본 제공:** [플래그 제거·dev 전 독립 검증 절차](features/payments/records/2026/11/04-customer-refunds-default-and-pre-dev-review.md). API `b924ca5`/Client `b90eedc` dev 반영, API5403·Client637·빌드 통과. 고객 신청은 기본 제공하되 관리자 승인 뒤 토스 취소한다. 별도 검증 결과를 받은 뒤에만 dev 반영하도록 인계에 명시했다. 전용 API3311·웹4203/4204는 현재 정지 상태다.
+
+**2026-11-04 PG 두 세션 최종 정리:** [고객 환불·PG 통합 인계](features/payments/records/2026/11/04-two-session-pgops-summary.md). 환불 승인·외부 취소 자동 정리·운영 UI·앱 정산 복구·가격/크레딧·무료체험365일 상한은 dev 반영 완료다. 실제 Toss 전체 E2E·조건부 DB86개·운영 배포/문구·로컬API3311 재기동은 별도다. 웹4203/4204는 종료했고 API/DB는 보존했다. [결제 색인](features/payments/README.md).
+
+**2026-11-04 하이라이트 Mac 가속:** [현재 모델·실측·사용·재현](operations/accelerators/README.md). 원격·원본 dev에 Python 17259bc와 Electron 849a51b를 반영했다. Made My Night 안무 335초 → 266초, 63개 목록·설정·집계 동일, 관련 Python 2,073개·Electron 1,977개 통과다. local-api Mac 앱·설치 환경·기동까지 확인했다. SFace·일부 얼굴 영역·Whisper는 CPU가 남아 있으며 Windows와 다른 플러그인 전체 검증은 별도다. [종합 인계](records/sessions/2026/11/04-highlight-mac-acceleration-handoff.md). 아래 과거 상태와 SHA는 당시 이력이다.
+
+**2026-11-03 W19 최종 dev:** [가입 프로모션·Free·요금제별 플러그인·스토어 배지의6repo 커밋/검증/통합](features/plugin-catalog/records/2026/11/03-store-plan-badges-dev-merge.md). 작업 브랜치와 원격 dev가 일치하며 충돌0/clean이다. 기존 macOS 보조 프로세스 종료 오류는 사용자 요청으로 [W20 새 세션](handoff/tasks/macos-owned-child-identity.md)에 분리했다. 아래 미커밋 표시는 이전 단계 기록이다.
+
+**2026-11-03 프로모션 세션 종합:** [현재 범위·구현·PG 논의·보류·Git/로컬 인계](records/sessions/2026/11/03-promotion-signup-free-plugin-session-summary.md). 가입 프로모션·참여 조건·지속 Free·가격 카드·일괄 플러그인 설정·감사 표시까지 로컬 구현/검증, 미커밋·미푸시·미배포다. 유료 예약/레퍼럴 성과/XLSX는 보존 후 현재 코드에서 제거했다. [PG 별도 정리](features/payments/records/2026/11/03-session-pg-discussions-and-changes.md). **100원 업그레이드 문제는 다른 세션 담당으로 이번 작업에서 제외한다.**
+
+**2026-10-29 남은 기능 재점검:** [W19 가입·크레딧형·기본 상태·요금제 허용과 가격 카드 데이터 연동](features/promotions/records/2026/10/29-remaining-scope-after-plugin-sync-deferral.md). [W18 앱 목록 동기화](handoff/tasks/plugin-catalog-sync.md)는 후속 작업으로 WORKBOARD에 별도 등록했다.
+
+**2026-10-29 플러그인 목록 동기화 후속 이관:** 사용자 지시로 이번 세션의 구현에서 제외했다. [논의·정책·구현 상태](features/plugin-catalog/records/2026/10/29-admin-store-sync-discussion-and-deferral.md) · [후속 TODO](todos/2026-10-29-plugin-catalog-admin-store-sync.md). 이전의 자동 동기화 추천/실험은 구현 승인이나 제품 완료가 아니다.
+
 **2026-10-23 최종 dev:** Person·무대 사용성·무대 파이프라인의 구현 커밋을 데스크톱 네 저장소 원격 dev에 통합하고 작업 브랜치와 일치를 확인했다. Angular `975e16f6`, Electron `dfc84d4`, Nest `15f534b9`, Python `584d76b`. [최종 원격 검증·전체 테스트·실영상/Windows 경계](features/highlights/records/2026/10/23-stage-person-integration-dev-merge-result.md). 아래 각 병합 SHA는 단계별 이력이다.
 
 **2026-10-23 무대 사용성 완료:** 원본 구간 저장 전환과 결과 편집·선택·숏폼 구성·묶음 드래그·미확인 인물 썸네일을 구현하고 원격 `dev`에 반영했다. Angular `f488e8a4`, Nest `8397afbc`, Python `3fbb002`; 충돌 없는 fast-forward, Electron 변경 없음. [이번 세션 구현·검증·병합 기록](features/highlights/records/2026/10/23-stage-usability-source-ranges-dev-merge.md). 아래 Person 병합 SHA는 이 작업의 이전 기준이다.
@@ -129,6 +143,7 @@ Project-first / Plugin / Queue 대정리는 아직 별도 작업으로 둔다.
 
 ## Domain Indexes
 
+- [features/payments/README.md](features/payments/README.md)
 - [features/template-builder/README.md](features/template-builder/README.md)
 - [features/dance-highlight/README.md](features/dance-highlight/README.md)
 - [features/highlights/README.md](features/highlights/README.md)

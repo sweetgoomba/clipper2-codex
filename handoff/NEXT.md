@@ -1,5 +1,88 @@
 # 다음 세션 시작 안내
 
+## 2026-11-04 고객 환불과 PG 두 세션 인계
+
+[통합 문서](../features/payments/records/2026/11/04-two-session-pgops-summary.md)와 [보존 증거](../features/payments/records/2026/11/04-two-session-pgops-evidence.json)를 먼저 읽는다. 서비스 기능은 dev에 들어갔으며 가격·무료체험이 미커밋이거나 외부 취소 후처리가 미구현이라는 과거 기록은 현재 판정이 아니다. 유효기간 편집 상한은 **365일**이다.
+
+고객 환불은 관리자 승인 절차를 유지한다. 외부 전액 취소의 내부 정리는 자동화했고, 사용분 정산·부분 취소·모호한 귀속은 운영자 확인 대상으로 남긴다. 실앱 강제 종료와 API 오프라인 복구의 각1회 반환은 실제 확인했다.
+
+남은 것은 실제 Toss 전체 환불/외부취소/복구 E2E, 조건부 DB 테스트86개, 운영 배포/정책 문구와 시험 도구 별도 정리다. 고객 환불은 플래그 없이 기본 제공한다. 새 API 빌드는 준비됐지만 API3311도 현재 정지 상태이며 웹4203/4204는 재실행하지 않았다. 전용 DB15433·작업 폴더/데이터는 보존했다. 원본3000/4201/4202와 프로모션4340/4241/4242는 별도 환경이다.
+
+이 PG 작업의 dev 반영 전에는 반드시 별도 컨텍스트의 독립 검증을 맡기고, 결과 확인·보완·재검토와 최신 원격/tree 확인을 거친다. [필수 절차와 검토 기록](../features/payments/records/2026/11/04-customer-refunds-default-and-pre-dev-review.md).
+
+아래 다른 세션의 인계와 환경은 보존한다. 이 문서화 요청은 실결제·DB 초기화·서버 재시작·다른 세션 변경을 새로 실행하라는 지시가 아니다.
+
+## 2026-11-04 하이라이트 Mac 가속 인계
+
+[모델별 현재 상태](../operations/accelerators/README.md), [종합 인계](../records/sessions/2026/11/04-highlight-mac-acceleration-handoff.md), [사용·검증 절차](../operations/accelerators/runbooks/mac-highlight-acceleration.md)를 먼저 읽는다. Python 17259bc·Electron 849a51b를 dev에 반영하고 원본 8개 대조·local-api Mac 빌드·재기동을 완료했다. Made My Night 안무 335초 → 266초, 63개 목록·설정·집계 동일, Python 2,073개·Electron 1,977개 통과다.
+
+Windows는 별도 채팅 01a1a294-76cc-7d73-af4d-be827b33bde9 담당이다. 모든 모델의 ONNX 전환·모든 GPU 승인·서버 배포 완료로 확대하지 않는다. SFace·일부 ROI·Whisper의 CPU 잔존과 Person의 source 크기 준비 미연결은 인계에 명시했다. 기존 결과·사용자 삭제 상태·다른 작업·캐시·비교 앱을 보존한다. 과거의 기반만 구현/얼굴 CPU/새 GPU 전체 미활성 설명은 당시 이력이다.
+
+## 2026-11-03 W19 최종 배지·6개 저장소 dev 반영 완료
+
+[최종 결과](../features/plugin-catalog/records/2026/11/03-store-plan-badges-dev-merge.md). API `6e1d001` / Admin `e84d531` / Client `50779ad` / App `222ef59a` / Nest `f2cc17a9` / Electron `8e70e99`. 작업 브랜치와 원격 dev가 일치하고6개 작업 폴더 clean, 충돌 없이 fast-forward 통합했다. 카드/상세의 요금제별 배지·권한 안내와 이번 세션 W19 전체 구현을 포함한다.
+
+API5,142/Admin2,728/Client591/App10,656/Electron1,913/PostgreSQL39 통과. Nest는 기존 macOS 종료 시험1건 실패를 사용자 승인으로 [W20 새 세션](tasks/macos-owned-child-identity.md)에 이관했으며 전체 통과로 표시하지 않는다. 100원 업그레이드 문제는 계속 다른 세션 담당이다. 새 앱/API4340 반영, 사용자 DB15438/웹4241·4242/로그인 프로필 유지. 이전 ‘미커밋’ 문구/스냅샷은 단계별 이력이다. `.codex` 문서 커밋·푸시는 하지 않았다.
+
+## 2026-11-03 프로모션 세션 재개 기준
+
+먼저 [종합 정리](../records/sessions/2026/11/03-promotion-signup-free-plugin-session-summary.md)와 [현재 W19 카드](tasks/signup-promotion-plan-entitlements.md)를 읽는다. 가입 프로모션·참여 조건/확인창/종료일 미정·Free·공통4카드·실행 검사·일괄 허용 설정/양방향 체크/sticky·변경 이력 한국어 표시는 이미 구현·로컬 검증됐다. 초기 유료 예약/레퍼럴 성과/XLSX는 현재 코드에서 제거, 보존 브랜치에 유지했다. 아래 W19의 ‘목업만 완료/미구현/잠금 체크’ 기록은 단계별 과거 상태다.
+
+[PG 분리 정리](../features/payments/records/2026/11/03-session-pg-discussions-and-changes.md)는 승인 전 자격 보완과 MID/업그레이드 정책 조사·문의문을 구분한다. **토스100원 최소 청구로 즉시 업그레이드가 예약되는 문제는 다른 세션 담당이므로 이번 구현·TODO·검증에서 제외한다.** W18 목록 동기화는 별도 후속이고 여기서 자동 재개하지 않는다.
+
+현재6개 제품 저장소 `feat/signup-credit-promotion-free-20261102`는 미커밋·staged0. 이번 정리에서 커밋/푸시/fetch/제품 변경 없음. API4340/Client4241/Admin4242/DB15438/독립 앱의 사용자 테스트 데이터를 임의로 초기화하거나 프로세스를 종료하지 않는다. 이번에는 실행 상태를 새로 보증하거나 앱을 재빌드하지 않았다. 상세 Git 조회는 [스냅샷](../records/sessions/2026/11/03-promotion-worktree-snapshot.json)을 따른다.
+
+## 2026-11-03 W19 플러그인 설정 변경 이력 표시 개선
+
+[구현·검증](../features/plugin-catalog/records/2026/11/03-readable-plugin-audit.md). JSON 전체 목록 대신 바뀐 요금제·플러그인별 허용 전후를 표시한다. 기존 이력은 이름을 조회해 표시하고 새 이력은 이름 스냅샷 보존. 원본 감사 기록 해시 유지 확인, 실제01:40기록18행 확인. API315/Admin79 tests/build/색상/diff 통과. API4340 PID37139/Admin4242 반영. DB/권한 설정 유지, 미커밋·미푸시.
+
+
+## 2026-11-03 W19 플러그인 체크 양방향 연동
+
+[최종 조작·검증](../features/plugin-catalog/records/2026/11/03-plan-plugin-bidirectional-selection.md). ON에서 체크는 상위로 전파, 해제는 하위로 전파하며 잠금 제거. OFF는 개별 선택 유지. 실제 Pro 스토리보드 해제→Business만 유지 확인. 관련81 tests/build/색상/diff 통과, Admin4242 반영. API/DB 변경·저장 설정 변경 없음, 미커밋·미푸시.
+
+
+## 2026-11-02 W19 실제 요금제별 플러그인 일괄 관리 적용
+
+[구현·검증·로컬 적용](../features/plugin-catalog/records/2026/11/02-plan-plugin-settings-implementation.md). /plans 단일 관리 버튼·외부 공통 배지·Free 포함 ON/OFF 비교 모달을 실제 API/DB에 연결했다. 전체 목록 원자적 저장, revision 충돌 방지, 신규 등급 상속, 재사용 편집기 반영. API5,131/Admin2,723/실제PG16 통과. 전용DB15438 백업 후 admin migration1 적용, 사용자 데이터 유지. API4340 PID81887/Admin4242 갱신. W18 동기화 제외 유지, 미커밋·미푸시.
+
+
+**최신 재초기화·재실행:** [런타임 최신 절](../operations/env-runtime/records/2026/11/02-promotion-branch-isolated-local-runtime.md). 사용자 요청으로3DB 백업·초기화/migration13·103·5/관리자2계정·테스트 데이터0 검증.4개빌드 성공. API4340 최신PID19844/웹60587/앱20762·Nest20891(port56212). 아래67957/16214 등은 과거 이력. 사용자 테스트 환경은 계속 유지하고 추가 요청 없이 초기화/종료하지 않는다.
+
+**최신 정책 정정:** [종료일 단축·인원 제한 검증·요약 열 배경](../features/promotions/records/2026/11/02-campaign-deadline-and-summary-colors.md). 등록 이력이 있어도 종료일을 시작일 이후로 단축 가능, 기존 혜택 유지. 옛 단축 금지 설명은 폐기. API5113/Admin2718/PG38·build 통과. API4340 최신PID67957, 웹60587/앱16214 유지. 사용자DB15438 초기화 없음. 미커밋·미푸시.
+
+**최신 관리자 후속:** [생성 확인/문구/인원 입력 배치/수정 규칙](../features/promotions/records/2026/11/02-campaign-create-confirmation-and-edit-rules.md). 공통 모달 생성 확인, 취소 입력 보존, 생성 요약만 두 열 왼쪽 정렬. 관리자2717/API정책35 통과·4242갱신. 기존 회원/캠페인 데이터 초기화 없음. API14845/웹60587/앱16214 유지. 미커밋·미푸시.
+
+**최신 실행:** 종료일 미정 후속까지 API/Admin/Client/앱 재빌드·실행 완료. DB15438 데이터는 이미0건이라 재초기화하지 않았고 관리자2계정/기본 상품·정책 유지. API4340 PID14845/웹4241·4242 PID60587/앱16214·Nest16285(port51814) 정상. [실행 기록](../operations/env-runtime/records/2026/11/02-promotion-branch-isolated-local-runtime.md). 기존 다른 환경 보존. 아래 PID64548/8088은 이전 실행 이력이며 환경을 임의 종료/초기화하지 않는다.
+
+**종료일 양방향 수정 추가 검증:** [결과](../features/promotions/records/2026/11/02-open-ended-campaign-edit-regression-check.md). 실제DB33/화면55 통과. 제품 변경 없이 테스트14개 보강, 미커밋·미푸시. 기존 종료일이 지났던 캠페인은 미정으로 바꿔도 자동 활성화하지 않으며 명시적 재활성화가 필요하다.
+
+**최신 후속:** 종료일 미정 캠페인 구현 완료. [검증 기록](../features/promotions/records/2026/11/02-open-ended-campaign-implementation-and-verification.md). API4340 최신PID64548, 웹4241/4242 PID60587 유지. DB15438 초기화 없이 백업·migration1 적용. API5,106/Admin2,707/Client591·PG23 통과. 아래 PID7681/55613은 과거 실행 이력. 사용자 테스트 환경을 임의 종료/초기화하지 않는다. 미커밋·미푸시.
+
+**2026-11-02 사용자 요청 재초기화·실행 최신:** [전용 로컬 런타임 최신 절](../operations/env-runtime/records/2026/11/02-promotion-branch-isolated-local-runtime.md). DB15438의3DB를 백업 후 초기화하고 migration/기본 설정/관리자2계정 준비. 회원·크레딧·결제·이용권·프로모션·릴리스 데이터 모두0 확인. API4340 PID7681/웹4241·4242 PID60587 정상. 앱을4340용으로 다시 빌드·실행(main8088/Nest8131, gateway65380). 기존 다른 작업 서버·DB·원본 dev앱18096 유지. 아래 PID55613·66870은 이전 실행 이력이며 최신 상태가 아니다. 사용자 테스트용 환경은 계속 실행해 두고 임의 종료/재초기화하지 않는다.
+
+
+**2026-11-02 W19 최신:** 참여 대상3가지/추가 조건2개 실제 구현 완료. [정본](../features/promotions/records/2026/11/02-campaign-eligibility-implementation-and-verification.md)을 먼저 읽는다. 직전 보류 해제, 새 조건 후보는 문서로만 보존. API5100/Admin2705/Client591·실제PG21 및 빌드·브라우저 검증, 독립 검토 수정 완료. API4340 PID55613·웹60587의4241/4242와 별도 앱을 유지한다. DB15438 초기화 없이 백업 후 migration1 적용. QA15439만 제거. 아직 커밋·푸시하지 않았다. 이미 완료한 구현을 재시작하거나 로컬 환경을 종료하지 않는다.
+
+
+## 2026-11-02 전용 로컬 테스트 환경 실행 중
+
+[전용 DB·포트·앱·관리자 계정·시작/종료](../operations/env-runtime/records/2026/11/02-promotion-branch-isolated-local-runtime.md). API4340·Client4241·Admin4242, DB15438, `Clipper Studio Local - promo-signup-20261102` 앱을 실행해 뒀다. 기존3000/4202/개발 앱/DB는 유지했다. Google callback4340은 사용자 추가 후 정상 로그인 화면 진입을 확인했다. 필수 동의 아래 코드 입력도 반영했다. 사용자 테스트용이므로 다음 턴에 임의 종료/재초기화하지 않는다.
+
+
+## 2026-11-02 W19 최신 인계
+
+**최신 사용자 지시: 참여 대상3가지/추가 조건2개 승인, 실제 관리자/API 구현 재개.** 제외 조건 대신 참여 가능 조건 목업(참여 대상 단일 선택 + 추가 조건2개/모두 충족)을 다시 검토한다. 직전 보류는 이번 구현 진행 지시로 해제되었다. [목업 최신 기록](../features/promotions/records/2026/11/02-campaign-create-eligibility-mockup.md).
+
+[가입 프로모션 크레딧·Free 구현/검증 정본](../features/promotions/records/2026/11/02-ai-booth-signup-free-implementation-and-verification.md)과 [W19 카드](tasks/signup-promotion-plan-entitlements.md)를 먼저 읽는다. `feat/signup-credit-promotion-free-20261102` 격리 checkout에서5개 repo 구현·전체 테스트·실제DB16·브라우저·최종 재검토를 완료했고 **미커밋·미푸시·미병합·미배포**다. 원본·보존 브랜치·기존 로컬DB는 유지했다. 이미 끝낸 구현을 다시 시작하지 않는다. 다음 사용자 지시가 커밋/통합이면 최종 manifest와 현재 diff를 대조한 뒤 수행한다. 배포는 새 마이그레이션과 worker drain·API/웹/앱 계약을 함께 확인해야 한다. W18 전체 목록 동기화는 재개하지 않았다.
+
+
+**2026-11-02 W19 최신 범위:** [AI 부스 가입 크레딧·Free·제안 F·브랜치 기록](../features/promotions/records/2026/11/02-ai-booth-signup-credits-and-free-scope.md)과 [작업카드](tasks/signup-promotion-plan-entitlements.md)를 먼저 읽는다. 신규 가입에만 코드 보너스를 적용하고 첫 로그인 잔액에 가입 혜택과 프로모션 지급을 함께 반영한다. 관리자에는 참여 회원 조회를 남기되 프로모션 종료 후 유료 예약·레퍼럴 결제 성과·XLSX는 현재 코드에서 제거할 대상이다. Free는 지속 상태이며 카드 문구는 **가입 시 1회 N크레딧**이다. 제안 F를 확인했고 목업 수량·가격·기능 조합은 예시다. 6개 저장소에서 최신 원격 dev 기준 보존/작업 브랜치를 만들었으며 기존 checkout/미커밋 파일은 유지했다. 제품 삭제/신규 구현·커밋·푸시·배포 완료는 아니다. 아래 10/29의 Free 명칭 미정·예약/성과 유지 등 상충 내용은 당시 기록이다.
+
+**2026-10-29 W18/W19 분리:** [W18 동기화](tasks/plugin-catalog-sync.md)는 후속 TODO다. [W19 남은 기능](tasks/signup-promotion-plan-entitlements.md)는 가입 코드·크레딧형·지속 기본·허용 설정/실행과 **관리자 DB를 읽는 회원 웹 요금제 카드**다. [최신 설계 재점검](../features/promotions/records/2026/10/29-remaining-scope-after-plugin-sync-deferral.md)를 먼저 읽는다. `/#price`·`/pricing`은 공통 카드를 재사용하고 요금제별 기능 목록 하드코딩을 금지한다. Free는 아직 명칭으로 결정되지 않았다.
+
+**2026-10-29 플러그인 목록 동기화 보류:** 웹 관리자/앱 스토어 목록 공통화·동기화는 이 세션에서 구현하지 않기로 했다. [논의와 전략실 답변](../features/plugin-catalog/records/2026/10/29-admin-store-sync-discussion-and-deferral.md) · [후속 TODO·재개 조건](../todos/2026-10-29-plugin-catalog-admin-store-sync.md). 기술 실험을 제품 완료로 오인하거나 다른 기능에 자동 편입하지 않는다. 유료 상위 플랜의 하위 기능 포함은 최신 방향이고, 요금제 미제공 기능 노출은 이사님 확인 전이다.
+
 **2026-10-26 문서 위치 정리:** 루트 `docs/merge`·`docs/superpowers`의 Markdown 6개를 `.codex`로 옮겼다. [새 위치·옛 경로 대응·증거 사본 보존 범위](../records/2026/10/26-root-docs-relocation.md)를 참고한다. `docs/tips`는 유지한다. 새 설계·계획·병합 기록 위치는 [문서 규칙](../README.DOCS.md)을 따른다.
 
 **2026-10-23 안무 메인 전용·완료 지연 원격 dev 반영:** Python `ea27940`, Nest `0fe9f8b0`를 dev·작업 브랜치에 atomic push했고 원본 두 저장소 dev·clean·0/0이다. 안무 주변 얼굴 보충/단체 자동 멤버 배정을 제거하고 메인 얼굴 근거를 요구한다. 저장 병합·완료 복구·UI 준비 상태·취소/progress 경합을 보완했다. 관련 Python507·Nest전체4,941 통과. Python 전체의 렌더5개 실패는 기존 dev에서도 재현돼 남겨두었다. 후속 사용자 요청으로 기본 dist-app의 ARM64 앱을 다시 빌드·실행했다. 기존 완료 결과는 유지하며 새 분석에 정책이 적용된다. [원인·정책·회귀·빌드·검증 한계](../features/highlights/records/2026/10/23-dance-main-only-and-completion-delay.md).
@@ -47,3 +130,11 @@ QA/W06은 [W16](tasks/payment-qa-bugs.md)·[W06](tasks/pg-production-followups.m
 - [ICP TC4 기존 로그 활용](tasks/icp-tc4.md)
 
 [과거 NEXT 원문](archive/2026/09/next-through-2026-09-18.md) · [9/18 PG 통합 종료 감사](../implementation/2026-09-18-pg-integration-closeout-and-remaining-work.md).
+
+## 2026-11-02 요금제 F 후속과 미구현 조건
+
+[제안 F 재대조 및 참여 제한 정정](../features/promotions/records/2026/11/02-proposal-f-fidelity-and-eligibility-correction.md): UI84시험/빌드/실화면 확인,4241최신. 혜택/참여 시점 분리와 선택 제한(현재 활성·과거 유료·관리자 지급)은 설계 정정이며 API/Admin에 아직 구현하지 않았다. 사용자 테스트용 API4340·Client4241·Admin4242·앱은 계속 실행한다.
+
+## 캠페인 추가 목업 사용자 정정
+
+상단 기본정보/지급혜택/참여조건/등록상한 탭을 실제 UI에 넣지 않는다. ‘참여 시점’을 따로 두지 말고 ‘이미 가입을 완료한 회원 제외’를 나머지 제한과 같은 체크박스 목록으로 처리한다. 목업은 수정·검증했으며 제품/API는 아직 변경하지 않았다. `/__mockups/campaign-create-eligibility.html`에서 현재 시안을 볼 수 있다.
