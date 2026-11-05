@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-03T16:24:19.318Z",
+  "adapter": [
+    {
+      "id": "metal:Apple M4",
+      "vendor": "Apple",
+      "device_id": "Apple M4",
+      "driver": "27.0.0",
+      "backend_indices": [
+        [
+          "ort_coreml",
+          0
+        ],
+        [
+          "torch_mps",
+          0
+        ]
+      ],
+      "free_bytes": null,
+      "total_bytes": null,
+      "memory_kind": "shared",
+      "usable": true
+    }
+  ],
+  "decisions": [
+    {
+      "event": "freemem_used_by_fits",
+      "at": "2026-11-03T16:24:18.987Z",
+      "bytes": 258195456
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:24:18.988Z",
+      "endpoint": "/acquire",
+      "status": 409,
+      "error": "memory_admission_deferred"
+    }
+  ],
+  "result": {
+    "ok": false,
+    "estimated_bytes": 302892000,
+    "kind": "backend_unavailable",
+    "message": "accelerator admission deferred",
+    "details": null,
+    "calls": []
+  },
+  "stderr": ""
+}

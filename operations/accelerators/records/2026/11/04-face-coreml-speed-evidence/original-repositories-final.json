@@ -1,0 +1,50 @@
+[
+  {
+    "repo": "web/clipper_web_client",
+    "branch": "dev",
+    "head": "dacc90dcd5b3e2cb486408baf0b1d0fdbab85ffd",
+    "tracked_clean": true
+  },
+  {
+    "repo": "web/clipper_web_api",
+    "branch": "dev",
+    "head": "755010493ff27e04c1c3a152dadc4f9a0d344667",
+    "tracked_clean": true
+  },
+  {
+    "repo": "web/clipper_web_admin",
+    "branch": "dev",
+    "head": "e079df729e15383ae29ff4e80503f3440522da9b",
+    "tracked_clean": true
+  },
+  {
+    "repo": "web/clipper_infra",
+    "branch": "dev",
+    "head": "f304750c4d1d6277483ba71ce73f88baaf33fe80",
+    "tracked_clean": true
+  },
+  {
+    "repo": "desktop/clipper_nestjs",
+    "branch": "dev",
+    "head": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+    "tracked_clean": true
+  },
+  {
+    "repo": "desktop/clipper_angular",
+    "branch": "dev",
+    "head": "7b559706cea07e21374592f3106c0503d7a93d34",
+    "tracked_clean": true
+  },
+  {
+    "repo": "desktop/clipper_python",
+    "branch": "dev",
+    "head": "a73593a2c6445bc87401eb4de30e9954ef2467ba",
+    "tracked_clean": true
+  },
+  {
+    "repo": "desktop/clipper_electron",
+    "branch": "dev",
+    "head": "6831d8de76d34bb6ae2523122e9c6271ba68d00f",
+    "tracked_clean": true
+  }
+]

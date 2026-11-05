@@ -1,0 +1,22 @@
+Clipper GPU 시험 결과 — windowsml — 20261103-053533
+onnxruntime 1.30.0
+
+[yolo_pose] (안무·인물)
+  CPU                              67.5ms/장  첫 실행 75ms  {}
+  DmlExecutionProvider:0           13.0ms/장  첫 실행 118ms  {'speedup_vs_cpu': 5.18, 'same_people_dance': '24/24', 'same_people_person': '24/24', 'matched_box_iou_min': 1.0}
+  auto:PREFER_GPU                  10.8ms/장  첫 실행 19ms  {'speedup_vs_cpu': 6.27, 'same_people_dance': '24/24', 'same_people_person': '24/24', 'matched_box_iou_min': 1.0}
+
+[yunet] (안무·인물)
+  CPU                               4.8ms/장  첫 실행 7ms  {}
+  DmlExecutionProvider:0            2.5ms/장  첫 실행 9ms  {'speedup_vs_cpu': 1.89, 'same_face_count': '24/24', 'face_score_max_diff': 0.0003}
+  auto:PREFER_GPU                   2.5ms/장  첫 실행 10ms  {'speedup_vs_cpu': 1.89, 'same_face_count': '24/24', 'face_score_max_diff': 0.0003}
+
+[auraface] (안무·인물)
+  CPU                              42.1ms/장  첫 실행 44ms  {}
+  DmlExecutionProvider:0       실패: UnicodeDecodeError('utf-8', b"[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'
+  auto:PREFER_GPU              실패: UnicodeDecodeError('utf-8', b"[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'
+
+[clip_visual] (대사)
+  CPU                              27.3ms/장  첫 실행 30ms  {}
+  DmlExecutionProvider:0           14.5ms/장  첫 실행 138ms  {'speedup_vs_cpu': 1.87, 'cosine_min': 1.0}
+  auto:PREFER_GPU                  13.3ms/장  첫 실행 75ms  {'speedup_vs_cpu': 2.05, 'cosine_min': 1.0}

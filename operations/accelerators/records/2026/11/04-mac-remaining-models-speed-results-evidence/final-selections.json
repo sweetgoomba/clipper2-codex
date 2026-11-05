@@ -1,0 +1,134 @@
+[
+  {
+    "at": 1793733433.796544,
+    "record": {
+      "model_id": "pose.phase_release",
+      "released": true,
+      "mps_before_bytes": 34124800,
+      "mps_after_bytes": 0
+    }
+  },
+  {
+    "at": 1793733434.743723,
+    "record": {
+      "model_id": "face.auraface",
+      "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider",
+      "reason": "builtin_coreml_local_check",
+      "calls": null,
+      "samples": 3,
+      "distinct_inputs": 3,
+      "cpu_median_ms": 51.018582948017865,
+      "candidate_median_ms": 5.752666969783604,
+      "execution_evidence": "profile_nodes",
+      "profile_verified": true,
+      "graph_execution": "mixed",
+      "release_qualified": false,
+      "cpu_reference_released": true,
+      "provider_node_counts": {
+        "CoreMLExecutionProvider": 6,
+        "CPUExecutionProvider": 12
+      },
+      "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+      "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c",
+      "precision": "fp16_internal_fp32_io",
+      "local_check": "first_face_and_two_spatial_flips",
+      "local_cosine_min": 0.999969548316577,
+      "setup_ms": 702.4231250397861,
+      "break_even_calls": 20,
+      "estimated_calls": 2324,
+      "estimated_total_saving_ms": 104321.48827443598
+    }
+  },
+  {
+    "at": 1793733436.046196,
+    "record": {
+      "model_id": "face.yunet",
+      "selected_backend": "ort_coreml",
+      "reason": "builtin_static_coreml_local_check",
+      "calls": 790,
+      "samples": 0,
+      "distinct_inputs": 0,
+      "cpu_median_ms": 24.739667016547173,
+      "candidate_median_ms": 13.748916971962899,
+      "execution_evidence": "profile_nodes",
+      "profile_verified": true,
+      "graph_execution": "accelerator_only",
+      "backends": [
+        "opencv_cpu"
+      ],
+      "execution_counts": {
+        "opencv_cpu": 790,
+        "ort_coreml": 2275
+      },
+      "execution_seconds": {
+        "opencv_cpu": 5.762598545697983,
+        "ort_coreml": 31.036079376994167
+      },
+      "release_qualified": false,
+      "provider_node_counts": {
+        "CoreMLExecutionProvider": 3
+      },
+      "precision": "fp32",
+      "source_sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "derived_sha256": "617ecfe0499f6294124a92707c1deae7d0e975ce31691e680a82f0c0a88994b7",
+      "accelerated_input_size": [
+        1920,
+        1080
+      ],
+      "setup_ms": 20.83370799664408
+    }
+  },
+  {
+    "at": 1793733481.469002,
+    "record": {
+      "model_id": "face.sface",
+      "selected_backend": "opencv_cpu",
+      "reason": "coreml_trial_failed",
+      "calls": null,
+      "samples": 0,
+      "distinct_inputs": 0,
+      "cpu_median_ms": null,
+      "candidate_median_ms": null,
+      "execution_evidence": "unverified",
+      "profile_verified": false,
+      "graph_execution": "unknown",
+      "release_qualified": false,
+      "cpu_reference_released": false,
+      "trial_failure": {
+        "kind": "backend_unavailable",
+        "message": "accelerator host rejected /reserve: memory_admission_deferred (HTTP 409)",
+        "gpu": null,
+        "transient": true,
+        "details": {
+          "source": "accelerator_host",
+          "reason": "memory_admission_deferred",
+          "http_status": 409,
+          "operation": "reserve",
+          "admission": {
+            "free_bytes": 74170368,
+            "budget_bytes": 897232896,
+            "requested_bytes": 1079002652,
+            "reserved_bytes": 0,
+            "request_total_bytes": 1079002652,
+            "file_backed_bytes": 3488923648,
+            "purgeable_bytes": 19628032,
+            "owner_pid": 23008,
+            "source": "darwin_vm",
+            "pressure": "normal",
+            "observed_at": "2026-11-03T19:18:01.468Z",
+            "adapter_id": "metal:Apple M4"
+          }
+        }
+      }
+    }
+  },
+  {
+    "at": 1793733521.1215968,
+    "record": {
+      "model_id": "pose.phase_release",
+      "released": true,
+      "mps_before_bytes": 34384896,
+      "mps_after_bytes": 0
+    }
+  }
+]

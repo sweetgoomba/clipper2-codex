@@ -1,0 +1,36 @@
+✔ cache-rich Mac admits bounded GPU work despite low currently free pages (31.257125ms)
+✔ critical pressure returns the decision snapshot and never grants a GPU lease (4.772167ms)
+✔ unknown or stale memory observations fail closed (2.318958ms)
+✔ reservations across adapters share the host budget and existing reservations cannot grow past it (6.182292ms)
+✔ overlapping observations cannot grant two leases on one adapter (18.8235ms)
+✔ Windows dedicated-memory and host-memory limits both remain enforced (2.041042ms)
+✔ Darwin parser counts only bounded reclaimable cache and respects pressure (0.46ms)
+✖ native phase release returns only owned bytes without weakening future admission (1.642334ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.151416
+
+✖ failing tests:
+
+test at test/accelerator-admission-memory.test.js:82:1
+✖ native phase release returns only owned bytes without weakening future admission (1.642334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  404 !== 403
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:86:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 404,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

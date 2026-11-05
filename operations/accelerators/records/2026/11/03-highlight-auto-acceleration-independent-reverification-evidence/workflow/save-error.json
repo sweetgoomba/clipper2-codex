@@ -1,0 +1,17 @@
+{
+  "scope": "No socket/model/worker; actual bridge HTTP handler called with synthetic request; cleanup failure stub.",
+  "response": {
+    "status": 409,
+    "payload": {
+      "error": "idle_cleanup_not_confirmed",
+      "detail": "Error: audit cleanup cannot be confirmed"
+    }
+  },
+  "persisted": {
+    "schema": 1,
+    "mode": "cpu",
+    "calibration": "idle",
+    "revision": 1
+  },
+  "ui_source_contract": "save() only patches settings on resolved api.save; catch only shows toast; runtime poll refreshes runtime/idle but not settings"
+}

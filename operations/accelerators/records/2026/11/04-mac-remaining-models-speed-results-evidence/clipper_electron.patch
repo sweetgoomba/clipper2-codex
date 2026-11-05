@@ -1,0 +1,69 @@
+commit 849a51b7906f84054e1a55d02da45bfa3768be6f
+Author:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+AuthorDate: Wed Nov 4 04:22:48 2026 +0900
+Commit:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+CommitDate: Wed Nov 4 04:22:48 2026 +0900
+
+    perf(accelerators): return reservations for released native models
+
+diff --git a/src/main/accelerators/leases.ts b/src/main/accelerators/leases.ts
+index 20b80e4..66787ea 100644
+--- a/src/main/accelerators/leases.ts
++++ b/src/main/accelerators/leases.ts
+@@ -14,7 +14,7 @@ export class AcceleratorLeases {
+     this.server=createServer((q,s)=>{void this.handle(q,s);});await new Promise<void>(r=>this.server!.listen(0,'127.0.0.1',r));this.server.unref();
+     this.timer=setInterval(()=>this.expire(),1000);this.timer.unref();
+     const address=this.server.address();if (!address || typeof address==='string')throw new Error('lease host address');
+-    return {CLIPPER_ACCELERATOR_HOST_URL:`http://127.0.0.1:${address.port}`,CLIPPER_ACCELERATOR_HOST_TOKEN:this.token};
++    return {CLIPPER_ACCELERATOR_HOST_URL:`http://127.0.0.1:${address.port}`,CLIPPER_ACCELERATOR_HOST_TOKEN:this.token,CLIPPER_ACCELERATOR_NATIVE_RELEASE:'1'};
+   }
+   async stop():Promise<void> {if(this.timer)clearInterval(this.timer);this.leases.clear();if(this.server)await new Promise<void>(r=>this.server!.close(()=>r()));}
+   private expire():void {
+@@ -72,6 +72,14 @@ export class AcceleratorLeases {
+         if(!decision.allowed){send(409,{error:'memory_admission_deferred',admission:decision.observation});return;}
+         lease.bytes+=body.estimated_bytes;
+       }
++      else if(req.url==='/unreserve-native') {
++        if(!lease.nativeOwner||lease.workers.size>0||lease.released){send(403,{error:'invalid_request'});return;}
++        if(!Number.isSafeInteger(body.estimated_bytes)||body.estimated_bytes<=0||body.estimated_bytes>lease.bytes){send(400,{error:'invalid_request'});return;}
++        // Only native owner code that has destroyed its model may return this
++        // part of its reservation. Keep the lease exclusive and all future
++        // increases subject to the unchanged memory admission policy.
++        lease.bytes-=body.estimated_bytes;
++      }
+       else if(req.url==='/heartbeat')lease.expires=Date.now()+15_000;
+       else if(req.url==='/validate') { /* read-only lease validation */ }
+       else if(req.url==='/release') {lease.released=true;this.expire();}
+diff --git a/test/accelerator-admission-memory.test.js b/test/accelerator-admission-memory.test.js
+index 490b8a2..303a654 100644
+--- a/test/accelerator-admission-memory.test.js
++++ b/test/accelerator-admission-memory.test.js
+@@ -78,3 +78,28 @@ test('Darwin parser counts only bounded reclaimable cache and respects pressure'
+  assert.equal(parseDarwinMemory(vm.replace('File-backed pages: 262144.',''), '1',200*MiB,24*1024**3).budget_bytes,0);
+  assert.equal(parseDarwinMemory(vm.replace('Pages free: 12800.','Pages free: 99999999999999999.'),'1',200*MiB,24*1024**3).budget_bytes,0);
+ });
++
++test('native phase release returns only owned bytes without weakening future admission',async t=>{
++ const request=await server(t,async()=>observation({budget_bytes:900*MiB}));
++ const first=await (await request('/acquire',acquire('metal:test',300*MiB))).json();
++ const scope={lease_id:first.lease_id,owner_pid:process.pid};
++ assert.equal((await request('/unreserve-native',{...scope,estimated_bytes:300*MiB})).status,403);
++ assert.equal((await request('/register-native',scope)).status,200);
++ assert.equal((await request('/reserve',{...scope,estimated_bytes:500*MiB})).status,200);
++ for(const amount of [-1,NaN,801*MiB])assert.equal((await request('/unreserve-native',{...scope,estimated_bytes:amount})).status,400);
++ assert.equal((await request('/unreserve-native',{...scope,owner_pid:process.pid+1,estimated_bytes:1})).status,410);
++ assert.equal((await request('/unreserve-native',{...scope,estimated_bytes:300*MiB})).status,200);
++ assert.equal((await request('/reserve',{...scope,estimated_bytes:350*MiB})).status,200);
++ assert.equal((await request('/reserve',{...scope,estimated_bytes:100*MiB})).status,409);
++ assert.equal((await request('/acquire',acquire())).status,409);
++});
++
++test('native release cannot discount live worker allocations',async t=>{
++ const {spawn}=require('node:child_process');
++ const request=await server(t,async()=>observation());
++ const first=await (await request('/acquire',acquire())).json();const scope={owner_pid:process.pid,lease_id:first.lease_id};
++ await request('/register-native',scope);
++ const child=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{stdio:'ignore'});t.after(()=>child.kill());
++ assert.equal((await request('/register-worker',{...scope,worker_pid:child.pid})).status,200);
++ assert.equal((await request('/unreserve-native',{...scope,estimated_bytes:1})).status,403);
++});

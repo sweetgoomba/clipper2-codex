@@ -1,0 +1,40 @@
+{
+  "scope": "No app, socket, model or external process; real factory/stage runner and Electron persisted settings; fake WebSocket/fetch/foreground host.",
+  "rows": [
+    {
+      "plugin": "dance_highlight",
+      "modes": [
+        "cpu",
+        "verify",
+        "auto"
+      ],
+      "grant": true,
+      "reservation": "idle",
+      "report_models": 1
+    },
+    {
+      "plugin": "person_highlight",
+      "modes": [
+        "cpu",
+        "verify",
+        "auto"
+      ],
+      "grant": true,
+      "reservation": "idle",
+      "report_models": 1
+    },
+    {
+      "plugin": "dialog_highlight",
+      "submitted_modes": [
+        "cpu",
+        "cpu",
+        "cpu"
+      ],
+      "before_models": 1,
+      "after_models": 1,
+      "validation_retained": true,
+      "recovery_retained": true
+    }
+  ],
+  "consumes": 7
+}

@@ -1,0 +1,63 @@
+{
+  "date_kst": "2026-11-04",
+  "reproduction": {
+    "status": 409,
+    "reason": "memory_admission_deferred",
+    "requested_bytes": 302892000,
+    "observed_host_free_bytes": 258195456,
+    "successful_inferences": 0
+  },
+  "fixed_probe": {
+    "successful_inferences": 2,
+    "devices": [
+      "mps:0"
+    ],
+    "cpu_people": 5,
+    "mps_people": 5,
+    "matched_box_iou_min": 0.9999992847442627,
+    "admission": {
+      "observed_at": "2026-11-03T16:29:03.889Z",
+      "source": "darwin_vm",
+      "pressure": "normal",
+      "free_bytes": 86966272,
+      "file_backed_bytes": 3825827840,
+      "purgeable_bytes": 8896512,
+      "budget_bytes": 1024106495,
+      "adapter_id": "metal:Apple M4",
+      "owner_pid": 93046,
+      "requested_bytes": 302892000,
+      "reserved_bytes": 0,
+      "request_total_bytes": 302892000,
+      "adapter_free_bytes": null
+    }
+  },
+  "continuous_probe": {
+    "successful_inferences": 24,
+    "first_inference_ms": 1013.8840840081684,
+    "warm_median_ms": 29.360041953623295,
+    "memory_processes": [
+      {
+        "command": "/usr/bin/vm_stat",
+        "milliseconds": 1.271792000000005
+      },
+      {
+        "command": "/usr/sbin/sysctl",
+        "milliseconds": 1.3885420000001432
+      }
+    ],
+    "lease_endpoints": [
+      "/acquire",
+      "/register-native",
+      "/heartbeat",
+      "/release"
+    ],
+    "cpu_people": 5,
+    "mps_people": 5,
+    "matched_box_iou_min": 0.9999992847442627
+  },
+  "limits": [
+    "original three jobs first rejection was not retained; cannot retroactively identify it",
+    "single-frame native MPS check is not full-video quality certification or a CPU/GPU speed comparison",
+    "NativeRecord provider_only/profile_verified=false remains conservative; actual short-probe device and allocation are separate evidence"
+  ]
+}

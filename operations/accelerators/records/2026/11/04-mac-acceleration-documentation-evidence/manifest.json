@@ -1,0 +1,22 @@
+[
+  {
+    "file": "baseline-result-view.json",
+    "bytes": 21063,
+    "sha256": "36816614faf8a8cd6ad1a8a90051627de59f79a9d47311b7303976d46214b35b"
+  },
+  {
+    "file": "final-result-view.json",
+    "bytes": 21069,
+    "sha256": "5f5fdf04ecc1f9eb96051fff37a18236dc2bec09a4f9282c0210927d89a98465"
+  },
+  {
+    "file": "provenance.json",
+    "bytes": 253,
+    "sha256": "004cd0c0c9b970bd48b736d2fd009bcc171dbc2cffdc939b6106b4f3141a7649"
+  },
+  {
+    "file": "pytest-run.py",
+    "bytes": 519,
+    "sha256": "c3abbfe723854c577a4148268fe04fff679dad199e1518d7944e38fdecd05a8f"
+  }
+]

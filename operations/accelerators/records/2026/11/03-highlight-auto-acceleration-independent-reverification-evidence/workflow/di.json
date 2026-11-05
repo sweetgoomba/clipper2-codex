@@ -1,0 +1,12 @@
+{
+  "factory_injection": [
+    "PluginHost",
+    "PythonRuntimeLifecyclePolicy",
+    "AccelerationSettingsService"
+  ],
+  "dialog_injection": [
+    "PluginHost",
+    "PythonRuntimeLifecyclePolicy",
+    "AccelerationSettingsService"
+  ]
+}

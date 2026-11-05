@@ -1,0 +1,544 @@
+{
+  "models": {
+    "yolo_pose": {
+      "file": "/Users/jina/Downloads/yolo_pose.onnx",
+      "sha256": "58e58b9f2889cc36be17b7a4474211d6037852f1593f481a181ff36b542a1b4c",
+      "bytes": 46817839,
+      "matches_manifest": true,
+      "ir_version": 8,
+      "producer_name": "pytorch",
+      "producer_version": "2.11.0",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 17
+        }
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            3,
+            640,
+            640
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output0",
+          "shape": [
+            1,
+            56,
+            8400
+          ]
+        }
+      ],
+      "metadata": {
+        "description": "Ultralytics YOLOv8s-pose model trained on /usr/src/app/ultralytics/datasets/coco-pose.yaml",
+        "author": "Ultralytics",
+        "date": "2026-10-31T15:14:48.899885",
+        "version": "8.4.38",
+        "license": "AGPL-3.0 License (https://ultralytics.com/license)",
+        "docs": "https://docs.ultralytics.com",
+        "stride": "32",
+        "task": "pose",
+        "batch": "1",
+        "imgsz": "[640, 640]",
+        "names": "{0: 'person'}",
+        "args": "{'batch': 1, 'half': False, 'dynamic': False, 'simplify': True, 'opset': 17, 'nms': False}",
+        "channels": "3",
+        "end2end": "False",
+        "kpt_shape": "[17, 3]"
+      },
+      "ops": {
+        "Conv": 73,
+        "Sigmoid": 65,
+        "Mul": 66,
+        "Split": 8,
+        "Add": 9,
+        "Concat": 19,
+        "MaxPool": 3,
+        "Resize": 2,
+        "Reshape": 13,
+        "Transpose": 1,
+        "Slice": 4,
+        "Softmax": 1,
+        "Sub": 2,
+        "Div": 1
+      },
+      "initializer_dtypes": {
+        "FLOAT": 152,
+        "INT64": 15
+      }
+    },
+    "yunet": {
+      "file": "/Users/jina/Downloads/yunet.onnx",
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "bytes": 232589,
+      "matches_manifest": true,
+      "ir_version": 6,
+      "producer_name": "pytorch",
+      "producer_version": "1.7",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 11
+        }
+      ],
+      "inputs": [
+        {
+          "name": "input",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            3,
+            640,
+            640
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "cls_8",
+          "shape": [
+            1,
+            6400,
+            1
+          ]
+        },
+        {
+          "name": "cls_16",
+          "shape": [
+            1,
+            1600,
+            1
+          ]
+        },
+        {
+          "name": "cls_32",
+          "shape": [
+            1,
+            400,
+            1
+          ]
+        },
+        {
+          "name": "obj_8",
+          "shape": [
+            1,
+            6400,
+            1
+          ]
+        },
+        {
+          "name": "obj_16",
+          "shape": [
+            1,
+            1600,
+            1
+          ]
+        },
+        {
+          "name": "obj_32",
+          "shape": [
+            1,
+            400,
+            1
+          ]
+        },
+        {
+          "name": "bbox_8",
+          "shape": [
+            1,
+            6400,
+            4
+          ]
+        },
+        {
+          "name": "bbox_16",
+          "shape": [
+            1,
+            1600,
+            4
+          ]
+        },
+        {
+          "name": "bbox_32",
+          "shape": [
+            1,
+            400,
+            4
+          ]
+        },
+        {
+          "name": "kps_8",
+          "shape": [
+            1,
+            6400,
+            10
+          ]
+        },
+        {
+          "name": "kps_16",
+          "shape": [
+            1,
+            1600,
+            10
+          ]
+        },
+        {
+          "name": "kps_32",
+          "shape": [
+            1,
+            400,
+            10
+          ]
+        }
+      ],
+      "metadata": {},
+      "ops": {
+        "Conv": 53,
+        "Relu": 15,
+        "MaxPool": 4,
+        "Resize": 2,
+        "Add": 2,
+        "Transpose": 12,
+        "Reshape": 12,
+        "Sigmoid": 6
+      },
+      "initializer_dtypes": {
+        "FLOAT": 109,
+        "INT64": 3
+      }
+    },
+    "auraface": {
+      "file": "/Users/jina/Downloads/auraface.onnx",
+      "sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+      "bytes": 260694151,
+      "matches_manifest": true,
+      "ir_version": 6,
+      "producer_name": "pytorch",
+      "producer_version": "2.3.0",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 11
+        }
+      ],
+      "inputs": [
+        {
+          "name": "data",
+          "dtype": "FLOAT",
+          "shape": [
+            "None",
+            3,
+            112,
+            112
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "1333",
+          "shape": [
+            1,
+            512
+          ]
+        }
+      ],
+      "metadata": {},
+      "ops": {
+        "Conv": 103,
+        "PRelu": 50,
+        "BatchNormalization": 51,
+        "Add": 49,
+        "Flatten": 1,
+        "Gemm": 1
+      },
+      "initializer_dtypes": {
+        "FLOAT": 462
+      },
+      "features_nodes": [
+        {
+          "name": "/Flatten",
+          "op": "Flatten",
+          "inputs": [
+            "/bn2/BatchNormalization_output_0"
+          ],
+          "outputs": [
+            "/Flatten_output_0"
+          ],
+          "attributes": [
+            {
+              "name": "axis",
+              "value": "1"
+            }
+          ],
+          "initializer_inputs": {}
+        },
+        {
+          "name": "/features/BatchNormalization",
+          "op": "BatchNormalization",
+          "inputs": [
+            "/fc/Gemm_output_0",
+            "features.weight",
+            "features.bias",
+            "features.running_mean",
+            "features.running_var"
+          ],
+          "outputs": [
+            "1333"
+          ],
+          "attributes": [
+            {
+              "name": "epsilon",
+              "value": "9.999999747378752e-06"
+            },
+            {
+              "name": "momentum",
+              "value": "0.8999999761581421"
+            }
+          ],
+          "initializer_inputs": {
+            "features.weight": {
+              "shape": [
+                512
+              ],
+              "dtype": "FLOAT"
+            },
+            "features.bias": {
+              "shape": [
+                512
+              ],
+              "dtype": "FLOAT"
+            },
+            "features.running_mean": {
+              "shape": [
+                512
+              ],
+              "dtype": "FLOAT"
+            },
+            "features.running_var": {
+              "shape": [
+                512
+              ],
+              "dtype": "FLOAT"
+            }
+          }
+        }
+      ]
+    },
+    "clip_visual": {
+      "file": "/Users/jina/Downloads/clip_visual.onnx",
+      "sha256": "ea3471533a815a729ce49cc2a2438ec1b934bc0bdd40974e0439240ea85f2019",
+      "bytes": 351781388,
+      "matches_manifest": true,
+      "ir_version": 8,
+      "producer_name": "pytorch",
+      "producer_version": "2.11.0",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 17
+        }
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "dtype": "FLOAT",
+          "shape": [
+            "batch",
+            3,
+            224,
+            224
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "shape": [
+            "batch",
+            512
+          ]
+        }
+      ],
+      "metadata": {},
+      "ops": {
+        "Constant": 662,
+        "Conv": 1,
+        "Shape": 100,
+        "Gather": 100,
+        "Unsqueeze": 279,
+        "Concat": 123,
+        "Reshape": 134,
+        "Transpose": 97,
+        "ConstantOfShape": 1,
+        "Mul": 73,
+        "Equal": 1,
+        "Where": 1,
+        "Expand": 1,
+        "Cast": 75,
+        "Add": 85,
+        "LayerNormalization": 26,
+        "Div": 36,
+        "Slice": 48,
+        "Squeeze": 24,
+        "MatMul": 61,
+        "Mod": 12,
+        "Sqrt": 36,
+        "Softmax": 12,
+        "Gemm": 12,
+        "Erf": 12
+      },
+      "initializer_dtypes": {
+        "FLOAT": 152
+      }
+    }
+  },
+  "samples": {
+    "yolo": {
+      "shape": [
+        24,
+        3,
+        640,
+        640
+      ],
+      "dtype": "float32",
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true,
+      "sha256_array": "f41552011b03acbe8d3a25f703a575ff1f84fbbee88b18af715bda2a4db76b27"
+    },
+    "yunet": {
+      "shape": [
+        24,
+        3,
+        640,
+        640
+      ],
+      "dtype": "float32",
+      "min": 0.0,
+      "max": 255.0,
+      "finite": true,
+      "sha256_array": "ab3dc3574f25d4946acb60d8ea4718afd653fa78f097c19aa90836c6eea8ee79"
+    },
+    "clip": {
+      "shape": [
+        24,
+        3,
+        224,
+        224
+      ],
+      "dtype": "float32",
+      "min": -1.7922625541687012,
+      "max": 2.1458969116210938,
+      "finite": true,
+      "sha256_array": "40827ea043da03683529101e6f8890538d102ba697265de5e33142041d2cfb2f"
+    },
+    "aura": {
+      "shape": [
+        30,
+        3,
+        112,
+        112
+      ],
+      "dtype": "float32",
+      "min": -1.0,
+      "max": 1.0,
+      "finite": true,
+      "sha256_array": "3e66863c16f2c1d0018d38b955100e09ea4dd7bf968cacd39b22f4e1f01aeab6"
+    }
+  },
+  "files": {
+    "run_kit.py": {
+      "bytes": 14980,
+      "sha256": "66930908463be4c7fab115e328cd11cf2ba7849213d71b0b7950754cf93fa34c"
+    },
+    "run.bat": {
+      "bytes": 1458,
+      "sha256": "a76246319e026a931bdb104aba01145fe1bcdfce9861dd214ceff4d58f3964f7"
+    },
+    "README.txt": {
+      "bytes": 1924,
+      "sha256": "d838746cee232a042ec09b9f8a430f637c0a104fabce63d40c64d058cf510b4d"
+    },
+    "manifest.json": {
+      "bytes": 1127,
+      "sha256": "73a39de8f814a48c469ee4d5e6161b5943b81e77844e34942b1a40998113ce88"
+    },
+    "samples.npz": {
+      "bytes": 23340218,
+      "sha256": "50adbc116bafc5204710633cf8678cdb5bee209d204574139f0f61f48c652b10"
+    },
+    "uv.exe": {
+      "bytes": 31803184,
+      "sha256": "81ea623608f8c17720c62efd0a380a8ead380c4d365ba6968e9d279a2319c674"
+    },
+    "directml-20261103-053501.json": {
+      "bytes": 9154,
+      "sha256": "1f9e7545c57253020aaed54ad9dcfabd6895a14482e1bb4e72975630ab28dc6a"
+    },
+    "directml-20261103-053501.txt": {
+      "bytes": 1723,
+      "sha256": "b233aa675fc4198aa8473f050a0ed7ab9c5526a7bed2ce69aa510d42b12a58cc"
+    },
+    "windowsml-20261103-053533.json": {
+      "bytes": 9191,
+      "sha256": "1af135fcd30b483f63ad5a9c51b2e1d1359bca723367c41bb173bac5a87dd5cd"
+    },
+    "windowsml-20261103-053533.txt": {
+      "bytes": 1726,
+      "sha256": "7f0b7bce2e8ed88aa9427118f4cd1d4345ffe865211a134bbf1701b13b57cfb4"
+    },
+    "windowsml-vendor-20261103-055055.json": {
+      "bytes": 9460,
+      "sha256": "49ca93705de322a380afbece75bd515dd9d190e63a126d0d2cb1cbc1a9501e90"
+    },
+    "windowsml-vendor-20261103-055055.txt": {
+      "bytes": 1733,
+      "sha256": "4671aac9f21bc3170ec7f57afae4ef49a5120367a51e7bd16ddb6fda8d4cc8e7"
+    }
+  },
+  "errors": [
+    {
+      "file": "directml-20261103-053501.json",
+      "ep": "DmlExecutionProvider:0",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2853)\\onnxruntime_pybind11_state.pyd!00007FFC78202FEC: (caller: 00007FFC781CDBD7) Exception(2) tid(f6c) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\P4XDyakgDReIAvRz\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 296, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 373: invalid start byte\n"
+    },
+    {
+      "file": "directml-20261103-053501.json",
+      "ep": "auto:PREFER_GPU",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2853)\\onnxruntime_pybind11_state.pyd!00007FFC78202FEC: (caller: 00007FFC781CDBD7) Exception(3) tid(f6c) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\P4XDyakgDReIAvRz\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 296, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 373: invalid start byte\n"
+    },
+    {
+      "file": "windowsml-20261103-053533.json",
+      "ep": "DmlExecutionProvider:0",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: C:\\__w\\1\\s\\win-onnxruntime\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2936)\\onnxruntime_pybind11_state.pyd!00007FFC785472B9: (caller: 00007FFC78517194) Exception(2) tid(41e0) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\mxib2PwpGSIS9EgS\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 395, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 388: invalid start byte\n"
+    },
+    {
+      "file": "windowsml-20261103-053533.json",
+      "ep": "auto:PREFER_GPU",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: C:\\__w\\1\\s\\win-onnxruntime\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2936)\\onnxruntime_pybind11_state.pyd!00007FFC785472B9: (caller: 00007FFC78517194) Exception(3) tid(41e0) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\mxib2PwpGSIS9EgS\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 395, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 388: invalid start byte\n"
+    },
+    {
+      "file": "windowsml-vendor-20261103-055055.json",
+      "ep": "DmlExecutionProvider:0",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: C:\\__w\\1\\s\\win-onnxruntime\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2879)\\onnxruntime_pybind11_state.pyd!00007FFC780DB765: (caller: 00007FFC780AB6B4) Exception(2) tid(3888) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\331oEPvSBD6tYC9x\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 321, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 388: invalid start byte\n"
+    },
+    {
+      "file": "windowsml-vendor-20261103-055055.json",
+      "ep": "auto:PREFER_GPU",
+      "cp949_message": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: C:\\__w\\1\\s\\win-onnxruntime\\onnxruntime\\core\\providers\\dml\\DmlExecutionProvider\\src\\MLOperatorAuthorImpl.cpp(2879)\\onnxruntime_pybind11_state.pyd!00007FFC780DB765: (caller: 00007FFC780AB6B4) Exception(3) tid(3888) 80070057 매개 변수가 틀립니다.\r\n",
+      "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\331oEPvSBD6tYC9x\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 321, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 388: invalid start byte\n"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "file": "dist-electron/main/accelerators/leases.js",
+  "packaged_sha256": "c035391cf7d563ffd9994423db51f3ff1197994a1c4a2c1eafc42098c698c3fe",
+  "compiled_sha256": "c035391cf7d563ffd9994423db51f3ff1197994a1c4a2c1eafc42098c698c3fe",
+  "matches": true,
+  "native_release": true,
+  "unreserve_endpoint": true
+}

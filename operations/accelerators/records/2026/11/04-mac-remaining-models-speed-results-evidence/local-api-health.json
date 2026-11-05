@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-11-04T04:25:11.844678+09:00",
+  "url": "http://127.0.0.1:3000/health",
+  "status": 200,
+  "health": {
+    "status": "ok",
+    "service": "clipper_web_api",
+    "db": {
+      "user": "ok",
+      "release": "ok",
+      "admin": "ok"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "batch": 1,
+    "output_metadata_dynamic": false,
+    "success": true,
+    "output_dims": [
+      1,
+      512
+    ]
+  },
+  {
+    "batch": 1,
+    "output_metadata_dynamic": true,
+    "success": true,
+    "output_dims": [
+      1,
+      512
+    ]
+  },
+  {
+    "batch": 8,
+    "output_metadata_dynamic": false,
+    "success": false,
+    "error": "[ShapeInferenceError] Inference error(s): (op_type:BatchNormalization, node name: /features/BatchNormalization): [ShapeInferenceError] Inferred shape and existing shape differ in dimension 0: (8) vs (1)\n"
+  },
+  {
+    "batch": 8,
+    "output_metadata_dynamic": true,
+    "success": true,
+    "output_dims": [
+      8,
+      512
+    ]
+  }
+]

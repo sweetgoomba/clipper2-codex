@@ -1,0 +1,87 @@
+Window: "Clipper Studio (dev)", App: Clipper Studio (dev).
+0 표준 윈도우 Clipper Studio (dev), Secondary Actions: Raise
+	1 container Clipper Studio (dev)
+		2 container
+			3 HTML 콘텐츠 Clipper Studio, URL: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/dance
+				4 container
+					5 container 주요 메뉴
+						6 텍스트 Clipper
+						7 link Description: 홈, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/projects
+						8 버튼 즐겨찾기
+						9 container
+							10 link Description: 안무 하이라이트, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/dance
+							11 팝업 버튼 안무 하이라이트 메뉴
+						12 버튼 하이라이트 추출
+						13 버튼 영상 자동제작
+						14 container
+							15 link Description: 해외영상 to 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/overseas-dub
+							16 팝업 버튼 해외영상 to 숏폼 메뉴
+						17 container
+							18 link Description: 프롬프트 to 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/shortform/prompt
+							19 팝업 버튼 프롬프트 to 숏폼 메뉴
+						20 container
+							21 link Description: 매체기사 to 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/shortform/article
+							22 팝업 버튼 매체기사 to 숏폼 메뉴
+						23 container
+							24 link Description: 블로그 to 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/shortform/url
+							25 팝업 버튼 블로그 to 숏폼 메뉴
+						26 container
+							27 link Description: 생성형 AI 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/shortform/explainer
+							28 팝업 버튼 생성형 AI 숏폼 메뉴
+						29 container
+							30 link Description: 텍스트 to 숏폼, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/shortform/paste
+							31 팝업 버튼 텍스트 to 숏폼 메뉴
+						32 버튼 영상 편집·변형
+						33 container
+							34 link Description: 1N : 숏폼 베리에이션, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/variation
+							35 팝업 버튼 1N : 숏폼 베리에이션 메뉴
+						36 container
+							37 link Description: 댓글 오버레이, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/comment-overlay
+							38 팝업 버튼 댓글 오버레이 메뉴
+						39 버튼 영상 구성
+						40 팝업 버튼 더보기, 기능 3개 더
+							41 텍스트 더보기
+							42 텍스트 +3
+						43 link Description: 스토어, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/store
+						44 link Description: 소재 관리, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/assets
+						45 link Description: 설정, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/settings
+						46 버튼 메뉴 접기
+							47 텍스트 메뉴 접기
+							48 텍스트 ⌘B
+						49 container 안무 하이라이트 즐겨찾기 · 하이라이트 추출 영상에서 춤 구간을 찾아 멤버별로 나눠 뽑아냅니다. 이럴 때 직캠이나 챌린지용 클립을 한 번에 만들 때
+							50 text 안무 하이라이트 즐겨찾기 · 하이라이트 추출
+							51 텍스트 영상에서 춤 구간을 찾아 멤버별로 나눠 뽑아냅니다.
+							52 text 이럴 때 직캠이나 챌린지용 클립을 한 번에 만들 때
+					53 container
+						54 항목 안무 하이라이트, Value: 1
+							55 텍스트 안무 하이라이트
+						56 텍스트 영상에서 아티스트와 멤버별 안무 하이라이트를 추출합니다.
+						57 버튼 사용법
+						58 입력 방식
+							59 라디오 버튼 YouTube URL, Value: 1
+							60 라디오 버튼 로컬 파일, Value: 0
+						61 container YouTube URL
+							62 텍스트 YouTube URL
+							63 container
+								64 텍스트 필드 (settable) YouTube URL, Placeholder: https://www.youtube.com/watch?v=...
+						65 버튼 (disabled) 아티스트 감지
+					66 container 상태 바
+						67 팝업 버튼 [account redacted] · Free
+						68 팝업 버튼 크레딧 17,550
+							69 텍스트 크레딧
+							70 텍스트 17,550
+						71 팝업 버튼 로컬 리소스 주의
+						72 텍스트 v0.0.1
+						73 전환 버튼 소식, Value: 0
+	74 닫기 버튼
+	75 전체 화면 버튼 Help: 이 버튼을 누르면 윈도우를 확대/축소합니다., Secondary Actions: 윈도우 확대/축소
+	76 최소화 버튼
+77 menu bar
+	78 Clipper Studio (dev)
+	79 File
+	80 Edit
+	81 View
+	82 Window
+	83 Help
+
+The focused UI element is 10 link Description: 안무 하이라이트, Value: file:///Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper%20Studio%20(dev).app/Contents/Resources/renderer/index.html#/dance

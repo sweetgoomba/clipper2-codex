@@ -1,0 +1,132 @@
+{
+  "project_id": 1793724487371,
+  "video_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/BZDZBUyaJbA/source.mp4",
+  "dance_setup": {
+    "artistName": "Le Sserafim",
+    "artistDisplayName": "Le Sserafim (르세라핌)",
+    "artistQid": "Q111381707",
+    "artistType": "group",
+    "members": [
+      {
+        "memberKey": "qid_q111537648",
+        "memberQid": "Q111537648",
+        "memberName": "허윤진",
+        "selectedImages": [
+          "dance-asset:acf3344b-8da0-4c85-983d-8361d7d42aca:dacda9578c565a2aeb5d12be6f2ba7b7",
+          "dance-asset:41ec38c6-098a-411a-a13c-001470de7eb2:00f6ad9e845742920c73fdbff2365554",
+          "dance-asset:6a86a488-a5cb-4129-bf05-82742d513199:847550a864f901db659ae515c85e6d8d",
+          "dance-asset:4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2:4f4dbf85ac07e4b35ddf8e86f1b45032",
+          "dance-asset:45420a1b-0666-4f74-92ed-f69f05194d3d:bfac300caf192323ee0c0b00aba8a83d",
+          "dance-asset:10d77536-9576-4186-966d-da2fa18f082b:57d575510256d43c95a7d4d1288b81cc",
+          "dance-asset:e4736b85-86e6-4cd1-80ef-b6b83792f3e7:4d9170c324166c0c97448b09655ad59a",
+          "dance-asset:782997da-79b7-4eb5-a5f2-88689f09d46c:cf411a0ed880da8ea4678a566341721b"
+        ],
+        "validatedImagePaths": [
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/acf3344b-8da0-4c85-983d-8361d7d42aca.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/41ec38c6-098a-411a-a13c-001470de7eb2.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/6a86a488-a5cb-4129-bf05-82742d513199.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/45420a1b-0666-4f74-92ed-f69f05194d3d.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/10d77536-9576-4186-966d-da2fa18f082b.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/e4736b85-86e6-4cd1-80ef-b6b83792f3e7.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/782997da-79b7-4eb5-a5f2-88689f09d46c.jpg"
+        ]
+      },
+      {
+        "memberKey": "qid_q111544444",
+        "memberQid": "Q111544444",
+        "memberName": "홍은채",
+        "selectedImages": [
+          "dance-asset:eca625c2-a5e6-4a02-9e81-58efdc4f06fb:dd88fcef07de1ca78f9aca7c09881323",
+          "dance-asset:40a115f8-670d-4001-b311-a12e71120ade:af5d3962a353be531223cfea0c0ecf8d",
+          "dance-asset:751eeea6-a217-4f85-998c-81adf3990720:d0cb6f3ab5a0e9ba3bbc0f0d3a560aaa",
+          "dance-asset:c8006503-1e65-4f71-bc9d-2f5040975d63:10687edafae46d2a322a63cf78ba5f92",
+          "dance-asset:00273f0d-b929-412b-9314-9d4c98b137ee:299057be61e258717f7ba5535a7b6b86",
+          "dance-asset:e01960a6-3239-4fc6-82b9-3f6513cdaa71:8865e561bb15b4e7507796f07d0c7504"
+        ],
+        "validatedImagePaths": [
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/eca625c2-a5e6-4a02-9e81-58efdc4f06fb.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/40a115f8-670d-4001-b311-a12e71120ade.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/751eeea6-a217-4f85-998c-81adf3990720.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/c8006503-1e65-4f71-bc9d-2f5040975d63.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/00273f0d-b929-412b-9314-9d4c98b137ee.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/e01960a6-3239-4fc6-82b9-3f6513cdaa71.jpg"
+        ]
+      },
+      {
+        "memberKey": "qid_q111544446",
+        "memberQid": "Q111544446",
+        "memberName": "카즈하",
+        "selectedImages": [
+          "dance-asset:f734d783-0970-4a51-9e4c-6fe485bca7ea:a3a38c5738c26f36fb5584913e06ff4a",
+          "dance-asset:fd12ee85-9561-45c0-a51c-385dadba4196:815800151e9a385089e38b49f207937d",
+          "dance-asset:bbbb8289-9586-4ebb-87ef-c5b36b953c3f:f3f52df81a3a4746fb3b7751d6496524",
+          "dance-asset:858d432e-e73e-433a-ba90-5871a0683ee5:941aa8d82400f9296360c02a384c24fa",
+          "dance-asset:12e1c164-a348-405d-956a-8015b631f0ce:1b15250b8961bff041bf6bf742fd1472"
+        ],
+        "validatedImagePaths": [
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/f734d783-0970-4a51-9e4c-6fe485bca7ea.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/fd12ee85-9561-45c0-a51c-385dadba4196.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/bbbb8289-9586-4ebb-87ef-c5b36b953c3f.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/858d432e-e73e-433a-ba90-5871a0683ee5.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/12e1c164-a348-405d-956a-8015b631f0ce.jpg"
+        ]
+      },
+      {
+        "memberKey": "qid_q56660174",
+        "memberQid": "Q56660174",
+        "memberName": "김채원",
+        "selectedImages": [
+          "dance-asset:93b52129-8de1-4c08-8b5b-c5b3a72b7b89:5dda323d34c85f74085d29f5923e74dc",
+          "dance-asset:0b47c9d5-bbbc-4402-8095-2848e1fd4899:3e09b6fa8e97c70b55f54c0e8364d585",
+          "dance-asset:f87f9245-9ab5-4422-8fea-7a9e9537c3d2:a6ae3860a57095c781b3312613058051",
+          "dance-asset:94bfa131-b5ba-48cb-adbd-bc9a99a78db8:444d3ed74823cebceaf12ea9c36cbf9c",
+          "dance-asset:04b4674c-3ad1-4bee-8dd8-fde48a498652:f57612a1023428093d57f023c97db0d1",
+          "dance-asset:5ece3942-a5d8-4399-982f-41388de37344:1b36d739f4e95372eea961daf8665daa"
+        ],
+        "validatedImagePaths": [
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/93b52129-8de1-4c08-8b5b-c5b3a72b7b89.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/0b47c9d5-bbbc-4402-8095-2848e1fd4899.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/f87f9245-9ab5-4422-8fea-7a9e9537c3d2.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/94bfa131-b5ba-48cb-adbd-bc9a99a78db8.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/04b4674c-3ad1-4bee-8dd8-fde48a498652.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/5ece3942-a5d8-4399-982f-41388de37344.jpg"
+        ]
+      },
+      {
+        "memberKey": "qid_q869966",
+        "memberQid": "Q869966",
+        "memberName": "사쿠라",
+        "selectedImages": [
+          "dance-asset:bc1e6635-0831-4bdc-819b-8e0557f29b0c:6d97bf8a439241f752a29a247e79c825",
+          "dance-asset:924036b1-bf13-42d8-a5d3-97ad967672da:8d88cd13393e09f92753c3005a19fa49",
+          "dance-asset:98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae:400bdbc518c3f82a581c985dd74bb9b0",
+          "dance-asset:cf2daf1b-82a2-49e5-86da-a2840d1383eb:f0babe9a9503e46b1b2baabff9f02a89",
+          "dance-asset:1c4893ca-d993-487e-a220-e919482e405a:05401007dc9efd54fb1b4668ba1c9ac2",
+          "dance-asset:c6d893d0-def1-49b9-934a-54c2ea1db318:e6f233091f36c5eedb7a744c56a0c778"
+        ],
+        "validatedImagePaths": [
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/bc1e6635-0831-4bdc-819b-8e0557f29b0c.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/924036b1-bf13-42d8-a5d3-97ad967672da.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/cf2daf1b-82a2-49e5-86da-a2840d1383eb.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/1c4893ca-d993-487e-a220-e919482e405a.jpg",
+          "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/c6d893d0-def1-49b9-934a-54c2ea1db318.jpg"
+        ]
+      }
+    ],
+    "excludedMembers": [
+      {
+        "memberKey": "qid_q111544443",
+        "memberQid": "Q111544443",
+        "memberName": "김가람"
+      }
+    ],
+    "usedCache": true
+  },
+  "source": {
+    "type": "youtube_url",
+    "url": "https://youtu.be/BZDZBUyaJbA",
+    "requestedQuality": "1080p"
+  }
+}

@@ -1,0 +1,38 @@
+✔ cache-rich Mac admits bounded GPU work despite low currently free pages (36.51975ms)
+✔ critical pressure returns the decision snapshot and never grants a GPU lease (7.3025ms)
+✔ unknown or stale memory observations fail closed (3.763958ms)
+✔ reservations across adapters share the host budget and existing reservations cannot grow past it (7.969584ms)
+✔ overlapping observations cannot grant two leases on one adapter (20.178458ms)
+✔ Windows dedicated-memory and host-memory limits both remain enforced (2.249708ms)
+✖ Darwin parser counts only bounded reclaimable cache and respects pressure (1.280083ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 127.515958
+
+✖ failing tests:
+
+test at test/accelerator-admission-memory.test.js:67:1
+✖ Darwin parser counts only bounded reclaimable cache and respects pressure (1.280083ms)
+  AssertionError [ERR_ASSERTION]: constructor
+  
+  1274229555 !== 0
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:76:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1062:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:752:18)
+      at Test.postRun (node:internal/test_runner/test:1191:19)
+      at Test.run (node:internal/test_runner/test:1119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1274229555,
+    expected: 0,
+    operator: 'strictEqual'
+  }

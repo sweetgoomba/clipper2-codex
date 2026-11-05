@@ -1,0 +1,8 @@
+{
+  "repeated_preservations": 3,
+  "source_assets": 1,
+  "same_reference": true,
+  "independent_inode": true,
+  "preserved_bytes_survive_external_mutation": true,
+  "scope": "tiny byte fixture, no media decode or app"
+}

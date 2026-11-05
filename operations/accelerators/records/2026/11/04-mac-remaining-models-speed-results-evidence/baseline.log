@@ -1,0 +1,136 @@
+[YOLO] device=mps half=True
+[DANCE] step: download_reference_images start
+[DANCE] step: download_reference_images done, count=5
+[DANCE][T] download_refs: 0.0s
+[DANCE] step: analyze_video_to_records start
+{"event": "progress", "elapsed_seconds": 3.31, "percent": 10, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 12.28, "percent": 11, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 19.66, "percent": 12, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 26.38, "percent": 13, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 33.86, "percent": 14, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 42.11, "percent": 15, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 50.6, "percent": 16, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 56.96, "percent": 17, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 63.91, "percent": 18, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 72.61, "percent": 19, "message": "영상 프레임을 분석하고 있습니다"}
+[DANCE] step: analyze_video_to_records done, frames=2324
+[DANCE][T] yolo: 1m 15.2s  (frames=2324, video=2m 35.0s, fps=59.9)
+[REF] member=허윤진 total_images=8 valid_face_embs=8
+[REF] member=홍은채 total_images=6 valid_face_embs=6
+[REF] member=카즈하 total_images=5 valid_face_embs=5
+[REF] member=김채원 total_images=6 valid_face_embs=6
+[REF] member=사쿠라 total_images=6 valid_face_embs=6
+[REF] built_ref_embeddings=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']
+[DANCE] step: build_reference_embeddings done, embs=['허윤진', '홍은채', '카즈하', '김채원', '사쿠라']
+[DANCE][T] ref_embeddings: 1.9s
+{"event": "progress", "elapsed_seconds": 80.48, "percent": 20, "message": "영상 프레임을 분석하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 80.64, "percent": 21, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 91.02, "percent": 22, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 102.78, "percent": 23, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 115.09, "percent": 24, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 125.38, "percent": 25, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 137.81, "percent": 26, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 148.2, "percent": 27, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 158.56, "percent": 28, "message": "메인 인물의 구도와 연속성을 확인하고 있습니다"}
+[DANCE][T] main_selection: 1m 58.1s
+{"event": "progress", "elapsed_seconds": 199.68, "percent": 29, "message": "원경 단체 장면을 확인하고 있습니다"}
+[DANCE][T] segment_build: 28.8s  (main=3, group=32)
+{"event": "progress", "elapsed_seconds": 227.47, "percent": 30, "message": "구간을 정리하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 227.58, "percent": 30, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 229.39, "percent": 31, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 231.2, "percent": 32, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 233.6, "percent": 33, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 236.0, "percent": 34, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 238.3, "percent": 35, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 240.97, "percent": 36, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 243.22, "percent": 37, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 245.14, "percent": 38, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 247.4, "percent": 39, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 249.31, "percent": 40, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 251.53, "percent": 41, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 253.44, "percent": 42, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 255.54, "percent": 43, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 258.64, "percent": 44, "message": "얼굴 특징을 추출하고 있습니다"}
+[DANCE][T] face_extract: 34.6s  (segs=3, candidates/seg=12, selected/seg=5, owned_samples=2271)
+{"event": "progress", "elapsed_seconds": 262.1, "percent": 45, "message": "얼굴 특징을 추출하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 268.84, "percent": 55, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 270.93, "percent": 56, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 273.02, "percent": 57, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 275.34, "percent": 58, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 277.75, "percent": 59, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 279.89, "percent": 60, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 281.92, "percent": 61, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 284.05, "percent": 62, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 286.15, "percent": 63, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 288.24, "percent": 64, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 290.17, "percent": 65, "message": "메인 인물의 얼굴 근거를 교차 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 291.35, "percent": 65, "message": "메인 인물의 연속 구간을 확인하고 있습니다"}
+[MATCH] segment=0 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=1 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=2 status=matched reason=member_timeline_consensus member=카즈하
+[MATCH] segment=3 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=4 status=matched reason=member_timeline_consensus member=카즈하
+[MATCH] segment=5 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=6 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=7 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=8 status=matched reason=member_body_continuity member=사쿠라
+[MATCH] segment=9 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=10 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=11 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=12 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=13 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=14 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=15 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=16 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=17 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=18 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=19 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=20 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=21 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=22 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=23 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=24 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=25 status=matched reason=verified_camera_focal_context member=허윤진
+[MATCH] segment=26 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=27 status=matched reason=member_timeline_consensus member=카즈하
+[MATCH] segment=28 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=29 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=30 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=31 status=matched reason=member_timeline_consensus member=카즈하
+[MATCH] segment=32 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=33 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=34 status=unmatched reason=unresolved_face_interval member=-
+[MATCH] segment=35 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=36 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=37 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=38 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=39 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=40 status=matched reason=member_timeline_consensus member=김채원
+[MATCH] segment=41 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=42 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=43 status=matched reason=member_body_continuity member=홍은채
+[MATCH] segment=44 status=matched reason=member_timeline_consensus member=카즈하
+[MATCH] segment=45 status=matched reason=member_timeline_consensus member=사쿠라
+[MATCH] segment=46 status=matched reason=member_timeline_consensus member=홍은채
+[MATCH] segment=47 status=matched reason=member_timeline_consensus member=허윤진
+[MATCH] segment=48 status=matched reason=member_timeline_consensus member=김채원
+[DANCE][T] cluster_map: 47.1s  (embs=2, clusters=34, persons=5)
+[DANCE][T] group_continuity: 0.1s  (joins=1)
+{"event": "progress", "elapsed_seconds": 309.32, "percent": 70, "message": "함께 등장 멤버를 확인하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 318.91, "percent": 75, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 320.26, "percent": 76, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 321.65, "percent": 77, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 322.47, "percent": 78, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 323.65, "percent": 79, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 325.5, "percent": 80, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 326.72, "percent": 81, "message": "장면 썸네일을 생성하고 있습니다"}
+[DANCE][T] clips_main: 9.0s  (n=49)
+{"event": "progress", "elapsed_seconds": 327.9, "percent": 82, "message": "장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 328.0, "percent": 82, "message": "단체 장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 329.93, "percent": 83, "message": "단체 장면 썸네일을 생성하고 있습니다"}
+{"event": "progress", "elapsed_seconds": 331.7, "percent": 84, "message": "단체 장면 썸네일을 생성하고 있습니다"}
+[DANCE][T] clips_group: 5.3s  (n=31)
+{"event": "progress", "elapsed_seconds": 333.16, "percent": 95, "message": "결과를 정리하고 있습니다"}
+[DANCE][T] TOTAL: 5m 30.7s  | download_refs=0.0s  yolo=1m 15.2s  ref_embs=1.9s  main_selection=1m 58.1s  segment_build=28.8s  face_extract=34.6s  cluster_map=47.1s  clips_main=9.0s  clips_group=5.3s
+{"event": "progress", "elapsed_seconds": 334.07, "percent": 100, "message": "완료"}
+{"event": "complete", "elapsed_seconds": 334.9578494169982, "acceleration": {"attempt": 0, "requested_device": "mps", "cpu_reanalysis": false, "fallback_reason": null, "fallback_error": null, "elapsed_seconds": 333.5754834159743}, "models": {"schema": 1, "mode": "auto", "consumer": "dance", "device": "mps", "release_qualified": null, "candidate_failures": {}, "models": [{"model_id": "pose.yolov8s", "selected_backend": "torch_mps", "reason": "existing_runtime", "calls": 2459, "samples": 0, "distinct_inputs": 0, "cpu_median_ms": null, "candidate_median_ms": null, "execution_evidence": "provider_only", "profile_verified": false, "graph_execution": "unknown", "backends": ["torch_mps"]}, {"model_id": "face.auraface", "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider", "reason": "builtin_coreml_local_check", "calls": 4603, "samples": 3, "distinct_inputs": 3, "cpu_median_ms": 52.97508300282061, "candidate_median_ms": 7.886208011768758, "execution_evidence": "profile_nodes", "profile_verified": true, "graph_execution": "mixed", "release_qualified": false, "provider_node_counts": {"CoreMLExecutionProvider": 6, "CPUExecutionProvider": 12}, "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60", "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c", "precision": "fp16_internal_fp32_io", "local_check": "first_face_and_two_spatial_flips", "local_cosine_min": 0.999969548316577, "setup_ms": 664.9931659922004, "break_even_calls": 20, "estimated_calls": 2324, "estimated_total_saving_ms": 103899.63643823285, "backends": ["CoreMLExecutionProvider/CPUExecutionProvider"]}, {"model_id": "face.yunet", "selected_backend": "opencv_cpu", "reason": "existing_runtime", "calls": null, "samples": 0, "distinct_inputs": 0, "cpu_median_ms": null, "candidate_median_ms": null, "execution_evidence": "unverified", "profile_verified": false, "graph_execution": "unknown"}]}}

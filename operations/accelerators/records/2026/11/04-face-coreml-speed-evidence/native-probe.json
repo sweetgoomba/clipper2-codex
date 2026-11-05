@@ -1,0 +1,73 @@
+{
+  "timings_ms": [
+    3788.2536250399426,
+    4.010959004517645,
+    4.3619159841910005,
+    5.846957967150956,
+    6.146500003524125,
+    4.693374969065189,
+    3.922250005416572,
+    3.9839590317569673,
+    3.5157499951310456,
+    3.8466250407509506,
+    3.686124982777983,
+    3.664499963633716,
+    3.749667026568204,
+    3.4120409982278943,
+    3.9943750016391277,
+    3.5148750175721943,
+    3.610875050071627,
+    3.8213340449146926,
+    4.523958021309227,
+    4.403416998684406,
+    3.924249962437898,
+    4.78458299767226,
+    4.200250026769936,
+    3.66454100003466,
+    3.9596250280737877,
+    3.908625047188252,
+    4.186916979961097,
+    3.574125003069639,
+    3.741541993804276,
+    5.7637919671833515
+  ],
+  "providers": [
+    "CoreMLExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "cosine_min": 0.9999637007713318,
+  "diagnostics": {
+    "schema": 1,
+    "mode": "auto",
+    "consumer": "dance",
+    "device": "mps",
+    "release_qualified": null,
+    "candidate_failures": {},
+    "models": [
+      {
+        "model_id": "face.auraface",
+        "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider",
+        "reason": "builtin_coreml_local_check",
+        "calls": null,
+        "samples": 3,
+        "distinct_inputs": 3,
+        "cpu_median_ms": 58.999417000450194,
+        "candidate_median_ms": 4.888291994575411,
+        "execution_evidence": "profile_nodes",
+        "profile_verified": true,
+        "graph_execution": "mixed",
+        "release_qualified": false,
+        "provider_node_counts": {
+          "CoreMLExecutionProvider": 6,
+          "CPUExecutionProvider": 12
+        },
+        "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+        "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c",
+        "precision": "fp16_internal_fp32_io",
+        "local_check": "first_face_and_two_spatial_flips",
+        "local_cosine_min": 0.9999711443890736,
+        "setup_ms": 3557.755374989938
+      }
+    ]
+  }
+}

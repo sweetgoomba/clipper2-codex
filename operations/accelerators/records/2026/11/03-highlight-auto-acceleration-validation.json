@@ -1,0 +1,44 @@
+{
+  "documents": {
+    "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-highlight-auto-acceleration-design.md": {
+      "sha256": "3a72a737b1373da8a5a46539daff9ec63ce9d78721a8c1f750eb5590662d22ad",
+      "lines": 302
+    },
+    "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-highlight-auto-acceleration-implementation-plan.md": {
+      "sha256": "48619dae7ec1c7f8a85cbd3affbcb4de25bd82ed321336fad41a563bfad2b145",
+      "lines": 278
+    }
+  },
+  "tasks": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15"
+  ],
+  "existing_file_checks": 33,
+  "source_link_checks": 12,
+  "planned_file_refs": 24,
+  "missing_existing_files": [],
+  "heads_at_document_validation": {
+    "/Users/jina/project/adlight/desktop/clipper_python": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+    "/Users/jina/project/adlight/desktop/clipper_electron": "775ffd5e7df8bede6a9096316a7a367da8dba0da",
+    "/Users/jina/project/adlight/desktop/clipper_nestjs": "e4e1fcf5d37bdbbd2c0c00a9f558b052c2d55f7f",
+    "/Users/jina/project/adlight/desktop/clipper_angular": "7217bda17e0330971aa4aa6a5f57f1950324e0c0"
+  },
+  "runtime_tests_run": false,
+  "notes": [
+    "Document checks only; no inference, installation, application restart, product implementation, commit or push.",
+    "HEAD is provenance only; quality baseline must include dirty and untracked source content in T01."
+  ]
+}

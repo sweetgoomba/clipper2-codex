@@ -1,0 +1,39 @@
+{
+  "scope": "No model/native imports/inference or processes; actual source AST classes and model_call with fake ORT sessions/Timer/lease host.",
+  "memory_calls": [
+    [
+      "acquire",
+      100
+    ],
+    [
+      "register_native"
+    ],
+    [
+      "reserve",
+      200
+    ],
+    [
+      "reserve",
+      50
+    ]
+  ],
+  "watchdogs": [
+    [
+      "start",
+      60
+    ],
+    [
+      "cancel",
+      60
+    ],
+    [
+      "start",
+      60
+    ],
+    [
+      "cancel",
+      60
+    ]
+  ],
+  "source_model_loads_executed": 2
+}

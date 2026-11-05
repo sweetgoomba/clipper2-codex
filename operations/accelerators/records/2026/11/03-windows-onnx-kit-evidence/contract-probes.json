@@ -1,0 +1,31 @@
+{
+  "model_inference_executed": false,
+  "batch1_overwritten_by_batch8_error": true,
+  "calls": [
+    {
+      "provider": "CPUExecutionProvider",
+      "batch": 1
+    },
+    {
+      "provider": "FakeGPU",
+      "batch": 1
+    },
+    {
+      "provider": "FakeGPU",
+      "batch": 8
+    },
+    {
+      "provider": "CPUExecutionProvider",
+      "batch": 8
+    }
+  ],
+  "yunet_boxes_landmarks_changed_1000_comparison": {
+    "same_face_count": "1/1",
+    "face_score_max_diff": 0.0
+  },
+  "yolo_keypoints_changed_1000_comparison": {
+    "same_people_dance": "1/1",
+    "same_people_person": "1/1",
+    "matched_box_iou_min": 1.0
+  }
+}

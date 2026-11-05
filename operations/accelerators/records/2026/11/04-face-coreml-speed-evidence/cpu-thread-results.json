@@ -1,0 +1,74 @@
+[
+  {
+    "threads": "default",
+    "ort": "1.31.0",
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "count": 30,
+    "median_ms": 50.073603983037174,
+    "mean_ms": 49.12076376106901,
+    "load_ms": 256.65329198818654,
+    "available_providers": [
+      "CoreMLExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cosine_min": 0.9999998807907104,
+    "max_abs_diff": 0.0
+  },
+  {
+    "threads": "1",
+    "ort": "1.31.0",
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "count": 30,
+    "median_ms": 77.71004148526117,
+    "mean_ms": 87.47712220453347,
+    "load_ms": 64.2209590296261,
+    "available_providers": [
+      "CoreMLExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cosine_min": 0.9999998807907104,
+    "max_abs_diff": 1.1801719665527344e-05
+  },
+  {
+    "threads": "2",
+    "ort": "1.31.0",
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "count": 30,
+    "median_ms": 79.5793964935001,
+    "mean_ms": 81.41695020021871,
+    "load_ms": 66.33608299307525,
+    "available_providers": [
+      "CoreMLExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cosine_min": 0.9999998807907104,
+    "max_abs_diff": 1.1801719665527344e-05
+  },
+  {
+    "threads": "4",
+    "ort": "1.31.0",
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "count": 30,
+    "median_ms": 57.64414553414099,
+    "mean_ms": 67.97004027563769,
+    "load_ms": 67.13437498547137,
+    "available_providers": [
+      "CoreMLExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cosine_min": 0.9999998807907104,
+    "max_abs_diff": 0.0
+  }
+]

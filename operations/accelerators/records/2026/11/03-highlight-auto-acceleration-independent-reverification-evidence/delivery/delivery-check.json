@@ -1,0 +1,82 @@
+{
+  "run_utc": "2026-11-03T10:41:14.159960+00:00",
+  "source_files": 4934,
+  "source_current_mismatches": [],
+  "source_zip_mismatches": [],
+  "source_zip_symlinks": [],
+  "source_sha_actual": "18701193394c9bfed7d665e39babe32bdb7009bfd035b4bea95648dda3ad9fe9",
+  "source_sha_recorded": {
+    "file": "clipper-acceleration-source.zip",
+    "sha256": "18701193394c9bfed7d665e39babe32bdb7009bfd035b4bea95648dda3ad9fe9",
+    "bytes": 57316225,
+    "source_files": 4934
+  },
+  "source_current_recorded": {
+    "checked": 4896,
+    "mismatches": []
+  },
+  "packaged": {
+    "clipper_python": {
+      "checked": 403,
+      "mismatches": [
+        ".ruff_cache/0.15.20/4522871906427332182"
+      ]
+    },
+    "clipper_nestjs": {
+      "checked": 89,
+      "mismatches": []
+    },
+    "renderer": {
+      "checked": 142,
+      "mismatches": []
+    },
+    "electron_dist": {
+      "checked": 324,
+      "mismatches": []
+    }
+  },
+  "asar_symlinks": [],
+  "dependency_packages": {
+    "electron-log": true,
+    "electron-updater": true,
+    "builder-util-runtime": true,
+    "graceful-fs": true,
+    "js-yaml": true,
+    "lazy-val": true,
+    "lodash.escaperegexp": true,
+    "lodash.isequal": true,
+    "semver": true
+  },
+  "mac_artifacts_recorded": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.dmg",
+      "bytes": 192260536,
+      "sha256": "492b0a275fa9f18f9785e9cc214200f188d876c2d2a52ea2b36eeb85864df840"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.zip",
+      "bytes": 192491748,
+      "sha256": "b4285f220ec24348bb486356910a60e62484ec1af6e18f56c0c4be561df576c5"
+    }
+  ],
+  "artifacts_actual": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.zip",
+      "bytes": 192593566,
+      "sha256": "f0e25ac8806cf330dc0b48a77857e8faee76752101b47e2f7c949489d314c93c"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.dmg",
+      "bytes": 192388648,
+      "sha256": "288b0d165abd46505f350d3e97c97f700682ac0357ff33b855040fe0000a5f12"
+    }
+  ],
+  "current-work-merge/manifest.json": {
+    "checked": 9,
+    "mismatches": []
+  },
+  "current-work-merge/new-user-files-sha.json": {
+    "checked": 5,
+    "mismatches": []
+  }
+}

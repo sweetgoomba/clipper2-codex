@@ -1,0 +1,144 @@
+{
+  "baseline_job": "dance_1793724487371",
+  "source_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/BZDZBUyaJbA/source.mp4",
+  "source_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+  "reference_count": 31,
+  "references": {
+    "허윤진": [
+      {
+        "sha256": "419fb6ff40c31fce4dc7e8eb25aedbce7988cdd85f250131bb7a9f1caf2a5d50",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/acf3344b-8da0-4c85-983d-8361d7d42aca.jpg"
+      },
+      {
+        "sha256": "812e2c59553fde6b070edadf8c23d63c617b25ce7b2820ce7bc04e442caf6190",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/41ec38c6-098a-411a-a13c-001470de7eb2.jpg"
+      },
+      {
+        "sha256": "60b55512d7fbc5e8fd2b5cd479c981421a06558ef7398ccaa14dd8e8323e4171",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/6a86a488-a5cb-4129-bf05-82742d513199.jpg"
+      },
+      {
+        "sha256": "4abf83ebb59d922e67615e3381cf3a39c5512acba0d073d6f0814f3312480722",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/4fafd2ed-edf1-40e3-87ec-77bc3cc57bb2.jpg"
+      },
+      {
+        "sha256": "d4ee5714559c50f81cf81c14d01480228ef46f20fa48de67a061d88eeb6b1787",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/45420a1b-0666-4f74-92ed-f69f05194d3d.jpg"
+      },
+      {
+        "sha256": "49d40dcf71632c827b608d7ba483c7ffe441347eb3b2d16593ab620a0a51568a",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/10d77536-9576-4186-966d-da2fa18f082b.jpg"
+      },
+      {
+        "sha256": "a88f4a226206c45aa2fdcb24c89abc6affcc8351b0e47c8c281fbd93e4eadf90",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/e4736b85-86e6-4cd1-80ef-b6b83792f3e7.jpg"
+      },
+      {
+        "sha256": "7e9f88c7effa7fab0fff8c114f021dbb0a72516b56cd7a22788c4f249a9a4049",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/782997da-79b7-4eb5-a5f2-88689f09d46c.jpg"
+      }
+    ],
+    "홍은채": [
+      {
+        "sha256": "4d1767fc2a8a2983f5c3f58fae6b5298473485615d92cd1db3b7cd93fedba000",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/eca625c2-a5e6-4a02-9e81-58efdc4f06fb.jpg"
+      },
+      {
+        "sha256": "99da853febb84964f6fc11ec76889ee9495265447ec81b206ef4308c9117e6b0",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/40a115f8-670d-4001-b311-a12e71120ade.jpg"
+      },
+      {
+        "sha256": "c19b7bd069d284a5d4c46c45736c53f038b8b989bf447d7d09ea551ce343b344",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/751eeea6-a217-4f85-998c-81adf3990720.jpg"
+      },
+      {
+        "sha256": "6d7b7d4ea0386c69c933448454aeec60723738cd840ca43c95a106d2d85e075f",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/c8006503-1e65-4f71-bc9d-2f5040975d63.jpg"
+      },
+      {
+        "sha256": "bc0fdc0ced007672a5e04640376bc7902939ecf108ae3daf32332c4bb57acb9b",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/00273f0d-b929-412b-9314-9d4c98b137ee.jpg"
+      },
+      {
+        "sha256": "660727122ebf45c73486345ed0664949654735345378ec8a7d4e66dd0b76e71f",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/e01960a6-3239-4fc6-82b9-3f6513cdaa71.jpg"
+      }
+    ],
+    "카즈하": [
+      {
+        "sha256": "25d0617feb9499b0d2254b2943ff465005c8fe9932e71e3d17353e01b3e9e66b",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/f734d783-0970-4a51-9e4c-6fe485bca7ea.jpg"
+      },
+      {
+        "sha256": "f7d2ddb6829e82d4db76bd9cf6a6217d4d70b998cda7f95e9a1f27ee1bd9e13d",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/fd12ee85-9561-45c0-a51c-385dadba4196.jpg"
+      },
+      {
+        "sha256": "3398c61e1f24eb9c491ccdc847a6df36ae8cecebc90ed39167b6cf31510402e9",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/bbbb8289-9586-4ebb-87ef-c5b36b953c3f.jpg"
+      },
+      {
+        "sha256": "23e7a603330e98420c185aa150316a08e8adc895b3556472e66cd7315aede06b",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/858d432e-e73e-433a-ba90-5871a0683ee5.jpg"
+      },
+      {
+        "sha256": "1087800472a40b397eb9321614ba9989125558ad79edbd7e86b8c4589c01a82b",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/12e1c164-a348-405d-956a-8015b631f0ce.jpg"
+      }
+    ],
+    "김채원": [
+      {
+        "sha256": "60172a2c5a06565160b90882a494f9ed97e03960ed2a9f74954b46b4f0593221",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/93b52129-8de1-4c08-8b5b-c5b3a72b7b89.jpg"
+      },
+      {
+        "sha256": "0ed628934970f82ea51392358747e3be70d0c3970665c61915aaea149b1af705",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/0b47c9d5-bbbc-4402-8095-2848e1fd4899.jpg"
+      },
+      {
+        "sha256": "7f1a9d6b6a7f646fc3f484dc7327fb50a46f3295d58e87714654840e32c82bc5",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/f87f9245-9ab5-4422-8fea-7a9e9537c3d2.jpg"
+      },
+      {
+        "sha256": "9b6832ce5ed7b678efaad8f59c57fd458804afdabae95f7f21787a61e9de8183",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/94bfa131-b5ba-48cb-adbd-bc9a99a78db8.jpg"
+      },
+      {
+        "sha256": "2537e25aa079f9b833d8ba70577b01cb82f23bd88664a473fa15133f8f30ad53",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/04b4674c-3ad1-4bee-8dd8-fde48a498652.jpg"
+      },
+      {
+        "sha256": "66b40c2050e698a4d8f6f99a2d6b00b5cc13fc1ff9418944cb3244f8352bd358",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/5ece3942-a5d8-4399-982f-41388de37344.jpg"
+      }
+    ],
+    "사쿠라": [
+      {
+        "sha256": "389f975846961e1a349c72c8c219235fcb2af05a0ea5791b903ad85ac4686273",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/bc1e6635-0831-4bdc-819b-8e0557f29b0c.jpg"
+      },
+      {
+        "sha256": "1c07506b80d53f59866cc0a3a2ad53a0cfbbde7866c615937be04ade94873d52",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/924036b1-bf13-42d8-a5d3-97ad967672da.jpg"
+      },
+      {
+        "sha256": "5c23a8fb3be84ce07f5bb2fc69c392553f3a967a1383b6aa0efe72a7398bc1b1",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/98e0cb0b-0e2b-4b37-bee6-d7faeba7ceae.jpg"
+      },
+      {
+        "sha256": "bb2fd7ae6052bfcbf1abec6749416e47bb7f4112ddfa1de41c67baa92f291484",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/cf2daf1b-82a2-49e5-86da-a2840d1383eb.jpg"
+      },
+      {
+        "sha256": "1bb10230abbb15596970e4cc1f898a69cbcc3a02cfc4983372c5775711cdd168",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/1c4893ca-d993-487e-a220-e919482e405a.jpg"
+      },
+      {
+        "sha256": "ce12b1d31594e7964898223a2d022df686e7eab17f4a8be63571a248605b72d8",
+        "path": "/Users/jina/Library/Application Support/Clipper Studio Dev/dance/references/c6d893d0-def1-49b9-934a-54c2ea1db318.jpg"
+      }
+    ]
+  },
+  "baseline_seconds": 721.975,
+  "candidate_output": "/private/tmp/clipper-face-speed-20261104/mmn"
+}

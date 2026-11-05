@@ -1,0 +1,219 @@
+{
+  "baseline_seconds": 721.975,
+  "candidate_wall_seconds": 327.61615208297735,
+  "reduction_percent": 54.62223039814712,
+  "before_counts": {
+    "main": 49,
+    "group": 14,
+    "output": 63,
+    "raw": 80,
+    "short": 22,
+    "unknown_seconds": 4.872033333333363
+  },
+  "after_counts": {
+    "main": 49,
+    "group": 14,
+    "output": 63,
+    "raw": 80,
+    "short": 22,
+    "unknown_seconds": 4.872033333333363
+  },
+  "acceleration": {
+    "attempt": 0,
+    "requested_device": "mps",
+    "cpu_reanalysis": false,
+    "fallback_reason": null,
+    "fallback_error": null,
+    "elapsed_seconds": 325.7120584169752
+  },
+  "models": [
+    {
+      "model_id": "pose.yolov8s",
+      "selected_backend": "torch_mps",
+      "reason": "existing_runtime",
+      "calls": 2459,
+      "samples": 0,
+      "distinct_inputs": 0,
+      "cpu_median_ms": null,
+      "candidate_median_ms": null,
+      "execution_evidence": "provider_only",
+      "profile_verified": false,
+      "graph_execution": "unknown",
+      "backends": [
+        "torch_mps"
+      ]
+    },
+    {
+      "model_id": "face.auraface",
+      "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider",
+      "reason": "builtin_coreml_local_check",
+      "calls": 4603,
+      "samples": 3,
+      "distinct_inputs": 3,
+      "cpu_median_ms": 59.42025000695139,
+      "candidate_median_ms": 6.315124977845699,
+      "execution_evidence": "profile_nodes",
+      "profile_verified": true,
+      "graph_execution": "mixed",
+      "release_qualified": false,
+      "provider_node_counts": {
+        "CoreMLExecutionProvider": 6,
+        "CPUExecutionProvider": 12
+      },
+      "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+      "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c",
+      "precision": "fp16_internal_fp32_io",
+      "local_check": "first_face_and_two_spatial_flips",
+      "local_cosine_min": 0.999969548316577,
+      "setup_ms": 828.723083017394,
+      "break_even_calls": 21,
+      "estimated_calls": 2324,
+      "estimated_total_saving_ms": 122347.37473458517,
+      "backends": [
+        "CoreMLExecutionProvider/CPUExecutionProvider"
+      ]
+    },
+    {
+      "model_id": "face.yunet",
+      "selected_backend": "opencv_cpu",
+      "reason": "existing_runtime",
+      "calls": null,
+      "samples": 0,
+      "distinct_inputs": 0,
+      "cpu_median_ms": null,
+      "candidate_median_ms": null,
+      "execution_evidence": "unverified",
+      "profile_verified": false,
+      "graph_execution": "unknown"
+    }
+  ],
+  "before_stats": {
+    "reference_matching": "shared_reference_v1",
+    "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+    "scene_policy": "observed_ensemble_v3_pose_extent",
+    "scene_group_seconds": 17.767750000000003,
+    "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+    "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+    "native_scene_changed_observations": 0,
+    "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+    "scene_context_added_main_seconds": 6.6066000000000145,
+    "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+    "secondary_reference_recovered_seconds": 1.301400000000001,
+    "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+    "body_continuity_recovered_seconds": 2.4694333333333347,
+    "mask_continuity_recovery": "disabled_runtime_cost_v1",
+    "mask_continuity_recovered_seconds": 0.0,
+    "joint_identity_revalidation": "disabled_runtime_cost_v1",
+    "joint_identity_corrected_seconds": 0.0,
+    "joint_identity_recovered_seconds": 0.0,
+    "joint_identity_conflict_seconds": 0.0,
+    "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+    "main_scope_policy": "identity_context_before_scene_mask",
+    "main_face_sampling": "all_pose_observations",
+    "main_evidence_scope_count": 3,
+    "main_evidence_seconds": 151.5514,
+    "main_eligible_seconds": 134.05058333333332,
+    "output_named_continuity": "final_named_continuity_v3_mask_edges",
+    "output_named_join_count": 0,
+    "incoming_preparation_context_count": 1,
+    "visible_member_clips_added": 0,
+    "identity_split_parent_count": 2,
+    "identity_recovered_seconds": -5.055750000000025,
+    "reference_match_distance_max": 0.6,
+    "reference_match_min_margin": 0.0,
+    "reference_match_status_counts": {
+      "matched": 37,
+      "ambiguous": 0,
+      "unmatched": 12,
+      "invalid": 0
+    },
+    "fps": 59.94005994005994,
+    "duration_sec": 155.03821666666667,
+    "raw_main_segments": 84,
+    "raw_group_segments": 32,
+    "smoothed_main_segments": 3,
+    "smoothed_group_segments": 31,
+    "kept_main_segments": 49,
+    "dropped_main_no_face": 0,
+    "num_persons_inferred": 5
+  },
+  "after_stats": {
+    "reference_matching": "shared_reference_v1",
+    "main_selection_policy": "observed_main_geometry_v3_camera_subject",
+    "scene_policy": "observed_ensemble_v3_pose_extent",
+    "scene_group_seconds": 17.767750000000003,
+    "scene_boundary_policy": "scene_cut_alignment_v3_spatial",
+    "native_scene_policy": "native_distant_scene_v3_upper_unobserved",
+    "native_scene_changed_observations": 0,
+    "scene_context_policy": "main_scene_context_v4_bounded_role_retention",
+    "scene_context_added_main_seconds": 6.6066000000000145,
+    "secondary_reference_recovery": "sface_main_revalidation_v6_independent_pair",
+    "secondary_reference_recovered_seconds": 1.4348666666666645,
+    "body_continuity_recovery": "main_body_face_gap_v2_observed_pose",
+    "body_continuity_recovered_seconds": 2.4694333333333347,
+    "mask_continuity_recovery": "disabled_runtime_cost_v1",
+    "mask_continuity_recovered_seconds": 0.0,
+    "joint_identity_revalidation": "disabled_runtime_cost_v1",
+    "joint_identity_corrected_seconds": 0.0,
+    "joint_identity_recovered_seconds": 0.0,
+    "joint_identity_conflict_seconds": 0.0,
+    "main_identity_refinement": "member_timeline_evidence_first_v6_independent_pair",
+    "main_scope_policy": "identity_context_before_scene_mask",
+    "main_face_sampling": "all_pose_observations",
+    "main_evidence_scope_count": 3,
+    "main_evidence_seconds": 151.5514,
+    "main_eligible_seconds": 134.05058333333332,
+    "output_named_continuity": "final_named_continuity_v3_mask_edges",
+    "output_named_join_count": 0,
+    "incoming_preparation_context_count": 1,
+    "visible_member_clips_added": 0,
+    "identity_split_parent_count": 2,
+    "identity_recovered_seconds": -5.055750000000025,
+    "reference_match_distance_max": 0.6,
+    "reference_match_min_margin": 0.0,
+    "reference_match_status_counts": {
+      "matched": 37,
+      "ambiguous": 0,
+      "unmatched": 12,
+      "invalid": 0
+    },
+    "fps": 59.94005994005994,
+    "duration_sec": 155.03821666666667,
+    "raw_main_segments": 84,
+    "raw_group_segments": 32,
+    "smoothed_main_segments": 3,
+    "smoothed_group_segments": 31,
+    "kept_main_segments": 49,
+    "dropped_main_no_face": 0,
+    "num_persons_inferred": 5
+  },
+  "source_sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363",
+  "before_face_runtime": {
+    "/runtime/recognizer_stats": {
+      "requests": 4603,
+      "inferences": 4557,
+      "cache_hits": 46,
+      "inference_seconds": 336.4204920680495
+    },
+    "/runtime/detector_stats": {
+      "requests": 6555,
+      "cache_hits": 891,
+      "detection_seconds": 146.4462287365459
+    }
+  },
+  "after_face_runtime": {
+    "/runtime/recognizer_stats": {
+      "requests": 4603,
+      "inferences": 4557,
+      "cache_hits": 46,
+      "inference_seconds": 23.670730476034805
+    },
+    "/runtime/detector_stats": {
+      "requests": 6555,
+      "cache_hits": 891,
+      "detection_seconds": 105.02735225739889
+    }
+  },
+  "lists_exactly_equal": true,
+  "config_equal": true
+}

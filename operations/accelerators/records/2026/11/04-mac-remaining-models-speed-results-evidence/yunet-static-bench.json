@@ -1,0 +1,111 @@
+[
+  {
+    "backend": "opencv",
+    "median_ms": 28.254292003111914,
+    "mean_ms": 33.072333499148954
+  },
+  {
+    "backend": "coreml",
+    "precision": "fp32",
+    "load_ms": 244.97237498871982,
+    "median_ms": 16.243187506916,
+    "mean_ms": 16.686437556927558,
+    "provider_nodes": {
+      "CoreMLExecutionProvider": 24
+    },
+    "samples": [
+      {
+        "count": 4,
+        "cpu_count": 4,
+        "max_abs_diff": 3.0517578125e-05
+      },
+      {
+        "count": 3,
+        "cpu_count": 3,
+        "max_abs_diff": 6.103515625e-05
+      },
+      {
+        "count": 4,
+        "cpu_count": 4,
+        "max_abs_diff": 6.103515625e-05
+      },
+      {
+        "count": 9,
+        "cpu_count": 9,
+        "max_abs_diff": 6.103515625e-05
+      },
+      {
+        "count": 5,
+        "cpu_count": 5,
+        "max_abs_diff": 3.0517578125e-05
+      },
+      {
+        "count": 5,
+        "cpu_count": 5,
+        "max_abs_diff": 6.103515625e-05
+      },
+      {
+        "count": 6,
+        "cpu_count": 6,
+        "max_abs_diff": 0.0001220703125
+      },
+      {
+        "count": 1,
+        "cpu_count": 1,
+        "max_abs_diff": 6.103515625e-05
+      }
+    ]
+  },
+  {
+    "backend": "coreml",
+    "precision": "fp16",
+    "load_ms": 660.4918749653734,
+    "median_ms": 9.369812993099913,
+    "mean_ms": 9.485192687861854,
+    "provider_nodes": {
+      "CoreMLExecutionProvider": 24
+    },
+    "samples": [
+      {
+        "count": 4,
+        "cpu_count": 4,
+        "max_abs_diff": 0.023189544677734375
+      },
+      {
+        "count": 3,
+        "cpu_count": 3,
+        "max_abs_diff": 0.140106201171875
+      },
+      {
+        "count": 4,
+        "cpu_count": 4,
+        "max_abs_diff": 0.04882049560546875
+      },
+      {
+        "count": 9,
+        "cpu_count": 9,
+        "max_abs_diff": 0.057342529296875
+      },
+      {
+        "count": 5,
+        "cpu_count": 5,
+        "max_abs_diff": 1.6654052734375
+      },
+      {
+        "count": 5,
+        "cpu_count": 5,
+        "max_abs_diff": 1.83795166015625
+      },
+      {
+        "count": 6,
+        "cpu_count": 6,
+        "max_abs_diff": 0.06444931030273438
+      },
+      {
+        "count": 1,
+        "cpu_count": 1,
+        "max_abs_diff": 0.117401123046875
+      }
+    ]
+  }
+]

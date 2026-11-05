@@ -1,0 +1,64 @@
+EEEEE                                                                    [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_source_shape_is_accelerated_and_other_roi_sizes_use_original_cpu _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-556/test_source_shape_is_accelerat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b6bb650>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_yunet,model_boundary
+E       ImportError: cannot import name 'native_yunet' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_yunet.py:19: ImportError
+_ ERROR at setup of test_no_source_or_small_workload_skips_prepare_and_coreml __
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-556/test_no_source_or_small_worklo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b6d0950>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_yunet,model_boundary
+E       ImportError: cannot import name 'native_yunet' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_yunet.py:19: ImportError
+_ ERROR at setup of test_local_quality_or_profile_rejection_keeps_original_cpu _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-556/test_local_quality_or_profile_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b7e04d0>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_yunet,model_boundary
+E       ImportError: cannot import name 'native_yunet' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_yunet.py:19: ImportError
+_ ERROR at setup of test_late_actual_ort_failure_propagates_for_whole_cpu_reanalysis _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-556/test_late_actual_ort_failure_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b835c90>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_yunet,model_boundary
+E       ImportError: cannot import name 'native_yunet' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_yunet.py:19: ImportError
+_ ERROR at setup of test_rejected_memory_is_reported_without_failing_original_analysis _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-556/test_rejected_memory_is_report0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc64b50>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_yunet,model_boundary
+E       ImportError: cannot import name 'native_yunet' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_yunet.py:19: ImportError
+=========================== short test summary info ============================
+ERROR clipper_accelerators/tests/test_native_yunet.py::test_source_shape_is_accelerated_and_other_roi_sizes_use_original_cpu
+ERROR clipper_accelerators/tests/test_native_yunet.py::test_no_source_or_small_workload_skips_prepare_and_coreml
+ERROR clipper_accelerators/tests/test_native_yunet.py::test_local_quality_or_profile_rejection_keeps_original_cpu
+ERROR clipper_accelerators/tests/test_native_yunet.py::test_late_actual_ort_failure_propagates_for_whole_cpu_reanalysis
+ERROR clipper_accelerators/tests/test_native_yunet.py::test_rejected_memory_is_reported_without_failing_original_analysis
+5 errors in 0.09s

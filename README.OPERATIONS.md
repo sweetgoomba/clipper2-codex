@@ -17,6 +17,9 @@
 
 ## Current References
 
+- [하이라이트 가속 현재 상태·Mac 실측·CPU 복구](operations/accelerators/README.md)
+- [Mac 가속 사용·재현·빌드·장애 확인](operations/accelerators/runbooks/mac-highlight-acceleration.md)
+
 - [operations/windows-packaging/README.md](operations/windows-packaging/README.md)
 - [operations/env-runtime/README.md](operations/env-runtime/README.md)
 - [operations/windows-packaging/records/2026/05/21-powertoys-ebusy-diagnosis.md](operations/windows-packaging/records/2026/05/21-powertoys-ebusy-diagnosis.md)

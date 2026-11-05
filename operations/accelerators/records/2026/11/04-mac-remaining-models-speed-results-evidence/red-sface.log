@@ -1,0 +1,28 @@
+EE                                                                       [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_sface_preserves_alignment_and_records_correct_model_dimension_and_precision _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-562/test_sface_preserves_alignment0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106f42ad0>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_face,native_sface,model_boundary
+E       ImportError: cannot import name 'native_sface' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_sface.py:18: ImportError
+_ ERROR at setup of test_sface_late_error_restarts_whole_unit_instead_of_mixing_cpu_features _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-562/test_sface_late_error_restarts0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1070e3f90>
+
+    @pytest.fixture
+    def setup(tmp_path,monkeypatch):
+>       from clipper_accelerators import native_face,native_sface,model_boundary
+E       ImportError: cannot import name 'native_sface' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_sface.py:18: ImportError
+=========================== short test summary info ============================
+ERROR clipper_accelerators/tests/test_native_sface.py::test_sface_preserves_alignment_and_records_correct_model_dimension_and_precision
+ERROR clipper_accelerators/tests/test_native_sface.py::test_sface_late_error_restarts_whole_unit_instead_of_mixing_cpu_features
+2 errors in 0.13s

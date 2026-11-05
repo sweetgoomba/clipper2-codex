@@ -1,0 +1,18 @@
+{
+  "scope": "No actual ps, signal, launch or Job calls. Current recovery function with injected observations.",
+  "birth_mismatch": {
+    "rejected": true,
+    "signals": [],
+    "error": "Error: idle PID birth/ownership changed; cleanup not confirmed"
+  },
+  "mixed_group": {
+    "rejected": true,
+    "signals": [],
+    "error": "Error: idle descendant ownership unknown; cleanup not confirmed"
+  },
+  "windows_unverified": {
+    "rejected": true,
+    "error": "Error: owned Windows idle Job cleanup not confirmed after restart",
+    "record_retained": true
+  }
+}

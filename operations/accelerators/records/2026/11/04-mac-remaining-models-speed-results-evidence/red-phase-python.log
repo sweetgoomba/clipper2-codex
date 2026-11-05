@@ -1,0 +1,73 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_native_release_removes_only_that_model_after_host_ack __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1072ef190>
+
+    def test_native_release_removes_only_that_model_after_host_ack(monkeypatch):
+        from clipper_accelerators import native_sessions as ns
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
+        events=[];lease=SimpleNamespace(unreserve_native=lambda amount:events.append(amount))
+        monkeypatch.setattr(ns,'_devices',{('torch_mps',0):'gpu'});monkeypatch.setattr(ns,'_leases',{'gpu':lease})
+        monkeypatch.setattr(ns,'_reservations',{('gpu','pose'):300,('gpu','face'):500})
+>       assert ns.release_model('mps','pose') is True
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'clipper_accelerators.native_sessions' has no attribute 'release_model'
+
+clipper_accelerators/tests/test_phase_model_release.py:13: AttributeError
+____________ test_host_rejection_keeps_the_conservative_reservation ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107290550>
+
+    def test_host_rejection_keeps_the_conservative_reservation(monkeypatch):
+        from clipper_accelerators import native_sessions as ns
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
+        def reject(*a):raise BackendFailure('backend_unavailable','not released')
+        monkeypatch.setattr(ns,'_devices',{('torch_mps',0):'gpu'});monkeypatch.setattr(ns,'_leases',{'gpu':SimpleNamespace(unreserve_native=reject)})
+        monkeypatch.setattr(ns,'_reservations',{('gpu','pose'):300})
+>       assert ns.release_model('mps','pose') is False and ns._reservations[('gpu','pose')]==300
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'clipper_accelerators.native_sessions' has no attribute 'release_model'
+
+clipper_accelerators/tests/test_phase_model_release.py:23: AttributeError
+___ test_pose_phase_destroys_weights_and_clears_mps_before_releasing_budget ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1072bb710>
+
+    def test_pose_phase_destroys_weights_and_clears_mps_before_releasing_budget(monkeypatch):
+        import sys
+        from dance_highlight.services.pose_engine import PoseEngine
+        from clipper_accelerators import native_sessions
+        class Model:pass
+        model=Model();reference=weakref.ref(model);engine=PoseEngine.__new__(PoseEngine)
+        engine.config=SimpleNamespace(yolo_device='mps');engine._model=model;del model
+        events=[]
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
+        monkeypatch.setattr(native_sessions,'operation_reservation',lambda *a:('pose',300))
+        monkeypatch.setitem(sys.modules,'torch',SimpleNamespace(mps=SimpleNamespace(synchronize=lambda:events.append('sync'),empty_cache=lambda:events.append('empty'))))
+        def release(device,model_id):
+            gc.collect();assert reference() is None and events==['sync','empty']
+            events.append('release');return True
+>       monkeypatch.setattr(native_sessions,'release_model',release)
+E       AttributeError: <module 'clipper_accelerators.native_sessions' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_sessions.py'> has no attribute 'release_model'
+
+clipper_accelerators/tests/test_phase_model_release.py:40: AttributeError
+_________ test_old_host_or_cpu_does_not_change_existing_pose_lifetime __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bccd450>
+
+    def test_old_host_or_cpu_does_not_change_existing_pose_lifetime(monkeypatch):
+        from dance_highlight.services.pose_engine import PoseEngine
+        engine=PoseEngine.__new__(PoseEngine);engine.config=SimpleNamespace(yolo_device='mps');engine._model=object()
+        monkeypatch.delenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE',raising=False)
+>       assert engine.release_mps_model() is False and engine._model is not None
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PoseEngine' object has no attribute 'release_mps_model'
+
+clipper_accelerators/tests/test_phase_model_release.py:49: AttributeError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_phase_model_release.py::test_native_release_removes_only_that_model_after_host_ack
+FAILED clipper_accelerators/tests/test_phase_model_release.py::test_host_rejection_keeps_the_conservative_reservation
+FAILED clipper_accelerators/tests/test_phase_model_release.py::test_pose_phase_destroys_weights_and_clears_mps_before_releasing_budget
+FAILED clipper_accelerators/tests/test_phase_model_release.py::test_old_host_or_cpu_does_not_change_existing_pose_lifetime
+4 failed in 1.00s

@@ -1,0 +1,43 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_owned_cpu_weights_are_released_before_gpu_admission ___________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107156690>
+
+    def test_owned_cpu_weights_are_released_before_gpu_admission(module,monkeypatch):
+        import weakref,gc
+        state={}
+        def make_cpu():
+            cpu=Session(np.ones((1,512),np.float32),delay=.002);state['ref']=weakref.ref(cpu);return cpu
+        gpu=Session(np.ones((1,512),np.float32));gpu.get_providers=lambda:['CoreMLExecutionProvider']
+        model=module.prepare_coreml_model(None);model.write_bytes(b'valid')
+        monkeypatch.setattr(module,'_candidate_session',lambda *a:(gpu,lambda:{'CoreMLExecutionProvider':3}))
+        def admit(*a,**kw):
+            gc.collect();assert state['ref']() is None,'CPU session still owns comparison weights'
+        monkeypatch.setattr(module,'admit',admit)
+>       session=module.CoreMLFaceSession(model,cpu=make_cpu(),cpu_reload=make_cpu)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: CoreMLFaceSession.__init__() got an unexpected keyword argument 'cpu_reload'
+
+clipper_accelerators/tests/test_native_face_coreml.py:308: TypeError
+_________ test_released_cpu_is_rebuilt_when_gpu_admission_is_rejected __________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10717b990>
+
+    def test_released_cpu_is_rebuilt_when_gpu_admission_is_rejected(module,monkeypatch):
+        calls=[]
+        def make_cpu():calls.append(1);return Session(np.ones((1,512),np.float32),delay=.002)
+        def reject(*a,**kw):raise BackendFailure('backend_unavailable','pressure',details={'source':'accelerator_host','reason':'memory_admission_deferred'})
+        monkeypatch.setattr(module,'admit',reject)
+        model=module.prepare_coreml_model(None);model.write_bytes(b'valid')
+>       session=module.CoreMLFaceSession(model,cpu=make_cpu(),cpu_reload=make_cpu)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: CoreMLFaceSession.__init__() got an unexpected keyword argument 'cpu_reload'
+
+clipper_accelerators/tests/test_native_face_coreml.py:319: TypeError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_owned_cpu_weights_are_released_before_gpu_admission
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_released_cpu_is_rebuilt_when_gpu_admission_is_rejected
+2 failed, 26 deselected in 0.12s

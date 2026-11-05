@@ -1,0 +1,995 @@
+commit 17259bcf1c7c466cd7108e04a25250172dd28151
+Author:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+AuthorDate: Wed Nov 4 04:22:47 2026 +0900
+Commit:     metabuzz-jinahan <jinahan@metabuzz.co.kr>
+CommitDate: Wed Nov 4 04:22:47 2026 +0900
+
+    perf(mac): accelerate full-frame faces and release finished GPU models
+
+diff --git a/clipper_accelerators/clipper_accelerators/face_adapter.py b/clipper_accelerators/clipper_accelerators/face_adapter.py
+index b3e0a33..452265e 100644
+--- a/clipper_accelerators/clipper_accelerators/face_adapter.py
++++ b/clipper_accelerators/clipper_accelerators/face_adapter.py
+@@ -10,7 +10,7 @@ from .assets import candidate_entry
+ 
+ def prepare_model(path, *, spatial_size=None):
+     import onnx
+-    model = onnx.load_model_from_string(Path(path).read_bytes())
++    model = onnx.load_model_from_string(path if isinstance(path,bytes) else Path(path).read_bytes())
+     # These are constants, not overridable inputs. SFace's older export lists
+     # both, preventing ORT from folding constants / assigning convolutions.
+     constants = {value.name for value in model.graph.initializer}
+@@ -114,11 +114,14 @@ class RoutedSession:
+ 
+ 
+ def route_recognizer(native,path,model_id='face.sface',*,incumbent=None):
+-    if not runtime.optional_routing(model_id):return incumbent or native
++    def builtin():
++        from .native_sface import native_recognizer
++        return native_recognizer(native,path) if model_id=='face.sface' else native
++    if not runtime.optional_routing(model_id):return incumbent or builtin()
+     entry=candidate_entry(model_id,runtime.file_sha(path),source=path)
+     if not entry:
+         runtime.record_native(model_id,'opencv_cpu')
+-        return incumbent or native
++        return incumbent or builtin()
+     class Recognizer:
+         gate=None
+         def alignCrop(self,*args):return native.alignCrop(*args)
+@@ -135,12 +138,15 @@ def route_recognizer(native,path,model_id='face.sface',*,incumbent=None):
+ 
+ 
+ def route_detector(native,path,score_threshold=.6,nms_threshold=.3,top_k=5000,*,incumbent=None):
++    def builtin():
++        from .native_yunet import native_detector
++        return native_detector(native,path,score_threshold,nms_threshold,top_k)
+     if not runtime.optional_routing('face.yunet'):
+-        runtime.record_native('face.yunet','opencv_cpu');return incumbent or native
++        runtime.record_native('face.yunet','opencv_cpu');return incumbent or builtin()
+     entry=candidate_entry('face.yunet',runtime.file_sha(path),source=path)
+     if not entry:
+         runtime.record_native('face.yunet','opencv_cpu')
+-        return incumbent or native
++        return incumbent or builtin()
+     class Detector:
+         gates={}
+         def __init__(self):self.gates={};self.size=None;self.source_size=None
+diff --git a/clipper_accelerators/clipper_accelerators/lease_client.py b/clipper_accelerators/clipper_accelerators/lease_client.py
+index 52617de..ea99b95 100644
+--- a/clipper_accelerators/clipper_accelerators/lease_client.py
++++ b/clipper_accelerators/clipper_accelerators/lease_client.py
+@@ -53,6 +53,9 @@ class HostLease:
+     def reserve(self,estimated_bytes):
+         self.check()
+         _request('/reserve',{'owner_pid':os.getpid(),'lease_id':self.id,'estimated_bytes':estimated_bytes})
++    def unreserve_native(self,estimated_bytes):
++        self.check()
++        _request('/unreserve-native',{'owner_pid':os.getpid(),'lease_id':self.id,'estimated_bytes':estimated_bytes})
+     def register_native(self):
+         self.check()
+         _request('/register-native',{'owner_pid':os.getpid(),'lease_id':self.id})
+diff --git a/clipper_accelerators/clipper_accelerators/native_face.py b/clipper_accelerators/clipper_accelerators/native_face.py
+index 7f76dc2..9f6a287 100644
+--- a/clipper_accelerators/clipper_accelerators/native_face.py
++++ b/clipper_accelerators/clipper_accelerators/native_face.py
+@@ -1,4 +1,4 @@
+-"""Bounded built-in AuraFace CoreML execution in an owned analysis process.
++"""Bounded built-in face embedding CoreML execution in an owned analysis process.
+ 
+ This is a local check of one pinned, derived version of the original weights,
+ not a release certificate or authorization for arbitrary optional model packs.
+@@ -27,38 +27,48 @@ from .native_sessions import admit
+ # static-batch, FP16-internal / FP32-I/O conversion with the pinned converters.
+ _SOURCE_SHA = 'a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60'
+ _DERIVED_SHA = 'a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c'
++_MODEL_SPECS = {
++    'face.auraface': (_SOURCE_SHA,_DERIVED_SHA,512,'fp16_internal_fp32_io',.9995,.02),
++    'face.sface': ('0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79',
++        'ae6a6ac44d2bdc87924e75fb23d8212430dd24f037f5e035c21deff99afc8b61',128,'fp32',.99999,.001),
++}
+ 
+ 
+-def prepare_coreml_model(source):
++def prepare_coreml_model(source, *, model_id='face.auraface'):
++    source_sha,derived_sha,*_= _MODEL_SPECS[model_id]
+     from .assets import home
+     from .cache import SelectionCache
+     source = Path(source)
+-    if runtime.file_sha(source) != _SOURCE_SHA:
+-        raise ValueError('unrecognized AuraFace source weights')
++    source_data = source.read_bytes()
++    if hashlib_sha(source_data) != source_sha:
++        raise ValueError('unrecognized face source weights')
+     import onnx
+     import onnxruntime as ort
+     if onnx.__version__ != '1.20.1' or ort.__version__ != '1.31.0':
+-        raise ValueError('unverified AuraFace converter version')
+-    root = home()/'native-coreml'/_DERIVED_SHA
+-    target = root/'auraface.onnx'
+-    with SelectionCache(home()/'native-coreml-locks')._lock(_DERIVED_SHA):
+-        if target.is_file() and not target.is_symlink() and runtime.file_sha(target) == _DERIVED_SHA:
++        raise ValueError('unverified face converter version')
++    root = home()/'native-coreml'/derived_sha
++    target = root/(model_id.rsplit('.',1)[-1]+'.onnx')
++    with SelectionCache(home()/'native-coreml-locks')._lock(derived_sha):
++        if target.is_file() and not target.is_symlink() and runtime.file_sha(target) == derived_sha:
+             return target
+         from onnxruntime.transformers.float16 import convert_float_to_float16
+         from onnxruntime.transformers.onnx_model import OnnxModel
+-        model = onnx.load_model_from_string(source.read_bytes())
+-        if len(model.graph.input) != 1:
+-            raise ValueError('unexpected AuraFace inputs')
+-        dim = model.graph.input[0].type.tensor_type.shape.dim[0]
+-        dim.ClearField('dim_param')
+-        dim.dim_value = 1
+-        model = convert_float_to_float16(model, keep_io_types=True)
+-        OnnxModel(model).topological_sort()
++        model = onnx.load_model_from_string(source_data)
++        if model_id == 'face.auraface':
++            if len(model.graph.input) != 1:raise ValueError('unexpected AuraFace inputs')
++            dim = model.graph.input[0].type.tensor_type.shape.dim[0]
++            dim.ClearField('dim_param');dim.dim_value = 1
++            model = convert_float_to_float16(model, keep_io_types=True)
++            OnnxModel(model).topological_sort()
++        else:
++            constants={value.name for value in model.graph.initializer}
++            inputs=[value for value in model.graph.input if value.name not in constants]
++            del model.graph.input[:];model.graph.input.extend(inputs)
+         onnx.checker.check_model(model)
+         data = model.SerializeToString()
+         import hashlib
+-        if hashlib.sha256(data).hexdigest() != _DERIVED_SHA or runtime.file_sha(source) != _SOURCE_SHA:
+-            raise ValueError('AuraFace conversion identity differs')
++        if hashlib.sha256(data).hexdigest() != derived_sha or runtime.file_sha(source) != source_sha:
++            raise ValueError('face conversion identity differs')
+         root.mkdir(parents=True, exist_ok=True)
+         temporary = None
+         try:
+@@ -73,6 +83,11 @@ def prepare_coreml_model(source):
+     return target
+ 
+ 
++def hashlib_sha(data):
++    import hashlib
++    return hashlib.sha256(data).hexdigest()
++
++
+ def _candidate_session(path):
+     import onnxruntime as ort
+     options = ort.SessionOptions()
+@@ -107,30 +122,38 @@ def _backend_errors():
+             state.EPFail, state.InvalidArgument)
+ 
+ 
+-def _coreml_call(operation, amount, *args):
++def _coreml_call(operation, amount, *args, model_id='face.auraface'):
+     from .model_boundary import model_call
+     def invoke():return operation(*args)
+-    invoke._accelerator_model_id = 'face.auraface'
++    invoke._accelerator_model_id = model_id
+     invoke._accelerator_estimated_bytes = amount
+     return model_call('ort_coreml', invoke)
+ 
+ 
+-def _valid(output):
++def _valid(output, dimension=512):
+     return (isinstance(output, list) and len(output) == 1
+-        and isinstance(output[0], np.ndarray) and output[0].shape == (1,512)
++        and isinstance(output[0], np.ndarray) and output[0].shape == (1,dimension)
+         and np.isfinite(output[0]).all() and np.linalg.norm(output[0]) > 1e-6)
+ 
+ 
+-def _similar(before, after):
+-    if not _valid(before) or not _valid(after):return None
++def _similar(before, after, dimension=512, cosine_min=.9995, norm_tolerance=.02):
++    if not _valid(before,dimension) or not _valid(after,dimension):return None
+     a,b = before[0].astype(np.float64),after[0].astype(np.float64)
+     an,bn = np.linalg.norm(a),np.linalg.norm(b)
+     cosine = float(np.sum(a*b)/(an*bn))
+-    return cosine if cosine >= .9995 and abs(bn/an-1.) <= .02 else None
++    return cosine if cosine >= cosine_min and abs(bn/an-1.) <= norm_tolerance else None
+ 
+ 
+ class CoreMLFaceSession:
+-    def __init__(self, path, *, cpu):
++    def __init__(self, path, *, cpu, model_id='face.auraface', cpu_reload=None):
++        self.model_id=model_id
++        self.spec=_MODEL_SPECS[model_id]
++        self.cpu_reload=cpu_reload
++        self.cpu_providers=cpu.get_providers()
++        self.reference_released=False
++        from types import SimpleNamespace
++        self.inputs=[SimpleNamespace(name=m.name,shape=getattr(m,'shape',None),type=getattr(m,'type',None)) for m in cpu.get_inputs()]
++        self.outputs=[SimpleNamespace(name=m.name,shape=getattr(m,'shape',None),type=getattr(m,'type',None)) for m in cpu.get_outputs()]
+         self.path = path
+         self.cpu = cpu
+         self.selected = cpu
+@@ -139,18 +162,18 @@ class CoreMLFaceSession:
+         self.estimated_bytes = 0
+         self.lock = threading.RLock()
+ 
+-    def get_inputs(self):return self.cpu.get_inputs() if self.cpu is not None else self.selected.get_inputs()
+-    def get_outputs(self):return self.cpu.get_outputs() if self.cpu is not None else self.selected.get_outputs()
+-    def get_providers(self):return self.selected.get_providers()
++    def get_inputs(self):return self.inputs
++    def get_outputs(self):return self.outputs
++    def get_providers(self):return self.selected.get_providers() if self.selected is not None else self.cpu_providers
+ 
+     def _record(self, reason, **extra):
+-        row = runtime.record_native('face.auraface','/'.join(self.get_providers()), reason=reason)
+-        row.extra.update(release_qualified=False, **extra)
++        row = runtime.record_native(self.model_id,'/'.join(self.get_providers()), reason=reason)
++        row.extra.update(release_qualified=False,cpu_reference_released=self.reference_released, **extra)
+         return row
+ 
+     def _trial(self, outputs, inputs):
+         estimates = runtime._state.get('estimates',{})
+-        planned = estimates.get('face.auraface',estimates.get('pose.yolov8s',0))
++        planned = estimates.get(self.model_id,estimates.get('pose.yolov8s',0))
+         # The measured cold conversion/compile needs roughly 80 faces to pay
+         # back on the development Mac. Avoid this entire cost when the video
+         # sampling estimate is missing or too small; do not probe then decline.
+@@ -166,28 +189,35 @@ class CoreMLFaceSession:
+         cpu_times, baseline = [],[]
+         for check in checks:
+             start = time.perf_counter()
+-            baseline.append(self.cpu.run(outputs,{name:check}))
++            raw=self.cpu.run(outputs,{name:check})
++            baseline.append([v.copy() for v in raw])
++            del raw
+             cpu_times.append((time.perf_counter()-start)*1000)
+         self.decided = True
++        if self.cpu_reload is not None:
++            self.cpu=None;self.selected=None
++            import gc
++            gc.collect()
++            self.reference_released=True
+         finish = None
+         started = time.perf_counter()
+         try:
+-            path = prepare_coreml_model(self.path)
++            path = prepare_coreml_model(self.path) if self.model_id=='face.auraface' else prepare_coreml_model(self.path,model_id=self.model_id)
+             self.estimated_bytes = path.stat().st_size*4+64*1024*1024
+-            admit('ort_coreml', model_id='face.auraface', estimated_bytes=self.estimated_bytes)
+-            candidate,finish = _coreml_call(_candidate_session, self.estimated_bytes, path)
++            admit('ort_coreml', model_id=self.model_id, estimated_bytes=self.estimated_bytes)
++            candidate,finish = _coreml_call(_candidate_session, self.estimated_bytes, path,model_id=self.model_id)
+             setup_ms = (time.perf_counter()-started)*1000
+             values,gpu_times,cosines = [],[],[]
+             for check,reference in zip(checks,baseline,strict=True):
+                 start = time.perf_counter()
+-                result = _coreml_call(candidate.run, self.estimated_bytes, outputs, {name:check})
++                result = _coreml_call(candidate.run, self.estimated_bytes, outputs, {name:check},model_id=self.model_id)
+                 gpu_times.append((time.perf_counter()-start)*1000)
+-                similarity = _similar(reference,result)
++                similarity = _similar(reference,result,self.spec[2],self.spec[4],self.spec[5])
+                 if similarity is None:
+                     self._record('coreml_quality_failed')
+                     return baseline[0]
+                 values.append(result);cosines.append(similarity)
+-            counts = _coreml_call(finish, self.estimated_bytes);finish = None
++            counts = _coreml_call(finish, self.estimated_bytes,model_id=self.model_id);finish = None
+             if not counts.get('CoreMLExecutionProvider',0):
+                 self._record('coreml_no_executed_nodes')
+                 return baseline[0]
+@@ -202,8 +232,8 @@ class CoreMLFaceSession:
+             self._record('builtin_coreml_local_check', profile_verified=True,
+                 execution_evidence='profile_nodes', provider_node_counts=counts,
+                 graph_execution='mixed' if counts.get('CPUExecutionProvider',0) else 'accelerator_only',
+-                source_sha256=_SOURCE_SHA, derived_sha256=_DERIVED_SHA,
+-                precision='fp16_internal_fp32_io', samples=3,
++                source_sha256=self.spec[0], derived_sha256=self.spec[1],
++                precision=self.spec[3], samples=3,
+                 distinct_inputs=len({runtime.fingerprint(check) for check in checks}),
+                 local_check='first_face_and_two_spatial_flips', local_cosine_min=min(cosines),
+                 cpu_median_ms=statistics.median(cpu_times), candidate_median_ms=statistics.median(gpu_times),
+@@ -216,8 +246,15 @@ class CoreMLFaceSession:
+             return baseline[0]
+         finally:
+             if finish is not None:
+-                try:_coreml_call(finish,self.estimated_bytes)
++                try:_coreml_call(finish,self.estimated_bytes,model_id=self.model_id)
+                 except (ValueError,*_backend_errors()):pass
++            if not self.accelerated and self.cpu_reload is not None:
++                # Rejected GPU weights must disappear before allocating CPU
++                # weights again. Trial outputs must not retain ORT allocators.
++                finish=None;candidate=None;values=None;result=None
++                import gc
++                gc.collect()
++                self.cpu=self.cpu_reload();self.selected=self.cpu
+ 
+     def run(self, outputs, inputs):
+         with self.lock:return self._run(outputs,inputs)
+@@ -226,15 +263,15 @@ class CoreMLFaceSession:
+         if not self.decided:return self._trial(outputs,inputs)
+         if not self.accelerated:return self.selected.run(outputs,inputs)
+         try:
+-            admit('ort_coreml',model_id='face.auraface',estimated_bytes=self.estimated_bytes)
+-            result = _coreml_call(self.selected.run,self.estimated_bytes,outputs,inputs)
++            admit('ort_coreml',model_id=self.model_id,estimated_bytes=self.estimated_bytes)
++            result = _coreml_call(self.selected.run,self.estimated_bytes,outputs,inputs,model_id=self.model_id)
+         except BackendFailure as error:
+             error.gpu = True
+             raise
+         except _backend_errors() as error:
+             raise BackendFailure('oom' if isinstance(error,MemoryError) else 'backend_unavailable',
+-                'AuraFace CoreML inference failed: '+str(error)[:1024],gpu=True) from error
+-        if not _valid(result):raise BackendFailure('invalid_output','Invalid AuraFace CoreML embedding',gpu=True)
++                self.model_id+' CoreML inference failed: '+str(error)[:1024],gpu=True) from error
++        if not _valid(result,self.spec[2]):raise BackendFailure('invalid_output','Invalid '+self.model_id+' CoreML embedding',gpu=True)
+         return result
+ 
+ 
+@@ -246,4 +283,4 @@ def face_session(path, *, cpu_factory=None, **kwargs):
+             or os.environ.get('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY') != '1'
+             or 'CoreMLExecutionProvider' not in ort.get_available_providers()):
+         return cpu
+-    return CoreMLFaceSession(path,cpu=cpu)
++    return CoreMLFaceSession(path,cpu=cpu,cpu_reload=(lambda:ort.InferenceSession(str(path),providers=['CPUExecutionProvider'])) if cpu_factory is None else None)
+diff --git a/clipper_accelerators/clipper_accelerators/native_sessions.py b/clipper_accelerators/clipper_accelerators/native_sessions.py
+index cc4a968..8b74828 100644
+--- a/clipper_accelerators/clipper_accelerators/native_sessions.py
++++ b/clipper_accelerators/clipper_accelerators/native_sessions.py
+@@ -55,3 +55,16 @@ def operation_reservation(operation,args):
+         inputs=sum(getattr(value,'nbytes',0) for value in args if type(getattr(value,'nbytes',0)) is int)
+         amount=max(256*1024*1024,weights*4+inputs*8+64*1024*1024)
+     return model_id,amount
++
++
++def release_model(device,model_id):
++    """Called only after destroying the model and synchronizing its device."""
++    if os.environ.get('CLIPPER_ACCELERATOR_NATIVE_RELEASE')!='1':return False
++    key={'mps':('torch_mps',0),'ort_coreml':('ort_coreml',0)}.get(str(device))
++    adapter=_devices.get(key)
++    identity=(adapter,model_id);amount=_reservations.get(identity,0)
++    if not amount:return True
++    try:_leases[adapter].unreserve_native(amount)
++    except BackendFailure:return False  # Retain a conservative reservation.
++    _reservations.pop(identity,None)
++    return True
+diff --git a/clipper_accelerators/clipper_accelerators/native_sface.py b/clipper_accelerators/clipper_accelerators/native_sface.py
+new file mode 100644
+index 0000000..7fb6572
+--- /dev/null
++++ b/clipper_accelerators/clipper_accelerators/native_sface.py
+@@ -0,0 +1,52 @@
++"""Original SFace BGR alignment, with locally checked FP32 CoreML features."""
++import os
++import platform
++from types import SimpleNamespace
++import cv2
++import numpy as np
++from . import runtime
++from .native_face import CoreMLFaceSession,_MODEL_SPECS
++
++
++class _CPU:
++    def __init__(self,native):self.native=native
++    def get_inputs(self):return [SimpleNamespace(name='data',shape=[1,3,112,112])]
++    def get_outputs(self):return [SimpleNamespace(name='fc1')]
++    def get_providers(self):return ['opencv_cpu']
++    def run(self,outputs,inputs):
++        # Caller accepts only aligned uint8 crops. Flips preserve integral RGB
++        # values; retain float precision while reconstructing OpenCV's BGR.
++        image=np.ascontiguousarray(inputs['data'][0].transpose(1,2,0)[:,:,::-1])
++        return [self.native.feature(image)]
++
++
++class SFaceRecognizer:
++    def __init__(self,native,path):
++        self.native=native
++        self.session=CoreMLFaceSession(path,cpu=_CPU(native),model_id='face.sface')
++    def alignCrop(self,*args):return self.native.alignCrop(*args)
++    def feature(self,image):
++        with self.session.lock:
++            if image.shape!=(112,112,3) or image.dtype!=np.uint8:
++                from .errors import BackendFailure
++                if self.session.accelerated:raise BackendFailure('invalid_output','Unsupported SFace crop',gpu=True)
++                self.session.decided=True
++                result=self.native.feature(image)
++                runtime.record_execution('face.sface','opencv_cpu')
++                return result
++            blob=cv2.dnn.blobFromImage(image,1.,(112,112),swapRB=True,crop=False)
++            result=self.session.run(None,{'data':blob})[0]
++            runtime.record_execution('face.sface','/'.join(self.session.get_providers()))
++            return result
++
++
++def native_recognizer(native,path):
++    if (runtime.mode()!='auto' or platform.system()!='Darwin' or platform.machine()!='arm64'
++            or not os.environ.get('CLIPPER_ACCELERATOR_HOST_URL')
++            or os.environ.get('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY')!='1'):
++        runtime.record_native('face.sface','opencv_cpu');return native
++    import onnxruntime as ort
++    if ('CoreMLExecutionProvider' not in ort.get_available_providers()
++            or runtime.file_sha(path)!=_MODEL_SPECS['face.sface'][0]):
++        runtime.record_native('face.sface','opencv_cpu');return native
++    return SFaceRecognizer(native,path)
+diff --git a/clipper_accelerators/clipper_accelerators/native_yunet.py b/clipper_accelerators/clipper_accelerators/native_yunet.py
+new file mode 100644
+index 0000000..963dd3f
+--- /dev/null
++++ b/clipper_accelerators/clipper_accelerators/native_yunet.py
+@@ -0,0 +1,158 @@
++"""Accelerate only the explicitly declared source size; retain original ROI work."""
++import hashlib
++import os
++from pathlib import Path
++import platform
++import statistics
++import threading
++import time
++import numpy as np
++import cv2
++from . import runtime
++from .errors import BackendFailure,failure_record
++from .native_face import _coreml_call,_backend_errors
++from .native_sessions import admit
++
++_SOURCE_SHA='8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4'
++
++
++def prepare_model(source,size):
++    from .assets import home
++    from .cache import SelectionCache
++    from .face_adapter import prepare_model as prepare
++    source_bytes=Path(source).read_bytes()
++    if hashlib.sha256(source_bytes).hexdigest()!=_SOURCE_SHA:raise ValueError('unrecognized YuNet source')
++    import onnxruntime as ort
++    import onnx
++    if ort.__version__!='1.31.0' or onnx.__version__!='1.20.1':raise ValueError('unverified YuNet converter')
++    padded=tuple((v+31)//32*32 for v in size)
++    data=prepare(source_bytes,spatial_size=padded)  # Original FP32 weights and padded pixels.
++    key=hashlib.sha256(data).hexdigest();root=home()/'native-coreml'/key;path=root/'yunet.onnx'
++    with SelectionCache(home()/'native-coreml-locks')._lock(key):
++        if not path.is_file() or path.is_symlink() or runtime.file_sha(path)!=key:
++            root.mkdir(parents=True,exist_ok=True)
++            from tempfile import NamedTemporaryFile
++            temporary=None
++            try:
++                with NamedTemporaryFile(dir=root,delete=False) as stream:
++                    temporary=Path(stream.name);stream.write(data);stream.flush();os.fsync(stream.fileno())
++                os.replace(temporary,path)
++            finally:
++                if temporary is not None:temporary.unlink(missing_ok=True)
++    return path
++
++
++def candidate(path,size,score,nms,top_k):
++    from .native_face import _candidate_session
++    from .face_adapter import decode_yunet
++    session,finish=_candidate_session(path)
++    name=session.get_inputs()[0].name;names=[v.name for v in session.get_outputs()]
++    padded=tuple((v+31)//32*32 for v in size)
++    def infer(image):
++        height,width=image.shape[:2]
++        blob=cv2.dnn.blobFromImage(cv2.copyMakeBorder(image,0,padded[1]-height,0,padded[0]-width,cv2.BORDER_CONSTANT))
++        values=session.run(None,{name:blob})
++        return decode_yunet(dict(zip(names,values,strict=True)),padded,score,nms,top_k)
++    return infer,finish
++
++
++def _same(before,after):
++    if before is None:return after is None
++    return (isinstance(after,np.ndarray) and before.shape==after.shape
++            and np.isfinite(after).all() and np.allclose(before,after,rtol=1e-5,atol=.001))
++
++
++class StaticYuNet:
++    execution_tracked=True
++    def __init__(self,native,path,score,nms,top_k):
++        self.native=native;self.path=path;self.options=(score,nms,top_k)
++        self.source_size=None;self.decided=False;self.selected=None;self.amount=0
++        self.lock=threading.RLock()
++    def setInputSize(self,size):
++        with self.lock:self.native.setInputSize(size)
++    def prepare_source(self,size):
++        with self.lock:
++            if self.decided and tuple(size)!=self.source_size:
++                raise BackendFailure('invalid_output','YuNet source shape changed within analysis',gpu=self.selected is not None)
++            self.source_size=tuple(size)
++    def release_accelerator(self):
++        if os.environ.get('CLIPPER_ACCELERATOR_NATIVE_RELEASE')!='1':return False
++        with self.lock:
++            if self.selected is None:return False
++            self.selected=None
++            import gc
++            gc.collect()
++            from .native_sessions import release_model
++            released=release_model('ort_coreml','face.yunet')
++            row=runtime.record_native('face.yunet','mixed',reason='source_phase_completed')
++            row.extra.update(accelerator_released=True,reservation_released=released)
++            return released
++    def _record(self,reason,**extra):
++        row=runtime.record_native('face.yunet','ort_coreml' if self.selected else 'opencv_cpu',reason=reason)
++        row.extra.update(release_qualified=False,**extra)
++        return row
++    def _call(self,operation,*args):
++        return _coreml_call(operation,self.amount,*args,model_id='face.yunet')
++    def _trial(self,image):
++        self.decided=True
++        checks=[image,np.ascontiguousarray(image[:,::-1]),np.ascontiguousarray(image[::-1,:])]
++        references=[];cpu=[];finish=None
++        for value in checks:
++            start=time.perf_counter();references.append(self.native.detect(value)[1]);cpu.append((time.perf_counter()-start)*1000)
++        try:
++            path=prepare_model(self.path,self.source_size)
++            self.amount=max(256*1024*1024,((self.source_size[0]+31)//32*32)*((self.source_size[1]+31)//32*32)*3*4*8+64*1024*1024)
++            admit('ort_coreml',model_id='face.yunet',estimated_bytes=self.amount)
++            start=time.perf_counter();infer,finish=self._call(candidate,path,self.source_size,*self.options);load=(time.perf_counter()-start)*1000
++            values=[];times=[]
++            for value,reference in zip(checks,references,strict=True):
++                start=time.perf_counter();output=self._call(infer,value);times.append((time.perf_counter()-start)*1000)
++                if not _same(reference,output):self._record('coreml_quality_failed');return references[0]
++                values.append(output)
++            nodes=self._call(finish);finish=None
++            if not nodes.get('CoreMLExecutionProvider') or statistics.median(times)>=statistics.median(cpu)*.8:
++                self._record('coreml_no_material_gain');return references[0]
++            self.selected=infer
++            self._record('builtin_static_coreml_local_check',profile_verified=True,execution_evidence='profile_nodes',
++                provider_node_counts=nodes,graph_execution='mixed' if nodes.get('CPUExecutionProvider') else 'accelerator_only',
++                precision='fp32',source_sha256=_SOURCE_SHA,derived_sha256=runtime.file_sha(path),
++                accelerated_input_size=list(self.source_size),cpu_median_ms=statistics.median(cpu),candidate_median_ms=statistics.median(times),setup_ms=load)
++            return values[0]
++        except (ValueError,ImportError,cv2.error,*_backend_errors()) as error:
++            self._record('coreml_trial_failed',**({'trial_failure':failure_record(error)} if isinstance(error,BackendFailure) else {'trial_error':str(error)[:1024]}))
++            return references[0]
++        finally:
++            if finish is not None:
++                try:self._call(finish)
++                except (ValueError,*_backend_errors()):pass
++    def detect(self,image):
++        with self.lock:
++            backend='opencv_cpu';start=time.perf_counter()
++            if tuple(image.shape[1::-1])==self.source_size and runtime._state.get('estimates',{}).get('pose.yolov8s',0)>=128:
++                if not self.decided:result=self._trial(image)
++                elif self.selected is None:result=self.native.detect(image)[1]
++                else:
++                    try:
++                        result=self._call(self.selected,image)
++                        if result is not None and (not isinstance(result,np.ndarray) or result.ndim!=2 or result.shape[1]!=15 or not np.isfinite(result).all()):
++                            raise BackendFailure('invalid_output','Invalid YuNet result',gpu=True)
++                    except BackendFailure as error:error.gpu=True;raise
++                    except (cv2.error,ValueError,*_backend_errors()) as error:
++                        raise BackendFailure('oom' if isinstance(error,MemoryError) else 'backend_unavailable','YuNet CoreML failed: '+str(error)[:1024],gpu=True) from error
++                if self.selected is not None:backend='ort_coreml'
++            else:result=self.native.detect(image)[1]
++            row=runtime.record_execution('face.yunet',backend)
++            counts=row.extra.setdefault('execution_counts',{});counts[backend]=counts.get(backend,0)+1
++            seconds=row.extra.setdefault('execution_seconds',{});seconds[backend]=seconds.get(backend,0.)+time.perf_counter()-start
++            return 1,result
++
++
++def native_detector(native,path,score,nms,top_k):
++    if (runtime.mode()!='auto' or platform.system()!='Darwin' or platform.machine()!='arm64'
++            or not os.environ.get('CLIPPER_ACCELERATOR_HOST_URL')
++            or os.environ.get('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY')!='1'):
++        return native
++    import onnxruntime as ort
++    if 'CoreMLExecutionProvider' not in ort.get_available_providers():return native
++    if runtime.file_sha(path)!=_SOURCE_SHA:return native
++    return StaticYuNet(native,path,score,nms,top_k)
+diff --git a/clipper_accelerators/tests/test_native_face_coreml.py b/clipper_accelerators/tests/test_native_face_coreml.py
+index 614b804..da74924 100644
+--- a/clipper_accelerators/tests/test_native_face_coreml.py
++++ b/clipper_accelerators/tests/test_native_face_coreml.py
+@@ -292,3 +292,47 @@ def test_concurrent_prepared_entry_cannot_capture_cpu_during_coreml_setup(module
+         first.result();second.result()
+     gates=[g for g in runtime._state['models'] if isinstance(g,runtime.ModelGate)]
+     assert gates and all(g.incumbent_backend=='CoreMLExecutionProvider/CPUExecutionProvider' and g.incumbent_precision=='fp16' for g in gates)
++
++
++def test_owned_cpu_weights_are_released_before_gpu_admission(module,monkeypatch):
++    import weakref,gc
++    state={}
++    def make_cpu():
++        cpu=Session(np.ones((1,512),np.float32),delay=.002);state['ref']=weakref.ref(cpu);return cpu
++    gpu=Session(np.ones((1,512),np.float32));gpu.get_providers=lambda:['CoreMLExecutionProvider']
++    model=module.prepare_coreml_model(None);model.write_bytes(b'valid')
++    monkeypatch.setattr(module,'_candidate_session',lambda *a:(gpu,lambda:{'CoreMLExecutionProvider':3}))
++    def admit(*a,**kw):
++        gc.collect();assert state['ref']() is None,'CPU session still owns comparison weights'
++    monkeypatch.setattr(module,'admit',admit)
++    session=module.CoreMLFaceSession(model,cpu=make_cpu(),cpu_reload=make_cpu)
++    assert session.run(['fc1'],value())[0].shape==(1,512)
++    assert session.accelerated is True
++
++
++def test_released_cpu_is_rebuilt_when_gpu_admission_is_rejected(module,monkeypatch):
++    calls=[]
++    def make_cpu():calls.append(1);return Session(np.ones((1,512),np.float32),delay=.002)
++    def reject(*a,**kw):raise BackendFailure('backend_unavailable','pressure',details={'source':'accelerator_host','reason':'memory_admission_deferred'})
++    monkeypatch.setattr(module,'admit',reject)
++    model=module.prepare_coreml_model(None);model.write_bytes(b'valid')
++    session=module.CoreMLFaceSession(model,cpu=make_cpu(),cpu_reload=make_cpu)
++    assert np.all(session.run(['fc1'],value())[0]==1.)
++    assert len(calls)==2 and session.get_providers()==['CPUExecutionProvider']
++
++
++def test_rejected_candidate_is_gone_before_cpu_reload(module,monkeypatch):
++    import weakref,gc
++    state={};calls=[]
++    def make_cpu():
++        if calls:
++            gc.collect();assert state['candidate']() is None,'rejected CoreML session still resident'
++        calls.append(1);return Session(np.ones((1,512),np.float32),delay=.002)
++    def candidate(*a):
++        gpu=Session(-np.ones((1,512),np.float32));state['candidate']=weakref.ref(gpu)
++        return gpu,lambda:{'CoreMLExecutionProvider':gpu.calls}
++    model=module.prepare_coreml_model(None);model.write_bytes(b'valid')
++    monkeypatch.setattr(module,'_candidate_session',candidate);monkeypatch.setattr(module,'admit',lambda *a,**kw:None)
++    session=module.CoreMLFaceSession(model,cpu=make_cpu(),cpu_reload=make_cpu)
++    assert np.all(session.run(['fc1'],value())[0]==1.)
++    assert len(calls)==2
+diff --git a/clipper_accelerators/tests/test_native_sface.py b/clipper_accelerators/tests/test_native_sface.py
+new file mode 100644
+index 0000000..621b7e2
+--- /dev/null
++++ b/clipper_accelerators/tests/test_native_sface.py
+@@ -0,0 +1,78 @@
++from types import SimpleNamespace
++import numpy as np
++import pytest
++from clipper_accelerators import runtime
++from clipper_accelerators.errors import BackendFailure
++
++
++class CPU:
++    calls=0
++    def alignCrop(self,image,face):return image
++    def feature(self,image):
++        import time
++        self.calls+=1;time.sleep(.002);return np.ones((1,128),np.float32)
++
++
++@pytest.fixture
++def setup(tmp_path,monkeypatch):
++    from clipper_accelerators import native_face,native_sface,model_boundary
++    previous=dict(runtime._state)
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_MODE','auto');monkeypatch.setenv('CLIPPER_ACCELERATOR_CONSUMER','dance')
++    runtime.configure({},'mps',tmp_path,consumer='dance');runtime.set_estimate('pose.yolov8s',1000)
++    monkeypatch.setattr(native_face,'admit',lambda *a,**kw:None)
++    monkeypatch.setattr(model_boundary,'model_call',lambda backend,fn,*a,**kw:fn(*a,**kw))
++    model=tmp_path/'sface.onnx';model.write_bytes(b'verified')
++    monkeypatch.setattr(native_face,'prepare_coreml_model',lambda *a,**kw:model)
++    gpu=SimpleNamespace(fail=False,calls=0)
++    def run(*a):
++        from onnxruntime.capi.onnxruntime_pybind11_state import EPFail
++        gpu.calls+=1
++        if gpu.fail:raise EPFail('device lost')
++        return [np.full((1,128),1.0001,np.float32)]
++    gpu.run=run;gpu.get_providers=lambda:['CoreMLExecutionProvider','CPUExecutionProvider']
++    monkeypatch.setattr(native_face,'_candidate_session',lambda *a:(gpu,lambda:{'CoreMLExecutionProvider':3}))
++    native=CPU();recognizer=native_sface.SFaceRecognizer(native,model)
++    yield SimpleNamespace(native=native,gpu=gpu,recognizer=recognizer,module=native_sface)
++    runtime._state.clear();runtime._state.update(previous)
++
++
++def test_sface_preserves_alignment_and_records_correct_model_dimension_and_precision(setup):
++    image=np.arange(112*112*3,dtype=np.uint8).reshape(112,112,3)
++    assert setup.recognizer.alignCrop(image,None) is image
++    assert setup.recognizer.feature(image).shape==(1,128)
++    assert setup.recognizer.feature(image)[0,0]==np.float32(1.0001)
++    assert setup.native.calls==3 and setup.gpu.calls==4
++    row=runtime.diagnostics()['models'][0]
++    assert row['model_id']=='face.sface' and row['precision']=='fp32'
++    assert row['calls']==2 and row['source_sha256'].startswith('0ba9fbfa')
++
++
++def test_sface_late_error_restarts_whole_unit_instead_of_mixing_cpu_features(setup):
++    image=np.ones((112,112,3),np.uint8);setup.recognizer.feature(image);setup.gpu.fail=True
++    with pytest.raises(BackendFailure) as error:setup.recognizer.feature(image)
++    assert error.value.gpu is True and setup.native.calls==3
++
++
++def test_unsupported_first_crop_freezes_cpu_for_gallery(setup):
++    image=np.ones((112,112,3),np.float32)
++    assert np.all(setup.recognizer.feature(image)==1.)
++    assert setup.recognizer.session.decided is True
++    assert np.all(setup.recognizer.feature(image.astype(np.uint8))==1.)
++    assert setup.gpu.calls==0
++
++
++@pytest.mark.parametrize('kind',['cpu','no_host','windows','intel','no_coreml'])
++def test_ineligible_factory_never_loads_an_accelerator(monkeypatch,kind):
++    from clipper_accelerators import native_sface
++    import onnxruntime as ort
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_MODE','auto');monkeypatch.delenv('CLIPPER_ACCELERATORS_CPU_ONLY',raising=False)
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_HOST_URL','http://127.0.0.1:1');monkeypatch.setenv('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY','1')
++    monkeypatch.setattr(native_sface.platform,'system',lambda:'Darwin');monkeypatch.setattr(native_sface.platform,'machine',lambda:'arm64')
++    monkeypatch.setattr(ort,'get_available_providers',lambda:['CoreMLExecutionProvider'])
++    if kind=='cpu':monkeypatch.setenv('CLIPPER_ACCELERATORS_CPU_ONLY','1')
++    if kind=='no_host':monkeypatch.delenv('CLIPPER_ACCELERATOR_HOST_URL')
++    if kind=='windows':monkeypatch.setattr(native_sface.platform,'system',lambda:'Windows')
++    if kind=='intel':monkeypatch.setattr(native_sface.platform,'machine',lambda:'x86_64')
++    if kind=='no_coreml':monkeypatch.setattr(ort,'get_available_providers',lambda:['CPUExecutionProvider'])
++    raw=CPU();monkeypatch.setattr(native_sface,'SFaceRecognizer',lambda *a:pytest.fail('ineligible'))
++    assert native_sface.native_recognizer(raw,'missing.onnx') is raw
+diff --git a/clipper_accelerators/tests/test_native_yunet.py b/clipper_accelerators/tests/test_native_yunet.py
+new file mode 100644
+index 0000000..f2a5691
+--- /dev/null
++++ b/clipper_accelerators/tests/test_native_yunet.py
+@@ -0,0 +1,121 @@
++from types import SimpleNamespace
++import numpy as np
++import pytest
++from clipper_accelerators import runtime
++from clipper_accelerators.errors import BackendFailure
++
++
++class Detector:
++    def __init__(self):self.calls=0;self.size=None
++    def setInputSize(self,size):self.size=tuple(size)
++    def detect(self,image):
++        import time
++        self.calls+=1;time.sleep(.002)
++        return 1,np.array([[5,6,10,12,7,8,10,8,8,10,7,12,10,12,.95]],np.float32)
++
++
++@pytest.fixture
++def setup(tmp_path,monkeypatch):
++    from clipper_accelerators import native_yunet,model_boundary
++    previous=dict(runtime._state)
++    for key,val in [('CLIPPER_ACCELERATOR_MODE','auto'),('CLIPPER_ACCELERATOR_CONSUMER','dance'),('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY','1')]:monkeypatch.setenv(key,val)
++    runtime.configure({},'mps',tmp_path,consumer='dance');runtime.set_estimate('pose.yolov8s',1000)
++    monkeypatch.setattr(model_boundary,'model_call',lambda backend,fn,*a,**kw:fn(*a,**kw))
++    path=tmp_path/'model.onnx';path.write_bytes(b'verified bytes')
++    monkeypatch.setattr(native_yunet,'prepare_model',lambda *a:path)
++    monkeypatch.setattr(native_yunet,'admit',lambda *a,**kw:None)
++    cpu=Detector();gpu=SimpleNamespace(calls=0,fail=False)
++    def infer(image):
++        from onnxruntime.capi.onnxruntime_pybind11_state import EPFail
++        gpu.calls+=1
++        if gpu.fail:raise EPFail('CoreML device lost')
++        return np.array([[5,6,10,12,7,8,10,8,8,10,7,12,10,12,.95]],np.float32)
++    monkeypatch.setattr(native_yunet,'candidate',lambda *a:(infer,lambda:{'CoreMLExecutionProvider':3}))
++    wrapper=native_yunet.StaticYuNet(cpu,path,.6,.3,5000)
++    yield SimpleNamespace(module=native_yunet,cpu=cpu,gpu=gpu,wrapper=wrapper,path=path)
++    runtime._state.clear();runtime._state.update(previous)
++
++
++def image(h=64,w=96):return np.arange(h*w*3,dtype=np.uint8).reshape(h,w,3)
++
++
++def test_source_shape_is_accelerated_and_other_roi_sizes_use_original_cpu(setup):
++    w=setup.wrapper;w.prepare_source((96,64));w.setInputSize((96,64))
++    assert w.detect(image())[1].shape==(1,15)
++    assert setup.cpu.calls==3 and setup.gpu.calls==3
++    w.detect(image());assert setup.gpu.calls==4 and setup.cpu.calls==3
++    w.setInputSize((32,32));w.detect(image(32,32));assert setup.cpu.calls==4
++    row=runtime.diagnostics()['models'][0]
++    assert row['selected_backend']=='mixed' and row['profile_verified'] is True
++    assert row['execution_counts']['ort_coreml']==2 and row['execution_counts']['opencv_cpu']==1
++
++
++def test_no_source_or_small_workload_skips_prepare_and_coreml(setup,monkeypatch):
++    monkeypatch.setattr(setup.module,'prepare_model',lambda *a:pytest.fail('must stay original CPU'))
++    setup.wrapper.detect(image());runtime.set_estimate('pose.yolov8s',1)
++    setup.wrapper.prepare_source((96,64));setup.wrapper.detect(image())
++    assert setup.gpu.calls==0 and setup.cpu.calls==2
++
++
++def test_local_quality_or_profile_rejection_keeps_original_cpu(setup,monkeypatch):
++    monkeypatch.setattr(setup.module,'candidate',lambda *a:(lambda im:np.zeros((1,15),np.float32),lambda:{'CPUExecutionProvider':3}))
++    setup.wrapper.prepare_source((96,64))
++    result=setup.wrapper.detect(image())[1]
++    assert result[0,0]==5 and setup.wrapper.selected is None
++
++
++def test_late_actual_ort_failure_propagates_for_whole_cpu_reanalysis(setup):
++    setup.wrapper.prepare_source((96,64));setup.wrapper.detect(image());setup.gpu.fail=True
++    with pytest.raises(BackendFailure) as error:setup.wrapper.detect(image())
++    assert error.value.gpu is True and setup.cpu.calls==3
++
++
++def test_rejected_memory_is_reported_without_failing_original_analysis(setup,monkeypatch):
++    def reject(*a,**kw):raise BackendFailure('backend_unavailable','memory',details={'source':'accelerator_host','reason':'memory_admission_deferred'})
++    monkeypatch.setattr(setup.module,'admit',reject)
++    setup.wrapper.prepare_source((96,64));assert setup.wrapper.detect(image())[1][0,0]==5
++    assert setup.gpu.calls==0
++    assert runtime.diagnostics()['models'][0]['trial_failure']['details']['reason']=='memory_admission_deferred'
++
++
++def test_conversion_consumes_exact_verified_source_bytes(tmp_path,monkeypatch):
++    import hashlib
++    from clipper_accelerators import native_yunet,face_adapter
++    source=tmp_path/'source.onnx';original=b'pinned source';source.write_bytes(original)
++    monkeypatch.setattr(native_yunet,'_SOURCE_SHA',hashlib.sha256(original).hexdigest())
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_HOME',str(tmp_path/'home'))
++    real_hash=runtime.file_sha;consumed=[]
++    def swap_after_hash(path):
++        value=real_hash(path)
++        if path==source:source.write_bytes(b'replaced')
++        return value
++    monkeypatch.setattr(runtime,'file_sha',swap_after_hash)
++    def convert(value,**kwargs):
++        data=value if isinstance(value,bytes) else value.read_bytes();consumed.append(data);return data
++    monkeypatch.setattr(face_adapter,'prepare_model',convert)
++    result=native_yunet.prepare_model(source,(1920,1080))
++    assert consumed==[original] and result.read_bytes()==original
++
++
++def test_shared_backend_counts_self_recording_detector_once(setup):
++    from clipper_face_core.opencv_backend import OpenCvFaceBackend
++    backend=OpenCvFaceBackend.__new__(OpenCvFaceBackend);backend.detector=setup.wrapper
++    list(backend._detect_faces(image()))
++    assert runtime.diagnostics()['models'][0]['calls']==1
++
++
++@pytest.mark.parametrize('kind',['cpu','no_host','windows','intel','no_coreml'])
++def test_ineligible_yunet_factory_keeps_native(monkeypatch,kind):
++    from clipper_accelerators import native_yunet
++    import onnxruntime as ort
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_MODE','auto');monkeypatch.delenv('CLIPPER_ACCELERATORS_CPU_ONLY',raising=False)
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_HOST_URL','http://127.0.0.1:1');monkeypatch.setenv('CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY','1')
++    monkeypatch.setattr(native_yunet.platform,'system',lambda:'Darwin');monkeypatch.setattr(native_yunet.platform,'machine',lambda:'arm64')
++    monkeypatch.setattr(ort,'get_available_providers',lambda:['CoreMLExecutionProvider'])
++    if kind=='cpu':monkeypatch.setenv('CLIPPER_ACCELERATORS_CPU_ONLY','1')
++    if kind=='no_host':monkeypatch.delenv('CLIPPER_ACCELERATOR_HOST_URL')
++    if kind=='windows':monkeypatch.setattr(native_yunet.platform,'system',lambda:'Windows')
++    if kind=='intel':monkeypatch.setattr(native_yunet.platform,'machine',lambda:'x86_64')
++    if kind=='no_coreml':monkeypatch.setattr(ort,'get_available_providers',lambda:['CPUExecutionProvider'])
++    raw=Detector();monkeypatch.setattr(native_yunet,'StaticYuNet',lambda *a:pytest.fail('ineligible'))
++    assert native_yunet.native_detector(raw,'missing.onnx',.6,.3,5000) is raw
+diff --git a/clipper_accelerators/tests/test_phase_model_release.py b/clipper_accelerators/tests/test_phase_model_release.py
+new file mode 100644
+index 0000000..41b9ff1
+--- /dev/null
++++ b/clipper_accelerators/tests/test_phase_model_release.py
+@@ -0,0 +1,63 @@
++from types import SimpleNamespace
++import gc,weakref
++import pytest
++from clipper_accelerators.errors import BackendFailure
++
++
++def test_native_release_removes_only_that_model_after_host_ack(monkeypatch):
++    from clipper_accelerators import native_sessions as ns
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
++    events=[];lease=SimpleNamespace(unreserve_native=lambda amount:events.append(amount))
++    monkeypatch.setattr(ns,'_devices',{('torch_mps',0):'gpu'});monkeypatch.setattr(ns,'_leases',{'gpu':lease})
++    monkeypatch.setattr(ns,'_reservations',{('gpu','pose'):300,('gpu','face'):500})
++    assert ns.release_model('mps','pose') is True
++    assert events==[300] and ns._reservations=={('gpu','face'):500}
++
++
++def test_host_rejection_keeps_the_conservative_reservation(monkeypatch):
++    from clipper_accelerators import native_sessions as ns
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
++    def reject(*a):raise BackendFailure('backend_unavailable','not released')
++    monkeypatch.setattr(ns,'_devices',{('torch_mps',0):'gpu'});monkeypatch.setattr(ns,'_leases',{'gpu':SimpleNamespace(unreserve_native=reject)})
++    monkeypatch.setattr(ns,'_reservations',{('gpu','pose'):300})
++    assert ns.release_model('mps','pose') is False and ns._reservations[('gpu','pose')]==300
++
++
++def test_pose_phase_destroys_weights_and_clears_mps_before_releasing_budget(monkeypatch):
++    import sys
++    from dance_highlight.services.pose_engine import PoseEngine
++    from clipper_accelerators import native_sessions
++    class Model:pass
++    model=Model();reference=weakref.ref(model);engine=PoseEngine.__new__(PoseEngine)
++    engine.config=SimpleNamespace(yolo_device='mps');engine._model=model;del model
++    events=[]
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
++    monkeypatch.setattr(native_sessions,'operation_reservation',lambda *a:('pose',300))
++    monkeypatch.setitem(sys.modules,'torch',SimpleNamespace(mps=SimpleNamespace(synchronize=lambda:events.append('sync'),empty_cache=lambda:events.append('empty'))))
++    def release(device,model_id):
++        gc.collect();assert reference() is None and events==['sync','empty']
++        events.append('release');return True
++    monkeypatch.setattr(native_sessions,'release_model',release)
++    assert engine.release_mps_model() is True and engine._model is None
++    assert events==['sync','empty','release']
++
++
++def test_old_host_or_cpu_does_not_change_existing_pose_lifetime(monkeypatch):
++    from dance_highlight.services.pose_engine import PoseEngine
++    engine=PoseEngine.__new__(PoseEngine);engine.config=SimpleNamespace(yolo_device='mps');engine._model=object()
++    monkeypatch.delenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE',raising=False)
++    assert engine.release_mps_model() is False and engine._model is not None
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1');engine.config.yolo_device='cpu'
++    assert engine.release_mps_model() is False and engine._model is not None
++
++
++def test_retained_pose_weights_never_return_memory_budget(monkeypatch):
++    import sys
++    from dance_highlight.services.pose_engine import PoseEngine
++    from clipper_accelerators import native_sessions
++    class Model:pass
++    retained=Model();engine=PoseEngine.__new__(PoseEngine);engine.config=SimpleNamespace(yolo_device='mps');engine._model=retained
++    monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
++    monkeypatch.setitem(sys.modules,'torch',SimpleNamespace(mps=SimpleNamespace(synchronize=lambda:None,empty_cache=lambda:None)))
++    monkeypatch.setattr(native_sessions,'release_model',lambda *a:pytest.fail('weights are still resident'))
++    assert engine.release_mps_model() is False
+diff --git a/clipper_face_core/clipper_face_core/opencv_backend.py b/clipper_face_core/clipper_face_core/opencv_backend.py
+index d5c6bbf..d5ae69a 100644
+--- a/clipper_face_core/clipper_face_core/opencv_backend.py
++++ b/clipper_face_core/clipper_face_core/opencv_backend.py
+@@ -44,7 +44,7 @@ class OpenCvFaceBackend:
+         height, width = frame_bgr.shape[:2]
+         self.detector.setInputSize((width, height))
+         _, faces = self.detector.detect(frame_bgr)
+-        if not hasattr(self.detector,'gates'):
++        if not hasattr(self.detector,'gates') and not getattr(self.detector,'execution_tracked',False):
+             try:
+                 from clipper_accelerators.runtime import record_execution
+                 record_execution('face.yunet','opencv_cpu')
+diff --git a/plugins/dance_highlight/dance_highlight/services/face_runtime.py b/plugins/dance_highlight/dance_highlight/services/face_runtime.py
+index 4c6651c..3b7b3ae 100644
+--- a/plugins/dance_highlight/dance_highlight/services/face_runtime.py
++++ b/plugins/dance_highlight/dance_highlight/services/face_runtime.py
+@@ -57,6 +57,11 @@ class CachedFaceDetector:
+                 prepare(size)
+             self.source_size = size
+ 
++    def release_accelerator(self):
++        with self.lock:
++            release=getattr(self.detector,'release_accelerator',None)
++            return release() if release is not None else False
++
+     @staticmethod
+     def _key(image, size):
+         return (size, image.shape, image.dtype.str,
+diff --git a/plugins/dance_highlight/dance_highlight/services/pipeline.py b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+index f220313..e4e5c85 100644
+--- a/plugins/dance_highlight/dance_highlight/services/pipeline.py
++++ b/plugins/dance_highlight/dance_highlight/services/pipeline.py
+@@ -698,6 +698,9 @@ class DancePipeline:
+             flush=True,
+         )
+ 
++        # The next pass needs faces, not the original pose model. Recreate the
++        # same MPS weights when native scene refinement requests pose again.
++        if hasattr(self.pose,'release_mps_model'):self.pose.release_mps_model()
+         _t = time.perf_counter()
+         reference_samples: List[ReferenceEmbeddingSample] = []
+         ref_embs = self._build_reference_embeddings(ref_image_paths, sample_sink=reference_samples)
+@@ -732,6 +735,8 @@ class DancePipeline:
+         _t = time.perf_counter()
+         # Scene eligibility controls exported roles, not available identity
+         # evidence. Keep original selected-body observations through inference.
++        detector=getattr(self.face,'_detector',None)
++        if hasattr(detector,'release_accelerator'):detector.release_accelerator()
+         evidence_recs = recs
+         native_scene_refinement = {}
+         if reference_samples:
+@@ -744,6 +749,7 @@ class DancePipeline:
+                 recs, input_video, fps, self.pose, video_size=size,
+                 cut_frames=main_role_refinement.get('cut_frames') if main_role_refinement.get('reason') == 'complete' else None,
+                 on_progress=lambda done,total:_progress(29, "원경 단체 장면을 확인하고 있습니다"))
++            if hasattr(self.pose,'release_mps_model'):self.pose.release_mps_model()
+             _timings["native_scene"] = time.perf_counter()-native_started
+             from .segment import bridge_compact_group_gaps
+             group_context_started = time.perf_counter()
+diff --git a/plugins/dance_highlight/dance_highlight/services/pose_engine.py b/plugins/dance_highlight/dance_highlight/services/pose_engine.py
+index c551d67..d8426ab 100644
+--- a/plugins/dance_highlight/dance_highlight/services/pose_engine.py
++++ b/plugins/dance_highlight/dance_highlight/services/pose_engine.py
+@@ -17,6 +17,27 @@ class PoseEngine:
+         self._model = create_pose_model(self.config.yolo_model_path,device=self.config.yolo_device,half=self.config.resolved_yolo_half())
+         print(f"[YOLO] device={self.config.yolo_device} half={self.config.resolved_yolo_half()}", flush=True)
+ 
++    def release_mps_model(self):
++        import os,sys,gc,weakref
++        if (os.environ.get('CLIPPER_ACCELERATOR_NATIVE_RELEASE')!='1'
++                or str(self.config.yolo_device)!='mps' or self._model is None
++                or getattr(self._model,'_accelerator_routed',False)):
++            return False
++        from clipper_accelerators.native_sessions import operation_reservation,release_model
++        from clipper_accelerators.errors import BackendFailure
++        torch=sys.modules.get('torch')
++        try:
++            if torch is not None:torch.mps.synchronize()
++            model_id,_=operation_reservation(self._model,())
++            reference=weakref.ref(self._model)
++            self._model=None;gc.collect()
++            if torch is not None:torch.mps.empty_cache()
++            if reference() is not None:return False
++            allocated=getattr(torch.mps,'current_allocated_memory',None) if torch is not None else None
++            if allocated is not None and allocated()>0:return False
++        except RuntimeError as error:raise BackendFailure('backend_unavailable','MPS model release failed',gpu=True) from error
++        return release_model('mps',model_id)
++
+     def run_pose_on_frame(self, frame: np.ndarray, *, image_size: int = 640) -> List[dict]:
+         self._ensure_model()
+ 

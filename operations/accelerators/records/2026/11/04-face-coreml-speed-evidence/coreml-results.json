@@ -1,0 +1,18 @@
+{
+  "backend": "coreml",
+  "load_ms": 2236.7519160034135,
+  "count": 30,
+  "median_ms": 3.522187500493601,
+  "mean_ms": 3.576695730832095,
+  "providers": [
+    "CoreMLExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "executed_node_events": {
+    "CoreMLExecutionProvider": 66,
+    "CPUExecutionProvider": 132
+  },
+  "cosine_min": 0.9999637007713318,
+  "max_abs_diff": 0.023300528526306152,
+  "profile": "/private/tmp/clipper-face-speed-20261104/coreml-profile_2026-11-04_02-56-34_398.json"
+}

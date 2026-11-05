@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "file": "clipper_accelerators/clipper_accelerators/native_face.py",
+      "source_sha256": "452972a144345a833df40c5f3696f7e1badc72fffdc6b51acc5a57313b24f0d7",
+      "packaged_sha256": "452972a144345a833df40c5f3696f7e1badc72fffdc6b51acc5a57313b24f0d7",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/face_adapter.py",
+      "source_sha256": "4f1518b47c9adc11c83274e0c3b20250ba56d2a969951cce1d755e5174987bfc",
+      "packaged_sha256": "4f1518b47c9adc11c83274e0c3b20250ba56d2a969951cce1d755e5174987bfc",
+      "matches": true
+    },
+    {
+      "file": "clipper_face_core/clipper_face_core/auraface.py",
+      "source_sha256": "ebc28e13284191b2d899695cc81f11eddb20e92a8788cc40ba9ecd9170db4c8b",
+      "packaged_sha256": "ebc28e13284191b2d899695cc81f11eddb20e92a8788cc40ba9ecd9170db4c8b",
+      "matches": true
+    }
+  ],
+  "runtime_config": {
+    "identity": "development",
+    "updateChannel": "dev",
+    "webApiBaseUrl": "http://127.0.0.1:3000",
+    "autoUpdateDisabled": true
+  }
+}

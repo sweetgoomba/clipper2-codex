@@ -1,0 +1,123 @@
+{
+  "at": "2026-11-03T16:29:06.302Z",
+  "adapter": [
+    {
+      "id": "metal:Apple M4",
+      "vendor": "Apple",
+      "device_id": "Apple M4",
+      "driver": "27.0.0",
+      "backend_indices": [
+        [
+          "ort_coreml",
+          0
+        ],
+        [
+          "torch_mps",
+          0
+        ]
+      ],
+      "free_bytes": null,
+      "total_bytes": null,
+      "memory_kind": "shared",
+      "usable": true
+    }
+  ],
+  "decisions": [
+    {
+      "event": "freemem_used_by_fits",
+      "at": "2026-11-03T16:29:03.888Z",
+      "bytes": 121864192
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:29:03.889Z",
+      "endpoint": "/acquire",
+      "status": 200,
+      "error": null,
+      "admission": {
+        "observed_at": "2026-11-03T16:29:03.889Z",
+        "source": "darwin_vm",
+        "pressure": "normal",
+        "free_bytes": 86966272,
+        "file_backed_bytes": 3825827840,
+        "purgeable_bytes": 8896512,
+        "budget_bytes": 1024106495,
+        "adapter_id": "metal:Apple M4",
+        "owner_pid": 93046,
+        "requested_bytes": 302892000,
+        "reserved_bytes": 0,
+        "request_total_bytes": 302892000,
+        "adapter_free_bytes": null
+      }
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:29:03.890Z",
+      "endpoint": "/register-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:29:06.018Z",
+      "endpoint": "/release",
+      "status": 200,
+      "error": null,
+      "admission": null
+    }
+  ],
+  "result": {
+    "ok": true,
+    "estimated_bytes": 302892000,
+    "frame_shape": [
+      1080,
+      1920,
+      3
+    ],
+    "frame_sha256": "c14a4aa7d3f0e30e724ffe92b9d2be542acf464539523f32da87c421a62fb165",
+    "calls": [
+      {
+        "milliseconds": 2058.397834014613,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 30.264958972111344,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      }
+    ],
+    "gpu_diagnostics": {
+      "schema": 1,
+      "mode": "auto",
+      "consumer": "dance",
+      "device": "mps",
+      "release_qualified": null,
+      "candidate_failures": {},
+      "models": [
+        {
+          "model_id": "pose.yolov8s",
+          "selected_backend": "torch_mps",
+          "reason": "existing_runtime",
+          "calls": 2,
+          "samples": 0,
+          "distinct_inputs": 0,
+          "cpu_median_ms": null,
+          "candidate_median_ms": null,
+          "execution_evidence": "provider_only",
+          "profile_verified": false,
+          "graph_execution": "unknown",
+          "backends": [
+            "torch_mps"
+          ]
+        }
+      ]
+    },
+    "cpu_people": 5,
+    "iou_min": 0.9999992847442627
+  },
+  "stderr": ""
+}

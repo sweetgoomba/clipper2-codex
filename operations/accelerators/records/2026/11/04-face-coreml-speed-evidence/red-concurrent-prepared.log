@@ -1,0 +1,43 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_concurrent_prepared_entry_cannot_capture_cpu_during_coreml_setup _____
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d5b590>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-545/test_concurrent_prepared_entry0')
+
+    def test_concurrent_prepared_entry_cannot_capture_cpu_during_coreml_setup(module,monkeypatch,tmp_path):
+        import threading,time
+        from concurrent.futures import ThreadPoolExecutor
+        import onnxruntime as ort
+        from clipper_accelerators import face_adapter,environment,idle
+        builtin,cpu,gpu,_=wrapper(module,monkeypatch)
+        source=tmp_path/'source.onnx';source.write_bytes(b'source')
+        monkeypatch.setattr(ort,'InferenceSession',lambda *a,**kw:cpu)
+        monkeypatch.setattr(face_adapter,'candidate_entry',lambda *a,**kw:{'backend':'ort_coreml','onnx_path':str(source),'output_names':['fc1']})
+        monkeypatch.setattr(face_adapter,'admitted',lambda *a,**kw:False)
+        monkeypatch.setattr(module,'face_session',lambda *a,**kw:builtin)
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_HOME',str(tmp_path/'home'))
+        snapshot=environment.probe_environment({'system':'darwin','host_arch':'arm64','process_arch':'arm64','os_build':'26'})
+        monkeypatch.setattr(environment,'native_environment',lambda *a,**kw:snapshot)
+        monkeypatch.setattr(idle,'choose_for_gate',lambda *a,**kw:None)
+        original_prepare=module.prepare_coreml_model;entered=threading.Event();release=threading.Event()
+        def prepare(path):
+            entered.set();assert release.wait(1);return original_prepare(path)
+        monkeypatch.setattr(module,'prepare_coreml_model',prepare)
+        session=face_adapter.RoutedSession(source)
+        with ThreadPoolExecutor(2) as pool:
+            first=pool.submit(session.run,['fc1'],value());assert entered.wait(1)
+            second=pool.submit(session.run,['fc1'],value());time.sleep(.05);release.set()
+            first.result();second.result()
+        gates=[g for g in runtime._state['models'] if isinstance(g,runtime.ModelGate)]
+>       assert gates and all(g.incumbent_backend=='CoreMLExecutionProvider/CPUExecutionProvider' and g.incumbent_precision=='fp16' for g in gates)
+E       assert ([<clipper_accelerators.runtime.ModelGate object at 0x108d84cd0>, <clipper_accelerators.runtime.ModelGate object at 0x108fbea90>] and False)
+E        +  where False = all(<generator object test_concurrent_prepared_entry_cannot_capture_cpu_during_coreml_setup.<locals>.<genexpr> at 0x11b257ed0>)
+
+clipper_accelerators/tests/test_native_face_coreml.py:294: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-04 03:16:53.895 Python[67900:21674976] 2026-11-04 03:16:53.894962 [W:onnxruntime:Default, telemetry_1ds.cc:600 operator()] Failed to persist telemetry device ID; using an in-memory identifier
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_concurrent_prepared_entry_cannot_capture_cpu_during_coreml_setup
+1 failed, 25 deselected in 0.34s

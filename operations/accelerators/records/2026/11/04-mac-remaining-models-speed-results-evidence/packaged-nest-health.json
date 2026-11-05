@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-11-04T04:25:24.254168+09:00",
+  "url": "http://127.0.0.1:52454/v1/health",
+  "status": 200,
+  "health": {
+    "status": "ok",
+    "service": "clipper-nestjs"
+  }
+}

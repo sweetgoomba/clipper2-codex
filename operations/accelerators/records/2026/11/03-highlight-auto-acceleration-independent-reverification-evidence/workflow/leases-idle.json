@@ -1,0 +1,20 @@
+{
+  "lease": {
+    "first": 200,
+    "expired_live_acquire": 409,
+    "expired_live_validate": 200,
+    "native_release_live_acquire": 409
+  },
+  "preemption": {
+    "events": [
+      "idle_running",
+      "cleanup_requested",
+      "cleanup_confirmed",
+      "foreground_admitted"
+    ],
+    "blocked_until_cleanup": true,
+    "foreground_count": 1,
+    "pending_preserved": true
+  },
+  "scope": "No real launch or kill; fake owned idle stop promise; authenticated handler invoked without a socket."
+}

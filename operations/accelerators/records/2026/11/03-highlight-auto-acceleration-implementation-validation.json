@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "status": "foundation_checkpoint_partial",
+  "full_plan_complete": false,
+  "new_gpu_enabled": false,
+  "worktrees": {
+    "python": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103",
+    "nestjs": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103"
+  },
+  "validation": {
+    "python": {
+      "passed": 3049,
+      "failed": 6,
+      "skipped": 7,
+      "preexisting_failures": [
+        "tests/test_annotation_layer_renderer.py::test_counter_formats_value_and_matches_goldens",
+        "tests/test_annotation_layer_renderer.py::test_chip_tones_and_badge_goldens",
+        "tests/test_annotation_layer_renderer.py::test_arrow_goldens",
+        "tests/test_annotation_layer_renderer.py::test_arrow_target_above_golden",
+        "tests/test_annotation_layer_renderer.py::test_layer_without_area_or_zone_tops_is_byte_identical_to_before",
+        "tests/test_clipper_video_render_ranking_transitions.py::test_real_render_list_holds_still_through_transitions_and_switches_at_handoff[fadeblack]"
+      ],
+      "new_failures": []
+    },
+    "nestjs": {
+      "passed": 5246,
+      "failed": 0,
+      "skipped": 9,
+      "build": "PASS"
+    },
+    "cpu_transport": {
+      "schema": 1,
+      "scope": "CPU direct ORT versus isolated worker transport only; not highlight quality or GPU qualification",
+      "runtime": "1.31.0",
+      "certificate_enabled": false,
+      "models": [
+        {
+          "model": "yolo_pose",
+          "artifact_sha256": "58e58b9f2889cc36be17b7a4474211d6037852f1593f481a181ff36b542a1b4c",
+          "input_shape": [
+            1,
+            3,
+            640,
+            640
+          ],
+          "samples": 24,
+          "equal_outputs": 24,
+          "max_abs_diff": 0.0,
+          "status": "PASS",
+          "worker_exit_confirmed": true
+        },
+        {
+          "model": "yunet",
+          "artifact_sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+          "input_shape": [
+            1,
+            3,
+            640,
+            640
+          ],
+          "samples": 24,
+          "equal_outputs": 288,
+          "max_abs_diff": 0.0,
+          "status": "PASS",
+          "worker_exit_confirmed": true
+        },
+        {
+          "model": "auraface",
+          "artifact_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+          "input_shape": [
+            1,
+            3,
+            112,
+            112
+          ],
+          "samples": 30,
+          "equal_outputs": 30,
+          "max_abs_diff": 0.0,
+          "status": "PASS",
+          "worker_exit_confirmed": true
+        },
+        {
+          "model": "clip_visual",
+          "artifact_sha256": "ea3471533a815a729ce49cc2a2438ec1b934bc0bdd40974e0439240ea85f2019",
+          "input_shape": [
+            1,
+            3,
+            224,
+            224
+          ],
+          "samples": 24,
+          "equal_outputs": 24,
+          "max_abs_diff": 0.0,
+          "status": "PASS",
+          "worker_exit_confirmed": true
+        }
+      ]
+    },
+    "preservation": {
+      "original_dirty_files_checked": 120,
+      "changed": []
+    }
+  },
+  "review": {
+    "critical": 0,
+    "important": 3,
+    "fixed": 3,
+    "minor": 0
+  },
+  "release_qualification": "BLOCKED",
+  "remaining": [
+    "T01 fullcorpus/distributable fixtures",
+    "T02 fullpack andIOmanifest",
+    "T03 nativeprobe",
+    "T04 runtimepackinstaller",
+    "T05 nativeWindows/GPU/hostownership",
+    "T06 leases andCPUadmission",
+    "T07 modelsession andidle integration",
+    "T08 liveplugin unitwiring",
+    "T09-T12 modeladapters",
+    "T13-T15 optionalproviders/UI/hardwarequalification"
+  ]
+}

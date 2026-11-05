@@ -1,0 +1,37 @@
+{
+  "AUDIT-REMEDIATION.ko.md": {
+    "bytes": 14133,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "BUILD-AND-TEST.ko.md": {
+    "bytes": 15355,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "IDLE-ROTATION-IMPLEMENTATION.ko.md": {
+    "bytes": 12898,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "IMPLEMENTATION-REPORT.ko.md": {
+    "bytes": 10469,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "corpus.example.json": {
+    "bytes": 163,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "matrix.example.json": {
+    "bytes": 819,
+    "current_completion_file_exists": true,
+    "matches_current_completion_file": true
+  },
+  "source-manifest.json": {
+    "bytes": 1077394,
+    "current_completion_file_exists": false,
+    "matches_current_completion_file": null
+  }
+}

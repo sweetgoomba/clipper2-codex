@@ -1,0 +1,438 @@
+{
+  "schema": 2,
+  "date": "2026-11-03",
+  "build_id": "highlight-idle-reaudit-ba5b9bb9f46f517e",
+  "scope": [
+    "darwin-arm64",
+    "win32-x64"
+  ],
+  "software_corrections_completed": [
+    "A01",
+    "A02",
+    "N01",
+    "N02",
+    "N03",
+    "N04",
+    "native_mps_evidence_label"
+  ],
+  "hardware_quality_speed_qualified": false,
+  "source_audit": {
+    "report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-highlight-auto-acceleration-independent-reverification.md",
+    "sha256": "21a477b090a613577be8bce220c82b3ee0673a6f0601a2838ef8f9e80d9c48bc",
+    "evidence_manifest_sha256": "ae41c1dcecb4f008758588acc37cc2c2a78e9c301fab7c2617472f9038c259bd"
+  },
+  "implementation_report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-highlight-idle-rotation-reaudit-remediation.md",
+  "independent_review": {
+    "schema": 1,
+    "reviewer": "independent read-only subagent",
+    "source_scope_sha256": "e5fd48487917bd19a68f6b9adf2ef3b11ab027a7457cd85f14ae7f4aae60af10",
+    "baseline": "immutable dirty snapshot before-source.zip, not HEAD",
+    "production_edits": 0,
+    "blocking_findings": [],
+    "findings": {
+      "A01": {
+        "verdict": "resolved_in_software_scope",
+        "evidence": "FP16 and FP32 native identities are distinct; CPU remains FP32; worker enforces requested dtype/device. Independent original-condition probe selects faster CPU from FP16 raw replay even with no publishable foreground raw baseline; complete run_once path additionally covered by frozen regression. Full prediction timings remain diagnostics only."
+      },
+      "A02": {
+        "verdict": "resolved",
+        "evidence": "Independent 35-second fake CPU probe: ZIP baseline global/model accounting 0/0, corrected 35/35, candidate0, deferred_budget. Shared remaining deadline reaches CPU/incumbent model_call, with owned-worker hard watchdog; errors and early returns pass outer accounting finally."
+      },
+      "N01": {
+        "verdict": "resolved_production_route; acceptance_scope_explicit",
+        "evidence": "Approved native plan reaches YOLO/CLIP NativeInference factory and owned NativeCalibrationSession. Parent and worker recheck source, pack, shape, consumer, preprocessing, purpose, precision, observed adapter mapping/certificate and live lease. Fresh production-factory tests confirm worker exit before lease release; incomplete cleanup retains session/client/lease in exception for owner recovery. Independent probe rejects absent/wrong precision/wrong adapter certificate and selects CUDA1 only with exact fixture certificate."
+      },
+      "N03": {
+        "verdict": "source_reconciled;_parent_owns_UI_suite",
+        "evidence": "Failed save catch rereads persisted settings, refreshes runtime/idle, and clears settings on failed reconciliation. Fresh real Electron bridge tests confirm cleanup failure returns409 while settings persistCPU and new foreground staysblocked. Angular regression source was read; this reviewer did not start Karma to avoid overlap with parent."
+      },
+      "N04": {
+        "verdict": "resolved_source_filter;_parent_owns_final_package",
+        "evidence": "Fresh app-builder-lib FileMatcher plus builder-util copyDir test excludes root worktree .git file, nested .git directory, root/nested pytest and ruff caches while retaining runtime sources. This reviewer did not rebuild or assert final ZIP contents."
+      }
+    },
+    "fresh_runs": [
+      {
+        "log": "a02-policy-tests.log",
+        "result": "PASS",
+        "passed": 25
+      },
+      {
+        "log": "electron-focused-tests-escalated.log",
+        "result": "PASS",
+        "passed": 4
+      },
+      {
+        "log": "native-focused-tests.log",
+        "result": "PASS",
+        "passed": 69,
+        "contains": "actual generated tiny CPU worker; no physical GPU"
+      },
+      {
+        "log": "frozen-native-and-budget-tests-fixed-fixture.log",
+        "result": "PASS",
+        "passed": 21,
+        "contains": "12 native regressions,7 reference budget tests,2 independent review probes"
+      },
+      {
+        "log": "native-independent-before-final.log",
+        "result": "EXPECTED_RED",
+        "failed": 2,
+        "contains": "A01 no FP16 replay; N01 native alternative discarded even when A01 fixture supplied"
+      }
+    ],
+    "environment_failures_explained": [
+      {
+        "log": "electron-focused-tests.log",
+        "reason": "sandbox listen EPERM on127.0.0.1; same command passed4 under tool escalation"
+      },
+      {
+        "log": "frozen-native-and-budget-tests.log",
+        "reason": "review-only fixture patched environment.native_environment but omitted runtime_catalog import-bound alias; combined run retained prior test environment. Reviewer fixture explicitly patched both aliases; same frozen production source passed21. No production fix made."
+      }
+    ],
+    "limitations": [
+      "Native benchmark_evidence validates exact runtime_device/source/pack/device/precision identity plus full33 samples/24 inputs comparison; ordinary auto calls are not substituted for comparison evidence. benchmark_app CLI cpu/verify still targets the default candidate and does not itself exercise native next-unit auto selection. Native full CLI acceptance is unproven/BLOCKED without matching frozen evidence.",
+      "FP16 numerical mismatch against CPU remains conservative rejection; no comparison tolerance, certificate, or source precision policy was weakened.",
+      "No physical GPU timing/quality, actual Windows Job, release corpus/certificate, app UI, or final artifact packaging was tested by this reviewer. Real tiny CPU worker and controlled GPU doubles prove software behavior only.",
+      "N02 metadata, full suites, final package payload/hash and original user work preservation are owned by the parent review, not this scoped reviewer."
+    ],
+    "evidence": {
+      "a02-independent-before.log": {
+        "sha256": "6c422af50e51a67ef565b4a78f340ef933011a4620440a479cff308513fecc75",
+        "bytes": 637
+      },
+      "a02-independent-after.log": {
+        "sha256": "ef4c7b6165e3edf805640c172b309b7e072cf15ff426f084d8db24d9d41ec771",
+        "bytes": 130
+      },
+      "a02-policy-tests.log": {
+        "sha256": "509ba10f6e4ca926879845689d64e08a71a1156f7d17c10c727adfd5a02d7d36",
+        "bytes": 100
+      },
+      "electron-focused-tests.log": {
+        "sha256": "d1ad8c83b2467e145c1b5fa403832604f4f7e6a3f535271e430f52a896c01851",
+        "bytes": 1622
+      },
+      "electron-focused-tests-escalated.log": {
+        "sha256": "bcfd31a1cc6f1cdc503bea934129a33dfab94d7167ebbbe0905ddfb60f7a8fbe",
+        "bytes": 651
+      },
+      "native-focused-tests.log": {
+        "sha256": "f746ab555bdd24a010617ebd318b0d1fabad000aea6f69b5fea7a0f718b4613a",
+        "bytes": 100
+      },
+      "native-independent-before-final.log": {
+        "sha256": "df1b0eca56ec7839199186a87dbe529830c6498b610bde9ff200cd24a1755778",
+        "bytes": 4270
+      },
+      "frozen-native-and-budget-tests.log": {
+        "sha256": "ba70aaad00895c0505aff7db74f377d49d9dadf53129e85be72ea2c17511e7c0",
+        "bytes": 2820
+      },
+      "frozen-native-and-budget-tests-fixed-fixture.log": {
+        "sha256": "e3b8ded218891ef622ab21c1ebfdfd22dd43db40fa29303eaaaee2dbff6f5583",
+        "bytes": 99
+      }
+    },
+    "prior_source_scope_sha256": "01a47e805e90f2efc6b498a69d33c0cdb283b963039d67ccf8759f619ba8489d",
+    "post_native_ui_review": {
+      "schema": 1,
+      "reviewed_at_utc": "2026-11-03T11:00:34.504808+00:00",
+      "prior_scope_sha256": "6c402ff60c647437231134b7b9c3c385efed46c120c843708b05bc80c2088c30",
+      "current_scope_sha256": "01a47e805e90f2efc6b498a69d33c0cdb283b963039d67ccf8759f619ba8489d",
+      "changed_files": [
+        {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/src/shell/settings/acceleration-settings-card/acceleration-settings-card.component.spec.ts",
+          "prior_review_sha256": "d391ea198872404b4e2620eb8af24afa0e46a3a50e54dd7444489fa8e17ea848",
+          "current_review_sha256": "452090698cde35a4a8f6cd873f8a87ef579d93d0c4e63f7b3fdf8d14932bfb1c"
+        },
+        {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/src/shell/settings/acceleration-settings-card/acceleration-settings-card.component.ts",
+          "prior_review_sha256": "2542301003286781fddbb7f392f112c528cf339f12788d2360f9e6f9c6476cc7",
+          "current_review_sha256": "3c9b2eaff451d663a4142b701fcd3d9f3b4d7092383abe53040ef95436cc921c"
+        }
+      ],
+      "blocking_findings": [],
+      "correction": "runtime_device physical GPU label now derives from executed_candidate_backend, then candidate_backend, then selected_backend. torch_mps displays MPS; backends ending cuda display CUDA; other physical GPU paths display GPU. Published CPU output cannot replace candidate execution identity. Physical verification gate semantics are unchanged.",
+      "regression_source": "Real component regression uses torch_mps executed candidate with selected_backend cpu and expects MPS. Existing ct2_cuda executed candidate with selected_backend cpu still expects CUDA, and unverified physical flag still returns runtime unknown.",
+      "observed_parent_logs": {
+        "native-label-red.log": {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/native-label-red.log",
+          "sha256": "51f315f4b641669da51c970d9ae7ff899e085d5b75c560d310e0cf58a862eb69",
+          "last_line": "TOTAL: 1 FAILED, 19 SUCCESS"
+        },
+        "angular-native-final.log": {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/angular-native-final.log",
+          "sha256": "7eb0c3f72d22dd74b8cfecfa657fd23421aea35ae283c53881ff047b4af656d0",
+          "last_line": "TOTAL: 53 SUCCESS"
+        }
+      },
+      "validation_scope": "Source and regression review plus direct read/hash of parent RED1/19 and GREEN53 logs. Reviewer did not launch concurrent Karma and did not rerun unchanged Python."
+    },
+    "native_test_isolation_review": {
+      "schema": 1,
+      "reviewed_at_utc": "2026-11-03T11:02:26.178407+00:00",
+      "prior_scope_sha256": "01a47e805e90f2efc6b498a69d33c0cdb283b963039d67ccf8759f619ba8489d",
+      "current_scope_sha256": "e5fd48487917bd19a68f6b9adf2ef3b11ab027a7457cd85f14ae7f4aae60af10",
+      "changed_files": [
+        {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/clipper_accelerators/tests/test_reaudit_native.py",
+          "prior_review_sha256": "ce7802fcf0be6a2d6e996a150eb2bd5e19a8342978c7e9c9cf9f96c0f6d8834c",
+          "current_review_sha256": "78b14862630715648932fc5e977aec595338aaefebd26a29eece43c5914bd647"
+        }
+      ],
+      "blocking_findings": [],
+      "correction": "Test-only autouse fixture imports runtime_catalog before patching, then explicitly patches runtime_catalog.native_environment imported alias and environment.native_environment to the same fixture probe; native interpreter is also pinned to test sys.executable. No production source changes.",
+      "cause": "Default test collection can import runtime_catalog before fixture monkeypatches environment.native_environment. Its module-owned imported alias otherwise retains the earlier function, so synthetic certificate adapter scope sees the real/earlier environment. This is test isolation, not a production admission relaxation.",
+      "observed_parent_evidence": {
+        "red-default-order.log": {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/red-default-order.log",
+          "sha256": "4f7b0936f4b686e61870005433ebc9b11844d571bef39ffb68a4ae3bd683c899",
+          "bytes": 20569
+        },
+        "green-default-order.log": {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/green-default-order.log",
+          "sha256": "86c7a7d75c81431abe648c543c779a165ffc5b14c25ee1c2b93e46bbdedf9df2",
+          "bytes": 341
+        },
+        "native-implementation-check.json": {
+          "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/native-implementation-check.json",
+          "sha256": "b23e11089bbf5920b1c45e89a1ba2eb3c60b3e6b05d038ee4f639a25b789297a",
+          "bytes": 3011
+        }
+      },
+      "parent_red": {
+        "failed": 4,
+        "passed": 283
+      },
+      "parent_green": {
+        "passed": 287
+      },
+      "reviewer_execution": "No new tests requested or run; source review and direct read/hash of parent default-order logs. Parent owns the full Python rerun."
+    }
+  },
+  "review_source_hash_scope": "e5fd48487917bd19a68f6b9adf2ef3b11ab027a7457cd85f14ae7f4aae60af10",
+  "review_source_hash_mismatches": [],
+  "tests": {
+    "python_full": {
+      "passed": 3379,
+      "failed": 6,
+      "skipped": 5,
+      "summary": "6 failed, 3379 passed, 5 skipped, 25 warnings in 198.34s (0:03:18)",
+      "same_preexisting_failure_set": true,
+      "failures": [
+        "FAILED tests/test_annotation_layer_renderer.py::test_counter_formats_value_and_matches_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_chip_tones_and_badge_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_arrow_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_arrow_target_above_golden",
+        "FAILED tests/test_annotation_layer_renderer.py::test_layer_without_area_or_zone_tops_is_byte_identical_to_before",
+        "FAILED tests/test_clipper_video_render_ranking_transitions.py::test_real_render_list_holds_still_through_transitions_and_switches_at_handoff[fadeblack]"
+      ]
+    },
+    "accelerator_default_order": {
+      "passed": 287
+    },
+    "reference_budget_policy_recovery": {
+      "passed": 34
+    },
+    "native_benchmark": {
+      "passed": 69
+    },
+    "native_workers_idle_adapters": {
+      "passed": 83
+    },
+    "electron_full": {
+      "passed": 1904,
+      "failed": 0,
+      "node": "24.19.0",
+      "test_concurrency": 4
+    },
+    "angular_related": {
+      "passed": 53,
+      "failed": 0
+    },
+    "angular_styles": {
+      "passed": 21
+    },
+    "nestjs_full_unchanged_source": {
+      "passed": 5292,
+      "new_nest_changes": 0
+    },
+    "ruff": {
+      "passed": true
+    }
+  },
+  "preservation": {
+    "original_four_repositories_recorded_source_and_HEAD_unchanged": true,
+    "previously_preserved_user_files": 18,
+    "all_match": true,
+    "original_model_files_checked": 10,
+    "weight_mismatches": [],
+    "source_changes_since_idle_start": 83
+  },
+  "actual_software_controls": {
+    "cpu_worker": {
+      "purpose": "isolated prepared-pack/software IPC control only; no model/GPU quality or speed approval",
+      "provider": "CPUExecutionProvider",
+      "distinct_inputs": 24,
+      "successful_inferences": 72,
+      "worker_exit_confirmed": true,
+      "worker_was_separate_process": true,
+      "runtime_pack_id": "ort-coreml-darwin-arm64"
+    },
+    "owned_idle_cli": {
+      "purpose": "actual packaged-module/owned CLI control with empty queue; no GPU/model qualification",
+      "foreground_exclusive": true,
+      "actual_cli_completed": true,
+      "queue_state": "waiting",
+      "queue_reason": "fixture_unavailable",
+      "pending": false
+    }
+  },
+  "package": {
+    "mac_architecture": "arm64",
+    "signed": false,
+    "python_nest_angular_files_match": 477,
+    "electron_files_match": 324,
+    "runtime_locks_metadata_match": 8,
+    "runtime_module_files_match": 38,
+    "node_dependencies": {
+      "checked": 9,
+      "missing": []
+    },
+    "app_zip_python_development_or_private_leaks": [],
+    "windows_native_built_or_executed": false
+  },
+  "handoff": {
+    "source_files": 4936,
+    "current_source_or_zip_mismatches": [],
+    "build_id": "highlight-idle-reaudit-ba5b9bb9f46f517e",
+    "all_designated_metadata_same_build": true,
+    "source_current_check": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/completion/handoff/source-current-check.json",
+    "mac_artifacts": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/completion/mac-artifacts.json",
+    "source_checksum": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/completion/handoff/sha256.json"
+  },
+  "artifacts": [
+    {
+      "build_id": "highlight-idle-reaudit-ba5b9bb9f46f517e",
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.dmg",
+      "bytes": 192301497,
+      "sha256": "3b75b86a4f4241a3cdb923d7d020f5c899a131410c4c91c77849dcfd91f1650e"
+    },
+    {
+      "build_id": "highlight-idle-reaudit-ba5b9bb9f46f517e",
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.zip",
+      "bytes": 192504751,
+      "sha256": "f47ea64fe344c78a4a9382e678cc3c9d693892371341c9d8a20e65e9de20c5ec"
+    },
+    {
+      "build_id": "highlight-idle-reaudit-ba5b9bb9f46f517e",
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/completion/handoff/clipper-acceleration-source.zip",
+      "bytes": 57333638,
+      "sha256": "f43ac3cd375e9492c6ab8a7aeeea2c6d3a17a0ce7f700b50cc1fb1046068a214"
+    }
+  ],
+  "limits": {
+    "release_catalog_or_certificate_created": false,
+    "new_backend_auto_requires_existing_release_scope_and_current_measurement": true,
+    "native_benchmark_cli_default_verify_not_end_to_end_native_acceptance": "native matrix remains BLOCKED without matching actual comparison evidence; automatic samples0 never qualify",
+    "real_mac_windows_gpu_quality_speed_fault_matrix": "user hardware acceptance; not claimed"
+  },
+  "evidence": {
+    "python_full_final": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/full-python-final.log",
+      "sha256": "136101b0ec5ec02c9646c31e5d2a0c2f74fb59d2876799cf048be0d78fd464f1"
+    },
+    "python_full_intermediate_order_failure": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/full-python.log",
+      "sha256": "2b37365792421465e9b6cb9e25860ef1c6371f7ecc18a91bfcf986d4a9718925"
+    },
+    "reference_budget_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/reference-budget-red.log",
+      "sha256": "4fb5c4f5bf4a374fc257fa0836040e1b12ed2d6c314b895b2cf0c28e171a32d7"
+    },
+    "reference_budget_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/reference-budget-final-green.log",
+      "sha256": "9e2d17be8cf752289831a350b3e70e518722d9d7f1358accafcd0ad792c0d901"
+    },
+    "native_corrections": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/native-implementation-check.json",
+      "sha256": "b23e11089bbf5920b1c45e89a1ba2eb3c60b3e6b05d038ee4f639a25b789297a"
+    },
+    "native_default_order_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/red-default-order.log",
+      "sha256": "4f7b0936f4b686e61870005433ebc9b11844d571bef39ffb68a4ae3bd683c899"
+    },
+    "native_default_order_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-native/green-default-order.log",
+      "sha256": "86c7a7d75c81431abe648c543c779a165ffc5b14c25ee1c2b93e46bbdedf9df2"
+    },
+    "independent_review": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/review/review-result.json",
+      "sha256": "2efd9f01ec39be868efe15e97ff8d274139b63947b7027878e4f3c47d117a69b"
+    },
+    "independent_review_source_hashes": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/review/review-source-hashes.json",
+      "sha256": "007355dfaeeb4412df558f030b749e64329daee9ec050fa0eea5277295a720c6"
+    },
+    "angular_final": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/angular-native-final.log",
+      "sha256": "7eb0c3f72d22dd74b8cfecfa657fd23421aea35ae283c53881ff047b4af656d0"
+    },
+    "angular_native_label_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/native-label-red.log",
+      "sha256": "51f315f4b641669da51c970d9ae7ff899e085d5b75c560d310e0cf58a862eb69"
+    },
+    "styles": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/styles-final.log",
+      "sha256": "e1f2f2d46aace6125491be84f592dd7f2ffbf8701c766c89e9080a386f2fb992"
+    },
+    "electron_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/full-electron.log",
+      "sha256": "21e83ca5dca1d3cf5fb335e6296a1422a32e524ab09ffe2bf8bbb9df203f8bc6"
+    },
+    "ui_packaging_fix": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/summary.json",
+      "sha256": "c626da9602a82ba1ce49410e97665f8aa982508653d976c192b7f6bd5c346f12"
+    },
+    "mac_build": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/reaudit-ui-packaging/mac-package-with-native-label.log",
+      "sha256": "6503451432b9d5bf210a030097db061ba0cf819426ca0af6ca6c416e07b9d744"
+    },
+    "nestjs_unchanged_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/idle-rotation/full-node-final.log",
+      "sha256": "f317a8db26b7ace9f3a5c9ac10b370af16433e013183760b84ca556ddbfa29a8"
+    },
+    "ruff": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "real_cpu_worker": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/actual-cpu-idle-smoke.json",
+      "sha256": "4a92aa1d9d6113e1f3443e0efce6396ddf80ff9ecfb271756b776311ee7cd64d"
+    },
+    "real_owned_idle_cli": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/actual-owned-idle-cli.json",
+      "sha256": "c83f22cc992564fc0e29b34bab3543fc904ac10d2a296efbd155744deb5cef9b"
+    },
+    "isolated_runtime_preparation": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/runtime-preparation.json",
+      "sha256": "3b8eab3de2f28de5cea8691f664185944df6a46a0ccfa59c74daca37bc4d3191"
+    },
+    "preservation": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/preservation.json",
+      "sha256": "88ff40920d3bfab12f616032a70005ff86bb6e91e5ec02608a42eb321450b203"
+    },
+    "python_failure_baseline": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/python-baseline-comparison.json",
+      "sha256": "09d4fa6ea638213e01cd98513476716cd0beb7b1dfc2f442805e70345ec5227f"
+    },
+    "designated_delivery": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/reaudit-corrections/designated-delivery-metadata.json",
+      "sha256": "a5dafb186276d06f324e0d2ea716fc11092a72f7320180f7f8c521e6369bf817"
+    }
+  },
+  "commit_or_push_performed": false,
+  "original_app_or_shared_venv_replaced": false
+}

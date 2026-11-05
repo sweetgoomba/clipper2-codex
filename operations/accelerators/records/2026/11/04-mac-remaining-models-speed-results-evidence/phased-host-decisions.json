@@ -1,0 +1,558 @@
+{
+  "native_release": true,
+  "decisions": [
+    {
+      "at": "2026-11-03T19:16:10.848Z",
+      "endpoint": "/acquire",
+      "status": 200,
+      "error": null,
+      "admission": {
+        "observed_at": "2026-11-03T19:16:10.848Z",
+        "source": "darwin_vm",
+        "pressure": "normal",
+        "free_bytes": 84426752,
+        "file_backed_bytes": 4087513088,
+        "purgeable_bytes": 114999296,
+        "budget_bytes": 1113918668,
+        "adapter_id": "metal:Apple M4",
+        "owner_pid": 23008,
+        "requested_bytes": 302892000,
+        "reserved_bytes": 0,
+        "request_total_bytes": 302892000,
+        "adapter_free_bytes": null
+      }
+    },
+    {
+      "at": "2026-11-03T19:16:10.849Z",
+      "endpoint": "/register-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:14.857Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:18.864Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:22.869Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:26.875Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:30.881Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:34.887Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:38.889Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:42.893Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:46.899Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:50.904Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:54.910Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:16:58.916Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:02.922Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:06.940Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:10.953Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:13.796Z",
+      "endpoint": "/unreserve-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:14.563Z",
+      "endpoint": "/reserve",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:14.959Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:15.891Z",
+      "endpoint": "/reserve",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:18.965Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:22.967Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:26.971Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:30.977Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:34.981Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:38.984Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:42.986Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:46.992Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:50.995Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:55.002Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:17:59.008Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:01.468Z",
+      "endpoint": "/reserve",
+      "status": 409,
+      "error": "memory_admission_deferred",
+      "admission": {
+        "observed_at": "2026-11-03T19:18:01.468Z",
+        "source": "darwin_vm",
+        "pressure": "normal",
+        "free_bytes": 74170368,
+        "file_backed_bytes": 3488923648,
+        "purgeable_bytes": 19628032,
+        "budget_bytes": 897232896,
+        "adapter_id": "metal:Apple M4",
+        "owner_pid": 23008,
+        "requested_bytes": 1079002652,
+        "reserved_bytes": 0,
+        "request_total_bytes": 1079002652,
+        "adapter_free_bytes": null
+      }
+    },
+    {
+      "at": "2026-11-03T19:18:03.014Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:07.019Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:11.021Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:15.028Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:19.031Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:23.038Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:27.043Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:29.386Z",
+      "endpoint": "/unreserve-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:30.315Z",
+      "endpoint": "/reserve",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:31.048Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:35.054Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:39.060Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:41.121Z",
+      "endpoint": "/unreserve-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:43.066Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:47.078Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:51.089Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:55.091Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:18:59.097Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:03.100Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:07.106Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:11.112Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:15.117Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:19.121Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:23.127Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:27.133Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:31.143Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:35.151Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:39.158Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:43.162Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:47.169Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:51.175Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:55.182Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:19:59.188Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:03.197Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:07.203Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:11.206Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:15.210Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:19.217Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:23.223Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:27.229Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:31.236Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "at": "2026-11-03T19:20:33.374Z",
+      "endpoint": "/release",
+      "status": 200,
+      "error": null,
+      "admission": null
+    }
+  ]
+}

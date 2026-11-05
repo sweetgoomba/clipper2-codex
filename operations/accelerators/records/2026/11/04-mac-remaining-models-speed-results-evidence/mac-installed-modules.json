@@ -1,0 +1,51 @@
+[
+  {
+    "module": "clipper_accelerators.native_yunet",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_accelerators/native_yunet.py",
+    "source_sha256": "334a7848d8f9266bca9281205449041d23250778ca091ce284cc1efcb798bf5f",
+    "installed_sha256": "334a7848d8f9266bca9281205449041d23250778ca091ce284cc1efcb798bf5f",
+    "matches": true
+  },
+  {
+    "module": "clipper_accelerators.native_sface",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_accelerators/native_sface.py",
+    "source_sha256": "189c5ec54418e06e4460510ec9daac11d499963e5adeb7127669ae25d46152f2",
+    "installed_sha256": "189c5ec54418e06e4460510ec9daac11d499963e5adeb7127669ae25d46152f2",
+    "matches": true
+  },
+  {
+    "module": "clipper_accelerators.native_face",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_accelerators/native_face.py",
+    "source_sha256": "5a546c4a4202ede9eda4e2db14a665c141a89a4152dd2053ec1fb8017f7fe541",
+    "installed_sha256": "5a546c4a4202ede9eda4e2db14a665c141a89a4152dd2053ec1fb8017f7fe541",
+    "matches": true
+  },
+  {
+    "module": "clipper_accelerators.native_sessions",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_accelerators/native_sessions.py",
+    "source_sha256": "820289d9be28af4088b815e636c88f2852821b83258b6d4b9b2ec06fb295520a",
+    "installed_sha256": "820289d9be28af4088b815e636c88f2852821b83258b6d4b9b2ec06fb295520a",
+    "matches": true
+  },
+  {
+    "module": "clipper_accelerators.face_adapter",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/clipper_accelerators/face_adapter.py",
+    "source_sha256": "77557bd1fa289636d100b5bf78ba43d18df13997ea89b1172a7b4c3e28842fca",
+    "installed_sha256": "77557bd1fa289636d100b5bf78ba43d18df13997ea89b1172a7b4c3e28842fca",
+    "matches": true
+  },
+  {
+    "module": "dance_highlight.services.pose_engine",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pose_engine.py",
+    "source_sha256": "de71acda73ac531e4adcc971ea4e56c570b24f97077e516c43b806bb0b59fce5",
+    "installed_sha256": "de71acda73ac531e4adcc971ea4e56c570b24f97077e516c43b806bb0b59fce5",
+    "matches": true
+  },
+  {
+    "module": "dance_highlight.services.pipeline",
+    "installed_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/lib/python3.11/site-packages/dance_highlight/services/pipeline.py",
+    "source_sha256": "004bdcfe58a765ad00a581e9ba906cbd6a56f2885db7b653bfa0803c8988743b",
+    "installed_sha256": "004bdcfe58a765ad00a581e9ba906cbd6a56f2885db7b653bfa0803c8988743b",
+    "matches": true
+  }
+]

@@ -1,0 +1,154 @@
+{
+  "date_kst": "2026-11-04",
+  "remote_dev": {
+    "clipper_python": "5d565dfa96c1fa3bd6a4b94e9dc96110088f0dab",
+    "clipper_electron": "6831d8de76d34bb6ae2523122e9c6271ba68d00f"
+  },
+  "base": {
+    "clipper_python": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+    "clipper_electron": "febb1670a56efc2348ad42f2b48ca4f30b74f7a7"
+  },
+  "tests": {
+    "python_full": {
+      "passed": 3382,
+      "failed": 6,
+      "skipped": 5,
+      "failures_reproduced_on_original_dev": true
+    },
+    "python_focused": {
+      "passed": 30,
+      "failed": 0
+    },
+    "node_full": {
+      "passed": 1975,
+      "failed": 0
+    },
+    "node_focused": {
+      "passed": 13,
+      "failed": 0
+    }
+  },
+  "preservation": {
+    "original_tracked_files": 4955,
+    "changes": [],
+    "original_heads": {
+      "clipper_python": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+      "clipper_electron": "540c6e6544e8aa46ad97224958d7e543c44c1c0c",
+      "clipper_nestjs": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+      "clipper_angular": "4150871c6bb14f0a3eb5fd4d55a51a7bec54e98c"
+    },
+    "protected_python_paths_changed": []
+  },
+  "metrics": {
+    "date_kst": "2026-11-04",
+    "reproduction": {
+      "status": 409,
+      "reason": "memory_admission_deferred",
+      "requested_bytes": 302892000,
+      "observed_host_free_bytes": 258195456,
+      "successful_inferences": 0
+    },
+    "fixed_probe": {
+      "successful_inferences": 2,
+      "devices": [
+        "mps:0"
+      ],
+      "cpu_people": 5,
+      "mps_people": 5,
+      "matched_box_iou_min": 0.9999992847442627,
+      "admission": {
+        "observed_at": "2026-11-03T16:29:03.889Z",
+        "source": "darwin_vm",
+        "pressure": "normal",
+        "free_bytes": 86966272,
+        "file_backed_bytes": 3825827840,
+        "purgeable_bytes": 8896512,
+        "budget_bytes": 1024106495,
+        "adapter_id": "metal:Apple M4",
+        "owner_pid": 93046,
+        "requested_bytes": 302892000,
+        "reserved_bytes": 0,
+        "request_total_bytes": 302892000,
+        "adapter_free_bytes": null
+      }
+    },
+    "continuous_probe": {
+      "successful_inferences": 24,
+      "first_inference_ms": 1013.8840840081684,
+      "warm_median_ms": 29.360041953623295,
+      "memory_processes": [
+        {
+          "command": "/usr/bin/vm_stat",
+          "milliseconds": 1.271792000000005
+        },
+        {
+          "command": "/usr/sbin/sysctl",
+          "milliseconds": 1.3885420000001432
+        }
+      ],
+      "lease_endpoints": [
+        "/acquire",
+        "/register-native",
+        "/heartbeat",
+        "/release"
+      ],
+      "cpu_people": 5,
+      "mps_people": 5,
+      "matched_box_iou_min": 0.9999992847442627
+    },
+    "limits": [
+      "original three jobs first rejection was not retained; cannot retroactively identify it",
+      "single-frame native MPS check is not full-video quality certification or a CPU/GPU speed comparison",
+      "NativeRecord provider_only/profile_verified=false remains conservative; actual short-probe device and allocation are separate evidence"
+    ]
+  },
+  "logs": {
+    "python_final": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/.implementation-evidence/final-full-pytest.log",
+      "sha256": "beb79d1b86c2908aad079cc6c1b238b1f8107f59616610eb50270c2caddb7abb"
+    },
+    "python_focused": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/.implementation-evidence/final-recovery-policy.log",
+      "sha256": "0c0ff5d5fa77c18ae3282b6a5f31ccbb4acb67b633d1c1b164e02b0196c51dae"
+    },
+    "baseline_render_six": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/.implementation-evidence/baseline-six-render-failures.log",
+      "sha256": "8f0a7ec41921e16a5651eb4286f383834c5081da26e25f5848e96ec825b48c51"
+    },
+    "node_final": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/.implementation-evidence/latest-dev-full-node-tests.log",
+      "sha256": "81ffb1848ec8482244f3abb9c6411cc08cb3cc406a7b4b9429980593cb7ced28"
+    },
+    "node_focused": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/.implementation-evidence/green-review-pressure.log",
+      "sha256": "fd2f4c201c2783a977b22448b644c7b2476d100ba04d1378513ae627f766132d"
+    },
+    "diagnostics_red": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/.implementation-evidence/red-diagnostics.log",
+      "sha256": "09e72da8a97ba1910f629492543afa6feafe1e94c542ef282fea5b836eec2f11"
+    },
+    "memory_red": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/.implementation-evidence/red-memory.log",
+      "sha256": "7ac70607924d912cf182bcc32f9a0d9b158a68b801aff996a46813119bf25e32"
+    },
+    "review_red": {
+      "original_path": "/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/.implementation-evidence/red-review-pressure.log",
+      "sha256": "9266d4a71ba96be6b58fdfdb895ae033aa67d35c6a170ad355983c12eab2ebe5"
+    }
+  },
+  "review": {
+    "reviewer": "independent subagent",
+    "finding": "inherited pressure-property lookup accepted unknown strings",
+    "fixed": true,
+    "reproduced_before_fix": true,
+    "confirmed_after_fix": true
+  },
+  "source_video": {
+    "original_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/sources/youtube/BZDZBUyaJbA/source.mp4",
+    "sha256": "3400a0f3d21399609c54b38884d0208bf28e2541e10d450c5135306deba2e363"
+  },
+  "weights": {
+    "original_path": "/Users/jina/Library/Application Support/Clipper Studio Dev/yolov8s-pose.pt",
+    "sha256": "234314cd8baf62616791aceb9ea6ad5c19f26cf6c0d8f3a1bfce1e23b186cfb3"
+  }
+}

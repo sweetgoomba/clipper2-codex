@@ -1,0 +1,21 @@
+✔ cache-rich Mac admits bounded GPU work despite low currently free pages (21.277709ms)
+✔ critical pressure returns the decision snapshot and never grants a GPU lease (6.362041ms)
+✔ unknown or stale memory observations fail closed (3.694042ms)
+✔ reservations across adapters share the host budget and existing reservations cannot grow past it (7.58575ms)
+✔ overlapping observations cannot grant two leases on one adapter (18.888167ms)
+✔ Windows dedicated-memory and host-memory limits both remain enforced (1.951833ms)
+✔ Darwin parser counts only bounded reclaimable cache and respects pressure (0.523708ms)
+✔ host requires capability, verified adapter, owned pid and exclusive lease (43.166958ms)
+✔ verification token is bound to plugin, job and first owned process (0.681667ms)
+✔ aggregate model reservations stay within adapter memory admission (8.834459ms)
+✔ expired heartbeat keeps a live owner exclusive until workers are gone (6.794959ms)
+✔ explicit native release retains reservation until native owner exits (7.210167ms)
+✔ permission-denied liveness never proves that device memory was released (2.93625ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.31475

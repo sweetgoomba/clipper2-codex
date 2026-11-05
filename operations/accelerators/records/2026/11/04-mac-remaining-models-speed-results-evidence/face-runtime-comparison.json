@@ -1,0 +1,28 @@
+{
+  "baseline-mmn": {
+    "recognizer_stats": {
+      "requests": 4603,
+      "inferences": 4557,
+      "cache_hits": 46,
+      "inference_seconds": 23.410426345362794
+    },
+    "detector_stats": {
+      "requests": 6555,
+      "cache_hits": 891,
+      "detection_seconds": 104.7214568258496
+    }
+  },
+  "single-phased-mmn": {
+    "recognizer_stats": {
+      "requests": 4603,
+      "inferences": 4565,
+      "cache_hits": 38,
+      "inference_seconds": 22.436230026301928
+    },
+    "detector_stats": {
+      "requests": 6555,
+      "cache_hits": 891,
+      "detection_seconds": 65.40355148533126
+    }
+  }
+}

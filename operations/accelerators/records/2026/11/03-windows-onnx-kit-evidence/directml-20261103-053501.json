@@ -1,0 +1,220 @@
+{
+  "label": "directml",
+  "system": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.11.14",
+    "onnxruntime": "1.24.4",
+    "available_providers": [
+      "DmlExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "windows_hw": "{\n    \"Name\":  \"NVIDIA GeForce GTX 1660 Ti\",\n    \"DriverVersion\":  \"32.0.15.8157\",\n    \"AdapterRAM\":  4293918720\n}\n{\n    \"Name\":  \"AMD Ryzen 7 3700X 8-Core Processor             \",\n    \"NumberOfCores\":  8,\n    \"NumberOfLogicalProcessors\":  16\n}",
+    "ep_devices": [
+      {
+        "ep": "CPUExecutionProvider",
+        "ep_vendor": "Microsoft",
+        "type": "OrtHardwareDeviceType.CPU",
+        "vendor": "AMD",
+        "vendor_id": "0x1022",
+        "device_id": "0x7",
+        "metadata": {
+          "Description": "AMD Ryzen 7 3700X 8-Core Processor             "
+        }
+      },
+      {
+        "ep": "DmlExecutionProvider",
+        "ep_vendor": "Microsoft",
+        "type": "OrtHardwareDeviceType.GPU",
+        "vendor": "NVIDIA",
+        "vendor_id": "0x10de",
+        "device_id": "0x2182",
+        "metadata": {
+          "Description": "NVIDIA GeForce GTX 1660 Ti",
+          "DxgiAdapterNumber": "0",
+          "DxgiHighPerformanceIndex": "0",
+          "DxgiVideoMemory": "5966 MB",
+          "LUID": "48940"
+        }
+      }
+    ]
+  },
+  "models": {
+    "yolo_pose": {
+      "used_by": [
+        "안무",
+        "인물"
+      ],
+      "rows": {
+        "CPU": {
+          "load_s": 0.13,
+          "first_run_ms": 97.0,
+          "median_ms_per_item": 89.93,
+          "p90_ms_per_item": 92.46,
+          "batch": 1
+        },
+        "DmlExecutionProvider:0": {
+          "load_s": 0.94,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 137.3,
+          "median_ms_per_item": 12.95,
+          "p90_ms_per_item": 13.85,
+          "batch": 1,
+          "speedup_vs_cpu": 6.94,
+          "same_people_dance": "24/24",
+          "same_people_person": "24/24",
+          "matched_box_iou_min": 1.0
+        },
+        "auto:PREFER_GPU": {
+          "load_s": 0.19,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 18.7,
+          "median_ms_per_item": 10.81,
+          "p90_ms_per_item": 11.03,
+          "batch": 1,
+          "speedup_vs_cpu": 8.32,
+          "same_people_dance": "24/24",
+          "same_people_person": "24/24",
+          "matched_box_iou_min": 1.0
+        }
+      }
+    },
+    "yunet": {
+      "used_by": [
+        "안무",
+        "인물"
+      ],
+      "rows": {
+        "CPU": {
+          "load_s": 0.03,
+          "first_run_ms": 7.3,
+          "median_ms_per_item": 4.71,
+          "p90_ms_per_item": 4.82,
+          "batch": 1
+        },
+        "DmlExecutionProvider:0": {
+          "load_s": 0.09,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 8.9,
+          "median_ms_per_item": 2.46,
+          "p90_ms_per_item": 2.48,
+          "batch": 1,
+          "speedup_vs_cpu": 1.91,
+          "same_face_count": "24/24",
+          "face_score_max_diff": 0.0003
+        },
+        "auto:PREFER_GPU": {
+          "load_s": 0.09,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 7.8,
+          "median_ms_per_item": 2.5,
+          "p90_ms_per_item": 2.52,
+          "batch": 1,
+          "speedup_vs_cpu": 1.88,
+          "same_face_count": "24/24",
+          "face_score_max_diff": 0.0003
+        }
+      }
+    },
+    "auraface": {
+      "used_by": [
+        "안무",
+        "인물"
+      ],
+      "rows": {
+        "CPU": {
+          "load_s": 0.51,
+          "first_run_ms": 59.3,
+          "median_ms_per_item": 56.49,
+          "p90_ms_per_item": 57.54,
+          "batch": 1,
+          "batch8": {
+            "first_run_ms": 406.8,
+            "median_ms_per_item": 51.03,
+            "p90_ms_per_item": 51.39,
+            "batch": 8
+          }
+        },
+        "DmlExecutionProvider:0": {
+          "error": "UnicodeDecodeError('utf-8', b\"[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: E:\\\\_work\\\\1\\\\s\\\\onnxruntime\\\\core\\\\providers\\\\dml\\\\DmlExecutionProvider\\\\src\\\\MLOperatorAuthorImpl.cpp(2853)\\\\onnxruntime_pybind11_state.pyd!00007FFC78202FEC: (caller: 00007FFC781CDBD7) Exception(2) tid(f6c) 80070057 \\xb8\\xc5\\xb0\\xb3 \\xba\\xaf\\xbc\\xf6\\xb0\\xa1 \\xc6\\xb2\\xb8\\xb3\\xb4\\xcf\\xb4\\xd9.\\r\\n\", 373, 374, 'invalid start byte')",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\P4XDyakgDReIAvRz\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 296, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 373: invalid start byte\n"
+        },
+        "auto:PREFER_GPU": {
+          "error": "UnicodeDecodeError('utf-8', b\"[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running BatchNormalization node. Name:'/features/BatchNormalization' Status Message: E:\\\\_work\\\\1\\\\s\\\\onnxruntime\\\\core\\\\providers\\\\dml\\\\DmlExecutionProvider\\\\src\\\\MLOperatorAuthorImpl.cpp(2853)\\\\onnxruntime_pybind11_state.pyd!00007FFC78202FEC: (caller: 00007FFC781CDBD7) Exception(3) tid(f6c) 80070057 \\xb8\\xc5\\xb0\\xb3 \\xba\\xaf\\xbc\\xf6\\xb0\\xa1 \\xc6\\xb2\\xb8\\xb3\\xb4\\xcf\\xb4\\xd9.\\r\\n\", 373, 374, 'invalid start byte')",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 240, in main\n    rows[provider][\"batch8\"] = run_all(session, inputs, max(4, args.runs // 4), batch=8)[1]\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\run_kit.py\", line 136, in run_all\n    first = session.run(None, {name: batches[0]})\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Metabuzz\\Desktop\\clipper-gpu-kit\\.uvcache\\archive-v0\\P4XDyakgDReIAvRz\\Lib\\site-packages\\onnxruntime\\capi\\onnxruntime_inference_collection.py\", line 296, in run\n    return self._sess.run(output_names, input_feed, run_options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xb8 in position 373: invalid start byte\n"
+        }
+      }
+    },
+    "clip_visual": {
+      "used_by": [
+        "대사"
+      ],
+      "rows": {
+        "CPU": {
+          "load_s": 0.77,
+          "first_run_ms": 37.4,
+          "median_ms_per_item": 31.94,
+          "p90_ms_per_item": 32.91,
+          "batch": 1,
+          "batch8": {
+            "first_run_ms": 188.3,
+            "median_ms_per_item": 25.26,
+            "p90_ms_per_item": 25.7,
+            "batch": 8
+          }
+        },
+        "DmlExecutionProvider:0": {
+          "load_s": 0.78,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 382.6,
+          "median_ms_per_item": 14.51,
+          "p90_ms_per_item": 14.56,
+          "batch": 1,
+          "speedup_vs_cpu": 2.2,
+          "cosine_min": 1.0,
+          "cosine_median": 1.0,
+          "batch8": {
+            "first_run_ms": 73.0,
+            "median_ms_per_item": 8.23,
+            "p90_ms_per_item": 8.31,
+            "batch": 8
+          }
+        },
+        "auto:PREFER_GPU": {
+          "load_s": 0.66,
+          "providers_used": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "first_run_ms": 73.3,
+          "median_ms_per_item": 13.03,
+          "p90_ms_per_item": 13.2,
+          "batch": 1,
+          "speedup_vs_cpu": 2.45,
+          "cosine_min": 1.0,
+          "cosine_median": 1.0,
+          "batch8": {
+            "first_run_ms": 72.5,
+            "median_ms_per_item": 8.31,
+            "p90_ms_per_item": 8.49,
+            "batch": 8
+          }
+        }
+      }
+    }
+  }
+}

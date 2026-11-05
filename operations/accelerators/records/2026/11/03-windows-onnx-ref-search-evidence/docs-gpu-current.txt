@@ -1,0 +1,162 @@
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:10:[Supertonic](https://github.com/supertone-inc/supertonic)(온디바이스 ONNX TTS)을 데스크톱 앱에 **로컬 설치형**으로 내장해, **완전히 독립된 "TTS 생성기" 수직 모듈**로 추가한다.
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:74:### 4-1. Python 플러그인 `tts_supertonic` (참조: `dance_highlight` — onnxruntime+모델+CPU 가장 닮은 꼴)
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:79:                         # deps: clipper-plugin-sdk(workspace), supertonic, onnxruntime, soundfile/numpy
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:151:| T2 | **동시성/스레드 안전**: `POST /tts` 동시호출 시 ONNX 세션 안전? lock/직렬화? | manifest `max_concurrency` |
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:152:| T3 | ✅ **uv + py3.11 + onnxruntime 휠** 설치 검증 — **mac arm64 완료** (`uv sync`로 `supertonic==1.3.1` 설치+부팅 OK). win x64만 남음 | pip은 됨, uv·플랫폼 미검증이었음 |
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:185:- SDK: `clipper_python/clipper_plugin_sdk/clipper_plugin_sdk/base.py` — `PluginBase`(`load_models`/`run_job`/**`register_extra_routes`**), `PluginRuntime`(idle-kill/OOM exit 10·11·12/accelerator probe(**onnxruntime** 포함)).
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:188:- **가장 닮은 참조 플러그인**: `clipper_python/plugins/dance_highlight/` (onnxruntime 의존 + 모델 + CPU). `manifest.json` 필드 전체 참고.
+origin/main:architecture/2026-06-11-supertonic-tts-module-design.md:204:- 온디바이스 ONNX TTS, ~99M 파라미터, **CPU만으로 동작**(라즈베리파이서도 구동), 31개 언어(한국어 포함).
+origin/main:architecture/2026-06-16-cross-process-logging-design.md:65:{"v":1,"ts":"2026-06-16T07:34:50.123Z","level":"error","src":"python.tts_supertonic","msg":"onnx load fail","trace":"7f3a9c21","ctx":{"model":"supertonic","code":"ENOENT"}}
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:26:| D4 | 리소스 = **①앱/OS ②런타임(mem·disk·cpu·gpu·uptime) ③앱상태(플러그인 readiness·모델·활성기능) 전부** + **QA 메모** | "무엇이 터졌나(trace) + 왜(스냅샷)"가 QA 핵심 |
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:39:        │  { traceId, entries[], appVersion, memo, system{os,mem,disk,cpu,gpu,uptime} }
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:41:[clipper_electron main]  IPC clipperBridge.system.snapshot() → OS/mem/disk/cpu/gpu 수집
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:67:| `resource` | jsonb | mem·disk·cpu·gpu·uptime |
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:84:- **신규 IPC** (`clipper_electron`): `system.snapshot()` — main에서 `os.platform/release/totalmem/freemem/cpus`, 디스크 여유(가벼운 방식), GPU(`app.getGPUInfo('basic')`), `process.uptime`. `clipperBridge`에 노출(preload).
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:99:- **상세(우측 드로어, 공용 패턴)**: ① 트레이스 타임라인 — 데스크톱 로그뷰어 `trace-view`(스팬바·flow) **이식**(순수 함수 재사용 or 포팅) + 로그줄들(`entries`) ② 리소스/앱상태 스냅샷(mem·disk·cpu·gpu·플러그인 readiness) ③ QA 메모 ④ 상태 변경.
+origin/main:architecture/2026-07-09-desktop-error-reports-design.md:102:- **renderer→nest** `POST /v1/error-reports/desktop`: `{ traceId?, entries: LogEntry[], memo?, system: SystemSnapshot }`. **정본 필드 계약 = 구현 계획의 Global Constraints**(`SystemSnapshot` 11필드: appVersion·osPlatform·**osRelease**·arch·cpuCount·memTotalBytes·memFreeBytes·diskFreeBytes|null·diskTotalBytes|null·gpu|null·uptimeSec). appVersion은 system 안에 포함.
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:35:  gpu: string | null; uptimeSec: number;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:83:  diskFreeBytes: number | null; diskTotalBytes: number | null; gpu: string | null; uptimeSec: number;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:230:      E({ src: 'python.tts', level: 'error', msg: 'onnx model load failed', ctx: { code: 'ENOENT' } }),
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:235:    expect(out.message).toBe('onnx model load failed');
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:353:    memTotalBytes: 1, memFreeBytes: 1, diskFreeBytes: null, diskTotalBytes: null, gpu: null, uptimeSec: 1 },
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:406:    memTotalBytes: number; memFreeBytes: number; diskFreeBytes: number | null; diskTotalBytes: number | null; gpu: string | null; uptimeSec: number };
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:424:        diskFreeBytes: s.diskFreeBytes, diskTotalBytes: s.diskTotalBytes, gpu: s.gpu, uptimeSec: s.uptimeSec },
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:564:  @IsOptional() gpu!: string | null;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:893:  @IsOptional() gpu!: string | null;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1049:  gpu: string | null;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1066:    diskFreeBytes: 5e9, diskTotalBytes: 500e9, gpu: 'Apple M3', uptimeSec: 123.9,
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1069:  assert.equal(out.gpu, 'Apple M3');
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1075:    memTotalBytes: 0, memFreeBytes: 0, diskFreeBytes: null, diskTotalBytes: null, gpu: null, uptimeSec: 0 });
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1077:  assert.equal(out.gpu, null);
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1093:  gpu: string | null; uptimeSec: number;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1108:    gpu: raw.gpu && raw.gpu.trim() ? raw.gpu.trim() : null,
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1136:`src/main/system-ipc.ts` (mirror `logs-ipc.ts`; 디스크는 `fs.statfs`, GPU/CPU/mem은 host-resource-monitor 활용 — 구현 시 `collectHostResources()`의 실제 반환 필드에 맞춰 매핑; 없으면 `os` 직접):
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1152:async function gpuSummary(): Promise<string | null> {
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1155:    // host-resource-monitor의 GPU 필드 형태에 맞춰 요약 문자열 추출(구현 시 실제 필드 확인).
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1156:    const gpu = (host as { gpu?: { name?: string } | Array<{ name?: string }> }).gpu;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1157:    if (Array.isArray(gpu)) return gpu.map((g) => g?.name).filter(Boolean).join(', ') || null;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1158:    return gpu?.name ?? null;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1165:    const gpu = await gpuSummary();
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1169:      diskFreeBytes: disk.free, diskTotalBytes: disk.total, gpu, uptimeSec: process.uptime(),
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1174:> 구현 노트: `collectHostResources()`가 GPU를 이미 캐시하므로 재사용이 이득. 실제 반환 타입(`HostResourceSnapshot`)의 GPU 필드명을 확인해 매핑을 맞출 것. GPU 수집이 무겁거나 형태가 안 맞으면 `gpuSummary`는 `null` 반환으로 degrade(스냅샷은 나머지 필드로 유효).
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1245:  diskFreeBytes: number | null; diskTotalBytes: number | null; gpu: string | null; uptimeSec: number;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1320:  cpuCount: 0, memTotalBytes: 0, memFreeBytes: 0, diskFreeBytes: null, diskTotalBytes: null, gpu: null, uptimeSec: 0,
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1591:  diskFreeBytes: number | null; diskTotalBytes: number | null; gpu: string | null; uptimeSec: number;
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1674:    exception: 'ENOENT', message: 'onnx model load failed', errorSrc: 'python.tts_supertonic', errorCount: 1,
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1691:      { v: 1, ts: '2026-07-09T00:00:28.500Z', level: 'error', src: 'python.tts_supertonic', msg: 'onnx model load failed', ctx: { code: 'ENOENT' } },
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1693:    resource: { cpuCount: 10, memTotalBytes: 16e9, memFreeBytes: 3e9, diskFreeBytes: 5e9, diskTotalBytes: 500e9, gpu: 'Apple M3', uptimeSec: 4200 },
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1896:          <div class="k">GPU</div><div class="v">{{ d.resource.gpu || '—' }}</div>
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:1951:    get: (id: string) => { calls.push(['get', id]); return of({ ...rep({ id }), entries: [], resource: { cpuCount: 8, memTotalBytes: 1, memFreeBytes: 1, diskFreeBytes: null, diskTotalBytes: null, gpu: null, uptimeSec: 1 }, appState: { tools: {}, plugins: [] } }); },
+origin/main:architecture/2026-07-09-desktop-error-reports-plan.md:2008:**Placeholder scan**: 코드 스텝은 실제 코드 포함. B1의 trace-view 포팅과 D2의 GPU 필드 매핑은 "원본 파일 열어 1:1 이식/실제 필드 확인" 지시(원본 경로 명시) — 원본이 정본이라 코드 중복 금지 차원의 의도적 위임.
+origin/main:architecture/2026-07-29-dependency-lifecycle-map.md:145:실질 데드라인은 CPython EOL(2027-10-31)이 아니라 **torch / onnxruntime / ultralytics / faster-whisper가 3.11 휠을 언제까지 빌드해주느냐**다. PyPI 생태계는 보통 CPython EOL보다 **먼저** 드롭한다.
+origin/main:architecture/2026-07-29-dependency-lifecycle-map.md:203:| **PyPI 휠** | torch·onnxruntime이 3.11 드롭 → `uv sync` 실패 | 릴리스 노트뿐 |
+origin/main:architecture/2026-08-08-angular22-electron43-upgrade-design.md:49:| D10 | 스크린샷 하네스는 **자동 게이트로 승격하지 않음** | 하네스 자체가 "폰트 힌팅·GPU 래스터 차이로 flaky해서 골든 비교 안 한다"고 명시. before/after를 사람이 대조하는 산출물로 쓴다 |
+origin/main:architecture/2026-08-14-shortform-generative-motion-review.md:152:2. **로컬 영상 생성은 제외.** 파일 크기가 아니라 시간 — M1 Max 64GB에서 4초 클립 7분(LTX), 2초 클립 82분(Wan). 8클립이면 56분~11시간. Windows·GPU 없는 기기는 아예 불가
+origin/main:architecture/2026-08-28-readiness-hardware-gate-design.md:23:| `tts_supertonic` | 1,024 | ONNX |
+origin/main:architecture/2026-08-28-readiness-hardware-gate-design.md:25:여기에 Electron(main+renderer+GPU)·nest·ffmpeg가 더 붙는다.
+origin/main:architecture/2026-08-28-readiness-hardware-gate-design.md:204:(Memory·CPU·Processes·GPU 카드)에 **"지금 시작할 수 없는 기능" 한 줄**을 더한다.
+origin/main:architecture/2026-08-28-readiness-hardware-gate-design.md:242:| 프로세스별 RSS · 메모리 · CPU · GPU | **`GET http://127.0.0.1:9019/v1/resources`** — 이미 있고 인증 없음 (`resources.controller.ts:10`, `main.ts:31,45,48`) | 없음 |
+origin/main:architecture/2026-09-07-desktop-telemetry-design.md:139:  "hw":  { "cpuCount": 8, "memTotalBytes": 17179869184, "gpu": "..." },
+origin/main:architecture/2026-09-08-desktop-telemetry-phase1a-plan.md:515:    hw: { cpuCount: 8, memTotalBytes: 17179869184, gpu: 'Intel UHD' },
+origin/main:architecture/2026-09-08-desktop-telemetry-phase1a-plan.md:531:    hw: { cpuCount: 1, memTotalBytes: 1, gpu: null },
+origin/main:architecture/2026-09-08-desktop-telemetry-phase1a-plan.md:546:    hw: { cpuCount: 1, memTotalBytes: 1, gpu: null }, flows: [], processExits: [], errorSignatures: [],
+origin/main:architecture/2026-09-08-desktop-telemetry-phase1a-plan.md:557:      hw: { cpuCount: 1, memTotalBytes: 1, gpu: null }, flows: [], processExits: [], errorSignatures: [],
+origin/main:architecture/2026-09-09-desktop-telemetry-phase1b-redaction-hardening-plan.md:555:Phase 1A 최종 확인에서 나온 갭이다(Ruling 40). Tier 2 번들의 `payload.system`은 Tier 1 화이트리스트 6필드(`appVersion`·`osPlatform`·`osRelease`·`arch`·`cpuCount`·`memTotalBytes`)로 조립되는데, **수신 DTO의 `SystemSnapshotDto`는 `memFreeBytes`·`uptimeSec`도 필수 int로 요구한다.** 1A 구현자가 `memFreeBytes: 0`을 채우지 않고 신고한 판단이 옳았다 — `gpu: null`은 "모른다"지만 `0`은 **거짓 측정값**이다.
+origin/main:architecture/2026-09-09-desktop-telemetry-phase1b-redaction-hardening-plan.md:592:  assert.deepEqual(Object.keys(payload.hw).sort(), ['cpuCount', 'gpu', 'memTotalBytes']);
+origin/main:architecture/2026-09-09-desktop-telemetry-phase1b-redaction-hardening-plan.md:605:`telemetry-wiring.ts`의 환경 소스에 `os.freemem()`·`os.uptime()`을 더한다(둘 다 **동기·비용 무시**다 — 종료 경로에서 await하는 GPU 프로브와 다르다). `error-bundle.ts`의 `whitelistSystem`에 두 필드를 **열거로** 추가한다(스프레드 금지). `session-summary.ts`(Tier 1)는 건드리지 않는다.
+origin/main:architecture/2026-09-09-observability-v0-plan.md:1072:    { level: 'error', src: 'python.tts', msg: 'onnx load failed', ctx: { code: 'ENOENT' } },
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:5:**Goal:** 이미 수집 중인 payload를 전부 화면에 올리고, 마지막으로 비어 있던 `hw.gpu`까지 채워 **텔레메트리 수집→표시 경로를 완성한다.**
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:7:**Architecture:** 기기(electron)는 부팅 시 GPU를 한 번 캐시해 기존 `hw` 슬롯에 넣는다(수집 스키마 변경 없음). 서버는 `overview`에 사용 지표·자기점검을 더하고, 기기·환경 분포는 **별도 엔드포인트 `/admin/telemetry/devices`** 로 가른다. admin은 목업대로 세 섹션을 그린다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:25:**③ `hw.gpu`를 이번에 채운다 — 안 하면 패널이 영구 미완성이다.**
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:26:위생 장치는 이미 있다: `GPU_NAME_SHAPE`(`^[\p{L}\p{N} ()._+-]{1,64}$`)가 `whitelistHw`에 **이미 적용돼 있고**, 경로·URL·이메일·따옴표는 원리적으로 통과 못 한다. 비어 있는 것은 **출처뿐**이다(`session-envelope.ts:108`이 `gpu: null` 하드코딩, `getGPUInfo` 호출 0건).
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:28:**④ 새 수집 항목은 GPU 하나뿐이다.**
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:29:저장된 payload 27개 경로를 전수 대조했다(실 데이터 26 + 조건부 `truncated`). GPU 외 모든 패널은 **이미 오는 값의 집계**다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:31:**⑤ 🔴 따라서 기기 배포가 필요하다.** 서버만 올리면 되는 작업이 아니다 — GPU 값은 **새 설치본이 퍼진 뒤에야** 쌓인다. 그전까지 GPU 패널은 "아직 값이 없음"이 정상이다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:52:| `src/main/telemetry/gpu-name.ts` (신규) | 부팅 시 1회 GPU 이름 캐시. 어떤 입력에도 던지지 않고, 못 얻으면 `null` 유지 |
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:53:| `src/main/telemetry/session-envelope.ts` (수정) | `gpu: null` 하드코딩 → 캐시 값 주입 |
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:71:**분리 이유**: GPU 캐시를 별 파일로 두는 것은 `session-envelope.ts`가 **"절대 던지지 않는다"** 를 보장하는 파일이기 때문이다. 비동기·플랫폼 의존 코드를 그 안에 넣으면 그 보장을 다시 증명해야 한다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:75:## Task 1: 기기 — 부팅 시 GPU 이름 캐시
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:77:**Files:** Create `src/main/telemetry/gpu-name.ts` + `test/telemetry-gpu-name.test.mjs` · Modify `session-envelope.ts`, `telemetry-wiring.ts`
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:80:- Produces: `startGpuNameCapture(deps): void` · `readGpuName(): string | null`
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:82:🔴 **부팅을 막지 않는다.** `app.getGPUInfo('basic')`은 비동기이고 플랫폼에 따라 느리거나 거부될 수 있다. **fire-and-forget**으로 시작하고 결과가 오면 캐시에 넣는다. 세션이 끝날 때까지 안 왔으면 `null`이다 — 기다리지 않는다(관측이 관측 대상을 지연시키면 안 된다).
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:84:🔴 **크래시 회수 봉투에도 현재 부팅의 GPU를 쓴다.** `publishRecoveredCrash`가 카운터를 빌려오지 않는 것과 **다른 종류**라서다: 카운터는 **그 세션의 것**이지만 GPU는 **그 기계의 것**이고, 직전 세션도 같은 기계에서 돌았다. 이 구분을 주석으로 남긴다 — 안 그러면 "죽은 세션의 값을 빌렸다"로 잘못 지적된다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:86:🔴 **모양 검증은 새로 만들지 않는다.** `session-summary.ts`의 `GPU_NAME_SHAPE`가 **이미 `whitelistHw`에서 돈다.** 여기서 또 검사하면 같은 규칙이 두 곳에 산다 — 이 프로그램이 반복해서 제거해 온 부류다. 이 파일은 **원문을 캐시만** 하고 판정은 화이트리스트에 맡긴다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:91:test('GPU 정보를 못 얻어도 던지지 않고 null로 남는다', async () => {
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:92:  const cache = createGpuNameCache({ getGPUInfo: async () => { throw new Error('denied'); } });
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:99:  const cache = createGpuNameCache({
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:100:    getGPUInfo: async () => ({ gpuDevice: [{ deviceString: 'Apple M2 Max' }] }),
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:108:  const cache = createGpuNameCache({ getGPUInfo: () => new Promise(() => {}) });
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:113:test('start를 두 번 불러도 getGPUInfo는 한 번만 돈다', async () => {
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:115:  const cache = createGpuNameCache({ getGPUInfo: async () => { calls++; return {}; } });
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:122:- [ ] **Step 2~5**: 실패 확인 → 구현 → 봉투 배선(`gpu: readGpuName()`) → 통과 확인 → 커밋
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:124:**배선 증명**: `session-envelope` 테스트에 "캐시에 값이 있으면 payload의 `hw.gpu`로 나간다"를 추가한다. 유닛만으로는 `gpu: null` 하드코딩이 남아 있어도 통과한다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:200:  gpu:         Array<{ name: string; installs: number }>;     // null 은 '보고 안 됨' 버킷
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:204:  gpuReported: number;   // gpu 가 non-null 인 설치 수 — 0이면 화면이 "아직 값 없음"을 띄운다
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:212:🔴 **`gpu: null`은 "GPU 없음"이 아니라 "보고 안 됨"이다.** 별도 버킷으로 세고, `gpuReported`가 0이면 화면이 분포 대신 사유를 띄운다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:214:- [ ] **Step 1: 실패 테스트** — 설치 단위 집계(같은 설치 다중 세션이 1로 세어짐) · `gpu: null` 버킷 분리 · `env` 기본 prod · `from`/`to` 누락 400 · 가드 적용
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:227:mock은 **`gpuReported: 0`인 상태를 반드시 포함**한다 — 새 설치본이 퍼지기 전의 실제 상태이고, 그게 화면의 기본 모습이다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:242:🔴 **GPU 패널은 `gpuReported === 0`이면 분포 대신 사유를 띄운다.** "전부 0"으로 그리면 데이터가 없는 것인지 GPU가 없는 것인지 구별되지 않는다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:250:it('gpuReported가 0이면 분포 대신 사유를 보여준다', () => { /* .nodata 존재 + 막대 없음 */ });
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:259:## Task 6: 처리방침 문구 — GPU 추가분
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:263:Tier 1이 **기본 ON**이므로 수집 항목이 늘면 방침 문구도 따라가야 한다. GPU 모델명은 **기계 사양**이지 개인 식별자가 아니고(일련번호가 아니라 모델 카테고리), 이미 수집 중인 `cpuCount`·`memTotalBytes`와 같은 부류다 — 그 근거를 적는다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:282:   - **GPU: `gpuReported: 0` → "아직 값 없음"** (새 설치본 전)
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:285:5. 🔴 **GPU는 새 설치본을 굽고 실행해야 값이 생긴다.** 빌드 → 설치 → 실행 → 종료 → 재실행(+60초) 후 `hw.gpu`가 봉투에 들어갔는지 **아웃박스 JSON으로 먼저 확인**하고, 그다음 화면에서 분포가 한 줄 생기는지 본다.
+origin/main:architecture/2026-09-14-telemetry-usage-and-device-plan.md:286:6. **이 계획이 하지 않는 것**: GPU 외 새 수집 · 사용시간 합계 지표 · 절전 구간 제외 규칙(기기 변경이 필요하고 임계값 근거가 없다)
+origin/main:architecture/2026-10-15-history-era1-d2x.md:14:  - 배포: GitHub Actions에서 EC2로 SSH 접속 → git pull → pipenv install → nohup gunicorn `restart.sh`. 웹은 pm2(Node 22.7). 미디어는 2024-10-25부터 Docker Compose(api·celery·redis, NVIDIA GPU 예약)를 쓰다가 2024-12에 맥미니로 옮겼다.
+origin/main:architecture/2026-10-15-history-era1-d2x.md:139:### 2024-10-25 — 미디어 Docker화 + GPU 인코딩
+origin/main:architecture/2026-10-15-history-era1-d2x.md:141:- 무엇이 바뀌었나: Dockerfile.api·Dockerfile.celery·docker-compose(redis 포함)를 만들었다. celery 워커에 NVIDIA GPU를 예약하고 ffmpeg은 `h264_nvenc`를 쓰게 했다. 이날 하루에만 "도커파일 수정" 커밋이 15개 남았다. 10/21에는 gunicorn과 celery 프로세스를 통합했다.
+origin/main:architecture/2026-10-15-history-era1-d2x.md:190:- 왜: 이유는 적혀 있지 않다(추정: GPU EC2 비용 절감과 패키징해 로컬에서 돌리기 위한 준비. pyinstaller가 근거).
+origin/main:architecture/2026-10-15-history-era1-d2x.md:228:  2. 렌더 서버 비용이 부담이었을 것이다(추정). GPU Docker(10/25) → 맥미니(12/11), Celery 제거.
+origin/main:architecture/2026-10-15-history-era2-adlight.md:100:- 무엇이 바뀌었나: 저장소에 통째로 넣어 두었던 Coqui를 걷어냈다. `~/project/adlight/coqui`는 2025-03의 자체 학습 체크포인트와 voice cloning 실험 흔적이다. 이후 Clova·Coqui·KT·Oute 비교 화면을 만들었다가 BuzzTTS로 Coqui를 대체했다. OuteTTS는 08-04에 끄고, 11-04에 다시 켰고, 12-08에 GPU(FlashAttention)를 붙였다.
+origin/main:architecture/2026-10-15-history-era2-adlight.md:170:### 2025-12-03 ~ 12-18 — 시연 서버, 도메인, GPU 가속
+origin/main:architecture/2026-10-15-history-era2-adlight.md:182:### 2026-03-19 ~ 03-25 — Windows GPU 패키징과의 싸움, 그리고 AI 페어 코딩 시작
+origin/main:architecture/2026-10-15-history-era2-adlight.md:184:- 무엇이 바뀌었나: 일주일 동안 python 커밋 75건 중 52건이 torch, onnxruntime, InsightFace의 DLL 로딩·CUDA·frozen 빌드 크래시 수정이었다. NSIS 32bit mmap 한계 때문에 nsis-web으로 바꿨고, CPU용과 CUDA용 두 가지 빌드로 나눴다. 첫 Claude 공동 작성 커밋도 이때 나왔다.
+origin/main:architecture/2026-10-15-history-era3-clipper-desktop.md:16:  - ML: Python 3.11 고정, uv 워크스페이스, FastAPI 기반 자체 SDK. 플러그인 `dance_highlight`(yolov8-pose·insightface) · `dialog_highlight`(faster-whisper·open-clip) · `clipper1_video_render`→`clipper_video_render` · `tts_supertonic`(Supertonic ONNX). LLM은 OpenAI gpt-4.1-mini(메모리: unit-cost-measurements)
+origin/main:architecture/2026-10-15-history-era3-clipper-desktop.md:93:- 무엇이 바뀌었나: 앱 이름 Clipper2. ffmpeg·모델 다운로드 동의/진행률 UX, 스토어·대시보드, 플러그인 조작의 Nest 일원화, 리소스 텔레메트리(GPU)·입장 제어, WS 잡 오케스트레이션.
+origin/main:architecture/2026-10-15-history-era3-clipper-desktop.md:95:- 근거: ng `350447dd`·el `22cd176` 이름 · ng `1885d3d2`·`4cc1055e` 동의 UI · ng `448a6210` 스토어 · ng `3da3ab8c` · nest `beb6b4cc` control plane · `37c87ae5`·`1fc810c6` · el `1a03c98` GPU
+origin/main:architecture/2026-10-15-history-era3-clipper-desktop.md:149:- 무엇이 바뀌었나: 온디바이스 ONNX TTS 플러그인 → TTS 화면 → ADR-0006으로 "재사용 프리셋 `{label, voiceId, speed}`"로 격상 → 7/2 숏폼 TTS Clova→Supertonic → 8/11 숏폼 AI 목소리 = TTS 프리셋 단일 소스. 9월 보이스 클론 실험.
+origin/main:architecture/2026-10-15-release-notes-series-plan.md:12:| 2. adlight | 2025-01 ~ 2026-03 (꼬리 ~07) | d2x 엔진 + 사내 자동화 툴킷(하이라이트·에셋·뉴스·광고 리포트). 2025-09-17 앱 이름 **clipperstudio** | 웹(Docker) ↔ 설치형(Electron) 두 번 전환 | Angular 19 NgModule, Nest 10, FastAPI, PyInstaller, Electron 33 | 약 2,700 | 앱 하나에 제품 7개 엉킴, Windows GPU 설치파일 7GB+ · DLL 크래시 |
+origin/main:architecture/2026-10-15-release-notes-series-plan.md:27:| 2 | 웹 서비스를 접고 PC로 | 2024-11 ~ 12 | 결제가 막히고 GPU 서버가 부담이 되자 렌더를 맥미니로, 그리고 사용자 PC로. 12/10 웹의 "새 숏폼 만들기"가 데스크톱 앱을 실행하게 됨 | **2024-11-29 스크린샷 10장**(`~/mine/사진/D2X/`): d2x.ai 홈, "D2X 어드민" Electron 5단계 편집기 — 남은 유일한 당시 화면 |
+origin/main:architecture/2026-10-15-release-notes-series-plan.md:31:| 6 | 7GB 설치파일 | 2026-02 ~ 03 | 롱폼 하이라이트(안무·대사)를 붙이자 Windows GPU 패키징이 무너짐. 일주일 python 커밋 75건 중 52건이 DLL·CUDA 크래시 수정 | "CPU 사용자에게 7GB를 설치시키는 것은 UX상 불가" |
+origin/main:architecture/2026-10-15-release-notes-series-plan.md:50:| A. 목소리 | KT AI Voice(2024-09) → CLOVA(2024-10) → Coqui 자체 학습(2025-03) → Clova·KT·Oute 비교, BuzzTTS(2025-05~06) → OuteTTS GPU(2025-12) → **Supertonic 온디바이스**(2026-06) → 재사용 프리셋(ADR-0006) → 숏폼도 Supertonic(7/2) → 보이스 클론 실험(9월) | 클라우드 API에서 내 PC의 내 목소리로 |
+origin/main:architecture/2026-10-15-release-notes-series-plan.md:52:| C. 어디서 렌더하나 | EC2 → GPU Docker(2024-10) → 맥미니(2024-12) → PyInstaller 로컬(2025-08) → 7GB 벽(2026-03) → 플러그인 + 필요할 때 받는 모델(2026-04) → 메모리 실측(2026-08) | 서버비와 사용자 PC 사양 사이 |
+origin/main:architecture/2026-10-16-overseas-dub-contracts.md:68:- 모델: OCR = `rapidocr_onnxruntime`(PP-OCRv4 중국어, 패키지에 모델 포함). STT = faster-whisper **small**(HF 캐시로 내려받음).
+origin/main:architecture/2026-10-16-overseas-video-to-shortform-design.md:210:- **OCR**: RapidOCR(`rapidocr_onnxruntime`, PP-OCRv4 ch, 모델 약 16MB). onnxruntime은 제품 Python에 이미 있다(1.24.4).
+origin/main:architecture/2026-10-16-overseas-video-to-shortform-design.md:221:- **manifest**: `models`(OCR 3개 + whisper), `resources`(CPU, `requires_gpu:false`), `idle_policy`. 설치 상태·모델 크기 등록은 §5.3.
+origin/main:architecture/CLIPPER_PROJECT_ANALYSIS.md:123:- **`models.py`** — `JobRequest`/`JobResult`/`JobStatus`, `HealthResponse`, `RuntimeAcceleratorsResponse`(torch CUDA/MPS·ONNX·CTranslate2 프로브)
+origin/main:architecture/CLIPPER_PROJECT_ANALYSIS.md:145:- **모델/라이브러리**: onnxruntime, insightface, ultralytics, opencv-python, scikit-learn, numpy, requests, yt-dlp
+origin/main:architecture/CLIPPER_PROJECT_ANALYSIS.md:175:- **프리즈 빌드 호환 처리**: dance_highlight에서 onnxruntime-gpu ↔ torch CUDA DLL 충돌 회피 위해 InsightFace를 CPU(-1)로 강제
+origin/main:launch/2026-07-30-dependency-risk-acceptance.md:157:| **torch·onnxruntime의 3.11 휠 드롭 공지** | R4-b | 즉시 Python 3.13 이관 |
+origin/main:launch/2026-08-14-generative-video-api-and-local-options.md:128:**8클립 숏폼 한 편 = LTX로 56분, Wan으로 11시간.** 그것도 **64GB M1 Max**라는 상위 1% 기계에서다. 우리 사용자 다수인 Windows·GPU 없는 노트북에서는 아예 안 돌아간다.
+origin/main:launch/2026-08-31-tos-v03-comment-answers.md:69:| 음성 합성(TTS, Supertonic onnx) | **회원 PC** — `plugins/tts_supertonic` |
+origin/main:launch/2026-08-31-tos-v03-comment-answers.md:320:| **onnxruntime / Supertonic 모델** | `plugins/tts_supertonic` |
+origin/main:launch/2026-09-08-privacy-policy-telemetry-amendment.md:119:| 운영체제·하드웨어 | `win32` / `10.0.26100` / `x64` / CPU 코어 수 / 메모리 총량 / **GPU 제조사**(아래 주) |
+origin/main:launch/2026-09-08-privacy-policy-telemetry-amendment.md:125:> **주 — GPU 제조사** (2026-09-14 추가). 담는 값은 제품명이 아니라 **미리 정한 일곱 개 중 하나**다:
+origin/main:launch/2026-09-08-privacy-policy-telemetry-amendment.md:128:> 따라서 모델명·드라이버 버전·어댑터 문자열은 원리적으로 들어올 수 없다. ✅확인 — `clipper_electron/src/main/telemetry/gpu-vendor.ts`의 닫힌 매핑 테이블과 `null` 반환 분기.
+origin/main:launch/2026-09-08-privacy-policy-telemetry-amendment.md:134:GPU 항목이 **제품명이 아니라 닫힌 목록**인 것도 이 원칙 때문이다 — 자유 텍스트를 담는 칸을 Tier 1에 하나도 두지 않는다.
+origin/main:qa/execution-sheet.csv:370:10-settings-logs-dashboard,SET-S10 · 플러그인 대시보드,SET-DASH-002,P1,기능,telemetry 수집됨,"1. ""로컬 런타임 리소스"" 확인","카드 4종: Memory(사용%·용량) · CPU Load(load/cores) · Processes(개수) · GPU/VRAM. ""마지막 수집 {시:분:초}"". 추적 프로세스 목록(역할·이름·PID·메모리·CPU). 3초 간격 폴링 갱신",N,,,,
+origin/main:qa/features/10-settings-logs-dashboard.md:136:| SET-DASH-002 | P1 | telemetry 수집됨 | 1. "로컬 런타임 리소스" 확인 | 카드 4종: Memory(사용%·용량) · CPU Load(load/cores) · Processes(개수) · GPU/VRAM. "마지막 수집 {시:분:초}". 추적 프로세스 목록(역할·이름·PID·메모리·CPU). **3초 간격 폴링 갱신** | — | |
+origin/main:status/2026-06-26-refactor-priority.html:228:          <li class="info">기회 리팩토링: plugin-manager 동시성 · deeplink 분리 · GPU 모니터 분리</li>
+origin/main:status/2026-06-26-refactor-priority.html:347:        <div class="sd">plugin-manager 동시성 · deeplink 분리 · GPU 모니터 분리. 당길 이유 없음.</div>
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:22:- 공개 ONNX 4종, 약 99M 파라미터. 텍스트 + **보이스 스타일 임베딩** → flow-matching으로 latent → 오토엔코더가 44.1kHz PCM 출력.
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:28:- ⚠️ 우리가 한 것도 "모델 학습"이 아니다. ONNX 가중치는 **동결**이라 학습 자체가 불가능하고, 경사하강으로 맞춘 건 **위 입력값 2개뿐**이다. adlight에서 했던 파인튜닝(모델을 바꿔 표현력을 늘리는 것)과는 종류가 다르다 — 우리는 고정된 모델이 낼 수 있는 소리 안에서 좌표만 찾는다.
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:79:- 클론 자체는 torch + GPU 오프라인 잡이다. 설치형에 탑재 불가(ADR-0006: 런타임은 프리셋 JSON만 소비). 사용자 셀프서비스 클론은 애초에 V3 항목이었다.
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:117:### 7.1 "ONNX라서 가중치를 못 바꾸는 거냐? 양자화 모델이라 그런가?"
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:118:둘 다 아니다. 공개 자산을 직접 열어 확인했다 (`~/.cache/supertonic3/onnx/`):
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:122:| `text_encoder.onnx` | 36.4MB | 9.0M | FLOAT(fp32) |
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:123:| `duration_predictor.onnx` | 3.7MB | 0.9M | FLOAT(fp32) |
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:124:| `vector_estimator.onnx` | 256.5MB | 64.0M | FLOAT(fp32) |
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:125:| `vocoder.onnx` | 101.4MB | 25.3M | FLOAT(fp32) |
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:130:가중치 변경도 포맷 때문에 막힌 게 아니다. 우리는 이미 `onnx2torch`로 **미분 가능한 torch 모델로 변환**해 그래디언트를 흘렸다(원본 ONNX 대조: 최대오차 5.6e-5, 상관 0.9999999992). 그래디언트는 가중치까지 도달한다. 실제로 막는 건 4개다.
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:132:1. **학습 레시피가 없다.** 공개된 건 추론용 ONNX와 런타임뿐. flow-matching 손실·오토엔코더 학습·데이터 파이프라인·스케줄은 비공개다. 추론 그래프는 있고 학습 목표가 없다.
+origin/main:status/2026-09-09-voice-clone-prosody-report.md:155:- **말투를 넣는 것** = 파인튜닝으로 **안 된다.** 조건 입력에 시간축이 없는 건 아키텍처(입력 인터페이스) 문제여서, 가중치를 아무리 맞춰도 "이 단어에서 힘을 빼라"를 지시할 통로가 없다. 넣으려면 **구조를 바꿔 재학습** = 사실상 새 모델 사전학습(수개월·대규모 데이터·GPU). 논문 트랙이다.
+origin/main:status/2026-10-06-new-module-estimates.md:37:| **3** | 번역+더빙+립싱크 | STT(faster-whisper, 언어 자동감지·단어 타임스탬프), WSOLA 후처리, web_api LLM/`/translation` | TTS가 **한국어 하드코딩**(`app.py:42`) → 다국어 TTS 확인. 원음 보이스 유지(보이스 클론은 실험만, 제품 0). 보컬/배경 분리. 다화자 = 1번 화자 분리 필요. **립싱크 0 → 신규**, GPU 요구 | 더빙 **22~30일** + 립싱크 **12~20일** = **34~50일** (+ 립싱크 검증 3~5일 선행) | **저** |
+origin/main:status/2026-10-06-new-module-estimates.md:62:- 고객 PC 로컬 실행 가능성: 현 플러그인은 전부 GPU 불요. 품질 쓸 만한 오픈 모델(LatentSync·MuseTalk)은 GPU 요구 ⚠️, Wav2Lip은 상업 이용 불가 ⚠️.
+origin/main:status/2026-10-06-new-module-estimates.md:73:| **A. 로컬 경량** | 다국어 CLIP류(샷당 프레임 3~5장) + STT 텍스트 하이브리드 + LLM 질의 변환(대본 문장 → 시각 묘사, 텍스트만 외부 전송) | 기본안. GPU 없는 PC 전부 |
+origin/main:status/2026-10-06-new-module-estimates.md:79:**함께 잴 것**: 모델 크기(설치본 증가분) · 피크 메모리 · 영상 1분 색인 시간(CPU / GPU 각각) · 질의 1회 지연 · 라이선스(상업 이용).
+origin/main:todos/2026-07-09-desktop-error-reports-followups.md:41:- [ ] **[electron]** `collectHostResources([])`가 GPU만 쓰는데 full 파이프라인(macOS `vm_stat` exec 비캐시) 실행. `collectGpuResources` export해 직접 호출로 대체(1회성 호출이라 무해). GPU는 60s 캐시라 반복 exec 없음.
+origin/main:todos/2026-07-09-desktop-error-reports-followups.md:42:- [ ] **[web_api]** ingest DTO `diskFreeBytes`/`diskTotalBytes`/`gpu` `@IsOptional()` 타입검증 느슨(신뢰 소스라 저위험). `@IsInt()`/`@IsString()` 추가 검토.
+origin/main:todos/2026-07-09-desktop-error-reports-followups.md:48:- [ ] **[cross-repo]** ingest DTO의 disk/gpu `@IsOptional`이 `undefined`도 허용 vs 소스(electron `shapeSnapshot`)는 **present-but-null 보장**. benign(키 항상 방출). 서버 strict 강화 시 `null`-not-`undefined` 유지.
+origin/main:todos/2026-09-02-dialog-keyframe-streaming-followups.md:61:**③ cuda 분기는 전용 회귀 테스트가 없다** — CI에 GPU가 없다. cpu 분기와의 코드 대칭만 확인됨.
+origin/main:todos/2026-09-11-desktop-telemetry-followups.md:110:`activeDaysHistogram`·`cpuCount`·`memTotalGb` 전부 **카운트 0인 버킷을 배열에서 뺀다**(`osBreakdown` 관례를 그대로 따랐다). 열린 범주(OS 릴리스·GPU 벤더)에서는 맞는 규칙이다 — 있을 수 있는 값을 미리 셀 수 없으니까.
+origin/main:todos/2026-10-08-web-redesign-followups.md:29:- [ ] (10/12) **시스템 요구사항 표시 — 위치 결정 후 다시 넣기.** 히어로 설치 버튼 아래 한 줄을 사용자 요청으로 뺐다(위치가 맞지 않음). 문구(예전 다운로드 화면 그대로): "시스템 요구사항 · 최소: Windows 10 / macOS 13 · RAM 8GB · 저장 5GB · 권장(AI 모델): RAM 16GB+ · NVIDIA GPU / Apple Silicon · VRAM 6GB+". 후보: 설치 안내창, FAQ, 푸터 근처 별도 줄. git `cf2cc9d`에 원래 구현이 있다.

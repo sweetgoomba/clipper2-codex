@@ -1,0 +1,23 @@
+[
+  {
+    "batch": 2,
+    "mean_ms_per_face": 99.62985276166971,
+    "min_cosine": 0.9999998807907104,
+    "max_abs_diff": 1.1801719665527344e-05,
+    "peak_rss_mib": 456.328125
+  },
+  {
+    "batch": 4,
+    "mean_ms_per_face": 67.66938063083217,
+    "min_cosine": 0.9999998807907104,
+    "max_abs_diff": 1.1801719665527344e-05,
+    "peak_rss_mib": 458.21875
+  },
+  {
+    "batch": 8,
+    "mean_ms_per_face": 56.79397083392056,
+    "min_cosine": 0.9999998807907104,
+    "max_abs_diff": 1.1801719665527344e-05,
+    "peak_rss_mib": 516.828125
+  }
+]

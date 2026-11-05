@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "stage": "actual_plugin_execution_and_explicit_yolo_onnx_test",
+  "automatic_best_backend_selection_complete": false,
+  "cpu_reanalysis_connected": [
+    "dance_highlight",
+    "person_highlight",
+    "dialog_highlight"
+  ],
+  "new_onnx_test_consumers": [
+    "dance.yolo_pose",
+    "person.yolo_pose"
+  ],
+  "real_native_comparison": [
+    {
+      "plugin": "person",
+      "equal": {
+        "groups": true,
+        "clips": true
+      }
+    },
+    {
+      "plugin": "dance",
+      "equal": {
+        "lists": true,
+        "persons": true
+      }
+    }
+  ],
+  "real_native_recovery": [
+    {
+      "plugin": "dance",
+      "attempts": [
+        "cuda:0",
+        "cpu"
+      ],
+      "real_first_attempt_evidence": [
+        {
+          "real_inference_frames": 3,
+          "injected": "oom"
+        }
+      ],
+      "final_decisions_equal_cpu": {
+        "lists": true,
+        "persons": true
+      },
+      "actual_inference_device": "CPU for injected-fault test",
+      "managed_source_is_independent": true
+    },
+    {
+      "plugin": "person",
+      "attempts": [
+        "cuda:0",
+        "cpu"
+      ],
+      "real_first_attempt_evidence": [
+        {
+          "real_inference_frames": 3,
+          "injected": "oom"
+        }
+      ],
+      "final_decisions_equal_cpu": {
+        "groups": true,
+        "clips": true
+      },
+      "actual_inference_device": "CPU for injected-fault test",
+      "managed_source_is_independent": true
+    }
+  ],
+  "native_nest_consumer_checks": [
+    {
+      "plugin": "dance",
+      "engine": "cpu",
+      "clips": 1,
+      "persons": 1,
+      "source_resolves": true,
+      "thumbnail_paths_verified": 1
+    },
+    {
+      "plugin": "dance",
+      "engine": "onnx",
+      "clips": 1,
+      "persons": 1,
+      "source_resolves": true,
+      "thumbnail_paths_verified": 1
+    },
+    {
+      "plugin": "person",
+      "engine": "cpu",
+      "clips": 1,
+      "persons": 1,
+      "source_resolves": true,
+      "thumbnail_paths_verified": 1
+    },
+    {
+      "plugin": "person",
+      "engine": "onnx",
+      "clips": 1,
+      "persons": 1,
+      "source_resolves": true,
+      "thumbnail_paths_verified": 1
+    }
+  ],
+  "full_python": {
+    "passed": 3103,
+    "failed": 6,
+    "skipped": 6,
+    "same_failure_assertions": true,
+    "note": "before final review corrections; corrected paths separately tested"
+  },
+  "final_review_regression": {
+    "passed": 73,
+    "failed": 0
+  },
+  "latest_targeted": {
+    "passed": 56,
+    "failed": 0
+  },
+  "independent_final_review": {
+    "passed": 56,
+    "no_remaining_confirmed_P1_P2_in_review_scope": true
+  },
+  "electron_targets": {
+    "passed": 24,
+    "failed": 0
+  },
+  "actual_gpu_oom_induced": false,
+  "native_windows_tested": false,
+  "new_gpu_release_qualified": false,
+  "independent_speech_policy_review": {
+    "passed": 8,
+    "failed": 0
+  }
+}

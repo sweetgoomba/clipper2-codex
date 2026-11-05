@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-11-04T04:27:29.303100+09:00",
+  "scope": "Mac Apple Silicon / dance_highlight / Made My Night only",
+  "commits": {
+    "clipper_python": "17259bcf1c7c466cd7108e04a25250172dd28151",
+    "clipper_electron": "849a51b7906f84054e1a55d02da45bfa3768be6f"
+  },
+  "wall_seconds": {
+    "before": 334.9578494169982,
+    "after": 266.0340287919971,
+    "reduction_percent": 20.57686384867964
+  },
+  "same_boundary_analysis_seconds": {
+    "before": 333.5754834159743,
+    "after": 264.99031087500043,
+    "reduction_percent": 20.56061549806615
+  },
+  "quality": {
+    "lists_equal": true,
+    "previous_lists_equal": true,
+    "config_equal": true,
+    "stats_equal": true,
+    "list_counts": {
+      "main": 49,
+      "group": 14
+    }
+  },
+  "cpu_reanalysis": false,
+  "tests": {
+    "python": {
+      "passed": 2073,
+      "seconds": 54.8
+    },
+    "electron_bounded": {
+      "passed": 1977,
+      "seconds": 34.811731834
+    },
+    "electron_initial": {
+      "passed": 1975,
+      "failed": 2
+    },
+    "electron_failed_files_retry": {
+      "passed": 20
+    }
+  },
+  "excluded_experiments": [
+    {
+      "label": "earlier-yunet-full-trial",
+      "reason": "AuraFace CPU after memory rejection; preserved output equality but not comparable GPU timing"
+    },
+    {
+      "label": "no-phase-control",
+      "seconds": 306.8099767,
+      "reason": "early CPU reference release; YuNet/SFace memory rejection"
+    },
+    {
+      "label": "pressure-run-aborted",
+      "reason": "app active memory pressure; diagnostic parent cancelled"
+    },
+    {
+      "label": "overlap-aborted",
+      "reason": "two mistakenly overlapping scratch runs cancelled via owned parent; excluded from quality and speed claims"
+    }
+  ],
+  "app": "/Users/jina/project/adlight/desktop/clipper_electron/dist-app/mac-arm64/Clipper Studio (dev).app",
+  "app_reopened": true,
+  "manual_user_project_deletions_preserved": true,
+  "server_deployment": false
+}

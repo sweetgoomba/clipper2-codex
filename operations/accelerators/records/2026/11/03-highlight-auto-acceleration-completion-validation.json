@@ -1,0 +1,39 @@
+{
+  "scope": [
+    "darwin-arm64",
+    "win32-x64"
+  ],
+  "python": {
+    "passed": 3169,
+    "failed": 6,
+    "skipped": 5,
+    "same_baseline_failures": true
+  },
+  "nestjs": {
+    "passed": 5261,
+    "failed": 0,
+    "latest_user_change_tests_passed": 10
+  },
+  "angular": {
+    "settings_tests_passed": 31,
+    "style_tests_passed": 21
+  },
+  "focused_accelerators": 195,
+  "preserved_dance_tests": 210,
+  "mac_packaged": true,
+  "windows_native_tested": false,
+  "release_catalog_shipped": false,
+  "source_files": 4896,
+  "source_bundle_integrity": true,
+  "notes": [
+    "Whisper on Mac remains CPU to preserve beam 5",
+    "Native Core ML person final comparison PASS; YOLO candidate rejected on raw quality check",
+    "Full Electron has existing fake-updater mock failure and intermittent unchanged POSIX ownership test; isolated ownership recheck passed"
+  ],
+  "electron_isolated_final_targets_passed": 24,
+  "packaged_dependency_resolution": {
+    "checked": 9,
+    "missing": []
+  },
+  "mac_runtime_sources_verified": 30
+}

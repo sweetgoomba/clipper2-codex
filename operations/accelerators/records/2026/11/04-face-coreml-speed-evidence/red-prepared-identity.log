@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_prepared_entry_freezes_real_incumbent_identity_before_observing_timings _
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107998710>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-538/test_prepared_entry_freezes_re0')
+
+    def test_prepared_entry_freezes_real_incumbent_identity_before_observing_timings(module,monkeypatch,tmp_path):
+        import onnxruntime as ort
+        from clipper_accelerators import face_adapter,environment,idle
+        builtin,cpu,gpu,_=wrapper(module,monkeypatch)
+        source=tmp_path/'source.onnx';source.write_bytes(b'source')
+        entry={'model_id':'face.auraface','backend':'ort_coreml','onnx_path':str(source),
+               'onnx_sha256':runtime.file_sha(source),'output_names':['fc1']}
+        monkeypatch.setattr(ort,'InferenceSession',lambda *a,**kw:cpu)
+        monkeypatch.setattr(face_adapter,'candidate_entry',lambda *a,**kw:entry)
+        monkeypatch.setattr(face_adapter,'admitted',lambda *a,**kw:False)
+        monkeypatch.setattr(module,'face_session',lambda path,**kw:builtin)
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_HOME',str(tmp_path/'home'))
+        snapshot=environment.probe_environment({'system':'darwin','host_arch':'arm64','process_arch':'arm64','os_build':'26'})
+        monkeypatch.setattr(environment,'native_environment',lambda *a,**kw:snapshot)
+        monkeypatch.setattr(idle,'choose_for_gate',lambda *a,**kw:None)
+        session=face_adapter.RoutedSession(source)
+        for i in range(33):session.run(['fc1'],{'data':value()['data']+np.float32(i*.001)})
+        gate=next(iter(session.gates.values()))
+>       assert gate.incumbent_backend=='CoreMLExecutionProvider/CPUExecutionProvider'
+E       AssertionError: assert 'CPUExecutionProvider' == 'CoreMLExecut...utionProvider'
+E         
+E         - CoreMLExecutionProvider/CPUExecutionProvider
+E         + CPUExecutionProvider
+
+clipper_accelerators/tests/test_native_face_coreml.py:214: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-04 03:12:34.978 Python[63550:21650409] 2026-11-04 03:12:34.978197 [W:onnxruntime:Default, telemetry_1ds.cc:600 operator()] Failed to persist telemetry device ID; using an in-memory identifier
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_prepared_entry_freezes_real_incumbent_identity_before_observing_timings
+1 failed, 22 deselected in 0.47s

@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-11-04T04:23:46.204146+09:00",
+  "repos": [
+    {
+      "path": "/Users/jina/project/adlight/web/clipper_web_client",
+      "branch": "dev",
+      "head": "aabcf3d4aa33a7da0795e7b141aee31da3ac2b71",
+      "remote_dev": "aabcf3d4aa33a7da0795e7b141aee31da3ac2b71",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/web/clipper_web_api",
+      "branch": "dev",
+      "head": "197af457fc00517de11e0f89fbb7c78863ca897c",
+      "remote_dev": "197af457fc00517de11e0f89fbb7c78863ca897c",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/web/clipper_web_admin",
+      "branch": "dev",
+      "head": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+      "remote_dev": "13b0568df99c3e3c6f99374f329d8f9bccc7b6a7",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/web/clipper_infra",
+      "branch": "dev",
+      "head": "f304750c4d1d6277483ba71ce73f88baaf33fe80",
+      "remote_dev": "f304750c4d1d6277483ba71ce73f88baaf33fe80",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_nestjs",
+      "branch": "dev",
+      "head": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "remote_dev": "a5f8db6f795847f778e67810e35f5d1af83c7fd0",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_angular",
+      "branch": "dev",
+      "head": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "remote_dev": "7b559706cea07e21374592f3106c0503d7a93d34",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_python",
+      "branch": "dev",
+      "head": "17259bcf1c7c466cd7108e04a25250172dd28151",
+      "remote_dev": "17259bcf1c7c466cd7108e04a25250172dd28151",
+      "tracked_changes": ""
+    },
+    {
+      "path": "/Users/jina/project/adlight/desktop/clipper_electron",
+      "branch": "dev",
+      "head": "849a51b7906f84054e1a55d02da45bfa3768be6f",
+      "remote_dev": "849a51b7906f84054e1a55d02da45bfa3768be6f",
+      "tracked_changes": ""
+    }
+  ]
+}

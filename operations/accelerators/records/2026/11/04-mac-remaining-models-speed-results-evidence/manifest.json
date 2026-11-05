@@ -1,0 +1,287 @@
+[
+  {
+    "file": "app-open-memory-observation.json",
+    "bytes": 438,
+    "sha256": "f607764cef0fd1a51138e30695cd039841ed39f9ad5a1963e10b59a759762610"
+  },
+  {
+    "file": "baseline-sitecustomize.py",
+    "bytes": 1535,
+    "sha256": "e7ed5ac1422bcda994c6182594febac4c4f4774cf9b283b24290157e9fd53cf7"
+  },
+  {
+    "file": "baseline.log",
+    "bytes": 15495,
+    "sha256": "db84698d9ae11b910d0f6924e063db000c8988a7ce1d4ec34909a220c713da8d"
+  },
+  {
+    "file": "bench_decode.py",
+    "bytes": 1011,
+    "sha256": "e521814fa9fc18178bb524457a45dcdd464caed0ac8f63992b96d5aa5ec0e0dc"
+  },
+  {
+    "file": "bench_sface.py",
+    "bytes": 3598,
+    "sha256": "ee0e77728f8df031be0d72d319816246c0977a5533d8001a6a9c3d2a30774c05"
+  },
+  {
+    "file": "bench_yunet.py",
+    "bytes": 4365,
+    "sha256": "f7c120af8b5baf1439d323e87a98e11eb4b4b82f6de96b0852624b6a0b46f55c"
+  },
+  {
+    "file": "bench_yunet_coreml.py",
+    "bytes": 3356,
+    "sha256": "9e543f4169fe03e718caef547930ba7e903e03ecdd73984b03eca7a9072299f9"
+  },
+  {
+    "file": "bench_yunet_static.py",
+    "bytes": 3966,
+    "sha256": "e9d7d43229d2ada7302ab2e229cdeb1288832804e8e54c61331c4744fe95bf37"
+  },
+  {
+    "file": "clipper_electron.patch",
+    "bytes": 4862,
+    "sha256": "13156a725b3948a5bbfa8168550e08de7dcc85ccf445a723c0ce1aa14613a398"
+  },
+  {
+    "file": "clipper_python.patch",
+    "bytes": 55205,
+    "sha256": "4f0138c241c2a339fcf3ad70975fd2350757119ce2eed47451218028d374df55"
+  },
+  {
+    "file": "compare_final.py",
+    "bytes": 1622,
+    "sha256": "2050b94116b9d53ffdb065400f0a1700a2b8ee9977d90cc71db18b6f7c73122d"
+  },
+  {
+    "file": "decode-bench.json",
+    "bytes": 1034,
+    "sha256": "95657e21b5f93a7dbccff9358b0f725ef313f30cfa8daa9e83542dafd220397a"
+  },
+  {
+    "file": "detector-shapes.json",
+    "bytes": 376416,
+    "sha256": "f819cfa793fabb4e9db746543fd9005ba2e413422a28892dd85d100f6ac2c471"
+  },
+  {
+    "file": "electron-focused-retry.log",
+    "bytes": 2684,
+    "sha256": "d3007de4b98c5d20e11eace9ff661da09da84238d821ad66b0d7b8b8cc49564d"
+  },
+  {
+    "file": "electron-regression-bounded.log",
+    "bytes": 214382,
+    "sha256": "3384298337174b35990da850758c1fd1466da69d57f2be0a42b1ec03f52fc453"
+  },
+  {
+    "file": "electron-regression-final.log",
+    "bytes": 215785,
+    "sha256": "36024ded0057488db6fd57cf6c207f83da1d8299b5b18bc606d3d7c8d2eb1712"
+  },
+  {
+    "file": "face-runtime-comparison.json",
+    "bytes": 612,
+    "sha256": "d13f9dc0d351521dcfb4eb0ce6e3d26b1d9766504904bd3865d989baf5aebaf9"
+  },
+  {
+    "file": "final-output-equivalence.json",
+    "bytes": 19651,
+    "sha256": "09f1bf4ca51c71a7d607bd71ff176f005a639f7df67d73aae98cbbce9bfc9934"
+  },
+  {
+    "file": "final-review.txt",
+    "bytes": 1060,
+    "sha256": "f671956567414952ef78ff53e8d29a96da8187e90a5b3819a63b66316ae2f933"
+  },
+  {
+    "file": "final-selections.json",
+    "bytes": 4093,
+    "sha256": "07e10a4c25f8d4e19ea3a0db44454a91d3aca79fd1f914e60a78bd15acf70cf2"
+  },
+  {
+    "file": "frozen-params.json",
+    "bytes": 8639,
+    "sha256": "bcb6784008149c6fef404d86e5b1c70e53871685484ca3f743768a84cd1309fc"
+  },
+  {
+    "file": "green-phase-host.log",
+    "bytes": 1355,
+    "sha256": "2a6fb553444352080b39d555e2b2c96d47de71718645560841c2b35fdb09e4ab"
+  },
+  {
+    "file": "green-phase-python.log",
+    "bytes": 99,
+    "sha256": "2b30caa7fef0b016f781e97c4ccfca411e052c9c0f853c42995f4bef2ba89fba"
+  },
+  {
+    "file": "green-retained-pose.log",
+    "bytes": 98,
+    "sha256": "b06acb3f9b38335db0209c5a6ed8e65ca702012d5080b4bebf4eced263667382"
+  },
+  {
+    "file": "green-yunet.log",
+    "bytes": 99,
+    "sha256": "1741059b42eb20921cde1d97fd3109da2a2b300d7d0e6d56ea6f759b6d90725e"
+  },
+  {
+    "file": "local-api-health.json",
+    "bytes": 267,
+    "sha256": "71ea2cd68dd13f9ec7d3e7d5fd1a0f7af9089edc3a0d31b68ebfb760c3055d8c"
+  },
+  {
+    "file": "mac-build.log",
+    "bytes": 5518,
+    "sha256": "de2f0af911ce089cc86ef1a7fa2164332a5f7ef1f6c25682dfb4047a4bd93a68"
+  },
+  {
+    "file": "mac-host-package-check.json",
+    "bytes": 310,
+    "sha256": "54da7c60fbe1fbcccb9dc5dbc4be5b37d853f27b0997455f1cd5011a8f826dc5"
+  },
+  {
+    "file": "mac-installed-modules.json",
+    "bytes": 3100,
+    "sha256": "f0bf677d58d71f23e9177ad8e609b293ea324782c4a4373f8606586fe195293a"
+  },
+  {
+    "file": "mac-package-check.json",
+    "bytes": 3157,
+    "sha256": "bee5c227eaf205b4a67521f90d5221357d68394a10ddb01079c9e7a3b05c1db0"
+  },
+  {
+    "file": "mac-plugin-update-check.json",
+    "bytes": 436,
+    "sha256": "08a471c5cde17d457be88aac4c021470a31a3f5653affb7c5da5412bf2b20adb"
+  },
+  {
+    "file": "mac-plugin-update.log",
+    "bytes": 3052,
+    "sha256": "b08f0b0c1dbcf3b3b294bf9b00d4579e7607be0157cbb015b99a38908670bc96"
+  },
+  {
+    "file": "mac-startup-ui.txt",
+    "bytes": 6080,
+    "sha256": "357e9fb823be6c84d06cf0a95e6de7689237bc0ba73ff0f8238cdb9bff206ee4"
+  },
+  {
+    "file": "mmn-inputs.json",
+    "bytes": 7900,
+    "sha256": "62c3e1f56bb6a7daf7193a15ee9c08bbeed052da525171a314664c069792d26b"
+  },
+  {
+    "file": "original-dirty-counts-final.json",
+    "bytes": 1485,
+    "sha256": "e389a4438e6488474f21bdf194e8ed8f26073a82785f2b12e147ff1bef4ea4cc"
+  },
+  {
+    "file": "original-repositories-final.json",
+    "bytes": 2098,
+    "sha256": "8eed67408746c65ed3a7d348147a1fcbd54a8cab42108d514f16f264d6607c35"
+  },
+  {
+    "file": "packaged-nest-health.json",
+    "bytes": 188,
+    "sha256": "322929f89a6b4f9866517d7e75110a347c3052b563eacf9ebe1a7c5b61d71c3e"
+  },
+  {
+    "file": "phased-host-decisions.json",
+    "bytes": 12364,
+    "sha256": "b8971d9507d18b44fe6ea1c267114536f59079a371c3dadcd94760afb80eba10"
+  },
+  {
+    "file": "red-peak-memory.log",
+    "bytes": 3082,
+    "sha256": "79e3016c102888116fd39f0ac4bdcaa6224715c3f7d8775c883633b4b01a996e"
+  },
+  {
+    "file": "red-phase-host.log",
+    "bytes": 1633,
+    "sha256": "19f1715b5e0d68c53f4995309950c2647d6342045ced4fb6e6a2a68091f8e420"
+  },
+  {
+    "file": "red-phase-python.log",
+    "bytes": 4935,
+    "sha256": "be1f65a432c840468f7c9d0c78078eb3fb3c0fac353bd55999a7a2221c255f08"
+  },
+  {
+    "file": "red-retained-pose.log",
+    "bytes": 2173,
+    "sha256": "2bc307ad70f4ebae8246c0428f3cee60492446ae98b4a65827b15e0d1d885925"
+  },
+  {
+    "file": "red-review.log",
+    "bytes": 3118,
+    "sha256": "8b9c892b0f4fcf33ddd8baddaddcd2912d452e91e8ecc23a96ef2ba41d16fae7"
+  },
+  {
+    "file": "red-sface.log",
+    "bytes": 1982,
+    "sha256": "0a8b18310895ba52562997075aeadcd7655bc74fdec5fba2b13be9d94008bfb1"
+  },
+  {
+    "file": "red-yunet.log",
+    "bytes": 4374,
+    "sha256": "ee1e421976c7b120949fa89a52a541af3090393d0a9aa70662769edafb64eaef"
+  },
+  {
+    "file": "regression-final.log",
+    "bytes": 2342,
+    "sha256": "e016fe7d38c935ee48234bd3dd3958000a2871d039793dd0e484da090e23473a"
+  },
+  {
+    "file": "run_baseline.cjs",
+    "bytes": 1286,
+    "sha256": "6f71f5392bf080f89ef65920d9b80e4a9592f2b95c8a396fd7b767cf7af18888"
+  },
+  {
+    "file": "run_baseline.py",
+    "bytes": 1860,
+    "sha256": "8a129c113f7fbea52c7486444e3d22b0e9109b7018e4e7568dfbb86e046d416c"
+  },
+  {
+    "file": "run_final.cjs",
+    "bytes": 1883,
+    "sha256": "6a28753103d905955f1fc31197682c8524a078a3025555bc7292f8e6fa84c51d"
+  },
+  {
+    "file": "run_final.py",
+    "bytes": 1797,
+    "sha256": "1e4a0965dd8764cfb73a144242f9a7e83decc80e342f9ee7717cdac3e4f19c14"
+  },
+  {
+    "file": "selection-sitecustomize.py",
+    "bytes": 1612,
+    "sha256": "78fd411cc53c8516e37ee2024144cc4bd82b70782ecefd04b20fb117b169f7d0"
+  },
+  {
+    "file": "sface-bench.json",
+    "bytes": 925,
+    "sha256": "1d04c2523b372243aa80322aba911e939960173b0a37a21ab7cff723374fb7cc"
+  },
+  {
+    "file": "single-phased-comparison.json",
+    "bytes": 12095,
+    "sha256": "c00ad53cec3a9562b2118758d8f897dfdff260a6c3eebb381cefd79e99383645"
+  },
+  {
+    "file": "single-phased-final.log",
+    "bytes": 17203,
+    "sha256": "29c57b97ec345b543f8f8fee86ea2fda06b5bcc85ef5c8e9ccf0a7a099358730"
+  },
+  {
+    "file": "yunet-coreml-bench.json",
+    "bytes": 6264,
+    "sha256": "f1f3a125392be26a0f92491ab0162c91c636e76f40951986555dd38bdb8d1db4"
+  },
+  {
+    "file": "yunet-cpu-bench.json",
+    "bytes": 10773,
+    "sha256": "6abdc4cadd46bf27c981886bade619740eab7231df8c51b8c3aa8db151d2016f"
+  },
+  {
+    "file": "yunet-static-bench.json",
+    "bytes": 2249,
+    "sha256": "52cb1c7877419845a155ebab96f85b5fc628054dfd13fbbf71b40c847d4b1ce8"
+  }
+]

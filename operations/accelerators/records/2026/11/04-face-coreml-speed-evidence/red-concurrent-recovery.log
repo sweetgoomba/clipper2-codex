@@ -1,0 +1,25 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_first_concurrent_calls_cannot_mix_cpu_and_coreml_embeddings _______
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10acb0890>
+
+    def test_first_concurrent_calls_cannot_mix_cpu_and_coreml_embeddings(module,monkeypatch):
+        from concurrent.futures import ThreadPoolExecutor
+        import threading,time
+        session,_,_,_=wrapper(module,monkeypatch)
+        original_prepare=module.prepare_coreml_model;entered=threading.Event();release=threading.Event()
+        def prepare(path):
+            entered.set();assert release.wait(1);return original_prepare(path)
+        monkeypatch.setattr(module,'prepare_coreml_model',prepare)
+        with ThreadPoolExecutor(2) as pool:
+            first=pool.submit(session.run,['fc1'],value());assert entered.wait(1)
+            second=pool.submit(session.run,['fc1'],value());time.sleep(.02);release.set()
+>           assert first.result()[0][0,0]==second.result()[0][0,0]==np.float32(1.0001)
+E           assert np.float32(1.0001) == np.float32(1.0)
+
+clipper_accelerators/tests/test_native_face_coreml.py:233: AssertionError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_first_concurrent_calls_cannot_mix_cpu_and_coreml_embeddings
+1 failed, 1 passed, 23 deselected in 0.22s

@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_conversion_consumes_exact_verified_source_bytes _____________
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-564/test_conversion_consumes_exact0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1071f4490>
+
+    def test_conversion_consumes_exact_verified_source_bytes(tmp_path,monkeypatch):
+        import hashlib
+        from clipper_accelerators import native_yunet,face_adapter
+        source=tmp_path/'source.onnx';original=b'pinned source';source.write_bytes(original)
+        monkeypatch.setattr(native_yunet,'_SOURCE_SHA',hashlib.sha256(original).hexdigest())
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_HOME',str(tmp_path/'home'))
+        real_hash=runtime.file_sha;consumed=[]
+        def swap_after_hash(path):
+            value=real_hash(path)
+            if path==source:source.write_bytes(b'replaced')
+            return value
+        monkeypatch.setattr(runtime,'file_sha',swap_after_hash)
+        def convert(value,**kwargs):
+            data=value if isinstance(value,bytes) else value.read_bytes();consumed.append(data);return data
+        monkeypatch.setattr(face_adapter,'prepare_model',convert)
+        result=native_yunet.prepare_model(source,(1920,1080))
+>       assert consumed==[original] and result.read_bytes()==original
+E       AssertionError: assert ([b'replaced'] == [b'pinned source']
+E         
+E         At index 0 diff: b'replaced' != b'pinned source'
+E         Use -v to get more diff)
+
+clipper_accelerators/tests/test_native_yunet.py:97: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-04 03:44:28.830 Python[95981:21821372] 2026-11-04 03:44:28.830642 [W:onnxruntime:Default, telemetry_1ds.cc:600 operator()] Failed to persist telemetry device ID; using an in-memory identifier
+___________ test_shared_backend_counts_self_recording_detector_once ____________
+
+setup = namespace(module=<module 'clipper_accelerators.native_yunet' from '/Users/jina/project/adlight/.worktrees/mps-admissio...var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-564/test_shared_backend_counts_sel0/model.onnx'))
+
+    def test_shared_backend_counts_self_recording_detector_once(setup):
+        from clipper_face_core.opencv_backend import OpenCvFaceBackend
+        backend=OpenCvFaceBackend.__new__(OpenCvFaceBackend);backend.detector=setup.wrapper
+        list(backend._detect_faces(image()))
+>       assert runtime.diagnostics()['models'][0]['calls']==1
+E       assert 2 == 1
+
+clipper_accelerators/tests/test_native_yunet.py:104: AssertionError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_yunet.py::test_conversion_consumes_exact_verified_source_bytes
+FAILED clipper_accelerators/tests/test_native_yunet.py::test_shared_backend_counts_self_recording_detector_once
+2 failed, 5 deselected in 0.54s

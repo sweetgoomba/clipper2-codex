@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-11-03T22:39:22.651023+09:00",
+  "status": "merged_and_remote_verified",
+  "user_scope": "이번 세션의 가속 변경만 반영; 다른 세션의 미커밋 안무 품질 개선 제외·보존",
+  "repositories": [
+    {
+      "repo": "python",
+      "root": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103",
+      "remote_before": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+      "integration": "469370b206c82a8a1d4a0e181e72fb6ce8c3910c",
+      "tree": "ecf59231c0d727591c39919fae1ad2f902ddbb84",
+      "scoped_files": 132,
+      "branch": "codex/merge-highlight-acceleration-dev-20261103",
+      "remote_after": "469370b206c82a8a1d4a0e181e72fb6ce8c3910c",
+      "remote_matches_verified_integration": true
+    },
+    {
+      "repo": "nestjs",
+      "root": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103",
+      "remote_before": "c8b71e7fc2079d666c0c3e32a6fc690190613dd9",
+      "integration": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+      "tree": "3e9c60e98d1699572e0747b84d83b9966f9724c2",
+      "scoped_files": 38,
+      "branch": "codex/merge-highlight-acceleration-dev-latest-20261103",
+      "remote_after": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+      "remote_matches_verified_integration": true
+    },
+    {
+      "repo": "electron",
+      "root": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103",
+      "remote_before": "8e70e99bc44e164d84dba16dd253b3b939928859",
+      "integration": "540c6e6544e8aa46ad97224958d7e543c44c1c0c",
+      "tree": "d33fda5a73d4634e68b47d659b0832592434513d",
+      "scoped_files": 23,
+      "branch": "codex/merge-highlight-acceleration-dev-20261103",
+      "remote_after": "540c6e6544e8aa46ad97224958d7e543c44c1c0c",
+      "remote_matches_verified_integration": true
+    },
+    {
+      "repo": "angular",
+      "root": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103",
+      "remote_before": "c558fb3f13090877371d1fe20d56028bb8804118",
+      "integration": "4d508c0d3b0c3009f48f171edd6bfac11de33d04",
+      "tree": "ac86da372987e688f3b8d43a7d5e894bb12301cc",
+      "scoped_files": 9,
+      "branch": "codex/merge-highlight-acceleration-dev-latest-20261103",
+      "remote_after": "4d508c0d3b0c3009f48f171edd6bfac11de33d04",
+      "remote_matches_verified_integration": true
+    }
+  ],
+  "push": {
+    "force_used": false,
+    "all_exit_zero": true,
+    "remote_ref": "refs/heads/dev"
+  },
+  "tests": {
+    "python_full": {
+      "passed": 2890,
+      "failed": 6,
+      "skipped": 5,
+      "same_existing_rendering_failures": true
+    },
+    "python_post_merge_targets": {
+      "passed": 433
+    },
+    "python_independent_scope_runtime_checks": {
+      "passed": 4
+    },
+    "python_lock_check": "144 packages, consistent, no environment installation",
+    "ruff": "pass",
+    "electron_full": {
+      "passed": 1962,
+      "failed": 0
+    },
+    "electron_final_whitespace_targets": {
+      "passed": 23,
+      "compiled_files_byte_identical": 326
+    },
+    "nestjs_full": {
+      "passed": 5340,
+      "failed": 0
+    },
+    "angular_related": {
+      "passed": 165,
+      "failed": 0
+    },
+    "angular_styles": {
+      "passed": 21
+    }
+  },
+  "scope": {
+    "python_files": 132,
+    "nestjs_files": 38,
+    "electron_files": 23,
+    "angular_files": 9,
+    "python_dance_production_files_changed": 6,
+    "other_dance_production_files_exact_remote": 45,
+    "legacy_uncommitted_gpu_helpers_excluded": true,
+    "remote_cpu_face_incumbents_preserved": true,
+    "remote_sam_and_identity_calls_preserved": true,
+    "latest_w20_macos_process_fix_preserved": true,
+    "latest_i19_dialog_layout_preserved": true
+  },
+  "preservation": {
+    "original_local_source_files_checked": 4802,
+    "all_match": true,
+    "original_local_branches_and_heads_unchanged": true,
+    "python_stash": "7e48aaa62ecf9dca211d02ab27a9964f88e574dc",
+    "nestjs_user_access_stash": "383174d0e0c3ed8a2566c3602eec06ffb4e16324",
+    "angular_overlay_stash": "9c42e703f52a7c48dc79c13de7f3209fdd190046",
+    "python_snapshot_files_preserved": 697,
+    "worktrees_removed": false
+  },
+  "package": {
+    "build_passed": true,
+    "scope": "isolated Mac arm64 validation only",
+    "code_assets_compared": 787,
+    "mismatches": 0,
+    "node_dependencies_checked": 9,
+    "missing_dependencies": 0,
+    "private_or_development_leaks": [],
+    "old_handoff_artifacts_overwritten": false
+  },
+  "limits": {
+    "physical_gpu_or_windows_hardware_tested": false,
+    "new_release_certificates_created": false,
+    "existing_six_rendering_failures_fixed": false,
+    "installed_apps_or_shared_venv_modified": false,
+    "docs_repository_pushed": false
+  },
+  "evidence": {
+    "python_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/full-python-scoped.log",
+      "sha256": "67a183439f59ab1ae6af501eca51ee281eaf71f994b52f9b9f98eb800319967e"
+    },
+    "python_merged_targets": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/merged-targets.log",
+      "sha256": "b78516d1183fb5e67d3c708edc56dc9a7cd598a73e60900a58083cd7cb701dda"
+    },
+    "python_baseline": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/python-baseline-comparison.json",
+      "sha256": "af9ab00f12e11ebef85449f10006c65166fb910b0d4b0659d03b3a2c5e316829"
+    },
+    "python_scope_review": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/scope-review/curated-closure.json",
+      "sha256": "7d0378ff2a47d573d84ad0b9cbb669bd121d21d37646bc949287a0926247b6a1"
+    },
+    "scope_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/scope-red.log",
+      "sha256": "a04d31c292933b4ff188f82cdd039b36cec975b4a743aa912376329c201c9578"
+    },
+    "scope_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/scoped-green.log",
+      "sha256": "38b2b85221a4d876e884632b132e58dc4b8a30fa0feb378c5a72e9185f8807f9"
+    },
+    "python_lock": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/lock-check.log",
+      "sha256": "067ed3b49f63e1c27220771db59f1063fc969a793eb9334717cbffdc8e77973c"
+    },
+    "python_ruff": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "python_wip_preservation": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/stash-source-preservation.json",
+      "sha256": "e0d7e082fd18913924f54e650982d5e4525cb6450a3c953d80e4083916acc922"
+    },
+    "original_after_push": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/original-after-push.json",
+      "sha256": "199bcac364627eb087f58f10dc9835dd100cddf53b54055c96d7c4e225a84644"
+    },
+    "package_sources": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/package-source-check.json",
+      "sha256": "c1fcb1042cbe8f3c8cfd8dd0c0e2df5056a47ddefe77773aee1676b80cf812f2"
+    },
+    "package_electron": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/dev-merge/packaged-electron-check.json",
+      "sha256": "6369eaa77abcf11856ed4206c21ad42874002146a6322923a110dfb32e1e3caa"
+    },
+    "package_build": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/dev-merge/cross-repo-package-latest.log",
+      "sha256": "6e8599a69bbc1addc9f7d23f620cf518a0ee3ef7dbfd6562286c6586dd0b95dc"
+    },
+    "electron_result": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/dev-merge/integration-summary.json",
+      "sha256": "768d8fdf62eb91a5d99d3c47e408c62a3e5270200f8bf94e527c3ea7558a9755"
+    },
+    "electron_whitespace_equivalence": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/dev-merge/whitespace-runtime-equivalence.json",
+      "sha256": "2cb21d2be1908eb5502a769ccde8fd6788e1439c7434aedaadc795db99be3615"
+    },
+    "electron_whitespace_targets": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/dev-merge/whitespace-targets.log",
+      "sha256": "69c203afa49530c924aedea2af9f1ee822eb1d0c74b41ecee1429fea888de35f"
+    },
+    "nestjs_result": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/dev-merge-latest/integration-result.json",
+      "sha256": "16dc0feeb6f5ab010af590da817a1ade22d787dc564363463e98472d20ff19b3"
+    },
+    "angular_result": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/dev-merge-latest/summary.json",
+      "sha256": "60bf7728a68e1f1c097d99db5e57054dc5e616677450c5a7e2f35e8c6ccf3c72"
+    },
+    "remote_verification": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/remote-after.json",
+      "sha256": "4d79046b2398059a253cfe4e78e1ce79581def5d79c6209f77d0703a0c71eecc"
+    },
+    "push_results": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/dev-merge/push-results.json",
+      "sha256": "9df431058243063f83c4c0bad8b932bd7e6ce4e8fead63097e9a14096ac66909"
+    }
+  }
+}

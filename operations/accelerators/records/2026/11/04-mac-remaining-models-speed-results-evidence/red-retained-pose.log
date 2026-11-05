@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_retained_pose_weights_never_return_memory_budget _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b4d9050>
+
+    def test_retained_pose_weights_never_return_memory_budget(monkeypatch):
+        import sys
+        from dance_highlight.services.pose_engine import PoseEngine
+        from clipper_accelerators import native_sessions
+        class Model:pass
+        retained=Model();engine=PoseEngine.__new__(PoseEngine);engine.config=SimpleNamespace(yolo_device='mps');engine._model=retained
+        monkeypatch.setenv('CLIPPER_ACCELERATOR_NATIVE_RELEASE','1')
+        monkeypatch.setitem(sys.modules,'torch',SimpleNamespace(mps=SimpleNamespace(synchronize=lambda:None,empty_cache=lambda:None)))
+        monkeypatch.setattr(native_sessions,'release_model',lambda *a:pytest.fail('weights are still resident'))
+>       assert engine.release_mps_model() is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_accelerators/tests/test_phase_model_release.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+plugins/dance_highlight/dance_highlight/services/pose_engine.py:35: in release_mps_model
+    return release_model('mps',model_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = ('mps', 'test_phase_model_release:test_retained_pose_weights_never_return_memory_budget.<locals>.Model:4484600784')
+
+>   monkeypatch.setattr(native_sessions,'release_model',lambda *a:pytest.fail('weights are still resident'))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: weights are still resident
+
+clipper_accelerators/tests/test_phase_model_release.py:62: Failed
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_phase_model_release.py::test_retained_pose_weights_never_return_memory_budget
+1 failed, 4 deselected in 1.07s

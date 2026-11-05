@@ -1,0 +1,54 @@
+..............FF.                                                        [100%]
+=================================== FAILURES ===================================
+____ test_real_ort_exception_is_classified_and_host_failure_details_survive ____
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e24a410>
+
+    def test_real_ort_exception_is_classified_and_host_failure_details_survive(module,monkeypatch):
+        from onnxruntime.capi.onnxruntime_pybind11_state import RuntimeException
+        session,cpu,gpu,_=wrapper(module,monkeypatch)
+        session.run(['fc1'],value())
+        gpu.run=lambda *a,**kw:(_ for _ in ()).throw(RuntimeException('CoreML execution failed'))
+>       with pytest.raises(BackendFailure) as error:session.run(['fc1'],value())
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_accelerators/tests/test_native_face_coreml.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_accelerators/clipper_accelerators/native_face.py:191: in run
+    result = self.selected.run(outputs,inputs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+clipper_accelerators/tests/test_native_face_coreml.py:129: in <lambda>
+    gpu.run=lambda *a,**kw:(_ for _ in ()).throw(RuntimeException('CoreML execution failed'))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x10e26b0a0>
+
+>   gpu.run=lambda *a,**kw:(_ for _ in ()).throw(RuntimeException('CoreML execution failed'))
+E   onnxruntime.capi.onnxruntime_pybind11_state.RuntimeException: CoreML execution failed
+
+clipper_accelerators/tests/test_native_face_coreml.py:129: RuntimeException
+________ test_native_coreml_calls_keep_existing_owned_process_watchdog _________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bb792d0>
+
+    def test_native_coreml_calls_keep_existing_owned_process_watchdog(module,monkeypatch):
+        from clipper_accelerators import model_boundary
+        calls=[]
+        def invoke(backend,operation,*args,**kwargs):
+            calls.append((backend,getattr(operation,'_accelerator_model_id',None),getattr(operation,'_accelerator_estimated_bytes',0)))
+            return operation(*args,**kwargs)
+        monkeypatch.setattr(model_boundary,'model_call',invoke)
+        session,_,_,_=wrapper(module,monkeypatch)
+        session.run(['fc1'],value());session.run(['fc1'],value())
+>       assert len(calls)>=5
+E       assert 0 >= 5
+E        +  where 0 = len([])
+
+clipper_accelerators/tests/test_native_face_coreml.py:147: AssertionError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_real_ort_exception_is_classified_and_host_failure_details_survive
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_native_coreml_calls_keep_existing_owned_process_watchdog
+2 failed, 15 passed in 0.27s

@@ -1,0 +1,71 @@
+{
+  "configuration": {
+    "identity": "development",
+    "updateChannel": "dev",
+    "webApiBaseUrl": "http://127.0.0.1:3000",
+    "autoUpdateDisabled": true
+  },
+  "files": [
+    {
+      "file": "clipper_accelerators/clipper_accelerators/native_yunet.py",
+      "source_sha256": "334a7848d8f9266bca9281205449041d23250778ca091ce284cc1efcb798bf5f",
+      "packaged_sha256": "334a7848d8f9266bca9281205449041d23250778ca091ce284cc1efcb798bf5f",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/native_sface.py",
+      "source_sha256": "189c5ec54418e06e4460510ec9daac11d499963e5adeb7127669ae25d46152f2",
+      "packaged_sha256": "189c5ec54418e06e4460510ec9daac11d499963e5adeb7127669ae25d46152f2",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/native_face.py",
+      "source_sha256": "5a546c4a4202ede9eda4e2db14a665c141a89a4152dd2053ec1fb8017f7fe541",
+      "packaged_sha256": "5a546c4a4202ede9eda4e2db14a665c141a89a4152dd2053ec1fb8017f7fe541",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/native_sessions.py",
+      "source_sha256": "820289d9be28af4088b815e636c88f2852821b83258b6d4b9b2ec06fb295520a",
+      "packaged_sha256": "820289d9be28af4088b815e636c88f2852821b83258b6d4b9b2ec06fb295520a",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/lease_client.py",
+      "source_sha256": "1ae467cd5d028e63110e26609174c27b7e6c1a9f8de382c69ffb705cd619732f",
+      "packaged_sha256": "1ae467cd5d028e63110e26609174c27b7e6c1a9f8de382c69ffb705cd619732f",
+      "matches": true
+    },
+    {
+      "file": "clipper_accelerators/clipper_accelerators/face_adapter.py",
+      "source_sha256": "77557bd1fa289636d100b5bf78ba43d18df13997ea89b1172a7b4c3e28842fca",
+      "packaged_sha256": "77557bd1fa289636d100b5bf78ba43d18df13997ea89b1172a7b4c3e28842fca",
+      "matches": true
+    },
+    {
+      "file": "clipper_face_core/clipper_face_core/opencv_backend.py",
+      "source_sha256": "091b2c0c9b1245a0f8732e385ed86ca9461a6e3156fd97dc3937a97411b5982c",
+      "packaged_sha256": "091b2c0c9b1245a0f8732e385ed86ca9461a6e3156fd97dc3937a97411b5982c",
+      "matches": true
+    },
+    {
+      "file": "plugins/dance_highlight/dance_highlight/services/pose_engine.py",
+      "source_sha256": "de71acda73ac531e4adcc971ea4e56c570b24f97077e516c43b806bb0b59fce5",
+      "packaged_sha256": "de71acda73ac531e4adcc971ea4e56c570b24f97077e516c43b806bb0b59fce5",
+      "matches": true
+    },
+    {
+      "file": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+      "source_sha256": "004bdcfe58a765ad00a581e9ba906cbd6a56f2885db7b653bfa0803c8988743b",
+      "packaged_sha256": "004bdcfe58a765ad00a581e9ba906cbd6a56f2885db7b653bfa0803c8988743b",
+      "matches": true
+    },
+    {
+      "file": "plugins/dance_highlight/dance_highlight/services/face_runtime.py",
+      "source_sha256": "2b2a8d2219c0237b2bca6f3907938b73f18f84bd7c36c5631006e0ffbcdb7f98",
+      "packaged_sha256": "2b2a8d2219c0237b2bca6f3907938b73f18f84bd7c36c5631006e0ffbcdb7f98",
+      "matches": true
+    }
+  ],
+  "all_match": true
+}

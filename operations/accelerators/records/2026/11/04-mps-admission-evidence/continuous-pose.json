@@ -1,0 +1,277 @@
+{
+  "at": "2026-11-03T16:36:49.089Z",
+  "adapter": [
+    {
+      "id": "metal:Apple M4",
+      "vendor": "Apple",
+      "device_id": "Apple M4",
+      "driver": "27.0.0",
+      "backend_indices": [
+        [
+          "ort_coreml",
+          0
+        ],
+        [
+          "torch_mps",
+          0
+        ]
+      ],
+      "free_bytes": null,
+      "total_bytes": null,
+      "memory_kind": "shared",
+      "usable": true
+    }
+  ],
+  "commands": [
+    {
+      "command": "/bin/ps",
+      "milliseconds": 2.688083000000006
+    },
+    {
+      "command": "/usr/bin/vm_stat",
+      "milliseconds": 1.271792000000005
+    },
+    {
+      "command": "/usr/sbin/sysctl",
+      "milliseconds": 1.3885420000001432
+    }
+  ],
+  "decisions": [
+    {
+      "event": "freemem_used_by_fits",
+      "at": "2026-11-03T16:36:42.771Z",
+      "bytes": 268795904
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:36:42.773Z",
+      "endpoint": "/acquire",
+      "status": 200,
+      "error": null,
+      "admission": {
+        "observed_at": "2026-11-03T16:36:42.772Z",
+        "source": "darwin_vm",
+        "pressure": "warning",
+        "free_bytes": 268795904,
+        "file_backed_bytes": 2798141440,
+        "purgeable_bytes": 79609856,
+        "budget_bytes": 565497856,
+        "adapter_id": "metal:Apple M4",
+        "owner_pid": 9098,
+        "requested_bytes": 302892000,
+        "reserved_bytes": 0,
+        "request_total_bytes": 302892000,
+        "adapter_free_bytes": null
+      }
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:36:42.774Z",
+      "endpoint": "/register-native",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:36:46.780Z",
+      "endpoint": "/heartbeat",
+      "status": 200,
+      "error": null,
+      "admission": null
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:36:48.747Z",
+      "endpoint": "/release",
+      "status": 200,
+      "error": null,
+      "admission": null
+    }
+  ],
+  "result": {
+    "ok": true,
+    "estimated_bytes": 302892000,
+    "frame_shape": [
+      1080,
+      1920,
+      3
+    ],
+    "frame_sha256": "c14a4aa7d3f0e30e724ffe92b9d2be542acf464539523f32da87c421a62fb165",
+    "calls": [
+      {
+        "milliseconds": 1013.8840840081684,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 31.680834013968706,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 35.36645899293944,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 43.3623330318369,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 32.27950003929436,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 28.862499981187284,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 29.360041953623295,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 28.84345897473395,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 32.37370902206749,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 28.3490419969894,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 28.881624981295317,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 28.604417049791664,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 27.032166020944715,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 32.1192080155015,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 29.059500026050955,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 28.961375006474555,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 27.79124997323379,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 30.045791994780302,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 33.276707981713116,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 35.88199999649078,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 31.745499989483505,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 29.17837497079745,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      },
+      {
+        "milliseconds": 29.359208012465388,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48171264
+      },
+      {
+        "milliseconds": 30.942041019443423,
+        "people": 5,
+        "model_device": "mps:0",
+        "allocated_bytes": 48238336
+      }
+    ],
+    "gpu_diagnostics": {
+      "schema": 1,
+      "mode": "auto",
+      "consumer": "dance",
+      "device": "mps",
+      "release_qualified": null,
+      "candidate_failures": {},
+      "models": [
+        {
+          "model_id": "pose.yolov8s",
+          "selected_backend": "torch_mps",
+          "reason": "existing_runtime",
+          "calls": 24,
+          "samples": 0,
+          "distinct_inputs": 0,
+          "cpu_median_ms": null,
+          "candidate_median_ms": null,
+          "execution_evidence": "provider_only",
+          "profile_verified": false,
+          "graph_execution": "unknown",
+          "backends": [
+            "torch_mps"
+          ]
+        }
+      ]
+    },
+    "cpu_people": 5,
+    "iou_min": 0.9999992847442627
+  },
+  "stderr": ""
+}

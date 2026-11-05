@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "status": "priority_fixes_implemented_release_blocked",
+  "changed_files": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/changed-files.json",
+  "python_full": {
+    "passed": 3090,
+    "failed": 6,
+    "skipped": 7,
+    "same_failure_details_as_previous": true
+  },
+  "python_final_targeted": {
+    "passed": 147,
+    "failed": 0
+  },
+  "nestjs_full": {
+    "passed": 5250,
+    "failed": 0,
+    "skipped": 9
+  },
+  "electron_full": {
+    "passed": 1860,
+    "failed": 1,
+    "baseline_reproduced": true
+  },
+  "new_gpu_certificates_enabled": false,
+  "real_cpu_recovery_scope": [
+    "dialog.analyze_media",
+    "dialog.transcribe_media"
+  ],
+  "remaining": [
+    "dance/person whole analysis recovery",
+    "real-media quality baseline and release evidence",
+    "native environment/pack/lease/admission",
+    "native Windows/Apple Silicon GPU matrix",
+    "host descendants and interleaved measurements",
+    "diagnostics/UI"
+  ],
+  "logs": {
+    "f01-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/f01-green.log",
+      "sha256": "2d46971a3b3b54c4ef4765e19176c7fa92024a36a0a0ed8113cb699c2aa7a9ba"
+    },
+    "f01-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/f01-red.log",
+      "sha256": "859c416e1a8c432d907ff096c7ddadb3b8541c459262c242889028f46fc3c35a"
+    },
+    "f03-f04-python-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/f03-f04-python-green.log",
+      "sha256": "890ff29abda66a692d1121e1499ccd52b75e95c0f64f6152e7e995b169f2be84"
+    },
+    "f03-f04-python-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/f03-f04-python-red.log",
+      "sha256": "2589d95c210c595374e69e8936b07d0645f7e91bb08fceb4d0f067e88d8d95c8"
+    },
+    "f06-f07-r01-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/f06-f07-r01-red.log",
+      "sha256": "9134285367e6c9b863f147082687f611c034039673128366e4fb99738646db88"
+    },
+    "final-targeted.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/final-targeted.log",
+      "sha256": "48f56ddf2b1f095e24c36a785a51cf7e0a075218215f0de7b8203857ccef38ce"
+    },
+    "full-python.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/full-python.log",
+      "sha256": "e1ef115864ff0841f9e6289a1564dcbc24a6368ddc6fddc93da44417a41dbc89"
+    },
+    "g01-f10-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/g01-f10-green.log",
+      "sha256": "a04bbbf97a4a9185cc96e2c75004b024fafbb178f01162eba063d5969524f6c7"
+    },
+    "g01-f10-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/g01-f10-red.log",
+      "sha256": "b4e3d1db5f7490ed6c6150278506eef1fc22ff6c46748eebd69a0bb2a89c48a0"
+    },
+    "g02-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/g02-green.log",
+      "sha256": "9acc6c6e2911c9746e4ea8baac1e6de08c2197c049b24afaa8495de051f388c5"
+    },
+    "g02-integration.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/g02-integration.log",
+      "sha256": "60578cdc57a7237e0b790474b85e79a96f5ce0ec2507aa7444aac4764bcc4574"
+    },
+    "g02-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/g02-red.log",
+      "sha256": "7e27dc904bc6635288fc587c8579278bde826d54c2d1eae4b2fdd0ad1a47a3d2"
+    },
+    "gates-and-calibration-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/gates-and-calibration-green.log",
+      "sha256": "70408f1c0254c92e8f3439faeb46782dcdbc87bd196e3ba94c2a1adecfcdfe6e"
+    },
+    "late-exit-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/late-exit-red.log",
+      "sha256": "fd27915a028ccd105e16bbf40af4c917c01e807c300ac2edbc30834a5720ea66"
+    },
+    "owned-process-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/owned-process-green.log",
+      "sha256": "83802a480f8a71740213845f8080f1fbd47379f2db9aaff08eba588d959ada31"
+    },
+    "whisper-mps-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/whisper-mps-red.log",
+      "sha256": "610e00c309e22d2a8a7a8bcc455afb9c9accd18afb048fc94779d2b6e57a99c1"
+    },
+    "worker-final.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/worker-final.log",
+      "sha256": "f525d39ed2c486806c7c6d4a663f9a300596593a384d5171e20346ea2e64038a"
+    },
+    "worker-green.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/worker-green.log",
+      "sha256": "cdbd48adacc3c698855c0f9535d65eeaad8a563bbf573df85e523e6f40c3e7ac"
+    },
+    "worker-red.log": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/audit-fixes/worker-red.log",
+      "sha256": "034cdbd4efa0cf3ec1fd3d317bc7e12944bd495346ab94b5cc09eb845eb638fe"
+    }
+  }
+}

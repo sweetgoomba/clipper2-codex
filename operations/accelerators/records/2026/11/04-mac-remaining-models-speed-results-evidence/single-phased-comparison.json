@@ -1,0 +1,372 @@
+{
+  "baseline_seconds": 333.5754834159743,
+  "after_seconds": 264.99031087500043,
+  "cpu_reanalysis": false,
+  "lists_equal": true,
+  "previous_lists_equal": true,
+  "config_equal": true,
+  "stats_equal": true,
+  "list_counts": {
+    "main": 49,
+    "group": 14
+  },
+  "before_performance": {
+    "stage_seconds": {
+      "download_refs": 0.007505791960284114,
+      "yolo": 75.23721070803003,
+      "ref_embs": 1.9192114169709384,
+      "pose_observations": 0.1351907500065863,
+      "main_selection": 118.10954454098828,
+      "native_scene": 11.214669959037565,
+      "group_context": 0.08970766700804234,
+      "segment_build": 28.758316041959915,
+      "face_extract": 34.60768341703806,
+      "secondary_faces": 23.031678041035775,
+      "body_continuity": 1.5314714999985881,
+      "context_faces": 0.0003237500204704702,
+      "mask_continuity": 0.0,
+      "joint_identity": 0.0,
+      "named_boundaries": 0.1864068330032751,
+      "observed_part_continuity": 0.1438838749891147,
+      "shot_member_gaps": 0.002778333961032331,
+      "cluster_map": 47.12525220803218,
+      "group_continuity": 0.07935066701611504,
+      "clips_main": 8.976993958000094,
+      "clips_group": 5.26101162499981
+    },
+    "total_before_metadata_write_seconds": 330.66997641697526,
+    "nested_stages": {
+      "segment_build": [
+        "native_scene",
+        "group_context"
+      ],
+      "cluster_map": [
+        "secondary_faces",
+        "body_continuity",
+        "context_faces",
+        "mask_continuity",
+        "joint_identity",
+        "named_boundaries",
+        "observed_part_continuity",
+        "shot_member_gaps"
+      ]
+    }
+  },
+  "after_performance": {
+    "stage_seconds": {
+      "download_refs": 0.0069187909830361605,
+      "yolo": 62.94483095803298,
+      "ref_embs": 1.8345367499860004,
+      "pose_observations": 0.1329119160072878,
+      "main_selection": 73.55509812501259,
+      "native_scene": 10.858944540959783,
+      "group_context": 0.08296370797324926,
+      "segment_build": 27.514261874952354,
+      "face_extract": 33.25788449996617,
+      "secondary_faces": 24.658326709002722,
+      "body_continuity": 1.5972283339942805,
+      "context_faces": 0.0002779590431600809,
+      "mask_continuity": 0.0,
+      "joint_identity": 0.0,
+      "named_boundaries": 0.18873258301755413,
+      "observed_part_continuity": 0.14275887497933581,
+      "shot_member_gaps": 0.002463334007188678,
+      "cluster_map": 42.378780582977924,
+      "group_continuity": 0.0588262079982087,
+      "clips_main": 7.465622834046371,
+      "clips_group": 5.018031832994893
+    },
+    "total_before_metadata_write_seconds": 262.5133364580106,
+    "nested_stages": {
+      "segment_build": [
+        "native_scene",
+        "group_context"
+      ],
+      "cluster_map": [
+        "secondary_faces",
+        "body_continuity",
+        "context_faces",
+        "mask_continuity",
+        "joint_identity",
+        "named_boundaries",
+        "observed_part_continuity",
+        "shot_member_gaps"
+      ]
+    }
+  },
+  "after_models": {
+    "schema": 1,
+    "mode": "auto",
+    "consumer": "dance",
+    "device": "mps",
+    "release_qualified": null,
+    "candidate_failures": {},
+    "models": [
+      {
+        "model_id": "pose.yolov8s",
+        "selected_backend": "torch_mps",
+        "reason": "existing_runtime",
+        "calls": 2459,
+        "samples": 0,
+        "distinct_inputs": 0,
+        "cpu_median_ms": null,
+        "candidate_median_ms": null,
+        "execution_evidence": "provider_only",
+        "profile_verified": false,
+        "graph_execution": "unknown",
+        "backends": [
+          "torch_mps"
+        ]
+      },
+      {
+        "model_id": "face.auraface",
+        "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider",
+        "reason": "builtin_coreml_local_check",
+        "calls": 4603,
+        "samples": 3,
+        "distinct_inputs": 3,
+        "cpu_median_ms": 51.018582948017865,
+        "candidate_median_ms": 5.752666969783604,
+        "execution_evidence": "profile_nodes",
+        "profile_verified": true,
+        "graph_execution": "mixed",
+        "release_qualified": false,
+        "cpu_reference_released": true,
+        "provider_node_counts": {
+          "CoreMLExecutionProvider": 6,
+          "CPUExecutionProvider": 12
+        },
+        "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+        "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c",
+        "precision": "fp16_internal_fp32_io",
+        "local_check": "first_face_and_two_spatial_flips",
+        "local_cosine_min": 0.999969548316577,
+        "setup_ms": 702.4231250397861,
+        "break_even_calls": 20,
+        "estimated_calls": 2324,
+        "estimated_total_saving_ms": 104321.48827443598,
+        "backends": [
+          "CoreMLExecutionProvider/CPUExecutionProvider"
+        ]
+      },
+      {
+        "model_id": "face.yunet",
+        "selected_backend": "mixed",
+        "reason": "source_phase_completed",
+        "calls": 5664,
+        "samples": 0,
+        "distinct_inputs": 0,
+        "cpu_median_ms": 24.739667016547173,
+        "candidate_median_ms": 13.748916971962899,
+        "execution_evidence": "profile_nodes",
+        "profile_verified": true,
+        "graph_execution": "accelerator_only",
+        "backends": [
+          "opencv_cpu",
+          "ort_coreml"
+        ],
+        "execution_counts": {
+          "opencv_cpu": 3389,
+          "ort_coreml": 2275
+        },
+        "execution_seconds": {
+          "opencv_cpu": 34.3323401833768,
+          "ort_coreml": 31.036079376994167
+        },
+        "release_qualified": false,
+        "provider_node_counts": {
+          "CoreMLExecutionProvider": 3
+        },
+        "precision": "fp32",
+        "source_sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+        "derived_sha256": "617ecfe0499f6294124a92707c1deae7d0e975ce31691e680a82f0c0a88994b7",
+        "accelerated_input_size": [
+          1920,
+          1080
+        ],
+        "setup_ms": 20.83370799664408,
+        "accelerator_released": true,
+        "reservation_released": true
+      },
+      {
+        "model_id": "face.sface",
+        "selected_backend": "opencv_cpu",
+        "reason": "coreml_trial_failed",
+        "calls": 3925,
+        "samples": 0,
+        "distinct_inputs": 0,
+        "cpu_median_ms": null,
+        "candidate_median_ms": null,
+        "execution_evidence": "unverified",
+        "profile_verified": false,
+        "graph_execution": "unknown",
+        "release_qualified": false,
+        "cpu_reference_released": false,
+        "trial_failure": {
+          "kind": "backend_unavailable",
+          "message": "accelerator host rejected /reserve: memory_admission_deferred (HTTP 409)",
+          "gpu": null,
+          "transient": true,
+          "details": {
+            "source": "accelerator_host",
+            "reason": "memory_admission_deferred",
+            "http_status": 409,
+            "operation": "reserve",
+            "admission": {
+              "free_bytes": 74170368,
+              "budget_bytes": 897232896,
+              "requested_bytes": 1079002652,
+              "reserved_bytes": 0,
+              "request_total_bytes": 1079002652,
+              "file_backed_bytes": 3488923648,
+              "purgeable_bytes": 19628032,
+              "owner_pid": 23008,
+              "source": "darwin_vm",
+              "pressure": "normal",
+              "observed_at": "2026-11-03T19:18:01.468Z",
+              "adapter_id": "metal:Apple M4"
+            }
+          }
+        },
+        "backends": [
+          "opencv_cpu"
+        ]
+      }
+    ]
+  },
+  "phase_selections": [
+    {
+      "at": 1793733433.796544,
+      "record": {
+        "model_id": "pose.phase_release",
+        "released": true,
+        "mps_before_bytes": 34124800,
+        "mps_after_bytes": 0
+      }
+    },
+    {
+      "at": 1793733434.743723,
+      "record": {
+        "model_id": "face.auraface",
+        "selected_backend": "CoreMLExecutionProvider/CPUExecutionProvider",
+        "reason": "builtin_coreml_local_check",
+        "calls": null,
+        "samples": 3,
+        "distinct_inputs": 3,
+        "cpu_median_ms": 51.018582948017865,
+        "candidate_median_ms": 5.752666969783604,
+        "execution_evidence": "profile_nodes",
+        "profile_verified": true,
+        "graph_execution": "mixed",
+        "release_qualified": false,
+        "cpu_reference_released": true,
+        "provider_node_counts": {
+          "CoreMLExecutionProvider": 6,
+          "CPUExecutionProvider": 12
+        },
+        "source_sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+        "derived_sha256": "a97695fbb8785013af24264fe235cb8bcffca8de77d56a47b3cc0e787608757c",
+        "precision": "fp16_internal_fp32_io",
+        "local_check": "first_face_and_two_spatial_flips",
+        "local_cosine_min": 0.999969548316577,
+        "setup_ms": 702.4231250397861,
+        "break_even_calls": 20,
+        "estimated_calls": 2324,
+        "estimated_total_saving_ms": 104321.48827443598
+      }
+    },
+    {
+      "at": 1793733436.046196,
+      "record": {
+        "model_id": "face.yunet",
+        "selected_backend": "ort_coreml",
+        "reason": "builtin_static_coreml_local_check",
+        "calls": 790,
+        "samples": 0,
+        "distinct_inputs": 0,
+        "cpu_median_ms": 24.739667016547173,
+        "candidate_median_ms": 13.748916971962899,
+        "execution_evidence": "profile_nodes",
+        "profile_verified": true,
+        "graph_execution": "accelerator_only",
+        "backends": [
+          "opencv_cpu"
+        ],
+        "execution_counts": {
+          "opencv_cpu": 790,
+          "ort_coreml": 2275
+        },
+        "execution_seconds": {
+          "opencv_cpu": 5.762598545697983,
+          "ort_coreml": 31.036079376994167
+        },
+        "release_qualified": false,
+        "provider_node_counts": {
+          "CoreMLExecutionProvider": 3
+        },
+        "precision": "fp32",
+        "source_sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+        "derived_sha256": "617ecfe0499f6294124a92707c1deae7d0e975ce31691e680a82f0c0a88994b7",
+        "accelerated_input_size": [
+          1920,
+          1080
+        ],
+        "setup_ms": 20.83370799664408
+      }
+    },
+    {
+      "at": 1793733481.469002,
+      "record": {
+        "model_id": "face.sface",
+        "selected_backend": "opencv_cpu",
+        "reason": "coreml_trial_failed",
+        "calls": null,
+        "samples": 0,
+        "distinct_inputs": 0,
+        "cpu_median_ms": null,
+        "candidate_median_ms": null,
+        "execution_evidence": "unverified",
+        "profile_verified": false,
+        "graph_execution": "unknown",
+        "release_qualified": false,
+        "cpu_reference_released": false,
+        "trial_failure": {
+          "kind": "backend_unavailable",
+          "message": "accelerator host rejected /reserve: memory_admission_deferred (HTTP 409)",
+          "gpu": null,
+          "transient": true,
+          "details": {
+            "source": "accelerator_host",
+            "reason": "memory_admission_deferred",
+            "http_status": 409,
+            "operation": "reserve",
+            "admission": {
+              "free_bytes": 74170368,
+              "budget_bytes": 897232896,
+              "requested_bytes": 1079002652,
+              "reserved_bytes": 0,
+              "request_total_bytes": 1079002652,
+              "file_backed_bytes": 3488923648,
+              "purgeable_bytes": 19628032,
+              "owner_pid": 23008,
+              "source": "darwin_vm",
+              "pressure": "normal",
+              "observed_at": "2026-11-03T19:18:01.468Z",
+              "adapter_id": "metal:Apple M4"
+            }
+          }
+        }
+      }
+    },
+    {
+      "at": 1793733521.1215968,
+      "record": {
+        "model_id": "pose.phase_release",
+        "released": true,
+        "mps_before_bytes": 34384896,
+        "mps_after_bytes": 0
+      }
+    }
+  ],
+  "reduction_percent": 20.56061549806615
+}

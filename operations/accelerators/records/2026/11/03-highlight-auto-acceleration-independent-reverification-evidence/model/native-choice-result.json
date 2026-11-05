@@ -1,0 +1,11 @@
+{
+  "incumbent_cuda0_ms": 10,
+  "alternative_cuda1_ms": 1,
+  "cpu_ms_initial": 20,
+  "choice_with_faster_alternative_gpu": null,
+  "certificate_admission_calls_for_native_candidates": 0,
+  "choice_after_cpu_made_fastest": [
+    "cpu",
+    null
+  ]
+}

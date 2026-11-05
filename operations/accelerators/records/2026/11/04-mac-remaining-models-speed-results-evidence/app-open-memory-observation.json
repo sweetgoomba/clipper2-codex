@@ -1,0 +1,18 @@
+{
+  "app_open": true,
+  "observation": {
+    "observed_at": "2026-11-03T19:25:44.032Z",
+    "source": "darwin_vm",
+    "pressure": "normal",
+    "free_bytes": 155254784,
+    "file_backed_bytes": 3697442816,
+    "purgeable_bytes": 123469824,
+    "budget_bytes": 1026973695
+  },
+  "required_face_pair_bytes": 857138640,
+  "face_reservations_bytes": {
+    "auraface": 588703184,
+    "yunet": 268435456
+  },
+  "pair_fits_observation": true
+}

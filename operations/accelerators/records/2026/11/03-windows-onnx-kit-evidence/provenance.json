@@ -1,0 +1,142 @@
+{
+  "date": "2026-11-03",
+  "authoritative_report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-trial-and-highlight-gpu-review.md",
+  "superseded_report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/initial-report-before-attachments.md",
+  "copied_files": [
+    {
+      "original_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-trial-and-highlight-gpu-review.md",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/initial-report-before-attachments.md",
+      "sha256": "e6b60a925794a54db2463137fde0d9cfaff8389e093c69ffe02e5686b31cebd7",
+      "bytes": 23130
+    },
+    {
+      "original_path": "/Users/jina/Downloads/run_kit.py",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/run_kit.py",
+      "sha256": "66930908463be4c7fab115e328cd11cf2ba7849213d71b0b7950754cf93fa34c",
+      "bytes": 14980
+    },
+    {
+      "original_path": "/Users/jina/Downloads/run.bat",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/run.bat",
+      "sha256": "a76246319e026a931bdb104aba01145fe1bcdfce9861dd214ceff4d58f3964f7",
+      "bytes": 1458
+    },
+    {
+      "original_path": "/Users/jina/Downloads/README.txt",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/README.txt",
+      "sha256": "d838746cee232a042ec09b9f8a430f637c0a104fabce63d40c64d058cf510b4d",
+      "bytes": 1924
+    },
+    {
+      "original_path": "/Users/jina/Downloads/manifest.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/manifest.json",
+      "sha256": "73a39de8f814a48c469ee4d5e6161b5943b81e77844e34942b1a40998113ce88",
+      "bytes": 1127
+    },
+    {
+      "original_path": "/Users/jina/Downloads/directml-20261103-053501.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/directml-20261103-053501.json",
+      "sha256": "1f9e7545c57253020aaed54ad9dcfabd6895a14482e1bb4e72975630ab28dc6a",
+      "bytes": 9154
+    },
+    {
+      "original_path": "/Users/jina/Downloads/directml-20261103-053501.txt",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/directml-20261103-053501.txt",
+      "sha256": "b233aa675fc4198aa8473f050a0ed7ab9c5526a7bed2ce69aa510d42b12a58cc",
+      "bytes": 1723
+    },
+    {
+      "original_path": "/Users/jina/Downloads/windowsml-20261103-053533.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/windowsml-20261103-053533.json",
+      "sha256": "1af135fcd30b483f63ad5a9c51b2e1d1359bca723367c41bb173bac5a87dd5cd",
+      "bytes": 9191
+    },
+    {
+      "original_path": "/Users/jina/Downloads/windowsml-20261103-053533.txt",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/windowsml-20261103-053533.txt",
+      "sha256": "7f0b7bce2e8ed88aa9427118f4cd1d4345ffe865211a134bbf1701b13b57cfb4",
+      "bytes": 1726
+    },
+    {
+      "original_path": "/Users/jina/Downloads/windowsml-vendor-20261103-055055.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/windowsml-vendor-20261103-055055.json",
+      "sha256": "49ca93705de322a380afbece75bd515dd9d190e63a126d0d2cb1cbc1a9501e90",
+      "bytes": 9460
+    },
+    {
+      "original_path": "/Users/jina/Downloads/windowsml-vendor-20261103-055055.txt",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/windowsml-vendor-20261103-055055.txt",
+      "sha256": "4671aac9f21bc3170ec7f57afae4ef49a5120367a51e7bd16ddb6fda8d4cc8e7",
+      "bytes": 1733
+    },
+    {
+      "original_path": "/private/tmp/clipper-kit-file-audit-20261103/model-samples-audit.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/model-samples-audit.json",
+      "sha256": "37c505f9e0dcf58578b5bf9a5c3d0dd78aa46c0fd7b5fd3bdb4bd7dd4cf2748c",
+      "bytes": 20244
+    },
+    {
+      "original_path": "/private/tmp/clipper-kit-file-audit-20261103/auraface-shape-inference.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/auraface-shape-inference.json",
+      "sha256": "8c5d8daf9c2163c5f6891cbf3b96a4547c295d7640c5c3ed2b6b5ff7a73642b4",
+      "bytes": 696
+    },
+    {
+      "original_path": "/private/tmp/clipper-kit-file-audit-20261103/contract-probes.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/contract-probes.json",
+      "sha256": "dbbdfdd8d8fa784f79243c5f7205e03ce52a3bca1740d4ebe593ec5f453e91f3",
+      "bytes": 631
+    },
+    {
+      "original_path": "/private/tmp/clipper-kit-file-audit-20261103/review_contract_probes.py",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/review_contract_probes.py",
+      "sha256": "402b5bdda7cd40b063e93b46750983b76c9066ba2c1b92a12c4dfebebebc972f",
+      "bytes": 2888
+    },
+    {
+      "original_path": "/private/tmp/clipper-kit-file-audit-20261103/review_auraface_shapes.py",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-kit-evidence/review_auraface_shapes.py",
+      "sha256": "4f341d2c2860860019ef356ff16c21620374793cffc5c331f44a59f4cdf5b452",
+      "bytes": 1808
+    },
+    {
+      "original_path": "/private/tmp/clipper-gpu-ref-audit-20261103/broad-audit.json",
+      "saved_path": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-windows-onnx-ref-search-evidence/broad-audit.json",
+      "sha256": "079a293949d200a4f4670da4c9450a6aff71087773916c391fa8744f78d183c2",
+      "bytes": 30825
+    }
+  ],
+  "large_assets": [
+    {
+      "original_path": "/Users/jina/Downloads/yolo_pose.onnx",
+      "sha256": "58e58b9f2889cc36be17b7a4474211d6037852f1593f481a181ff36b542a1b4c",
+      "bytes": 46817839
+    },
+    {
+      "original_path": "/Users/jina/Downloads/yunet.onnx",
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "bytes": 232589
+    },
+    {
+      "original_path": "/Users/jina/Downloads/auraface.onnx",
+      "sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+      "bytes": 260694151
+    },
+    {
+      "original_path": "/Users/jina/Downloads/clip_visual.onnx",
+      "sha256": "ea3471533a815a729ce49cc2a2438ec1b934bc0bdd40974e0439240ea85f2019",
+      "bytes": 351781388
+    },
+    {
+      "original_path": "/Users/jina/Downloads/samples.npz",
+      "bytes": 23340218,
+      "sha256": "50adbc116bafc5204710633cf8678cdb5bee209d204574139f0f61f48c652b10"
+    },
+    {
+      "original_path": "/Users/jina/Downloads/uv.exe",
+      "bytes": 31803184,
+      "sha256": "81ea623608f8c17720c62efd0a380a8ead380c4d365ba6968e9d279a2319c674"
+    }
+  ],
+  "note": "Original attachments and product runtime files were not modified. The initial report is retained verbatim and superseded by the authoritative report."
+}

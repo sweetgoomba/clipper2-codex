@@ -1,0 +1,92 @@
+[
+  {
+    "label": "docs-state",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD",
+      "origin/main"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-state.txt",
+    "stdout_lines": 2
+  },
+  {
+    "label": "docs-ahead-behind",
+    "argv": [
+      "git",
+      "rev-list",
+      "--left-right",
+      "--count",
+      "HEAD...origin/main"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-ahead-behind.txt",
+    "stdout_lines": 1
+  },
+  {
+    "label": "docs-remote-commits",
+    "argv": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "HEAD..origin/main"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-remote-commits.txt",
+    "stdout_lines": 12
+  },
+  {
+    "label": "docs-remote-files",
+    "argv": [
+      "git",
+      "diff",
+      "--name-status",
+      "HEAD",
+      "origin/main"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-remote-files.txt",
+    "stdout_lines": 11
+  },
+  {
+    "label": "docs-gpu-current",
+    "argv": [
+      "git",
+      "grep",
+      "-n",
+      "-I",
+      "-i",
+      "-E",
+      "gpu|directml|windows[ _-]?ml|onnx",
+      "origin/main",
+      "--"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-gpu-current.txt",
+    "stdout_lines": 162
+  },
+  {
+    "label": "docs-gpu-local",
+    "argv": [
+      "git",
+      "grep",
+      "-n",
+      "-I",
+      "-i",
+      "-E",
+      "gpu|directml|windows[ _-]?ml|onnx",
+      "HEAD",
+      "--"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_file": "docs-gpu-local.txt",
+    "stdout_lines": 162
+  }
+]

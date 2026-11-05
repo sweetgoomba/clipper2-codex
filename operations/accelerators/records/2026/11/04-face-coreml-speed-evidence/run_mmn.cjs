@@ -1,0 +1,6 @@
+const {spawn,execFileSync}=require('node:child_process');
+const python='/Users/jina/Library/Application Support/Clipper Studio Dev/venvs/plugins/dance_highlight/bin/python';
+const pkg='/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators';
+const {AcceleratorLeases}=require('/Users/jina/project/adlight/desktop/clipper_electron/dist-electron/main/accelerators/leases');
+const data=JSON.parse(execFileSync(python,['-c',`import sys,json;sys.path.insert(0,${JSON.stringify(pkg)});from dataclasses import asdict;from clipper_accelerators.environment import native_environment;print(json.dumps(asdict(native_environment())))`],{encoding:'utf8'}));
+(async()=>{const host=new AcceleratorLeases(()=>data.adapters);const cap=await host.start();const child=spawn(python,['/private/tmp/clipper-face-speed-20261104/run_mmn.py'],{env:{...process.env,...cap,CLIPPER_ACCELERATORS_WHOLE_UNIT_RECOVERY:'1',CLIPPER_ACCELERATOR_MODE:'auto'}});child.stdout.pipe(process.stdout);child.stderr.pipe(process.stderr);const timeout=setTimeout(()=>child.kill('SIGTERM'),1800000);const code=await new Promise(r=>child.once('exit',r));clearTimeout(timeout);await host.stop();process.exitCode=code??1;})().catch(error=>{console.error(error);process.exitCode=1});

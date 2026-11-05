@@ -1,0 +1,122 @@
+.................FFFF                                                    [100%]
+=================================== FAILURES ===================================
+___________ test_short_workload_skips_conversion_load_and_probes[0] ____________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109101fd0>, count = 0
+
+    @pytest.mark.parametrize('count',[0,1,127])
+    def test_short_workload_skips_conversion_load_and_probes(module,monkeypatch,count):
+        session,cpu,gpu,_=wrapper(module,monkeypatch)
+        runtime.set_estimate('face.auraface',count) if count else runtime._state['estimates'].clear()
+        monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+>       assert np.all(session.run(['fc1'],value())[0]==1.)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_accelerators/tests/test_native_face_coreml.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_accelerators/clipper_accelerators/native_face.py:213: in run
+    if not self.decided:return self._trial(outputs,inputs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+clipper_accelerators/clipper_accelerators/native_face.py:160: in _trial
+    path = prepare_coreml_model(self.path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = 'source.onnx'
+
+>   monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: short workloads must not convert
+
+clipper_accelerators/tests/test_native_face_coreml.py:165: Failed
+___________ test_short_workload_skips_conversion_load_and_probes[1] ____________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109101ed0>, count = 1
+
+    @pytest.mark.parametrize('count',[0,1,127])
+    def test_short_workload_skips_conversion_load_and_probes(module,monkeypatch,count):
+        session,cpu,gpu,_=wrapper(module,monkeypatch)
+        runtime.set_estimate('face.auraface',count) if count else runtime._state['estimates'].clear()
+        monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+>       assert np.all(session.run(['fc1'],value())[0]==1.)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_accelerators/tests/test_native_face_coreml.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_accelerators/clipper_accelerators/native_face.py:213: in run
+    if not self.decided:return self._trial(outputs,inputs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+clipper_accelerators/clipper_accelerators/native_face.py:160: in _trial
+    path = prepare_coreml_model(self.path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = 'source.onnx'
+
+>   monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: short workloads must not convert
+
+clipper_accelerators/tests/test_native_face_coreml.py:165: Failed
+__________ test_short_workload_skips_conversion_load_and_probes[127] ___________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1090ae090>
+count = 127
+
+    @pytest.mark.parametrize('count',[0,1,127])
+    def test_short_workload_skips_conversion_load_and_probes(module,monkeypatch,count):
+        session,cpu,gpu,_=wrapper(module,monkeypatch)
+        runtime.set_estimate('face.auraface',count) if count else runtime._state['estimates'].clear()
+        monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+>       assert np.all(session.run(['fc1'],value())[0]==1.)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+clipper_accelerators/tests/test_native_face_coreml.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+clipper_accelerators/clipper_accelerators/native_face.py:213: in run
+    if not self.decided:return self._trial(outputs,inputs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+clipper_accelerators/clipper_accelerators/native_face.py:160: in _trial
+    path = prepare_coreml_model(self.path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = 'source.onnx'
+
+>   monkeypatch.setattr(module,'prepare_coreml_model',lambda _:pytest.fail('short workloads must not convert'))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: short workloads must not convert
+
+clipper_accelerators/tests/test_native_face_coreml.py:165: Failed
+________ test_prepared_optional_routing_retains_builtin_with_shared_cpu ________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109094150>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-532/test_prepared_optional_routing0')
+
+    def test_prepared_optional_routing_retains_builtin_with_shared_cpu(module,monkeypatch,tmp_path):
+        import onnxruntime as ort
+        from clipper_accelerators import face_adapter
+        source=tmp_path/'source.onnx';source.write_bytes(b'source')
+        cpu=Session(np.ones((1,512),np.float32));marker=Session(np.full((1,512),2.,np.float32));captured=[]
+        monkeypatch.setattr(ort,'InferenceSession',lambda *a,**kw:cpu)
+        monkeypatch.setattr(face_adapter,'candidate_entry',lambda *a,**kw:None)
+        def builtin(path,*,cpu_factory):
+            captured.append(cpu_factory(path));return marker
+        monkeypatch.setattr(module,'face_session',builtin)
+        session=face_adapter.RoutedSession(source)
+>       assert np.all(session.run(['fc1'],value())[0]==2.)
+E       assert np.False_
+E        +  where np.False_ = <function all at 0x108dead70>(array([[1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,\n        1., 1., 1., 1., 1., 1., 1., 1., 1., 1.... 1., 1., 1., 1., 1., 1.,\n        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]],\n      dtype=float32) == 2.0)
+E        +    where <function all at 0x108dead70> = np.all
+
+clipper_accelerators/tests/test_native_face_coreml.py:182: AssertionError
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_short_workload_skips_conversion_load_and_probes[0]
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_short_workload_skips_conversion_load_and_probes[1]
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_short_workload_skips_conversion_load_and_probes[127]
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_prepared_optional_routing_retains_builtin_with_shared_cpu
+4 failed, 17 passed in 0.44s

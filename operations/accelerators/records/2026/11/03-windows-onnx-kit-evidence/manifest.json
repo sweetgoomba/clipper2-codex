@@ -1,0 +1,47 @@
+{
+  "yolo_pose": {
+    "file": "yolo_pose.onnx",
+    "samples": "yolo",
+    "used_by": [
+      "안무",
+      "인물"
+    ],
+    "kind": "yolo",
+    "sha256": "58e58b9f2889cc36be17b7a4474211d6037852f1593f481a181ff36b542a1b4c",
+    "bytes": 46817839,
+    "export_max_relative_error_vs_torch": 3.846640538540669e-06
+  },
+  "yunet": {
+    "file": "yunet.onnx",
+    "samples": "yunet",
+    "used_by": [
+      "안무",
+      "인물"
+    ],
+    "kind": "yunet",
+    "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+    "bytes": 232589
+  },
+  "auraface": {
+    "file": "auraface.onnx",
+    "samples": "aura",
+    "used_by": [
+      "안무",
+      "인물"
+    ],
+    "kind": "embedding",
+    "sha256": "a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60",
+    "bytes": 260694151
+  },
+  "clip_visual": {
+    "file": "clip_visual.onnx",
+    "samples": "clip",
+    "used_by": [
+      "대사"
+    ],
+    "kind": "embedding",
+    "sha256": "ea3471533a815a729ce49cc2a2438ec1b934bc0bdd40974e0439240ea85f2019",
+    "bytes": 351781388,
+    "export_min_cosine_vs_torch": 0.9999999403953552
+  }
+}

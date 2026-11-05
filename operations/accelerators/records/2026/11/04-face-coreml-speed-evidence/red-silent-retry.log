@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_coreml_session_disables_ort_silent_cpu_retry _______________
+
+module = <module 'clipper_accelerators.native_face' from '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/native_face.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1073f3d10>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-534/test_coreml_session_disables_o0')
+
+    def test_coreml_session_disables_ort_silent_cpu_retry(module,monkeypatch,tmp_path):
+        import onnxruntime as ort
+        calls=[]
+        class Candidate:
+            def disable_fallback(self):calls.append('disabled')
+        monkeypatch.setattr(ort,'InferenceSession',lambda *a,**kw:Candidate())
+        session,_=module._candidate_session(tmp_path/'model.onnx')
+>       assert calls==['disabled']
+E       AssertionError: assert [] == ['disabled']
+E         
+E         Right contains one more item: 'disabled'
+E         Use -v to get more diff
+
+clipper_accelerators/tests/test_native_face_coreml.py:193: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-04 03:08:51.734 Python[60344:21632523] 2026-11-04 03:08:51.734400 [W:onnxruntime:Default, telemetry_1ds.cc:600 operator()] Failed to persist telemetry device ID; using an in-memory identifier
+=========================== short test summary info ============================
+FAILED clipper_accelerators/tests/test_native_face_coreml.py::test_coreml_session_disables_ort_silent_cpu_retry
+1 failed, 21 deselected in 0.14s

@@ -1,0 +1,125 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_http_rejection_keeps_safe_reason_and_snapshot[memory_admission_deferred] _
+
+rejection_host = {'body': {'admission': {'adapter_id': 'metal:Apple M4', 'budget_bytes': 180736819, 'free_bytes': 258195456, 'observed_... forbidden-secret', 'environment': {'TOKEN': 'forbidden-secret'}, 'error': 'memory_admission_deferred'}, 'status': 409}
+reason = 'memory_admission_deferred'
+
+    @pytest.mark.parametrize('reason',['memory_admission_deferred','adapter_busy'])
+    def test_http_rejection_keeps_safe_reason_and_snapshot(rejection_host,reason):
+        from clipper_accelerators.lease_client import _request
+        rejection_host['body']['error']=reason
+        with pytest.raises(BackendFailure) as caught:_request('/acquire',{'owner_pid':os.getpid()})
+        error=caught.value
+>       assert getattr(error,'details',None) is not None
+E       AssertionError: assert None is not None
+E        +  where None = getattr(BackendFailure('accelerator admission deferred'), 'details', None)
+
+tests/test_accelerator_admission_diagnostics.py:38: AssertionError
+_______ test_http_rejection_keeps_safe_reason_and_snapshot[adapter_busy] _______
+
+rejection_host = {'body': {'admission': {'adapter_id': 'metal:Apple M4', 'budget_bytes': 180736819, 'free_bytes': 258195456, 'observed_...ion': 'Bearer forbidden-secret', 'environment': {'TOKEN': 'forbidden-secret'}, 'error': 'adapter_busy'}, 'status': 409}
+reason = 'adapter_busy'
+
+    @pytest.mark.parametrize('reason',['memory_admission_deferred','adapter_busy'])
+    def test_http_rejection_keeps_safe_reason_and_snapshot(rejection_host,reason):
+        from clipper_accelerators.lease_client import _request
+        rejection_host['body']['error']=reason
+        with pytest.raises(BackendFailure) as caught:_request('/acquire',{'owner_pid':os.getpid()})
+        error=caught.value
+>       assert getattr(error,'details',None) is not None
+E       AssertionError: assert None is not None
+E        +  where None = getattr(BackendFailure('accelerator admission deferred'), 'details', None)
+
+tests/test_accelerator_admission_diagnostics.py:38: AssertionError
+_____ test_unrecognized_error_body_is_bounded_and_never_copies_credentials _____
+
+rejection_host = {'body': {'error': 'forbidden-secret', 'headers': {'Authorization': 'forbidden-secret'}}, 'status': 403}
+
+    def test_unrecognized_error_body_is_bounded_and_never_copies_credentials(rejection_host):
+        from clipper_accelerators.lease_client import _request
+        rejection_host.update(status=403,body={'error':'forbidden-secret','headers':{'Authorization':'forbidden-secret'}})
+        with pytest.raises(BackendFailure) as caught:_request('/reserve',{})
+>       assert getattr(caught.value,'details',{}).get('http_status')==403
+E       AssertionError: assert None == 403
+E        +  where None = <built-in method get of dict object at 0x10c6b73c0>('http_status')
+E        +    where <built-in method get of dict object at 0x10c6b73c0> = {}.get
+E        +      where {} = getattr(BackendFailure('accelerator lease unavailable'), 'details', {})
+E        +        where BackendFailure('accelerator lease unavailable') = <ExceptionInfo BackendFailure('accelerator lease unavailable') tblen=2>.value
+
+tests/test_accelerator_admission_diagnostics.py:49: AssertionError
+_ test_owned_process_keeps_rejection_details_after_temporary_response_is_removed _
+
+rejection_host = {'body': {'admission': {'adapter_id': 'metal:Apple M4', 'budget_bytes': 180736819, 'free_bytes': 258195456, 'observed_... forbidden-secret', 'environment': {'TOKEN': 'forbidden-secret'}, 'error': 'memory_admission_deferred'}, 'status': 409}
+boundary_entry = 'admission_fixture:run'
+
+    def test_owned_process_keeps_rejection_details_after_temporary_response_is_removed(rejection_host,boundary_entry):
+        from clipper_accelerators.owned_stage import run_owned_stage
+        with pytest.raises(BackendFailure) as caught:
+            run_owned_stage(boundary_entry,{'cpu_only':False},threading.Event())
+>       assert getattr(caught.value,'details',{}).get('reason')=='memory_admission_deferred'
+E       AssertionError: assert None == 'memory_admission_deferred'
+E        +  where None = <built-in method get of dict object at 0x10c6b4d80>('reason')
+E        +    where <built-in method get of dict object at 0x10c6b4d80> = {}.get
+E        +      where {} = getattr(BackendFailure('accelerator admission deferred'), 'details', {})
+E        +        where BackendFailure('accelerator admission deferred') = <ExceptionInfo BackendFailure('accelerator admission deferred') tblen=2>.value
+
+tests/test_accelerator_admission_diagnostics.py:75: AssertionError
+_ test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision[dance_highlight] _
+
+rejection_host = {'body': {'admission': {'adapter_id': 'metal:Apple M4', 'budget_bytes': 180736819, 'free_bytes': 258195456, 'observed_... forbidden-secret', 'environment': {'TOKEN': 'forbidden-secret'}, 'error': 'memory_admission_deferred'}, 'status': 409}
+boundary_entry = 'admission_fixture:run', plugin = 'dance_highlight'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c6b5710>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-510/test_real_owned_cpu_retry_publ0')
+
+    @pytest.mark.parametrize('plugin',['dance_highlight','person_highlight'])
+    def test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision(rejection_host,boundary_entry,plugin,monkeypatch,tmp_path):
+        from clipper_accelerators import visual_unit
+        from clipper_accelerators.owned_stage import run_owned_stage
+        from clipper_accelerators.artifacts import ArtifactSnapshot
+        monkeypatch.setattr(visual_unit,'run_owned_stage',lambda entry,*args:run_owned_stage(boundary_entry,*args))
+        result=visual_unit.run_visual_unit(plugin,'diagnostic',{'output_root':str(tmp_path/'out')},'mps',threading.Event())
+        assert result['acceleration']['cpu_reanalysis'] is True
+>       assert result['acceleration'].get('fallback_error',{}).get('details',{}).get('reason')=='memory_admission_deferred'
+E       AssertionError: assert None == 'memory_admission_deferred'
+E        +  where None = <built-in method get of dict object at 0x10cd22e40>('reason')
+E        +    where <built-in method get of dict object at 0x10cd22e40> = {}.get
+E        +      where {} = <built-in method get of dict object at 0x10ccfcac0>('details', {})
+E        +        where <built-in method get of dict object at 0x10ccfcac0> = {}.get
+E        +          where {} = <built-in method get of dict object at 0x10cd228c0>('fallback_error', {})
+E        +            where <built-in method get of dict object at 0x10cd228c0> = {'attempt': 1, 'cpu_reanalysis': True, 'elapsed_seconds': 0.3513525840244256, 'fallback_reason': 'backend_unavailable', ...}.get
+
+tests/test_accelerator_admission_diagnostics.py:88: AssertionError
+_ test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision[person_highlight] _
+
+rejection_host = {'body': {'admission': {'adapter_id': 'metal:Apple M4', 'budget_bytes': 180736819, 'free_bytes': 258195456, 'observed_... forbidden-secret', 'environment': {'TOKEN': 'forbidden-secret'}, 'error': 'memory_admission_deferred'}, 'status': 409}
+boundary_entry = 'admission_fixture:run', plugin = 'person_highlight'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c931790>
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-510/test_real_owned_cpu_retry_publ1')
+
+    @pytest.mark.parametrize('plugin',['dance_highlight','person_highlight'])
+    def test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision(rejection_host,boundary_entry,plugin,monkeypatch,tmp_path):
+        from clipper_accelerators import visual_unit
+        from clipper_accelerators.owned_stage import run_owned_stage
+        from clipper_accelerators.artifacts import ArtifactSnapshot
+        monkeypatch.setattr(visual_unit,'run_owned_stage',lambda entry,*args:run_owned_stage(boundary_entry,*args))
+        result=visual_unit.run_visual_unit(plugin,'diagnostic',{'output_root':str(tmp_path/'out')},'mps',threading.Event())
+        assert result['acceleration']['cpu_reanalysis'] is True
+>       assert result['acceleration'].get('fallback_error',{}).get('details',{}).get('reason')=='memory_admission_deferred'
+E       AssertionError: assert None == 'memory_admission_deferred'
+E        +  where None = <built-in method get of dict object at 0x10cd7f5c0>('reason')
+E        +    where <built-in method get of dict object at 0x10cd7f5c0> = {}.get
+E        +      where {} = <built-in method get of dict object at 0x10cd7ee00>('details', {})
+E        +        where <built-in method get of dict object at 0x10cd7ee00> = {}.get
+E        +          where {} = <built-in method get of dict object at 0x10cd7ef40>('fallback_error', {})
+E        +            where <built-in method get of dict object at 0x10cd7ef40> = {'attempt': 1, 'cpu_reanalysis': True, 'elapsed_seconds': 0.2824043339933269, 'fallback_reason': 'backend_unavailable', ...}.get
+
+tests/test_accelerator_admission_diagnostics.py:88: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accelerator_admission_diagnostics.py::test_http_rejection_keeps_safe_reason_and_snapshot[memory_admission_deferred]
+FAILED tests/test_accelerator_admission_diagnostics.py::test_http_rejection_keeps_safe_reason_and_snapshot[adapter_busy]
+FAILED tests/test_accelerator_admission_diagnostics.py::test_unrecognized_error_body_is_bounded_and_never_copies_credentials
+FAILED tests/test_accelerator_admission_diagnostics.py::test_owned_process_keeps_rejection_details_after_temporary_response_is_removed
+FAILED tests/test_accelerator_admission_diagnostics.py::test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision[dance_highlight]
+FAILED tests/test_accelerator_admission_diagnostics.py::test_real_owned_cpu_retry_publishes_rejection_and_consistent_revision[person_highlight]
+6 failed in 3.49s

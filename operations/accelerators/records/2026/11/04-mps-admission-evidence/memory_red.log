@@ -1,0 +1,121 @@
+✖ cache-rich Mac admits bounded GPU work despite low currently free pages (26.500666ms)
+✖ critical pressure returns the decision snapshot and never grants a GPU lease (5.58025ms)
+✖ unknown or stale memory observations fail closed (1.626042ms)
+✖ reservations across adapters share the host budget and existing reservations cannot grow past it (3.107375ms)
+✔ overlapping observations cannot grant two leases on one adapter (3.1535ms)
+✖ Windows dedicated-memory and host-memory limits both remain enforced (2.00075ms)
+✖ Darwin parser counts only bounded reclaimable cache and respects pressure (0.209625ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.977
+
+✖ failing tests:
+
+test at test/accelerator-admission-memory.test.js:19:1
+✖ cache-rich Mac admits bounded GPU work despite low currently free pages (26.500666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  409 !== 200
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:22:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 409,
+    expected: 200,
+    operator: 'strictEqual'
+  }
+
+test at test/accelerator-admission-memory.test.js:25:1
+✖ critical pressure returns the decision snapshot and never grants a GPU lease (5.58025ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:27:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual'
+  }
+
+test at test/accelerator-admission-memory.test.js:34:1
+✖ unknown or stale memory observations fail closed (1.626042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:37:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual'
+  }
+
+test at test/accelerator-admission-memory.test.js:42:1
+✖ reservations across adapters share the host budget and existing reservations cannot grow past it (3.107375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:46:80)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual'
+  }
+
+test at test/accelerator-admission-memory.test.js:59:1
+✖ Windows dedicated-memory and host-memory limits both remain enforced (2.00075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:64:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:752:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual'
+  }
+
+test at test/accelerator-admission-memory.test.js:67:1
+✖ Darwin parser counts only bounded reclaimable cache and respects pressure (0.209625ms)
+  Error: Cannot find module '../dist-electron/main/accelerators/memory'
+  Require stack:
+  - /Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.require (node:internal/modules/cjs/loader:1449:12)
+      at require (node:internal/modules/helpers:135:16)
+      at TestContext.<anonymous> (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js:68:28)
+      at Test.runInAsyncScope (node:async_hooks:214:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_electron/test/accelerator-admission-memory.test.js' ]
+  }

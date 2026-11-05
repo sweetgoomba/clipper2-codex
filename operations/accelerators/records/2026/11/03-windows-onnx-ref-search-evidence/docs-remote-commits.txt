@@ -1,0 +1,12 @@
+5b3b57a14879f26702fbc628f9a3c229bf216780 Merge branch 'fix/curation-still-detail-image' — 상품 큐레이션 D33 개정: '정지'는 진짜 정지 (3차 QA I-10)
+f12cb923ea301f9c24319a34e37f289ab4758086 docs(curation): '정지'면 상세 이미지도 움직이지 않는다 — D33 개정
+cefebb7ba66e009113515599dfc6099103bf416e Merge branch 'fix/overseas-preview-source-audio' — 해외 영상 계약 보기 voice에 trackId (3차 QA I-05)
+9cd7aedac0f71d839b54e8d3e8092b41c2c78275 docs(overseas-dub): 계약 보기 voice에 trackId 추가 (3차 QA I-05)
+fe79ee65e095d842a6d0275adbf9098018481349 docs(architecture): 소식 배너 글자 선택·그림 맞춤 설계·계획 (2026-10-27)
+c0ade574b4528a318a752e1c41afbc639ca16f54 docs(mobile-remote): 폰 리모컨 전체 설계·묶음 1(기반) spec·구현 계획
+29feee3373e1ebb7d058059148c8a62a518264da docs(explainer): 개정 11 로컬 dev 머지 기록(nest·python·angular)
+29aa52c38649674cbdf7cb98a67ede9fb07ccd26 docs(explainer): 개정 11 실행 결과 — W15 빼고 완료, V3 통과, 남은 것
+e64484212cac0b01508b4f9e2d2f7630a0a0ebb8 docs(explainer): 복제본 이름 — 주제 앞 12자 안에서 단어 경계까지(목업 예시와 맞춤)
+0ad19439d459b9c47fe5f250e52e220666adbabe docs(explainer): 개정 11 구현 계획(N31~N35·P6·A38~A41·W15·V3), 칸 순서 전체 화면 먼저, 접기는 nest 엔드포인트
+23166f31b455176bff334cb5dfc0490f7dd6ba6e docs(explainer): 개정 11 — 영상 영역 기본을 전체 화면으로(사용자 10/23), 그림 지시·리스크 맞춤
+ed0addf3b35d2112b33e3ffa5c14ae576e160904 docs(explainer): 개정 11 설계 — 템플릿을 랭킹 방식으로, ⑤에서 작게 고치고 크면 템플릿 편집으로 (D104~D124)

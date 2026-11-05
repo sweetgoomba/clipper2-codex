@@ -1,0 +1,26 @@
+{
+  "F06": {
+    "successful_explicit_recheck_available": true,
+    "release_qualified": false,
+    "incomplete_recheck_still_quarantined": true
+  },
+  "F09": {
+    "execution_evidence": "profiled",
+    "profile_verified": true,
+    "graph_execution": "mixed",
+    "provider_node_counts": {
+      "CPUExecutionProvider": 7,
+      "CoreMLExecutionProvider": 3
+    },
+    "physical_gpu_verified": false,
+    "legacy_provider_only": "provider_only"
+  },
+  "F05_remaining_cpu_budget_accounting": {
+    "actual_simulated_comparison_seconds": 35.0,
+    "per_model_budget_seconds": 30,
+    "reported_consumed_global_seconds": 0.0,
+    "gate_trial_seconds": 0.0,
+    "reason": "deferred_budget",
+    "candidate_calls": 0
+  }
+}

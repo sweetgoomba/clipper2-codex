@@ -1,0 +1,9 @@
+{
+  "actual_yolo_calls": 40,
+  "raw_incumbent_samples": 1,
+  "raw_distinct_inputs": 1,
+  "full_prediction_diagnostic_samples": 33,
+  "published_observed_incumbent": null,
+  "incumbent_precision": "fp16",
+  "reason": "certificate_required"
+}

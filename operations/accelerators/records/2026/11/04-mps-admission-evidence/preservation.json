@@ -1,0 +1,11 @@
+{
+  "original_tracked_files": 4955,
+  "changes": [],
+  "original_heads": {
+    "clipper_python": "9a9a940801f03c5a37e8a5897a474e5bb14bb7fd",
+    "clipper_electron": "540c6e6544e8aa46ad97224958d7e543c44c1c0c",
+    "clipper_nestjs": "a75f6ba46d91dce4bbde35c2871c51e63f7cee3e",
+    "clipper_angular": "4150871c6bb14f0a3eb5fd4d55a51a7bec54e98c"
+  },
+  "protected_python_paths_changed": []
+}

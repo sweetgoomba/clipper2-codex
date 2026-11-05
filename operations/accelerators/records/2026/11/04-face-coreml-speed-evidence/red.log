@@ -1,0 +1,172 @@
+EEEEEEEEEEEEEE                                                           [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_selects_faster_coreml_before_returning_any_gallery_embedding _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_selects_faster_coreml_bef0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10740a8d0>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate0-True-coreml_slower] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_unsupported_slow_or_inval0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107409490>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate1-True-coreml_quality_failed] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_unsupported_slow_or_inval1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107488e10>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate2-True-coreml_quality_failed] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_unsupported_slow_or_inval2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1073f9750>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate3-False-coreml_no_executed_nodes] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_unsupported_slow_or_inval3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107478490>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate4-True-coreml_trial_failed] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_unsupported_slow_or_inval4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10747ead0>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_late_failure_is_gpu_failure_for_whole_unit_cpu_retry __
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_late_failure_is_gpu_failu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106af0290>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+______ ERROR at setup of test_late_invalid_output_does_not_enter_gallery _______
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_late_invalid_output_does_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107488690>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_memory_rejection_stays_cpu_and_reports_real_host_reason _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_memory_rejection_stays_cp0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107466c90>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+__ ERROR at setup of test_noneligible_calls_never_convert_or_request_gpu[cpu] __
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_noneligible_calls_never_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107417450>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_noneligible_calls_never_convert_or_request_gpu[no_owner] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_noneligible_calls_never_c1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1074956d0>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_noneligible_calls_never_convert_or_request_gpu[windows] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_noneligible_calls_never_c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1073fbb90>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_noneligible_calls_never_convert_or_request_gpu[intel_mac] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_noneligible_calls_never_c3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1074a3250>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+_ ERROR at setup of test_noneligible_calls_never_convert_or_request_gpu[no_provider] _
+
+tmp_path = PosixPath('/private/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/pytest-of-jina/pytest-526/test_noneligible_calls_never_c4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107485590>
+
+    @pytest.fixture
+    def module(tmp_path, monkeypatch):
+>       from clipper_accelerators import native_face
+E       ImportError: cannot import name 'native_face' from 'clipper_accelerators' (/Users/jina/project/adlight/.worktrees/mps-admission-20261104/clipper_python/clipper_accelerators/clipper_accelerators/__init__.py)
+
+clipper_accelerators/tests/test_native_face_coreml.py:11: ImportError
+=========================== short test summary info ============================
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_selects_faster_coreml_before_returning_any_gallery_embedding
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate0-True-coreml_slower]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate1-True-coreml_quality_failed]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate2-True-coreml_quality_failed]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate3-False-coreml_no_executed_nodes]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_unsupported_slow_or_invalid_trial_returns_only_cpu[candidate4-True-coreml_trial_failed]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_late_failure_is_gpu_failure_for_whole_unit_cpu_retry
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_late_invalid_output_does_not_enter_gallery
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_memory_rejection_stays_cpu_and_reports_real_host_reason
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_noneligible_calls_never_convert_or_request_gpu[cpu]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_noneligible_calls_never_convert_or_request_gpu[no_owner]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_noneligible_calls_never_convert_or_request_gpu[windows]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_noneligible_calls_never_convert_or_request_gpu[intel_mac]
+ERROR clipper_accelerators/tests/test_native_face_coreml.py::test_noneligible_calls_never_convert_or_request_gpu[no_provider]
+14 errors in 0.13s

@@ -1,0 +1,40 @@
+[
+  {
+    "engine": "opencv",
+    "mean_ms": 5.708103894721717,
+    "median_ms": 5.640083487378433,
+    "count": 5
+  },
+  {
+    "engine": "ort_cpu",
+    "mean_ms": 3.718600102001801,
+    "median_ms": 3.6393335030879825,
+    "load_ms": 23.540791997220367,
+    "cosine_min": 0.9999999403953552,
+    "provider_nodes": {
+      "CPUExecutionProvider": 930
+    }
+  },
+  {
+    "engine": "coreml_fp32",
+    "mean_ms": 3.0408459075260907,
+    "median_ms": 2.9870000144001096,
+    "load_ms": 322.4963750108145,
+    "cosine_min": 0.9999999403953552,
+    "provider_nodes": {
+      "CoreMLExecutionProvider": 30,
+      "CPUExecutionProvider": 30
+    }
+  },
+  {
+    "engine": "coreml_fp16",
+    "mean_ms": 1.4038543915376067,
+    "median_ms": 1.427916984539479,
+    "load_ms": 619.2347499891184,
+    "cosine_min": 0.9999725222587585,
+    "provider_nodes": {
+      "CoreMLExecutionProvider": 30,
+      "CPUExecutionProvider": 60
+    }
+  }
+]

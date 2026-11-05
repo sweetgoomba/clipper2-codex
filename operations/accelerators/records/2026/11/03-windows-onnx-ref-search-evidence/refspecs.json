@@ -1,0 +1,56 @@
+[
+  {
+    "repo": "desktop/clipper_electron",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "desktop/clipper_angular",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "desktop/clipper_nestjs",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "web/clipper_web_client",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "web/clipper_web_admin",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "web/clipper_web_api",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "web/clipper_infra",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "desktop/clipper_python",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  },
+  {
+    "repo": "clipper_docs",
+    "exit_code": 0,
+    "stdout": "remote.origin.fetch +refs/heads/*:refs/remotes/origin/*\n",
+    "stderr": ""
+  }
+]

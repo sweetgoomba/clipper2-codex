@@ -4,6 +4,10 @@
 
 ## 현재 상태를 읽는 순서
 
+- [11/4 공통 가속과 Mac 얼굴 병목의 현재 상태](../../operations/accelerators/README.md): 실제 모델·설정·복구 연결과 dev 반영, Made My Night 안무 335초 → 266초·63개 목록 동일. [사용·재현](../../operations/accelerators/runbooks/mac-highlight-acceleration.md)과 [종합 인계](../../records/sessions/2026/11/04-highlight-mac-acceleration-handoff.md)에 Person 크기 준비 미연결, Whisper CPU, Windows 별도 검증 범위를 명시했다. 아래 11/3 초기 상태와 구분한다.
+
+- [11/3 GPU·ONNX 조사 요약과 담당 세션](records/2026/11/03-gpu-onnx-research-and-owner-session.md): 안무·인물·대사 공통 조사와 기존 안무 가속 개선을 연결한다. 별도 GPU 세션에서 공통 기반·CPU 복구를 1차 구현했으며, 실제 플러그인 연결·실장비 검증과 새 GPU 자동 선택 활성화는 남았다.
+
 - [W14 작업 카드](../../handoff/tasks/person-highlight.md)
 - [10/23 인물·공통 얼굴 모델 체크포인트](records/2026/10/23-person-highlight-checkpoint-and-shared-face-model.md)
 - [10/23 dev 병합·후속 담당 인계](records/2026/10/23-person-highlight-dev-merge-and-stage-usability-handoff.md)

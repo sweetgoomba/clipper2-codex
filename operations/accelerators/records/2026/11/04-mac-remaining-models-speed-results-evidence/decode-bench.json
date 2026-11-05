@@ -1,0 +1,30 @@
+[
+  {
+    "mode": "default",
+    "opened": true,
+    "backend": "FFMPEG",
+    "hw": 0.0,
+    "seconds": 0.6987525000004098,
+    "hashes": [
+      "8b8bf2f04b01dfe8767acc349b47d51babc135b7199ea2a42422a50da11c88a3",
+      "a8d0d7b60275817812beb66625069b461e32dad90c853e09494842de6f433d2b",
+      "31908c803b4daf51c04fe05e281caf4dc70c6ce59b1bab086d304fae01041e3d",
+      "925f0c03438293f98cf010840999ee7951259d3036921f9f5fb5de34927dac80",
+      "592310f44cf3b53d9986bdf7f439bd2c199d84d42efe63e1fedeba059c46ce15"
+    ]
+  },
+  {
+    "mode": "any",
+    "opened": true,
+    "backend": "FFMPEG",
+    "hw": 0.0,
+    "seconds": 0.6077126660384238,
+    "hashes": [
+      "8b8bf2f04b01dfe8767acc349b47d51babc135b7199ea2a42422a50da11c88a3",
+      "a8d0d7b60275817812beb66625069b461e32dad90c853e09494842de6f433d2b",
+      "31908c803b4daf51c04fe05e281caf4dc70c6ce59b1bab086d304fae01041e3d",
+      "925f0c03438293f98cf010840999ee7951259d3036921f9f5fb5de34927dac80",
+      "592310f44cf3b53d9986bdf7f439bd2c199d84d42efe63e1fedeba059c46ce15"
+    ]
+  }
+]

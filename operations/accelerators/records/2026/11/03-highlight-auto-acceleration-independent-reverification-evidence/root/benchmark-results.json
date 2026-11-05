@@ -1,0 +1,68 @@
+[
+  {
+    "case": "control",
+    "exit": 0,
+    "device": "PASS",
+    "coverage": true,
+    "timing": "PASS",
+    "baseline": "PASS",
+    "comparison": "PASS",
+    "process_calls": 6,
+    "release": "BLOCKED"
+  },
+  {
+    "case": "missing_baseline",
+    "exit": 2,
+    "device": "BLOCKED",
+    "coverage": false,
+    "timing": "BLOCKED",
+    "baseline": "BLOCKED",
+    "comparison": "BLOCKED",
+    "process_calls": 0,
+    "release": "BLOCKED"
+  },
+  {
+    "case": "regression100x",
+    "exit": 2,
+    "device": "FAIL",
+    "coverage": true,
+    "timing": "FAIL",
+    "baseline": "PASS",
+    "comparison": "PASS",
+    "process_calls": 6,
+    "release": "BLOCKED"
+  },
+  {
+    "case": "zero_model_calls",
+    "exit": 2,
+    "device": "BLOCKED",
+    "coverage": false,
+    "timing": "PASS",
+    "baseline": "PASS",
+    "comparison": "PASS",
+    "process_calls": 6,
+    "release": "BLOCKED"
+  },
+  {
+    "case": "different_identity",
+    "exit": 2,
+    "device": "FAIL",
+    "coverage": true,
+    "timing": "PASS",
+    "baseline": "FAIL",
+    "comparison": "FAIL",
+    "process_calls": 6,
+    "release": "BLOCKED"
+  },
+  {
+    "case": "insufficient_diversity",
+    "exit": 2,
+    "device": "BLOCKED",
+    "coverage": false,
+    "timing": "PASS",
+    "baseline": "PASS",
+    "comparison": "PASS",
+    "process_calls": 6,
+    "release": "BLOCKED"
+  }
+]

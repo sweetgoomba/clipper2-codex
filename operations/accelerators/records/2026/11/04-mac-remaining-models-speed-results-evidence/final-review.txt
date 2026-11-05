@@ -1,0 +1,6 @@
+Independent read-only code review: /root/static_yunet_review
+Latest review: no additional critical/important findings after retained-model weakref/MPS allocation guard.
+Reviewed: PoseEngine.release_mps_model destroys the owned model and retains reservation if any MPS allocation remains; native_sessions.release_model removes only its model reservation after host acknowledgement; host endpoint checks owner/native registration/active workers while preserving exclusivity and normal admission for future increases.
+Earlier findings fixed with red/green evidence: exact source bytes consumed after hashing; no double execution counting for shared face detector; rejected GPU candidate destroyed before rebuilding CPU weights; unsupported first SFace crop fixes CPU choice before returning output.
+Runtime limit: current_allocated_memory is process-wide, so unrelated MPS tensors can conservatively prevent reservation return. Actual full-video performance and final output checks performed separately by root.
+No files changed or ML/tests launched by reviewer.

@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "review_report": "/Users/jina/project/adlight/.codex/operations/accelerators/records/2026/11/03-highlight-auto-acceleration-final-independent-audit.md",
+  "scope": [
+    "darwin-arm64",
+    "win32-x64"
+  ],
+  "findings": {
+    "F01": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F02": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F03": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F04": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F05": {
+      "status": "partial",
+      "fixed": [
+        "remaining preparation/load/inference deadlines",
+        "comparison-only cost accounting",
+        "current cold-load cost",
+        "deadline removal after trial"
+      ],
+      "remaining": [
+        "idle corpus calibration product integration",
+        "all-adapter/runtime rotation"
+      ]
+    },
+    "F06": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F07": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F08": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F09": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F10": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F11": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "F12": {
+      "status": "fixed_with_regression_evidence"
+    },
+    "R01": {
+      "status": "not_complete",
+      "reason": "release catalog/corpus approval absent; existing CPU/MPS/CUDA kept; new ONNX auto gate preserved"
+    },
+    "R02": {
+      "status": "not_verified",
+      "reason": "physical Mac/Windows diverse corpus and fault matrix remains user device acceptance"
+    }
+  },
+  "tests": {
+    "python_full": {
+      "passed": 3251,
+      "failed": 6,
+      "skipped": 5,
+      "same_baseline_failure_ids": true,
+      "failures": [
+        "FAILED tests/test_annotation_layer_renderer.py::test_counter_formats_value_and_matches_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_chip_tones_and_badge_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_arrow_goldens",
+        "FAILED tests/test_annotation_layer_renderer.py::test_arrow_target_above_golden",
+        "FAILED tests/test_annotation_layer_renderer.py::test_layer_without_area_or_zone_tops_is_byte_identical_to_before",
+        "FAILED tests/test_clipper_video_render_ranking_transitions.py::test_real_render_list_holds_still_through_transitions_and_switches_at_handoff[fadeblack]"
+      ]
+    },
+    "python_focused": {
+      "passed": 265
+    },
+    "python_final_policy": {
+      "passed": 17
+    },
+    "nestjs_full": {
+      "passed": 5271,
+      "failed": 0
+    },
+    "electron_full": {
+      "passed": 1874,
+      "failed": 1,
+      "known_failure": "test/fake-updater.test.js:59, fake timer count actual26 expected1"
+    },
+    "angular_focused_chrome": {
+      "passed": 38
+    },
+    "ruff": {
+      "passed": true
+    },
+    "diff_check": {
+      "python": {
+        "exit_code": 0
+      },
+      "nestjs": {
+        "exit_code": 0
+      },
+      "angular": {
+        "exit_code": 0
+      },
+      "electron": {
+        "exit_code": 2,
+        "diagnostic": "pre-existing trailing whitespace at plugin-process.ts:148,195",
+        "file_unchanged_from_pre_remediation": true
+      }
+    }
+  },
+  "preservation": {
+    "proof": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/preservation.json",
+    "original_four_repositories_existing_files_and_HEAD_unchanged": true,
+    "previously_preserved_user_files": 18,
+    "all_match": true,
+    "original_weight_files_checked": 10,
+    "weight_mismatches": [],
+    "remediation_changed_source_files": 43
+  },
+  "real_cpu_smoke": {
+    "artifact_revision": 2,
+    "groups_identical": true,
+    "clips_identical": true,
+    "source_files": 1,
+    "source_sha256": "9020828d67e81f6f25e3c6f9d67a772398f685f3621af58d091cbfccd3ebc2a1"
+  },
+  "package": {
+    "architecture": "arm64",
+    "signed": false,
+    "source_files_matched": 470,
+    "electron_files_matched": 316,
+    "dependency_resolution": {
+      "checked": 9,
+      "missing": []
+    },
+    "windows_native_tested": false
+  },
+  "handoff": {
+    "source_zip_files": 4904,
+    "current_source_and_zip_mismatches": [],
+    "guidance": "BUILD-AND-TEST.ko.md",
+    "report": "AUDIT-REMEDIATION.ko.md"
+  },
+  "artifacts": [
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/completion/handoff/clipper-acceleration-source.zip",
+      "bytes": 57209040,
+      "sha256": "725bf7f8e6d805d04b04583dc65909a2b1c12e32c9a5e252eb08ccffa084d0cd"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.dmg",
+      "bytes": 192292548,
+      "sha256": "e52ecd356bf1b3b726d6613d5933049253ed700d7c55bff19d6c46ea567ac72c"
+    },
+    {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/dist-app/Clipper Studio (dev)-0.0.1-arm64.zip",
+      "bytes": 192508434,
+      "sha256": "da5b9a0afb84749807413e11af57910ff0b616d53f118c4b5041f21d04f4bd2a"
+    }
+  ],
+  "evidence": {
+    "python_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/full-python-frozen.log",
+      "sha256": "256e89fe0b9ab9d0e360ddb011bc3aa43fd597f6a158f1b6981c107049fe8961"
+    },
+    "python_focused": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/final-focused-green.log",
+      "sha256": "6c483e71139d30bfb8f96591b7c2a6e2053613cd7759c22d68d8e33fa2f7fe15"
+    },
+    "python_final_policy": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/cold-load-green.log",
+      "sha256": "ab97ecfeeebacd256e8105c195d3e87e3add7bafbe2457eb92cd57be5f3d188f"
+    },
+    "ruff": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "nestjs_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/final-audit-full-node.log",
+      "sha256": "190ee2efa4eaa08d695625fe31066341863b5e745e86d5f9399d516408add1a5"
+    },
+    "nestjs_workflow_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/final-audit-workflow-red.log",
+      "sha256": "f9722947eaa548c3faa1549aa3e5cb25e17c63db42b287a6e8174f95ee7a407b"
+    },
+    "nestjs_workflow_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/final-audit-workflow-green.log",
+      "sha256": "7a55433e84a7a703a9746cf95ae18111f6dc9028a5ed1115bd08b9621c1baf54"
+    },
+    "nestjs_integrated": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-nestjs-accelerators-20261103/.implementation-evidence/final-audit-integrated-green.log",
+      "sha256": "7a17afe5b8685dd33f5b8e772a0393be822bf4860731279d3a92faa3b4e6b526"
+    },
+    "electron_full": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/final-audit-full-electron.log",
+      "sha256": "5b78237e7f3012790f9737298f3ed5509f29f2ed4c3796e58d55be8e31c8579c"
+    },
+    "electron_ownership": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/final-audit-owner-proof-green.log",
+      "sha256": "7b02967d7b71156c391f61d93d6c48943b20fa3e6e681bce65ae57172d99eb55"
+    },
+    "angular": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-angular-accelerators-20261103/.implementation-evidence/final-audit-speech-evidence-ui.log",
+      "sha256": "7d8c1becd6bfb1654d756e3c876b2be892513447613ef86753598ef375b61a2f"
+    },
+    "mac_build": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-electron-accelerators-20261103/.implementation-evidence/final-audit-mac-package-final.log",
+      "sha256": "d439dfd945eb3c37493bdaeea17f414ff4a51c42cd26eb6aac1b531e39409526"
+    },
+    "deadline_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/selected-deadline-red.log",
+      "sha256": "31fd48a8ef74eb3ef541a7ead8860e37f953d95c167fde362a11b2b3b12a88bf"
+    },
+    "deadline_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/selected-deadline-green.log",
+      "sha256": "07fb9b5cd3315ce72cddbd2c95b2e0d567611aeb1d95aba9a72e5c52babffb40"
+    },
+    "cold_load_red": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/cold-load-red.log",
+      "sha256": "cc45fdf542989d1f0314782e58619b06e99be02c0657c16a4c8704c1239043a4"
+    },
+    "cold_load_green": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/cold-load-green.log",
+      "sha256": "ab97ecfeeebacd256e8105c195d3e87e3add7bafbe2457eb92cd57be5f3d188f"
+    },
+    "benchmark": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/benchmark/verification.json",
+      "sha256": "b87812aa04c415455d88bb943862293b9bd5232f637adb0ed5f2831604e1f8fe"
+    },
+    "source_storage": {
+      "path": "/Users/jina/project/adlight/.worktrees/clipper-python-accelerators-20261103/.implementation-evidence/final-audit-fixes/source-storage/results.json",
+      "sha256": "f3bf3ccc32b3544775aae6d0487f8e690ff2010c38181ae1b5c7bc2a152f674b"
+    }
+  },
+  "no_commit_or_push": true,
+  "live_app_or_shared_venv_replaced": false,
+  "new_release_certificates_created": false
+}

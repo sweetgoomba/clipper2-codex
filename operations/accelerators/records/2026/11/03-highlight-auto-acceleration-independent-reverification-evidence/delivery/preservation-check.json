@@ -1,0 +1,127 @@
+{
+  "originals": {
+    "/Users/jina/project/adlight/desktop/clipper_python": {
+      "checked": 599,
+      "mismatches": [],
+      "large_files_not_rehashed": [
+        "tests/fixtures/dance_scene_review/group_continuity.json",
+        "fonts/NotoColorEmoji.ttf"
+      ],
+      "head": "4b54bced17e13aadbeb97be75259b7f7213a9b24",
+      "head_matches": true
+    },
+    "/Users/jina/project/adlight/desktop/clipper_nestjs": {
+      "checked": 1473,
+      "mismatches": [],
+      "large_files_not_rehashed": [],
+      "head": "e4e1fcf5d37bdbbd2c0c00a9f558b052c2d55f7f",
+      "head_matches": true
+    },
+    "/Users/jina/project/adlight/desktop/clipper_electron": {
+      "checked": 461,
+      "mismatches": [],
+      "large_files_not_rehashed": [],
+      "head": "775ffd5e7df8bede6a9096316a7a367da8dba0da",
+      "head_matches": true
+    },
+    "/Users/jina/project/adlight/desktop/clipper_angular": {
+      "checked": 2271,
+      "mismatches": [],
+      "large_files_not_rehashed": [],
+      "head": "500cf9f455bcf4b0d857fa1de08e44fa9ff97e93",
+      "head_matches": true
+    }
+  },
+  "preserved_user_changes": [
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/face_evidence.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/member_timeline.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/pipeline.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/scene_context.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/stage_prominence.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/test_dance_member_timeline.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/test_dance_stage_prominence.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_nestjs",
+      "path": "src/modules/access/application/access.service.ts",
+      "matches": true
+    },
+    {
+      "repo": "clipper_nestjs",
+      "path": "test/access-credit-proxy.test.js",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "plugins/dance_highlight/dance_highlight/services/ensemble_continuity.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/fixtures/dance_scene_review/mmn103_role_subject.json",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/fixtures/dance_scene_review/mmn50_cut_support.json",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/fixtures/dance_scene_review/mmn50_ensemble_zoom.json",
+      "matches": true
+    },
+    {
+      "repo": "clipper_python",
+      "path": "tests/test_dance_ensemble_continuity.py",
+      "matches": true
+    },
+    {
+      "repo": "clipper_angular",
+      "path": "src/shell/projects/source-scene-overlay/source-scene-overlay.component.html",
+      "matches": true
+    },
+    {
+      "repo": "clipper_angular",
+      "path": "src/shell/projects/source-scene-overlay/source-scene-overlay.component.scss",
+      "matches": true
+    },
+    {
+      "repo": "clipper_angular",
+      "path": "src/shell/projects/source-scene-overlay/source-scene-overlay.component.spec.ts",
+      "matches": true
+    },
+    {
+      "repo": "clipper_angular",
+      "path": "src/shell/projects/source-scene-overlay/source-scene-overlay.component.ts",
+      "matches": true
+    }
+  ]
+}

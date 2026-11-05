@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-11-04T04:36:59.443177+09:00",
+  "markdown_files": [
+    "operations/accelerators/README.md",
+    "operations/accelerators/runbooks/mac-highlight-acceleration.md",
+    "records/sessions/2026/11/04-highlight-mac-acceleration-handoff.md",
+    "README.md",
+    "handoff/NEXT.md",
+    "handoff/WORKBOARD.md",
+    "handoff/tasks/dance-highlight.md",
+    "features/highlights/README.md",
+    "features/dance-highlight/README.md",
+    "README.OPERATIONS.md",
+    "features/highlights/records/2026/11/03-gpu-onnx-research-and-owner-session.md"
+  ],
+  "existing_documents_preserved": [
+    "README.md",
+    "handoff/NEXT.md",
+    "handoff/WORKBOARD.md",
+    "handoff/tasks/dance-highlight.md",
+    "features/highlights/README.md",
+    "features/dance-highlight/README.md",
+    "README.OPERATIONS.md",
+    "features/highlights/records/2026/11/03-gpu-onnx-research-and-owner-session.md"
+  ],
+  "local_links_checked": 54,
+  "broken_links": [],
+  "sealed_evidence_files_verified": 57,
+  "sealed_manifest_unchanged": true,
+  "supplement_files_verified": 4,
+  "comparison": {
+    "lists_equal": true,
+    "config_equal": true,
+    "stats_equal": true,
+    "counts": {
+      "main": 49,
+      "group": 14
+    },
+    "cpu_reanalysis": false,
+    "canonical_lists_sha256": "20e815c03c379b28af5b8e76031cb09db917037f2814fd82c46055fae6ce8d0d"
+  },
+  "shell_snippets_syntax_checked": 4,
+  "read_only_comparison_command_output": "PASS: lists/config/stats identical, CPU reanalysis false",
+  "pytest_runner_syntax_checked": true,
+  "product_source_state": {
+    "clipper_python": {
+      "head": "17259bcf1c7c466cd7108e04a25250172dd28151",
+      "tracked_status": ""
+    },
+    "clipper_electron": {
+      "head": "849a51b7906f84054e1a55d02da45bfa3768be6f",
+      "tracked_status": ""
+    }
+  },
+  "new_ml_or_performance_tests": false,
+  "git_diff_check": true
+}

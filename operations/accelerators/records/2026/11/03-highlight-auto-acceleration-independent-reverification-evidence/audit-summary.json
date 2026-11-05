@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-03",
+  "source_thread": "01a19e03-43e4-7880-83f1-92e0b923fb88",
+  "original_statuses": {
+    "F01": "resolved_original_condition",
+    "F02": "resolved_original_condition",
+    "F04": "resolved_original_condition",
+    "F06": "resolved_original_condition",
+    "F07": "resolved_original_condition",
+    "F08": "resolved_original_condition",
+    "F09": "resolved_original_condition",
+    "F10": "resolved_original_condition",
+    "F11": "resolved_original_condition",
+    "F12": "resolved_original_condition",
+    "F03": "partially_resolved",
+    "F05": "partially_resolved",
+    "R01": "partial_progress_release_incomplete",
+    "R02": "hardware_unverified"
+  },
+  "residual_findings": {
+    "A01": "P2",
+    "A02": "P2"
+  },
+  "new_findings": {
+    "N01": "P2",
+    "N02": "P2",
+    "N03": "P3",
+    "N04": "P3"
+  },
+  "production_sources_modified": false,
+  "app_or_gpu_or_windows_hardware_tested": false,
+  "fresh_full_build_or_full_suites": false
+}

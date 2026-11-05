@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-03T16:23:45.056Z",
+  "adapter": [
+    {
+      "id": "metal:Apple M4",
+      "vendor": "Apple",
+      "device_id": "Apple M4",
+      "driver": "27.0.0",
+      "backend_indices": [
+        [
+          "ort_coreml",
+          0
+        ],
+        [
+          "torch_mps",
+          0
+        ]
+      ],
+      "free_bytes": null,
+      "total_bytes": null,
+      "memory_kind": "shared",
+      "usable": true
+    }
+  ],
+  "decisions": [
+    {
+      "event": "freemem_used_by_fits",
+      "at": "2026-11-03T16:23:44.577Z",
+      "bytes": 779042816
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:23:44.582Z",
+      "endpoint": "/acquire",
+      "status": 200,
+      "error": null
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:23:44.583Z",
+      "endpoint": "/register-native",
+      "status": 200,
+      "error": null
+    },
+    {
+      "event": "decision",
+      "at": "2026-11-03T16:23:44.898Z",
+      "endpoint": "/release",
+      "status": 200,
+      "error": null
+    }
+  ],
+  "result": {
+    "ok": true,
+    "result": {
+      "device": "mps:0",
+      "value": 64,
+      "allocated_bytes": 16384
+    },
+    "calls": 1
+  },
+  "stderr": ""
+}

@@ -1,0 +1,32 @@
+✔ POSIX normal root exit still drains its actual native descendant process group (139.789625ms)
+✔ Windows idle wraps the command in the owned supervisor and requires empty-job proof=true (1.419417ms)
+✔ Windows idle wraps the command in the owned supervisor and requires empty-job proof=false (0.671875ms)
+✔ a Windows spawn error leaves no unrecoverable ownership record for a process never created (2.767666ms)
+✔ restart recovery verifies birth and nonce before draining an owned POSIX group (167.81175ms)
+✔ PID reuse or an unmarked group is blocked without signalling unrelated processes (93.671416ms)
+✔ Windows abrupt supervisor death recovers an absent named Job without an old stdout proof (1.856708ms)
+✔ Windows named Job needs a creation proof before termination and blocks an alive uncontained supervisor (2.78725ms)
+✔ hard-killed Windows supervisor recovers its verified named Job in the same app process (2.074333ms)
+✔ foreground analysis can begin in the same coordinator after a hard-killed supervisor has a verified empty Job (4.936292ms)
+✔ new development identity never claims the old app data or login protocol (0.621917ms)
+✔ build profiles are explicit and only local-API builds turn updates off (0.632166ms)
+✔ packaged config requires a profile, matching channel, and an API origin (1.110375ms)
+✔ generated runtime files round-trip without guessing the profile or leaking rejected API values (1.582125ms)
+✔ inherited old settings cannot redirect new development caches, ports, or update channel (0.270125ms)
+✔ Mac checks and downloads updates from its own macOS feed (0.235375ms)
+✔ Mac local-API builds still never check for updates (0.076833ms)
+✔ new dev packaging owns a separate updater cache name and protocol (0.559875ms)
+  • loaded configuration  file=/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/profile-updater-PQTVap/build/generated/electron-builder.dev.yml
+  • loaded configuration  file=/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/profile-updater-PQTVap/build/generated/electron-builder.prod.yml
+✔ Windows builder generates an isolated updater configuration without publishing (585.631ms)
+  • loaded configuration  file=/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/profile-mac-updater-eMWMTd/build/generated/electron-builder.dev.yml
+  • loaded configuration  file=/var/folders/1m/rqyx3mvn1tgc9z5hjr31q2380000gn/T/profile-mac-updater-eMWMTd/build/generated/electron-builder.prod.yml
+✔ Mac builder generates the same isolated updater configuration for the macOS feed (5.544541ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 646.309667
