@@ -1,0 +1,53 @@
+실제 수동 전환: 사용자가 출시 전이며 실사용자/내부 테스트 사용자도 없다고 밝히고 2번을 직접 승인했다.
+회사 공유 Mac 전체가 아니라 클리퍼 운영 컨테이너만 대상으로 한다.
+완료: ALB 회사8080/AWS8081 테스트 조건 경로 검증, AWS DB-a/c 모두 읽기 전용 streaming 확인.
+현재 단계: 실제 전환 절차와 재시작 조건을 준비하고, 회사 API 정지용 첫 명령을 제공한다.
+순서: 회사 API 정지 및 재시작 정책 기록/해제 -> 회사 DB의 SQL 신규 연결 차단/기존 세션 정리 -> 최종 WAL 반영 확인 -> 회사 DB 3개 정지 및 재시작 정책 해제 -> AWS-a 주 DB 설정으로 재기동/승격 -> AWS-c는 AWS-a에서 새로 복제 -> AWS API 실행 -> AWS8081 API/준비 상태 활성화 -> ALB 시험 -> 운영 DNS/기본 경로 전환 -> 쓰기/복제/백업 검증.
+결정: 두 AWS 노드는 기존에 모두 회사 DB를 따랐으므로, 첫 전환에서 C는 단순 주소 교체보다 A에서 새로 복제한다. 기존 C 데이터는 삭제하지 않고 보존 경로로 옮긴다. 복제 크기가 작고 타임라인 분기 위험을 피하기 쉽다.
+결정: 현재 data_checksums/wal_log_hints가 off이므로 회사 복귀도 pg_rewind를 가정하지 않고 전체 재복제를 준비한다.
+주의: API profile이 기본 실행에서 제외돼 있지만 명시적으로 지정하면 실행된다. AWS API 실행 전까지 준비 단계503을 유지한다.
+주의: ALB 대상 전체 비정상이면 fail-open하므로 상태 검사503 자체를 쓰기 차단으로 간주하지 않는다.
+승인 추가 요구 없음: 사용자가 실제 수동 전환을 승인했다. 회사 m4/m2는 원격 데스크톱에서 사용자 명령 실행이 필요하고, AWS는 Mac SSH driver로 진행하는 기존 방식을 따른다.
+2026-11-02 22:34:10 KST 사용자 확인: 회사 DB 일반 SQL 차단/기존 SQL 세션 종료/default readonly on, 복제는 유지. 마지막 WAL: user0/60001F8 admin0/70001F8 release0/50001F8.
+검증: AWS a/c 모두 세 DB replay는 각각0/6000230 0/7000230 0/5000230으로 원본 barrier 이상, recovery/read-only/streaming 유지.
+2026-11-02 22:37:50 KST 최종 물리 백업+S3 roundtrip+실제 복원3개 통과: physical/db-c/run-20261102T133718Z-c929BS. 상태 /srv/clipper-data/manual-cutover/final-backup-20261102-vvQNS2. DB-c hourly timer는 stop/inactive이며 enabled는 유지. C재복제 완료 후 반드시 start 및 신규백업 검증.
+다음 단계 helper: stop-office-db-20261102-09d1e22b73db.sh, SHA09d1e22b73db307d43655ba5dc8d96a62ca86b6367e8c72e947d3f7966bb5a5f. Private S3 bootstrap/cutover-scripts 업로드/읽기검증 완료. 사용자 m2-db 실행 결과 대기; 아직 회사DB는 실행 중이고 AWS 승격/API시작 안 함.
+Helper 검증: bash구문/다른호스트거절, 격리 PG16.14 fixture에서 실제 stop_and_verify_source 함수 정상정지(exit0/restartno), 이후 A승격·쓰기·C새복제 통과. fixture 전부 정리. 수동 검토: 정확한3prod만, 데이터 삭제 없음, 전체사전검사 후 정지, 오류시 현재차단유지, 원본재시작 없음.
+2026-11-02 22:49:09 KST 사용자 확인: 회사 3prod DB 모두 STOPPED/exited0/restartno. 마지막 barrier user0/60002E0 admin0/70002E0 release0/50002E0. 상태 db-freeze-20261102-223410-nvXAON/stop-20261102-224909-tUH23n.
+AWS양쪽에서 위barrier 이상 재확인 후 A3DB pg_promote 수행. A compose는 standby.signal 거절하는 primary 시작조건 및 recoveryfalse/readonlyoff health로 교체, 컨테이너3재생성/healthy/rollback쓰기검증 성공. timeline2. 상태 /srv/clipper-data/manual-cutover/promote-a-20261102-FGNXb4.
+C는 A로TLS접속/IDENTIFY_SYSTEM·timeline2·슬롯없음 검증 후 새3basebackup/manifest/WAL 검증. 기존 C정상정지 후 구data /srv/clipper-data/manual-cutover/reseed-c-20261102-4MIk7g/old-data 보존. 새PGDATA로재생성,3개healthy/recoverytrue/readonlyon/sender10.80.11.41/streaming/timeline2 검증.
+앱A→C순서로 실제Compose oneoff TLS+DB역할검증 후 동일운영API이미지 기동. 양쪽 deephealth200/3DBok. 일부 핵심정기업무의DB잠금/claim코드검토, 전체외부결제동시성수용시험은미수행; 원래커밋변경없음.
+양쪽 HAProxy8081 API503guard 해제→로컬43202 API, /readyz→로컬API/health. 회사8080설정과 회사HTTP주기점검중단은 그대로. 구성SHA5d5d1df73a8647b9e03571be721193dab097b9ff1e0dc8d5ee1f1fba3994b8d2. 실컨테이너구문검증/USR2reload/3웹200/API200/unknown403 확인.
+ALB 헤더시험 API200/TLS0/3DBok, 고객웹200·관리자웹200/TLS0, 공개다운로드2건 확인. A→C 모든3DB TLSstreaming/async/replaylag0/slotactive reserved 확인.
+2026-11-02 22:57:06 KST 새주DB기준 C백업/실제S3복원3개 성공: physical/db-c/run-20261102T135633Z-ZNBayW. 시간별timer enable--now/active 복원 완료.
+미완료: 사용자가 ALB HTTPS443 마지막기본규칙 대상을 clipper-prod-app-tg→clipper-prod-aws-app-tg 단독100%로 변경. 우선순위100테스트규칙도동일AWS대상이므로유지가능. api DNS만ALB이며 apex/www/admin DNS는 아직회사. 회사API/DB는정지유지, 복귀시현AWS주DB에서전체재복제필요.
+사용자 ALB HTTPS443 기본 전달 대상을 AWS TG로 저장 완료 확인. 시험 헤더 없는 일반 https://api.clipperstudio.ai/health HTTP200/TLS검증0/원격ALB52.78.45.109/3DBok. 일반 downloads/latest windows/x64+macos/arm64 두건 조회 성공.
+최종 SSH검증: 앱A/C 각각 API·고객웹·관리자웹·HAProxy running healthy, 양쪽 aws_app_entry→aws_api/local_api 200 기록 존재. DB-a 세클러스터 recoveryfalse/readonlyoff/timeline2, A→C TLSstreaming/지연0 유지. 두앱 adminDB세션 실제존재.
+최근 자동백업 2026-11-02 23:00:35 KST success, physical/db-c/run-20261102T140001Z-zaMhiG, 시간별timeractive. API 수동AWS전환 완료. 실제로그인·결제 등 기능시험은 별도. apex/www/admin DNS는 아직회사. 회사API/DB 정지 유지, 복귀전AWS최신데이터로전체재복제 필요. 자동감지/자동승격은 구현하지 않았음.
+2026-11-03 사용자 전체운영서비스AWS전환 승인, 이후별도작업은사용자가나중에지시. API/DB이미AWS. 실제ALB 기본AWS경로에서 apex/www/admin루트/dashboard 전부HTTP200/TLS0 검증. AWS고객웹두개운영API주소확인, 관리자실제apiBaseUrl=https://api.clipperstudio.ai 확인(다른에셋의devURL문자열과구분).
+DNS현황 권한ns1hosting: apexA112.169.113.138, wwwCNAMEapex, adminCNAMEmetabuzz.iptime.org, apiCNAMEALB. 개발레코드그대로. 기존ns1..4.hosting.co.kr는legacy, 루트ALB주소Alias지원Cloud ns1.hostingkr.net/ns2.hostingkr.net만 공식지원. 근거 HostingKR CNAME(Alias)등록하기 article5695232561561, 지원DNS유형5733494307737.
+전체DNS레코드목록(메일/TXT/검증포함) 비동기질문으로요청, 답변대기. Cloud전환시기존존자동보존가정금지, 목록대조필수. 다음인간작업: 기존DNS에서 admin/www 두CNAME만 ALBDNS로변경/TTL180; @A는Alias준비전유지, api/개발/ACM검증유지. 우리도구로DNS실제변경없음.
+2026-11-03 사용자 DNS서비스 AWS Route53 선택(첫25영역기준기본월$0.50+일부DNS조회비). HostingKR Cloud결제진행안함/Registrar유지. 기존IDC→Cloud는공식2026-10-29공지상레코드자동복사확인됐으나 비용선택으로Route53전환.
+로컬 S3-ACCESS-USER는 route53:ListHostedZonesByName 거절. 새권한추가요청하지않고기존AWS관리자콘솔로기존존확인/새publiczone생성진행할예정.
+Route53일괄등록JSON outputs/route53-records-clipperstudio-20261103.json 준비/검증. 11개 CREATE원자적배치: apex A Alias→기존ALB/ALBtargetHostedZoneIdZWKZPGTI48KDX/EvaluateTargetHealthfalse, 나머지10CNAME(admin/api/www→ALB,dev3→company,ACM4보존),TTL180. 새존의자동NS/SOA는건드리지않음. 등록기관위임변경전전체응답검증필수.
+Google/Cloudflare parentDS조회NODATA 확인. 현재legacy ns1 wwwCNAMEapex응답남아있음(사용자변경진술/이전GoogleALB응답과혼재); Route53대상목록은www직접ALB로명시. 현재www완전전파됐다고단정하지않음.
+다음사용자단계: Route53→호스팅영역에서clipperstudio.ai기존publiczone확인,없으면생성. ID와AWS할당NS4주소대기. 아직등록기관NS는IDC유지.
+2026-11-03 사용자 Route53 공개 영역 생성 확인: 기본 NS/SOA 두 레코드. NS4는 ns-1635.awsdns-12.co.uk / ns-873.awsdns-45.net / ns-1131.awsdns-13.org / ns-186.awsdns-23.com. 네 곳 모두 직접 SOA 권한 응답 확인. 영역 ID는 스크립트가 도메인/public/NS4 일치로 자동 확인.
+configure-route53-20261103-38fe06a5ba6c.py 결과 폴더 보관 및 기존 DB-a 역할로 비공개 S3 bootstrap/cutover-scripts/ 업로드/읽기검증 완료. SHA256=38fe06a5ba6cae79c1aba0898ac8db732651085d818b080dbe74ff0f3b5f9492. 도구로 실제 Route53 레코드 변경은 실행하지 않음.
+스크립트 오프라인 검증 6개 통과: 신규11개/같은내용재실행/다른계정거절/다른NS거절/다른ALB거절/예상외레코드거절. CloudShell에서 계정327655937726 및 공개영역/NS4/ALB상태 확인 후, 기본2개만 있는 영역에 CREATE11 원자적 등록, INSYNC 후13개 대조 및 NS/SOA 유지 확인. 사용자 실행 결과를 받은 뒤 AWS NS4의 모든 기록을 독립 검증하고 HostingKR 위임 변경 진행.
+2026-11-03 사용자 CloudShell 등록 성공: 계정327655937726, HostedZoneIdZ06349555CIPHA7AYFTT, ChangeId/C03579301W5BS9YA51M49, CREATE11개/전체13개/NS·SOA유지/등록기관위임미변경. CheckDir/tmp/clipper-route53-20261103-0b23hvhl.
+AWS NS4에 모든11개 DNS직접대조 4곳모두11/11일치,NS세트일치. apexA는ALB13.124.168.4/52.78.45.109응답. 두IP로apexHTTPS200/TLS0, 일반운영API200/3DBok검증. 개발3개회사CNAME/ACM4개검증CNAME보존.
+다음 사용자 단계: HostingKR 도메인네임서버수정→직접입력/사용자지정→기존IDC4를AWS할당NS4로교체저장. Cloud유료선택사용안함. 사용자저장후TLD위임/공개리졸버/정상HTTPS실접속으로전체서비스전환검증. 위임바뀌기전실제주DNS는아직IDC.
+2026-11-03 사용자 HostingKR 네임서버 변경 저장 완료. 초기검증 .ai부모/공개리졸버기존IDC, 이후같은턴 .ai6개권한서버 모두AWS할당NS4로변경확인. Google은NS4/A둘다AWS, CloudflareA도ALB13.124.168.4/52.78.45.109반영(NS조회자체는기존IDC캐시잔존).
+실제일반HTTPS wwwAWS52.78.45.109/관리자AWS13.124.168.4/API AWS13.124.168.4 모두200/TLS0/API3DBok. apex는현재Mac의KT DNS168.126.63.1이112.169.113.138반환하여회사웹200. /etc/hosts clipper고정항목없음. 시스템캐시만이라고단정하지않고KT리졸버잔여캐시로기록. 확인시각2026-11-03 04:14:29 KST.
+전환설정및등록기관위임완료, 세계모든기기의전파완료는아님. 회사운영클라이언트/관리자정적웹은캐시갱신동안유지, 회사API/DB는정지유지. 새DNS설정추가변경필요없음. 사용자나중에지시할작업은아직미제공.
+사용자 기능시험 보고: 운영관리자dashboard 로그인/목록조회/기존데이터표시 정상. 기존운영배포 데스크톱앱 다운로드·설치, 웹로그인후앱전환 및 앱인증상태실행 정상. 별도신규업무데이터생성·수정결과는명시보고되지않음.
+다음 기존계획3단계: 회사m4-prod의 운영클라이언트/관리자 두컨테이너만 임시정지 후 AWS서비스독립동작검증. helper stop-office-webs-20261103-da0cd67ecad9.sh 준비/구문/다른호스트거절확인. 회사API정지/restartno 및 두웹OCI커밋선검사, 원래메타데이터보존, restartno/정상종료exit0검증. 실제회사실행은아직안함.
+스크립트 결과폴더보관/기존비공개S3 bootstrap/cutover-scripts 업로드읽기검증. SHA256 da0cd67ecad9f7660021c6d72cc1c2605fb5b7cefb4a2483ed72f042dbb190c4. 사용자m4-prod실행결과대기. 회사Mac전체/Docker서비스/다른프로젝트는정지대상아님.
+2026-11-03 04:50:37 KST 사용자 회사m4-prod 클라이언트/관리자 정지 확인(exit0/restartno),API도계속정지. 상태 /Users/m4-prod/Documents/clipper-manual-cutover/web-stop-20261103-045037-U0wZtp.
+정지후검증: www/admin dashboard/API 일반HTTPS AWS200/TLS0/API3DBok, 공개릴리스2건. 단apex일반접속은112.169.113.138로회귀하여502. 따라서전체정지독립시험완료로표시하지않음.
+원인대조: KT기본/보조·Google·Cloudflare직접지정A/NS전부AWS, 부모.ai/Route53NS정상, 같은apex호스트로ALB두IP직접HTTPS200/TLS0. 반면기본dig(168.126.63.1표시)와Mac시스템이름조회는회사IP응답,hosts고정항목없음. 기본조회경로잔여캐시가남은상태로기록,회사API/DB재시작금지.
+작업Mac로컬캐시flush sudo-n시도는관리자암호필요로실패하여아무캐시변경도수행하지못함. 다음사용자단계는jina본인Mac에서sudo dscacheutil-flushcache 및mDNSResponder HUP후일반curl결과확인. 회사m4터미널에서실행하는단계아님. 필요시기존회사정적클라이언트만임시복구가능하지만아직수행하지않음.
+사용자 작업Mac DNS캐시갱신후 일반apex접속 HTTP200/IP13.124.168.4 보고. 이후최종독립검증: 강제DNS/시험헤더없이 apex13.124.168.4/www13.124.168.4/admin-dashboard52.78.45.109/API13.124.168.4 전부HTTP200/TLS0, API3DBok.
+회사클리퍼 운영클라이언트/관리자/API/DB3 정지 및 restartno상태를유지한정지시험통과. 컨테이너와원본데이터는보존. DNS캐시로발생한apex502는사용자로컬캐시갱신으로해소, 회사정적웹을다시시작하지않았음.
+사용자관리자로그인·조회·데이터표시 및 운영앱다운로드·설치·웹인증후앱전환·앱인증실행 확인까지수동AWS전체전환단계완료. 결제·메일실발송·새릴리스업로드등은별도미검증. 사용자아까예고한추가작업은아직내용을받지않았으므로새범위추정하지않음.

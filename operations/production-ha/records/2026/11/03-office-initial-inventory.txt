@@ -1,0 +1,639 @@
+[원격 데스크톱 표시 이름] m2-db:
+metabuzz@metabuzzui-Macmini ~ % date '+%Y-%m-%d %H:%M:%S %Z'
+hostname
+sw_vers
+system_profiler SPHardwareDataType | awk '/Model Name:|Model Identifier:|Chip:|Total Number of Cores:|Memory:/{print}'
+diskutil list internal physical
+df -h / /System/Volumes/Data
+2026-11-02 02:23:05 KST
+metabuzzui-Macmini.local
+ProductName:		macOS
+ProductVersion:		14.6.1
+BuildVersion:		23G93
+      Model Name: Mac mini
+      Model Identifier: Mac14,12
+      Chip: Apple M2 Pro
+      Total Number of Cores: 10 (6 performance and 4 efficiency)
+      Memory: 16 GB
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.3 GB   disk0
+   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s1s1   460Gi    12Gi   277Gi     5%    404k  2.9G    0%   /
+/dev/disk3s5     460Gi   150Gi   277Gi    36%    1.3M  2.9G    0%   /System/Volumes/Data
+metabuzz@metabuzzui-Macmini ~ % docker context show
+docker context inspect "$(docker context show)" --format '{{.Endpoints.docker.Host}}'
+docker version --format 'Client={{.Client.Version}} Server={{.Server.Version}}'
+docker compose version
+docker info --format 'Engine={{.Name}} OS={{.OperatingSystem}} Arch={{.Architecture}} CPUs={{.NCPU}} MemoryBytes={{.MemTotal}}'
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+docker compose ls
+desktop-linux
+unix:///Users/metabuzz/.docker/run/docker.sock
+Client=28.0.4 Server=28.0.4
+Docker Compose version v2.34.0-desktop.1
+Engine=docker-desktop OS=Docker Desktop Arch=aarch64 CPUs=10 MemoryBytes=12529553408
+NAMES                     IMAGE                      STATUS                 PORTS
+clipper-db-admin-dev      postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55213->5432/tcp
+clipper-db-release-dev    postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55223->5432/tcp
+clipper-db-user-dev       postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55203->5432/tcp
+clipper-db-user-prod      postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55202->5432/tcp
+clipper-db-release-prod   postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55222->5432/tcp
+clipper-db-admin-prod     postgres:16-alpine         Up 2 weeks (healthy)   192.168.0.7:55212->5432/tcp
+viewx-db-dev              postgres:18.6-alpine3.24   Up 2 weeks (healthy)   192.168.0.7:55501->5432/tcp
+viewx-db-prod             postgres:18.6-alpine3.24   Up 2 weeks (healthy)   192.168.0.7:55502->5432/tcp
+coldmail-db-prod          postgres:16                Up 2 weeks (healthy)   0.0.0.0:55402->5432/tcp
+coldmail-db-dev           postgres:16                Up 2 weeks (healthy)   0.0.0.0:55401->5432/tcp
+buildingon-db-absorbed    postgres:16-alpine         Up 2 weeks (healthy)   0.0.0.0:55301->5432/tcp
+rewards-db-dev            postgres:15-alpine         Up 2 weeks (healthy)   0.0.0.0:55103->5432/tcp
+rewards-db-prod           postgres:15-alpine         Up 2 weeks (healthy)   0.0.0.0:55102->5432/tcp
+rewards-db-stg            postgres:15-alpine         Up 2 weeks (healthy)   0.0.0.0:55101->5432/tcp
+NAME                STATUS              CONFIG FILES
+buildingon-db       running(1)          /Users/metabuzz/Desktop/project/buildingon-infra/db/compose.yml
+clipper-db-dev      running(3)          /Users/metabuzz/Desktop/project/clipper2/clipper_infra/db/compose.yml
+clipper-db-prod     running(3)          /Users/metabuzz/Desktop/project/clipper2/clipper_infra/db/compose.yml
+coldmail-db-dev     running(1)          /Users/metabuzz/Desktop/project/coldmail/docker-compose.db.yml
+coldmail-db-prod    running(1)          /Users/metabuzz/Desktop/project/coldmail/docker-compose.db.yml
+postgres            running(3)          /Users/metabuzz/Desktop/project/dohit-infra/database/postgres/docker-compose.yml
+viewx-db            running(2)          /Users/metabuzz/Desktop/project/viewx/infra/compose/compose.db.yml
+metabuzz@metabuzzui-Macmini ~ % networksetup -listallhardwareports | awk '/Hardware Port:|Device:/{print}'
+ifconfig | awk '/^[[:alnum:]]/ || /^[[:space:]]+inet6? / || /^[[:space:]]+status:/'
+route -n get default | awk '/gateway:|interface:/{print}'
+scutil --dns | awk '/resolver #|nameserver\[[0-9]+\]|if_index/{print}'
+Hardware Port: Ethernet
+Device: en0
+Hardware Port: Ethernet Adapter (en6)
+Device: en6
+Hardware Port: Ethernet Adapter (en7)
+Device: en7
+Hardware Port: Ethernet Adapter (en8)
+Device: en8
+Hardware Port: Ethernet Adapter (en9)
+Device: en9
+Hardware Port: Thunderbolt Bridge
+Device: bridge0
+Hardware Port: Wi-Fi
+Device: en1
+Hardware Port: Thunderbolt 1
+Device: en2
+Hardware Port: Thunderbolt 2
+Device: en3
+Hardware Port: Thunderbolt 3
+Device: en4
+Hardware Port: Thunderbolt 4
+Device: en5
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
+stf0: flags=0<> mtu 1280
+anpi1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi3: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi2: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::c87:a208:dd1c:52fc%en0 prefixlen 64 secured scopeid 0x8 
+	inet 192.168.0.7 netmask 0xffffff00 broadcast 192.168.0.255
+	status: active
+en6: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en7: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en8: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en9: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en3: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en4: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en5: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+ap1: flags=8802<BROADCAST,SIMPLEX,MULTICAST> mtu 1500
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::c86:ea31:ca6e:ed66%en1 prefixlen 64 secured scopeid 0x13 
+	inet 192.168.10.117 netmask 0xffffff00 broadcast 192.168.10.255
+	status: active
+awdl0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::dcbf:83ff:fe80:123b%awdl0 prefixlen 64 scopeid 0x14 
+	status: active
+llw0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::dcbf:83ff:fe80:123b%llw0 prefixlen 64 scopeid 0x15 
+	status: inactive
+utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1380
+	inet6 fe80::d7c3:dc96:be16:9967%utun0 prefixlen 64 scopeid 0x16 
+utun1: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 2000
+	inet6 fe80::bd2d:853f:1cd4:c367%utun1 prefixlen 64 scopeid 0x17 
+utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1000
+	inet6 fe80::ce81:b1c:bd2c:69e%utun2 prefixlen 64 scopeid 0x18 
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+	inet6 fe80::a9ad:6f5f:531d:3404%utun3 prefixlen 64 scopeid 0x19 
+    gateway: 192.168.0.1
+  interface: en0
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 8 (en0)
+resolver #2
+resolver #3
+resolver #4
+resolver #5
+resolver #6
+resolver #7
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 8 (en0)
+resolver #2
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 8.8.8.8
+  if_index : 19 (en1)
+metabuzz@metabuzzui-Macmini ~ % 
+
+[원격 데스크톱 표시 이름] m2-proxy:
+metabeojeu@metabuzz-staging ~ % date '+%Y-%m-%d %H:%M:%S %Z'
+hostname
+sw_vers
+system_profiler SPHardwareDataType | awk '/Model Name:|Model Identifier:|Chip:|Total Number of Cores:|Memory:/{print}'
+diskutil list internal physical
+df -h / /System/Volumes/Data
+2026-11-02 02:24:28 KST
+metabuzz-staging.local
+ProductName:		macOS
+ProductVersion:		14.5
+BuildVersion:		23F79
+      Model Name: Mac mini
+      Model Identifier: Mac14,3
+      Chip: Apple M2
+      Total Number of Cores: 8 (4 performance and 4 efficiency)
+      Memory: 8 GB
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *251.0 GB   disk0
+   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         245.1 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s1s1   228Gi    12Gi    91Gi    13%    404k  954M    0%   /
+/dev/disk3s5     228Gi   108Gi    91Gi    55%    1.2M  954M    0%   /System/Volumes/Data
+metabeojeu@metabuzz-staging ~ % docker context show
+docker context inspect "$(docker context show)" --format '{{.Endpoints.docker.Host}}'
+docker version --format 'Client={{.Client.Version}} Server={{.Server.Version}}'
+docker compose version
+docker info --format 'Engine={{.Name}} OS={{.OperatingSystem}} Arch={{.Architecture}} CPUs={{.NCPU}} MemoryBytes={{.MemTotal}}'
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+docker compose ls
+desktop-linux
+unix:///Users/metabeojeu/.docker/run/docker.sock
+Client=28.0.4 Server=28.0.4
+Docker Compose version v2.34.0-desktop.1
+Engine=docker-desktop OS=Docker Desktop Arch=aarch64 CPUs=8 MemoryBytes=2069004288
+NAMES                 IMAGE                             STATUS      PORTS
+clipper-web-monitor   monitor-clipper-web-monitor       Up 5 days   
+nginx-proxy-manager   jc21/nginx-proxy-manager:latest   Up 5 days   0.0.0.0:81->81/tcp, 0.0.0.0:18080->80/tcp, 0.0.0.0:18443->443/tcp
+NAME                STATUS              CONFIG FILES
+monitor             running(1)          /Users/metabeojeu/Desktop/project/clipper2/clipper_infra/ops/monitor/compose.yml
+proxy-server        running(1)          /Users/metabeojeu/Desktop/infra/proxy-server/docker-compose.yml
+metabeojeu@metabuzz-staging ~ % networksetup -listallhardwareports | awk '/Hardware Port:|Device:/{print}'
+ifconfig | awk '/^[[:alnum:]]/ || /^[[:space:]]+inet6? / || /^[[:space:]]+status:/'
+route -n get default | awk '/gateway:|interface:/{print}'
+scutil --dns | awk '/resolver #|nameserver\[[0-9]+\]|if_index/{print}'
+Hardware Port: Ethernet
+Device: en0
+Hardware Port: Ethernet Adapter (en4)
+Device: en4
+Hardware Port: Ethernet Adapter (en5)
+Device: en5
+Hardware Port: Thunderbolt Bridge
+Device: bridge0
+Hardware Port: Wi-Fi
+Device: en1
+Hardware Port: Thunderbolt 1
+Device: en2
+Hardware Port: Thunderbolt 2
+Device: en3
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
+stf0: flags=0<> mtu 1280
+anpi0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::18fb:55ac:437d:3eaf%en0 prefixlen 64 secured scopeid 0x6 
+	inet 192.168.0.2 netmask 0xffffff00 broadcast 192.168.0.255
+	status: active
+en4: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en5: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en3: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+ap1: flags=8802<BROADCAST,SIMPLEX,MULTICAST> mtu 1500
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::1482:27d8:a2b3:5483%en1 prefixlen 64 secured scopeid 0xd 
+	inet 192.168.10.113 netmask 0xffffff00 broadcast 192.168.10.255
+	status: active
+awdl0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::b08a:6bff:fe98:950b%awdl0 prefixlen 64 scopeid 0xe 
+	status: active
+llw0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::b08a:6bff:fe98:950b%llw0 prefixlen 64 scopeid 0xf 
+	status: inactive
+utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+	inet6 fe80::11d1:ad6a:6ecb:3f0b%utun0 prefixlen 64 scopeid 0x10 
+utun1: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1380
+	inet6 fe80::a667:39c9:fa0f:6da7%utun1 prefixlen 64 scopeid 0x11 
+utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 2000
+	inet6 fe80::7024:b3ac:477c:6923%utun2 prefixlen 64 scopeid 0x12 
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1000
+	inet6 fe80::ce81:b1c:bd2c:69e%utun3 prefixlen 64 scopeid 0x13 
+    gateway: 192.168.0.1
+  interface: en0
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 6 (en0)
+resolver #2
+resolver #3
+resolver #4
+resolver #5
+resolver #6
+resolver #7
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 6 (en0)
+resolver #2
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 8.8.8.8
+  if_index : 13 (en1)
+metabeojeu@metabuzz-staging ~ % 
+
+metabeojeu@metabuzz-staging ~ % lsof -nP -iTCP -sTCP:LISTEN
+COMMAND     PID       USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+ARDAgent    608 metabeojeu   10u  IPv6 0x960f4344b2ede82f      0t0  TCP *:3283 (LISTEN)
+com.docke 46304 metabeojeu  148u  IPv6 0xe7737d8a37a3591c      0t0  TCP *:18443 (LISTEN)
+com.docke 46304 metabeojeu  155u  IPv6 0xe1dbe91cb752a4d4      0t0  TCP *:18080 (LISTEN)
+com.docke 46304 metabeojeu  173u  IPv6 0x6fe1233342ce0d9f      0t0  TCP *:81 (LISTEN)
+metabeojeu@metabuzz-staging ~ % 
+
+
+[원격 데스크톱 표시 이름] m2-stage:
+metabuzz@metabuzzs-Mac-mini-2 ~ % date '+%Y-%m-%d %H:%M:%S %Z'
+hostname
+sw_vers
+system_profiler SPHardwareDataType | awk '/Model Name:|Model Identifier:|Chip:|Total Number of Cores:|Memory:/{print}'
+diskutil list internal physical
+df -h / /System/Volumes/Data
+2026-11-02 02:25:29 KST
+metabuzzs-Mac-mini-2.local
+ProductName:		macOS
+ProductVersion:		14.7.5
+BuildVersion:		23H527
+      Model Name: Mac mini
+      Model Identifier: Macmini9,1
+      Chip: Apple M1
+      Total Number of Cores: 8 (4 performance and 4 efficiency)
+      Memory: 8 GB
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *251.0 GB   disk0
+   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         245.1 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s3s1   228Gi    12Gi    46Gi    22%    404k  478M    0%   /
+/dev/disk3s1     228Gi   151Gi    46Gi    77%    1.3M  478M    0%   /System/Volumes/Data
+metabuzz@metabuzzs-Mac-mini-2 ~ % docker context show
+docker context inspect "$(docker context show)" --format '{{.Endpoints.docker.Host}}'
+docker version --format 'Client={{.Client.Version}} Server={{.Server.Version}}'
+docker compose version
+docker info --format 'Engine={{.Name}} OS={{.OperatingSystem}} Arch={{.Architecture}} CPUs={{.NCPU}} MemoryBytes={{.MemTotal}}'
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+docker compose ls
+desktop-linux
+unix:///Users/metabuzz/.docker/run/docker.sock
+Client=28.0.4 Server=28.0.4
+Docker Compose version v2.34.0-desktop.1
+Engine=docker-desktop OS=Docker Desktop Arch=aarch64 CPUs=8 MemoryBytes=4109803520
+NAMES                    IMAGE                                      STATUS                 PORTS
+clipper-web-admin-dev    clipper-web-admin:dev                      Up 3 days              192.168.0.23:42303->80/tcp
+clipper-web-client-dev   clipper-web-client:dev                     Up 3 days              192.168.0.23:42203->80/tcp
+clipper-web-api-dev      clipper-web-api:dev                        Up 2 days              3000/tcp, 192.168.0.23:43203->43203/tcp
+viewx-angular-dev        viewx-angular-dev:20261020T045053Z-57521   Up 12 days (healthy)   192.168.0.23:42403->80/tcp
+viewx-nestjs-dev         viewx-nestjs-dev:20261020T045053Z-57521    Up 3 days (healthy)    192.168.0.23:43403->3000/tcp
+NAME                STATUS              CONFIG FILES
+clipper-dev         running(3)          /Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.yml,/Users/metabuzz/Desktop/project/clipper2/clipper_infra/apps/compose.dev.yml
+viewx-dev           running(2)          /Users/metabuzz/Desktop/project/viewx/infra/compose/compose.dev.yml
+metabuzz@metabuzzs-Mac-mini-2 ~ % networksetup -listallhardwareports | awk '/Hardware Port:|Device:/{print}'
+ifconfig | awk '/^[[:alnum:]]/ || /^[[:space:]]+inet6? / || /^[[:space:]]+status:/'
+route -n get default | awk '/gateway:|interface:/{print}'
+scutil --dns | awk '/resolver #|nameserver\[[0-9]+\]|if_index/{print}'
+Hardware Port: Ethernet
+Device: en0
+Hardware Port: Ethernet Adapter (en4)
+Device: en4
+Hardware Port: Ethernet Adapter (en5)
+Device: en5
+Hardware Port: Thunderbolt Bridge
+Device: bridge0
+Hardware Port: Wi-Fi
+Device: en1
+Hardware Port: Thunderbolt 1
+Device: en2
+Hardware Port: Thunderbolt 2
+Device: en3
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
+stf0: flags=0<> mtu 1280
+anpi1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::cfe:27b2:e514:a155%en0 prefixlen 64 secured scopeid 0x6 
+	inet 192.168.0.23 netmask 0xffffff00 broadcast 192.168.0.255
+	status: active
+en4: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en5: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en3: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+ap1: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::3498:77ff:fe75:d76e%ap1 prefixlen 64 scopeid 0xb 
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::438:8664:882d:b1f3%en1 prefixlen 64 secured scopeid 0xc 
+	inet 192.168.10.111 netmask 0xffffff00 broadcast 192.168.10.255
+	status: active
+bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+awdl0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::5c11:deff:fe95:dca5%awdl0 prefixlen 64 scopeid 0xe 
+	status: active
+llw0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::5c11:deff:fe95:dca5%llw0 prefixlen 64 scopeid 0xf 
+	status: inactive
+utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+	inet6 fe80::86a8:4fb9:e2d9:f014%utun0 prefixlen 64 scopeid 0x10 
+utun1: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1380
+	inet6 fe80::3316:76a6:7153:fd%utun1 prefixlen 64 scopeid 0x11 
+utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 2000
+	inet6 fe80::d9b2:24f:4878:1ef8%utun2 prefixlen 64 scopeid 0x12 
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1000
+	inet6 fe80::ce81:b1c:bd2c:69e%utun3 prefixlen 64 scopeid 0x13 
+    gateway: 192.168.0.1
+  interface: en0
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 6 (en0)
+resolver #2
+resolver #3
+resolver #4
+resolver #5
+resolver #6
+resolver #7
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 6 (en0)
+resolver #2
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 8.8.8.8
+  if_index : 12 (en1)
+metabuzz@metabuzzs-Mac-mini-2 ~ % docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}'
+lsof -nP -iTCP -sTCP:LISTEN
+NAME                     CPU %     MEM USAGE / LIMIT     MEM %
+clipper-web-admin-dev    0.00%     8.18MiB / 3.828GiB    0.21%
+clipper-web-client-dev   0.00%     9.738MiB / 3.828GiB   0.25%
+clipper-web-api-dev      0.00%     163.6MiB / 3.828GiB   4.17%
+viewx-angular-dev        0.00%     5.574MiB / 3.828GiB   0.14%
+viewx-nestjs-dev         0.00%     133.3MiB / 3.828GiB   3.40%
+COMMAND     PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+ARDAgent    542 metabuzz    9u  IPv6 0xa0c073183b740b4c      0t0  TCP *:3283 (LISTEN)
+com.docke 71106 metabuzz   11u  IPv4 0xd199db202702d45a      0t0  TCP 192.168.0.23:42203 (LISTEN)
+com.docke 71106 metabuzz   89u  IPv4 0x5d82eb83449aca1f      0t0  TCP 192.168.0.23:43203 (LISTEN)
+com.docke 71106 metabuzz  190u  IPv4 0xa3423fff171c543d      0t0  TCP 192.168.0.23:43403 (LISTEN)
+com.docke 71106 metabuzz  208u  IPv4 0x8a600791d1fb5950      0t0  TCP 192.168.0.23:42303 (LISTEN)
+com.docke 71106 metabuzz  216u  IPv4 0x2c6012657beec262      0t0  TCP 192.168.0.23:42403 (LISTEN)
+Code\x20H 72410 metabuzz   34u  IPv4 0x40d32d853ef11690      0t0  TCP 127.0.0.1:57296 (LISTEN)
+metabuzz@metabuzzs-Mac-mini-2 ~ % 
+
+[원격 데스크톱 표시 이름] m4-prod:
+m4-prod@m4-produi-Macmini ~ % date '+%Y-%m-%d %H:%M:%S %Z'
+hostname
+sw_vers
+system_profiler SPHardwareDataType | awk '/Model Name:|Model Identifier:|Chip:|Total Number of Cores:|Memory:/{print}'
+diskutil list internal physical
+df -h / /System/Volumes/Data
+2026-11-02 02:26:38 KST
+m4-produi-Macmini.local
+ProductName:		macOS
+ProductVersion:		26.5
+BuildVersion:		25F71
+2026-11-02 02:26:38.702 system_profiler[73891:113116688] hw.cpufamily: 0x6f5129ac
+      Model Name: Mac mini
+      Model Identifier: Mac16,10
+      Chip: Apple M4
+      Total Number of Cores: 10 (4 Performance and 6 Efficiency)
+      Memory: 24 GB
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.3 GB   disk0
+   1:             Apple_APFS_ISC Container disk2         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk1         5.4 GB     disk0s3
+
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s3s1   460Gi    16Gi   349Gi     5%    459k  3.7G    0%   /
+/dev/disk3s1     460Gi    76Gi   349Gi    18%    404k  3.7G    0%   /System/Volumes/Data
+m4-prod@m4-produi-Macmini ~ % docker context show
+docker context inspect "$(docker context show)" --format '{{.Endpoints.docker.Host}}'
+docker version --format 'Client={{.Client.Version}} Server={{.Server.Version}}'
+docker compose version
+docker info --format 'Engine={{.Name}} OS={{.OperatingSystem}} Arch={{.Architecture}} CPUs={{.NCPU}} MemoryBytes={{.MemTotal}}'
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+docker compose ls
+desktop-linux
+unix:///Users/m4-prod/.docker/run/docker.sock
+Client=29.4.3 Server=29.4.3
+
+Docker Compose version v5.1.3
+Engine=docker-desktop OS=Docker Desktop Arch=aarch64 CPUs=10 MemoryBytes=8321712128
+NAMES                          IMAGE                                       STATUS                 PORTS
+clipper-web-client-prod        clipper-web-client:prod                     Up 3 days              192.168.0.47:42202->80/tcp
+clipper-web-api-prod           clipper-web-api:prod                        Up 3 days              192.168.0.47:43202->43202/tcp
+clipper-web-admin-prod         clipper-web-admin:prod                      Up 3 days              192.168.0.47:42302->80/tcp
+buildingon-mbz-legacy-sync-1   mbz-legacy-sync:latest                      Up 3 weeks             
+clipper-web-monitor            monitor-clipper-web-monitor                 Up 3 weeks             
+viewx-nestjs-prod              viewx-nestjs-prod:20260928T083649Z-75572    Up 4 weeks (healthy)   192.168.0.47:43502->3000/tcp
+viewx-angular-prod             viewx-angular-prod:20260928T083649Z-75572   Up 4 weeks (healthy)   192.168.0.47:42502->80/tcp
+buildingon-mbz-caddy-1         caddy:2-alpine                              Up 3 months            0.0.0.0:10700->10700/tcp, [::]:10700->10700/tcp, 0.0.0.0:10702->10702/tcp, [::]:10702->10702/tcp
+buildingon-mbz-api-1           mbz-api:latest                              Up 3 months            127.0.0.1:10701->10701/tcp
+coldmail-angular-admin-prod    coldmail-prod-web-admin                     Up 3 months            0.0.0.0:42401->42401/tcp, [::]:42401->42401/tcp
+coldmail-angular-client-prod   coldmail-prod-web-worker                    Up 3 months            0.0.0.0:42402->42402/tcp, [::]:42402->42402/tcp
+coldmail-nestjs-prod           coldmail-prod-nest                          Up 3 months            0.0.0.0:43401->43401/tcp, [::]:43401->43401/tcp
+NAME                STATUS              CONFIG FILES
+buildingon-mbz      running(3)          /Users/m4-prod/Documents/projects/buildingon-mbz/docker-compose.yml
+clipper-prod        running(3)          /Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.yml,/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.prod.yml
+coldmail-prod       running(3)          /Users/m4-prod/documents/projects/coldmail/docker-compose.yml
+monitor             running(1)          /Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/ops/monitor/compose.yml
+viewx-prod          running(2)          /Users/m4-prod/Documents/projects/viewx/infra/compose/compose.prod.yml
+m4-prod@m4-produi-Macmini ~ % 
+m4-prod@m4-produi-Macmini ~ % networksetup -listallhardwareports | awk '/Hardware Port:|Device:/{print}'
+ifconfig | awk '/^[[:alnum:]]/ || /^[[:space:]]+inet6? / || /^[[:space:]]+status:/'
+route -n get default | awk '/gateway:|interface:/{print}'
+scutil --dns | awk '/resolver #|nameserver\[[0-9]+\]|if_index/{print}'
+Hardware Port: Ethernet
+Device: en0
+Hardware Port: Ethernet Adapter (en5)
+Device: en5
+Hardware Port: Ethernet Adapter (en6)
+Device: en6
+Hardware Port: Ethernet Adapter (en7)
+Device: en7
+Hardware Port: Thunderbolt Bridge
+Device: bridge0
+Hardware Port: Wi-Fi
+Device: en1
+Hardware Port: Thunderbolt 1
+Device: en2
+Hardware Port: Thunderbolt 2
+Device: en3
+Hardware Port: Thunderbolt 4
+Device: en4
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
+stf0: flags=0<> mtu 1280
+anpi0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+anpi3: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::67:6910:5de5:5b99%en0 prefixlen 64 secured scopeid 0x7 
+	inet 192.168.0.47 netmask 0xffffff00 broadcast 192.168.0.255
+	status: active
+en5: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en6: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en7: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en3: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en4: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+ap1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::1c06:1bbd:c54d:f62d%en1 prefixlen 64 secured scopeid 0xf 
+	inet 192.168.10.102 netmask 0xffffff00 broadcast 192.168.10.255
+	status: active
+bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	status: inactive
+awdl0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::40f8:62ff:fe60:93b2%awdl0 prefixlen 64 scopeid 0x11 
+	status: active
+llw0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	inet6 fe80::40f8:62ff:fe60:93b2%llw0 prefixlen 64 scopeid 0x12 
+utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+	inet6 fe80::e60d:8a9:3dbf:6545%utun0 prefixlen 64 scopeid 0x13 
+utun1: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1380
+	inet6 fe80::45d1:827a:2d48:e9f%utun1 prefixlen 64 scopeid 0x14 
+utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 2000
+	inet6 fe80::3eb5:e45e:354f:dafa%utun2 prefixlen 64 scopeid 0x15 
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1000
+	inet6 fe80::ce81:b1c:bd2c:69e%utun3 prefixlen 64 scopeid 0x16 
+    gateway: 192.168.0.1
+  interface: en0
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 7 (en0)
+resolver #2
+resolver #3
+resolver #4
+resolver #5
+resolver #6
+resolver #7
+resolver #1
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 168.126.63.2
+  if_index : 7 (en0)
+resolver #2
+  nameserver[0] : 168.126.63.1
+  nameserver[1] : 8.8.8.8
+  if_index : 15 (en1)
+m4-prod@m4-produi-Macmini ~ % docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}'
+lsof -nP -iTCP -sTCP:LISTEN
+NAME                           CPU %     MEM USAGE / LIMIT    MEM %
+clipper-web-client-prod        0.00%     9.461MiB / 7.75GiB   0.12%
+clipper-web-api-prod           0.00%     88.14MiB / 7.75GiB   1.11%
+clipper-web-admin-prod         0.00%     9.652MiB / 7.75GiB   0.12%
+buildingon-mbz-legacy-sync-1   0.00%     16.35MiB / 7.75GiB   0.21%
+clipper-web-monitor            0.00%     164.1MiB / 7.75GiB   2.07%
+viewx-nestjs-prod              0.00%     68.6MiB / 7.75GiB    0.86%
+viewx-angular-prod             1.35%     11.91MiB / 7.75GiB   0.15%
+buildingon-mbz-caddy-1         0.00%     54.25MiB / 7.75GiB   0.68%
+buildingon-mbz-api-1           0.00%     216.4MiB / 7.75GiB   2.73%
+coldmail-angular-admin-prod    0.00%     7.137MiB / 7.75GiB   0.09%
+coldmail-angular-client-prod   0.00%     6.766MiB / 7.75GiB   0.09%
+coldmail-nestjs-prod           0.00%     27.9MiB / 7.75GiB    0.35%
+COMMAND    PID    USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+ARDAgent   430 m4-prod    9u  IPv6 0xd4a7bae7723d9792      0t0  TCP *:3283 (LISTEN)
+com.docke 3040 m4-prod   15u  IPv4 0xd0b9634a8a10c46e      0t0  TCP 192.168.0.47:42202 (LISTEN)
+com.docke 3040 m4-prod   80u  IPv4 0xcfba5b4da179c451      0t0  TCP 192.168.0.47:42502 (LISTEN)
+com.docke 3040 m4-prod  100u  IPv4 0x1d6946eb6736ddcb      0t0  TCP 192.168.0.47:43502 (LISTEN)
+com.docke 3040 m4-prod  128u  IPv4 0x57321553bec6da03      0t0  TCP 127.0.0.1:10701 (LISTEN)
+com.docke 3040 m4-prod  159u  IPv6 0x7ed8892d90e6dfe1      0t0  TCP *:10702 (LISTEN)
+com.docke 3040 m4-prod  187u  IPv6 0x663350df8f7e7d7c      0t0  TCP *:10700 (LISTEN)
+com.docke 3040 m4-prod  204u  IPv4 0xef74926f0486506b      0t0  TCP 192.168.0.47:42302 (LISTEN)
+com.docke 3040 m4-prod  206u  IPv6 0x7c7cab41154953e4      0t0  TCP *:43401 (LISTEN)
+com.docke 3040 m4-prod  209u  IPv6 0x4d7b338d53bd8801      0t0  TCP *:42401 (LISTEN)
+com.docke 3040 m4-prod  210u  IPv6 0x4aa693926a989006      0t0  TCP *:42402 (LISTEN)
+com.docke 3040 m4-prod  255u  IPv4 0x4ed29e82a06d6e29      0t0  TCP 192.168.0.47:43202 (LISTEN)
+m4-prod@m4-produi-Macmini ~ % 
+m4-prod@m4-produi-Macmini ~ % for c in $(docker ps -q --filter 'name=clipper-web-'); do
+  docker inspect --format '{{.Name}} | project={{index .Config.Labels "com.docker.compose.project"}} | service={{index .Config.Labels "com.docker.compose.service"}} | directory={{index .Config.Labels "com.docker.compose.project.working_dir"}} | files={{index .Config.Labels "com.docker.compose.project.config_files"}}' "$c"
+done
+/clipper-web-client-prod | project=clipper-prod | service=web-client | directory=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps | files=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.yml,/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.prod.yml
+/clipper-web-api-prod | project=clipper-prod | service=api | directory=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps | files=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.yml,/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.prod.yml
+/clipper-web-admin-prod | project=clipper-prod | service=web-admin | directory=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps | files=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.yml,/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/apps/compose.prod.yml
+/clipper-web-monitor | project=monitor | service=clipper-web-monitor | directory=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/ops/monitor | files=/Users/m4-prod/Documents/projects/clipperstudio/clipper_infra/ops/monitor/compose.yml
+m4-prod@m4-produi-Macmini ~ % 

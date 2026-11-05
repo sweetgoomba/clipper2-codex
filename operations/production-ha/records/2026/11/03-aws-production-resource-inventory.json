@@ -1,0 +1,802 @@
+{
+  "문서_기준": {
+    "작성일": "2026-11-03",
+    "시간대": "Asia/Seoul",
+    "상태_관측_기준": "2026-11-03 약 05시의 실제 전환 검증과 사용자 기능 확인",
+    "작성_중_새_운영_변경": false,
+    "비밀값_포함": false,
+    "원래_대화": "01a176cf-706f-7290-8bf8-6d27d78c4732",
+    "실행_대화": "01a19820-165f-7fb1-89a0-b641d390cd01"
+  },
+  "account": "327655937726",
+  "region": "ap-northeast-2",
+  "console_user": "METABUZZ_ADMINISTRATOR",
+  "local_cli_user": "S3-ACCESS-USER",
+  "vpc": {
+    "name": "clipper-prod-vpc",
+    "id": "vpc-02112f6e5414ba35a",
+    "cidr": "10.80.0.0/16",
+    "dns_support": true,
+    "dns_hostnames": true,
+    "ipv6": false,
+    "internet_gateway": "igw-01761abecec579bef",
+    "public_route_table": "rtb-0ae90f4282c236e02",
+    "original_main_route_table": "rtb-0b0bab71fc17c5cd7",
+    "subnets": [
+      {
+        "name": "clipper-prod-app-a",
+        "id": "subnet-06281b4c52df6762e",
+        "cidr": "10.80.1.0/24",
+        "availability_zone": "ap-northeast-2a",
+        "auto_public_ipv4": false,
+        "route_table": "rtb-0ae90f4282c236e02"
+      },
+      {
+        "name": "clipper-prod-app-c",
+        "id": "subnet-0dca68cc0351c54a1",
+        "cidr": "10.80.2.0/24",
+        "availability_zone": "ap-northeast-2c",
+        "auto_public_ipv4": false,
+        "route_table": "rtb-0ae90f4282c236e02"
+      },
+      {
+        "name": "clipper-prod-db-a",
+        "id": "subnet-0a45af4483b0b8099",
+        "cidr": "10.80.11.0/24",
+        "availability_zone": "ap-northeast-2a",
+        "auto_public_ipv4": false,
+        "route_table": "rtb-0ae90f4282c236e02"
+      },
+      {
+        "name": "clipper-prod-db-c",
+        "id": "subnet-0c6f092076fb508c8",
+        "cidr": "10.80.12.0/24",
+        "availability_zone": "ap-northeast-2c",
+        "auto_public_ipv4": false,
+        "route_table": "rtb-0ae90f4282c236e02"
+      }
+    ],
+    "s3_gateway_endpoint": {
+      "id": "vpce-0437fd48eed349c50",
+      "service": "com.amazonaws.ap-northeast-2.s3",
+      "ip_address_type": "ipv4",
+      "dns_record_type": "service-defined",
+      "cross_region": false
+    }
+  },
+  "security_groups": [
+    {
+      "name": "clipper-prod-alb-sg",
+      "id": "sg-039e4cacdba276e8b",
+      "inbound": [
+        {
+          "tcp": [
+            80,
+            443
+          ],
+          "source": "0.0.0.0/0"
+        }
+      ],
+      "outbound": [
+        {
+          "tcp": [
+            8080,
+            8081
+          ],
+          "destination": "sg-0c04b7f809e795216"
+        }
+      ]
+    },
+    {
+      "name": "clipper-prod-app-sg",
+      "id": "sg-0c04b7f809e795216",
+      "inbound": [
+        {
+          "tcp": [
+            8080,
+            8081
+          ],
+          "source": "sg-039e4cacdba276e8b"
+        },
+        {
+          "tcp": [
+            22
+          ],
+          "source": "0.0.0.0/0",
+          "decision": "사용자 명시 선택"
+        }
+      ],
+      "outbound": "기본 전체 허용"
+    },
+    {
+      "name": "clipper-prod-db-sg",
+      "id": "sg-050f6be7f163ec517",
+      "inbound": [
+        {
+          "tcp": [
+            55202,
+            55212,
+            55222
+          ],
+          "source": "sg-0c04b7f809e795216"
+        },
+        {
+          "tcp": [
+            55202,
+            55212,
+            55222
+          ],
+          "source": "sg-050f6be7f163ec517"
+        },
+        {
+          "tcp": [
+            22
+          ],
+          "source": "0.0.0.0/0",
+          "decision": "사용자 선택 SSH 방식"
+        }
+      ],
+      "outbound": "기본 전체 허용"
+    }
+  ],
+  "instances": [
+    {
+      "name": "clipper-prod-app-a",
+      "instance_id": "i-0d225a5516599e8e8",
+      "private_ip": "10.80.1.178",
+      "elastic_ip": "13.125.76.59",
+      "allocation_id": "eipalloc-09c276cfb23ace42c",
+      "role": "clipper-prod-app-role",
+      "kind": "app",
+      "eni_observed": "eni-0f8af4a512cccc18a",
+      "association_id_observed": "eipassoc-0a2deb5de16988ce1",
+      "type": "t4g.small",
+      "architecture": "arm64",
+      "ami_id": "ami-030be4a60317343e1",
+      "ubuntu": "24.04 LTS",
+      "subnet_id": "subnet-06281b4c52df6762e",
+      "availability_zone": "ap-northeast-2a",
+      "root_gib": 20,
+      "root_type": "gp3",
+      "encrypted": true,
+      "root_delete_on_termination": true,
+      "ssh_key_pair": "clipper-prod-ssh"
+    },
+    {
+      "name": "clipper-prod-app-c",
+      "instance_id": "i-0cc1b6497d48b218a",
+      "private_ip": "10.80.2.59",
+      "elastic_ip": "13.209.168.199",
+      "allocation_id": "eipalloc-046556c390b4c0a3c",
+      "role": "clipper-prod-app-role",
+      "kind": "app",
+      "type": "t4g.small",
+      "architecture": "arm64",
+      "ami_id": "ami-030be4a60317343e1",
+      "ubuntu": "24.04 LTS",
+      "subnet_id": "subnet-0dca68cc0351c54a1",
+      "availability_zone": "ap-northeast-2c",
+      "root_gib": 20,
+      "root_type": "gp3",
+      "encrypted": true,
+      "root_delete_on_termination": true,
+      "ssh_key_pair": "clipper-prod-ssh"
+    },
+    {
+      "name": "clipper-prod-db-a",
+      "instance_id": "i-0136dfbf14051dee5",
+      "private_ip": "10.80.11.41",
+      "elastic_ip": "3.37.76.120",
+      "allocation_id": "eipalloc-08d091484effba568",
+      "role": "clipper-prod-db-role",
+      "kind": "db",
+      "database_role": "primary",
+      "root_volume_id": "vol-07c68da386a1496e0",
+      "data_volume_id": "vol-015a78630eefcfbef",
+      "data_uuid": "8076ac37-bb4b-4063-9ada-2fabe543e1d8",
+      "replication_secret_dir": "/srv/clipper-data/replication-secrets/aws-a-amQ8nT/runtime",
+      "type": "t4g.small",
+      "architecture": "arm64",
+      "ami_id": "ami-030be4a60317343e1",
+      "ubuntu": "24.04 LTS",
+      "subnet_id": "subnet-0a45af4483b0b8099",
+      "availability_zone": "ap-northeast-2a",
+      "root_gib": 20,
+      "root_type": "gp3",
+      "encrypted": true,
+      "root_delete_on_termination": true,
+      "ssh_key_pair": "clipper-prod-ssh",
+      "data_gib": 40,
+      "data_delete_on_termination": false,
+      "data_mount": "/srv/clipper-data",
+      "data_fstype": "ext4"
+    },
+    {
+      "name": "clipper-prod-db-c",
+      "instance_id": "i-0de112dc5ac1bcfa5",
+      "private_ip": "10.80.12.240",
+      "elastic_ip": "43.202.128.103",
+      "allocation_id": "eipalloc-059513ae8ab4526fd",
+      "role": "clipper-prod-db-role",
+      "kind": "db",
+      "database_role": "standby",
+      "root_volume_id": "vol-0d24ea5358ecd06e0",
+      "data_volume_id": "vol-010f41fb4f0f620d1",
+      "data_uuid": "406d55e0-9e66-418c-b126-bf7fbff25700",
+      "replication_secret_dir": "/srv/clipper-data/replication-secrets/aws-c-IFJLMW/runtime",
+      "type": "t4g.small",
+      "architecture": "arm64",
+      "ami_id": "ami-030be4a60317343e1",
+      "ubuntu": "24.04 LTS",
+      "subnet_id": "subnet-0c6f092076fb508c8",
+      "availability_zone": "ap-northeast-2c",
+      "root_gib": 20,
+      "root_type": "gp3",
+      "encrypted": true,
+      "root_delete_on_termination": true,
+      "ssh_key_pair": "clipper-prod-ssh",
+      "data_gib": 40,
+      "data_delete_on_termination": false,
+      "data_mount": "/srv/clipper-data",
+      "data_fstype": "ext4"
+    }
+  ],
+  "storage": {
+    "total_ec2": 4,
+    "total_ebs_volumes": 6,
+    "total_gib": 160,
+    "kms_alias": "aws/ebs",
+    "kms_key_id": "151be80a-7e4e-42fc-8f39-d12bb899c08b",
+    "db_fstab_options": "defaults,nofail 0 2",
+    "docker_mount_guard": "/etc/systemd/system/docker.service.d/10-clipper-data.conf",
+    "app_a_swap": "/swapfile 2GiB"
+  },
+  "runtime_versions": {
+    "docker": "29.9.2",
+    "compose": "v5.6.1",
+    "host_node_apps": "v22.23.4",
+    "host_npm_apps": "10.9.9",
+    "git_apps": "2.43.0",
+    "postgres": "16.14",
+    "alpine_postgres": "3.23.4",
+    "postgres_image": "postgres@sha256:16bc17c64a573ef34162af9298258d1aec548232985b33ed7b1eac33ba35c229",
+    "postgres_uid_gid": "70:70",
+    "haproxy": "3.2.26",
+    "haproxy_image": "haproxy@sha256:5893840576071e6217cd52ebdcc14f454c6f7a631056fa6f4e0f40d3cac4215b",
+    "aws_cli_image": "amazon/aws-cli:2.39.3"
+  },
+  "git": {
+    "organization": "OhMyMetabuzz",
+    "authenticated_github_user": "Metabuzz-NewBusiness",
+    "protocol": "https",
+    "checkout_root": "/home/ubuntu/projects/clipperstudio",
+    "deployed_branch": "main",
+    "revisions": {
+      "clipper_infra": "51fbc6992e48947dd0df947755d43088fd49dd7f",
+      "clipper_web_client": "74fc845e00b7837993b3c4bca514e6501e10b04c",
+      "clipper_web_admin": "2a4316211a842cdb3a320ce2156c7a6541c43571",
+      "clipper_web_api": "dc04f1eb61e1a391772d80ad5a5a27f22a31ab4e"
+    },
+    "infra_remote_default_branch_observed": "dev",
+    "infra_remote_dev_head_observed": "f304750c4d1d6277483ba71ce73f88baaf33fe80",
+    "app_image_ids": {
+      "clipper-web-client": "sha256:82ea48fad524a45311eaaa45e9ec5ea09545b2af35bc1b6fbb356dd745cba00e",
+      "clipper-web-admin": "sha256:f82aa4ed44f15cde3be4347e9208cbb95d1423c4bcca85c1f2ecf89dd9646f1f",
+      "clipper-web-api": "sha256:12957286c3e57e0b0745b7352848337c36b2f912c62cc1daa2792c5ddd8ad503"
+    },
+    "ecr_used": false
+  },
+  "alb": {
+    "name": "clipper-prod-alb",
+    "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:327655937726:loadbalancer/app/clipper-prod-alb/f3de62fe98770b6e",
+    "dns": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com",
+    "canonical_hosted_zone_id": "ZWKZPGTI48KDX",
+    "scheme": "internet-facing",
+    "ip_type": "ipv4",
+    "listener_https": "arn:aws:elasticloadbalancing:ap-northeast-2:327655937726:listener/app/clipper-prod-alb/f3de62fe98770b6e/23b51b1e46dfc1cd",
+    "http_80": "301 redirect HTTPS preserve host path query",
+    "https_443_default": "AWS target group only 100%",
+    "tls_policy": "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09",
+    "target_groups": [
+      {
+        "name": "clipper-prod-app-tg",
+        "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:327655937726:targetgroup/clipper-prod-app-tg/e163145f42a7dfd8",
+        "port": 8080,
+        "destination": "회사 HTTPS 원본",
+        "selected_by_default": false,
+        "readiness": "로컬 프록시 자체 200",
+        "office_active_http_checks": false
+      },
+      {
+        "name": "clipper-prod-aws-app-tg",
+        "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:327655937726:targetgroup/clipper-prod-aws-app-tg/3e8f08dcc324772b",
+        "port": 8081,
+        "destination": "각 AWS EC2 내부 앱",
+        "selected_by_default": true,
+        "health_path": "/readyz",
+        "health_interval_seconds": 30,
+        "health_timeout_seconds": 5,
+        "healthy_threshold": 5,
+        "unhealthy_threshold": 2,
+        "success_codes": "200",
+        "healthy_targets_last_confirmed": 2,
+        "weight": 1,
+        "stickiness": false
+      }
+    ],
+    "test_rule": {
+      "name": "clipper-aws-route-test",
+      "priority": 100,
+      "header_name": "X-Clipper-Test-Route",
+      "header_value": "aws-20261102",
+      "and_source_ip": "121.138.93.95/32",
+      "target_group": "clipper-prod-aws-app-tg"
+    }
+  },
+  "haproxy": {
+    "config": "/home/ubuntu/projects/clipperstudio/aws-runtime/proxy/config/haproxy.cfg",
+    "config_sha256": "5d5d1df73a8647b9e03571be721193dab097b9ff1e0dc8d5ee1f1fba3994b8d2",
+    "container": "clipper-proxy-prod",
+    "project": "clipper-prod-proxy",
+    "host_network": true,
+    "office_port": 8080,
+    "aws_port": 8081,
+    "office_origin": "metabuzz.iptime.org:443",
+    "office_tls_verify": true,
+    "office_periodic_http_checks": false,
+    "aws_local_ports": {
+      "client": 42202,
+      "admin": 42302,
+      "api": 43202
+    },
+    "aws_readiness": "/readyz -> 127.0.0.1:43202/health",
+    "unknown_host_status": 403,
+    "reload_signal": "USR2",
+    "logging": "접속 메타데이터만, URL과 query와 cookie 제외"
+  },
+  "apps": {
+    "directory": "/home/ubuntu/projects/clipperstudio/aws-runtime/apps",
+    "compose_file": "/home/ubuntu/projects/clipperstudio/aws-runtime/apps/compose.yml",
+    "compose_contains_secrets": true,
+    "compose_mode": "0600",
+    "api_profile": "api",
+    "api_current_running_both": true,
+    "database_host": "ip-10-80-11-41.ap-northeast-2.compute.internal",
+    "aws_region": "ap-northeast-2",
+    "source_region_typo": "aa-northeast-2",
+    "sslmode": "verify-full",
+    "node_extra_ca_certs": "/run/clipper-db-ca/ca.crt",
+    "node_tls_reject_unauthorized": "1",
+    "secret_files": [
+      "user-jwt-private.pem",
+      "user-jwt-public.pem",
+      "operator-jwt-secret",
+      "github-app-clipper-release.pem"
+    ],
+    "secret_container_dir": "/run/clipper-web-api-secrets",
+    "release_s3_bucket_env": "clipper-release",
+    "release_s3_prefix": "clipper2/prod",
+    "default_media_bucket": "clipperstudio",
+    "default_media_prefix": "default-media/prod",
+    "release_runner_mode": "github-actions",
+    "desktop_auth_target": "production",
+    "desktop_release_target": "production",
+    "export_archive": "runtime-prod-20261102-155552-Hxg35d.tar.gz",
+    "export_sha256": "3b98bbc1431e65ab65fa11dce494ca996c9ca1964b1283c480c3840ad312e48f",
+    "public_download_platforms": [
+      "windows/x64",
+      "macos/arm64"
+    ],
+    "public_download_origin": "https://clipperstudio.s3.ap-northeast-2.amazonaws.com"
+  },
+  "databases": [
+    {
+      "kind": "user",
+      "database": "clipper_user_prod",
+      "owner": "clipper_user_prod_user",
+      "container": "clipper-db-user-prod",
+      "published_port": 55202,
+      "container_port": 5432,
+      "system_id": "7693860253065678882",
+      "source_stopped_timeline": 1,
+      "source_stopped_flush_lsn": "0/60002E0",
+      "current_aws_timeline": 2,
+      "restored_public_tables_observed": 8,
+      "replication_role": "clipper_repl_user",
+      "primary": "10.80.11.41",
+      "standby": "10.80.12.240",
+      "replication_mode": "async"
+    },
+    {
+      "kind": "admin",
+      "database": "clipper_admin_prod",
+      "owner": "clipper_admin_prod_user",
+      "container": "clipper-db-admin-prod",
+      "published_port": 55212,
+      "container_port": 5432,
+      "system_id": "7693860253031817250",
+      "source_stopped_timeline": 1,
+      "source_stopped_flush_lsn": "0/70002E0",
+      "current_aws_timeline": 2,
+      "restored_public_tables_observed": 55,
+      "replication_role": "clipper_repl_admin",
+      "primary": "10.80.11.41",
+      "standby": "10.80.12.240",
+      "replication_mode": "async"
+    },
+    {
+      "kind": "release",
+      "database": "clipper_release_prod",
+      "owner": "clipper_release_prod_user",
+      "container": "clipper-db-release-prod",
+      "published_port": 55222,
+      "container_port": 5432,
+      "system_id": "7693860253038637089",
+      "source_stopped_timeline": 1,
+      "source_stopped_flush_lsn": "0/50002E0",
+      "current_aws_timeline": 2,
+      "restored_public_tables_observed": 9,
+      "replication_role": "clipper_repl_release",
+      "primary": "10.80.11.41",
+      "standby": "10.80.12.240",
+      "replication_mode": "async"
+    }
+  ],
+  "database_topology": {
+    "compose": "/srv/clipper-data/postgres/compose.yml",
+    "primary": "db-a",
+    "standby": "db-c",
+    "active_physical_slot_on_a": "clipper_aws_c",
+    "mode": "async",
+    "continuous_wal_archive": false,
+    "source_current_state": "정지 및 재시작 정책 no",
+    "max_slot_wal_keep_size": "1024MB",
+    "checksums": false,
+    "wal_log_hints": false,
+    "pg_rewind_assumed_available": false,
+    "automatic_promotion": false
+  },
+  "pki": {
+    "source_root": "/Users/metabuzz/Documents/clipper-db-pki",
+    "ca_private_key_sent_to_aws": false,
+    "ca_sha256_fingerprint": "AF:08:FE:F3:A3:95:D8:D0:DC:17:D8:FF:61:21:73:E3:4B:56:FF:8C:FF:3E:5E:A3:8E:4B:31:FD:41:DB:95:1E",
+    "leaf_expiration_date": "2029-02-04",
+    "office_san": [
+      "metabuzz.iptime.org"
+    ],
+    "aws_a_san": [
+      "10.80.11.41",
+      "ip-10-80-11-41.ap-northeast-2.compute.internal"
+    ],
+    "aws_c_san": [
+      "10.80.12.240",
+      "ip-10-80-12-240.ap-northeast-2.compute.internal"
+    ]
+  },
+  "acm": {
+    "certificate_id": "aa59f99d-b5c0-4a64-aace-ffe0db46bfd9",
+    "arn": "arn:aws:acm:ap-northeast-2:327655937726:certificate/aa59f99d-b5c0-4a64-aace-ffe0db46bfd9",
+    "status_last_reported": "ISSUED",
+    "domains": [
+      "clipperstudio.ai",
+      "www.clipperstudio.ai",
+      "api.clipperstudio.ai",
+      "admin.clipperstudio.ai"
+    ],
+    "key": "RSA 2048",
+    "deleted_single_name_request": "9fa77499-c62c-4a6f-a8f6-0c0789e83223"
+  },
+  "dns": {
+    "registrar": "HostingKR",
+    "registrar_transfer": false,
+    "authoritative_dns": "Amazon Route 53",
+    "public_hosted_zone_id": "Z06349555CIPHA7AYFTT",
+    "change_id": "/change/C03579301W5BS9YA51M49",
+    "nameservers": [
+      "ns-1635.awsdns-12.co.uk.",
+      "ns-873.awsdns-45.net.",
+      "ns-1131.awsdns-13.org.",
+      "ns-186.awsdns-23.com."
+    ],
+    "prior_nameservers": [
+      "ns1.hosting.co.kr",
+      "ns2.hosting.co.kr",
+      "ns3.hosting.co.kr",
+      "ns4.hosting.co.kr"
+    ],
+    "hostingkr_cloud_purchased": false,
+    "created_records": 11,
+    "total_records_including_ns_soa": 13,
+    "records": [
+      {
+        "Name": "clipperstudio.ai.",
+        "Type": "A",
+        "AliasTarget": {
+          "HostedZoneId": "ZWKZPGTI48KDX",
+          "DNSName": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com.",
+          "EvaluateTargetHealth": false
+        }
+      },
+      {
+        "Name": "_0949e9a456032bcdcced2b3a7a1ec5b2.api.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "_2df4e77edcf15353a66cff2f53104e9f.wzccmgtwzk.acm-validations.aws."
+          }
+        ]
+      },
+      {
+        "Name": "_254527ae72bfd489ad51d03f5ea1c1bf.www.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "_4a21d14a5930aed18e42444b40dbcf2e.wzccmgtwzk.acm-validations.aws."
+          }
+        ]
+      },
+      {
+        "Name": "_6442abb5637989fd57834dc1b4cca601.admin.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "_936e8dac2ecd95c3cbf1a82b01e97d44.wzccmgtwzk.acm-validations.aws."
+          }
+        ]
+      },
+      {
+        "Name": "_fa6821573e8f373068665bfcd3c2f345.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "_4d56a3a23fca3a4f6a75e329499336df.wzccmgtwzk.acm-validations.aws."
+          }
+        ]
+      },
+      {
+        "Name": "admin.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com."
+          }
+        ]
+      },
+      {
+        "Name": "api.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com."
+          }
+        ]
+      },
+      {
+        "Name": "dev.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "metabuzz.iptime.org."
+          }
+        ]
+      },
+      {
+        "Name": "dev-admin.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "metabuzz.iptime.org."
+          }
+        ]
+      },
+      {
+        "Name": "dev-api.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "metabuzz.iptime.org."
+          }
+        ]
+      },
+      {
+        "Name": "www.clipperstudio.ai.",
+        "Type": "CNAME",
+        "TTL": 180,
+        "ResourceRecords": [
+          {
+            "Value": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com."
+          }
+        ]
+      }
+    ],
+    "prior_backup": {
+      "zone": "clipperstudio.ai",
+      "source": "User full DNS screenshot matched against ns1.hosting.co.kr",
+      "records": [
+        {
+          "type": "A",
+          "host": "@",
+          "value": "112.169.113.138",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "_0949e9a456032bcdcced2b3a7a1ec5b2.api",
+          "value": "_2df4e77edcf15353a66cff2f53104e9f.wzccmgtwzk.acm-validations.aws",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "_254527ae72bfd489ad51d03f5ea1c1bf.www",
+          "value": "_4a21d14a5930aed18e42444b40dbcf2e.wzccmgtwzk.acm-validations.aws",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "_6442abb5637989fd57834dc1b4cca601.admin",
+          "value": "_936e8dac2ecd95c3cbf1a82b01e97d44.wzccmgtwzk.acm-validations.aws",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "_fa6821573e8f373068665bfcd3c2f345",
+          "value": "_4d56a3a23fca3a4f6a75e329499336df.wzccmgtwzk.acm-validations.aws",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "admin",
+          "value": "metabuzz.iptime.org",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "api",
+          "value": "clipper-prod-alb-1706545749.ap-northeast-2.elb.amazonaws.com",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "dev",
+          "value": "metabuzz.iptime.org",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "dev-admin",
+          "value": "metabuzz.iptime.org",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "dev-api",
+          "value": "metabuzz.iptime.org",
+          "ttl": 180
+        },
+        {
+          "type": "CNAME",
+          "host": "www",
+          "value": "clipperstudio.ai",
+          "ttl": 180
+        }
+      ]
+    },
+    "tested_resolvers": [
+      "168.126.63.1",
+      "168.126.63.2",
+      "8.8.8.8",
+      "1.1.1.1"
+    ],
+    "final_observed_alb_ips_not_for_pinning": [
+      "13.124.168.4",
+      "52.78.45.109"
+    ]
+  },
+  "backup": {
+    "bucket": "clipper-prod-db-backup-327655937726",
+    "region": "ap-northeast-2",
+    "versioning": true,
+    "encryption": "SSE-S3",
+    "public_access_block": true,
+    "object_lock": false,
+    "iam_role": "clipper-prod-db-role",
+    "policy": "clipper-prod-db-backup-policy",
+    "worker": "/usr/local/sbin/clipper-physical-backup",
+    "worker_sha256": "89c23680cea11613a185364077a402f023606aeca667745a7364bbbf2949aeda",
+    "service": "clipper-physical-backup.service",
+    "timer": "clipper-physical-backup.timer",
+    "schedule": "매시간 정각",
+    "persistent": true,
+    "enabled_last_confirmed": true,
+    "active_last_confirmed": true,
+    "last_success_file": "/srv/clipper-data/physical-backup/last-success.txt",
+    "last_separately_observed_success_kst": "2026-11-02 23:00:35",
+    "last_separately_observed_s3_prefix": "physical/db-c/run-20261102T140001Z-zaMhiG",
+    "validation": "모든 세 백업의 manifest와 WAL, S3 다운로드 checksum, 격리된 실제 복원과 시스템 ID 검사",
+    "retention": [
+      {
+        "name": "clipper-prod-backup-cleanup",
+        "scope": "all",
+        "noncurrent_expiration_days": 30,
+        "expired_delete_markers": true,
+        "abort_multipart_days": 7
+      },
+      {
+        "name": "clipper-prod-physical-backup-retention",
+        "prefix": "physical/",
+        "current_expiration_days": 30
+      }
+    ],
+    "pitr": false,
+    "pgbackrest": false,
+    "same_account": true,
+    "cross_region": false
+  },
+  "source_stop_states": {
+    "api": "/Users/m4-prod/Documents/clipper-manual-cutover/api-stop-20261102-221435-H9g0wl",
+    "db_freeze": "/Users/metabuzz/Documents/clipper-manual-cutover/db-freeze-20261102-223410-nvXAON",
+    "db_stop": "/Users/metabuzz/Documents/clipper-manual-cutover/db-freeze-20261102-223410-nvXAON/stop-20261102-224909-tUH23n",
+    "webs": "/Users/m4-prod/Documents/clipper-manual-cutover/web-stop-20261103-045037-U0wZtp",
+    "all_six_containers_stopped": true,
+    "restart_policy": "no",
+    "volumes_deleted": false,
+    "company_docker_daemons_stopped": false,
+    "development_services_changed": false
+  },
+  "cutover_states": {
+    "promote_a": "/srv/clipper-data/manual-cutover/promote-a-20261102-FGNXb4",
+    "reseed_c": "/srv/clipper-data/manual-cutover/reseed-c-20261102-4MIk7g",
+    "c_old_data_retained": true,
+    "company_must_not_be_blindly_restarted": true,
+    "failback_requires_reseed_and_controlled_writer_switch": true
+  },
+  "not_deployed": [
+    "VPN",
+    "NAT Gateway",
+    "EC2 NAT",
+    "ECR",
+    "GHCR",
+    "RDS",
+    "ECS",
+    "EKS",
+    "CloudFront",
+    "WAF",
+    "Global Accelerator",
+    "SNS topic and subscription",
+    "CloudWatch custom alarm and heartbeat",
+    "automatic fencing controller",
+    "Patroni",
+    "etcd",
+    "Pacemaker",
+    "Corosync",
+    "PAF",
+    "SBD",
+    "UPS PDU LTE integration",
+    "continuous WAL archive",
+    "pgBackRest",
+    "Parameter Store migration",
+    "Secrets Manager migration",
+    "automatic failback"
+  ],
+  "user_functional_validation": {
+    "admin_login": true,
+    "admin_list": true,
+    "existing_data_visible": true,
+    "desktop_download_install": true,
+    "browser_to_desktop_auth_handoff": true,
+    "authenticated_desktop_runs": true,
+    "explicit_new_business_data_save_reported": false,
+    "external_live_payment_tested": false,
+    "real_email_send_tested": false,
+    "new_release_upload_tested": false
+  }
+}
