@@ -1,0 +1,165 @@
+{
+  "kind": "throwaway-local-proof",
+  "revision": "23392de036680cabac9c3f6a12630beaa39e4bb8",
+  "extractedCount": 14,
+  "results": [
+    {
+      "name": "actual app source exports 14 public plugin registrations",
+      "passed": true
+    },
+    {
+      "name": "unauthorized upload is rejected without inserting rows",
+      "passed": true
+    },
+    {
+      "name": "real HTTP upload creates 14 pending rows and zero store entries",
+      "passed": true
+    },
+    {
+      "name": "parallel repeated uploads do not duplicate plugin IDs",
+      "passed": true
+    },
+    {
+      "name": "invalid digest and duplicate IDs are rejected before DB writes",
+      "passed": true
+    },
+    {
+      "name": "sync credentials cannot publish and missing configuration blocks publication",
+      "passed": true
+    },
+    {
+      "name": "admin configuration and publication expose only the configured plugin",
+      "passed": true
+    },
+    {
+      "name": "resync preserves operator publication, name, category and allowed targets",
+      "passed": true
+    },
+    {
+      "name": "adding a registration in source fixtures discovers exactly one new pending plugin",
+      "passed": true
+    },
+    {
+      "name": "missing source metadata fails extraction instead of silently exporting an incomplete list",
+      "passed": true
+    },
+    {
+      "name": "server and DB client restart retain discovery and operator settings",
+      "passed": true
+    }
+  ],
+  "databaseRows": [
+    {
+      "plugin_key": "comment_overlay",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "curation",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "dance_highlight",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "dialog_highlight",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "overseas_dub",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "person_highlight",
+      "status": "published",
+      "category_id": "highlight",
+      "display_name": "운영자가 지정한 이름",
+      "allowed_targets": [
+        "free_trial",
+        "basic"
+      ]
+    },
+    {
+      "plugin_key": "proof_new_plugin",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "ranking",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_article",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_director",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_explainer",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_paste",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_prompt",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "shortform_url",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    },
+    {
+      "plugin_key": "variation",
+      "status": "settings_pending",
+      "category_id": null,
+      "display_name": null,
+      "allowed_targets": []
+    }
+  ],
+  "passed": 11,
+  "scope": "Actual source extraction + real loopback HTTP + actual PostgreSQL. Temporary server; no product endpoint, operator JWT integration, app packaging or deployment pipeline was implemented.",
+  "temporaryPostgresStopped": true,
+  "productSourcesUnchanged": true
+}

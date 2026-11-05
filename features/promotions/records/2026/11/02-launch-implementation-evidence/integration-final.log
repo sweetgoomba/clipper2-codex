@@ -1,0 +1,9 @@
+
+> clipper_web_api@0.0.1 test
+> jest --runInBand signup-benefits.integration.spec.ts
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        1.468 s, estimated 2 s
+Ran all test suites matching signup-benefits.integration.spec.ts.

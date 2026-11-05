@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>캠페인 추가 · 참여 조건 목업</title>
+  <link rel="stylesheet" href="/styles-C5SWKLZD.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+    .shell { display: grid; grid-template-columns: 228px minmax(0, 1fr); min-height: 100vh; }
+    .sidebar { padding: 24px 12px; border-right: 1px solid var(--outline); background: var(--surface-sunken); }
+    .brand { display: flex; align-items: center; gap: 8px; padding: 0 12px 26px; }
+    .brand img { width: 108px; }
+    .brand span { font-size: 12px; color: var(--on-surface-muted); }
+    .nav-group { border-top: 1px solid var(--outline); padding: 16px 0 8px; margin-top: 8px; }
+    .nav-label { padding: 0 12px 6px; color: var(--on-surface-muted); font-size: 11.5px; font-weight: 700; }
+    .nav-item { display: block; padding: 8px 12px; border-radius: 8px; color: var(--on-surface-muted); }
+    .nav-item.active { background: var(--primary-container); color: var(--on-primary-container); font-weight: 600; }
+    main { min-width: 0; padding: 36px 32px; }
+    .page-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+    .group { color: var(--on-surface-muted); font-size: 12px; margin-bottom: 6px; }
+    h1 { margin: 0; font-size: 24px; font-weight: 700; }
+    .page-sub { margin: 8px 0 0; color: var(--on-surface-muted); font-size: 13.5px; }
+    .btn { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--outline-strong); border-radius: 8px; padding: 8px 16px; color: var(--on-surface); background: transparent; font-weight: 600; white-space: nowrap; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+    .btn-quiet { border-color: transparent; }
+    .list { border: 1px solid var(--outline); border-radius: 12px; background: var(--surface); overflow: hidden; }
+    .list-title { padding: 20px 24px; font-size: 16px; font-weight: 600; }
+    .list-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline); padding: 16px 24px; }
+    .list-tabs { display: flex; gap: 20px; color: var(--on-surface-muted); font-size: 13px; }
+    .list-tabs strong { color: var(--link); }
+    .search { color: var(--on-surface-muted); background: var(--surface-sunken); border: 1px solid var(--outline); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+    .empty { padding: 72px 24px; text-align: center; color: var(--on-surface-muted); }
+    .empty strong { display: block; margin-bottom: 8px; color: var(--on-surface); font-size: 15px; }
+    .mock-banner { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; color: var(--purple); font-size: 12px; }
+    .mock-chip { display: inline-flex; border-radius: 6px; padding: 3px 8px; background: var(--purple-container); font-weight: 600; }
+    .backdrop { position: fixed; inset: 0; background: color-mix(in srgb, var(--bg) 68%, transparent); z-index: 5; }
+    .drawer { position: fixed; inset: 0 0 0 auto; z-index: 6; display: flex; flex-direction: column; width: 560px; max-width: 94vw; background: var(--surface-raised); border-left: 1px solid var(--outline); box-shadow: 0 24px 80px color-mix(in srgb, var(--bg) 65%, transparent); }
+    .drawer-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--outline); flex: none; }
+    .drawer-header h2 { margin: 0; font-size: 18px; line-height: 1.4; font-weight: 700; }
+    .drawer-header p { margin: 5px 0 0; color: var(--on-surface-muted); font-size: 13px; }
+    .close { flex: none; width: 32px; height: 32px; border: 1px solid var(--outline); border-radius: 8px; background: var(--surface-selected); color: var(--on-surface); font-size: 20px; line-height: 1; }
+    .drawer-body { overflow-y: auto; min-height: 0; padding: 20px; scroll-behavior: smooth; scroll-padding-top: 16px; }
+    .form-section { margin-bottom: 24px; scroll-margin-top: 16px; }
+    .form-section + .form-section { padding-top: 24px; border-top: 1px solid var(--outline); }
+    .section-title { margin: 0 0 14px; font-size: 14px; font-weight: 600; }
+    .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    .pair > .field { margin-top: 0; }
+    .field { display: grid; min-width: 0; gap: 6px; margin-top: 14px; }
+    .field:first-child { margin-top: 0; }
+    .benefit-kind { margin-top: 0; }
+    .benefit-fields { margin-top: 16px; }
+    .field-label { color: var(--on-surface-muted); font-size: 12px; }
+    .required { color: var(--link); }
+    .input { min-width: 0; width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--outline-input); border-radius: 8px; background: transparent; color: var(--on-surface); color-scheme: dark; }
+    .input-unit { position: relative; }
+    .input-unit input { padding-right: 44px; }
+    .unit { position: absolute; right: 13px; top: 11px; color: var(--on-surface-muted); font-size: 13px; pointer-events: none; }
+    input[type="radio"], input[type="checkbox"] { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--primary); cursor: pointer; }
+    .help { margin: 8px 0 0; color: var(--on-surface-muted); font-size: 12px; line-height: 1.6; }
+    .optional { color: var(--on-surface-muted); font-size: 12px; font-weight: 400; margin-left: 5px; }
+    .condition-group { padding: 0; margin: 16px 0 0; border: 0; min-width: 0; }
+    .condition-group:first-of-type { margin-top: 0; }
+    .condition-legend { padding: 0; font-size: 12px; color: var(--on-surface-muted); margin-bottom: 8px; }
+    .condition-group .restrictions { margin-top: 0; }
+    .condition-group .help + .restrictions { margin-top: 10px; }
+    .restrictions { border: 1px solid var(--outline); border-radius: 12px; padding: 0 14px; margin-top: 12px; }
+    .restriction { display: flex; align-items: flex-start; gap: 10px; padding: 11px 0; cursor: pointer; }
+    .restriction + .restriction { border-top: 1px solid var(--outline); }
+    .restriction input { margin-top: 2px; }
+    .restriction strong { display: block; font-size: 13px; font-weight: 500; }
+    .restriction small { display: block; margin-top: 4px; font-size: 12px; color: var(--on-surface-muted); line-height: 1.6; }
+    .restriction:has(input:checked) strong { color: var(--on-primary-container); }
+    .restriction:has(input:disabled) { opacity: .5; cursor: default; }
+    .restriction input:disabled { cursor: default; }
+    .summary { margin-top: 12px; padding: 12px; border-radius: 8px; border: 1px solid var(--primary-outline); background: var(--primary-container); }
+    .summary-title { font-size: 12px; font-weight: 600; color: var(--on-primary-container); margin: 0 0 6px; }
+    .summary p:last-child { margin: 0; color: var(--on-surface); font-size: 13px; line-height: 1.7; }
+    .fixed-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; padding: 12px; border-radius: 8px; background: var(--surface-sunken); color: var(--on-surface-muted); font-size: 12px; line-height: 1.65; }
+    .fixed-note b { font-weight: 500; color: var(--on-surface); }
+    .drawer-footer { display: flex; align-items: center; gap: 8px; padding: 16px 20px; border-top: 1px solid var(--outline); flex: none; background: var(--surface-raised); }
+    .drawer-footer small { margin-left: auto; color: var(--on-surface-muted); font-size: 12px; }
+    .inline-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; }
+    .toast { position: fixed; left: 24px; bottom: 24px; z-index: 20; background: var(--surface-selected); border: 1px solid var(--outline-strong); padding: 14px 18px; border-radius: 8px; box-shadow: var(--elevation-raised); max-width: calc(100vw - 48px); }
+    dialog { width: 480px; max-width: calc(100vw - 32px); padding: 24px; border: 1px solid var(--outline); border-radius: 12px; background: var(--surface-raised); color: var(--on-surface); }
+    dialog::backdrop { background: color-mix(in srgb, var(--bg) 75%, transparent); }
+    dialog h2 { margin: 0 0 16px; font-size: 18px; }
+    dialog dl { margin: 0 0 20px; }
+    dialog dl > div { padding: 12px 0; border-bottom: 1px solid var(--outline); }
+    dialog dt { color: var(--on-surface-muted); font-size: 12px; margin-bottom: 4px; }
+    dialog dd { margin: 0; font-size: 13px; line-height: 1.7; }
+    @media (max-width: 720px) { .shell { grid-template-columns: minmax(0,1fr); } .sidebar { display: none; } main { padding: 24px 16px; } .page-head { align-items: flex-start; } .page-sub { max-width: 250px; } }
+    @media (max-width: 420px) { .drawer { max-width: 100vw; width: 100%; } .drawer-header, .drawer-body { padding-inline: 16px; } .drawer-footer small { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .drawer-body { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <div class="shell" id="page-shell" inert>
+    <aside class="sidebar">
+      <div class="brand"><img src="/assets/brand/logo_clipper_w.png" alt="Clipper"><span>Admin</span></div>
+      <div class="nav-item">홈</div>
+      <div class="nav-group"><div class="nav-label">모니터링</div><div class="nav-item">서버 에러</div><div class="nav-item">설치형 앱 에러</div><div class="nav-item">진단</div></div>
+      <div class="nav-group"><div class="nav-label">고객</div><div class="nav-item">회원</div><div class="nav-item">결제</div><div class="nav-item">환불</div><div class="nav-item active">프로모션</div></div>
+      <div class="nav-group"><div class="nav-label">설정</div><div class="nav-item">요금제</div><div class="nav-item">운영 정책</div><div class="nav-item">운영자</div></div>
+    </aside>
+    <main>
+      <div class="mock-banner"><span class="mock-chip">목업</span> 캠페인 추가 화면 미리보기 · 실제 데이터는 저장되지 않습니다.</div>
+      <div class="page-head"><div><div class="group">고객</div><h1>프로모션</h1><p class="page-sub">캠페인과 프로모션 코드를 관리하고 참여 회원 등록 현황을 확인합니다.</p></div><button class="btn btn-primary" id="open-drawer" type="button">＋ 캠페인 추가</button></div>
+      <section class="list"><div class="list-title">캠페인 목록</div><div class="list-toolbar"><div class="list-tabs"><strong>전체 0</strong><span>활성화 0</span><span>비활성화 0</span></div><div class="search">캠페인 이름 또는 코드 검색</div></div><div class="empty"><strong>아직 캠페인이 없습니다</strong>캠페인을 추가한 뒤 상세페이지에서 코드를 발급할 수 있습니다.</div></section>
+    </main>
+  </div>
+  <div class="backdrop" id="backdrop"></div>
+  <section class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer-header"><div><h2 id="drawer-title">캠페인 추가 <span class="mock-chip" style="font-size:11px;vertical-align:2px;margin-left:5px">목업</span></h2><p>캠페인 설정을 저장한 뒤 상세페이지에서 코드를 발급할 수 있습니다.</p></div><button class="close" type="button" id="close-drawer" aria-label="캠페인 추가 닫기">×</button></header>
+    <div class="drawer-body" id="drawer-body">
+      <form id="campaign-form">
+        <section class="form-section" id="basic"><h3 class="section-title">기본 정보</h3><label class="field"><span class="field-label">캠페인 이름 <span class="required">*</span></span><input class="input" id="campaign-name" value="런칭 이벤트" maxlength="120" required></label><div class="pair" style="margin-top:14px"><label class="field"><span class="field-label">시작일 <span class="required">*</span></span><input class="input" type="date" id="starts" value="2026-11-02" required></label><label class="field" style="margin-top:0"><span class="field-label">종료일 <span class="required">*</span></span><input class="input" type="date" id="ends" value="2026-11-30" required></label></div></section>
+        <section class="form-section" id="benefit">
+          <h3 class="section-title">지급 혜택</h3>
+          <label class="field benefit-kind"><span class="field-label">혜택 종류 <span class="required">*</span></span><select class="input" name="benefit" id="benefit-kind"><option value="credits">크레딧 지급</option><option value="access">이용권 지급</option></select></label>
+          <div class="benefit-fields pair" id="credit-fields">
+            <label class="field"><span class="field-label">지급 크레딧 <span class="required">*</span></span><span class="input-unit"><input class="input" type="number" id="credits" min="1" value="200"><span class="unit">개</span></span></label>
+          <label class="field" id="credit-validity-field"><span class="field-label">크레딧 유효기간 <span class="required">*</span></span><span class="input-unit"><input class="input" type="number" id="credit-days" min="1" value="30"><span class="unit">일</span></span></label>
+          </div>
+          <div class="benefit-fields pair" id="access-fields" hidden>
+            <label class="field"><span class="field-label">지급 이용권 등급 <span class="required">*</span></span><select class="input" id="tier"><option>Basic</option><option>Pro</option><option>Business</option></select></label>
+            <label class="field"><span class="field-label">이용 기간 <span class="required">*</span></span><span class="input-unit"><input class="input" type="number" id="months" min="1" value="1"><span class="unit">개월</span></span></label>
+          </div>
+          <p class="help" id="benefit-help">크레딧만 지급합니다. 회원의 이용권 등급은 변경하지 않습니다.</p>
+        </section>
+        <section class="form-section" id="participation">
+          <h3 class="section-title">참여 가능 조건</h3>
+          <fieldset class="condition-group">
+            <legend class="condition-legend">참여 대상 <span class="required">*</span></legend>
+            <div class="restrictions">
+              <label class="restriction"><input type="radio" name="audience" id="audience-new" value="new"><span><strong>회원가입하는 신규 회원만</strong><small>회원가입 과정에서 코드를 입력한 경우에만 참여할 수 있습니다.</small></span></label>
+              <label class="restriction"><input type="radio" name="audience" id="audience-all" value="all" checked><span><strong>신규 회원과 기존 회원</strong><small>회원가입할 때 또는 가입 후에도 코드를 등록할 수 있습니다.</small></span></label>
+            </div>
+          </fieldset>
+          <fieldset class="condition-group" aria-describedby="condition-help">
+            <legend class="condition-legend">추가 조건 <span class="optional">선택 · 복수 선택 가능</span></legend>
+            <p class="help" id="condition-help" style="margin-top:0">체크한 조건을 모두 만족하는 회원만 참여할 수 있습니다.</p>
+            <div class="restrictions">
+              <label class="restriction"><input type="checkbox" id="require-no-active"><span><strong>현재 활성 이용권이 없는 회원</strong><small>유료·프로모션·관리자 지급 이용권을 확인합니다. Free는 활성 이용권에 포함하지 않습니다.</small></span></label>
+              <label class="restriction"><input type="checkbox" id="require-no-paid"><span><strong>유료 이용권 결제·사용 이력이 없는 회원</strong><small>가입했더라도 유료 이용 이력이 없다면 참여할 수 있습니다. 만료된 유료 이용권 이력도 확인합니다.</small></span></label>
+            </div>
+          </fieldset>
+          <div class="summary" aria-live="polite"><p class="summary-title">참여할 수 있는 회원</p><p id="condition-summary"></p></div>
+          <div class="fixed-note" id="access-note" hidden><span aria-hidden="true">ⓘ</span><span><b>이용권 중복 지급 방지</b><br>이용권 지급형은 기존 이용권과 이용 기간이 겹치면 등록할 수 없습니다.</span></div>
+          <p class="help">같은 캠페인은 회원당 코드 하나만 등록할 수 있습니다.<span id="history-note"><br>무료체험 이력과 다른 캠페인 참여 이력은 제한하지 않습니다.</span></p>
+        </section>
+        <section class="form-section" id="cap"><h3 class="section-title">등록 상한</h3><label class="inline-check"><input type="checkbox" id="cap-enabled">코드별 성공 등록 상한 설정</label><label class="field" id="cap-field" hidden><span class="field-label">코드당 최대 등록 건수</span><span class="input-unit"><input class="input" type="number" id="cap-count" min="1" value="100"><span class="unit">건</span></span></label><p class="help">설정한 상한은 이 캠페인의 각 코드에 동일하게 적용됩니다.</p></section>
+      </form>
+    </div>
+    <footer class="drawer-footer"><button class="btn btn-primary" type="submit" form="campaign-form">저장 미리보기</button><button class="btn btn-quiet" type="button" id="cancel">취소</button><small>실제 캠페인은 저장되지 않습니다.</small></footer>
+  </section>
+  <dialog id="preview" aria-labelledby="preview-title"><h2 id="preview-title">캠페인 설정 미리보기</h2><dl><div><dt>캠페인</dt><dd id="preview-name"></dd></div><div><dt>지급 혜택</dt><dd id="preview-benefit"></dd></div><div><dt>참여 조건</dt><dd id="preview-conditions"></dd></div><div><dt>코드별 등록 상한</dt><dd id="preview-cap"></dd></div></dl><p class="help" style="margin-bottom:16px">목업이므로 실제 캠페인·코드·크레딧은 생성되지 않습니다.</p><button class="btn btn-primary" type="button" id="preview-close">확인</button></dialog>
+  <script>
+    const $ = id => document.getElementById(id);
+    const form = $('campaign-form');
+    function update() {
+      const isAccess = form.elements.benefit.value === 'access';
+      $('credit-fields').hidden = isAccess;
+      $('access-fields').hidden = !isAccess;
+      $('credit-validity-field').hidden = isAccess;
+      $('credit-days').disabled = isAccess;
+      $('access-note').hidden = !isAccess;
+      $('benefit-help').textContent = isAccess ? '크레딧은 선택한 등급의 월 지급량으로 매월 지급되며, 각 월별 이용 기간이 끝나면 만료됩니다.' : '크레딧만 지급합니다. 회원의 이용권 등급은 변경하지 않습니다.';
+      $('cap-field').hidden = !$('cap-enabled').checked;
+      const newMembersOnly = $('audience-new').checked;
+      $('history-note').hidden = newMembersOnly;
+      ['require-no-active', 'require-no-paid'].forEach(id => {
+        const input = $(id);
+        input.disabled = newMembersOnly;
+        if (newMembersOnly) input.checked = false;
+      });
+      const noActive = $('require-no-active').checked;
+      const noPaidHistory = $('require-no-paid').checked;
+      const existingMemberCondition = noActive && noPaidHistory
+        ? '현재 활성 이용권이 없고 유료 이용권 결제·사용 이력도 없는'
+        : noActive ? '현재 활성 이용권이 없는'
+        : noPaidHistory ? '유료 이용권 결제·사용 이력이 없는' : '';
+      $('condition-summary').textContent = newMembersOnly
+        ? '신규 회원이 회원가입할 때만 참여할 수 있습니다.'
+        : existingMemberCondition
+          ? '신규 회원과, ' + existingMemberCondition + ' 기존 회원이 참여할 수 있습니다.'
+          : '신규 회원과 기존 회원 모두 참여할 수 있습니다.';
+    }
+    function openDrawer() { $('drawer').hidden = false; $('backdrop').hidden = false; $('page-shell').inert = true; $('close-drawer').focus(); }
+    function closeDrawer() { $('drawer').hidden = true; $('backdrop').hidden = true; $('page-shell').inert = false; $('open-drawer').focus(); }
+    $('open-drawer').addEventListener('click', openDrawer);
+    ['close-drawer', 'cancel', 'backdrop'].forEach(id => $(id).addEventListener('click', closeDrawer));
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    form.addEventListener('submit', event => {
+      event.preventDefault(); update();
+      $('preview-name').textContent = $('campaign-name').value;
+      $('preview-benefit').textContent = form.elements.benefit.value === 'credits' ? Number($('credits').value).toLocaleString('ko-KR') + '크레딧 · 지급일부터 ' + $('credit-days').value + '일' : $('tier').value + ' 이용권 · ' + $('months').value + '개월 · 크레딧은 매월 지급되며 해당 월별 이용 기간에만 사용할 수 있습니다.';
+      $('preview-conditions').textContent = $('condition-summary').textContent;
+      $('preview-cap').textContent = $('cap-enabled').checked ? '각 코드당 ' + $('cap-count').value + '건' : '제한 없음';
+      $('preview').showModal();
+    });
+    $('preview-close').addEventListener('click', () => $('preview').close());
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !$('preview').open && !$('drawer').hidden) closeDrawer();
+      if (event.key !== 'Tab' || $('drawer').hidden || $('preview').open) return;
+      const controls = [...$('drawer').querySelectorAll('button,input,select')].filter(el => !el.disabled && el.getClientRects().length);
+      if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1).focus(); }
+      else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0].focus(); }
+    });
+    update();
+  </script>
+</body>
+</html>

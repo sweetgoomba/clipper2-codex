@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-28T11:14:31.361Z",
+  "url": "http://localhost:3000/catalog/credit-products",
+  "data": [
+    {
+      "id": "b165e726-e9df-4034-bdd2-16fec3739edd",
+      "code": "credits_400",
+      "name": "추가 크레딧 400",
+      "credits": 400,
+      "priceKrw": 5900,
+      "validityDays": 30,
+      "isActive": true,
+      "sortOrder": 0,
+      "createdAt": "2026-09-20T21:55:52.879Z",
+      "updatedAt": "2026-09-20T21:55:52.879Z"
+    },
+    {
+      "id": "dc41b80f-72cf-4a5c-8f94-2b21b7aad86c",
+      "code": "credits_1000",
+      "name": "추가 크레딧 1,000",
+      "credits": 1000,
+      "priceKrw": 10900,
+      "validityDays": 30,
+      "isActive": true,
+      "sortOrder": 1,
+      "createdAt": "2026-09-20T21:55:52.867Z",
+      "updatedAt": "2026-09-20T21:55:52.879Z"
+    },
+    {
+      "id": "27160e3c-ef50-4fbb-8255-4de2390147c5",
+      "code": "credits_4000",
+      "name": "추가 크레딧 4,000",
+      "credits": 4000,
+      "priceKrw": 29900,
+      "validityDays": 30,
+      "isActive": true,
+      "sortOrder": 2,
+      "createdAt": "2026-09-20T21:55:52.879Z",
+      "updatedAt": "2026-09-20T21:55:52.879Z"
+    }
+  ]
+}

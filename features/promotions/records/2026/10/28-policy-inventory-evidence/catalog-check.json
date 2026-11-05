@@ -1,0 +1,185 @@
+[
+  {
+    "name": "dev_catalog",
+    "url": "https://dev-api.clipperstudio.ai/catalog",
+    "status": 200,
+    "items": [
+      {
+        "code": "basic",
+        "name": "Basic",
+        "monthlyCredits": 400,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "basic_monthly",
+            "priceKrw": 5900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "basic_yearly",
+            "priceKrw": 58800,
+            "billingIntervalMonths": 12
+          }
+        ]
+      },
+      {
+        "code": "pro",
+        "name": "Pro",
+        "monthlyCredits": 1000,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "pro_monthly",
+            "priceKrw": 10900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "pro_yearly",
+            "priceKrw": 82800,
+            "billingIntervalMonths": 12
+          }
+        ]
+      },
+      {
+        "code": "business",
+        "name": "Business",
+        "monthlyCredits": 4000,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "business_monthly",
+            "priceKrw": 29900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "business_yearly",
+            "priceKrw": 234000,
+            "billingIntervalMonths": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev_topups",
+    "url": "https://dev-api.clipperstudio.ai/catalog/credit-products",
+    "status": 200,
+    "items": [
+      {
+        "code": "credits_400",
+        "name": "추가 크레딧 400",
+        "credits": 400,
+        "priceKrw": 5900,
+        "validityDays": 30
+      },
+      {
+        "code": "credits_1000",
+        "name": "추가 크레딧 1,000",
+        "credits": 1000,
+        "priceKrw": 10900,
+        "validityDays": 30
+      },
+      {
+        "code": "credits_4000",
+        "name": "추가 크레딧 4,000",
+        "credits": 4000,
+        "priceKrw": 29900,
+        "validityDays": 30
+      }
+    ]
+  },
+  {
+    "name": "local_catalog",
+    "url": "http://localhost:3000/catalog",
+    "status": 200,
+    "items": [
+      {
+        "code": "basic",
+        "name": "Basic",
+        "monthlyCredits": 400,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "basic_monthly",
+            "priceKrw": 5900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "basic_yearly",
+            "priceKrw": 58800,
+            "billingIntervalMonths": 12
+          }
+        ]
+      },
+      {
+        "code": "pro",
+        "name": "Pro",
+        "monthlyCredits": 1000,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "pro_monthly",
+            "priceKrw": 10900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "pro_yearly",
+            "priceKrw": 82800,
+            "billingIntervalMonths": 12
+          }
+        ]
+      },
+      {
+        "code": "business",
+        "name": "Business",
+        "monthlyCredits": 4000,
+        "entitlementMode": "all",
+        "products": [
+          {
+            "code": "business_monthly",
+            "priceKrw": 29900,
+            "billingIntervalMonths": 1
+          },
+          {
+            "code": "business_yearly",
+            "priceKrw": 234000,
+            "billingIntervalMonths": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "local_topups",
+    "url": "http://localhost:3000/catalog/credit-products",
+    "status": 200,
+    "items": [
+      {
+        "code": "credits_400",
+        "name": "추가 크레딧 400",
+        "credits": 400,
+        "priceKrw": 5900,
+        "validityDays": 30
+      },
+      {
+        "code": "credits_1000",
+        "name": "추가 크레딧 1,000",
+        "credits": 1000,
+        "priceKrw": 10900,
+        "validityDays": 30
+      },
+      {
+        "code": "credits_4000",
+        "name": "추가 크레딧 4,000",
+        "credits": 4000,
+        "priceKrw": 29900,
+        "validityDays": 30
+      }
+    ]
+  },
+  {
+    "name": "production_catalog",
+    "url": "https://api.clipperstudio.ai/catalog",
+    "status": 502
+  }
+]

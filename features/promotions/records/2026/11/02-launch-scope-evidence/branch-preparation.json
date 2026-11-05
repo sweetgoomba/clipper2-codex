@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-02",
+  "branches": [
+    "archive/promotion-access-referral-20261102",
+    "feat/signup-credit-promotion-free-20261102"
+  ],
+  "repos": [
+    {
+      "repo": "web/clipper_web_api",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api",
+      "origin_dev": "64919db3d8b12640cab115cf7103c419b60ab2c3",
+      "previous_head": "b2aead8e99270f6a71384668b38b3fa095ddbf6f",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "M src/modules/payments/application/topup-payments.service.spec.ts\n M src/modules/payments/application/topup-payments.service.ts\n M src/modules/payments/domain/payment-failure-message.spec.ts\n M src/modules/payments/domain/payment-failure-message.ts\n M src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts\n M src/modules/payments/presentation/toss-payments-redirect.controller.ts",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "64919db3d8b12640cab115cf7103c419b60ab2c3",
+        "feat/signup-credit-promotion-free-20261102": "64919db3d8b12640cab115cf7103c419b60ab2c3"
+      },
+      "status_after": "M src/modules/payments/application/topup-payments.service.spec.ts\n M src/modules/payments/application/topup-payments.service.ts\n M src/modules/payments/domain/payment-failure-message.spec.ts\n M src/modules/payments/domain/payment-failure-message.ts\n M src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts\n M src/modules/payments/presentation/toss-payments-redirect.controller.ts"
+    },
+    {
+      "repo": "web/clipper_web_client",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_client",
+      "origin_dev": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c",
+      "previous_head": "17e3e07ace8c67352217fc55a11a772f3fe24241",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c",
+        "feat/signup-credit-promotion-free-20261102": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c"
+      },
+      "status_after": ""
+    },
+    {
+      "repo": "web/clipper_web_admin",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_admin",
+      "origin_dev": "3435f2a36ed69e101e9f8170fdaa40612434562d",
+      "previous_head": "2a4316211a842cdb3a320ce2156c7a6541c43571",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "3435f2a36ed69e101e9f8170fdaa40612434562d",
+        "feat/signup-credit-promotion-free-20261102": "3435f2a36ed69e101e9f8170fdaa40612434562d"
+      },
+      "status_after": ""
+    },
+    {
+      "repo": "desktop/clipper_nestjs",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_nestjs",
+      "origin_dev": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b",
+      "previous_head": "c296d623d5463351568c5ef654b098710acc0177",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b",
+        "feat/signup-credit-promotion-free-20261102": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b"
+      },
+      "status_after": ""
+    },
+    {
+      "repo": "desktop/clipper_angular",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_angular",
+      "origin_dev": "9dd1550e0b097a78415b6e969b919646d6b032f4",
+      "previous_head": "23392de036680cabac9c3f6a12630beaa39e4bb8",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "9dd1550e0b097a78415b6e969b919646d6b032f4",
+        "feat/signup-credit-promotion-free-20261102": "9dd1550e0b097a78415b6e969b919646d6b032f4"
+      },
+      "status_after": ""
+    },
+    {
+      "repo": "desktop/clipper_electron",
+      "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_electron",
+      "origin_dev": "99be6e0971c449ac1df1e03bae95c8f0cb61d993",
+      "previous_head": "480a1d538186ec42a1b8eafb9944b0bfe5db7d06",
+      "previous_branch": "feat/signup-promotion-plugin-access-20261028",
+      "status_before": "",
+      "existing_branches": {
+        "archive/promotion-access-referral-20261102": false,
+        "feat/signup-credit-promotion-free-20261102": false
+      },
+      "branches": {
+        "archive/promotion-access-referral-20261102": "99be6e0971c449ac1df1e03bae95c8f0cb61d993",
+        "feat/signup-credit-promotion-free-20261102": "99be6e0971c449ac1df1e03bae95c8f0cb61d993"
+      },
+      "status_after": ""
+    }
+  ],
+  "uncommitted_patch": {
+    "temporary_path": "/private/tmp/promotion-topup-uncommitted-20261102.patch",
+    "bytes": 16990,
+    "sha256": "bdeaeb49c05fd0433ab28cb167f88d5b4d2a68bf8fc0015812809f28926b698c",
+    "preserved_path": "/Users/jina/project/adlight/.codex/features/promotions/records/2026/11/02-launch-scope-evidence/promotion-topup-uncommitted-20261102.patch"
+  },
+  "checkout_changed": false,
+  "product_sources_changed": false,
+  "commits_created": false,
+  "pushed": false
+}

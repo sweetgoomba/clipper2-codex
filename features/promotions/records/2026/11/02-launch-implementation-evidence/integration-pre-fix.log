@@ -1,0 +1,9 @@
+
+> clipper_web_api@0.0.1 test
+> jest --runInBand --runTestsByPath src/modules/promotions/application/signup-benefits.integration.spec.ts
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.724 s, estimated 1 s
+Ran all test suites within paths "src/modules/promotions/application/signup-benefits.integration.spec.ts".

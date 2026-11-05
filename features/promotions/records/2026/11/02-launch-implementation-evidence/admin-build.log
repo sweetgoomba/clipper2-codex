@@ -1,0 +1,42 @@
+
+> clipper-web-admin@0.0.0 build
+> ng build
+
+❯ Building...
+✔ Building...
+Initial chunk files   | Names                   |  Raw size | Estimated transfer size
+main-Q3BZ26WI.js      | main                    | 387.98 kB |                83.90 kB
+chunk-WiwgpLgf.js     | -                       | 191.21 kB |                54.99 kB
+chunk-oONRAU1-.js     | -                       | 148.33 kB |                38.09 kB
+styles-C5SWKLZD.css   | styles                  |  68.40 kB |                12.37 kB
+chunk-o0nuV786.js     | -                       |  49.51 kB |                13.07 kB
+polyfills-5CFQRCPP.js | polyfills               |  34.59 kB |                11.33 kB
+chunk-CipbAZNj.js     | -                       | 109 bytes |               109 bytes
+
+                      | Initial total           | 880.13 kB |               213.86 kB
+
+Lazy chunk files      | Names                   |  Raw size | Estimated transfer size
+chunk-DkUVDR5l.js     | app-news-component      | 120.54 kB |                31.21 kB
+chunk-Cu96092m.js     | member-detail-component |  89.46 kB |                21.23 kB
+chunk-BS9IuN9e2.js    | telemetry-component     |  75.17 kB |                18.97 kB
+chunk-D532-7sL.js     | -                       |  72.40 kB |                12.28 kB
+chunk-BUBcwhbk2.js    | default-media-component |  72.09 kB |                17.32 kB
+chunk-Bac5AJg9.js     | api-keys-component      |  70.38 kB |                14.72 kB
+chunk-QljJeqAM.js     | browser                 |  67.86 kB |                17.80 kB
+chunk-qnhuUNT-.js     | plans-component         |  59.11 kB |                13.35 kB
+chunk-BIn01NMv.js     | promotions-component    |  53.72 kB |                12.36 kB
+chunk-B-EHGxAU.js     | external-data-component |  52.25 kB |                11.34 kB
+chunk-C6zCFOoz.js     | -                       |  43.17 kB |                11.62 kB
+chunk-OEFef30h.js     | -                       |  41.27 kB |                 5.46 kB
+chunk-Bmq8wPWY.js     | -                       |  38.19 kB |                 9.15 kB
+chunk-DnVdC63q.js     | versions-component      |  36.96 kB |                 9.34 kB
+chunk-DMZpslIw.js     | dashboard-component     |  36.84 kB |                 8.59 kB
+...and 76 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [20.563 seconds] - 2026-11-02T04:46:03.546Z
+
+▲ [WARNING] bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 380.13 kB with a total of 880.13 kB.
+
+
+Output location: /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_admin/dist/clipper_web_admin
+

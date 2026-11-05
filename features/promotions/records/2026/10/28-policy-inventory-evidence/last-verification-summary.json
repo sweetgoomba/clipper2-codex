@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "numPassedTests": 4845,
+  "numFailedTests": 0,
+  "numPendingTests": 69,
+  "numPassedTestSuites": 457,
+  "numPendingTestSuites": 10,
+  "scope": "Last product-code verification, topup access confirmation fix, 2026-10-28; this inventory changed no product code.",
+  "modifiedSourceSha256": {
+    "src/modules/payments/application/topup-payments.service.spec.ts": "469c9b09f08388e3e0fe75acea131b0864a43c433d4d110699aa3b9cbf266139",
+    "src/modules/payments/application/topup-payments.service.ts": "fc60dc294f76cfa02cdc1808b297363474552aaec114e508a028a25e221a4667",
+    "src/modules/payments/domain/payment-failure-message.spec.ts": "409759a3d6ed9f13e74d849cec75a4e481b40067e405eaad16a838cef212492b",
+    "src/modules/payments/domain/payment-failure-message.ts": "30f53c178e1b8e929c583785e794bc39de6c9cace72a7c03f750609fe2cae8bd",
+    "src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts": "825b7c0e6681b83174ede337a74e391cf5db811c3e547d0cd6bf9ab8a16d55dd",
+    "src/modules/payments/presentation/toss-payments-redirect.controller.ts": "c3269a488cba95a25e5d611392a9147da05146d4539ba2f1f17f0c041c27a549"
+  }
+}

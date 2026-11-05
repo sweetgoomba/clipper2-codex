@@ -1,0 +1,492 @@
+
+> clipper_web_api@0.0.1 test
+> jest --runInBand
+
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] PayloadTooLargeError: request entity too large
+    at Gunzip.onData (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:260:12)
+    at Gunzip.emit (node:events:509:28)
+    at addChunk (node:internal/streams/readable:563:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+    at Gunzip.Readable.push (node:internal/streams/readable:394:5)
+    at Zlib.processCallback (node:zlib:548:32) {
+  limit: 1048576,
+  received: 1064960,
+  type: 'entity.too.large'
+}
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] BadRequestError: Bad Request
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/read.js:125:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:227:14)
+    at invokeCallback (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:238:16)
+    at done (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:227:7)
+    at Gunzip.onEnd (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:274:21)
+    at Gunzip.emit (node:events:521:24)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -3,
+  code: 'Z_DATA_ERROR'
+}
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] PayloadTooLargeError: request entity too large
+    at readStream (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:116:12)
+    at read (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/@nestjs/platform-express/adapters/express-adapter.js:34:17
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at router.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:186:3)
+    at app.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/application.js:177:15)
+    at Server.app (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/express.js:38:9)
+    at Server.emit (node:events:509:28)
+    at parserOnIncoming (node:_http_server:1282:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17) {
+  expected: 8388632,
+  length: 8388632,
+  limit: 8388608,
+  type: 'entity.too.large'
+}
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] PayloadTooLargeError: request entity too large
+    at readStream (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:116:12)
+    at read (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/@nestjs/platform-express/adapters/express-adapter.js:34:17
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at router.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:186:3)
+    at app.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/application.js:177:15)
+    at Server.app (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/express.js:38:9)
+    at Server.emit (node:events:509:28)
+    at parserOnIncoming (node:_http_server:1282:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17) {
+  expected: 8388632,
+  length: 8388632,
+  limit: 8388608,
+  type: 'entity.too.large'
+}
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] PayloadTooLargeError: request entity too large
+    at readStream (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:116:12)
+    at read (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/@nestjs/platform-express/adapters/express-adapter.js:34:17
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at router.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:186:3)
+    at app.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/application.js:177:15)
+    at Server.app (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/express.js:38:9)
+    at Server.emit (node:events:509:28)
+    at parserOnIncoming (node:_http_server:1282:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17) {
+  expected: 8388632,
+  length: 8388632,
+  limit: 8388608,
+  type: 'entity.too.large'
+}
+[Nest] 20262  - 11/02/2026, 1:45:42 PM   ERROR [ExceptionsHandler] PayloadTooLargeError: request entity too large
+    at readStream (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/raw-body/index.js:116:12)
+    at read (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/@nestjs/platform-express/adapters/express-adapter.js:34:17
+    at Layer.handleRequest (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:342:13)
+    at /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:297:9
+    at processParams (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:582:12)
+    at next (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:291:5)
+    at router.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/router/index.js:186:3)
+    at app.handle (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/application.js:177:15)
+    at Server.app (/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api/node_modules/express/lib/express.js:38:9)
+    at Server.emit (node:events:509:28)
+    at parserOnIncoming (node:_http_server:1282:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17) {
+  expected: 3145742,
+  length: 3145742,
+  limit: 1048576,
+  type: 'entity.too.large'
+}
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=m-x, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.research generated (model=gpt-5.4-mini, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_review generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_review generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM    WARN [ExplainerPlannerService] explainer.plan_draft retry once: OpenAI explainer.plan draft violates the plan shape: lines
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_review generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_review generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_draft generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:43 PM     LOG [ExplainerPlannerService] explainer.plan_review generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:45:46 PM   ERROR [ScriptController] shortform_script evidence_finalize_failed requestId=b884e66b-22c4-48bf-9dba-213c2e4b1f42 providerOutcome=succeeded message=evidence database unavailable
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=1
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=2
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 persisted — rotated key a → b
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=approved retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=approved retry=1
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=approved retry=2
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=1
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=2
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=1
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=a retry=2
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 persisted — rotated key a → b
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=b retry=0
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=b retry=1
+[Nest] 20262  - 11/02/2026, 1:45:52 PM    WARN [NaverResearchProviderService] naver naver-news 429 (errorCode=-) key=b retry=2
+[Nest] 20262  - 11/02/2026, 1:45:55 PM    WARN [DesktopTelemetryIngestController] telemetry.ingest.dropped {"accepted":50,"dropped":13,"reasons":{"malformedEnvelope":0,"wrongKind":0,"overDailyCap":0,"overArrayLimit":13,"nonArrayBody":0},"samples":[]}
+[Nest] 20262  - 11/02/2026, 1:45:55 PM    WARN [DesktopTelemetryIngestController] telemetry.ingest.dropped {"accepted":0,"dropped":0,"reasons":{"malformedEnvelope":0,"wrongKind":0,"overDailyCap":0,"overArrayLimit":0,"nonArrayBody":1},"samples":["v=- kind=- appVersion=- channel=-"]}
+[Nest] 20262  - 11/02/2026, 1:46:01 PM   ERROR [MediaSearchController] media_search evidence_finalize_failed requestId=54c64140-c349-456e-bcdf-530e48dcdb26 providerOutcome=succeeded message=evidence database unavailable
+[Nest] 20262  - 11/02/2026, 1:46:06 PM   ERROR [ExplainerLlmController] openai:explainer_research evidence_finalize_failed reference=ref_1 outcome=succeeded message=db
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=verbatim; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=verbatim; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM    WARN [ProductCurationCopyService] llm.product_curation_item regeneration failed (OpenAI llm.product_curation_item request failed: timeout); returning first result with guard=forbidden
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=length; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=length; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=length; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM    WARN [ProductCurationCopyService] llm.product_curation_item regeneration failed (OpenAI llm.product_curation_item request failed: timeout); returning first result with guard=length
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM    WARN [ProductCurationCopyService] llm.product_curation_frame regeneration failed (OpenAI llm.product_curation_frame request failed: timeout); returning first result with guard=forbidden
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=length; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item guard=tone; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=custom-basis; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=custom-basis; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=custom-basis; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame guard=forbidden; regenerating once
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_frame generated (model=gpt-5.6-luna, n=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:12 PM     LOG [ProductCurationCopyService] llm.product_curation_item generated (model=gpt-5.6-luna, rank=3, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:13 PM    WARN [DefaultMediaAdminService] default media S3 delete failed for default-media/test/sfx/750ad9a3-2fa7-4e2d-b82a-e5067d890cd8/file.mp3: s3 down
+[Nest] 20262  - 11/02/2026, 1:46:13 PM    WARN [DefaultMediaAdminService] default media S3 delete failed for default-media/test/asset/a54c6029-4135-404f-98a0-efcbc72fe7fd/file.png: s3 down
+[Nest] 20262  - 11/02/2026, 1:46:13 PM    WARN [DefaultMediaAdminService] default media S3 delete failed for default-media/test/asset/a54c6029-4135-404f-98a0-efcbc72fe7fd/thumb.webp: s3 down
+[Nest] 20262  - 11/02/2026, 1:46:15 PM    WARN [AppNewsAdminService] banner 11111111-1111-4111-8111-111111111111 image url unavailable: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:15 PM    WARN [AppNewsAdminService] failed to delete banner image default-media/test/app-news/banners/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:15 PM    WARN [AppNewsAdminService] failed to delete banner image default-media/test/app-news/banners/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:18 PM    WARN [AppNewsFeedService] banner 11111111-1111-4111-8111-111111111111 image url unavailable: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:18 PM    WARN [AppNewsFeedService] banner unsigned image url unavailable: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:18 PM    WARN [AppNewsFeedService] banner text image url unavailable: Default media storage is not configured.
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-4.1-mini, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5-mini, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-4.1-mini, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false, tokens: input=120 output=340 reasoning=64)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=false)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-5.6-luna, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:20 PM     LOG [ScriptService] llm.script generated (model=gpt-4.1-mini, webSearch=true)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title_narration, requested=1, first=1, produced=1)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=3, first=1, afterTopUp=3, produced=3)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM    WARN [VariationService] llm.variation top-up failed: OpenAI llm.variation request failed: network down
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=3, first=1, produced=1)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=5, first=1, afterTopUp=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=3, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=3, first=1, afterTopUp=3, produced=3)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title_narration, requested=1, first=1, produced=1)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-4.1-mini, scope=title, requested=2, first=2, produced=2)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=2, first=2, produced=2, tokens: input=80 output=210 reasoning=32)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=1, first=1, produced=1)
+[Nest] 20262  - 11/02/2026, 1:46:23 PM     LOG [VariationService] llm.variation generated (model=gpt-5.6-luna, scope=title, requested=3, first=1, afterTopUp=3, produced=3)
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.queries generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.queries generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.queries generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_judge generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.source_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.facts generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.photo_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.photo_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.photo_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.photo_pick generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.article_image_map generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.article_image_map generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.article_image_map generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:24 PM     LOG [ShortformGroundingService] llm.shortform.article_image_map generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_shorten generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_shorten generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM    WARN [OverseasDubScriptService] llm.overseas_dub.script improvement stopped, returning the draft: OpenAI llm.overseas_dub.rewrite_shorten request failed: socket hang up
+[Nest] 20262  - 01/01/1970, 9:01:00 AM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.script generated (model=gpt-4.1, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_shorten generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_shorten generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_fix generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.rewrite_lengthen generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:25 PM     LOG [OverseasDubScriptService] llm.overseas_dub.keyword generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-4.1-mini)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=story_backbone, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=define_highlight_topics, model=high-model)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5-mini)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=story_backbone, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=story_backbone, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-4.1-mini)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=story_backbone, model=gpt-4.1)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna, tokens: input=200 output=500 reasoning=128)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=sentence_split, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=select_highlights, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight title repair (model=gpt-5.6-luna, replaced=2/2)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight title repair (model=gpt-5.6-luna, replaced=0/2)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:26 PM     LOG [DialogHighlightLlmService] llm.dialogHighlight title repair (model=gpt-5.6-luna, replaced=1/2, tokens: input=300 output=40)
+[Nest] 20262  - 01/01/1970, 9:16:40 AM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 01/01/1970, 9:16:40 AM     LOG [DialogHighlightLlmService] llm.dialogHighlight title repair (model=gpt-5.6-luna, replaced=0/2)
+[Nest] 20262  - 01/01/1970, 9:21:30 AM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 01/01/1970, 9:21:30 AM     LOG [DialogHighlightLlmService] llm.dialogHighlight title repair (model=gpt-5.6-luna, replaced=0/2)
+[Nest] 20262  - 01/01/1970, 9:21:52 AM     LOG [DialogHighlightLlmService] llm.dialogHighlight generated (operation=highlight_metadata, model=gpt-5.6-luna)
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "아이브" page=1 start=1 display=8 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "아이브" page=1 start=1 display=3 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "아이브" page=1 start=1 display=8 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "아이브" page=1 start=1 display=8 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "아이브" page=1 start=1 display=3 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "하나" page=1 start=1 display=8 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "둘" page=1 start=1 display=8 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [SearchService] naver image search: "x" page=1000 start=1000 display=30 → 1건
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [RankingCopyService] llm.ranking_copy generated (model=gpt-5.6-luna, items=1, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [RankingCopyService] llm.ranking_copy generated (model=gpt-5-mini, items=1, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:27 PM     LOG [RankingCopyService] llm.ranking_copy generated (model=gpt-5.6-luna, items=1, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=m-x, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [ExplainerReviseService] explainer.revise generated (model=gpt-5.6-luna, tokens: )
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [RetentionService] telemetry.retention.purged {"sessions":3,"bundles":3}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [RetentionService] telemetry.retention.purged {"sessions":0,"bundles":0}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [RetentionService] telemetry.retention.purged {"sessions":0,"bundles":0}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM   ERROR [RetentionService] telemetry.retention.failed {"table":"desktop_sessions","error":"deadlock"}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM   ERROR [RetentionService] telemetry.retention.failed {"table":"desktop_error_reports","error":"deadlock"}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [RetentionService] telemetry.retention.purged {"sessions":0,"bundles":0}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM   ERROR [RetentionService] telemetry.retention.failed {"table":"desktop_sessions","error":"deadlock"}
+[Nest] 20262  - 11/02/2026, 1:46:28 PM     LOG [RetentionService] telemetry.retention.purged {"sessions":0,"bundles":5}
+[Nest] 20262  - 11/02/2026, 1:46:30 PM    WARN [GoogleOAuthGuard] [auth] Google rejected the authorization code (invalid_grant)
+[Nest] 20262  - 11/02/2026, 1:46:30 PM    WARN [SlackNotifier] slack alert could not be sent (Error)
+[Nest] 20262  - 11/02/2026, 1:46:30 PM    WARN [SlackNotifier] slack webhook url could not be read (Error)
+[Nest] 20262  - 11/02/2026, 1:46:31 PM    WARN [ReleaseArtifactUpdateFile] Ignoring a partially stored update file on a release artifact
+
+Test Suites: 11 skipped, 468 passed, 468 of 479 total
+Tests:       78 skipped, 5080 passed, 5158 total
+Snapshots:   5 passed, 5 total
+Time:        59.901 s
+Ran all test suites.

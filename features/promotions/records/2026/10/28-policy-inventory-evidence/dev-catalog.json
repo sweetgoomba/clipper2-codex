@@ -1,0 +1,180 @@
+{
+  "checkedAt": "2026-10-28T11:14:31.415Z",
+  "url": "https://dev-api.clipperstudio.ai/catalog",
+  "data": [
+    {
+      "id": "807cceaf-bc4a-4756-8af2-6e1d619fa856",
+      "code": "basic",
+      "name": "Basic",
+      "description": null,
+      "sortOrder": 1,
+      "monthlyCredits": 400,
+      "monthlyCreditValidityDays": null,
+      "entitlementMode": "all",
+      "upgradeRank": 10,
+      "pluginKeys": [
+        "comment_overlay",
+        "curation",
+        "dance_highlight",
+        "dialog_highlight",
+        "overseas_dub",
+        "person_highlight",
+        "ranking",
+        "shortform_article",
+        "shortform_director",
+        "shortform_explainer",
+        "shortform_paste",
+        "shortform_prompt",
+        "shortform_url",
+        "variation"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-15T19:21:10.909Z",
+      "updatedAt": "2026-10-15T19:21:10.948Z",
+      "products": [
+        {
+          "id": "53a4b5e6-cb93-4648-b2dc-dd57422c66f6",
+          "code": "basic_monthly",
+          "tierId": "807cceaf-bc4a-4756-8af2-6e1d619fa856",
+          "name": "Basic 월간",
+          "billingIntervalMonths": 1,
+          "priceKrw": 5900,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.909Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": null
+        },
+        {
+          "id": "18976a80-965e-4e39-8fb3-ac14487daf23",
+          "code": "basic_yearly",
+          "tierId": "807cceaf-bc4a-4756-8af2-6e1d619fa856",
+          "name": "Basic 연간",
+          "billingIntervalMonths": 12,
+          "priceKrw": 58800,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.909Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": 17
+        }
+      ]
+    },
+    {
+      "id": "180c75f2-d5c8-4832-aa8e-30b0d0e38897",
+      "code": "pro",
+      "name": "Pro",
+      "description": null,
+      "sortOrder": 2,
+      "monthlyCredits": 1000,
+      "monthlyCreditValidityDays": null,
+      "entitlementMode": "all",
+      "upgradeRank": 20,
+      "pluginKeys": [
+        "comment_overlay",
+        "curation",
+        "dance_highlight",
+        "dialog_highlight",
+        "overseas_dub",
+        "person_highlight",
+        "ranking",
+        "shortform_article",
+        "shortform_director",
+        "shortform_explainer",
+        "shortform_paste",
+        "shortform_prompt",
+        "shortform_url",
+        "variation"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-15T19:21:10.909Z",
+      "updatedAt": "2026-10-15T19:21:10.948Z",
+      "products": [
+        {
+          "id": "d96ab9ee-ba50-4eca-8f1a-9aa675124095",
+          "code": "pro_monthly",
+          "tierId": "180c75f2-d5c8-4832-aa8e-30b0d0e38897",
+          "name": "Pro 월간",
+          "billingIntervalMonths": 1,
+          "priceKrw": 10900,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.909Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": null
+        },
+        {
+          "id": "f0085428-b02d-4368-b58c-f779a9ec81bc",
+          "code": "pro_yearly",
+          "tierId": "180c75f2-d5c8-4832-aa8e-30b0d0e38897",
+          "name": "Pro 연간",
+          "billingIntervalMonths": 12,
+          "priceKrw": 82800,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.909Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": 37
+        }
+      ]
+    },
+    {
+      "id": "07f747c7-1f6c-4f6a-a460-7c683b51f747",
+      "code": "business",
+      "name": "Business",
+      "description": null,
+      "sortOrder": 3,
+      "monthlyCredits": 4000,
+      "monthlyCreditValidityDays": null,
+      "entitlementMode": "all",
+      "upgradeRank": 30,
+      "pluginKeys": [
+        "comment_overlay",
+        "curation",
+        "dance_highlight",
+        "dialog_highlight",
+        "overseas_dub",
+        "person_highlight",
+        "ranking",
+        "shortform_article",
+        "shortform_director",
+        "shortform_explainer",
+        "shortform_paste",
+        "shortform_prompt",
+        "shortform_url",
+        "variation"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-15T19:21:10.948Z",
+      "updatedAt": "2026-10-15T19:21:10.948Z",
+      "products": [
+        {
+          "id": "b05aca8b-1042-4163-95f2-be0937578329",
+          "code": "business_monthly",
+          "tierId": "07f747c7-1f6c-4f6a-a460-7c683b51f747",
+          "name": "Business 월간",
+          "billingIntervalMonths": 1,
+          "priceKrw": 29900,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.948Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": null
+        },
+        {
+          "id": "36eed82e-7b68-4c54-b9bf-d67b3600fff3",
+          "code": "business_yearly",
+          "tierId": "07f747c7-1f6c-4f6a-a460-7c683b51f747",
+          "name": "Business 연간",
+          "billingIntervalMonths": 12,
+          "priceKrw": 234000,
+          "autoRenews": true,
+          "isActive": true,
+          "createdAt": "2026-10-15T19:21:10.948Z",
+          "updatedAt": "2026-10-15T19:21:10.948Z",
+          "effectiveDiscountPercent": 35
+        }
+      ]
+    }
+  ]
+}

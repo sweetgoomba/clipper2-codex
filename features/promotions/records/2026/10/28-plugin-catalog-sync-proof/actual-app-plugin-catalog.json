@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "revision": "23392de036680cabac9c3f6a12630beaa39e4bb8",
+    "configSha256": "ea571cff458f7f64ce8b25897e64a096eb3dd16f768813c196df96f85ccc982e",
+    "metadataSha256": "e415e5031d2da3ede8d9a3e3406c7c0be4bac8b3fc66580b25f93720f2be957f"
+  },
+  "plugins": [
+    {
+      "pluginKey": "comment_overlay",
+      "defaultName": "댓글 오버레이",
+      "route": "comment-overlay",
+      "icon": "chat"
+    },
+    {
+      "pluginKey": "curation",
+      "defaultName": "상품 큐레이션",
+      "route": "curation",
+      "icon": "shopping_bag"
+    },
+    {
+      "pluginKey": "dance_highlight",
+      "defaultName": "안무 하이라이트",
+      "route": "dance",
+      "icon": "taunt"
+    },
+    {
+      "pluginKey": "dialog_highlight",
+      "defaultName": "대사 하이라이트",
+      "route": "dialog",
+      "icon": "format_quote"
+    },
+    {
+      "pluginKey": "overseas_dub",
+      "defaultName": "해외영상 to 숏폼",
+      "route": "overseas-dub",
+      "icon": "translate"
+    },
+    {
+      "pluginKey": "person_highlight",
+      "defaultName": "인물 하이라이트",
+      "route": "person",
+      "icon": "groups"
+    },
+    {
+      "pluginKey": "ranking",
+      "defaultName": "영상 랭킹",
+      "route": "ranking",
+      "icon": "trophy"
+    },
+    {
+      "pluginKey": "shortform_article",
+      "defaultName": "매체기사 to 숏폼",
+      "route": "shortform/article",
+      "icon": "newspaper"
+    },
+    {
+      "pluginKey": "shortform_director",
+      "defaultName": "스토리보드",
+      "route": "shortform/director",
+      "icon": "view_carousel"
+    },
+    {
+      "pluginKey": "shortform_explainer",
+      "defaultName": "설명 to 숏폼",
+      "route": "shortform/explainer",
+      "icon": "auto_awesome"
+    },
+    {
+      "pluginKey": "shortform_paste",
+      "defaultName": "텍스트 to 숏폼",
+      "route": "shortform/paste",
+      "icon": "article"
+    },
+    {
+      "pluginKey": "shortform_prompt",
+      "defaultName": "프롬프트 to 숏폼",
+      "route": "shortform/prompt",
+      "icon": "lightbulb"
+    },
+    {
+      "pluginKey": "shortform_url",
+      "defaultName": "블로그 to 숏폼",
+      "route": "shortform/url",
+      "icon": "link"
+    },
+    {
+      "pluginKey": "variation",
+      "defaultName": "1N : 숏폼 베리에이션",
+      "route": "variation",
+      "icon": "dynamic_feed"
+    }
+  ],
+  "digest": "e2df71bb50fdef1c21aadf66effebc9ee5d8f8e0c89765c89c7fee3e9fac1030"
+}

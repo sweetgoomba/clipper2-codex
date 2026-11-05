@@ -1,5 +1,7 @@
 # W17 — 범용 프로모션 캠페인·레퍼럴 코드
 
+> **현재 출시 범위 안내(2026-11-03):** 아래는 W17 당시 dev 반영 이력이다. AI 부스 가입 크레딧·Free 후속은 [W19 종합](../../records/sessions/2026/11/03-promotion-signup-free-plugin-session-summary.md)이 최신이며, 현재 작업 브랜치에서는 유료 예약/레퍼럴 성과/XLSX를 제거했다. 아래의 행사 이용권 등급·이력 옵션·후속 예약 설명을 최신 W19 구현 요구로 재적용하지 않는다.
+
 최종 확인: **2026-10-26 KST**. **기존 프로모션 기능과 후속 감사 수정의 원격 `dev` 병합·푸시 완료**. 서버 배포 및 실제 결제망 검증은 별도다.
 
 [전체 현황](../WORKBOARD.md) · [현재 설계](../../design/2026-10-23-promotion-campaign-current-state.md) · [구현·병합 검증](../../implementation/2026-10-23-promotion-campaign-dev-merge.md)

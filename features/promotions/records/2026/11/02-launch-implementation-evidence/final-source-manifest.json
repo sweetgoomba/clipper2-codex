@@ -1,0 +1,813 @@
+[
+  {
+    "repository": "clipper_web_api",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_api",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "64919db3d8b12640cab115cf7103c419b60ab2c3",
+    "archive": "64919db3d8b12640cab115cf7103c419b60ab2c3",
+    "staged": [],
+    "files": [
+      {
+        "path": "docs/api/openapi.yaml",
+        "sha256": "66d0fc86643d1c14bb4644f62cc4c2bced519b4793476e40017492eb753a4ad3"
+      },
+      {
+        "path": "src/core/database/admin.datasource.ts",
+        "sha256": "f0b1487fccbbc980da38f0454958cff0a74738668f733706169d53eef5b25770"
+      },
+      {
+        "path": "src/core/database/migrations/admin/1793577600000-AddSignupCreditPromotions.ts",
+        "sha256": "933ddeee40c3360dcad90bfe48b8530fb71937ecf5ee5cb1acba401d129926dc"
+      },
+      {
+        "path": "src/core/database/migrations/admin/1793577700000-PersistentFreeTier.ts",
+        "sha256": "2dd0d5c9c08b9faedac2313727c78e2752ec6b04aa1693c6479acf18190aef01"
+      },
+      {
+        "path": "src/core/database/migrations/user/1793577600000-AddSignupBenefitIntent.ts",
+        "sha256": "53154b87b9e98b0a6a054e59fe3606ac1500b235c4af7c60fde5f46ddedd700e"
+      },
+      {
+        "path": "src/core/database/migrations/user/1793664000000-AddOnboardingClaimGeneration.ts",
+        "sha256": "aaa9eb13217097bd7e6cdc853eb22e242babfa4444efa89102dbbf7aa51e7ed8"
+      },
+      {
+        "path": "src/core/database/user.datasource.ts",
+        "sha256": "3628e5ac4ef3b21e3a412100e0fa328f7c777de3c75d56c9eb317119d9750109"
+      },
+      {
+        "path": "src/modules/access/access.module.ts",
+        "sha256": "31ad8d4694519a4043df168dfd474544f58064fd3fbecf005f9c2c4df7220cbf"
+      },
+      {
+        "path": "src/modules/access/application/access-grants.service.spec.ts",
+        "sha256": "0ce9e37739e9988081d632bdf705dd348e20b6cef429393389ae116cf5b858ee"
+      },
+      {
+        "path": "src/modules/access/application/access-grants.service.ts",
+        "sha256": "4857318d284204e25e0bde2a0dc62dc7ca05bea724a6465cf6981f841883f464"
+      },
+      {
+        "path": "src/modules/access/application/effective-access.service.spec.ts",
+        "sha256": "47ffbff96d1dbfb128f41058ff41a5b2f2563a3a91bc2f8a32a84dbae1e0212e"
+      },
+      {
+        "path": "src/modules/access/application/effective-access.service.ts",
+        "sha256": "5fc1ae712cc74a1ebf50d622469560837824fd62de7468ebc7d0b2bbef2bd5cf"
+      },
+      {
+        "path": "src/modules/access/application/free-trial-onboarding.service.spec.ts",
+        "sha256": "fd5958749446bc573b039d4a0eb5a045dff9c4596accd6e32e3799df3d69cc65"
+      },
+      {
+        "path": "src/modules/access/application/free-trial-onboarding.service.ts",
+        "sha256": "a558b5ab150024b63acfff19a507053113bcdcb8d64515306d642670f9f836ff"
+      },
+      {
+        "path": "src/modules/access/application/free-trial-provisioner.service.ts",
+        "sha256": "2f09fc1da69eaf82a15e10abafcce036390192927e01d533de5d0cebaa3a40ca"
+      },
+      {
+        "path": "src/modules/access/presentation/current-access.controller.spec.ts",
+        "sha256": "3a13fb1718bb1a1258cccd0129d4413ea1bf0e51b9a724a9701bb6119dc8cd44"
+      },
+      {
+        "path": "src/modules/access/signup-benefits.module.ts",
+        "sha256": "329eaa043dd2b3fec8f1e62c6191219d7f68cb1d2f99d016d894d136fe1422c7"
+      },
+      {
+        "path": "src/modules/auth/application/signup.service.spec.ts",
+        "sha256": "87b5f0ba5fbcb91e330f88cf054204b2a6069135ebcf0d387e6170a9c92a49d9"
+      },
+      {
+        "path": "src/modules/auth/application/signup.service.ts",
+        "sha256": "b3745607d52f53a5b2b34d7b87c300c6cdfc473fb974992ca339846f5cdc64f3"
+      },
+      {
+        "path": "src/modules/auth/auth.module.ts",
+        "sha256": "afe4eaec42c8698977659bcba7a5dfc650739a8466e354f28a1ee99975ca978f"
+      },
+      {
+        "path": "src/modules/auth/domain/signup-completion.repository.ts",
+        "sha256": "ef02fde9e821e771afea34a63114d336719deb6652cbbf0724b95f88744c501e"
+      },
+      {
+        "path": "src/modules/auth/infrastructure/typeorm-signup-completion.repository.spec.ts",
+        "sha256": "44e9593b38f01fdf5b20871825e61c94feee80902db0f5f74084b3f5fffc019e"
+      },
+      {
+        "path": "src/modules/auth/infrastructure/typeorm-signup-completion.repository.ts",
+        "sha256": "e50cbef276b7df8d16dd9ce4a14c21540a4f6d8c16ff66c27046cf094657fb5d"
+      },
+      {
+        "path": "src/modules/auth/presentation/admin-route-permissions.spec.ts",
+        "sha256": "909722081b5230dafa7287042539d90beccd45f073fc83553c858201c0646ba8"
+      },
+      {
+        "path": "src/modules/auth/presentation/auth.controller.spec.ts",
+        "sha256": "5872914b1a03d3d257645f81a884357302f46e902f1080860f41a79a2170a1d5"
+      },
+      {
+        "path": "src/modules/auth/presentation/auth.controller.ts",
+        "sha256": "63dd3ecd6f592137ce21890ff75f296fb51b1fced8e1041c84f0bf64eed910d7"
+      },
+      {
+        "path": "src/modules/auth/presentation/desktop-login-flow.spec.ts",
+        "sha256": "2c548b46fd640d0db547a4969105bc72bf2a9fae6118d5717a73f5f02b1642b0"
+      },
+      {
+        "path": "src/modules/auth/presentation/dto/signup.dto.ts",
+        "sha256": "4dc5bf0d43c404e07d21b0ef68c03b48a20e479e360569f79bbb89d555b5e6da"
+      },
+      {
+        "path": "src/modules/auth/presentation/signup-flow.spec.ts",
+        "sha256": "69132915d8fed3c74e50b1df2608e28e3ec561e288a971922197ac2be50857a5"
+      },
+      {
+        "path": "src/modules/auth/presentation/web-login-flow.spec.ts",
+        "sha256": "f8636d5766d6af97df95f4ce279fcb378cc075eca4b8676a655499e2a5e1087a"
+      },
+      {
+        "path": "src/modules/catalog/application/product-catalog.service.spec.ts",
+        "sha256": "3073b42bc9bac6f97ebd900eca94e7f66124fabfebbfa9cf3aa5b0bb838b51e9"
+      },
+      {
+        "path": "src/modules/catalog/application/product-catalog.service.ts",
+        "sha256": "cb9c21624652fa10906f9993bd5fec4f15a9b85381782e8ae4001c5d30694d63"
+      },
+      {
+        "path": "src/modules/catalog/domain/plan-plugin-hierarchy.spec.ts",
+        "sha256": "0d54eba3e9b60a82cfec428c98d7ec1aa443eda475fc55a7a3a6e353cddb13bc"
+      },
+      {
+        "path": "src/modules/catalog/domain/plan-plugin-hierarchy.ts",
+        "sha256": "f14a5017cfbdc9b7476fed4f84d0e19ecf617cd5b6f32530e10885e859b93bd9"
+      },
+      {
+        "path": "src/modules/catalog/domain/plugin-presentation.spec.ts",
+        "sha256": "c81991a7bfbed19c47d0e8c717175f86ea82907f8bbd25dead3b5fb9a63dc88d"
+      },
+      {
+        "path": "src/modules/catalog/domain/plugin-presentation.ts",
+        "sha256": "d7e254e63d0cca0aa3e08e3eee1efaa5697768a5557e63f1132662453c4d15b9"
+      },
+      {
+        "path": "src/modules/catalog/domain/product-catalog.model.ts",
+        "sha256": "c18d390d9c05dbe704520744698dd005252a43af11c4445c210aa5539a894ed6"
+      },
+      {
+        "path": "src/modules/catalog/domain/product-catalog.repository.ts",
+        "sha256": "9bda7b73d83dc55adf5e7049e7985648f71fbe716f790f4c1b055def5bfc6ab4"
+      },
+      {
+        "path": "src/modules/catalog/infrastructure/typeorm-product-catalog.repository.spec.ts",
+        "sha256": "b5b19fcbb7819e45f7fe61f577de4f77f1e4052c092aa4c6628173ecb8f06d93"
+      },
+      {
+        "path": "src/modules/catalog/infrastructure/typeorm-product-catalog.repository.ts",
+        "sha256": "f121c18979f01939e8ade872b05f35d53d68892040584ffac59ce27f175d3f2a"
+      },
+      {
+        "path": "src/modules/catalog/presentation/admin-catalog.controller.spec.ts",
+        "sha256": "ca0da7dc2a8f9b7fc67a440a2ce4a3ed344e619a34c11842a7b4387055e13f67"
+      },
+      {
+        "path": "src/modules/catalog/presentation/admin-catalog.controller.ts",
+        "sha256": "c934b54827a1c6d8b916220692cff97e6f48c85f150035869f7a468fdfd619da"
+      },
+      {
+        "path": "src/modules/catalog/presentation/dto/replace-tier-plugins.dto.ts",
+        "sha256": "85e5801135b82a810cf4d679a021a967e20e128e039bf207ae5637b02b3d79dd"
+      },
+      {
+        "path": "src/modules/catalog/presentation/dto/update-plan-tier.dto.ts",
+        "sha256": "0df4058e2d4d17969ed8756f4efe371b3d4bbf87367d7a3cf4d028775ae864b3"
+      },
+      {
+        "path": "src/modules/credits/domain/credit-ledger-display.spec.ts",
+        "sha256": "63749bb5bf5a46e31030b816733f099ca1ac2418ecda8fbb76a20e8286ec712f"
+      },
+      {
+        "path": "src/modules/credits/domain/credit-ledger-display.ts",
+        "sha256": "9231603c3e4515e6e8270ad56547667cba030d9470b8edbb1269ef5579b9006e"
+      },
+      {
+        "path": "src/modules/operations/application/operations-pool.spec.ts",
+        "sha256": "4d100cd542552d38d86b434207c7018049353334466c6c6a4f695345eb852dc8"
+      },
+      {
+        "path": "src/modules/operations/application/operations.service.spec.ts",
+        "sha256": "4798c10cbe0a8dc3ec02c65916fcca56de4d6dc4dc2bece22a5b5bde5373d2a9"
+      },
+      {
+        "path": "src/modules/operations/application/operations.service.ts",
+        "sha256": "77b4697f28e9dba0aeb80c854a196a70863a9e617b3c781ff27aea789cf07368"
+      },
+      {
+        "path": "src/modules/operations/application/storyboard-operations.spec.ts",
+        "sha256": "2e95c115b1eb42221e3a9c7413e7176260f5b81c0980dcf1fa5d345e3d89b36b"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-payments.service.spec.ts",
+        "sha256": "99c2be4b089cc5dd795e9477b05a6f2125b58f03aa3bd6c759a51bd36d6d1d8c"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-payments.service.ts",
+        "sha256": "b0be1c1995c3263221ece7bbb7ea0033eb26a2a02891b90bcc6984a1c4d50a32"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-plan-changes.service.spec.ts",
+        "sha256": "424774a884f16cc32c9e2381eace08204dec2ae0b81fe0e12f78938a6585b949"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-plan-changes.service.ts",
+        "sha256": "9bdc774d5c12d9eda64c39f454e2fef3e8e24911cc5fdd822fe56b447925b2a8"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-renewal.service.spec.ts",
+        "sha256": "9494b97044268914c879ae509b5ca9e43ecea99ab80376e6876ca815c80f8c90"
+      },
+      {
+        "path": "src/modules/payments/application/subscription-renewal.service.ts",
+        "sha256": "fdd121fb9269ca086dfcbf622a0e912097fe81d3ae28c5a92a28b01253ec435f"
+      },
+      {
+        "path": "src/modules/payments/application/topup-payments.service.spec.ts",
+        "sha256": "e97b1499176534ed0cb2dac64d00308a5404a229c2955390c0f3315dc49e9a00"
+      },
+      {
+        "path": "src/modules/payments/application/topup-payments.service.ts",
+        "sha256": "b0fc1af8e9e05ae3bc6c2c1a5c0ddd48275b0c10234ea996724757fe5b79ba69"
+      },
+      {
+        "path": "src/modules/payments/domain/payment-failure-message.spec.ts",
+        "sha256": "409759a3d6ed9f13e74d849cec75a4e481b40067e405eaad16a838cef212492b"
+      },
+      {
+        "path": "src/modules/payments/domain/payment-failure-message.ts",
+        "sha256": "30f53c178e1b8e929c583785e794bc39de6c9cace72a7c03f750609fe2cae8bd"
+      },
+      {
+        "path": "src/modules/payments/presentation/dto/create-subscription-checkout.dto.ts",
+        "sha256": "3754001fb816e3ca977e638ba83705b9a18e7b9f94bbb9fec7bc7faa748d5635"
+      },
+      {
+        "path": "src/modules/payments/presentation/payments-openapi-contract.spec.ts",
+        "sha256": "76280f4d357578c1cb0b0a277db22fb50f81746f45c1ab5dc5d96ef6f710c963"
+      },
+      {
+        "path": "src/modules/payments/presentation/subscriptions.controller.spec.ts",
+        "sha256": "0fbb4231de183619be0cc3e589cfa70b868cd18622b9fca13616dacb585378bd"
+      },
+      {
+        "path": "src/modules/payments/presentation/subscriptions.controller.ts",
+        "sha256": "23da40a09fb8dc0e374817ef608c13e2c605ae75e9aa989d0e6e6378ec998bc3"
+      },
+      {
+        "path": "src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts",
+        "sha256": "825b7c0e6681b83174ede337a74e391cf5db811c3e547d0cd6bf9ab8a16d55dd"
+      },
+      {
+        "path": "src/modules/payments/presentation/toss-payments-redirect.controller.ts",
+        "sha256": "c3269a488cba95a25e5d611392a9147da05146d4539ba2f1f17f0c041c27a549"
+      },
+      {
+        "path": "src/modules/promotions/application/promotion-report.service.spec.ts",
+        "sha256": null
+      },
+      {
+        "path": "src/modules/promotions/application/promotion-report.service.ts",
+        "sha256": null
+      },
+      {
+        "path": "src/modules/promotions/application/promotions.service.spec.ts",
+        "sha256": "410f6209d9f1930f784048305d26e2128012f46173a6357b609c22a52a797833"
+      },
+      {
+        "path": "src/modules/promotions/application/promotions.service.ts",
+        "sha256": "1c1f5d708a2c3c9840361c89cc626d2fcfe25febb3b95e83b5c1045b4568a217"
+      },
+      {
+        "path": "src/modules/promotions/application/signup-benefits.integration.spec.ts",
+        "sha256": "91fc801b80ed0d3e8a58488115532dce68f093f9cdc9fcc953336390d5b95303"
+      },
+      {
+        "path": "src/modules/promotions/application/signup-promotion-credit-provisioner.service.spec.ts",
+        "sha256": "252002de3ab9d8098c901d550052da6995186c5fe8db21d3d27a7615e5e71b55"
+      },
+      {
+        "path": "src/modules/promotions/application/signup-promotion-credit-provisioner.service.ts",
+        "sha256": "1ef40bd24367c17f30f873f1f7939a244f008db2ad8d4a6aaed8f4e934895649"
+      },
+      {
+        "path": "src/modules/promotions/domain/promotion-code.ts",
+        "sha256": "68d1e72824fbffbaf78bcd7e71e98c85452df37f0d6c4aab603dcf76cf1a66e7"
+      },
+      {
+        "path": "src/modules/promotions/domain/promotion-report.model.ts",
+        "sha256": null
+      },
+      {
+        "path": "src/modules/promotions/domain/promotion.model.ts",
+        "sha256": "3e7ec8002a4a399721e37e98a95acad5c669a708bc22f973ea50ea9b5f0d0a36"
+      },
+      {
+        "path": "src/modules/promotions/domain/promotions.repository.ts",
+        "sha256": "2d6dc25ceffee880eeabb179ee7de14d31c8dbba4598fc9350351f7091e32b74"
+      },
+      {
+        "path": "src/modules/promotions/infrastructure/typeorm-promotions.repository.spec.ts",
+        "sha256": "a018b298a76b20fdbab57c68695e598624bdbafac28807fb86e07e9adc9e0529"
+      },
+      {
+        "path": "src/modules/promotions/infrastructure/typeorm-promotions.repository.ts",
+        "sha256": "977d926f57abe67c9e663ab3544b555cad018403b23fd455d5c95d1d0f6a6c79"
+      },
+      {
+        "path": "src/modules/promotions/presentation/admin-promotions.controller.spec.ts",
+        "sha256": "bf3a09becd65b1f832f9ff644862c32bd61df7804d17ba8792676fda20d78bfc"
+      },
+      {
+        "path": "src/modules/promotions/presentation/admin-promotions.controller.ts",
+        "sha256": "0fbbf7ab6e838c504ad4902a003344af6c186231b305b28ea528f4f433349037"
+      },
+      {
+        "path": "src/modules/promotions/presentation/promotion.dto.ts",
+        "sha256": "476548f5e637bfd3f00307786f79dead55d9529624d8fd1a3026a84118039c89"
+      },
+      {
+        "path": "src/modules/promotions/presentation/retired-promotion-routes.spec.ts",
+        "sha256": "2eb76b6c0d5b75849d43378a9a5360dfab63e19bbbe8d65e2c2d4ed0072939f1"
+      },
+      {
+        "path": "src/modules/promotions/promotions.module.ts",
+        "sha256": "89d60fe8668aa60217fd1909e870280e454df67ddb08e994950b3a64b7a06262"
+      },
+      {
+        "path": "src/modules/shortform-explainer/presentation/explainer-gate-guard.spec.ts",
+        "sha256": "121d9d9a7da0a04384d24f3114d77b2ac0ea605dcd861a3841d5b63b13903dce"
+      },
+      {
+        "path": "src/modules/shortform-explainer/presentation/explainer-run-binding.spec.ts",
+        "sha256": "efd526df0c34133d1816a6727f1c26dc16d6d5f25dc62d4138ff8eebf828c273"
+      },
+      {
+        "path": "src/modules/users/domain/user-onboarding-job.model.ts",
+        "sha256": "c61cdb93f87d6d4c3e1eb8249d40e932ac89c084a5041235a225f9745f38a4a3"
+      },
+      {
+        "path": "src/modules/users/domain/user-onboarding-jobs.repository.ts",
+        "sha256": "36fd155f77b11db33edeb1275883772503880ee2eda6de4fd04cb1fe7cb21caa"
+      },
+      {
+        "path": "src/modules/users/infrastructure/typeorm-user-onboarding-jobs.repository.spec.ts",
+        "sha256": "62faa21fa93019cbe35570286783f71f1f8f24b4690b641869706f13400d1d12"
+      },
+      {
+        "path": "src/modules/users/infrastructure/typeorm-user-onboarding-jobs.repository.ts",
+        "sha256": "2144913fc0fa07aba3449329a90e940315d81f0f6b78b8d6d860345391e8d221"
+      },
+      {
+        "path": "src/modules/users/infrastructure/typeorm-users.repository.spec.ts",
+        "sha256": "c8fb7036cf89d8138426f30dae3eba5ab9fd922f9253c8b69997040aeffd2138"
+      },
+      {
+        "path": "src/modules/users/infrastructure/typeorm-users.repository.ts",
+        "sha256": "0e1a5afa697ce8bbc8826350b67656a7b53fd2ed080075c2f0f8e9e791a80ba2"
+      },
+      {
+        "path": "src/modules/users/infrastructure/user-onboarding-job.entity.ts",
+        "sha256": "180fe17b9e1937e75ee50145bdb30ebc3ec0c5ec60e9d1a4bae7be40fcc29686"
+      }
+    ]
+  },
+  {
+    "repository": "clipper_web_client",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_client",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c",
+    "archive": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c",
+    "staged": [],
+    "files": [
+      {
+        "path": "src/app/core/api/access-api.service.spec.ts",
+        "sha256": "4b43fd8e90520aae755cf0f2aa418f925795f35c0ed7d3d701c42ce8e9ac2f3a"
+      },
+      {
+        "path": "src/app/core/api/auth-api.service.spec.ts",
+        "sha256": "6afbbdad73db30d2f14cc546a3a6321d566da9f4fb73fad2ba4eb1c69869312f"
+      },
+      {
+        "path": "src/app/core/api/catalog-api.service.spec.ts",
+        "sha256": "668cb79433c4774b1cd45d286ec38118ec39cacca477931ff1c8df7425d36f0e"
+      },
+      {
+        "path": "src/app/core/api/mock/mock-api.interceptor.spec.ts",
+        "sha256": "c4306faad3c3d761d5dae6d175af52f03ca91c5cf59d3cbd6905e2198c6f551b"
+      },
+      {
+        "path": "src/app/core/api/mock/mock-data.ts",
+        "sha256": "7d08df0f2a02d18744e4b850283b4efbe44c00beb030fba752272dcfa43f9b66"
+      },
+      {
+        "path": "src/app/core/api/models.ts",
+        "sha256": "ca3077e1c98960076593b215d46f6d2103810d4176a0cc861d9952198d7e7beb"
+      },
+      {
+        "path": "src/app/core/api/payments-api.service.spec.ts",
+        "sha256": "0740c37bb9363427346509f98366ee474de26f666a7efb412bdf9f038904cd5b"
+      },
+      {
+        "path": "src/app/core/api/payments-api.service.ts",
+        "sha256": "9666490166a70e98db4832b0ae4382f66820864de1a00ff2110c1ce1605e1ccc"
+      },
+      {
+        "path": "src/app/core/api/promotions-api.service.ts",
+        "sha256": "c486c3ad2bffe524f1863fcf5dd6c4e074b067bb61a1a1f30001029f35c7bbac"
+      },
+      {
+        "path": "src/app/features/portal/dashboard/dashboard.component.html",
+        "sha256": "fc7d03422aed2644da76231b1ec0572c7df46ce62f2ea2d0f74dd0c3acbb8879"
+      },
+      {
+        "path": "src/app/features/portal/dashboard/dashboard.component.spec.ts",
+        "sha256": "2649b39911c66bca136fd336690183ddf32380a7f0c26623162a069539ed9d66"
+      },
+      {
+        "path": "src/app/features/portal/dashboard/dashboard.component.ts",
+        "sha256": "d31db5ca6799fd4838e01a0231953b56fb4f87f7cbde8fbfe9edb334b327385b"
+      },
+      {
+        "path": "src/app/features/portal/payment-checkout/payment-checkout.component.html",
+        "sha256": "796c8ea082e32c17b9acc46a1500b7df3fb23860f4859a0038c063c613663287"
+      },
+      {
+        "path": "src/app/features/portal/payment-checkout/payment-checkout.component.spec.ts",
+        "sha256": "6a749e3f51b8c51595b2d265d7e9e574508654bf868bc507296a5da815fe3bb5"
+      },
+      {
+        "path": "src/app/features/portal/payment-checkout/payment-checkout.component.ts",
+        "sha256": "1d1931597c1f0c075a41ad11238ace4caf7a3802ad39178e6a09dcba0d585e20"
+      },
+      {
+        "path": "src/app/features/portal/payment-result/payment-result.component.html",
+        "sha256": "3787b6ddc673ee0c41b4fa42222bce002d036a46f1817d510eb5d42c742341c2"
+      },
+      {
+        "path": "src/app/features/portal/payment-result/payment-result.component.spec.ts",
+        "sha256": "e45d3c044716da4a870edc70d3ca046bfd9cc73b4545bedb7c720ede5dee64cd"
+      },
+      {
+        "path": "src/app/features/portal/payment-result/payment-result.component.ts",
+        "sha256": "d81377aba97fc8164237f428ac03dd7d764e63cc998b3ada10243dee1dbe86f7"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.html",
+        "sha256": "5e35176adfd4eedd9fb21588564ee6bf7d661c808dc90b80725e317e78b7694e"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.spec.ts",
+        "sha256": "e89d5170155c92c88c216e8efd42cd41c5a7d61769e99059a2646e7ad324e3b6"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.ts",
+        "sha256": "264bf6254cb6c4135c92e74bfcfbca0210da30e2be656f3b121a28eee4fdb1f7"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.html",
+        "sha256": "7566f2010ba0f8ed6a91414d6d4127ed0c072012238a64a1c163ffa334d2c214"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.scss",
+        "sha256": "1fc131a363879e85b3ea53281848af15f61a8fd05db5c1b0582f091446a817ae"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.spec.ts",
+        "sha256": "c251466aff6b338b88f2b01743e026cfe9a635560491762e93b134f961b390b6"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.ts",
+        "sha256": "5a8c7a8fca7c91c0d9b927ee3a633d91115ebc2057221e03b345f04a4eff001b"
+      },
+      {
+        "path": "src/app/features/portal/topup/topup.component.html",
+        "sha256": "7dacd3014600a04bf6934ffd2e5277aa951c15133ca4b04aa8f008c8902d7038"
+      },
+      {
+        "path": "src/app/features/portal/topup/topup.component.spec.ts",
+        "sha256": "9eb2352b952a10920fb001de34eb1228a7cc381dcedf10e15305cf93a24bcf52"
+      },
+      {
+        "path": "src/app/features/public/auth-callback/auth-callback.component.spec.ts",
+        "sha256": "90a5cebb906010e872b6c6da7a198b8da44fabe47c898a017324f876561e1d20"
+      },
+      {
+        "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.html",
+        "sha256": "6e18e21f1879001c85c725f593b0b5186d040014371bef204bd8dd27701f2c82"
+      },
+      {
+        "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.scss",
+        "sha256": "47cebf025362a63d207f1701f39b3b83199f90d39fda19062e1f96e613ba333e"
+      },
+      {
+        "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.spec.ts",
+        "sha256": "3d9ae0bac1f5a2d92ac0ec606967b98c5cd4b4cd12f9acfb87b6f6692374fb2b"
+      },
+      {
+        "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.ts",
+        "sha256": "8dcb2b06eacc0d11cac84b4c04d1766f601a7aa537b6db35d16ad79a77dabca7"
+      },
+      {
+        "path": "src/app/features/public/pricing/plan-card/plan-card.component.html",
+        "sha256": "7cb4e4c453546eaa73b9fc31e06bb882d259d7e8404fdd1cd71aeb8fcddad15f"
+      },
+      {
+        "path": "src/app/features/public/pricing/plan-card/plan-card.component.scss",
+        "sha256": "61a4c25a2a8bcc0031a236456b095582473e1a2a978f8d2cf1e36a4b4f3e45f8"
+      },
+      {
+        "path": "src/app/features/public/pricing/plan-card/plan-card.component.spec.ts",
+        "sha256": "f9fa9db206f752ce6bbec3e306d7bf6b619154c1860fd87f763a48ed42ebd17a"
+      },
+      {
+        "path": "src/app/features/public/pricing/plan-card/plan-card.component.ts",
+        "sha256": "4e891439318497e6228bb25d1b8d84df59519eb5360d3a5686978daef4850707"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-catalog.component.html",
+        "sha256": "4c75890b8bcc31f3612b161c7cee8c986517a071917bbc0fe2eecb38f021afc3"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-catalog.component.scss",
+        "sha256": "58ab27f201bb61f2ac78b782b922fcc647c019764e581c64768082e4e36b636e"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-catalog.component.ts",
+        "sha256": "181cf58c2717a0a934546bb3454b598026740077564eb3bf31e17fc9a02a1b2d"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-checkout.service.ts",
+        "sha256": "c618717554eb6a910a86556c0c6535ae9e4950089513d2f0bbd9ef1aa8945b6b"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-contract.spec.ts",
+        "sha256": "fb55040bd0724e6f50d38a1b477bfa633e41cb90845bbbb96030ba650bc5f5de"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-format.spec.ts",
+        "sha256": "d019952f356f37ee4d549c6cada70af559de98096024c0d72f7d54c791394d13"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing-format.ts",
+        "sha256": "a59b543cdf5a4bc02b1d945a87005b8f89121188504ec5de7e4b622e4c246f33"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing.component.html",
+        "sha256": "b44c5c42a96cae827b2b3b6e76b41fd79d427b905aab6eb86e6c813ee96664b4"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing.component.scss",
+        "sha256": "60e676ca2179ea384483052694d7e6bf378bcd5065d225d3b99b326d71fcc3e5"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing.component.spec.ts",
+        "sha256": "a155547b1be6aa53d76b997d0a822ac687cd6c687fd5f2852febe4f64a8c2a1f"
+      },
+      {
+        "path": "src/app/features/public/pricing/pricing.component.ts",
+        "sha256": "6ca58ad4721bf8ee1fa9af642afa623bb8f98f1906efb575b9b251e3272603a7"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-consent.component.html",
+        "sha256": "0ae3eec94e8c8107f39d0fd276bdcdd5e8e42168b53d8e1c478c5759535db570"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-consent.component.scss",
+        "sha256": "bd6abf2182ce9816b73b1a329c3b5e967ca84db2c42e1d4317c308e28f21f91d"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-consent.component.spec.ts",
+        "sha256": "a89b17cbc71fefdb5f8bd2ec24884f3761be8f6c497f119dc59f86bd7c2038af"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-consent.component.ts",
+        "sha256": "d62d4ee5652d9823f57790477b664c18dc4e55ab373b3350088cca70d9c3115e"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-ticket.spec.ts",
+        "sha256": "ca43ef200b36da5297258ef627c5e291a0510bc6b175c170b949547a39059f53"
+      },
+      {
+        "path": "src/app/features/public/signup-consent/signup-ticket.ts",
+        "sha256": "68ce379d7b8b38f59aede6f5acdb906cbff122b1d1b3d40a1fd332b48c24215a"
+      }
+    ]
+  },
+  {
+    "repository": "clipper_web_admin",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/web/clipper_web_admin",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "3435f2a36ed69e101e9f8170fdaa40612434562d",
+    "archive": "3435f2a36ed69e101e9f8170fdaa40612434562d",
+    "staged": [],
+    "files": [
+      {
+        "path": "src/app/core/api/catalog-api.service.spec.ts",
+        "sha256": "7cb8c7674eb9cee60eb08852c0dc201b7214ef464e5f3cdbcab9a57ccb21d70e"
+      },
+      {
+        "path": "src/app/core/api/catalog-api.service.ts",
+        "sha256": "565d11f0176ad27311ffde3773de4fc8c3979e573147e1513206d17e2032b968"
+      },
+      {
+        "path": "src/app/core/api/mock/mock-api.interceptor.spec.ts",
+        "sha256": "7c36cc31aea3c78c71449481d58820da8889a1835dab4e45650e05b670cbe517"
+      },
+      {
+        "path": "src/app/core/api/mock/mock-api.interceptor.ts",
+        "sha256": "d7d6cf35e3d982d574f6c5d6e0ff7a8ce36e8150bb3c21470ec98fa4f27f531a"
+      },
+      {
+        "path": "src/app/core/api/mock/mock-data.ts",
+        "sha256": "2e58053f776e3bd6676652e027aee3df628dfa98e1caf8f42e746a5fcf6990e5"
+      },
+      {
+        "path": "src/app/core/api/models.ts",
+        "sha256": "f7e0d27f176c3414698b5b599aed90b46ee08d932dee7e6e10c8109f859be1ff"
+      },
+      {
+        "path": "src/app/core/api/promotions-api.service.ts",
+        "sha256": "6e9264bb1483e963a33b577cafc55f4f01a4ef6a1eb4c05b7287a44337754c41"
+      },
+      {
+        "path": "src/app/features/portal/members/detail/member-detail.component.html",
+        "sha256": "114c19814531c5ed4a506c6dbbf27bd87ce6e135ffdf4d61a85107503c9258b0"
+      },
+      {
+        "path": "src/app/features/portal/members/detail/member-detail.component.spec.ts",
+        "sha256": "401553a1fdd491f9d930d2e6e3a888e5c314d80f9fdfe235f99a902854a3b941"
+      },
+      {
+        "path": "src/app/features/portal/members/detail/member-detail.component.ts",
+        "sha256": "f6bb1598a561f93c06f0fecf4061de3e1dc85d1d826e3e8ce75f36e2f4bcc45a"
+      },
+      {
+        "path": "src/app/features/portal/plans/plans.component.html",
+        "sha256": "f6b14fbc3a36a013df7b941218549058dd4f7884ec1c435a18ffb0ef0c09333b"
+      },
+      {
+        "path": "src/app/features/portal/plans/plans.component.spec.ts",
+        "sha256": "c4494f520ac8599a29deb7f7293a76f15e006440e4f424c922656b745c8291d2"
+      },
+      {
+        "path": "src/app/features/portal/plans/plans.component.ts",
+        "sha256": "b8cdd569d1f9e2d316198900115d9fbd437fe31faab88d2b8759c97848b8b09d"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.html",
+        "sha256": "88f3c510501c4981720f3d11975bd1370fd23636349cc7ab7a7e036a957d298a"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.scss",
+        "sha256": "7915df27d24159b56c1e39e5f1c14b34e90d7cbc58fa5dffd99c7876095af7a5"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.spec.ts",
+        "sha256": "6d7d65f73d9fc2b8105c50a9a92e438331712969326ec4ea4c254b0840a81940"
+      },
+      {
+        "path": "src/app/features/portal/promotions/promotions.component.ts",
+        "sha256": "ffd0ae2863cf782f6c69f6754af0804ba16f9f6426bc6c7c4c6ef49ff861871e"
+      },
+      {
+        "path": "src/app/shared/labels/audit.labels.spec.ts",
+        "sha256": "aabe7158714aecbb79aecf1ab1bfaca87140858dadf214dd0814ec2f7a439ff1"
+      },
+      {
+        "path": "src/app/shared/labels/audit.labels.ts",
+        "sha256": "d913560b61909e5efac9848c1b4dcdcf81cf633ce0a53c2e47a5e05bad3a1862"
+      },
+      {
+        "path": "src/app/shared/labels/member.labels.spec.ts",
+        "sha256": "8436d307e661b6666eec97830801b931442c53b50d190c58157bdd13fbb79509"
+      },
+      {
+        "path": "src/app/shared/labels/member.labels.ts",
+        "sha256": "895f0d9327f6450c63ffccf0b0a949082bda57fd60c89b96eb3a9e1d67b2e145"
+      }
+    ]
+  },
+  {
+    "repository": "clipper_nestjs",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_nestjs",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b",
+    "archive": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b",
+    "staged": [],
+    "files": [
+      {
+        "path": "src/core/auth/license-policy.service.ts",
+        "sha256": "fec6e10b9fabf6fe6a721caabf003733929d2f7ab93c8d46f083f515e8339272"
+      },
+      {
+        "path": "src/core/web-api/web-api-operation-run.service.ts",
+        "sha256": "9d42efba2e967697610e3a874b4337cc26543ea0239a28c3d2f4f82f1cdbc363"
+      },
+      {
+        "path": "src/modules/access/application/access.service.ts",
+        "sha256": "3e9fdb9037463f2c28446570fc591b60f58b3b028c4abc17f359f0ccba9ff265"
+      },
+      {
+        "path": "test/access-credit-proxy.test.js",
+        "sha256": "5b3cb2082eff041fff10a60af2eae51eb4e97c841c4e6906463be4f51ef9d2ec"
+      }
+    ]
+  },
+  {
+    "repository": "clipper_angular",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_angular",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "9dd1550e0b097a78415b6e969b919646d6b032f4",
+    "archive": "9dd1550e0b097a78415b6e969b919646d6b032f4",
+    "staged": [],
+    "files": [
+      {
+        "path": "src/core/errors/error-catalog.spec.ts",
+        "sha256": "e4d07bcd348843d48d909a0de248154ca7cb18206ffacfb3fc7d3c7500e372c6"
+      },
+      {
+        "path": "src/core/errors/error-catalog.ts",
+        "sha256": "3b4f10f8520591cdd9fdb726711efa48fbfe24172f8991ed31086a39d190ba1c"
+      },
+      {
+        "path": "src/core/operations/operation-billing.service.ts",
+        "sha256": "7d2ff7c37414acd5ce84f103e5dca610d01dcbfe6945be502d26bc2c6a4c9bc4"
+      },
+      {
+        "path": "src/shared/operations/operation-charge-guard.service.spec.ts",
+        "sha256": "f426124eee4312d4193de709b74196e31c491a93ebad4734fb7b89093df0ea9d"
+      },
+      {
+        "path": "src/shared/operations/operation-charge-guard.service.ts",
+        "sha256": "13ba7c63e2802f7351ebb14334632c4b86b2698e9c87f74fce5e55143521c8c7"
+      },
+      {
+        "path": "src/shell/account/account-summary.store.spec.ts",
+        "sha256": "30f545c2729b40c8234cedbf6274f6193ba5e8f8291984b7cc345e6aaec5d254"
+      },
+      {
+        "path": "src/shell/account/account-summary.store.ts",
+        "sha256": "e6001518197a5ed630c4fdef35934a175342c98d6e9f93e3e4cc021e9666cc5f"
+      },
+      {
+        "path": "src/shell/settings/settings/settings-account.service.ts",
+        "sha256": "dc38c89453f75d428da71e1ebf4294deac5b3d47742b19086033c6f814fb6f7b"
+      },
+      {
+        "path": "src/shell/store/plugin-card/plugin-card.component.html",
+        "sha256": "c6518f1418caf07cd9b9d199f5fe868047193c1a5b165f80105f5289fb495415"
+      },
+      {
+        "path": "src/shell/store/plugin-card/plugin-card.component.spec.ts",
+        "sha256": "3104cb306b28e9ca554afadcaa62b32e083e6fc4302b0db0405a6d59f84684b9"
+      },
+      {
+        "path": "src/shell/store/plugin-card/plugin-card.component.ts",
+        "sha256": "40e2ef665cee14be279f75d259290fb99350c21a99bf10a31c3ecc9f89c37580"
+      },
+      {
+        "path": "src/shell/store/plugin-detail/plugin-detail.component.html",
+        "sha256": "392bc0983d227b137829cebf3e1f56620e543855c59a7db4c0bf0a63dcaceddb"
+      },
+      {
+        "path": "src/shell/store/plugin-detail/plugin-detail.component.spec.ts",
+        "sha256": "1d101ca1034a4fe3cf05b3757129f576bca1773b558553194bba9c0de9b8e869"
+      },
+      {
+        "path": "src/shell/store/plugin-detail/plugin-detail.component.ts",
+        "sha256": "6402cbffce6cbd3d216df25836c69fa6aa9aef807a4ca2e4c8593032224fc79e"
+      },
+      {
+        "path": "src/shell/store/store/store.component.html",
+        "sha256": "3c8ed95488fa6cdb4db68f7d7e6fe2b8dfdb24466a0b16b31d8289967e653676"
+      },
+      {
+        "path": "src/shell/store/store/store.component.spec.ts",
+        "sha256": "687b9439f16a708607c10476f217a36e7200374c1725acfe6dbedefb494793f6"
+      },
+      {
+        "path": "src/shell/store/store/store.component.ts",
+        "sha256": "a65beda95a9a50b9fa89313daec417cf0f1153ef8e13e1926b5f1e6d310d4bfb"
+      }
+    ]
+  },
+  {
+    "repository": "clipper_electron",
+    "path": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_electron",
+    "branch": "feat/signup-credit-promotion-free-20261102",
+    "head": "99be6e0971c449ac1df1e03bae95c8f0cb61d993",
+    "archive": "99be6e0971c449ac1df1e03bae95c8f0cb61d993",
+    "staged": [],
+    "files": []
+  }
+]

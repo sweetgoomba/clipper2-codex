@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-29 KST",
+  "kind": "read-only-source-and-contract-review",
+  "landingReusesPlanCard": true,
+  "pricingReusesPlanCard": true,
+  "cardStillHasSameFeaturesCopy": true,
+  "catalogExposesPluginKeys": true,
+  "signupCreatedFlagAvailableButDiscarded": true,
+  "desktopLicenseCurrentlyAlwaysAllows": true,
+  "modifiedApiHashesMatchLastVerification": true,
+  "modifiedApiFilesCompared": 6,
+  "productTestsBuildDatabaseNetworkRun": false,
+  "concurrencyRiskRuntimeReproduced": false
+}

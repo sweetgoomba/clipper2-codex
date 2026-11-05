@@ -1,0 +1,62 @@
+{
+  "checked_on": "2026-11-03 KST",
+  "worktree": "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028",
+  "remote_fetch_performed": false,
+  "product_git_mutations_performed": false,
+  "repositories": [
+    {
+      "repository": "web/clipper_web_api",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "64919db3d8b1",
+      "tracked": 87,
+      "untracked": 24,
+      "staged": 0,
+      "archive_ref_present": true
+    },
+    {
+      "repository": "web/clipper_web_admin",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "3435f2a36ed6",
+      "tracked": 32,
+      "untracked": 8,
+      "staged": 0,
+      "archive_ref_present": true
+    },
+    {
+      "repository": "web/clipper_web_client",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "c0719ac8a1f2",
+      "tracked": 53,
+      "untracked": 4,
+      "staged": 0,
+      "archive_ref_present": true
+    },
+    {
+      "repository": "desktop/clipper_angular",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "9dd1550e0b09",
+      "tracked": 17,
+      "untracked": 0,
+      "staged": 0,
+      "archive_ref_present": true
+    },
+    {
+      "repository": "desktop/clipper_nestjs",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "7f57ff1b2e68",
+      "tracked": 4,
+      "untracked": 0,
+      "staged": 0,
+      "archive_ref_present": true
+    },
+    {
+      "repository": "desktop/clipper_electron",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "head": "99be6e0971c4",
+      "tracked": 9,
+      "untracked": 1,
+      "staged": 0,
+      "archive_ref_present": true
+    }
+  ]
+}

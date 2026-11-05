@@ -1,0 +1,34 @@
+
+> clipper-angular@0.0.0 build
+> ng build
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names                              |  Raw size | Estimated transfer size
+main-IRRMLKWT.js    | main                               | 313.74 kB |                64.36 kB
+styles-EDTMW33K.css | styles                             | 117.40 kB |                10.77 kB
+
+                    | Initial total                      | 431.14 kB |                75.12 kB
+
+Lazy chunk files    | Names                              |  Raw size | Estimated transfer size
+chunk-CdtgkTiy.js   | -                                  | 553.51 kB |               113.00 kB
+chunk-Hgt_Swsd.js   | shortform-explainer-page-component | 366.27 kB |                70.95 kB
+chunk-Dt1R68uE.js   | shortform-workflow-page-component  | 246.02 kB |                52.02 kB
+chunk-BqOJEfWo.js   | curation-page-component            | 224.94 kB |                51.44 kB
+chunk-DHNA4jSE2.js  | projects-detail-page-component     | 207.02 kB |                40.17 kB
+chunk-BZP9qcV8.js   | -                                  | 189.54 kB |                55.28 kB
+chunk-DVXv3YeC2.js  | ranking-setup-component            | 169.13 kB |                39.28 kB
+chunk-AcRrWj-1.js   | asset-manager-page-component       | 164.97 kB |                30.41 kB
+chunk-C6sccW7T2.js  | template-builder-page-component    | 158.33 kB |                31.99 kB
+chunk-O9httrv5.js   | -                                  | 126.61 kB |                32.17 kB
+chunk-D4r6IDFT.js   | projects-component                 | 103.65 kB |                24.00 kB
+chunk-Cl1yxoRH2.js  | overseas-dub-page-component        | 102.65 kB |                24.41 kB
+chunk-CxFtv5xk.js   | comment-overlay-setup-component    | 102.17 kB |                23.33 kB
+chunk-CX62DYyH2.js  | -                                  |  75.24 kB |                20.45 kB
+chunk-Dg5QvSNF.js   | v2-variation-list-component        |  70.86 kB |                16.78 kB
+...and 100 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [33.655 seconds] - 2026-11-02T04:46:19.005Z
+
+Output location: /Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/desktop/clipper_angular/dist/clipper_angular
+

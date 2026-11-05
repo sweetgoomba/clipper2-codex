@@ -1,0 +1,49 @@
+{
+  "checkedDate": "2026-10-29 KST",
+  "remoteFetchPerformed": false,
+  "repos": [
+    {
+      "repo": "web/clipper_web_api",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "b2aead8e99270f6a71384668b38b3fa095ddbf6f",
+      "status": [
+        " M src/modules/payments/application/topup-payments.service.spec.ts",
+        " M src/modules/payments/application/topup-payments.service.ts",
+        " M src/modules/payments/domain/payment-failure-message.spec.ts",
+        " M src/modules/payments/domain/payment-failure-message.ts",
+        " M src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts",
+        " M src/modules/payments/presentation/toss-payments-redirect.controller.ts"
+      ]
+    },
+    {
+      "repo": "web/clipper_web_client",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "17e3e07ace8c67352217fc55a11a772f3fe24241",
+      "status": []
+    },
+    {
+      "repo": "web/clipper_web_admin",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "2a4316211a842cdb3a320ce2156c7a6541c43571",
+      "status": []
+    },
+    {
+      "repo": "desktop/clipper_nestjs",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "c296d623d5463351568c5ef654b098710acc0177",
+      "status": []
+    },
+    {
+      "repo": "desktop/clipper_angular",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "23392de036680cabac9c3f6a12630beaa39e4bb8",
+      "status": []
+    },
+    {
+      "repo": "desktop/clipper_electron",
+      "branch": "feat/signup-promotion-plugin-access-20261028",
+      "head": "480a1d538186ec42a1b8eafb9944b0bfe5db7d06",
+      "status": []
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "operationKey": "shortform_director.generate",
+    "pluginKey": "shortform_director",
+    "displayName": "스토리보드 생성",
+    "creditCost": 5,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "shortform_url.create",
+    "pluginKey": "shortform_url",
+    "displayName": "URL 기반 숏폼 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "shortform_paste.create",
+    "pluginKey": "shortform_paste",
+    "displayName": "붙여넣기 숏폼 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "shortform_prompt.create",
+    "pluginKey": "shortform_prompt",
+    "displayName": "프롬프트 숏폼 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "shortform_article.create",
+    "pluginKey": "shortform_article",
+    "displayName": "매체기사 숏폼 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "dialog_highlight.extract",
+    "pluginKey": "dialog_highlight",
+    "displayName": "대사 중심 하이라이트 추출",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": [
+      "openai"
+    ]
+  },
+  {
+    "operationKey": "dance_highlight.extract",
+    "pluginKey": "dance_highlight",
+    "displayName": "안무영상 하이라이트 추출",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "person_highlight.extract",
+    "pluginKey": "person_highlight",
+    "displayName": "인물 하이라이트 추출",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "variation.render",
+    "pluginKey": "variation",
+    "displayName": "베리에이션 영상 생성",
+    "creditCost": 20,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "comment_overlay.create",
+    "pluginKey": "comment_overlay",
+    "displayName": "댓글 오버레이 영상 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "ranking.create",
+    "pluginKey": "ranking",
+    "displayName": "랭킹 영상 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "curation.create",
+    "pluginKey": "curation",
+    "displayName": "상품 큐레이션",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "overseas_dub.create",
+    "pluginKey": "overseas_dub",
+    "displayName": "해외영상 to 숏폼 생성",
+    "creditCost": 50,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": []
+  },
+  {
+    "operationKey": "shortform_explainer.script",
+    "pluginKey": "shortform_explainer",
+    "displayName": "생성형 AI 숏폼 대본",
+    "creditCost": 550,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": [
+      "openai"
+    ]
+  },
+  {
+    "operationKey": "shortform_explainer.visuals",
+    "pluginKey": "shortform_explainer",
+    "displayName": "생성형 AI 숏폼 그림",
+    "creditCost": 120,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": [
+      "openai",
+      "gemini"
+    ]
+  },
+  {
+    "operationKey": "shortform_explainer.video",
+    "pluginKey": "shortform_explainer",
+    "displayName": "생성형 AI 숏폼 영상",
+    "creditCost": 700,
+    "billingStrategy": "charge_then_refund",
+    "providerScopes": [
+      "gemini",
+      "openai"
+    ]
+  }
+]

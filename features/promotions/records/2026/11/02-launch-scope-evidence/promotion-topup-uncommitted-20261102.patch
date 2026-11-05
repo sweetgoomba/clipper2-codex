@@ -1,0 +1,448 @@
+diff --git a/src/modules/payments/application/topup-payments.service.spec.ts b/src/modules/payments/application/topup-payments.service.spec.ts
+index 5207b1ec..42346a00 100644
+--- a/src/modules/payments/application/topup-payments.service.spec.ts
++++ b/src/modules/payments/application/topup-payments.service.spec.ts
+@@ -27,6 +27,9 @@ const CIPHER_KEY = '22'.repeat(32);
+ describe('TopupPaymentsService final one-time checkout and confirmation', () => {
+   beforeAll(() => {
+     jest.useFakeTimers();
++  });
++
++  beforeEach(() => {
+     jest.setSystemTime(NOW);
+   });
+ 
+@@ -167,13 +170,12 @@ describe('TopupPaymentsService final one-time checkout and confirmation', () =>
+     },
+   );
+ 
+-  it('completes a checkout after its formerly active paid subscription has expired', async () => {
++  it('rejects confirmation when the paid subscription that allowed checkout is no longer active', async () => {
+     const context = fixture();
+     const checkout = await context.service.createCheckout(
+       'user-1',
+       'credits-1000',
+     );
+-    const checkoutReadCount = context.subscriptions.reads.length;
+     context.subscriptions.clear();
+     const [order] = context.orders.all();
+     context.provider.confirmResult = payment({
+@@ -182,17 +184,192 @@ describe('TopupPaymentsService final one-time checkout and confirmation', () =>
+       method: '카드',
+     });
+ 
++    await expect(
++      context.service.confirmNormalPayment(
++        checkout.receiptToken,
++        'payment-key-1',
++        order.orderNo,
++        9900,
++      ),
++    ).rejects.toThrow('NO_ACTIVE_ACCESS');
++
++    expect(context.orders.required(order.id).status).toBe('checkout_ready');
++    expect(context.provider.confirmInputs).toEqual([]);
++    expect(context.fulfillment.fulfilledIds).toEqual([]);
++  });
++
++  it('rejects confirmation at the exact end of an otherwise active paid period', async () => {
++    const paid = subscription();
++    const context = fixture({ paidSubscription: paid });
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.provider.confirmResult = payment({
++      orderId: order.orderNo,
++      paymentKey: 'payment-key-1',
++    });
++    jest.setSystemTime(paid.currentPeriodEnd!);
++
++    await expect(
++      context.service.confirmNormalPayment(
++        checkout.receiptToken,
++        'payment-key-1',
++        order.orderNo,
++        order.amountKrw,
++      ),
++    ).rejects.toThrow('NO_ACTIVE_ACCESS');
++
++    expect(context.orders.required(order.id).status).toBe('checkout_ready');
++    expect(context.provider.confirmInputs).toEqual([]);
++    expect(context.fulfillment.fulfilledIds).toEqual([]);
++  });
++
++  it('rejects confirmation after the promotion access that allowed checkout is revoked', async () => {
++    const accessState = {
++      paidSubscription: null,
++      promoRedemptionId: 'redemption-1' as string | null,
++    };
++    const context = fixture(accessState);
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.provider.confirmResult = payment({
++      orderId: order.orderNo,
++      paymentKey: 'payment-key-1',
++    });
++    accessState.promoRedemptionId = null;
++
++    await expect(
++      context.service.confirmNormalPayment(
++        checkout.receiptToken,
++        'payment-key-1',
++        order.orderNo,
++        order.amountKrw,
++      ),
++    ).rejects.toThrow('NO_ACTIVE_ACCESS');
++
++    expect(context.orders.required(order.id).status).toBe('checkout_ready');
++    expect(context.provider.confirmInputs).toEqual([]);
++    expect(context.fulfillment.fulfilledIds).toEqual([]);
++  });
++
++  it('confirms payment while promotion access is still active', async () => {
++    const context = fixture({
++      paidSubscription: null,
++      promoRedemptionId: 'redemption-1',
++    });
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.provider.confirmResult = payment({
++      orderId: order.orderNo,
++      paymentKey: 'payment-key-1',
++    });
++
+     const result = await context.service.confirmNormalPayment(
+       checkout.receiptToken,
+       'payment-key-1',
+       order.orderNo,
+-      9900,
++      order.amountKrw,
++    );
++
++    expect(result).toMatchObject({
++      status: 'paid',
++      promotionRedemptionId: 'redemption-1',
++    });
++    expect(context.fulfillment.fulfilledIds).toEqual([order.id]);
++  });
++
++  it('keeps an already paid callback idempotent after purchase access ends', async () => {
++    const context = fixture();
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.provider.confirmResult = payment({
++      orderId: order.orderNo,
++      paymentKey: 'payment-key-1',
++    });
++    await context.service.confirmNormalPayment(
++      checkout.receiptToken,
++      'payment-key-1',
++      order.orderNo,
++      order.amountKrw,
++    );
++    context.subscriptions.clear();
++
++    const result = await context.service.confirmNormalPayment(
++      checkout.receiptToken,
++      'payment-key-1',
++      order.orderNo,
++      order.amountKrw,
+     );
+ 
+     expect(result.status).toBe('paid');
+-    expect(context.orders.required(order.id).status).toBe('paid');
++    expect(context.provider.confirmInputs).toHaveLength(1);
+     expect(context.fulfillment.fulfilledIds).toEqual([order.id]);
+-    expect(context.subscriptions.reads).toHaveLength(checkoutReadCount);
++  });
++
++  it('recovers an in-flight confirmation after purchase access ends using the original payment idempotency key', async () => {
++    const context = fixture();
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.orders.patch(order.id, { status: 'payment_pending' });
++    context.subscriptions.clear();
++    context.provider.confirmResult = payment({
++      orderId: order.orderNo,
++      paymentKey: 'payment-key-1',
++    });
++
++    const result = await context.service.confirmNormalPayment(
++      checkout.receiptToken,
++      'payment-key-1',
++      order.orderNo,
++      order.amountKrw,
++    );
++
++    expect(result.status).toBe('paid');
++    expect(context.provider.confirmInputs).toEqual([
++      {
++        paymentKey: 'payment-key-1',
++        orderId: order.orderNo,
++        amount: order.amountKrw,
++        idempotencyKey: order.confirmationIdempotencyKey,
++      },
++    ]);
++    expect(context.fulfillment.fulfilledIds).toEqual([order.id]);
++  });
++
++  it('reconciles an uncertain confirmation after purchase access ends without approving again', async () => {
++    const context = fixture();
++    const checkout = await context.service.createCheckout(
++      'user-1',
++      'credits-1000',
++    );
++    const [order] = context.orders.all();
++    context.orders.patch(order.id, { status: 'reconciliation_required' });
++    context.subscriptions.clear();
++
++    const result = await context.service.confirmNormalPayment(
++      checkout.receiptToken,
++      'payment-key-1',
++      order.orderNo,
++      order.amountKrw,
++    );
++
++    expect(result.status).toBe('reconciliation_required');
++    expect(context.reconciliation.orderIds).toEqual([order.id]);
++    expect(context.provider.confirmInputs).toEqual([]);
+   });
+ 
+   it.each([
+diff --git a/src/modules/payments/application/topup-payments.service.ts b/src/modules/payments/application/topup-payments.service.ts
+index 74be5dff..21e2caa6 100644
+--- a/src/modules/payments/application/topup-payments.service.ts
++++ b/src/modules/payments/application/topup-payments.service.ts
+@@ -5,6 +5,7 @@ import {
+   Injectable,
+   NotFoundException,
+ } from '@nestjs/common';
++import type { EntityManager } from 'typeorm';
+ import { AdminTransactionRunner } from '../../../core/database/admin-transaction.runner.js';
+ import { SecretCipher } from '../../../shared/crypto/secret-cipher.js';
+ import { ProductCatalogService } from '../../catalog/application/product-catalog.service.js';
+@@ -66,30 +67,51 @@ export class TopupPaymentsService {
+   ): Promise<CheckoutSession> {
+     const ids = this.checkoutIds();
+     await this.transactions.run(async (manager) => {
+-      const subscriptions = this.subscriptions.bind(manager);
+       const catalog = this.catalog.bind(manager);
+       const orders = this.orders.bind(manager);
+-      const open = await subscriptions.findOpenByUserId(userId);
+-      if (open) {
+-        const paid = await subscriptions.withSubscriptionLock(open.id, async (locked) => {
++      const promotionRedemptionId = await this.requirePurchaseAccess(
++        userId,
++        manager,
++      );
++      await this.createTopupOrder(
++        catalog,
++        orders,
++        userId,
++        creditProductCode,
++        ids,
++        promotionRedemptionId,
++      );
++    });
++    return this.checkoutSessions.get(userId, ids.receiptToken);
++  }
++
++  private async requirePurchaseAccess(
++    userId: string,
++    manager: EntityManager,
++  ): Promise<string | null> {
++    // These transaction-scoped locks also cover the subsequent order update.
++    const subscriptions = this.subscriptions.bind(manager);
++    const open = await subscriptions.findOpenByUserId(userId);
++    if (open) {
++      const paid = await subscriptions.withSubscriptionLock(
++        open.id,
++        async (locked) => {
+           const current = await locked.findById(open.id);
+-          if (!this.hasActivePaidPeriod(current, userId, new Date())) return false;
+-          await this.createTopupOrder(catalog, orders, userId, creditProductCode, ids, null);
+-          return true;
+-        });
+-        if (paid) return;
+-      }
++          return this.hasActivePaidPeriod(current, userId, new Date());
++        },
++      );
++      if (paid) return null;
++    }
+ 
+-      // The member lock also serializes checkout with promotion revocation.
+-      await this.access.bind(manager).withUserLock(userId, async (lockedAccess) => {
++    return this.access
++      .bind(manager)
++      .withUserLock(userId, async (lockedAccess) => {
+         const grant = await lockedAccess.findEffectiveForUser(userId, new Date());
+         if (grant?.source !== 'promotion' || !grant.promotionRedemptionId) {
+           throw new BadRequestException('NO_ACTIVE_ACCESS');
+         }
+-        await this.createTopupOrder(catalog, orders, userId, creditProductCode, ids, grant.promotionRedemptionId);
++        return grant.promotionRedemptionId;
+       });
+-    });
+-    return this.checkoutSessions.get(userId, ids.receiptToken);
+   }
+ 
+   private async createTopupOrder(
+@@ -213,6 +235,8 @@ export class TopupPaymentsService {
+         throw new BadRequestException('payment callback does not match');
+       }
+       if (order.status !== 'checkout_ready') return order;
++      if (!order.userId) throw new BadRequestException('NO_ACTIVE_ACCESS');
++      await this.requirePurchaseAccess(order.userId, manager);
+       if (!(await orders.tryBeginConfirmation(order.id))) {
+         return (await orders.findById(order.id)) ?? order;
+       }
+diff --git a/src/modules/payments/domain/payment-failure-message.spec.ts b/src/modules/payments/domain/payment-failure-message.spec.ts
+index 76ba3fc9..c8455e51 100644
+--- a/src/modules/payments/domain/payment-failure-message.spec.ts
++++ b/src/modules/payments/domain/payment-failure-message.spec.ts
+@@ -5,6 +5,14 @@ describe('paymentFailureMessage', () => {
+   it('explains the persisted unsupported-card error', () => {
+     expect(paymentFailureMessage(failed)).toContain('지원되지 않는 카드 종류');
+   });
++  it('explains a top-up rejected before approval because purchase access ended', () => {
++    expect(
++      paymentFailureMessage({ ...failed, errorCode: 'NO_ACTIVE_ACCESS' }),
++    ).toBe(
++      '현재 이용 중인 유료·프로모션 이용권이 없어 추가 크레딧 결제를 진행하지 않았습니다.',
++    );
++  });
++
+   it('never exposes unknown provider payloads', () => {
+     expect(paymentFailureMessage({ ...failed, errorCode: 'secret=user@example.com' })).toBe('결제를 완료하지 못했습니다. 문제가 계속되면 주문번호와 함께 고객 지원에 문의해 주세요.');
+     expect(safePaymentErrorCode('secret=user@example.com')).toBeNull();
+diff --git a/src/modules/payments/domain/payment-failure-message.ts b/src/modules/payments/domain/payment-failure-message.ts
+index 00b644d9..ada3e618 100644
+--- a/src/modules/payments/domain/payment-failure-message.ts
++++ b/src/modules/payments/domain/payment-failure-message.ts
+@@ -2,6 +2,7 @@ import type { PaymentOrder } from './payment.model.js';
+ 
+ // Only curated text is public. Never echo a provider error message or payload.
+ const MESSAGES: Readonly<Record<string, string>> = {
++  NO_ACTIVE_ACCESS: '현재 이용 중인 유료·프로모션 이용권이 없어 추가 크레딧 결제를 진행하지 않았습니다.',
+   INVALID_CARD_NUMBER: '입력한 카드번호를 확인해 주세요.',
+   INVALID_CARD_EXPIRATION: '입력한 카드 유효기간을 확인해 주세요.',
+   INVALID_CARD_PASSWORD: '입력한 카드 비밀번호를 확인해 주세요.',
+diff --git a/src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts b/src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts
+index 4b8c076f..02f0cd6a 100644
+--- a/src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts
++++ b/src/modules/payments/presentation/toss-payments-redirect.controller.spec.ts
+@@ -332,6 +332,57 @@ describe('TossPaymentsRedirectController', () => {
+     );
+   });
+ 
++  it('sends a rejected top-up purchase to the existing payment result page', async () => {
++    const state = fixture({ order: paymentOrder() });
++    const res = response();
++    state.normal.confirmNormalPayment.mockRejectedValueOnce(
++      new BadRequestException('NO_ACTIVE_ACCESS'),
++    );
++
++    await state.controller.normalSuccess(
++      {
++        receipt: RECEIPT,
++        paymentKey: 'payment-key-1',
++        orderId: 'topup_1234567890',
++        amount: 27_900,
++      },
++      res as never,
++    );
++
++    expect(state.scopedOrders.tryMarkPreCheckoutFailed).toHaveBeenCalledWith(
++      ORDER_ID,
++      'NO_ACTIVE_ACCESS',
++      '결제를 완료하지 못했습니다.',
++    );
++    expect(res.redirect).toHaveBeenCalledWith(
++      302,
++      `https://web.example/my/payment/result?receipt=${RECEIPT}`,
++    );
++  });
++
++  it('preserves a mismatched normal payment callback error without marking the order failed', async () => {
++    const state = fixture({ order: paymentOrder() });
++    const res = response();
++    state.normal.confirmNormalPayment.mockRejectedValueOnce(
++      new BadRequestException('payment callback does not match'),
++    );
++
++    await expect(
++      state.controller.normalSuccess(
++        {
++          receipt: RECEIPT,
++          paymentKey: 'payment-key-1',
++          orderId: 'topup_1234567890',
++          amount: 27_900,
++        },
++        res as never,
++      ),
++    ).rejects.toThrow('payment callback does not match');
++
++    expect(state.scopedOrders.tryMarkPreCheckoutFailed).not.toHaveBeenCalled();
++    expect(res.redirect).not.toHaveBeenCalled();
++  });
++
+   it('redirects persisted provider uncertainty but preserves bounded 400 errors', async () => {
+     const uncertain = fixture();
+     uncertain.billing.completeAuthorization.mockRejectedValueOnce(
+diff --git a/src/modules/payments/presentation/toss-payments-redirect.controller.ts b/src/modules/payments/presentation/toss-payments-redirect.controller.ts
+index fbceb26d..27fe5b2c 100644
+--- a/src/modules/payments/presentation/toss-payments-redirect.controller.ts
++++ b/src/modules/payments/presentation/toss-payments-redirect.controller.ts
+@@ -71,12 +71,31 @@ export class TossPaymentsRedirectController {
+     @Res() response: Response,
+   ): Promise<void> {
+     const destination = this.resultUrl(query.receipt);
+-    await this.normalPayments.confirmNormalPayment(
+-      query.receipt,
+-      query.paymentKey,
+-      query.orderId,
+-      query.amount,
+-    );
++    try {
++      await this.normalPayments.confirmNormalPayment(
++        query.receipt,
++        query.paymentKey,
++        query.orderId,
++        query.amount,
++      );
++    } catch (error) {
++      if (
++        !(error instanceof BadRequestException) ||
++        error.message !== 'NO_ACTIVE_ACCESS'
++      ) {
++        throw error;
++      }
++      await this.fail(
++        {
++          receipt: query.receipt,
++          orderId: query.orderId,
++          code: 'NO_ACTIVE_ACCESS',
++          message: GENERIC_PAYMENT_FAILURE,
++        },
++        response,
++      );
++      return;
++    }
+     response.redirect(HttpStatus.FOUND, destination);
+   }
+ 

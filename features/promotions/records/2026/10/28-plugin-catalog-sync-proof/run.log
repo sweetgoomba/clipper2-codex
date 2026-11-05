@@ -1,0 +1,12 @@
+PASS actual app source exports 14 public plugin registrations
+PASS unauthorized upload is rejected without inserting rows
+PASS real HTTP upload creates 14 pending rows and zero store entries
+PASS parallel repeated uploads do not duplicate plugin IDs
+PASS invalid digest and duplicate IDs are rejected before DB writes
+PASS sync credentials cannot publish and missing configuration blocks publication
+PASS admin configuration and publication expose only the configured plugin
+PASS resync preserves operator publication, name, category and allowed targets
+PASS adding a registration in source fixtures discovers exactly one new pending plugin
+PASS missing source metadata fails extraction instead of silently exporting an incomplete list
+PASS server and DB client restart retain discovery and operator settings
+{"passed":11,"temporaryPostgresStopped":true,"productSourcesUnchanged":true,"evidence":"/private/tmp/plugin-catalog-sync-proof-evidence/result.json"}

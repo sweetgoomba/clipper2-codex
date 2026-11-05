@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "revision": "synthetic-source-registration-fixture",
+    "configSha256": "3463c6ac83c10f6aa2678116b80dd377018da3bd5363b1d93031d4cef6dcd7ef",
+    "metadataSha256": "e5d9f6f024bc86b99b8e8c10dde8f2fe67d07baf81938456f59f218321e1e703"
+  },
+  "plugins": [
+    {
+      "pluginKey": "comment_overlay",
+      "defaultName": "댓글 오버레이",
+      "route": "comment-overlay",
+      "icon": "chat"
+    },
+    {
+      "pluginKey": "curation",
+      "defaultName": "상품 큐레이션",
+      "route": "curation",
+      "icon": "shopping_bag"
+    },
+    {
+      "pluginKey": "dance_highlight",
+      "defaultName": "안무 하이라이트",
+      "route": "dance",
+      "icon": "taunt"
+    },
+    {
+      "pluginKey": "dialog_highlight",
+      "defaultName": "대사 하이라이트",
+      "route": "dialog",
+      "icon": "format_quote"
+    },
+    {
+      "pluginKey": "overseas_dub",
+      "defaultName": "해외영상 to 숏폼",
+      "route": "overseas-dub",
+      "icon": "translate"
+    },
+    {
+      "pluginKey": "person_highlight",
+      "defaultName": "인물 하이라이트",
+      "route": "person",
+      "icon": "groups"
+    },
+    {
+      "pluginKey": "proof_new_plugin",
+      "defaultName": "실험용 새 등록",
+      "route": "proof/new",
+      "icon": "science"
+    },
+    {
+      "pluginKey": "ranking",
+      "defaultName": "영상 랭킹",
+      "route": "ranking",
+      "icon": "trophy"
+    },
+    {
+      "pluginKey": "shortform_article",
+      "defaultName": "매체기사 to 숏폼",
+      "route": "shortform/article",
+      "icon": "newspaper"
+    },
+    {
+      "pluginKey": "shortform_director",
+      "defaultName": "스토리보드",
+      "route": "shortform/director",
+      "icon": "view_carousel"
+    },
+    {
+      "pluginKey": "shortform_explainer",
+      "defaultName": "설명 to 숏폼",
+      "route": "shortform/explainer",
+      "icon": "auto_awesome"
+    },
+    {
+      "pluginKey": "shortform_paste",
+      "defaultName": "텍스트 to 숏폼",
+      "route": "shortform/paste",
+      "icon": "article"
+    },
+    {
+      "pluginKey": "shortform_prompt",
+      "defaultName": "프롬프트 to 숏폼",
+      "route": "shortform/prompt",
+      "icon": "lightbulb"
+    },
+    {
+      "pluginKey": "shortform_url",
+      "defaultName": "블로그 to 숏폼",
+      "route": "shortform/url",
+      "icon": "link"
+    },
+    {
+      "pluginKey": "variation",
+      "defaultName": "1N : 숏폼 베리에이션",
+      "route": "variation",
+      "icon": "dynamic_feed"
+    }
+  ],
+  "digest": "b97271e8cc2a643f01712c0c02ceb70087b8a5c82cb7890c6976191444c470cb"
+}

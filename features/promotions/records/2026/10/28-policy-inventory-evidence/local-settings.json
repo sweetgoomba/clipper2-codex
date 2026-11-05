@@ -1,0 +1,153 @@
+{
+  "checkedAt": "2026-10-28T11:15:06.525Z",
+  "environment": "local",
+  "readOnly": true,
+  "freeTrial": [
+    {
+      "initial_credits": 400,
+      "validity_days": 30,
+      "is_enabled": true,
+      "tier_code": "trial"
+    }
+  ],
+  "renewal": [
+    {
+      "grace_period_days": 3,
+      "retry_days": [
+        1,
+        2
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "code": "trial",
+      "name": "Trial",
+      "monthly_credits": 0,
+      "monthly_credit_validity_days": null,
+      "entitlement_mode": "all",
+      "upgrade_rank": 0,
+      "is_active": true
+    },
+    {
+      "code": "basic",
+      "name": "Basic",
+      "monthly_credits": 400,
+      "monthly_credit_validity_days": null,
+      "entitlement_mode": "all",
+      "upgrade_rank": 10,
+      "is_active": true
+    },
+    {
+      "code": "pro",
+      "name": "Pro",
+      "monthly_credits": 1000,
+      "monthly_credit_validity_days": null,
+      "entitlement_mode": "all",
+      "upgrade_rank": 20,
+      "is_active": true
+    },
+    {
+      "code": "business",
+      "name": "Business",
+      "monthly_credits": 4000,
+      "monthly_credit_validity_days": null,
+      "entitlement_mode": "all",
+      "upgrade_rank": 30,
+      "is_active": true
+    }
+  ],
+  "operationPolicies": [
+    {
+      "operation_key": "comment_overlay.create",
+      "plugin_key": "comment_overlay",
+      "display_name": "댓글 오버레이 영상 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "curation.create",
+      "plugin_key": "curation",
+      "display_name": "상품 큐레이션",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "dance_highlight.extract",
+      "plugin_key": "dance_highlight",
+      "display_name": "안무영상 하이라이트 추출",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "dialog_highlight.extract",
+      "plugin_key": "dialog_highlight",
+      "display_name": "대사 중심 하이라이트 추출",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "overseas_dub.create",
+      "plugin_key": "overseas_dub",
+      "display_name": "해외 영상 to 숏폼 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "person_highlight.extract",
+      "plugin_key": "person_highlight",
+      "display_name": "인물 하이라이트 추출",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "ranking.create",
+      "plugin_key": "ranking",
+      "display_name": "랭킹 영상 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "shortform_article.create",
+      "plugin_key": "shortform_article",
+      "display_name": "매체기사 숏폼 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "shortform_director.generate",
+      "plugin_key": "shortform_director",
+      "display_name": "스토리보드 생성",
+      "credit_cost": 5,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "shortform_paste.create",
+      "plugin_key": "shortform_paste",
+      "display_name": "붙여넣기 숏폼 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "shortform_prompt.create",
+      "plugin_key": "shortform_prompt",
+      "display_name": "프롬프트 숏폼 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "shortform_url.create",
+      "plugin_key": "shortform_url",
+      "display_name": "URL 기반 숏폼 생성",
+      "credit_cost": 50,
+      "billing_strategy": "charge_then_refund"
+    },
+    {
+      "operation_key": "variation.render",
+      "plugin_key": "variation",
+      "display_name": "베리에이션 영상 생성",
+      "credit_cost": 20,
+      "billing_strategy": "charge_then_refund"
+    }
+  ]
+}
