@@ -1,0 +1,317 @@
+[
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "scripts/assert-no-packaged-secrets.mjs",
+    "sha256": "dc5018191a56c7dc3a8b5730d9a034ab9b96b30ae5dc77fb307111dced31ff23"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "scripts/build-runtime-config.mjs",
+    "sha256": "d125ed6baffa3a5a5de4ebecc866a49d91cf1503ee9bb601bcb9ffa2a2e51383"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "src/main/auth/auth-ipc.ts",
+    "sha256": "7f3514a7cf1ac2696b49c06a3af0ff9f331b8bfccad33a8e3d72291b6a1520ad"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "src/main/auth/deeplink.ts",
+    "sha256": "c1bd63b448141768528bbf17a6435cfdb88f99807915b04705ef95bc3d97bb85"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "src/main/config/packaged-runtime-config.ts",
+    "sha256": "7660dc643caf08c7a73e9ff1703e041bc22d99f7a2483338406099830f93dd2e"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "src/main/config/production-identity.ts",
+    "sha256": "dc64f706c40be26330c64fe90115275c1074ca4dd488af1acd7bfe4151db93b0"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "src/main/main.ts",
+    "sha256": "ba16091e4295a40524b862ad7d87abe1be17191aacdb1db50b9f1a1b07721964"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "test/local-runtime-profile.test.mjs",
+    "sha256": "c451b1cc4b3cce3f77dac328997533f6171b251f80f4c5f51817cb77af39b8fc"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "test/main-boot-order-boundary.test.js",
+    "sha256": "24668998adbf22ba28431188328b8fc962d8fa4127a4a6277183f3fb4c4eb434"
+  },
+  {
+    "repository": "desktop/clipper_electron",
+    "path": "test/packaged-secret-scan.test.js",
+    "sha256": "967c8fa2607666389ef3f85c32752813bddec339f71a90fca849ff27c98a330d"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/access-api.service.spec.ts",
+    "sha256": "4b43fd8e90520aae755cf0f2aa418f925795f35c0ed7d3d701c42ce8e9ac2f3a"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/auth-api.service.spec.ts",
+    "sha256": "6afbbdad73db30d2f14cc546a3a6321d566da9f4fb73fad2ba4eb1c69869312f"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/catalog-api.service.spec.ts",
+    "sha256": "668cb79433c4774b1cd45d286ec38118ec39cacca477931ff1c8df7425d36f0e"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/mock/mock-api.interceptor.spec.ts",
+    "sha256": "c4306faad3c3d761d5dae6d175af52f03ca91c5cf59d3cbd6905e2198c6f551b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/mock/mock-data.ts",
+    "sha256": "7d08df0f2a02d18744e4b850283b4efbe44c00beb030fba752272dcfa43f9b66"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/models.ts",
+    "sha256": "ca3077e1c98960076593b215d46f6d2103810d4176a0cc861d9952198d7e7beb"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/payments-api.service.spec.ts",
+    "sha256": "0740c37bb9363427346509f98366ee474de26f666a7efb412bdf9f038904cd5b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/payments-api.service.ts",
+    "sha256": "9666490166a70e98db4832b0ae4382f66820864de1a00ff2110c1ce1605e1ccc"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/core/api/promotions-api.service.ts",
+    "sha256": "c486c3ad2bffe524f1863fcf5dd6c4e074b067bb61a1a1f30001029f35c7bbac"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/dashboard/dashboard.component.html",
+    "sha256": "fc7d03422aed2644da76231b1ec0572c7df46ce62f2ea2d0f74dd0c3acbb8879"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/dashboard/dashboard.component.spec.ts",
+    "sha256": "2649b39911c66bca136fd336690183ddf32380a7f0c26623162a069539ed9d66"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/dashboard/dashboard.component.ts",
+    "sha256": "d31db5ca6799fd4838e01a0231953b56fb4f87f7cbde8fbfe9edb334b327385b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-checkout/payment-checkout.component.html",
+    "sha256": "796c8ea082e32c17b9acc46a1500b7df3fb23860f4859a0038c063c613663287"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-checkout/payment-checkout.component.spec.ts",
+    "sha256": "6a749e3f51b8c51595b2d265d7e9e574508654bf868bc507296a5da815fe3bb5"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-checkout/payment-checkout.component.ts",
+    "sha256": "1d1931597c1f0c075a41ad11238ace4caf7a3802ad39178e6a09dcba0d585e20"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-result/payment-result.component.html",
+    "sha256": "3787b6ddc673ee0c41b4fa42222bce002d036a46f1817d510eb5d42c742341c2"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-result/payment-result.component.spec.ts",
+    "sha256": "e45d3c044716da4a870edc70d3ca046bfd9cc73b4545bedb7c720ede5dee64cd"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/payment-result/payment-result.component.ts",
+    "sha256": "d81377aba97fc8164237f428ac03dd7d764e63cc998b3ada10243dee1dbe86f7"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.html",
+    "sha256": "5e35176adfd4eedd9fb21588564ee6bf7d661c808dc90b80725e317e78b7694e"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.spec.ts",
+    "sha256": "e89d5170155c92c88c216e8efd42cd41c5a7d61769e99059a2646e7ad324e3b6"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotion-benefit-dialog.component.ts",
+    "sha256": "264bf6254cb6c4135c92e74bfcfbca0210da30e2be656f3b121a28eee4fdb1f7"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotions.component.html",
+    "sha256": "7566f2010ba0f8ed6a91414d6d4127ed0c072012238a64a1c163ffa334d2c214"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotions.component.scss",
+    "sha256": "1fc131a363879e85b3ea53281848af15f61a8fd05db5c1b0582f091446a817ae"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotions.component.spec.ts",
+    "sha256": "c251466aff6b338b88f2b01743e026cfe9a635560491762e93b134f961b390b6"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/promotions/promotions.component.ts",
+    "sha256": "5a8c7a8fca7c91c0d9b927ee3a633d91115ebc2057221e03b345f04a4eff001b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/topup/topup.component.html",
+    "sha256": "7dacd3014600a04bf6934ffd2e5277aa951c15133ca4b04aa8f008c8902d7038"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/portal/topup/topup.component.spec.ts",
+    "sha256": "9eb2352b952a10920fb001de34eb1228a7cc381dcedf10e15305cf93a24bcf52"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/auth-callback/auth-callback.component.spec.ts",
+    "sha256": "90a5cebb906010e872b6c6da7a198b8da44fabe47c898a017324f876561e1d20"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.html",
+    "sha256": "6e18e21f1879001c85c725f593b0b5186d040014371bef204bd8dd27701f2c82"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.scss",
+    "sha256": "47cebf025362a63d207f1701f39b3b83199f90d39fda19062e1f96e613ba333e"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.spec.ts",
+    "sha256": "3d9ae0bac1f5a2d92ac0ec606967b98c5cd4b4cd12f9acfb87b6f6692374fb2b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/landing/sections/pricing-section/pricing-section.component.ts",
+    "sha256": "8dcb2b06eacc0d11cac84b4c04d1766f601a7aa537b6db35d16ad79a77dabca7"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/plan-card/plan-card.component.html",
+    "sha256": "7cb4e4c453546eaa73b9fc31e06bb882d259d7e8404fdd1cd71aeb8fcddad15f"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/plan-card/plan-card.component.scss",
+    "sha256": "61a4c25a2a8bcc0031a236456b095582473e1a2a978f8d2cf1e36a4b4f3e45f8"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/plan-card/plan-card.component.spec.ts",
+    "sha256": "f9fa9db206f752ce6bbec3e306d7bf6b619154c1860fd87f763a48ed42ebd17a"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/plan-card/plan-card.component.ts",
+    "sha256": "4e891439318497e6228bb25d1b8d84df59519eb5360d3a5686978daef4850707"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-catalog.component.html",
+    "sha256": "4c75890b8bcc31f3612b161c7cee8c986517a071917bbc0fe2eecb38f021afc3"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-catalog.component.scss",
+    "sha256": "58ab27f201bb61f2ac78b782b922fcc647c019764e581c64768082e4e36b636e"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-catalog.component.ts",
+    "sha256": "181cf58c2717a0a934546bb3454b598026740077564eb3bf31e17fc9a02a1b2d"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-checkout.service.ts",
+    "sha256": "c618717554eb6a910a86556c0c6535ae9e4950089513d2f0bbd9ef1aa8945b6b"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-contract.spec.ts",
+    "sha256": "fb55040bd0724e6f50d38a1b477bfa633e41cb90845bbbb96030ba650bc5f5de"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-format.spec.ts",
+    "sha256": "d019952f356f37ee4d549c6cada70af559de98096024c0d72f7d54c791394d13"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing-format.ts",
+    "sha256": "a59b543cdf5a4bc02b1d945a87005b8f89121188504ec5de7e4b622e4c246f33"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing.component.html",
+    "sha256": "b44c5c42a96cae827b2b3b6e76b41fd79d427b905aab6eb86e6c813ee96664b4"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing.component.scss",
+    "sha256": "60e676ca2179ea384483052694d7e6bf378bcd5065d225d3b99b326d71fcc3e5"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing.component.spec.ts",
+    "sha256": "a155547b1be6aa53d76b997d0a822ac687cd6c687fd5f2852febe4f64a8c2a1f"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/pricing/pricing.component.ts",
+    "sha256": "6ca58ad4721bf8ee1fa9af642afa623bb8f98f1906efb575b9b251e3272603a7"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-consent.component.html",
+    "sha256": "7ce28afd3a92f3e11d7882ef0eaf29aeef31a7a752c2a2d9054921d7b1840e14"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-consent.component.scss",
+    "sha256": "dfad8dfc1d2dda908f2e0d7b64aa1929469a04d96cc03577dabc7338f611beb0"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-consent.component.spec.ts",
+    "sha256": "a89b17cbc71fefdb5f8bd2ec24884f3761be8f6c497f119dc59f86bd7c2038af"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-consent.component.ts",
+    "sha256": "d62d4ee5652d9823f57790477b664c18dc4e55ab373b3350088cca70d9c3115e"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-ticket.spec.ts",
+    "sha256": "ca43ef200b36da5297258ef627c5e291a0510bc6b175c170b949547a39059f53"
+  },
+  {
+    "repository": "web/clipper_web_client",
+    "path": "src/app/features/public/signup-consent/signup-ticket.ts",
+    "sha256": "68ce379d7b8b38f59aede6f5acdb906cbff122b1d1b3d40a1fd332b48c24215a"
+  }
+]

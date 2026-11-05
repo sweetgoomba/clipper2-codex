@@ -1,5 +1,10 @@
 # Environment And Runtime
 
+## 프로모션 브랜치 전용 로컬 환경 (2026-11-02)
+
+[실행 주소·빈 DB·독립 앱·관리자 계정·시작/종료](records/2026/11/02-promotion-branch-isolated-local-runtime.md). API4340·Client4241·Admin4242·DB15438과 전용 local-api 앱이 실행 중이다. 다른 작업의3000/4202/기존 개발 앱/DB는 유지했다. 테스트 중인 환경을 임의 종료/초기화하지 않는다.
+
+
 Execution mode, env file ownership, and runtime process boundaries are tracked here.
 
 ## Current Rules

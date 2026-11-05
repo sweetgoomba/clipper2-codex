@@ -1,0 +1,12 @@
+✔ concurrent checks share one run (1.488625ms)
+✔ a newer active update is compared against the pointer, not the base venv (1.558791ms)
+✔ old update folders are pruned, keeping the active and the previous one (3.686667ms)
+✔ a pointer to a folder without the completion marker is ignored (0.411625ms)
+ℹ tests 1913
+ℹ suites 3
+ℹ pass 1913
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33660.763208

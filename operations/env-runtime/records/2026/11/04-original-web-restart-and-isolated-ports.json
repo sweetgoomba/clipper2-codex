@@ -1,0 +1,67 @@
+{
+  "restart": {
+    "started_at": "2026-11-04T03:47:00.143787+09:00",
+    "stopped": [
+      {
+        "port": 4202,
+        "pid": 17622
+      }
+    ],
+    "started": [
+      {
+        "port": 4201,
+        "cwd": "/Users/jina/project/adlight/web/clipper_web_client",
+        "npm_pid": 97993,
+        "log": "/tmp/adlight-original-web-20261104/client.log",
+        "command": "npm start"
+      },
+      {
+        "port": 4202,
+        "cwd": "/Users/jina/project/adlight/web/clipper_web_admin",
+        "npm_pid": 97994,
+        "log": "/tmp/adlight-original-web-20261104/admin.log",
+        "command": "npm start"
+      }
+    ]
+  },
+  "verification": {
+    "checked_at": "2026-11-04T03:47:17.620751+09:00",
+    "endpoints": [
+      {
+        "url": "http://localhost:4201/",
+        "http_status": 200
+      },
+      {
+        "url": "http://localhost:4202/",
+        "http_status": 200
+      },
+      {
+        "url": "http://127.0.0.1:4241/",
+        "http_status": 200
+      },
+      {
+        "url": "http://127.0.0.1:4242/",
+        "http_status": 200
+      },
+      {
+        "url": "http://127.0.0.1:4340/health",
+        "http_status": 200,
+        "response": {
+          "status": "ok",
+          "service": "clipper_web_api",
+          "db": {
+            "user": "ok",
+            "release": "ok",
+            "admin": "ok"
+          }
+        }
+      }
+    ],
+    "isolated_web_process": {
+      "pid": 60587,
+      "server_script": [
+        "/Users/jina/project/adlight/.worktrees/signup-promotion-plugin-access-20261028/.local-runtime/promotion-signup-20261102/serve-web.py"
+      ]
+    }
+  }
+}

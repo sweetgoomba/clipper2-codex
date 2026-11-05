@@ -1,0 +1,114 @@
+{
+  "schema_audit": {
+    "checked_at": "2026-11-03T18:59:53.020Z",
+    "mode": "read-only",
+    "env_file": ".env",
+    "databases": [
+      {
+        "name": "user",
+        "host": "localhost",
+        "port": 5435,
+        "database": "clipper_user",
+        "executed_count": 11,
+        "registered_count": 13,
+        "pending": [
+          "AddSignupBenefitIntent1793577600000",
+          "AddOnboardingClaimGeneration1793664000000"
+        ],
+        "columns": {
+          "user_onboarding_jobs.claim_generation": false
+        },
+        "tables": {}
+      },
+      {
+        "name": "admin",
+        "host": "localhost",
+        "port": 5433,
+        "database": "clipper_admin",
+        "executed_count": 88,
+        "registered_count": 115,
+        "pending": [
+          "AllowRateLimitedProviderEvidence1792520000000",
+          "AddShortformExplainerEntitlement1792530000000",
+          "AllowGeminiOnExplainerVisualsPolicy1792540000000",
+          "AllowOpenaiOnExplainerVideoPolicy1792550000000",
+          "RenameOverseasDubOperationDisplayName1793150000000",
+          "AllowAppNewsBannerWithoutText1793200000000",
+          "RenameExplainerOperationDisplayNames1793250000000",
+          "AllowSignatureGroupAuditTarget1793300000000",
+          "CreateModuleQualityRuns1793350000000",
+          "ExtendAdminAuditLogsForHistory1793400000000",
+          "NormalizeDefaultMediaNamesToNfc1793450000000",
+          "AddSignupCreditPromotions1793577600000",
+          "PersistentFreeTier1793577700000",
+          "CampaignParticipationConditions1793577800000",
+          "AllowOpenEndedPromotionCampaigns1793577900000",
+          "CatalogPluginSettings1793664100000",
+          "UpdatePlanCatalogPrices1793664200000",
+          "AddCustomerRefundRequests1793664300000",
+          "TrackProviderCancellations1793664400000",
+          "TrackRefundFollowUps1793664500000",
+          "TrackCancellationScanFailures1793664600000",
+          "PrioritizeRecentCancellationScans1793664700000",
+          "RateLimitCustomerRefundRequests1793664800000",
+          "RemoveVirtualAccountPayments1793664900000",
+          "AddCustomerRefundApproval1793665000000",
+          "AllowCustomerRefundWithdrawal1793665100000",
+          "ExternalCancellationEffects1793665200000"
+        ],
+        "columns": {
+          "payment_orders.last_cancellation_scanned_at": false
+        },
+        "tables": {
+          "catalog_plugin_settings": false,
+          "customer_refund_requests": false,
+          "external_cancellation_effects": false,
+          "payment_refund_request_rate_limits": false
+        }
+      },
+      {
+        "name": "release",
+        "host": "localhost",
+        "port": 5434,
+        "database": "clipper_release",
+        "executed_count": 3,
+        "registered_count": 5,
+        "pending": [
+          "AddArtifactUpdateFile1790100000000",
+          "AddRunnerJobRunUrl1790200000000"
+        ],
+        "columns": {
+          "release_runner_jobs.run_url": false
+        },
+        "tables": {}
+      }
+    ]
+  },
+  "data_impact": {
+    "checked_at": "2026-11-03T19:00:42.475Z",
+    "mode": "read-only",
+    "database": "clipper_admin",
+    "port": 5433,
+    "payment": {
+      "all_orders": 0,
+      "virtual_account_removal_candidates": 0
+    },
+    "deposit": {
+      "deposit_callback_rows": 0
+    },
+    "prices": {
+      "products_targeted": 6,
+      "products_with_price_change": 6
+    },
+    "counts": {
+      "promotion_campaigns": 0,
+      "plan_tiers": 4,
+      "default_media_items": 0,
+      "payment_refund_cases": 0
+    },
+    "normalized": {
+      "rows_to_normalize": 0
+    },
+    "warning": "Pending migrations include irreversible virtual-account removal and catalog price updates. No migration, backup, data update or deletion performed."
+  }
+}

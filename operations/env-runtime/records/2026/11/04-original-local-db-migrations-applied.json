@@ -1,0 +1,599 @@
+{
+  "backups": {
+    "created_at": "2026-11-04T04:03:08.466646+09:00",
+    "run_dir": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308",
+    "approved_pending_count": 31,
+    "source_head": "197af457fc00517de11e0f89fbb7c78863ca897c",
+    "preserved_listener_pids": {
+      "4201": [
+        98035
+      ],
+      "4202": [
+        98036
+      ],
+      "3000": [
+        81330
+      ]
+    },
+    "databases": [
+      {
+        "name": "user",
+        "database": "clipper_user",
+        "host_port": 5435,
+        "container": "clipper_web_api-clipper-db-user-dev-1",
+        "backup": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/backups/user.dump",
+        "bytes": 25008,
+        "sha256": "4e65854907dd03cd8ae155c34ab6d6d2c2fdc2a627e228ed2c894693b5cc836e",
+        "mode": "0o600",
+        "toc_entries": 50,
+        "full_archive_read_verified": true
+      },
+      {
+        "name": "admin",
+        "database": "clipper_admin",
+        "host_port": 5433,
+        "container": "clipper_web_api-clipper-db-admin-dev-1",
+        "backup": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/backups/admin.dump",
+        "bytes": 1155960,
+        "sha256": "fda272e37d6aa6549304b625fbcdf9d702cc3b256b184edb41d93fb62cf7fd37",
+        "mode": "0o600",
+        "toc_entries": 355,
+        "full_archive_read_verified": true
+      },
+      {
+        "name": "release",
+        "database": "clipper_release",
+        "host_port": 5434,
+        "container": "clipper_web_api-clipper-db-release-dev-1",
+        "backup": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/backups/release.dump",
+        "bytes": 22080,
+        "sha256": "01ce105a2e99fb44edb7f5652feb1b01cba62c6b0a6cb919fb94e604037eae66",
+        "mode": "0o600",
+        "toc_entries": 51,
+        "full_archive_read_verified": true
+      }
+    ],
+    "complete": true
+  },
+  "migrations": {
+    "started_at": "2026-11-03T19:03:25.785Z",
+    "source_head": "197af457fc00517de11e0f89fbb7c78863ca897c",
+    "backup_manifest": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/backup-manifest.json",
+    "databases": [
+      {
+        "name": "user",
+        "port": 5435,
+        "database": "clipper_user",
+        "transaction": "all",
+        "applied": [
+          "AddSignupBenefitIntent1793577600000",
+          "AddOnboardingClaimGeneration1793664000000"
+        ],
+        "applied_count": 2,
+        "total_executed_after": 13
+      },
+      {
+        "name": "admin",
+        "port": 5433,
+        "database": "clipper_admin",
+        "transaction": "all",
+        "applied": [
+          "AllowRateLimitedProviderEvidence1792520000000",
+          "AddShortformExplainerEntitlement1792530000000",
+          "AllowGeminiOnExplainerVisualsPolicy1792540000000",
+          "AllowOpenaiOnExplainerVideoPolicy1792550000000",
+          "RenameOverseasDubOperationDisplayName1793150000000",
+          "AllowAppNewsBannerWithoutText1793200000000",
+          "RenameExplainerOperationDisplayNames1793250000000",
+          "AllowSignatureGroupAuditTarget1793300000000",
+          "CreateModuleQualityRuns1793350000000",
+          "ExtendAdminAuditLogsForHistory1793400000000",
+          "NormalizeDefaultMediaNamesToNfc1793450000000",
+          "AddSignupCreditPromotions1793577600000",
+          "PersistentFreeTier1793577700000",
+          "CampaignParticipationConditions1793577800000",
+          "AllowOpenEndedPromotionCampaigns1793577900000",
+          "CatalogPluginSettings1793664100000",
+          "UpdatePlanCatalogPrices1793664200000",
+          "AddCustomerRefundRequests1793664300000",
+          "TrackProviderCancellations1793664400000",
+          "TrackRefundFollowUps1793664500000",
+          "TrackCancellationScanFailures1793664600000",
+          "PrioritizeRecentCancellationScans1793664700000",
+          "RateLimitCustomerRefundRequests1793664800000",
+          "RemoveVirtualAccountPayments1793664900000",
+          "AddCustomerRefundApproval1793665000000",
+          "AllowCustomerRefundWithdrawal1793665100000",
+          "ExternalCancellationEffects1793665200000"
+        ],
+        "applied_count": 27,
+        "total_executed_after": 115
+      },
+      {
+        "name": "release",
+        "port": 5434,
+        "database": "clipper_release",
+        "transaction": "all",
+        "applied": [
+          "AddArtifactUpdateFile1790100000000",
+          "AddRunnerJobRunUrl1790200000000"
+        ],
+        "applied_count": 2,
+        "total_executed_after": 5
+      }
+    ],
+    "complete": true,
+    "finished_at": "2026-11-03T19:03:26.080Z"
+  },
+  "schema_before": {
+    "checked_at": "2026-11-03T19:02:46.911Z",
+    "mode": "read-only",
+    "env_file": ".env",
+    "databases": [
+      {
+        "name": "user",
+        "host": "localhost",
+        "port": 5435,
+        "database": "clipper_user",
+        "executed_count": 11,
+        "registered_count": 13,
+        "pending": [
+          "AddSignupBenefitIntent1793577600000",
+          "AddOnboardingClaimGeneration1793664000000"
+        ],
+        "columns": {
+          "user_onboarding_jobs.claim_generation": false
+        },
+        "tables": {}
+      },
+      {
+        "name": "admin",
+        "host": "localhost",
+        "port": 5433,
+        "database": "clipper_admin",
+        "executed_count": 88,
+        "registered_count": 115,
+        "pending": [
+          "AllowRateLimitedProviderEvidence1792520000000",
+          "AddShortformExplainerEntitlement1792530000000",
+          "AllowGeminiOnExplainerVisualsPolicy1792540000000",
+          "AllowOpenaiOnExplainerVideoPolicy1792550000000",
+          "RenameOverseasDubOperationDisplayName1793150000000",
+          "AllowAppNewsBannerWithoutText1793200000000",
+          "RenameExplainerOperationDisplayNames1793250000000",
+          "AllowSignatureGroupAuditTarget1793300000000",
+          "CreateModuleQualityRuns1793350000000",
+          "ExtendAdminAuditLogsForHistory1793400000000",
+          "NormalizeDefaultMediaNamesToNfc1793450000000",
+          "AddSignupCreditPromotions1793577600000",
+          "PersistentFreeTier1793577700000",
+          "CampaignParticipationConditions1793577800000",
+          "AllowOpenEndedPromotionCampaigns1793577900000",
+          "CatalogPluginSettings1793664100000",
+          "UpdatePlanCatalogPrices1793664200000",
+          "AddCustomerRefundRequests1793664300000",
+          "TrackProviderCancellations1793664400000",
+          "TrackRefundFollowUps1793664500000",
+          "TrackCancellationScanFailures1793664600000",
+          "PrioritizeRecentCancellationScans1793664700000",
+          "RateLimitCustomerRefundRequests1793664800000",
+          "RemoveVirtualAccountPayments1793664900000",
+          "AddCustomerRefundApproval1793665000000",
+          "AllowCustomerRefundWithdrawal1793665100000",
+          "ExternalCancellationEffects1793665200000"
+        ],
+        "columns": {
+          "payment_orders.last_cancellation_scanned_at": false
+        },
+        "tables": {
+          "catalog_plugin_settings": false,
+          "customer_refund_requests": false,
+          "external_cancellation_effects": false,
+          "payment_refund_request_rate_limits": false
+        }
+      },
+      {
+        "name": "release",
+        "host": "localhost",
+        "port": 5434,
+        "database": "clipper_release",
+        "executed_count": 3,
+        "registered_count": 5,
+        "pending": [
+          "AddArtifactUpdateFile1790100000000",
+          "AddRunnerJobRunUrl1790200000000"
+        ],
+        "columns": {
+          "release_runner_jobs.run_url": false
+        },
+        "tables": {}
+      }
+    ]
+  },
+  "schema_after": {
+    "checked_at": "2026-11-03T19:03:51.657Z",
+    "mode": "read-only",
+    "env_file": ".env",
+    "databases": [
+      {
+        "name": "user",
+        "host": "localhost",
+        "port": 5435,
+        "database": "clipper_user",
+        "executed_count": 13,
+        "registered_count": 13,
+        "pending": [],
+        "columns": {
+          "user_onboarding_jobs.claim_generation": true
+        },
+        "tables": {}
+      },
+      {
+        "name": "admin",
+        "host": "localhost",
+        "port": 5433,
+        "database": "clipper_admin",
+        "executed_count": 115,
+        "registered_count": 115,
+        "pending": [],
+        "columns": {
+          "payment_orders.last_cancellation_scanned_at": true
+        },
+        "tables": {
+          "catalog_plugin_settings": true,
+          "customer_refund_requests": true,
+          "external_cancellation_effects": true,
+          "payment_refund_request_rate_limits": true
+        }
+      },
+      {
+        "name": "release",
+        "host": "localhost",
+        "port": 5434,
+        "database": "clipper_release",
+        "executed_count": 5,
+        "registered_count": 5,
+        "pending": [],
+        "columns": {
+          "release_runner_jobs.run_url": true
+        },
+        "tables": {}
+      }
+    ]
+  },
+  "api_restart": {
+    "changed_at": "2026-11-04T04:06:01.408718+09:00",
+    "old_api_pid": 81330,
+    "new_api_pid": 14957,
+    "cwd": "/Users/jina/project/adlight/web/clipper_web_api",
+    "command": "node dist/main",
+    "env_file": "/Users/jina/project/adlight/web/clipper_web_api/.env",
+    "changed_key": "DESKTOP_RELEASE_TARGET",
+    "new_value": "development",
+    "private_env_backup": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/api-env-before-release-target.private",
+    "log": "/Users/jina/project/adlight/.local-runtime/original-db-migration-20261104-040308/api-after-release-target.log",
+    "frontend_listener_pids": {
+      "4201": [
+        98035
+      ],
+      "4202": [
+        98036
+      ]
+    }
+  },
+  "authenticated_api": {
+    "checked_at": "2026-11-03T19:06:07.318Z",
+    "api": "http://127.0.0.1:3000",
+    "endpoints": [
+      {
+        "path": "/admin/catalog",
+        "http_status": 200,
+        "ok": true,
+        "response_shape": "object",
+        "response_keys": [
+          "plugins",
+          "tiers",
+          "products",
+          "creditProducts",
+          "presentationSettings",
+          "pluginSettings"
+        ]
+      },
+      {
+        "path": "/admin/customer-refund-requests?limit=20&offset=0",
+        "http_status": 200,
+        "ok": true,
+        "response_shape": "object",
+        "response_keys": [
+          "items",
+          "counts",
+          "nextCursor"
+        ]
+      },
+      {
+        "path": "/admin/release-console",
+        "http_status": 200,
+        "ok": true,
+        "response_shape": "object",
+        "response_keys": [
+          "releases",
+          "sourceRevisions",
+          "builds",
+          "runnerJobs",
+          "artifacts",
+          "attempts",
+          "targets",
+          "events",
+          "coordinator"
+        ]
+      },
+      {
+        "path": "/admin/payments/reconciliation?limit=20&offset=0",
+        "http_status": 200,
+        "ok": true,
+        "response_shape": "object",
+        "response_keys": [
+          "total",
+          "items",
+          "nextCursor"
+        ]
+      },
+      {
+        "path": "/health",
+        "http_status": 200,
+        "ok": true,
+        "response_shape": "object",
+        "response_keys": [
+          "status",
+          "service",
+          "db"
+        ],
+        "health": {
+          "status": "ok",
+          "db": {
+            "user": "ok",
+            "release": "ok",
+            "admin": "ok"
+          }
+        }
+      }
+    ],
+    "login_http_status": 201,
+    "smoke_session_logout_http_status": 201
+  },
+  "ui": {
+    "checked_at": "2026-11-03T19:06:52.317Z",
+    "pages": [
+      {
+        "path": "/product-policies",
+        "result": "loaded: Free plus Basic/Pro/Business and 6 updated billing products"
+      },
+      {
+        "path": "/refund-management",
+        "result": "loaded: customer refund requests 0, no query error"
+      },
+      {
+        "path": "/versions/overview",
+        "result": "loaded: release overview, no schema/config error"
+      },
+      {
+        "path": "/payment-operations?tab=warnings",
+        "result": "loaded: reconciliation targets 0, no query error"
+      }
+    ],
+    "errors_after_api_restart": []
+  },
+  "final": {
+    "checked_at": "2026-11-03T19:07:57.424Z",
+    "applied_count": 31,
+    "databases": [
+      {
+        "name": "user",
+        "pending": 0,
+        "executed": 13,
+        "preserved_row_counts": {
+          "users": {
+            "before": 1,
+            "after": 1
+          },
+          "user_sessions": {
+            "before": 11,
+            "after": 11
+          },
+          "desktop_auth_codes": {
+            "before": 12,
+            "after": 12
+          },
+          "user_onboarding_jobs": {
+            "before": 1,
+            "after": 1
+          },
+          "user_consents": {
+            "before": 3,
+            "after": 3
+          },
+          "signup_ticket_redemptions": {
+            "before": 1,
+            "after": 1
+          }
+        }
+      },
+      {
+        "name": "admin",
+        "pending": 0,
+        "executed": 115,
+        "preserved_row_counts": {
+          "operators": {
+            "before": 3,
+            "after": 3
+          },
+          "payment_orders": {
+            "before": 0,
+            "after": 0
+          },
+          "payment_events": {
+            "before": 0,
+            "after": 0
+          },
+          "credit_grants": {
+            "before": 3,
+            "after": 3
+          },
+          "credit_ledger_entries": {
+            "before": 108,
+            "after": 108
+          },
+          "user_access_grants": {
+            "before": 0,
+            "after": 0
+          },
+          "subscriptions": {
+            "before": 0,
+            "after": 0
+          },
+          "promotion_campaigns": {
+            "before": 0,
+            "after": 0
+          },
+          "promotion_redemptions": {
+            "before": 0,
+            "after": 0
+          },
+          "plan_tiers": {
+            "before": 4,
+            "after": 4
+          },
+          "billing_products": {
+            "before": 6,
+            "after": 6
+          },
+          "default_media_items": {
+            "before": 0,
+            "after": 0
+          }
+        }
+      },
+      {
+        "name": "release",
+        "pending": 0,
+        "executed": 5,
+        "preserved_row_counts": {
+          "release_versions": {
+            "before": 0,
+            "after": 0
+          },
+          "release_builds": {
+            "before": 0,
+            "after": 0
+          },
+          "release_artifacts": {
+            "before": 0,
+            "after": 0
+          },
+          "release_runner_jobs": {
+            "before": 0,
+            "after": 0
+          },
+          "release_targets": {
+            "before": 0,
+            "after": 0
+          }
+        }
+      }
+    ],
+    "ports": {
+      "3000": [
+        14957
+      ],
+      "4201": [
+        98035
+      ],
+      "4202": [
+        98036
+      ],
+      "4241": [],
+      "4242": [],
+      "4340": []
+    },
+    "http": [
+      {
+        "url": "http://localhost:4201/",
+        "http_status": 200
+      },
+      {
+        "url": "http://localhost:4202/",
+        "http_status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/health",
+        "http_status": 200,
+        "db": {
+          "user": "ok",
+          "release": "ok",
+          "admin": "ok"
+        }
+      }
+    ],
+    "source_repositories": [
+      {
+        "repo": "web/clipper_web_client",
+        "git_status_empty": true
+      },
+      {
+        "repo": "web/clipper_web_api",
+        "git_status_empty": true
+      },
+      {
+        "repo": "web/clipper_web_admin",
+        "git_status_empty": true
+      },
+      {
+        "repo": "web/clipper_infra",
+        "git_status_empty": true
+      },
+      {
+        "repo": "desktop/clipper_nestjs",
+        "git_status_empty": true
+      },
+      {
+        "repo": "desktop/clipper_angular",
+        "git_status_empty": true
+      },
+      {
+        "repo": "desktop/clipper_python",
+        "git_status_empty": true
+      },
+      {
+        "repo": "desktop/clipper_electron",
+        "git_status_empty": true
+      }
+    ],
+    "local_env_changed_keys": [
+      "DESKTOP_RELEASE_TARGET"
+    ],
+    "backup_integrity": [
+      {
+        "name": "user",
+        "sha256_matches": true,
+        "mode600": true,
+        "bytes": 25008
+      },
+      {
+        "name": "admin",
+        "sha256_matches": true,
+        "mode600": true,
+        "bytes": 1155960
+      },
+      {
+        "name": "release",
+        "sha256_matches": true,
+        "mode600": true,
+        "bytes": 22080
+      }
+    ],
+    "authenticated_api_http200": 4,
+    "verified_ui_pages": 4,
+    "ui_errors_after_restart": 0,
+    "schema_errors_in_new_api_log": 0
+  }
+}
