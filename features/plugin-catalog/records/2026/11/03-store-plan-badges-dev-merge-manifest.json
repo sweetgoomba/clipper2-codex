@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-03 KST",
+  "remote_heads_independently_verified": true,
+  "merge_method": "fast-forward; verified feature tree equals dev tree",
+  "repositories": [
+    {
+      "repository": "web/clipper_web_api",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "6e1d001c0f5bef357a1352bf667a8427e3ae0043",
+      "remote_dev": "6e1d001c0f5bef357a1352bf667a8427e3ae0043",
+      "remote_feature": "6e1d001c0f5bef357a1352bf667a8427e3ae0043",
+      "parent": "64919db3d8b12640cab115cf7103c419b60ab2c3",
+      "tree": "339013e95a9ec6c79c06444a15c2a8d1eb13ddd8",
+      "working_tree_clean": true
+    },
+    {
+      "repository": "web/clipper_web_admin",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "e84d531a086075245f991ec74d30b90265d1006c",
+      "remote_dev": "e84d531a086075245f991ec74d30b90265d1006c",
+      "remote_feature": "e84d531a086075245f991ec74d30b90265d1006c",
+      "parent": "3435f2a36ed69e101e9f8170fdaa40612434562d",
+      "tree": "4ade6ba824e8caf4c41e450d3c35b7b632de7950",
+      "working_tree_clean": true
+    },
+    {
+      "repository": "web/clipper_web_client",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "50779ad01b1abb7009205a8490979b7bf032dceb",
+      "remote_dev": "50779ad01b1abb7009205a8490979b7bf032dceb",
+      "remote_feature": "50779ad01b1abb7009205a8490979b7bf032dceb",
+      "parent": "c0719ac8a1f288fc151121fc543c8b4ba8f8cb6c",
+      "tree": "c401d7436022a05413702bd64867c7b6b4e5ece6",
+      "working_tree_clean": true
+    },
+    {
+      "repository": "desktop/clipper_angular",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "222ef59a4168b842cf747bad559e2a05df2cb535",
+      "remote_dev": "222ef59a4168b842cf747bad559e2a05df2cb535",
+      "remote_feature": "222ef59a4168b842cf747bad559e2a05df2cb535",
+      "parent": "9dd1550e0b097a78415b6e969b919646d6b032f4",
+      "tree": "ce1083a6032b68f8ba97915d10a361fe6fb33669",
+      "working_tree_clean": true
+    },
+    {
+      "repository": "desktop/clipper_nestjs",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "f2cc17a9c6a73fa7096c602e8fc68df4403aeacc",
+      "remote_dev": "f2cc17a9c6a73fa7096c602e8fc68df4403aeacc",
+      "remote_feature": "f2cc17a9c6a73fa7096c602e8fc68df4403aeacc",
+      "parent": "7f57ff1b2e6807376b2cb5c4393a6efdcf056f6b",
+      "tree": "3797dcc72ed4beb0f1380e3fd08b2c359390e0b7",
+      "working_tree_clean": true
+    },
+    {
+      "repository": "desktop/clipper_electron",
+      "branch": "feat/signup-credit-promotion-free-20261102",
+      "commit": "8e70e99bc44e164d84dba16dd253b3b939928859",
+      "remote_dev": "8e70e99bc44e164d84dba16dd253b3b939928859",
+      "remote_feature": "8e70e99bc44e164d84dba16dd253b3b939928859",
+      "parent": "99be6e0971c449ac1df1e03bae95c8f0cb61d993",
+      "tree": "b8a876f23e3367b3827416805bf10d7e63be0538",
+      "working_tree_clean": true
+    }
+  ],
+  "excluded": {
+    "minimum_100_krw_upgrade": "another session; unchanged",
+    "macos_owned_child_identity": "user chose separate session; no fix included",
+    "plugin_catalog_full_sync": "W18 deferred"
+  },
+  "created_issue_thread": "01a19dcf-acaf-7371-9d72-58b3fce5f985",
+  "tests": {
+    "web_api": {
+      "passed": 5142,
+      "skipped": 109,
+      "failed": 0
+    },
+    "signup_postgresql": {
+      "passed": 39,
+      "failed": 0,
+      "disposable_port": 15439,
+      "container_removed": true
+    },
+    "web_admin": {
+      "passed": 2728,
+      "failed": 0
+    },
+    "web_client": {
+      "passed": 591,
+      "failed": 0
+    },
+    "desktop_angular": {
+      "passed": 10656,
+      "styles_passed": 21,
+      "failed": 0
+    },
+    "desktop_nestjs": {
+      "passed": 5290,
+      "failed": 1,
+      "failure": "existing macOS owned process identity race; user approved separate-session handling"
+    },
+    "desktop_electron": {
+      "passed": 1913,
+      "failed": 0
+    }
+  }
+}
