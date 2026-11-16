@@ -20,5 +20,6 @@ Angular UI 작업 시 우선 확인할 기준이다.
 ## Current References
 
 - [standards/ANGULAR_FRONTEND_RULES.md](standards/ANGULAR_FRONTEND_RULES.md)
+- [UI 목업 가이드](standards/UI_MOCKUP_PLAYBOOK.md) — 실제 앱 컴포넌트, 라이브 프리뷰, 검토 캔버스.
 - [features/template-builder/README.md](features/template-builder/README.md)
 - [features/dance-highlight/README.md](features/dance-highlight/README.md)

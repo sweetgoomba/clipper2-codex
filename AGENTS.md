@@ -150,7 +150,7 @@ clipper_docs/               크로스-레포 메타 (adr·architecture·playbook
 - 계약/엔드포인트/스키마 무변경 — 바꿔야 하면 별도 작업.
 
 ### 7.2 기능 추가 (`playbooks/feature.md`)
-- 흐름: **brainstorming → spec → plan → 구현(subagent-driven) → finishing**. 화면 관련이면 목업(static HTML) 먼저.
+- 흐름: **brainstorming → spec → plan → 구현(subagent-driven) → finishing**. 화면 목업은 [UI 목업 가이드](standards/UI_MOCKUP_PLAYBOOK.md)에 따라 실제 앱 컴포넌트와 테마로 렌더링한다.
 - **계약(OpenAPI) 우선 → FE mock → 백엔드.** **TDD**(실패 테스트 → 구현 → 통과 → 커밋).
 - 신규 작업은 `feat/<topic>` 브랜치. 크로스-레포 기능은 레포 간 **동일 브랜치명**.
 
