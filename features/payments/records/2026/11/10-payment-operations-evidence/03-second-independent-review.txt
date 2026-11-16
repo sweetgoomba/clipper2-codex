@@ -1,0 +1,158 @@
+Clipper 결제 운영·마이페이지·구독 처리 — 최종 독립 검증
+검증일: 2026-11-10 KST
+
+판정
+제품 P2 문제 2건, 신규 테스트 코드의 P3 타입 문제 2건을 확인했습니다.
+P0/P1 문제는 이번 조사·실행 범위에서 발견하지 않았습니다. 제품 P2 2건이 남아 있어 최종 검증 통과 판정은 보류합니다. 별도 허가 단계인 원격 최신 dev 병합 테스트는 실행하지 않았습니다. 그 단계로 넘기기 전 두 제품 문제를 수정·재검증하는 것을 권고합니다.
+모든 지적은 아래 실제 코드·재현 출력에 근거합니다. 제품 수정은 하지 않았습니다.
+
+대상과 보존
+세 저장소 모두 feat/payment-operations-panels-20261109의 전체 미커밋 변경(미추적 제품 파일 포함)을 대상으로 했습니다.
+API: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api
+HEAD c85fd18cccfb75e8f288ca964fbaf2979adb6b7c
+관리자: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/admin
+HEAD bb2bca7270f565df890cdb8b35cff2cb96f8c62b
+사용자 Git 원본: /Users/jina/.codex/worktrees/initial-subscription-failure/clipper_web_client
+HEAD 9b7165bd463213f66a35a9d575d1cf32300ff912
+기본 web 체크아웃과 runtime/client 복사본은 검증 source로 사용하거나 수정하지 않았습니다.
+검증 시작 시 변경 파일 API 60개/관리자 49개/사용자 9개의 SHA-256을 기록했습니다. 종료 대조에서 모두 동일했습니다. 세 HEAD·브랜치 동일, staged 파일 없음, git diff --check 모두 통과했습니다.
+
+확정 제품 문제
+
+1. [P2] 새 첫 결제 예약에 이전 구독의 해지 mode를 보내면 예약이 취소됩니다.
+주 위치: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/presentation/subscriptions.controller.ts:60
+관련 위치: 같은 파일:63
+실제 변경 경계: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/application/subscription-payments.service.ts:493
+
+재현 조건:
+- 현재 구독이 pending이며 카드 등록 완료, firstChargeAt이 미래인 정상 첫 결제 예약입니다.
+- POST /subscriptions/current/cancel에 {mode:'end_grace'} 또는 {mode:'retain_paid_period'}를 보냅니다.
+- 이전 구독의 해지 확인창을 다른 탭에서 열어 둔 뒤 현재 구독이 새 예약으로 바뀌었을 때 가능한 stale 요청입니다. 정상 예약 취소 UI는 이 mode를 보내지 않습니다.
+
+기대: 확인한 동작과 현재 상태가 다르므로 SUBSCRIPTION_CANCELLATION_MODE_CHANGED로 거절하고 새 신청을 유지합니다.
+실제: 컨트롤러가 mode 검사 전에 pending 분기로 빠집니다. cancelReservation은 mode를 전달받지 않고 현재 open 신청을 취소합니다.
+격리 DB에서 두 mode 모두 before=pending, 응답=canceled, 저장된 subscription=canceled, 첫 주문=expired, error=null을 확인했습니다. 실제 결제/빌링키 삭제 호출은 없었습니다.
+영향: 유예 종료 또는 유료 이용기간 유지에 동의한 오래된 요청이 새 계약의 첫 결제 예약을 의도하지 않게 취소합니다. active↔past_due mode 검사는 있으나 pending 우회 경로에는 적용되지 않습니다.
+수정 방향: 예약 취소 분기까지 포함해 확인된 mode와 현재 상태를 동일한 잠금·트랜잭션 경계에서 검증하고 불일치 시 변경 없이 거절해야 합니다. mode 없는 기존 예약 취소 흐름은 유지할 수 있습니다.
+증거: /private/tmp/payment-final-review-reservation-mode.log
+재현 코드: /private/tmp/payment-final-review-probes/reservation-mode.spec.ts
+실행: API cwd에서 /Users/jina/.nvm/versions/node/v24.19.0/bin/node /private/tmp/payment-final-review-reservation-mode.cjs
+결과: 올바른 동작을 요구하는 2 assertions가 실패하여 문제를 재현했습니다. 실제 SubscriptionPaymentsService/TypeORM 저장소/컨트롤러를 사용했습니다.
+
+2. [P2] 성공 재확인 후에도 과거 조회 실패가 영구 미해결로 남습니다.
+주 위치: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/application/provider-cancellation-observation.service.ts:89
+취소 없는 성공 경로: 같은 파일:98
+목록 조건: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/application/provider-cancellation-incidents.service.ts:151
+
+재현 조건:
+- 기존 provider_cancellation_scan_failures에 status='open'인 유효한 paid 주문이 있습니다.
+- 관리자 주문 상태 재확인을 실행하고 모의 공급자가 검증 가능한 DONE 또는 CANCELED 스냅샷을 성공 반환합니다.
+
+기대: 해당 조회 실패를 해결 처리하고 미해결 조회 실패 목록·건수에서 제외합니다.
+실제: 두 응답 모두 재확인은 성공하지만 failures.status='open', resolved_at=null, scanFailures.total=1로 남습니다.
+원인: 제거된 scanOrder가 담당하던 성공 시 failure 해결 UPDATE도 삭제됐습니다. 남은 observeOrder/observeSnapshot 및 일반 reconcile 경로에는 이를 대체하는 쓰기가 없습니다. 취소 감지·후처리 큐가 정상 작동해도 기존 조회 실패 레코드는 해소되지 않습니다.
+영향: 상태가 확인된 주문을 계속 '취소 여부 미확인'·미해결로 표시하고 운영 건수가 영구 누적됩니다. 기존 실패가 있는 환경에서 발생하며, 전수 스캔을 다시 도입할 필요는 없습니다.
+수정 방향: 실제 스냅샷 검증 성공 경로에 해당 주문의 조회 실패 해소를 연결해야 합니다. 취소 0건인 DONE 성공도 포함하고, 공급자 호출/검증이 없었던 early return 또는 실패는 성공으로 처리하지 않아야 합니다.
+증거: /private/tmp/payment-final-review-probes.log
+재현 코드: /private/tmp/payment-final-review-probes/review.spec.ts:80
+실행: API cwd에서 /Users/jina/.nvm/versions/node/v24.19.0/bin/node /private/tmp/payment-final-review-probes.cjs
+결과: 이전 수정 재현 5건 통과, 새 DONE/CANCELED 실패 해소 검사 2건 실패, 합의로 제외한 same-order 그룹화 2건 skip. 실패 2건은 이 제품 문제를 재현한 기대 동작 assertion입니다.
+
+신규 테스트 코드 문제 — 제품 실행 장애와 구분
+
+3. [P3] 새 renewal mock에 중복 속성이 있어 TS1117이 발생합니다.
+위치: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/application/subscription-renewal.service.spec.ts:1287
+같은 객체의 기존 선언: 같은 파일:1227
+재현: API cwd에서 Node24로 node_modules/typescript/bin/tsc --noEmit --incremental false 실행.
+실제: isExternalCancellationFenced가 동일 mock 객체에 두 번 선언되어 TS1117을 발생시킵니다. 후행 선언은 이번 diff의 새 추가행이고 HEAD에는 한 선언만 있습니다.
+영향: 테스트 포함 타입 검사를 더 악화시킵니다. Jest의 isolatedModules 실행은 통과하며 제품 tsconfig.build.json에는 포함되지 않습니다.
+수정 방향: 기존 선언을 재사용하고 새 중복 선언을 제거합니다.
+
+4. [P3] 새 목록 PG 테스트의 null 처리에 타입 오류가 남아 있습니다.
+위치: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-local-runtime/api/src/modules/payments/infrastructure/admin-payment-lists.postgres.spec.ts:133
+관련 위치: 같은 파일:193
+재현: 위 전체 tsc 명령.
+실제: 133행은 cursor:null인 page를 cursor?:string인 ListCancellationIncidentsQueryDto 인자로 넘겨 TS2345가 납니다. 193행의 두 context 접근에는 TS2533이 납니다. 세 진단 모두 이번 새 추가행입니다.
+영향: 제품과 PG 테스트 실행은 정상이나 테스트 포함 타입 검사에 신규 진단이 추가됩니다.
+수정 방향: DTO 호출에는 cursor를 생략하거나 undefined로 정규화하고, context 존재를 타입 수준에서 확인한 뒤 접근합니다.
+
+전체 tsc 참고
+- 제품 전용 tsc -p tsconfig.build.json --noEmit --incremental false는 exit 0입니다.
+- 테스트 포함 tsc는 exit 2, 86개 파일/468개 TypeScript 진단이었습니다.
+- 위 P3 2건의 총 4진단은 git diff의 추가행과 직접 대조하여 신규로 확인했습니다. 나머지 전체 오류의 baseline 재현·전수 원인 분류는 하지 않았으며, 이를 모두 이번 변경 탓으로 분류하지 않습니다.
+- 직전 지적된 payment-list-context.loader.spec.ts의 mock 인자 서명은 수정되어 있고 이번 전체 tsc에 해당 파일 진단은 없습니다.
+- 로그: /private/tmp/payment-final-review-api-all-tsc.log
+
+이번에 직접 통과한 실행 검증
+
+A. API 핵심 단위/경계/계약: 17 suites, 612 tests 통과
+10 suites/396 tests: 최초 결제, 갱신, 결제수단, 관리자 주문·지급, context loader, 웹훅 recovery, 공급자 관측, 인증 operator action, 웹훅 저장소.
+7 suites/216 tests: 구독 컨트롤러, 관리자 결제 컨트롤러, 페이지 입력 검증, OpenAPI 계약, 관리자 route 권한, AccessGrantsService, PaymentsModule.
+DOTENV_CONFIG_PATH=/dev/null과 Node /Users/jina/.nvm/versions/node/v24.19.0/bin/node를 사용했습니다. API cwd에서 --runInBand --silent --runTestsByPath로 해당 spec만 실행했습니다.
+로그: /private/tmp/payment-final-review-api.log, /private/tmp/payment-final-review-contracts.log
+기보고 API 전체 6,123건을 이번에 다시 실행한 것으로 표현하지 않습니다.
+
+B. 관리자 Angular ChromeHeadless: 248 tests 통과
+--include='src/app/features/portal/payment-operations/**/*.spec.ts'
+--include='src/app/features/portal/payment-fulfillment-recovery/**/*.spec.ts'
+--include='src/app/features/portal/payments.workflow.spec.ts'
+--include='src/app/features/portal/refunds/refund-management.component.spec.ts'
+drawer 기반 workflow 수정도 이 실행에 포함됩니다.
+로그: /private/tmp/payment-final-review-admin.log
+
+C. 사용자 Git 원본 Angular ChromeHeadless: 108 tests 통과
+--include='src/app/features/portal/dashboard/**/*.spec.ts'
+초기 신청 숨김, 최초 실패 버튼 제거, 종료 사유/사실 표시, 유예 해지/정상 해지 모달, 이전 focus·projection·retry·plan-change 응답 경합과 destroy 관련 검사를 포함합니다.
+로그: /private/tmp/payment-final-review-client.log
+두 Angular 테스트는 지정 Node PATH, CHROME_BIN, NG_BUILD_MAX_WORKERS=2로 순차 실행했습니다. 최초 샌드박스 사용자 테스트 exit 134는 실행 환경 문제로 별도 취급하고, 허가된 로컬 Karma/Chrome 실행의 exit 0과 TOTAL 출력을 판정에 사용했습니다.
+
+D. 격리 PostgreSQL: 8 suites, 127 tests 통과
+subscription-lifecycle.postgres.spec.ts
+initial-subscription-failure.postgres.spec.ts
+admin-payment-lists.postgres.spec.ts
+external-cancellation-effects.postgres.spec.ts
+provider-cancellation-observation.postgres.spec.ts
+payment-operator-actions.postgres.spec.ts
+subscription-recovery.postgres.spec.ts
+payment-refund-races.postgres.spec.ts
+runner와 createIsolatedBillingDatabase를 읽은 뒤 사용했습니다. 127.0.0.1:55441 전용 클러스터에 고유 billing_test_<UUID> DB만 생성하고 자신이 만든 DB만 정리했습니다.
+로그: /private/tmp/payment-final-review-pg.log
+첫 EPERM 시도는 DB 연결 전에 실패했고, 로컬 실행 권한으로 재시도해 통과했습니다.
+기존 runner 및 신규 독립 PG probe 두 실행 모두 전후 DB inventory 동일/임시 DB 정리=true를 확인했습니다.
+전후 inventory: clipper_payment_ops_admin, clipper_payment_ops_release, clipper_payment_ops_user, postgres.
+
+E. 직전 지적의 독립 재현 5건 통과
+정상 paid+succeeded 웹훅 완료 필터, 상품 검색 3목록, reconcile context 유지, 재확인 실패 이력 영속화, 자연 만료 후 환불의 종료 사유 보존을 실제 저장소/격리 DB로 확인했습니다.
+웹훅 및 provider cancellation의 주문별 합치기는 합의된 제외사항이므로 실패로 재보고하지 않았습니다.
+
+F. 제품 컴파일/빌드
+API: tsc --project tsconfig.build.json --noEmit --incremental false 통과.
+관리자: ng build --configuration local --output-path=/private/tmp/payment-final-review-admin-build 통과.
+사용자: ng build --configuration local --output-path=/private/tmp/payment-final-review-client-build 통과.
+로그: /private/tmp/payment-final-review-api-typecheck.log, /private/tmp/payment-final-review-admin-build.log, /private/tmp/payment-final-review-client-build.log
+API Nest 전체 build를 별도로 수행하지 않았습니다. 기존 dist나 서버 프로세스를 갱신하지 않았습니다.
+
+소스·요구사항 대조 결과
+- 주문 탭은 주문별 행이며 회원·주문·상품·금전·지급·후처리 context가 실제 API에 연결됩니다. 웹훅·취소 거래는 이벤트별 행을 유지합니다.
+- 02~07 상세는 제품 drawer/PaymentOrderRecord를 사용합니다. 첫 시각 컬럼 유지, 재처리 사유 trim·길이 검증, 인증 actor 전달, 권한 guard, 중복 지급 차단의 관련 테스트를 확인했습니다.
+- 담당자 입력 UI 제거, 운영자 프로필 조인, CS 메모와 자동 실행 시각의 분리, 일반 재확인 requested/succeeded/failed 영속 이력 및 한글 라벨을 대조했습니다. 외부취소 조사 상태·메모 입력 UI는 제거되어 있습니다.
+- 전체 과거 scanNext/Cron 순회는 제거되어 있고 웹훅 감지와 발견된 cancellation effects 재시도는 유지됩니다. 과거 scan failure 해소는 위 P2 문제입니다.
+- past_due 외부취소의 중간 정지에서 next_retry_index를 유지하고 종료 전환에서 NULL 처리하는 DB 제약·중복·경합 검사가 통과했습니다.
+- 최초 확정 결제 실패는 order 실패와 신청 종료를 같은 트랜잭션으로 처리하고 자동/수동 재청구를 만들지 않습니다. 미확정 결과 복구와 기존 갱신 retry는 유지됩니다.
+- lifecycle는 저장된 종료 사유·실제 종료 시각을 우선합니다. 예정 종료일을 종료 카드의 실제 종료일로 재사용하지 않고, 환불·원장상 회수량·만료량을 분리합니다. 회원/구독/기간에 맞지 않는 evidence의 배제 테스트가 통과했습니다.
+- past_due 회원 해지는 이용권 즉시 revoke, 만료 구독 크레딧 정리, 재시도 필드 정리를 원자적으로 수행합니다. rollback·멱등·가입/추가 크레딧 보존과 정상 active의 남은 이용기간 유지 검사가 통과했습니다. pending 상태까지의 mode 경계는 위 P2 문제입니다.
+
+브라우저 확인과 한계
+- 실제 localhost:3310 결제 운영에서 앱 셸과 주문 목록을 확인하고 지급 실패 주문의 '상세 보기'만 열었습니다. 회원·주문·상품·금전·처리 이력과 우측 drawer가 렌더링됨을 DOM과 스크린샷으로 확인했습니다. 지급 재처리/재확인/환불 액션은 클릭하지 않았습니다.
+- localhost:3311/my는 현재 브라우저 세션에서 로그인 화면으로 이동했습니다. 실계정 로그인이나 상태 변경을 하지 않았으며, 이번 실행의 실제 마이페이지 시각 검증은 미완료입니다. 사용자 Git 원본의 ChromeHeadless DOM 테스트와 제품 build로 검증한 범위를 구분합니다.
+- 목업 15개 아트보드 전체, 모든 배율·반응형·접근성·픽셀 정합을 새로 전수 검사하지 않았습니다. 이전 보고서의 브라우저 검증을 이번 실행 결과로 재인용하지 않았습니다.
+
+미검증·금지 작업 준수
+- 전체 API/관리자/사용자 suite를 모두 재실행하지 않았습니다. 위 위험 기반 선택과 8개 PG suite 밖의 PG suite는 미검증입니다.
+- 실 토스 결제·조회·환불, 외부 Slack/메일 발송을 하지 않았습니다. 독립 재현은 모의 공급자와 격리 DB에 한정했습니다.
+- 제품 코드·목업·환경·시드·기존 DB·컨테이너·실계정 데이터를 수정하지 않았습니다. 테스트 산출물/로그/보고서만 별도 임시 경로에 작성했습니다.
+- worktree 생성, fetch, 원격 dev 병합 테스트, git stage/commit/push/merge/rebase, 배포 또는 서버 재시작을 하지 않았습니다.
+- 로컬 start-local.command, environment.local.ts의 4340 변경, payment-review 엔트리/fixtures/tsconfig는 검토·실행용 파일로 구분했습니다. 제품의 새 미추적 loader/lifecycle/context/panel/record 소스는 검증 대상에 포함했습니다. 커밋 대상으로 정리하거나 파일을 옮기지 않았습니다.
+
+후속 단계
+제품 P2 두 건을 먼저 수정하고 동일 독립 probe를 통과시킨 뒤, 허가된 별도 단계에서 최신 dev 병합 테스트를 진행하는 것을 권고합니다. P3 두 건은 baseline 전체 타입 정리와 독립적으로 좁게 수정할 수 있습니다. 이번 보고서는 전체 정상 통과 또는 병합 승인으로 해석하면 안 됩니다.

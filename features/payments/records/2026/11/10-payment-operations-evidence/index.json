@@ -1,0 +1,104 @@
+{
+  "documentedAt": "2026-11-10T06:39:53.683246+09:00",
+  "sourceThread": "01a1bea6-b00b-7493-aa45-fc5085a7c809",
+  "scope": "2026-11-09~10 payment incident, UI, policy, local review, independent verification and integration history",
+  "files": [
+    {
+      "file": "01-first-independent-review.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1c16e-d970-7e02-ae4c-963f7bc85745/payment-independent-review-20261110.txt",
+      "sha256": "fe6ae5fba525cb5824d1e380f64355a709976042397404056f4bbb27bfd5554c",
+      "bytes": 23302
+    },
+    {
+      "file": "02-first-corrections.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-independent-corrections-20261110.txt",
+      "sha256": "b34b08fcdd029e49bdbca0dc934f1ae40fb60d56ada4f0bf6e5c599b3526ffbf",
+      "bytes": 2424
+    },
+    {
+      "file": "03-second-independent-review.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-final-independent-review-20261110/report.txt",
+      "sha256": "c83a5a553b32a8cc631becd38855fb4e5f8b3e93dfb7a357aa9044b7bfdf1494",
+      "bytes": 17470
+    },
+    {
+      "file": "04-four-final-fixes.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-four-final-fixes-20261110/report.txt",
+      "sha256": "aaabe246640479b2ce5d60ddeac7fc2062b5beba52679a60aaa6c0d96f0a2f46",
+      "bytes": 2386
+    },
+    {
+      "file": "05-first-integration-test.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-merge-test-20261110/report.txt",
+      "sha256": "12ae64a6a56d2af9e4b6c767a78d84d021601b702d82972751df5c9ea36664fa",
+      "bytes": 3877
+    },
+    {
+      "file": "06-mail-payment-integration-push.txt",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-integration-push-20261110/report.txt",
+      "sha256": "53db295b375915128caafde2ef145893f9252e365b161a716646d82fd5c7fe3b",
+      "bytes": 3032
+    },
+    {
+      "file": "push-verification.json",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-integration-push-20261110/push-verification.json",
+      "sha256": "c864abff028dd010e4311786adaaba41b56b1ee3063fe507d25428d3a6bef39f",
+      "bytes": 859
+    },
+    {
+      "file": "validated-trees.json",
+      "originalPath": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-integration-push-20261110/validated-trees.json",
+      "sha256": "86005eafb2b710ed617a11acb358715bafea54cfdcc038a04011a35337e62827",
+      "bytes": 166
+    }
+  ],
+  "gitAtDocumentation": {
+    "api": {
+      "integrationBranch": "integration/payment-operations-20261109",
+      "integrationCommit": "3fda70f5081a52d3cda2a09132f3f72e3c216da9",
+      "integrationParents": [
+        "400937f695d4b61d07933e27deaf778c3bb00dd8",
+        "e8ddd7b12c3e56c237d05401ce8e182fbcde158b"
+      ],
+      "integrationDate": "2026-11-10T05:17:18+09:00",
+      "localDevAtDocumentation": "130c81e8e2fd3e7759072be6ba22fb269c5f128b",
+      "originDevAtDocumentation": "130c81e8e2fd3e7759072be6ba22fb269c5f128b",
+      "integrationIncludedInLocalDev": true,
+      "worktree": "/Users/jina/.codex/worktrees/payment-merge-api-20261110/api",
+      "statusAtDocumentation": ""
+    },
+    "admin": {
+      "integrationBranch": "integration/payment-operations-20261109",
+      "integrationCommit": "2a65cf763483f748baac088854dd7fbf68b372cd",
+      "integrationParents": [
+        "5dd01d1406cf98676ae72b8b36506693b8734996",
+        "381533c5d231379de16d2990cec15cbc294ad228"
+      ],
+      "integrationDate": "2026-11-10T05:17:18+09:00",
+      "localDevAtDocumentation": "97c1cd9d6064e215cee7f6e8e7f94f929811027c",
+      "originDevAtDocumentation": "97c1cd9d6064e215cee7f6e8e7f94f929811027c",
+      "integrationIncludedInLocalDev": true,
+      "worktree": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-merge-test-20261110/admin",
+      "statusAtDocumentation": ""
+    },
+    "client": {
+      "integrationBranch": "integration/payment-operations-20261109",
+      "integrationCommit": "a32f8ef29aefc3c2e4d4f05483cf475775bb50f5",
+      "integrationParents": [
+        "625b74c8636295b0a659b83faf99a9dbc12aca06",
+        "70c4af7a20182f61a3ef351d52a4f3e718dc2aca"
+      ],
+      "integrationDate": "2026-11-10T05:17:18+09:00",
+      "localDevAtDocumentation": "93fb968c038b6d75e57b6028c2e56a1b62498b8e",
+      "originDevAtDocumentation": "93fb968c038b6d75e57b6028c2e56a1b62498b8e",
+      "integrationIncludedInLocalDev": true,
+      "worktree": "/Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-merge-test-20261110/client",
+      "statusAtDocumentation": ""
+    }
+  },
+  "notes": [
+    "Historical report statements refer to their original verification time. Later dev integration was performed outside this session.",
+    "No credentials, raw env, payment keys, cookies or DB dumps copied.",
+    "Only report copies and curated Git metadata are archived here."
+  ]
+}

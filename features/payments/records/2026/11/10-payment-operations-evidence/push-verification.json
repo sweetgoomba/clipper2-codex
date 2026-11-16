@@ -1,0 +1,23 @@
+{
+  "api": {
+    "commit": "3fda70f5081a52d3cda2a09132f3f72e3c216da9",
+    "remoteBranch": "integration/payment-operations-20261109",
+    "remoteDev": "c85fd18cccfb75e8f288ca964fbaf2979adb6b7c",
+    "localDevIncluded": "e8ddd7b12c3e56c237d05401ce8e182fbcde158b",
+    "clean": true
+  },
+  "admin": {
+    "commit": "2a65cf763483f748baac088854dd7fbf68b372cd",
+    "remoteBranch": "integration/payment-operations-20261109",
+    "remoteDev": "bb2bca7270f565df890cdb8b35cff2cb96f8c62b",
+    "localDevIncluded": "381533c5d231379de16d2990cec15cbc294ad228",
+    "clean": true
+  },
+  "client": {
+    "commit": "a32f8ef29aefc3c2e4d4f05483cf475775bb50f5",
+    "remoteBranch": "integration/payment-operations-20261109",
+    "remoteDev": "9b7165bd463213f66a35a9d575d1cf32300ff912",
+    "localDevIncluded": "70c4af7a20182f61a3ef351d52a4f3e718dc2aca",
+    "clean": true
+  }
+}

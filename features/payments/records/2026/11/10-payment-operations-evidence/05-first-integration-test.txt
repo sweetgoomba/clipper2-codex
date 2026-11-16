@@ -1,0 +1,44 @@
+Clipper payment changes — latest remote dev integration test
+Completed: 2026-11-10T03:36:13.644507+09:00
+
+Result: Product changes applied without conflicts; full API/admin/client tests and product builds pass.
+Test branch (all three repositories): integration/payment-operations-20261109
+
+api:
+  fetched origin/dev (also verified remotely at end): c85fd18cccfb75e8f288ca964fbaf2979adb6b7c
+  isolated test worktree: /Users/jina/.codex/worktrees/payment-merge-api-20261110/api
+  selected files: 59
+  excluded local/review-only files: start-local.command
+admin:
+  fetched origin/dev (also verified remotely at end): bb2bca7270f565df890cdb8b35cff2cb96f8c62b
+  isolated test worktree: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-merge-test-20261110/admin
+  selected files: 41
+  excluded local/review-only files: src/environments/environment.local.ts, src/app/features/samples/payment-review/payment-review.component.html, src/app/features/samples/payment-review/payment-review.component.scss, src/app/features/samples/payment-review/payment-review.component.ts, src/app/features/samples/payment-review/payment-review.fixtures.ts, src/payment-review-index.html, src/payment-review-main.ts, tsconfig.payment-review.json
+client:
+  fetched origin/dev (also verified remotely at end): 9b7165bd463213f66a35a9d575d1cf32300ff912
+  isolated test worktree: /Users/jina/.codex/visualizations/2026/11/09/01a1bea6-b00b-7493-aa45-fc5085a7c809/payment-merge-test-20261110/client
+  selected files: 9
+  excluded local/review-only files: 
+
+Method and scope:
+Original feature work is uncommitted. No temporary commit was created. Tracked product diffs were applied using git apply --check / git apply, and selected new product files were copied to clean origin/dev worktrees. All 109 selected files match original source hashes. All source HEADs equal fetched origin/dev, so this is application of the complete feature delta to the latest dev without divergent committed history. No git merge commit or dev branch update was performed.
+Temporary launcher, local environment port override, and admin review-only entry/fixtures were excluded. Existing product mock handlers, tests and new shared UI components were included.
+
+Verification:
+- API Jest:520 suites passed;6123 tests passed;517 conditional/PG tests skipped;5 snapshots passed.
+- Payment/subscription PostgreSQL:8 isolated suites,138 tests passed. Only test-created unique DBs used/removed; DB inventory unchanged.
+- Admin Angular ChromeHeadless:3082 tests passed.
+- Client Angular ChromeHeadless:892 tests passed.
+- Admin script tests:27 passed; direct-color check passed (0 raw colors).
+- API Nest product build passed.
+- Admin and client prod configuration builds passed with production budgets enabled.
+- git diff --check passed in all three targets; no staged changes and zero commits after each origin/dev base.
+
+Existing non-blocking findings:
+- Whole API test-inclusive tsc fails on clean remote dev and integrated code:464 diagnostics in both. File/error-code/message comparison, ignoring shifted line numbers and one existing constructor arity message (8 ->8-9), finds no new semantic diagnostic. Product build passes.
+- Production build initial-bundle warnings:admin964.54kB and client533.16kB, both above500kB warning thresholds but below build error limits.
+
+Preservation:
+Original feature branches, all tracked/untracked source file hashes, original staging, local dev refs and local data remain unchanged. Remote dev hashes were checked again via git ls-remote and still match all three bases. No commits, pushes, dev integration, deployment, live provider calls or changes to the running local servers were made.
+
+Reports and evidence are in this directory:source-manifest.json, application-result.json,preservation.json,typecheck-comparison.json and per-repo test/build logs.

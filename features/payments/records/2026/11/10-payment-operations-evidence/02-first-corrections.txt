@@ -1,0 +1,29 @@
+Independent review corrections — 2026-11-10 KST
+
+Fixed product findings: 1,2,3,4,5,6,8.
+- Stale dashboard focus/projection/mutation responses cannot overwrite newer account changes.
+- Saved subscription termination reason is independent of a later refund.
+- Reconcile response includes fresh payment/refund/effects context and masked withdrawn identity.
+- Webhook completed/attention filters include normal paid+succeeded fulfillment; independent delivery filter retained.
+- Product name/code search works across warnings, cancellation events, lookup failures (list/count).
+- CS notes are not displayed as automatic execution; actual execution timestamps determine attribution.
+- Generic order recheck records requested + completed/failed outcomes and authenticated operator identity; safe errors only, labels in shared order-history grid.
+Also fixed drawer workflow spec and newly added loader mock typing.
+
+Excluded report finding 7 by scope agreement: webhook/provider cancellation event rows remain event-level, not grouped by order. Orders tab remains one row per order.
+
+Verification:
+API Jest: 520 suites pass; 6123 tests pass, 506 skipped (PG/conditional suites tested separately below); 5 snapshots pass.
+Admin Angular ChromeHeadless: 3082 tests pass.
+Client Angular ChromeHeadless: 892 tests pass.
+Isolated PostgreSQL: 8 suites,127 tests pass; before/after DB inventory identical, test-created databases removed.
+Original independent-review probes:5 pass,2 same-order grouping probes deliberately excluded.
+API Nest build, admin Angular local build, client Angular local build pass.
+Read-only final correction review: no actionable findings.
+Three git diff --check checks pass; branches and HEADs unchanged; no staged changes.
+Whole API test-inclusive tsc still has pre-existing spec type errors. Product build/typecheck passes; newly introduced loader mock TS2493 removed. This correction did not repair unrelated baseline spec errors.
+
+Local runtime:
+API rebuilt and only verified review API process restarted; admin reused; client dashboard source synced to runtime copy.
+Admin3310,user3311,API4340 ready. Browser confirmed completed webhook filter includes a normal paid+succeeded row alongside completed cancellations, and actual logged-in mypage loads.
+No real provider payments/rechecks, persistent seed changes, commits, pushes, staging, merges, merge tests, deployments, or changes to other containers.

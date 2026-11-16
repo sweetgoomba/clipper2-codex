@@ -1,0 +1,20 @@
+Final four independent review findings — corrected and reverified, 2026-11-10 KST
+
+1) Stale cancellation mode cannot cancel a new pending reservation. Controller forwards mode to reservation service; rejection is inside user lock before any order/subscription mutation. Mode-less normal reservation cancellation remains supported.
+2) Verified DONE, PARTIAL_CANCELED and CANCELED snapshots resolve only that order's open lookup failure with resolved_at, in the same transaction as locked validation/evidence. Missing key/unpaid/network/malformed/stale snapshots do not resolve it. Repeated successful verification preserves the original resolution time. Other orders' failures remain unchanged.
+3) Duplicate isExternalCancellationFenced mock removed.
+4) New PG list tests normalize absent cursor to undefined and narrow nullable contexts before accessing their fields.
+
+Verification:
+- Original independent reservation probe: RED2 -> GREEN2.
+- Original independent review probes: RED2 failures+5pass -> GREEN7pass; agreed-excluded grouping2skip.
+- Added persisted regression tests in existing PG suites: expected RED6 failures -> GREEN. Covers two stale modes, normal reservation cancel, three provider statuses, invalid/network/skipped lookups, stale DONE after cancellation, failure-list removal and idempotency.
+- API complete Jest:520 suites pass,6123 tests pass,517 conditional/PG tests skipped,5 snapshots pass.
+- Isolated PostgreSQL:8 suites,138 tests pass. No permanent DB writes. Final sequential independent probes also show unchanged DB inventory and temporary cleanup verified=true.
+- Nest product build passes.
+- Whole test-inclusive tsc:468 diagnostics before ->464 after, precisely the requested four diagnostics removed, no new diagnostics after normalizing shifted line numbers. Whole test-inclusive tsc remains failing due to other pre-existing errors; not claimed clean.
+- Read-only separate review of current seven-file correction diff: no actionable findings.
+- git diff --check passes; same branch and HEAD, no staged changes. No commits, pushes, merges, merge tests, deployments or real payment/provider calls.
+- Only verified local review API restarted on4340; existing Docker DB and admin3310/client3311 services reused.
+
+Changes are limited to seven API source/test files; all earlier dirty work remains present. No frontend modifications in this correction.

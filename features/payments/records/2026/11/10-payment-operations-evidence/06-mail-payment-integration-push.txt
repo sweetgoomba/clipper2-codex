@@ -1,0 +1,31 @@
+Payment + local dev mail integration — committed and pushed
+Branch: integration/payment-operations-20261109
+
+Three original payment feature commits were made from the previously tested exact trees. Local dev mail merge commits were then merged into integration only (actual dev refs unchanged).
+API conflicts in subscription current/lifecycle and renewal constructor/mail hooks, plus client dashboard refund/state race guards, were resolved retaining both features. Focused combined regressions were added.
+
+Final remote commits:
+api: 3fda70f5081a52d3cda2a09132f3f72e3c216da9
+  payment feature commit: 400937f695d4b61d07933e27deaf778c3bb00dd8
+  local dev mail commit included: e8ddd7b12c3e56c237d05401ce8e182fbcde158b
+admin: 2a65cf763483f748baac088854dd7fbf68b372cd
+  payment feature commit: 5dd01d1406cf98676ae72b8b36506693b8734996
+  local dev mail commit included: 381533c5d231379de16d2990cec15cbc294ad228
+client: a32f8ef29aefc3c2e4d4f05483cf475775bb50f5
+  payment feature commit: 625b74c8636295b0a659b83faf99a9dbc12aca06
+  local dev mail commit included: 70c4af7a20182f61a3ef351d52a4f3e718dc2aca
+
+Verification:
+API full Jest:537 suites,6224 tests,5 snapshots passed;550 conditional tests skipped.
+Admin full ChromeHeadless:3080 passed. Client full ChromeHeadless:905 passed.
+Isolated payment/mail/signup/refund/withdrawal PostgreSQL:13 suites,268 tests passed.
+Three product builds passed. Admin production build preserves mock/review exclusion; initial bundle799.45kB. Client533.53kB. Existing500kB warning thresholds remain.
+Read-only merge review and follow-up test review: no actionable findings.
+
+Initial PG run:267pass/1failure. Existing real-deadlock test assumed only withdrawal could be victim; a card-change victim produced an unhandled40P01. Isolated retry demonstrated nondeterminism. Test now immediately handles both possible victims and asserts atomic rollback or completed withdrawal appropriately; existing unit test still verifies40P01 -> retryable conflict mapping. No production lock behavior changed. Final13suite rerun passed268/268.
+
+No live payment, provider recheck, email delivery, production deployment, permanent DB migration, actual dev commit/merge/push, or changes to other containers were made. This run own temporary PG container was removed after its own temporary databases were cleaned.
+Original feature dirty worktrees and all recorded file hashes are unchanged. Local dev hashes remain the other session local mail merge commits. Remote dev hashes remain their pre-task values. Only integration branches were pushed. Three integration worktrees are clean and tracking remote branches at0ahead/0behind.
+Whole API test-inclusive tsc was not re-run for this mail combination; earlier baseline test typing debt remains separate from successful product builds.
+
+Evidence:commits.json,validated-trees.json,push-verification.json,api-tests.log,admin-tests.log,client-tests.log,postgres-tests.log(initial failure),postgres-tests-green.log,api-build.log,admin-prod-build.log,client-prod-build.log.
