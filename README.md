@@ -1,5 +1,7 @@
 # Codex Workspace
 
+**2026-11-10 메일 세션 종합:** [구현·전체 Git·검증·개발 배포·운영 준비 기록](features/mail/records/2026/11/2026-11-10-mail-session-summary.md). 자동10종·광고 동의·공통 디자인·SES와 후속 수정은 4repo dev 반영/푸시 완료이며 사용자는 개발 배포 완료를 보고했다. **운영은 SES/SNS/IAM 생성만 완료, 이번 메일 코드/DB는 미배포**다. [메일 현재 기준](features/mail/README.md) · [10종 전체 문구](features/mail/records/2026/11/2026-11-10-automatic-mail-template-snapshot.md).
+
 **2026-11-04 고객 환불 기본 제공:** [플래그 제거·dev 전 독립 검증 절차](features/payments/records/2026/11/04-customer-refunds-default-and-pre-dev-review.md). API `b924ca5`/Client `b90eedc` dev 반영, API5403·Client637·빌드 통과. 고객 신청은 기본 제공하되 관리자 승인 뒤 토스 취소한다. 별도 검증 결과를 받은 뒤에만 dev 반영하도록 인계에 명시했다. 전용 API3311·웹4203/4204는 현재 정지 상태다.
 
 **2026-11-04 PG 두 세션 최종 정리:** [고객 환불·PG 통합 인계](features/payments/records/2026/11/04-two-session-pgops-summary.md). 환불 승인·외부 취소 자동 정리·운영 UI·앱 정산 복구·가격/크레딧·무료체험365일 상한은 dev 반영 완료다. 실제 Toss 전체 E2E·조건부 DB86개·운영 배포/문구·로컬API3311 재기동은 별도다. 웹4203/4204는 종료했고 API/DB는 보존했다. [결제 색인](features/payments/README.md).

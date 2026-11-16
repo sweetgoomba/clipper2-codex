@@ -1,5 +1,9 @@
 # 다음 세션 시작 안내
 
+## 2026-11-10 메일 세션 재개 기준
+
+먼저 [메일 종합 인계](../features/mail/records/2026/11/2026-11-10-mail-session-summary.md)를 읽는다. 4repo dev 커밋·푸시와 다른 결제 채팅의 통합은 완료했으며 사용자는 최신 개발 배포 완료를 보고했다. 운영 SES/SNS/IAM은 생성만 했고 이번 메일 코드/DB는 아직 운영 미배포다. prod 구성 세트 clipper-mail-prod, 실제 자격 증명 선택, DB migration, SNS HTTPS 확인과 제한된 수신 테스트·워커 활성화가 남는다. 초기 문서의 Resend 이전/19개 미연결/미커밋 문구는 과거 기록이다. 수동 작성 UI·상세 실패 사유·나머지 실제 전체 흐름 검증은 보류를 유지한다. 실제 env·사용자 DB·다른 채팅 런타임을 임의로 변경하지 않고, 재개 시 repo/서버 상태를 새로 확인한다.
+
 ## 2026-11-04 고객 환불과 PG 두 세션 인계
 
 [통합 문서](../features/payments/records/2026/11/04-two-session-pgops-summary.md)와 [보존 증거](../features/payments/records/2026/11/04-two-session-pgops-evidence.json)를 먼저 읽는다. 서비스 기능은 dev에 들어갔으며 가격·무료체험이 미커밋이거나 외부 취소 후처리가 미구현이라는 과거 기록은 현재 판정이 아니다. 유효기간 편집 상한은 **365일**이다.
