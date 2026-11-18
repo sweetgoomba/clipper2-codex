@@ -1,5 +1,9 @@
 # 다음 세션 시작 안내
 
+## 2026-11-18 크레딧 모달 성능 작업
+
+[세션 기록](../records/sessions/2026/11/18.md)에 34개 버튼의 전후표, 스피너 동안의 처리, 구현·테스트, 네 PR과 병합 커밋, 설치판·QA 환경을 정리했다. PR 생성 이후 상태를 11월 18일 GitHub에서 확인했으며 Electron #5·Angular #18·NestJS #19·웹 API #12 모두 dev 병합 완료다. 워크트리는 `/Users/jina/project/adlight/.worktrees/credit-modal-20261117`, 작업 브랜치는 `fix/credit-modal-latency`다. 로컬 API 3000과 QA 앱은 종료 상태이고 전용 PostgreSQL 55467은 실행 중이다. 재실행 도구·근거 파일·남은 실측 범위는 세션 기록을 따른다.
+
 ## 2026-11-10 메일 세션 재개 기준
 
 먼저 [메일 종합 인계](../features/mail/records/2026/11/2026-11-10-mail-session-summary.md)를 읽는다. 4repo dev 커밋·푸시와 다른 결제 채팅의 통합은 완료했으며 사용자는 최신 개발 배포 완료를 보고했다. 운영 SES/SNS/IAM은 생성만 했고 이번 메일 코드/DB는 아직 운영 미배포다. prod 구성 세트 clipper-mail-prod, 실제 자격 증명 선택, DB migration, SNS HTTPS 확인과 제한된 수신 테스트·워커 활성화가 남는다. 초기 문서의 Resend 이전/19개 미연결/미커밋 문구는 과거 기록이다. 수동 작성 UI·상세 실패 사유·나머지 실제 전체 흐름 검증은 보류를 유지한다. 실제 env·사용자 DB·다른 채팅 런타임을 임의로 변경하지 않고, 재개 시 repo/서버 상태를 새로 확인한다.
