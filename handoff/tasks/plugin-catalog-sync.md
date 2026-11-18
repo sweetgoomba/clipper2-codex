@@ -1,6 +1,8 @@
 # W18 플러그인 목록과 관리자 및 앱 스토어 동기화
 
-최종 정리: **2026-11-03 KST**. 상태: **후속 TODO, 이번 세션 제외, 사용자 재개 지시 대기**. 우선순위·일정·구현 방식 미정.
+최종 정리: **2026-11-18 KST**. 상태: **설계 제안·독립 검증 2회와 필수 보완 반영, 제품 미구현**. 사용자 요청으로 설계만 재개했으며 구현 승인은 받지 않았다. 우선순위·구현 일정은 미정이다.
+
+[최초안](../../features/plugin-catalog/records/2026/11/18-catalog-sync-initial-design.md) · [독립 검증과 재검증](../../features/plugin-catalog/records/2026/11/18-catalog-sync-independent-review.md) · [권고 설계와 판단 차이](../../features/plugin-catalog/records/2026/11/18-catalog-sync-recommended-design.md). 권고는 기존 Angular 등록에서 빌드 목록을 생성하고 release DB의 불변 목록과 관리자 운영 설정을 결합하는 방식이다. 제품·DB·빌드·배포 변경 없이 사용자에게 설계를 설명할 단계다.
 
 [WORKBOARD](../WORKBOARD.md) · [전체 논의](../../features/plugin-catalog/records/2026/10/29-admin-store-sync-discussion-and-deferral.md) · [상세 TODO와 완료 기준](../../todos/2026-10-29-plugin-catalog-admin-store-sync.md) · [동기화 제외 후 W19 범위](../../features/promotions/records/2026/10/29-remaining-scope-after-plugin-sync-deferral.md)
 
@@ -22,7 +24,7 @@
 
 ## 다음 행동
 
-사용자 재개 지시 후 논의 기록과 TODO를 읽고 최소 범위·등록 정본·동기화 방식·권한·공개/활성 상태를 정한다. 기존 기술 실험을 그대로 운영에 붙이지 않는다. W19 진행에 필요하다는 이유로 자동 착수하지 않는다.
+11/18 권고 설계를 사용자와 검토한다. 구현 지시가 오면 현재 원격 dev와 작업 상태를 다시 확인하고 계약·migration·화면·실행 경계별 검증 계획을 작성한다. 기존 기술 실험을 그대로 운영에 붙이지 않는다. 설계 문서만을 근거로 제품 구현에 착수하지 않는다.
 
 ## 제약과 미확인
 
