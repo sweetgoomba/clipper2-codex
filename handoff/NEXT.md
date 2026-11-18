@@ -2,7 +2,7 @@
 
 ## 2026-11-18 크레딧 모달 성능 작업
 
-[세션 기록](../records/sessions/2026/11/18.md)에 34개 버튼의 전후표, 스피너 동안의 처리, 구현·테스트, 네 PR과 병합 커밋, 설치판·QA 환경을 정리했다. PR 생성 이후 상태를 11월 18일 GitHub에서 확인했으며 Electron #5·Angular #18·NestJS #19·웹 API #12 모두 dev 병합 완료다. 워크트리는 `/Users/jina/project/adlight/.worktrees/credit-modal-20261117`, 작업 브랜치는 `fix/credit-modal-latency`다. 로컬 API 3000과 QA 앱은 종료 상태이고 전용 PostgreSQL 55467은 실행 중이다. 재실행 도구·근거 파일·남은 실측 범위는 세션 기록을 따른다.
+[세션 기록](../records/sessions/2026/11/18.md)에 34개 버튼의 전후표, 구현·검증, 네 PR과 병합 커밋을 정리했다. Electron #5·Angular #18·NestJS #19·웹 API #12의 dev 병합을 확인했다. 사용자의 요청으로 11월 18일 다섯 워크트리와 임시 설치판·QA DB·별도 백업을 정리하고 전용 PostgreSQL 55467을 종료했다. 검토서와 작은 측정 원본은 [근거 폴더](../records/sessions/2026/11/18-credit-modal-evidence)에 있다.
 
 ## 2026-11-10 메일 세션 재개 기준
 

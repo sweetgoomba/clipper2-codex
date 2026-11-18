@@ -1,6 +1,6 @@
 # Codex Workspace
 
-**2026-11-18 크레딧 모달 성능 세션:** [34개 버튼 전후 측정·구현·검증·네 PR 기록](records/sessions/2026/11/18.md). 같은 macOS 로컬 API 설치판에서 텍스트 숏폼 4장면 중앙값 875.1→66.2ms, 12장면 1,123.1→64.7ms를 기록했다. Electron·Angular·NestJS·웹 API 변경을 각각 커밋·푸시했고, 문서화 시 네 PR의 dev 병합을 확인했다. Windows·실제 외부 이미지 지연의 실측은 별도다.
+**2026-11-18 크레딧 모달 성능 세션:** [34개 버튼 전후 측정·구현·검증·네 PR 기록](records/sessions/2026/11/18.md). 같은 macOS 로컬 API 설치판에서 텍스트 숏폼 4장면 중앙값 875.1→66.2ms, 12장면 1,123.1→64.7ms를 기록했다. Electron·Angular·NestJS·웹 API 변경을 각각 커밋·푸시했고, 문서화 시 네 PR의 dev 병합을 확인했다. Windows·실제 외부 이미지 지연의 실측은 별도다. 사용자의 요청으로 워크트리와 임시 설치판·QA DB를 정리하고 검토서·측정 원본을 보존했다.
 
 **2026-11-10 메일 세션 종합:** [구현·전체 Git·검증·개발 배포·운영 준비 기록](features/mail/records/2026/11/2026-11-10-mail-session-summary.md). 자동10종·광고 동의·공통 디자인·SES와 후속 수정은 4repo dev 반영/푸시 완료이며 사용자는 개발 배포 완료를 보고했다. **운영은 SES/SNS/IAM 생성만 완료, 이번 메일 코드/DB는 미배포**다. [메일 현재 기준](features/mail/README.md) · [10종 전체 문구](features/mail/records/2026/11/2026-11-10-automatic-mail-template-snapshot.md).
 

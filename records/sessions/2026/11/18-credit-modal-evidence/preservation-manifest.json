@@ -1,0 +1,68 @@
+{
+  "original_worktree": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117",
+  "files": [
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/크레딧 모달 지연 검토.md",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/크레딧 모달 지연 검토.md",
+      "sha256": "e60044e669318272f751104150baa07ca15d6809293f471a6694cc3f498500d8",
+      "bytes": 20417
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/크레딧 모달 개선 전후.md",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/크레딧 모달 개선 전후.md",
+      "sha256": "6e1dcbd70424b391bb2e55fa94c8410b2d021b76ae9f7d7a933c4cbd8d06bdb5",
+      "bytes": 9203
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/measurements.jsonl",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/measurements.jsonl",
+      "sha256": "8444c523d81105cd41e8d317f2e41dab7b7b0fe1bb66c945bea25c70e5032d12",
+      "bytes": 46083
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/measurements-stage1.jsonl",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/measurements-stage1.jsonl",
+      "sha256": "5cb02eb6e6b691898e691238187907069a8cfbf7f91e73ff60619a4bddfacbf2",
+      "bytes": 8276
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/measurements-matched-before.jsonl",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/measurements-matched-before.jsonl",
+      "sha256": "7eca22ed2ef2bf4e064a2019415d4354eb6fa78114c627e103182eafa4f3ed66",
+      "bytes": 34973
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/measurements-matched-after.jsonl",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/measurements-matched-after.jsonl",
+      "sha256": "5f0ba4ea9bfa49efb9f22b961a904181c20d8fb3469b9ca4e16a0c3ccbbc7565",
+      "bytes": 36315
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/bridge-durations.json",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/bridge-durations.json",
+      "sha256": "28073ed14efda0cd7366e70bdd3849f03320ad83711c419c698c66064f1af5df",
+      "bytes": 111
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/bridge-stage1.txt",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/bridge-stage1.txt",
+      "sha256": "7c89d8ee9f8de156d1403b7480306f26bfde4934d851966b57aad49e65daf5a4",
+      "bytes": 158
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/ledger-before-after-qa.txt",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/ledger-before-after-qa.txt",
+      "sha256": "d66c00395b0ce907a598fafbbf7057001d5322007b2e83dbcdd9017bf986a318",
+      "bytes": 47
+    },
+    {
+      "original_path": "/Users/jina/project/adlight/.worktrees/credit-modal-20261117/run/ledger-after-comparison.txt",
+      "preserved_path": "/Users/jina/project/adlight/.codex/records/sessions/2026/11/18-credit-modal-evidence/ledger-after-comparison.txt",
+      "sha256": "d66c00395b0ce907a598fafbbf7057001d5322007b2e83dbcdd9017bf986a318",
+      "bytes": 47
+    }
+  ],
+  "retention": "Review reports, measurements, bridge durations, and ledger snapshots only",
+  "cleanup_date": "2026-11-18",
+  "worktree_removed": true
+}
