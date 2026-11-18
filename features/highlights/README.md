@@ -4,6 +4,10 @@
 
 ## 현재 상태를 읽는 순서
 
+- [11/18 하이라이트 가속 QA와 로컬 검증 인계](../../records/sessions/2026/11/18-highlight-acceleration-qa-handoff.md). 4차 QA·R3 수정·Windows 2·3·8번 오프라인 CPU 기준과 다음 GPU·로컬 API/어드민 시험을 연결한다.
+
+- [11/18 대사·안무 예열 제거와 취소 정리](../../records/sessions/2026/11/18-highlight-warmup-cancellation-handoff.md). 자동 기동을 실제 계산이 필요한 시점으로 옮기고, 취소한 작업의 종료가 확인돼야 큐 자리를 넘기도록 했다. Angular·Nest·Electron의 `dev` 대상 PR 세 건을 올렸다. 머지·배포는 보류 상태다.
+
 - [11/4 공통 가속과 Mac 얼굴 병목의 현재 상태](../../operations/accelerators/README.md): 실제 모델·설정·복구 연결과 dev 반영, Made My Night 안무 335초 → 266초·63개 목록 동일. [사용·재현](../../operations/accelerators/runbooks/mac-highlight-acceleration.md)과 [종합 인계](../../records/sessions/2026/11/04-highlight-mac-acceleration-handoff.md)에 Person 크기 준비 미연결, Whisper CPU, Windows 별도 검증 범위를 명시했다. 아래 11/3 초기 상태와 구분한다.
 
 - [11/3 GPU·ONNX 조사 요약과 담당 세션](records/2026/11/03-gpu-onnx-research-and-owner-session.md): 안무·인물·대사 공통 조사와 기존 안무 가속 개선을 연결한다. 별도 GPU 세션에서 공통 기반·CPU 복구를 1차 구현했으며, 실제 플러그인 연결·실장비 검증과 새 GPU 자동 선택 활성화는 남았다.
